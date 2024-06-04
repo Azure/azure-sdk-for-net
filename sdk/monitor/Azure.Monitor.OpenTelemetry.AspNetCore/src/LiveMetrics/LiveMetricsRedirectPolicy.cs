@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             while (redirectCount <= MaxRedirect && IsRedirection(response, out string? redirectionValue))
             {
                 Debug.WriteLine($"OnPing: Received Redirection: {redirectionValue}");
-                AzureMonitorAspNetCoreEventSource.Log.ReceivedRedirection(redirectionValue);
+                AzureMonitorAspNetCoreEventSource.Log.LiveMetricsRedirectReceived(redirectionValue);
 
                 response.Dispose();
 
