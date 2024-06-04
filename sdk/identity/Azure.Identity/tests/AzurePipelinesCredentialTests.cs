@@ -93,11 +93,6 @@ namespace Azure.Identity.Tests
         [Test]
         public void AzurePipelineCredentialReturnsErrorInformation()
         {
-            using (new TestEnvVar(new Dictionary<string, string>
-            {
-                { "SYSTEM_OIDCREQUESTURI", "mockCollectionUri" },
-            }))
-            {
                 var systemAccessToken = "mytoken";
                 var tenantId = "myTenantId";
                 var clientId = "myClientId";
@@ -110,7 +105,6 @@ namespace Azure.Identity.Tests
                 var cred = new AzurePipelinesCredential(systemAccessToken, clientId, tenantId, serviceConnectionId, options);
 
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
-            }
         }
 
         public class MockCredential : TokenCredential
