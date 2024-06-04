@@ -22,13 +22,11 @@ namespace Azure.Health.Deidentification.Samples
             const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
-            #region Snippet:AzHealthDeidSample2_CreateDeidClient
             DeidentificationClient client = new(
                 new Uri(serviceEndpoint),
                 credential,
                 new DeidentificationClientOptions()
             );
-            #endregion
 
             string storageAccountUrl = TestEnvironment.StorageAccountSASUri;
 

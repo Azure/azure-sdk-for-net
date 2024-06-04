@@ -1,4 +1,4 @@
-# List Jobs
+# List Jobs Async
 
 This sample demonstrates how to list jobs an iterate over in a for loop.
 
@@ -6,9 +6,9 @@ This sample demonstrates how to list jobs an iterate over in a for loop.
 ## List Jobs and iterate over in a for loop
 
 ```C# Snippet:AzHealthDeidSample2Async_CreateJob
-Pageable<DeidentificationJob> jobs = client.GetJobs();
+AsyncPageable<DeidentificationJob> jobs = client.GetJobsAsync();
 
-foreach (DeidentificationJob job in jobs)
+await foreach (DeidentificationJob job in jobs)
 {
     Console.WriteLine($"Job Name: {job.Name}");
     Console.WriteLine($"Job Status: {job.Status}");

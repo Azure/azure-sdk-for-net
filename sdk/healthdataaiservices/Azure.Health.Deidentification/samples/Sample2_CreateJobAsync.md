@@ -1,18 +1,7 @@
 # Create and Run Job Async
 
-This sample demonstrates how to create a `DeidentificationClient` and then create a job which will deidentify all files within a blob storage container filtering via a prefix.
+This sample demonstrates how to create a job which will deidentify all files within a blob storage container filtering via a prefix.
 
-## Create a DeidentificationClient
-
-The service endpoint url can be pulled from the azure portal `Service Url`.
-
-```C# Snippet:AzHealthDeidSample2Async_CreateDeidClient
-DeidentificationClient client = new(
-    new Uri(serviceEndpoint),
-    credential,
-    new DeidentificationClientOptions()
-);
-```
 
 ## Create Job and Check Status
 

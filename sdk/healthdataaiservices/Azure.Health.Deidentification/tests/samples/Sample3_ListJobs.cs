@@ -17,7 +17,7 @@ namespace Azure.Health.Deidentification.Samples
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
         [Test]
-        public async void CreateAndRunJobAsync()
+        public void ListJobs()
         {
             const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
@@ -30,17 +30,14 @@ namespace Azure.Health.Deidentification.Samples
 
             string storageAccountUrl = TestEnvironment.StorageAccountSASUri;
 
-            #region Snippet:AzHealthDeidSample2Async_CreateJob
-            DeidentificationJob job = new()
-            {
-                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/", new string[] { "*" }),
-                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
-                DataType = DocumentDataType.PlainText,
-                Operation = OperationType.Surrogate
-            };
+            #region Snippet:AzHealthDeidSample3_ListJobs
+            Pageable<DeidentificationJob> jobs = client.GetJobs();
 
-            job = (await client.CreateJobAsync(WaitUntil.Completed, "my-job-1", job)).Value;
-            Console.WriteLine($"Job Status: {job.Status}"); // Job Status: Completed
+            foreach (DeidentificationJob job in jobs)
+            {
+                Console.WriteLine($"Job Name: {job.Name}");
+                Console.WriteLine($"Job Status: {job.Status}");
+            }
             #endregion
         }
     }
