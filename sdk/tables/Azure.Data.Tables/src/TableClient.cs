@@ -1150,7 +1150,7 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1177,7 +1177,7 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1232,7 +1232,7 @@ namespace Azure.Data.Tables
                             queryOptions: queryOptions,
                             cancellationToken: cancellationToken);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
@@ -1260,7 +1260,7 @@ namespace Azure.Data.Tables
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken);
 
-                        return Page.FromValues(
+                        return Page<T>.FromValues(
                             response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
