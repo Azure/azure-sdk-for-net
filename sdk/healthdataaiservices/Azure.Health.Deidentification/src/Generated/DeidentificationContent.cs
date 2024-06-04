@@ -47,32 +47,30 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to deidentify. </param>
-        /// <param name="dataType"> Data type of the input. </param>
         /// <param name="operation"> Operation to perform on the input. </param>
-        /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
+        /// <param name="dataType"> Data type of the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
-        public DeidentificationContent(string inputText, DocumentDataType dataType, OperationType operation, StringIndexType stringIndexType)
+        public DeidentificationContent(string inputText, OperationType operation, DocumentDataType dataType)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
             InputText = inputText;
-            DataType = dataType;
             Operation = operation;
-            StringIndexType = stringIndexType;
+            DataType = dataType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to deidentify. </param>
-        /// <param name="dataType"> Data type of the input. </param>
         /// <param name="operation"> Operation to perform on the input. </param>
+        /// <param name="dataType"> Data type of the input. </param>
         /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is Redact. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, DocumentDataType dataType, OperationType operation, StringIndexType stringIndexType, string redactionFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationContent(string inputText, OperationType operation, DocumentDataType dataType, StringIndexType stringIndexType, string redactionFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputText = inputText;
-            DataType = dataType;
             Operation = operation;
+            DataType = dataType;
             StringIndexType = stringIndexType;
             RedactionFormat = redactionFormat;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,10 +83,10 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Input text to deidentify. </summary>
         public string InputText { get; }
-        /// <summary> Data type of the input. </summary>
-        public DocumentDataType DataType { get; }
         /// <summary> Operation to perform on the input. </summary>
         public OperationType Operation { get; }
+        /// <summary> Data type of the input. </summary>
+        public DocumentDataType DataType { get; }
         /// <summary> Format of the redacted output. Only valid when OperationType is Redact. </summary>
         public string RedactionFormat { get; set; }
     }

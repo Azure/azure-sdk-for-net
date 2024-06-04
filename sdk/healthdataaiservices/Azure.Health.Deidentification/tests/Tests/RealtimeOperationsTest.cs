@@ -12,20 +12,25 @@ using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Tests
 {
+    [TestFixture]
     public class RealtimeOperationsTest : DeidentificationTestBase
     {
+        public RealtimeOperationsTest() : base(true)
+        {
+        }
+
         public RealtimeOperationsTest(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task Realtime_ValidArguments_ReturnsExcepted()
+        public async Task Realtime_Surrogate_ReturnsExcepted()
         {
             DeidentificationClient client = GetDeidClient();
 
             string input = "Hello, my name is John Smith.";
             // TODO: Defaults should be set for these.
-            DeidentificationContent content = new(input, DocumentDataType.PlainText, OperationType.Surrogate, StringIndexType.TextElementV8);
+            DeidentificationContent content = new(input, OperationType.Surrogate, DocumentDataType.PlainText);
 
             // TODO: body should be changed to config
             DeidentificationResult result = await client.DeidentifyAsync(content);
@@ -34,6 +39,32 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNotNull(result.OutputText, "On Surrogate Operation, expect OutputText to be not null.");
             Assert.IsTrue(result.OutputText.Length > 21, "Expected output text to be longer than the tag and a single character for each name token.");
             Assert.AreNotEqual(input, result.OutputText, "Expected output text to be different from input text.");
+        }
+
+
+        [Test]
+        public async Task Realtime_Tag_ReturnsExcepted()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string input = "Hello, my name is John Smith.";
+            // TODO: Defaults should be set for these.
+            DeidentificationContent content = new(input, OperationType.Tag, DocumentDataType.PlainText);
+
+            // TODO: body should be changed to config
+            DeidentificationResult result = await client.DeidentifyAsync(content);
+
+            Assert.IsNotNull(result.TaggerResult, "On Tag Operation, expect TaggerResult to be not null.");
+            Assert.IsNull(result.OutputText, "On Tag Operation, expect OutputText to be null.");
+            Assert.IsNull(result.TaggerResult.Etag, "Expected Etag to be null.");
+            Assert.IsNull(result.TaggerResult.Path, "Expected Path to be null.");
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, result.TaggerResult.StringIndexType, "Expected StringIndexType to be Utf16CodeUnit.");
+
+            Assert.IsTrue(result.TaggerResult.Entities.Count > 0, "Expected TaggerResult to have at least one tag.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Category == PhiCategory.Doctor || result.TaggerResult.Entities[0].Category == PhiCategory.Patient, "Expected first tag to be a patient/doctor.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Text == "John Smith", "Expected first tag to be 'John Smith'.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Offset == 18, "Expected first tag to start at index 19.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Length == 10, "Expected first tag to be 10 characters long.");
         }
     }
 }

@@ -35,10 +35,10 @@ namespace Azure.Health.Deidentification
             writer.WriteObjectValue(SourceLocation, options);
             writer.WritePropertyName("targetLocation"u8);
             writer.WriteObjectValue(TargetLocation, options);
-            writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
+            writer.WritePropertyName("dataType"u8);
+            writer.WriteStringValue(DataType.ToString());
             if (Optional.IsDefined(RedactionFormat))
             {
                 writer.WritePropertyName("redactionFormat"u8);
@@ -115,8 +115,8 @@ namespace Azure.Health.Deidentification
             string name = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
-            DocumentDataType dataType = default;
             OperationType operation = default;
+            DocumentDataType dataType = default;
             string redactionFormat = default;
             JobStatus status = default;
             ResponseError error = default;
@@ -143,14 +143,14 @@ namespace Azure.Health.Deidentification
                     targetLocation = TargetStorageLocation.DeserializeTargetStorageLocation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataType"u8))
-                {
-                    dataType = new DocumentDataType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operation"u8))
                 {
                     operation = new OperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataType"u8))
+                {
+                    dataType = new DocumentDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redactionFormat"u8))
@@ -214,8 +214,8 @@ namespace Azure.Health.Deidentification
                 name,
                 sourceLocation,
                 targetLocation,
-                dataType,
                 operation,
+                dataType,
                 redactionFormat,
                 status,
                 error,

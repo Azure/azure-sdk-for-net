@@ -1,4 +1,4 @@
-# Realtime Deidentification
+# Realtime Deidentification Async
 
 This sample demonstrates how to create a `DeidentificationClient` and then deidentify a `string`.
 
@@ -6,7 +6,7 @@ This sample demonstrates how to create a `DeidentificationClient` and then deide
 
 The service endpoint url can be pulled from the azure portal `Service Url`.
 
-```C# Snippet:AzHealthDeidSample1_CreateDeidClient
+```C# Snippet:AzHealthDeidSample1Async_CreateDeidClient
 DeidentificationClient client = new(
     new Uri(serviceEndpoint),
     credential,
@@ -16,10 +16,10 @@ DeidentificationClient client = new(
 
 ## Build Request and Call Function
 
-```C# Snippet:AzHealthDeidSample1_CreateRequest
+```C# Snippet:AzHealthDeidSample1Async_CreateRequest
 DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.PlainText);
 
-Response<DeidentificationResult> result = client.Deidentify(content);
+Response<DeidentificationResult> result = await client.DeidentifyAsync(content);
 string outputString = result.Value.OutputText;
 Console.WriteLine(outputString); // Hello, Tom!
 ```

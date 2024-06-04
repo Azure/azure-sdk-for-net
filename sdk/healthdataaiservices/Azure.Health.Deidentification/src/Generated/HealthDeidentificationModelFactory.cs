@@ -18,8 +18,8 @@ namespace Azure.Health.Deidentification
         /// <param name="name"> The name of a job. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
-        /// <param name="dataType"> Data type of the input documents. </param>
         /// <param name="operation"> Operation to perform on the input documents. </param>
+        /// <param name="dataType"> Data type of the input documents. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
         /// <param name="status"> Current status of a job. </param>
         /// <param name="error"> Error when job fails in it's entirety. </param>
@@ -34,14 +34,14 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, OperationType operation = default, DocumentDataType dataType = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
                 sourceLocation,
                 targetLocation,
-                dataType,
                 operation,
+                dataType,
                 redactionFormat,
                 status,
                 error,

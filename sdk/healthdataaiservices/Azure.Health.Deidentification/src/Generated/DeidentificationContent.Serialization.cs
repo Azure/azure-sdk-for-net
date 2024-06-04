@@ -28,10 +28,10 @@ namespace Azure.Health.Deidentification
             writer.WriteStartObject();
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
-            writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
+            writer.WritePropertyName("dataType"u8);
+            writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("stringIndexType"u8);
             writer.WriteStringValue(StringIndexType.ToString());
             if (Optional.IsDefined(RedactionFormat))
@@ -78,8 +78,8 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string inputText = default;
-            DocumentDataType dataType = default;
             OperationType operation = default;
+            DocumentDataType dataType = default;
             StringIndexType stringIndexType = default;
             string redactionFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -91,18 +91,22 @@ namespace Azure.Health.Deidentification
                     inputText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"u8))
-                {
-                    dataType = new DocumentDataType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operation"u8))
                 {
                     operation = new OperationType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("dataType"u8))
+                {
+                    dataType = new DocumentDataType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("stringIndexType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
@@ -119,8 +123,8 @@ namespace Azure.Health.Deidentification
             serializedAdditionalRawData = rawDataDictionary;
             return new DeidentificationContent(
                 inputText,
-                dataType,
                 operation,
+                dataType,
                 stringIndexType,
                 redactionFormat,
                 serializedAdditionalRawData);

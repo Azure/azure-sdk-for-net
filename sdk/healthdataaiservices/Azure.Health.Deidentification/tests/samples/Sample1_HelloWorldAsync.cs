@@ -17,12 +17,12 @@ namespace Azure.Health.Deidentification.Samples
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
         [Test]
-        public void HelloWorld()
+        public async void HelloWorldAsync()
         {
             const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
-            #region Snippet:AzHealthDeidSample1_CreateDeidClient
+            #region Snippet:AzHealthDeidSample1Async_CreateDeidClient
             DeidentificationClient client = new(
                 new Uri(serviceEndpoint),
                 credential,
@@ -30,10 +30,10 @@ namespace Azure.Health.Deidentification.Samples
             );
             #endregion
 
-            #region Snippet:AzHealthDeidSample1_CreateRequest
+            #region Snippet:AzHealthDeidSample1Async_CreateRequest
             DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.PlainText);
 
-            Response<DeidentificationResult> result = client.Deidentify(content);
+            Response<DeidentificationResult> result = await client.DeidentifyAsync(content);
             string outputString = result.Value.OutputText;
             Console.WriteLine(outputString); // Hello, Tom!
             #endregion

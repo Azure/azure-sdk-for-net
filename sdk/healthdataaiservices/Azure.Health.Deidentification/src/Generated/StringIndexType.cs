@@ -24,7 +24,7 @@ namespace Azure.Health.Deidentification
 
         private const string TextElementV8Value = "TextElement_v8";
         private const string UnicodeCodePointValue = "UnicodeCodePoint";
-        private const string Utf16CodeUnitValue = "UnicodeCodePoint";
+        private const string Utf16CodeUnitValue = "Utf16CodeUnit";
 
         /// <summary> Iterates over graphemes as defined by the Unicode 8.0.0 standard. </summary>
         public static StringIndexType TextElementV8 { get; } = new StringIndexType(TextElementV8Value);

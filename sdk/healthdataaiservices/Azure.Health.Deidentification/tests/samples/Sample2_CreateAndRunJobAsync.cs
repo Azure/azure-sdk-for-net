@@ -17,12 +17,12 @@ namespace Azure.Health.Deidentification.Samples
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
         [Test]
-        public void HelloWorld()
+        public async void CreateAndRunJobAsync()
         {
             const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
-            #region Snippet:AzHealthDeidSample1_CreateDeidClient
+            #region Snippet:AzHealthDeidSample2Async_CreateDeidClient
             DeidentificationClient client = new(
                 new Uri(serviceEndpoint),
                 credential,
@@ -30,12 +30,19 @@ namespace Azure.Health.Deidentification.Samples
             );
             #endregion
 
-            #region Snippet:AzHealthDeidSample1_CreateRequest
-            DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.PlainText);
+            string storageAccountUrl = TestEnvironment.StorageAccountSASUri;
 
-            Response<DeidentificationResult> result = client.Deidentify(content);
-            string outputString = result.Value.OutputText;
-            Console.WriteLine(outputString); // Hello, Tom!
+            #region Snippet:AzHealthDeidSample2Async_CreateJob
+            DeidentificationJob job = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/", new string[] { "*" }),
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
+                DataType = DocumentDataType.PlainText,
+                Operation = OperationType.Surrogate
+            };
+
+            job = (await client.CreateJobAsync(WaitUntil.Completed, "my-job-1", job)).Value;
+            Console.WriteLine($"Job Status: {job.Status}"); // Job Status: Completed
             #endregion
         }
     }
