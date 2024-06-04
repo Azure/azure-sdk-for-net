@@ -107,18 +107,6 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayResource"/> object. </returns>
-        public virtual ApplicationGatewayResource GetApplicationGatewayResource(ResourceIdentifier id)
-        {
-            ApplicationGatewayResource.ValidateResourceId(id);
-            return new ApplicationGatewayResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

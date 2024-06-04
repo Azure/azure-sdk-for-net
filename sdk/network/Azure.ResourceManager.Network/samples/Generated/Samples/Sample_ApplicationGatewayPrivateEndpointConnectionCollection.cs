@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Samples
 {
@@ -28,16 +29,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplicationGatewayResource created on azure
-            // for more information of creating ApplicationGatewayResource, please refer to the document of ApplicationGatewayResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string applicationGatewayName = "appgw";
-            ResourceIdentifier applicationGatewayResourceId = ApplicationGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGatewayName);
-            ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ApplicationGatewayPrivateEndpointConnectionResource
-            ApplicationGatewayPrivateEndpointConnectionCollection collection = applicationGateway.GetApplicationGatewayPrivateEndpointConnections();
+            string applicationGatewayName = "appgw";
+            ApplicationGatewayPrivateEndpointConnectionCollection collection = resourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
 
             // invoke the operation
             string connectionName = "connection1";
@@ -73,16 +74,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplicationGatewayResource created on azure
-            // for more information of creating ApplicationGatewayResource, please refer to the document of ApplicationGatewayResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string applicationGatewayName = "appgw";
-            ResourceIdentifier applicationGatewayResourceId = ApplicationGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGatewayName);
-            ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ApplicationGatewayPrivateEndpointConnectionResource
-            ApplicationGatewayPrivateEndpointConnectionCollection collection = applicationGateway.GetApplicationGatewayPrivateEndpointConnections();
+            string applicationGatewayName = "appgw";
+            ApplicationGatewayPrivateEndpointConnectionCollection collection = resourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
 
             // invoke the operation
             string connectionName = "connection1";
@@ -108,16 +109,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplicationGatewayResource created on azure
-            // for more information of creating ApplicationGatewayResource, please refer to the document of ApplicationGatewayResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string applicationGatewayName = "appgw";
-            ResourceIdentifier applicationGatewayResourceId = ApplicationGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGatewayName);
-            ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ApplicationGatewayPrivateEndpointConnectionResource
-            ApplicationGatewayPrivateEndpointConnectionCollection collection = applicationGateway.GetApplicationGatewayPrivateEndpointConnections();
+            string applicationGatewayName = "appgw";
+            ApplicationGatewayPrivateEndpointConnectionCollection collection = resourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
 
             // invoke the operation
             string connectionName = "connection1";
@@ -139,16 +140,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplicationGatewayResource created on azure
-            // for more information of creating ApplicationGatewayResource, please refer to the document of ApplicationGatewayResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string applicationGatewayName = "appgw";
-            ResourceIdentifier applicationGatewayResourceId = ApplicationGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGatewayName);
-            ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ApplicationGatewayPrivateEndpointConnectionResource
-            ApplicationGatewayPrivateEndpointConnectionCollection collection = applicationGateway.GetApplicationGatewayPrivateEndpointConnections();
+            string applicationGatewayName = "appgw";
+            ApplicationGatewayPrivateEndpointConnectionCollection collection = resourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
 
             // invoke the operation
             string connectionName = "connection1";
@@ -182,16 +183,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplicationGatewayResource created on azure
-            // for more information of creating ApplicationGatewayResource, please refer to the document of ApplicationGatewayResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string applicationGatewayName = "appgw";
-            ResourceIdentifier applicationGatewayResourceId = ApplicationGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGatewayName);
-            ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ApplicationGatewayPrivateEndpointConnectionResource
-            ApplicationGatewayPrivateEndpointConnectionCollection collection = applicationGateway.GetApplicationGatewayPrivateEndpointConnections();
+            string applicationGatewayName = "appgw";
+            ApplicationGatewayPrivateEndpointConnectionCollection collection = resourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
 
             // invoke the operation and iterate over the result
             await foreach (ApplicationGatewayPrivateEndpointConnectionResource item in collection.GetAllAsync())

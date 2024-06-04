@@ -154,25 +154,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetApplicationGatewayResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationGatewayResource"/> object. </returns>
-        public static ApplicationGatewayResource GetApplicationGatewayResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetApplicationGatewayResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -2337,32 +2318,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets a collection of ApplicationGatewayResources in the ResourceGroupResource.
+        /// Gets a collection of ApplicationGatewayPrivateEndpointConnectionResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGateways()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateEndpointConnections(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
-        public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroupResource resourceGroupResource)
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnectionResources and their operations over a ApplicationGatewayPrivateEndpointConnectionResource. </returns>
+        public static ApplicationGatewayPrivateEndpointConnectionCollection GetApplicationGatewayPrivateEndpointConnections(this ResourceGroupResource resourceGroupResource, string applicationGatewayName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGateways();
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName);
         }
 
         /// <summary>
-        /// Gets the specified application gateway.
+        /// Gets the specified private endpoint connection on application gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_Get</description>
+        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2370,37 +2353,38 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <description><see cref="ApplicationGatewayPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateEndpointConnectionAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="applicationGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationGatewayPrivateEndpointConnectionResource>> GetApplicationGatewayPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayPrivateEndpointConnectionAsync(applicationGatewayName, connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the specified application gateway.
+        /// Gets the specified private endpoint connection on application gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_Get</description>
+        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2408,25 +2392,26 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <description><see cref="ApplicationGatewayPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGateway(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateEndpointConnection(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="applicationGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplicationGatewayResource> GetApplicationGateway(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationGatewayPrivateEndpointConnectionResource> GetApplicationGatewayPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGateway(applicationGatewayName, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayPrivateEndpointConnection(applicationGatewayName, connectionName, cancellationToken);
         }
 
         /// <summary>
@@ -6562,6 +6547,146 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_BackendHealthOnDemand</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.BackendHealthOnDemandApplicationGateway(WaitUntil,string,ApplicationGatewayOnDemandProbe,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
+        /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="applicationGatewayName"/> or <paramref name="probeRequest"/> is null. </exception>
+        public static async Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandApplicationGatewayAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).BackendHealthOnDemandApplicationGatewayAsync(waitUntil, applicationGatewayName, probeRequest, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_BackendHealthOnDemand</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.BackendHealthOnDemandApplicationGateway(WaitUntil,string,ApplicationGatewayOnDemandProbe,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
+        /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="applicationGatewayName"/> or <paramref name="probeRequest"/> is null. </exception>
+        public static ArmOperation<ApplicationGatewayBackendHealthOnDemand> BackendHealthOnDemandApplicationGateway(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).BackendHealthOnDemandApplicationGateway(waitUntil, applicationGatewayName, probeRequest, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all private link resources on an application gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayPrivateLinkResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateLinkResources(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayPrivateLinkResourcesAsync(applicationGatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all private link resources on an application gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayPrivateLinkResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateLinkResources(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetApplicationGatewayPrivateLinkResources(applicationGatewayName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all of the available subnet delegations for this resource group in this region.
         /// <list type="bullet">
         /// <item>
@@ -7453,78 +7578,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets all the application gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetApplicationGateways(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewaysAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the application gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetApplicationGateways(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationGatewayResource> GetApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGateways(cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all available server variables.
         /// <list type="bullet">
         /// <item>
@@ -7538,10 +7591,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -7575,10 +7624,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7610,10 +7655,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -7647,10 +7688,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7682,10 +7719,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -7719,10 +7752,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7754,10 +7783,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -7791,10 +7816,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7827,10 +7848,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7862,10 +7879,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7896,10 +7909,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -7933,10 +7942,6 @@ namespace Azure.ResourceManager.Network
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -7968,10 +7973,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -8005,10 +8006,6 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>

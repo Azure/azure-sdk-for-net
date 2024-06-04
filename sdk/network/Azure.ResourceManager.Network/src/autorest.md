@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/nipati-p/azure-rest-api-specs/blob/f09d5caba6a3359cc631060c14e656f8b94ab9b5/specification/network/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/19b66613827a0acf8fbbd0a4c2d9cbef9f2f5899/specification/network/resource-manager/readme.md
 tag: package-2023-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -325,6 +325,15 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  - remove-operation: 'ApplicationGateways_Delete'
+  - remove-operation: 'ApplicationGateways_Get'
+  - remove-operation: 'ApplicationGateways_CreateOrUpdate'
+  - remove-operation: 'ApplicationGateways_UpdateTags'
+  - remove-operation: 'ApplicationGateways_List'
+  - remove-operation: 'ApplicationGateways_ListAll'
+  - remove-operation: 'ApplicationGateways_Start'
+  - remove-operation: 'ApplicationGateways_Stop'
+  - remove-operation: 'ApplicationGateways_BackendHealth'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:

@@ -60,13 +60,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create NetworkGroup
             string groupName = Recording.GenerateAssetName("ANMNG");
-            /* var networkManagerGroup = new NetworkGroupData();
+            var networkManagerGroup = new NetworkGroupData();
 
-            networkManagerGroup.
+            var nmResource = putNMResponse.Value;
+            var ngCollection = nmResource.GetNetworkGroups();
+            /*
+            networkManagerGroupCollection = resourceGroup.GetNetworkMan 
             // Put NetworkManagerGroup
-            var putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
+            var networkGrCollection = resourceGroup.GetNetworkG();
+            var putNMResponse = networkManagerCollection.CreateOrUpdate(WaitUntil.Completed, networkManagerName, networkManager);
             Assert.Equal(groupName, putNmGroupResponse.Name);
             Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
-            */
+            /*
         }
     }

@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             PolicySettings policySettings = default;
             IList<WebApplicationFirewallCustomRule> customRules = default;
-            IReadOnlyList<ApplicationGatewayData> applicationGateways = default;
+            IReadOnlyList<ApplicationGateway> applicationGateways = default;
             NetworkProvisioningState? provisioningState = default;
             WebApplicationFirewallPolicyResourceState? resourceState = default;
             ManagedRulesDefinition managedRules = default;
@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
+                            List<ApplicationGateway> array = new List<ApplicationGateway>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item, options));
+                                array.Add(ApplicationGateway.DeserializeApplicationGateway(item, options));
                             }
                             applicationGateways = array;
                             continue;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 policySettings,
                 customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>(),
-                applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>(),
+                applicationGateways ?? new ChangeTrackingList<ApplicationGateway>(),
                 provisioningState,
                 resourceState,
                 managedRules,

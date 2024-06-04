@@ -135,9 +135,10 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            await networkVirtualAppliance.RestartAsync();
+            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed);
+            NetworkVirtualApplianceInstanceIds result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Restart Specific NetworkVirtualAppliance VMs in VM Scale Set
@@ -162,9 +163,10 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            await networkVirtualAppliance.RestartAsync();
+            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed);
+            NetworkVirtualApplianceInstanceIds result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List all Network Virtual Appliances for a given subscription
