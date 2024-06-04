@@ -27,7 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         {
             // Check if we've already processed the redirection
             if (message.TryGetProperty("redirectionComplete", out object? objValue)
-                && objValue != null
                 && objValue is bool isComplete
                 && isComplete)
             {
