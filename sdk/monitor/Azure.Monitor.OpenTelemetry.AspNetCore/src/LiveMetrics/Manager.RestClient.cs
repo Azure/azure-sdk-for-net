@@ -52,6 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                         RefreshConfigurationOnEtagChange(response);
                         SetPostState();
                     }
+
+                    SetPingIntervalFromService(response.PollingIntervalMilliseconds);
                 }
             }
             catch (System.Exception ex)
