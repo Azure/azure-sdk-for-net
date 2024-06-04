@@ -2444,8 +2444,6 @@ namespace Azure.ResourceManager.AppService
                         value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2475,8 +2473,6 @@ namespace Azure.ResourceManager.AppService
                         value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

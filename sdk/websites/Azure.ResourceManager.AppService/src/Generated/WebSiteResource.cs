@@ -695,13 +695,6 @@ namespace Azure.ResourceManager.AppService
             return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
         }
 
-        /// <summary> Gets an object representing a AuthsettingsV2SiteConfigResource along with the instance operations that can be performed on it in the WebSite. </summary>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteConfigResource"/> object. </returns>
-        public virtual AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfig()
-        {
-            return new AuthsettingsV2SiteConfigResource(Client, Id.AppendChildResource("config", "authsettingsV2"));
-        }
-
         /// <summary> Gets a collection of SiteConfigAppsettingResources in the WebSite. </summary>
         /// <returns> An object representing collection of SiteConfigAppsettingResources and their operations over a SiteConfigAppsettingResource. </returns>
         public virtual SiteConfigAppsettingCollection GetSiteConfigAppsettings()
@@ -3200,6 +3193,226 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.GetAuthSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2WithoutSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> GetAuthSettingsV2WithoutSecretsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2WithoutSecrets");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetAuthSettingsV2WithoutSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2WithoutSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteAuthSettingsV2Resource> GetAuthSettingsV2WithoutSecrets(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2WithoutSecrets");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetAuthSettingsV2WithoutSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateAuthSettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateAuthSettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SiteAuthSettingsV2Resource> UpdateAuthSettingsV2(SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteAuthSettingsV2Resource> GetAuthSettingsV2(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

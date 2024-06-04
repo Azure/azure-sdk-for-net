@@ -1255,44 +1255,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAuthsettingsV2SiteConfigResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteConfigResource"/> object. </returns>
-        public static AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfigResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetAuthsettingsV2SiteConfigResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteSlotConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteSlotConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAuthsettingsV2SiteSlotConfigResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteSlotConfigResource"/> object. </returns>
-        public static AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetAuthsettingsV2SiteSlotConfigResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SiteConfigAppsettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteConfigAppsettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigAppsettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -2221,6 +2183,25 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppServiceArmClient(client).GetWebSiteSlotExtensionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteAuthSettingsV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteAuthSettingsV2Resource.CreateResourceIdentifier" /> to create a <see cref="SiteAuthSettingsV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteAuthSettingsV2Resource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource"/> object. </returns>
+        public static SiteAuthSettingsV2Resource GetSiteAuthSettingsV2Resource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteAuthSettingsV2Resource(id);
         }
 
         /// <summary>
@@ -5531,7 +5512,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_list</description>
+        /// <description>GetUsagesInLocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -5564,7 +5545,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_list</description>
+        /// <description>GetUsagesInLocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -803,30 +803,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteConfigResource"/> object. </returns>
-        public virtual AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfigResource(ResourceIdentifier id)
-        {
-            AuthsettingsV2SiteConfigResource.ValidateResourceId(id);
-            return new AuthsettingsV2SiteConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteSlotConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteSlotConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteSlotConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteSlotConfigResource"/> object. </returns>
-        public virtual AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfigResource(ResourceIdentifier id)
-        {
-            AuthsettingsV2SiteSlotConfigResource.ValidateResourceId(id);
-            return new AuthsettingsV2SiteSlotConfigResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SiteConfigAppsettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteConfigAppsettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigAppsettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1412,6 +1388,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             WebSiteSlotExtensionResource.ValidateResourceId(id);
             return new WebSiteSlotExtensionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteAuthSettingsV2Resource.CreateResourceIdentifier" /> to create a <see cref="SiteAuthSettingsV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource"/> object. </returns>
+        public virtual SiteAuthSettingsV2Resource GetSiteAuthSettingsV2Resource(ResourceIdentifier id)
+        {
+            SiteAuthSettingsV2Resource.ValidateResourceId(id);
+            return new SiteAuthSettingsV2Resource(Client, id);
         }
 
         /// <summary>

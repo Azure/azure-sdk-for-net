@@ -535,13 +535,6 @@ namespace Azure.ResourceManager.AppService
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
         }
 
-        /// <summary> Gets an object representing a AuthsettingsV2SiteSlotConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteSlotConfigResource"/> object. </returns>
-        public virtual AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfig()
-        {
-            return new AuthsettingsV2SiteSlotConfigResource(Client, Id.AppendChildResource("config", "authsettingsV2"));
-        }
-
         /// <summary> Gets a collection of WebSiteSlotConfigAppSettingResources in the WebSiteSlot. </summary>
         /// <returns> An object representing collection of WebSiteSlotConfigAppSettingResources and their operations over a WebSiteSlotConfigAppSettingResource. </returns>
         public virtual WebSiteSlotConfigAppSettingCollection GetWebSiteSlotConfigAppSettings()
@@ -1541,6 +1534,13 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<WebSiteSlotExtensionResource> GetWebSiteSlotExtension(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             return GetWebSiteSlotExtensions().Get(siteExtensionId, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a SiteAuthSettingsV2Resource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
+        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource"/> object. </returns>
+        public virtual SiteAuthSettingsV2Resource GetSiteAuthSettingsV2()
+        {
+            return new SiteAuthSettingsV2Resource(Client, Id.AppendChildResource("config", "authsettingsV2"));
         }
 
         /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>

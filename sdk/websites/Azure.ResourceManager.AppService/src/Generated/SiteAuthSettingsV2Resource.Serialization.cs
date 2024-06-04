@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AuthsettingsV2SiteConfigResource : IJsonModel<SiteAuthSettingsV2Data>
+    public partial class SiteAuthSettingsV2Resource : IJsonModel<SiteAuthSettingsV2Data>
     {
         void IJsonModel<SiteAuthSettingsV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteAuthSettingsV2Data>)Data).Write(writer, options);
 

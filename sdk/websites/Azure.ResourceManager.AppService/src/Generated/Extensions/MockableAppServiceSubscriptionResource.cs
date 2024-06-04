@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_list</description>
+        /// <description>GetUsagesInLocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2082,7 +2082,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_list</description>
+        /// <description>GetUsagesInLocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
