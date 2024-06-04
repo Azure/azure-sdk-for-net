@@ -120,10 +120,10 @@ rename-mapping:
 
 override-operation-name:
   CheckNameAvailability_CheckAvailability: CheckSelfHelpNameAvailability
-  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
+  DiscoverySolution_List: DiscoverSolutions
   SolutionSelfHelp_Get: GetSelfHelpSolutionById
-  DiscoverySolutionNLP_DiscoverSolutionsBySubscription: DiscoverSolutions
-  DiscoverySolutionNLP_DiscoverSolutions: DiscoverSolutions
+  DiscoverySolutionNLP_DiscoverSolutionsBySubscription: DiscoverSolutionsNlp
+  DiscoverySolutionNLP_DiscoverSolutions: DiscoverSolutionsNlp
 
 directive:
   - from: help.json

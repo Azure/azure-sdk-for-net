@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         // List DiscoverySolutions at resource scope
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSelfHelpDiscoverySolutions_ListDiscoverySolutionsAtResourceScope()
+        public async Task DiscoverSolutions_ListDiscoverySolutionsAtResourceScope()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/ListDiscoverySolutionsAtTenantScope.json
             // this example is just showing the usage of "DiscoverySolution_List" operation, for the dependent resources, they will have to be created separately.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation and iterate over the result
             string filter = "ProblemClassificationId eq 'SampleProblemClassificationId1'";
-            await foreach (SelfHelpSolutionMetadata item in tenantResource.GetSelfHelpDiscoverySolutionsAsync(filter: filter))
+            await foreach (SelfHelpSolutionMetadata item in tenantResource.DiscoverSolutionsAsync(filter: filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         // Discovery Solutions using issue summary and service id.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DiscoverSolutions_DiscoverySolutionsUsingIssueSummaryAndServiceId()
+        public async Task DiscoverSolutionsNlp_DiscoverySolutionsUsingIssueSummaryAndServiceId()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/DiscoverSolutionsAtTenantScope.json
             // this example is just showing the usage of "DiscoverySolutionNLP_DiscoverSolutions" operation, for the dependent resources, they will have to be created separately.
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             {
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadata item in tenantResource.DiscoverSolutionsAsync(content: content))
+            await foreach (SolutionNlpMetadata item in tenantResource.DiscoverSolutionsNlpAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

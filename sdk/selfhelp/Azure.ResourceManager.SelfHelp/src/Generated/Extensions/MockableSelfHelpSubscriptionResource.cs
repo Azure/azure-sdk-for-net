@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutions(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
     }
 }

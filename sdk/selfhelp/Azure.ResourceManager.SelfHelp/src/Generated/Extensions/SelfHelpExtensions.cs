@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutions(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -585,11 +585,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsAsync(content, cancellationToken);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutions(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -618,11 +618,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadata> DiscoverSolutions(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutions(content, cancellationToken);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlp(content, cancellationToken);
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpDiscoverySolutions(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SelfHelpSolutionMetadata> DiscoverSolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsAsync(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpDiscoverySolutions(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -686,11 +686,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static Pageable<SelfHelpSolutionMetadata> DiscoverSolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpDiscoverySolutions(filter, skiptoken, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutions(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -785,11 +785,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsAsync(content, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -818,11 +818,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadata> DiscoverSolutions(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutions(content, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlp(content, cancellationToken);
         }
     }
 }

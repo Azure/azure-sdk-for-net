@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         public async Task DiscoveryNlpSubscriptionScopeTest()
         {
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
-            await foreach (SolutionNlpMetadata item in DefaultSubscription.DiscoverSolutionsAsync(discoveryNlpReqObject))
+            await foreach (SolutionNlpMetadata item in DefaultSubscription.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
             {
                 Assert.IsNotNull(item);
                 break;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         public async Task DiscoveryNlpTenantScopeTest()
         {
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
-            await foreach (SolutionNlpMetadata item in DefaultTenantResource.DiscoverSolutionsAsync(discoveryNlpReqObject))
+            await foreach (SolutionNlpMetadata item in DefaultTenantResource.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
             {
                 Assert.IsNotNull(item);
                 break;
