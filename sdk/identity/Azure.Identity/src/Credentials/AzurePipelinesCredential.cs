@@ -94,13 +94,12 @@ namespace Azure.Identity
 
         internal HttpMessage CreateOidcRequestMessage(AzurePipelinesCredentialOptions options)
         {
-            string serviceConnectionId = ServiceConnectionId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: Either serviceConnectionId was not supplied to the credential or the environment variable AZURESUBSCRIPTION_SERVICE_CONNECTION_ID is not set.");
             string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_OIDCREQUESTURI is not set.");
             string systemToken = SystemAccessToken;
 
             var message = Pipeline.HttpPipeline.CreateMessage();
 
-            var requestUri = new Uri($"{oidcRequestUri}?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
+            var requestUri = new Uri($"{oidcRequestUri}?api-version={OIDC_API_VERSION}&serviceConnectionId={ServiceConnectionId}");
             message.Request.Uri.Reset(requestUri);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {systemToken}");
             message.Request.Headers.SetValue(HttpHeader.Names.ContentType, "application/json");
