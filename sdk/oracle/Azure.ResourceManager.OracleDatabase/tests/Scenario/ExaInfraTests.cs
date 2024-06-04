@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
     [TestFixture]
     public class ExaInfraTests : OracleDatabaseManagementTestBase
     {
+        private string cloudExadataInfrastructureName;
         public ExaInfraTests() : base(true, RecordedTestMode.Record)
         {
         }
@@ -28,9 +29,22 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         [OneTimeTearDown]
         public void Cleanup()
         {
-            Console.WriteLine("HERE: Cleanup");
             CleanupResourceGroups();
         }
+
+        private CloudExadataInfrastructurePatch GetCloudExadataInfrastructurePatch(string tagName, string tagValue) {
+            ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
+            {
+                new KeyValuePair<string, string>(tagName, tagValue)
+            };
+            var customerContact = new CustomerContact() {
+                Email = Recording.GenerateAssetName("Email")
+            };
+            IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
+            return new CloudExadataInfrastructurePatch(
+                new List<string>{ "2" }, tags, 2, 3, default, customerContacts, cloudExadataInfrastructureName, default);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task TestExaInfraOperations()
@@ -38,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             var resourceGroupName = Recording.GenerateAssetName("NetSdkTestRg");
             await TryRegisterResourceGroupAsync(ResourceGroupsOperations, "eastus", resourceGroupName);
             CloudExadataInfrastructureCollection cloudExadataInfrastructureCollection = await GetCloudExadataInfrastructureCollectionAsync(resourceGroupName);
-            var cloudExadataInfrastructureName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfra");
+            cloudExadataInfrastructureName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfra");
             CloudExadataInfrastructureData exadataInfrastructureData = GetDefaultCloudExadataInfrastructureData(cloudExadataInfrastructureName);
 
             // Create
@@ -65,28 +79,15 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Assert.NotNull(exaInfraResult);
             Assert.IsTrue(exaInfraResult.Count >= 1);
 
-            // Update - TODO: Updating ExaInfra currently unsupported, add this back when updates are supported.
+            // // Update - TODO: Updating ExaInfra currently unsupported, add this back when updates are supported.
             // var tagName = Recording.GenerateAssetName("TagName");
             // var tagValue = Recording.GenerateAssetName("TagValue");
-            // ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
-            // {
-            //     new KeyValuePair<string, string>(tagName, tagValue)
-            // };
-            // var customerContact = new CustomerContact() {
-            //     Email = Recording.GenerateAssetName("Email")
-            // };
-            // IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
-            // CloudExadataInfrastructurePatch exaInfraParameter = new CloudExadataInfrastructurePatch(
-            //     new List<string>{ "2" }, tags, 2, 3, default, customerContact, cloudExadataInfrastructureName, default);
-            // // CloudExadataInfrastructurePatch exaInfraParameter = new() {
-            // //     Tags = tags
-            // // };
+            // CloudExadataInfrastructurePatch exaInfraParameter = GetCloudExadataInfrastructurePatch(tagName, tagValue);
             // var updateExaInfraOperation = await exaInfraResource.UpdateAsync(WaitUntil.Completed, exaInfraParameter);
             // Assert.IsTrue(updateExaInfraOperation.HasCompleted);
             // Assert.IsTrue(updateExaInfraOperation.HasValue);
 
-            // Get after Update
-            // Console.WriteLine("HERE: TestExaInfraOperations Get2");
+            // // Get after Update
             // getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
             // exaInfraResource = getExaInfraResponse.Value;
             // Assert.IsNotNull(exaInfraResource);

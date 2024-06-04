@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.Core;
 using System;
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Assert.IsTrue(vmClusterResult.Count >= 1);
 
             // // ListBySubscription
-            // vmClusters = OracleExtensions.GetCloudVmClustersAsync(DefaultSubscription);
+            // vmClusters = OracleDatabaseExtensions.GetCloudVmClustersAsync(DefaultSubscription);
             // vmClusterResult = await vmClusters.ToEnumerableAsync();
             // Assert.NotNull(vmClusterResult);
             // Assert.IsTrue(vmClusterResult.Count >= 1);
