@@ -23,6 +23,9 @@ $sshKey = Get-Content $PSScriptRoot/sshKey.pub
 
 $templateFileParameters['sshPubKey'] = $sshKey
 
+Write-Host "ARM_OIDC_TOKEN length: $(($env:ARM_OIDC_TOKEN).Length)"
+Write-Host "idToken length: $(($env:idToken).Length)"
+
 # Get the max version that is not preview and then get the name of the patch version with the max value
 az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
 $versions = az aks get-versions -l westus -o json | ConvertFrom-Json
