@@ -65,6 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                     || _pingPeriodFromService.Value.TotalMilliseconds != milliseconds)
                 {
                     _pingPeriodFromService = TimeSpan.FromMilliseconds(Convert.ToDouble(milliseconds));
+                    AzureMonitorAspNetCoreEventSource.Log.LiveMetricsPolingIntervalReceived(milliseconds.Value);
                 }
             }
             else

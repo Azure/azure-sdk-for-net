@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response, _host, message.Request.Uri.Host);
                         return new QuickPulseResponse(success: false);
                     }
                 default:
@@ -141,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response, _host, message.Request.Uri.Host);
                         return new QuickPulseResponse(success: false);
                     }
                 default:
