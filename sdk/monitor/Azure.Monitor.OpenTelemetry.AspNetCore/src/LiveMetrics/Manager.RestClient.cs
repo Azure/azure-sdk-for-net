@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
-        private void OnPing()
+        internal void OnPing()
         {
             try
             {

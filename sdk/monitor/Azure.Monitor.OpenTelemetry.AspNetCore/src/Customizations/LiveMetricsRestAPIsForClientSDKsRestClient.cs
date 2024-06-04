@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 503:
                     {
                         ServiceError value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 503:
                     {
                         ServiceError value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);

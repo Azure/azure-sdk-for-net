@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private bool _shouldCollect = false;
         private Action _callbackAction = () => { };
         private Func<bool> _evaluateBackoff = () => false;
-        private TimeSpan? _pingPeriodFromService;
+        internal TimeSpan? _pingPeriodFromService;
 
         private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
