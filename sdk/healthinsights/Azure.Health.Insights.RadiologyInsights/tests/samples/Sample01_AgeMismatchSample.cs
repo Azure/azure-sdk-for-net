@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
@@ -42,11 +44,10 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         {
             // Read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            #region Snippet:Age_Mismatch_Sync_Tests_Samples_CreateClient
+            #region Snippet:Age_Mismatch_Sync_Tests_Samples_TokenCredential
             Uri endpointUri = new Uri(endpoint);
-            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
+            TokenCredential cred = new DefaultAzureCredential();
+            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
             #endregion
             #region Snippet:Age_Mismatch_Sync_Tests_Samples_synccall
             RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();

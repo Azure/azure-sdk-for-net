@@ -115,12 +115,12 @@ RadiologyInsightsData radiologyInsightsData = new(patientRecords);
 radiologyInsightsData.Configuration = CreateConfiguration();
 ```
 
-## Create a RadiologyInsights client.
+## Create a RadiologyInsights client by initializing TokenCredential using the default Azure credentials.
 
-```C# Snippet:Age_Mismatch_Sync_Tests_Samples_CreateClient
+```C# Snippet:Age_Mismatch_Sync_Tests_Samples_TokenCredential
 Uri endpointUri = new Uri(endpoint);
-AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
+TokenCredential cred = new DefaultAzureCredential();
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
 ```
 
 ## Send a synchronous request using the RadiologyInsights client along with the job id and radiologyInsightsjob.
