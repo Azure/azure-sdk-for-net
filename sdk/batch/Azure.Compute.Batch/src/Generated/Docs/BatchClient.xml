@@ -8060,8 +8060,8 @@ using RequestContent content = RequestContent.Create(new
 {
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -8533,8 +8533,8 @@ using RequestContent content = RequestContent.Create(new
 {
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -9290,8 +9290,8 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
 {
     Schedule = new BatchJobScheduleConfiguration
     {
-        DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-        DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+        DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
         RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
     },
@@ -9607,8 +9607,8 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
 {
     Schedule = new BatchJobScheduleConfiguration
     {
-        DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-        DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+        DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
         RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
     },
@@ -9646,8 +9646,8 @@ using RequestContent content = RequestContent.Create(new
 {
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -10125,8 +10125,8 @@ using RequestContent content = RequestContent.Create(new
 {
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -10732,8 +10732,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
 {
-    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -11049,8 +11049,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
 {
-    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -11380,8 +11380,8 @@ using RequestContent content = RequestContent.Create(new
     displayName = "<displayName>",
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -11863,8 +11863,8 @@ using RequestContent content = RequestContent.Create(new
     displayName = "<displayName>",
     schedule = new
     {
-        doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-        doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+        doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+        doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
         startWindow = "PT1H23M45S",
         recurrenceInterval = "PT1H23M45S",
     },
@@ -14255,7 +14255,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
 {
     IsAdmin = true,
-    ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     Password = "<password>",
     SshPublicKey = "<sshPublicKey>",
 };
@@ -14282,7 +14282,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
 {
     IsAdmin = true,
-    ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     Password = "<password>",
     SshPublicKey = "<sshPublicKey>",
 };
@@ -14315,7 +14315,7 @@ using RequestContent content = RequestContent.Create(new
 {
     name = "<name>",
     isAdmin = true,
-    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    expiryTime = "2022-05-10T18:57:31.2311892Z",
     password = "<password>",
     sshPublicKey = "<sshPublicKey>",
 });
@@ -14350,7 +14350,7 @@ using RequestContent content = RequestContent.Create(new
 {
     name = "<name>",
     isAdmin = true,
-    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    expiryTime = "2022-05-10T18:57:31.2311892Z",
     password = "<password>",
     sshPublicKey = "<sshPublicKey>",
 });
@@ -14425,7 +14425,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
 {
     Password = "<password>",
-    ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     SshPublicKey = "<sshPublicKey>",
 };
 Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14451,7 +14451,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
 {
     Password = "<password>",
-    ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     SshPublicKey = "<sshPublicKey>",
 };
 Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14479,7 +14479,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     password = "<password>",
-    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    expiryTime = "2022-05-10T18:57:31.2311892Z",
     sshPublicKey = "<sshPublicKey>",
 });
 Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14509,7 +14509,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     password = "<password>",
-    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    expiryTime = "2022-05-10T18:57:31.2311892Z",
     sshPublicKey = "<sshPublicKey>",
 });
 Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -15137,7 +15137,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", content);
 ]]></code>
 This sample shows how to call UploadNodeLogsAsync with all parameters.
@@ -15146,9 +15146,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
 {
-    EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    EndTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     IdentityReference = new BatchNodeIdentityReference
     {
         ResourceId = "<resourceId>",
@@ -15165,7 +15165,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("<poolId>", "<nodeId>", content);
 ]]></code>
 This sample shows how to call UploadNodeLogs with all parameters.
@@ -15174,9 +15174,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
 {
-    EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    EndTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
     IdentityReference = new BatchNodeIdentityReference
     {
         ResourceId = "<resourceId>",
@@ -15196,7 +15196,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     containerUrl = "<containerUrl>",
-    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    startTime = "2022-05-10T18:57:31.2311892Z",
 });
 Response response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", content);
 
@@ -15213,8 +15213,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     containerUrl = "<containerUrl>",
-    startTime = "2022-05-10T14:57:31.2311892-04:00",
-    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    startTime = "2022-05-10T18:57:31.2311892Z",
+    endTime = "2022-05-10T18:57:31.2311892Z",
     identityReference = new
     {
         resourceId = "<resourceId>",
@@ -15238,7 +15238,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     containerUrl = "<containerUrl>",
-    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    startTime = "2022-05-10T18:57:31.2311892Z",
 });
 Response response = client.UploadNodeLogs("<poolId>", "<nodeId>", content);
 
@@ -15255,8 +15255,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     containerUrl = "<containerUrl>",
-    startTime = "2022-05-10T14:57:31.2311892-04:00",
-    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    startTime = "2022-05-10T18:57:31.2311892Z",
+    endTime = "2022-05-10T18:57:31.2311892Z",
     identityReference = new
     {
         resourceId = "<resourceId>",
@@ -15657,7 +15657,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
+await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), endtime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), filter: "<filter>"))
 {
 }
 ]]></code></example>
@@ -15680,7 +15680,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
+foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), endtime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), filter: "<filter>"))
 {
 }
 ]]></code></example>
@@ -15709,7 +15709,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
+await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), "<filter>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -15744,7 +15744,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetPoolUsageMetrics(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
+foreach (BinaryData item in client.GetPoolUsageMetrics(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), "<filter>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());

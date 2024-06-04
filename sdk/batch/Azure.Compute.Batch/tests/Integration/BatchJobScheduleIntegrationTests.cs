@@ -69,26 +69,34 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
 
-            Response response = await client.CreateJobScheduleAsync(jobSchedule);
-
-            // check to see if the job schedule exists
-            bool result = client.JobScheduleExists(jobScheduleId);
-            Assert.True(result);
-
-            // get the job schedule and verify
-            BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
-            Assert.NotNull(batchJobSchedule);
-            Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
-
-            // update the job schedule
-            int jobCount = 0;
-            await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("<jobScheduleId>"))
+            try
             {
-                jobCount++;
-            }
+                Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
-            Assert.AreEqual(1, jobCount);
-            //await client.ReplaceJobScheduleAsync
+                // check to see if the job schedule exists
+                bool result = await client.JobScheduleExistsAsync(jobScheduleId);
+                Assert.True(result);
+
+                // get the job schedule and verify
+                BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
+                Assert.NotNull(batchJobSchedule);
+                Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
+
+                // disable the schedule
+                response = await client.DisableJobScheduleAsync(jobScheduleId);
+                Assert.AreEqual(204, response.Status);
+
+                // enable the schedule
+                response = await client.EnableJobScheduleAsync(jobScheduleId);
+                Assert.AreEqual(204, response.Status);
+
+                response = await client.TerminateJobScheduleAsync(jobScheduleId);
+                Assert.AreEqual(202, response.Status);
+            }
+            finally
+            {
+                await client.DeleteJobScheduleAsync(jobScheduleId);
+            }
         }
 
         [RecordedTest]
@@ -122,12 +130,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 AutoPoolSpecification = autoPoolSpecification,
             };
-            BatchJobManagerTask batchJobManagerTask = new BatchJobManagerTask()
-            {
-                Id = "task1",
-                CommandLine = "cmd / c echo Hello World",
-                RequiredSlots = 1,
-            };
+            BatchJobManagerTask batchJobManagerTask = new BatchJobManagerTask("task1", "cmd / c echo Hello World");
+
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo)
             {
                 JobManagerTask = batchJobManagerTask,
@@ -139,14 +143,15 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
-                // check to see if the job schedule exists
-                bool result = client.JobScheduleExists(jobScheduleId);
-                Assert.True(result);
+                // check to see if the job schedule exists via list
+                bool found = false;
+                await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync())
+                {
+                    if ( item.Id == jobScheduleId)
+                        found = true;
+                }
 
-                // get the job schedule and verify
-                BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
-                Assert.NotNull(batchJobSchedule);
-                Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
+                Assert.True(found);
 
                 // update the job schedule
                 int jobCount = 0;
@@ -156,7 +161,63 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
 
                 Assert.AreEqual(1, jobCount);
-                //await client.ReplaceJobScheduleAsync
+            }
+            finally
+            {
+                await client.DeleteJobScheduleAsync(jobScheduleId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task JobScheduleUpdate()
+        {
+            var client = CreateBatchClient();
+            string jobScheduleId = "jobSchedule3";
+            DateTime unboundDNRU = DateTime.UtcNow.AddYears(1);
+            BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
+            {
+                DoNotRunUntil = unboundDNRU,
+            };
+            // create a new pool
+            ImageReference imageReference = new ImageReference()
+            {
+                Publisher = "MicrosoftWindowsServer",
+                Offer = "WindowsServer",
+                Sku = "2019-datacenter-smalldisk",
+                Version = "latest"
+            };
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
+
+            BatchPoolSpecification batchPoolSpecification = new BatchPoolSpecification("STANDARD_D1_v2")
+            {
+                VirtualMachineConfiguration = virtualMachineConfiguration,
+                TargetDedicatedNodes = 1,
+            };
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            {
+                KeepAlive = false,
+                Pool = batchPoolSpecification,
+            };
+            BatchPoolInfo poolInfo = new BatchPoolInfo()
+            {
+                AutoPoolSpecification = autoPoolSpecification,
+            };
+            BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
+
+            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+
+            try
+            {
+                Response response = await client.CreateJobScheduleAsync(jobSchedule);
+
+                BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
+                Assert.NotNull(batchJobSchedule);
+
+                response = await client.ReplaceJobScheduleAsync(jobScheduleId, batchJobSchedule);
+                Assert.AreEqual(200, response.Status);
+
+                // blocked due to not having a model
+                //await client.UpdateJobScheduleAsync()
             }
             finally
             {

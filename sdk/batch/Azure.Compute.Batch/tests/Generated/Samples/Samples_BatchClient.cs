@@ -20,7 +20,7 @@ namespace Azure.Compute.Batch.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplication_ShortVersion()
+        public void Example_Batch_GetApplication_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplication_ShortVersion_Async()
+        public async Task Example_Batch_GetApplication_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplication_ShortVersion_Convenience()
+        public void Example_Batch_GetApplication_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -63,7 +63,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplication_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetApplication_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplication_AllParameters()
+        public void Example_Batch_GetApplication_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplication_AllParameters_Async()
+        public async Task Example_Batch_GetApplication_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplication_AllParameters_Convenience()
+        public void Example_Batch_GetApplication_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplication_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetApplication_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -128,7 +128,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreatePool_ShortVersion()
+        public void Example_Batch_CreatePool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -146,7 +146,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreatePool_ShortVersion_Async()
+        public async Task Example_Batch_CreatePool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreatePool_ShortVersion_Convenience()
+        public void Example_Batch_CreatePool_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -176,7 +176,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreatePool_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreatePool_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -188,7 +188,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreatePool_AllParameters()
+        public void Example_Batch_CreatePool_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -510,7 +510,7 @@ mountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreatePool_AllParameters_Async()
+        public async Task Example_Batch_CreatePool_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -832,7 +832,7 @@ mountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreatePool_AllParameters_Convenience()
+        public void Example_Batch_CreatePool_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1051,7 +1051,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreatePool_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreatePool_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1270,7 +1270,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeletePool_ShortVersion()
+        public void Example_Batch_DeletePool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1283,7 +1283,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeletePool_ShortVersion_Async()
+        public async Task Example_Batch_DeletePool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1296,7 +1296,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeletePool_AllParameters()
+        public void Example_Batch_DeletePool_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1309,7 +1309,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeletePool_AllParameters_Async()
+        public async Task Example_Batch_DeletePool_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1322,7 +1322,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPool_ShortVersion()
+        public void Example_Batch_GetPool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1336,7 +1336,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPool_ShortVersion_Async()
+        public async Task Example_Batch_GetPool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1350,7 +1350,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPool_ShortVersion_Convenience()
+        public void Example_Batch_GetPool_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1361,7 +1361,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPool_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetPool_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1372,7 +1372,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPool_AllParameters()
+        public void Example_Batch_GetPool_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1562,7 +1562,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPool_AllParameters_Async()
+        public async Task Example_Batch_GetPool_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1752,7 +1752,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPool_AllParameters_Convenience()
+        public void Example_Batch_GetPool_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1763,7 +1763,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPool_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetPool_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1774,7 +1774,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdatePool_ShortVersion()
+        public void Example_Batch_UpdatePool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1788,7 +1788,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdatePool_ShortVersion_Async()
+        public async Task Example_Batch_UpdatePool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1802,7 +1802,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdatePool_AllParameters()
+        public void Example_Batch_UpdatePool_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1886,7 +1886,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdatePool_AllParameters_Async()
+        public async Task Example_Batch_UpdatePool_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1970,7 +1970,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisablePoolAutoScale_ShortVersion()
+        public void Example_Batch_DisablePoolAutoScale_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1983,7 +1983,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisablePoolAutoScale_ShortVersion_Async()
+        public async Task Example_Batch_DisablePoolAutoScale_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1996,7 +1996,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisablePoolAutoScale_AllParameters()
+        public void Example_Batch_DisablePoolAutoScale_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2009,7 +2009,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisablePoolAutoScale_AllParameters_Async()
+        public async Task Example_Batch_DisablePoolAutoScale_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2022,7 +2022,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnablePoolAutoScale_ShortVersion()
+        public void Example_Batch_EnablePoolAutoScale_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2036,7 +2036,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnablePoolAutoScale_ShortVersion_Async()
+        public async Task Example_Batch_EnablePoolAutoScale_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2050,7 +2050,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnablePoolAutoScale_ShortVersion_Convenience()
+        public void Example_Batch_EnablePoolAutoScale_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2062,7 +2062,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnablePoolAutoScale_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_EnablePoolAutoScale_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2074,7 +2074,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnablePoolAutoScale_AllParameters()
+        public void Example_Batch_EnablePoolAutoScale_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2092,7 +2092,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnablePoolAutoScale_AllParameters_Async()
+        public async Task Example_Batch_EnablePoolAutoScale_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2110,7 +2110,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnablePoolAutoScale_AllParameters_Convenience()
+        public void Example_Batch_EnablePoolAutoScale_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2126,7 +2126,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnablePoolAutoScale_AllParameters_Convenience_Async()
+        public async Task Example_Batch_EnablePoolAutoScale_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2142,7 +2142,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EvaluatePoolAutoScale_ShortVersion()
+        public void Example_Batch_EvaluatePoolAutoScale_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2160,7 +2160,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EvaluatePoolAutoScale_ShortVersion_Async()
+        public async Task Example_Batch_EvaluatePoolAutoScale_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2178,7 +2178,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EvaluatePoolAutoScale_ShortVersion_Convenience()
+        public void Example_Batch_EvaluatePoolAutoScale_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2190,7 +2190,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EvaluatePoolAutoScale_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_EvaluatePoolAutoScale_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2202,7 +2202,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EvaluatePoolAutoScale_AllParameters()
+        public void Example_Batch_EvaluatePoolAutoScale_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2225,7 +2225,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EvaluatePoolAutoScale_AllParameters_Async()
+        public async Task Example_Batch_EvaluatePoolAutoScale_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2248,7 +2248,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EvaluatePoolAutoScale_AllParameters_Convenience()
+        public void Example_Batch_EvaluatePoolAutoScale_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2260,7 +2260,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EvaluatePoolAutoScale_AllParameters_Convenience_Async()
+        public async Task Example_Batch_EvaluatePoolAutoScale_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2272,7 +2272,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_ShortVersion()
+        public void Example_Batch_ResizePool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2286,7 +2286,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_ShortVersion_Async()
+        public async Task Example_Batch_ResizePool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2300,7 +2300,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_ShortVersion_Convenience()
+        public void Example_Batch_ResizePool_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2312,7 +2312,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ResizePool_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2324,7 +2324,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_AllParameters()
+        public void Example_Batch_ResizePool_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2344,7 +2344,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_AllParameters_Async()
+        public async Task Example_Batch_ResizePool_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2364,7 +2364,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_AllParameters_Convenience()
+        public void Example_Batch_ResizePool_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2382,7 +2382,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ResizePool_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2400,7 +2400,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_StopPoolResize_ShortVersion()
+        public void Example_Batch_StopPoolResize_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2413,7 +2413,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_StopPoolResize_ShortVersion_Async()
+        public async Task Example_Batch_StopPoolResize_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2426,7 +2426,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_StopPoolResize_AllParameters()
+        public void Example_Batch_StopPoolResize_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2439,7 +2439,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_StopPoolResize_AllParameters_Async()
+        public async Task Example_Batch_StopPoolResize_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2452,7 +2452,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplacePoolProperties_ShortVersion()
+        public void Example_Batch_ReplacePoolProperties_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2483,7 +2483,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplacePoolProperties_ShortVersion_Async()
+        public async Task Example_Batch_ReplacePoolProperties_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2514,7 +2514,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplacePoolProperties_ShortVersion_Convenience()
+        public void Example_Batch_ReplacePoolProperties_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2532,7 +2532,7 @@ new MetadataItem("<name>", "<value>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplacePoolProperties_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ReplacePoolProperties_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2550,7 +2550,7 @@ new MetadataItem("<name>", "<value>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplacePoolProperties_AllParameters()
+        public void Example_Batch_ReplacePoolProperties_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2634,7 +2634,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplacePoolProperties_AllParameters_Async()
+        public async Task Example_Batch_ReplacePoolProperties_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2718,7 +2718,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplacePoolProperties_AllParameters_Convenience()
+        public void Example_Batch_ReplacePoolProperties_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2785,7 +2785,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplacePoolProperties_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ReplacePoolProperties_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2852,7 +2852,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_ShortVersion()
+        public void Example_Batch_RemoveNodes_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2872,7 +2872,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_ShortVersion_Async()
+        public async Task Example_Batch_RemoveNodes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2892,7 +2892,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_ShortVersion_Convenience()
+        public void Example_Batch_RemoveNodes_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2904,7 +2904,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_RemoveNodes_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2916,7 +2916,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_AllParameters()
+        public void Example_Batch_RemoveNodes_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2938,7 +2938,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_AllParameters_Async()
+        public async Task Example_Batch_RemoveNodes_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2960,7 +2960,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_AllParameters_Convenience()
+        public void Example_Batch_RemoveNodes_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2976,7 +2976,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_AllParameters_Convenience_Async()
+        public async Task Example_Batch_RemoveNodes_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2992,7 +2992,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJob_ShortVersion()
+        public void Example_Batch_DeleteJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3005,7 +3005,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJob_ShortVersion_Async()
+        public async Task Example_Batch_DeleteJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3018,7 +3018,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJob_AllParameters()
+        public void Example_Batch_DeleteJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3031,7 +3031,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJob_AllParameters_Async()
+        public async Task Example_Batch_DeleteJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3044,7 +3044,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJob_ShortVersion()
+        public void Example_Batch_GetJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3058,7 +3058,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJob_ShortVersion_Async()
+        public async Task Example_Batch_GetJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3072,7 +3072,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJob_ShortVersion_Convenience()
+        public void Example_Batch_GetJob_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3083,7 +3083,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJob_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJob_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3094,7 +3094,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJob_AllParameters()
+        public void Example_Batch_GetJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3377,7 +3377,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJob_AllParameters_Async()
+        public async Task Example_Batch_GetJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3660,7 +3660,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJob_AllParameters_Convenience()
+        public void Example_Batch_GetJob_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3671,7 +3671,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJob_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJob_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3682,7 +3682,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdateJob_ShortVersion()
+        public void Example_Batch_UpdateJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3696,7 +3696,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdateJob_ShortVersion_Async()
+        public async Task Example_Batch_UpdateJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3710,7 +3710,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdateJob_AllParameters()
+        public void Example_Batch_UpdateJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4054,7 +4054,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdateJob_AllParameters_Async()
+        public async Task Example_Batch_UpdateJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4398,7 +4398,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJob_ShortVersion()
+        public void Example_Batch_ReplaceJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4415,7 +4415,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJob_ShortVersion_Async()
+        public async Task Example_Batch_ReplaceJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4432,7 +4432,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJob_ShortVersion_Convenience()
+        public void Example_Batch_ReplaceJob_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4444,7 +4444,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJob_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ReplaceJob_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4456,7 +4456,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJob_AllParameters()
+        public void Example_Batch_ReplaceJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4800,7 +4800,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJob_AllParameters_Async()
+        public async Task Example_Batch_ReplaceJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5144,7 +5144,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJob_AllParameters_Convenience()
+        public void Example_Batch_ReplaceJob_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5381,7 +5381,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJob_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ReplaceJob_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5618,7 +5618,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_ShortVersion()
+        public void Example_Batch_DisableJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5635,7 +5635,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_ShortVersion_Async()
+        public async Task Example_Batch_DisableJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5652,7 +5652,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_ShortVersion_Convenience()
+        public void Example_Batch_DisableJob_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5664,7 +5664,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_DisableJob_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5676,7 +5676,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_AllParameters()
+        public void Example_Batch_DisableJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5693,7 +5693,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_AllParameters_Async()
+        public async Task Example_Batch_DisableJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5710,7 +5710,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_AllParameters_Convenience()
+        public void Example_Batch_DisableJob_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5722,7 +5722,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_AllParameters_Convenience_Async()
+        public async Task Example_Batch_DisableJob_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5734,7 +5734,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableJob_ShortVersion()
+        public void Example_Batch_EnableJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5747,7 +5747,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableJob_ShortVersion_Async()
+        public async Task Example_Batch_EnableJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5760,7 +5760,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableJob_AllParameters()
+        public void Example_Batch_EnableJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5773,7 +5773,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableJob_AllParameters_Async()
+        public async Task Example_Batch_EnableJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5786,7 +5786,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_ShortVersion()
+        public void Example_Batch_TerminateJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5800,7 +5800,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_ShortVersion_Async()
+        public async Task Example_Batch_TerminateJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5814,7 +5814,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_ShortVersion_Convenience()
+        public void Example_Batch_TerminateJob_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5825,7 +5825,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_TerminateJob_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5836,7 +5836,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_AllParameters()
+        public void Example_Batch_TerminateJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5853,7 +5853,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_AllParameters_Async()
+        public async Task Example_Batch_TerminateJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5870,7 +5870,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_AllParameters_Convenience()
+        public void Example_Batch_TerminateJob_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5885,7 +5885,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_AllParameters_Convenience_Async()
+        public async Task Example_Batch_TerminateJob_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5900,7 +5900,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJob_ShortVersion()
+        public void Example_Batch_CreateJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5918,7 +5918,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJob_ShortVersion_Async()
+        public async Task Example_Batch_CreateJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5936,7 +5936,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJob_ShortVersion_Convenience()
+        public void Example_Batch_CreateJob_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5948,7 +5948,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJob_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreateJob_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5960,7 +5960,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJob_AllParameters()
+        public void Example_Batch_CreateJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6409,7 +6409,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJob_AllParameters_Async()
+        public async Task Example_Batch_CreateJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6858,7 +6858,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJob_AllParameters_Convenience()
+        public void Example_Batch_CreateJob_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7156,7 +7156,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJob_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreateJob_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7454,7 +7454,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobTaskCounts_ShortVersion()
+        public void Example_Batch_GetJobTaskCounts_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7477,7 +7477,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobTaskCounts_ShortVersion_Async()
+        public async Task Example_Batch_GetJobTaskCounts_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7500,7 +7500,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobTaskCounts_ShortVersion_Convenience()
+        public void Example_Batch_GetJobTaskCounts_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7511,7 +7511,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobTaskCounts_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobTaskCounts_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7522,7 +7522,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobTaskCounts_AllParameters()
+        public void Example_Batch_GetJobTaskCounts_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7545,7 +7545,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobTaskCounts_AllParameters_Async()
+        public async Task Example_Batch_GetJobTaskCounts_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7568,7 +7568,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobTaskCounts_AllParameters_Convenience()
+        public void Example_Batch_GetJobTaskCounts_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7579,7 +7579,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobTaskCounts_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobTaskCounts_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7590,7 +7590,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJobSchedule_ShortVersion()
+        public void Example_Batch_DeleteJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7603,7 +7603,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_DeleteJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7616,7 +7616,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJobSchedule_AllParameters()
+        public void Example_Batch_DeleteJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7629,7 +7629,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_DeleteJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7642,7 +7642,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedule_ShortVersion()
+        public void Example_Batch_GetJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7656,7 +7656,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_GetJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7670,7 +7670,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedule_ShortVersion_Convenience()
+        public void Example_Batch_GetJobSchedule_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7681,7 +7681,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobSchedule_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7692,7 +7692,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedule_AllParameters()
+        public void Example_Batch_GetJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7977,7 +7977,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_GetJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8262,7 +8262,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedule_AllParameters_Convenience()
+        public void Example_Batch_GetJobSchedule_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8273,7 +8273,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedule_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobSchedule_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8284,7 +8284,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdateJobSchedule_ShortVersion()
+        public void Example_Batch_UpdateJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8298,7 +8298,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdateJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_UpdateJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8312,7 +8312,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UpdateJobSchedule_AllParameters()
+        public void Example_Batch_UpdateJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8322,8 +8322,8 @@ Version = "<version>",
             {
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -8774,7 +8774,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UpdateJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_UpdateJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8784,8 +8784,8 @@ null
             {
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -9236,7 +9236,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJobSchedule_ShortVersion()
+        public void Example_Batch_ReplaceJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9256,7 +9256,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_ReplaceJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9276,7 +9276,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJobSchedule_ShortVersion_Convenience()
+        public void Example_Batch_ReplaceJobSchedule_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9288,7 +9288,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ReplaceJobSchedule_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9300,7 +9300,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJobSchedule_AllParameters()
+        public void Example_Batch_ReplaceJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9310,8 +9310,8 @@ null
             {
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -9762,7 +9762,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_ReplaceJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9772,8 +9772,8 @@ null
             {
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -10224,7 +10224,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceJobSchedule_AllParameters_Convenience()
+        public void Example_Batch_ReplaceJobSchedule_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10520,8 +10520,8 @@ Version = "<version>",
             {
                 Schedule = new BatchJobScheduleConfiguration
                 {
-                    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                     StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 },
@@ -10532,7 +10532,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceJobSchedule_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ReplaceJobSchedule_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10828,8 +10828,8 @@ Version = "<version>",
             {
                 Schedule = new BatchJobScheduleConfiguration
                 {
-                    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                    DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                     StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 },
@@ -10840,7 +10840,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJobSchedule_ShortVersion()
+        public void Example_Batch_DisableJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10853,7 +10853,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_DisableJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10866,7 +10866,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJobSchedule_AllParameters()
+        public void Example_Batch_DisableJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10879,7 +10879,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_DisableJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10892,7 +10892,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableJobSchedule_ShortVersion()
+        public void Example_Batch_EnableJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10905,7 +10905,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_EnableJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10918,7 +10918,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableJobSchedule_AllParameters()
+        public void Example_Batch_EnableJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10931,7 +10931,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_EnableJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10944,7 +10944,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJobSchedule_ShortVersion()
+        public void Example_Batch_TerminateJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10957,7 +10957,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_TerminateJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10970,7 +10970,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJobSchedule_AllParameters()
+        public void Example_Batch_TerminateJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10983,7 +10983,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_TerminateJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10996,7 +10996,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJobSchedule_ShortVersion()
+        public void Example_Batch_CreateJobSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11018,7 +11018,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJobSchedule_ShortVersion_Async()
+        public async Task Example_Batch_CreateJobSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11040,7 +11040,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJobSchedule_ShortVersion_Convenience()
+        public void Example_Batch_CreateJobSchedule_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11052,7 +11052,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreateJobSchedule_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11064,7 +11064,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJobSchedule_AllParameters()
+        public void Example_Batch_CreateJobSchedule_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11076,8 +11076,8 @@ Version = "<version>",
                 displayName = "<displayName>",
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -11528,7 +11528,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJobSchedule_AllParameters_Async()
+        public async Task Example_Batch_CreateJobSchedule_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11540,8 +11540,8 @@ null
                 displayName = "<displayName>",
                 schedule = new
                 {
-                    doNotRunUntil = "2022-05-10T14:57:31.2311892-04:00",
-                    doNotRunAfter = "2022-05-10T14:57:31.2311892-04:00",
+                    doNotRunUntil = "2022-05-10T18:57:31.2311892Z",
+                    doNotRunAfter = "2022-05-10T18:57:31.2311892Z",
                     startWindow = "PT1H23M45S",
                     recurrenceInterval = "PT1H23M45S",
                 },
@@ -11992,7 +11992,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateJobSchedule_AllParameters_Convenience()
+        public void Example_Batch_CreateJobSchedule_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12000,8 +12000,8 @@ null
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
             {
-                DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
             }, new BatchJobSpecification(new BatchPoolInfo
@@ -12300,7 +12300,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateJobSchedule_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreateJobSchedule_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12308,8 +12308,8 @@ Version = "<version>",
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
             {
-                DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
             }, new BatchJobSpecification(new BatchPoolInfo
@@ -12608,7 +12608,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTask_ShortVersion()
+        public void Example_Batch_CreateTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12626,7 +12626,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTask_ShortVersion_Async()
+        public async Task Example_Batch_CreateTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12644,7 +12644,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTask_ShortVersion_Convenience()
+        public void Example_Batch_CreateTask_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12656,7 +12656,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTask_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreateTask_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12668,7 +12668,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTask_AllParameters()
+        public void Example_Batch_CreateTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -12835,7 +12835,7 @@ version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTask_AllParameters_Async()
+        public async Task Example_Batch_CreateTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13002,7 +13002,7 @@ version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTask_AllParameters_Convenience()
+        public void Example_Batch_CreateTask_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13105,7 +13105,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTask_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreateTask_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13208,7 +13208,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTaskCollection_ShortVersion()
+        public void Example_Batch_CreateTaskCollection_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13233,7 +13233,7 @@ commandLine = "<commandLine>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTaskCollection_ShortVersion_Async()
+        public async Task Example_Batch_CreateTaskCollection_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13258,7 +13258,7 @@ commandLine = "<commandLine>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTaskCollection_ShortVersion_Convenience()
+        public void Example_Batch_CreateTaskCollection_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13273,7 +13273,7 @@ new BatchTaskCreateContent("<id>", "<commandLine>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTaskCollection_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreateTaskCollection_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13288,7 +13288,7 @@ new BatchTaskCreateContent("<id>", "<commandLine>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTaskCollection_AllParameters()
+        public void Example_Batch_CreateTaskCollection_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13471,7 +13471,7 @@ access = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTaskCollection_AllParameters_Async()
+        public async Task Example_Batch_CreateTaskCollection_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13654,7 +13654,7 @@ access = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateTaskCollection_AllParameters_Convenience()
+        public void Example_Batch_CreateTaskCollection_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13760,7 +13760,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateTaskCollection_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreateTaskCollection_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13866,7 +13866,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteTask_ShortVersion()
+        public void Example_Batch_DeleteTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13879,7 +13879,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteTask_ShortVersion_Async()
+        public async Task Example_Batch_DeleteTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13892,7 +13892,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteTask_AllParameters()
+        public void Example_Batch_DeleteTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13905,7 +13905,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteTask_AllParameters_Async()
+        public async Task Example_Batch_DeleteTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13918,7 +13918,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTask_ShortVersion()
+        public void Example_Batch_GetTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13932,7 +13932,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTask_ShortVersion_Async()
+        public async Task Example_Batch_GetTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13946,7 +13946,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTask_ShortVersion_Convenience()
+        public void Example_Batch_GetTask_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13957,7 +13957,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTask_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetTask_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13968,7 +13968,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTask_AllParameters()
+        public void Example_Batch_GetTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14084,7 +14084,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTask_AllParameters_Async()
+        public async Task Example_Batch_GetTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14200,7 +14200,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTask_AllParameters_Convenience()
+        public void Example_Batch_GetTask_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14211,7 +14211,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTask_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetTask_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14222,7 +14222,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceTask_ShortVersion()
+        public void Example_Batch_ReplaceTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14236,7 +14236,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceTask_ShortVersion_Async()
+        public async Task Example_Batch_ReplaceTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14250,7 +14250,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceTask_ShortVersion_Convenience()
+        public void Example_Batch_ReplaceTask_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14262,7 +14262,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceTask_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ReplaceTask_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14274,7 +14274,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceTask_AllParameters()
+        public void Example_Batch_ReplaceTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14296,7 +14296,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceTask_AllParameters_Async()
+        public async Task Example_Batch_ReplaceTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14318,7 +14318,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceTask_AllParameters_Convenience()
+        public void Example_Batch_ReplaceTask_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14338,7 +14338,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceTask_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ReplaceTask_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14358,7 +14358,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateTask_ShortVersion()
+        public void Example_Batch_TerminateTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14371,7 +14371,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateTask_ShortVersion_Async()
+        public async Task Example_Batch_TerminateTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14384,7 +14384,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateTask_AllParameters()
+        public void Example_Batch_TerminateTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14397,7 +14397,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateTask_AllParameters_Async()
+        public async Task Example_Batch_TerminateTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14410,7 +14410,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReactivateTask_ShortVersion()
+        public void Example_Batch_ReactivateTask_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14423,7 +14423,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReactivateTask_ShortVersion_Async()
+        public async Task Example_Batch_ReactivateTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14436,7 +14436,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReactivateTask_AllParameters()
+        public void Example_Batch_ReactivateTask_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14449,7 +14449,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReactivateTask_AllParameters_Async()
+        public async Task Example_Batch_ReactivateTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14462,7 +14462,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteTaskFile_ShortVersion()
+        public void Example_Batch_DeleteTaskFile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14475,7 +14475,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteTaskFile_ShortVersion_Async()
+        public async Task Example_Batch_DeleteTaskFile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14488,7 +14488,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteTaskFile_AllParameters()
+        public void Example_Batch_DeleteTaskFile_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14501,7 +14501,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteTaskFile_AllParameters_Async()
+        public async Task Example_Batch_DeleteTaskFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14514,7 +14514,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFile_ShortVersion()
+        public void Example_Batch_GetTaskFile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14528,7 +14528,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFile_ShortVersion_Async()
+        public async Task Example_Batch_GetTaskFile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14542,7 +14542,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFile_ShortVersion_Convenience()
+        public void Example_Batch_GetTaskFile_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14553,7 +14553,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFile_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetTaskFile_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14564,7 +14564,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFile_AllParameters()
+        public void Example_Batch_GetTaskFile_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14578,7 +14578,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFile_AllParameters_Async()
+        public async Task Example_Batch_GetTaskFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14592,7 +14592,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFile_AllParameters_Convenience()
+        public void Example_Batch_GetTaskFile_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14603,7 +14603,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFile_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetTaskFile_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14614,7 +14614,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateNodeUser_ShortVersion()
+        public void Example_Batch_CreateNodeUser_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14631,7 +14631,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateNodeUser_ShortVersion_Async()
+        public async Task Example_Batch_CreateNodeUser_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14648,7 +14648,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateNodeUser_ShortVersion_Convenience()
+        public void Example_Batch_CreateNodeUser_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14660,7 +14660,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateNodeUser_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_CreateNodeUser_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14672,7 +14672,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateNodeUser_AllParameters()
+        public void Example_Batch_CreateNodeUser_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14682,7 +14682,7 @@ Access = {AccessScope.Job},
             {
                 name = "<name>",
                 isAdmin = true,
-                expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+                expiryTime = "2022-05-10T18:57:31.2311892Z",
                 password = "<password>",
                 sshPublicKey = "<sshPublicKey>",
             });
@@ -14693,7 +14693,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateNodeUser_AllParameters_Async()
+        public async Task Example_Batch_CreateNodeUser_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14703,7 +14703,7 @@ Access = {AccessScope.Job},
             {
                 name = "<name>",
                 isAdmin = true,
-                expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+                expiryTime = "2022-05-10T18:57:31.2311892Z",
                 password = "<password>",
                 sshPublicKey = "<sshPublicKey>",
             });
@@ -14714,7 +14714,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_CreateNodeUser_AllParameters_Convenience()
+        public void Example_Batch_CreateNodeUser_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14723,7 +14723,7 @@ Access = {AccessScope.Job},
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
             {
                 IsAdmin = true,
-                ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 Password = "<password>",
                 SshPublicKey = "<sshPublicKey>",
             };
@@ -14732,7 +14732,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_CreateNodeUser_AllParameters_Convenience_Async()
+        public async Task Example_Batch_CreateNodeUser_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14741,7 +14741,7 @@ Access = {AccessScope.Job},
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
             {
                 IsAdmin = true,
-                ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 Password = "<password>",
                 SshPublicKey = "<sshPublicKey>",
             };
@@ -14750,7 +14750,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteNodeUser_ShortVersion()
+        public void Example_Batch_DeleteNodeUser_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14763,7 +14763,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteNodeUser_ShortVersion_Async()
+        public async Task Example_Batch_DeleteNodeUser_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14776,7 +14776,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteNodeUser_AllParameters()
+        public void Example_Batch_DeleteNodeUser_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14789,7 +14789,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteNodeUser_AllParameters_Async()
+        public async Task Example_Batch_DeleteNodeUser_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14802,7 +14802,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceNodeUser_ShortVersion()
+        public void Example_Batch_ReplaceNodeUser_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14816,7 +14816,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceNodeUser_ShortVersion_Async()
+        public async Task Example_Batch_ReplaceNodeUser_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14830,7 +14830,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceNodeUser_ShortVersion_Convenience()
+        public void Example_Batch_ReplaceNodeUser_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14842,7 +14842,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceNodeUser_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_ReplaceNodeUser_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14854,7 +14854,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceNodeUser_AllParameters()
+        public void Example_Batch_ReplaceNodeUser_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14863,7 +14863,7 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 password = "<password>",
-                expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+                expiryTime = "2022-05-10T18:57:31.2311892Z",
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14873,7 +14873,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceNodeUser_AllParameters_Async()
+        public async Task Example_Batch_ReplaceNodeUser_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14882,7 +14882,7 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 password = "<password>",
-                expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+                expiryTime = "2022-05-10T18:57:31.2311892Z",
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14892,7 +14892,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReplaceNodeUser_AllParameters_Convenience()
+        public void Example_Batch_ReplaceNodeUser_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14901,7 +14901,7 @@ Access = {AccessScope.Job},
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
             {
                 Password = "<password>",
-                ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14909,7 +14909,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReplaceNodeUser_AllParameters_Convenience_Async()
+        public async Task Example_Batch_ReplaceNodeUser_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14918,7 +14918,7 @@ Access = {AccessScope.Job},
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
             {
                 Password = "<password>",
-                ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                ExpiryTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -14926,7 +14926,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNode_ShortVersion()
+        public void Example_Batch_GetNode_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14940,7 +14940,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNode_ShortVersion_Async()
+        public async Task Example_Batch_GetNode_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14954,7 +14954,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNode_ShortVersion_Convenience()
+        public void Example_Batch_GetNode_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14965,7 +14965,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNode_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNode_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14976,7 +14976,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNode_AllParameters()
+        public void Example_Batch_GetNode_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15081,7 +15081,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNode_AllParameters_Async()
+        public async Task Example_Batch_GetNode_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15186,7 +15186,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNode_AllParameters_Convenience()
+        public void Example_Batch_GetNode_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15197,7 +15197,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNode_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNode_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15208,7 +15208,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_ShortVersion()
+        public void Example_Batch_RebootNode_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15222,7 +15222,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_ShortVersion_Async()
+        public async Task Example_Batch_RebootNode_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15236,7 +15236,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_ShortVersion_Convenience()
+        public void Example_Batch_RebootNode_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15247,7 +15247,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_RebootNode_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15258,7 +15258,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_AllParameters()
+        public void Example_Batch_RebootNode_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15275,7 +15275,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_AllParameters_Async()
+        public async Task Example_Batch_RebootNode_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15292,7 +15292,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_AllParameters_Convenience()
+        public void Example_Batch_RebootNode_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15307,7 +15307,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_AllParameters_Convenience_Async()
+        public async Task Example_Batch_RebootNode_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15322,7 +15322,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableNodeScheduling_ShortVersion()
+        public void Example_Batch_DisableNodeScheduling_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15336,7 +15336,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableNodeScheduling_ShortVersion_Async()
+        public async Task Example_Batch_DisableNodeScheduling_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15350,7 +15350,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableNodeScheduling_ShortVersion_Convenience()
+        public void Example_Batch_DisableNodeScheduling_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15361,7 +15361,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableNodeScheduling_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_DisableNodeScheduling_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15372,7 +15372,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableNodeScheduling_AllParameters()
+        public void Example_Batch_DisableNodeScheduling_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15389,7 +15389,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableNodeScheduling_AllParameters_Async()
+        public async Task Example_Batch_DisableNodeScheduling_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15406,7 +15406,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableNodeScheduling_AllParameters_Convenience()
+        public void Example_Batch_DisableNodeScheduling_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15421,7 +15421,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableNodeScheduling_AllParameters_Convenience_Async()
+        public async Task Example_Batch_DisableNodeScheduling_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15436,7 +15436,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableNodeScheduling_ShortVersion()
+        public void Example_Batch_EnableNodeScheduling_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15449,7 +15449,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableNodeScheduling_ShortVersion_Async()
+        public async Task Example_Batch_EnableNodeScheduling_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15462,7 +15462,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableNodeScheduling_AllParameters()
+        public void Example_Batch_EnableNodeScheduling_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15475,7 +15475,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableNodeScheduling_AllParameters_Async()
+        public async Task Example_Batch_EnableNodeScheduling_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15488,7 +15488,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeRemoteLoginSettings_ShortVersion()
+        public void Example_Batch_GetNodeRemoteLoginSettings_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15503,7 +15503,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeRemoteLoginSettings_ShortVersion_Async()
+        public async Task Example_Batch_GetNodeRemoteLoginSettings_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15518,7 +15518,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeRemoteLoginSettings_ShortVersion_Convenience()
+        public void Example_Batch_GetNodeRemoteLoginSettings_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15529,7 +15529,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeRemoteLoginSettings_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodeRemoteLoginSettings_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15540,7 +15540,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeRemoteLoginSettings_AllParameters()
+        public void Example_Batch_GetNodeRemoteLoginSettings_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15555,7 +15555,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeRemoteLoginSettings_AllParameters_Async()
+        public async Task Example_Batch_GetNodeRemoteLoginSettings_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15570,7 +15570,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeRemoteLoginSettings_AllParameters_Convenience()
+        public void Example_Batch_GetNodeRemoteLoginSettings_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15581,7 +15581,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeRemoteLoginSettings_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodeRemoteLoginSettings_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15592,7 +15592,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UploadNodeLogs_ShortVersion()
+        public void Example_Batch_UploadNodeLogs_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15601,7 +15601,7 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = client.UploadNodeLogs("<poolId>", "<nodeId>", content);
 
@@ -15612,7 +15612,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UploadNodeLogs_ShortVersion_Async()
+        public async Task Example_Batch_UploadNodeLogs_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15621,7 +15621,7 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", content);
 
@@ -15632,31 +15632,31 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UploadNodeLogs_ShortVersion_Convenience()
+        public void Example_Batch_UploadNodeLogs_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("<poolId>", "<nodeId>", content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UploadNodeLogs_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_UploadNodeLogs_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UploadNodeLogs_AllParameters()
+        public void Example_Batch_UploadNodeLogs_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15665,8 +15665,8 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 identityReference = new
                 {
                     resourceId = "<resourceId>",
@@ -15681,7 +15681,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UploadNodeLogs_AllParameters_Async()
+        public async Task Example_Batch_UploadNodeLogs_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15690,8 +15690,8 @@ Access = {AccessScope.Job},
             using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 identityReference = new
                 {
                     resourceId = "<resourceId>",
@@ -15706,15 +15706,15 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_UploadNodeLogs_AllParameters_Convenience()
+        public void Example_Batch_UploadNodeLogs_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
-                EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                EndTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 IdentityReference = new BatchNodeIdentityReference
                 {
                     ResourceId = "<resourceId>",
@@ -15725,15 +15725,15 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_UploadNodeLogs_AllParameters_Convenience_Async()
+        public async Task Example_Batch_UploadNodeLogs_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
-                EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                EndTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 IdentityReference = new BatchNodeIdentityReference
                 {
                     ResourceId = "<resourceId>",
@@ -15744,7 +15744,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtension_ShortVersion()
+        public void Example_Batch_GetNodeExtension_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15758,7 +15758,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtension_ShortVersion_Async()
+        public async Task Example_Batch_GetNodeExtension_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15772,7 +15772,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtension_ShortVersion_Convenience()
+        public void Example_Batch_GetNodeExtension_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15783,7 +15783,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtension_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodeExtension_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15794,7 +15794,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtension_AllParameters()
+        public void Example_Batch_GetNodeExtension_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15828,7 +15828,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtension_AllParameters_Async()
+        public async Task Example_Batch_GetNodeExtension_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15862,7 +15862,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtension_AllParameters_Convenience()
+        public void Example_Batch_GetNodeExtension_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15873,7 +15873,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtension_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodeExtension_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15884,7 +15884,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteNodeFile_ShortVersion()
+        public void Example_Batch_DeleteNodeFile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15897,7 +15897,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteNodeFile_ShortVersion_Async()
+        public async Task Example_Batch_DeleteNodeFile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15910,7 +15910,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteNodeFile_AllParameters()
+        public void Example_Batch_DeleteNodeFile_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15923,7 +15923,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteNodeFile_AllParameters_Async()
+        public async Task Example_Batch_DeleteNodeFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15936,7 +15936,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFile_ShortVersion()
+        public void Example_Batch_GetNodeFile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15950,7 +15950,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFile_ShortVersion_Async()
+        public async Task Example_Batch_GetNodeFile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15964,7 +15964,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFile_ShortVersion_Convenience()
+        public void Example_Batch_GetNodeFile_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15975,7 +15975,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFile_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodeFile_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15986,7 +15986,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFile_AllParameters()
+        public void Example_Batch_GetNodeFile_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16000,7 +16000,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFile_AllParameters_Async()
+        public async Task Example_Batch_GetNodeFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16014,7 +16014,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFile_AllParameters_Convenience()
+        public void Example_Batch_GetNodeFile_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16025,7 +16025,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFile_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodeFile_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16036,7 +16036,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplications_ShortVersion()
+        public void Example_Batch_GetApplications_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16053,7 +16053,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplications_ShortVersion_Async()
+        public async Task Example_Batch_GetApplications_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16070,7 +16070,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplications_ShortVersion_Convenience()
+        public void Example_Batch_GetApplications_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16083,7 +16083,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplications_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetApplications_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16096,7 +16096,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplications_AllParameters()
+        public void Example_Batch_GetApplications_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16113,7 +16113,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplications_AllParameters_Async()
+        public async Task Example_Batch_GetApplications_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16130,7 +16130,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetApplications_AllParameters_Convenience()
+        public void Example_Batch_GetApplications_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16143,7 +16143,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetApplications_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetApplications_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16156,7 +16156,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolUsageMetrics_ShortVersion()
+        public void Example_Batch_GetPoolUsageMetrics_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16175,7 +16175,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolUsageMetrics_ShortVersion_Async()
+        public async Task Example_Batch_GetPoolUsageMetrics_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16194,7 +16194,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolUsageMetrics_ShortVersion_Convenience()
+        public void Example_Batch_GetPoolUsageMetrics_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16207,7 +16207,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolUsageMetrics_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetPoolUsageMetrics_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16220,13 +16220,13 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolUsageMetrics_AllParameters()
+        public void Example_Batch_GetPoolUsageMetrics_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetPoolUsageMetrics(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
+            foreach (BinaryData item in client.GetPoolUsageMetrics(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), "<filter>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -16239,13 +16239,13 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolUsageMetrics_AllParameters_Async()
+        public async Task Example_Batch_GetPoolUsageMetrics_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
+            await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), "<filter>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -16258,33 +16258,33 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolUsageMetrics_AllParameters_Convenience()
+        public void Example_Batch_GetPoolUsageMetrics_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
+            foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), endtime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), filter: "<filter>"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolUsageMetrics_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetPoolUsageMetrics_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
+            await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), endtime: DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), filter: "<filter>"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPools_ShortVersion()
+        public void Example_Batch_GetPools_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16299,7 +16299,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPools_ShortVersion_Async()
+        public async Task Example_Batch_GetPools_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16314,7 +16314,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPools_ShortVersion_Convenience()
+        public void Example_Batch_GetPools_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16327,7 +16327,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPools_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetPools_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16340,7 +16340,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPools_AllParameters()
+        public void Example_Batch_GetPools_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16531,7 +16531,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPools_AllParameters_Async()
+        public async Task Example_Batch_GetPools_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16722,7 +16722,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPools_AllParameters_Convenience()
+        public void Example_Batch_GetPools_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16735,7 +16735,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPools_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetPools_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16748,7 +16748,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSupportedImages_ShortVersion()
+        public void Example_Batch_GetSupportedImages_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16766,7 +16766,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSupportedImages_ShortVersion_Async()
+        public async Task Example_Batch_GetSupportedImages_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16784,7 +16784,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSupportedImages_ShortVersion_Convenience()
+        public void Example_Batch_GetSupportedImages_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16797,7 +16797,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSupportedImages_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetSupportedImages_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16810,7 +16810,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSupportedImages_AllParameters()
+        public void Example_Batch_GetSupportedImages_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16835,7 +16835,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSupportedImages_AllParameters_Async()
+        public async Task Example_Batch_GetSupportedImages_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16860,7 +16860,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSupportedImages_AllParameters_Convenience()
+        public void Example_Batch_GetSupportedImages_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16873,7 +16873,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSupportedImages_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetSupportedImages_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16886,7 +16886,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolNodeCounts_ShortVersion()
+        public void Example_Batch_GetPoolNodeCounts_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16901,7 +16901,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolNodeCounts_ShortVersion_Async()
+        public async Task Example_Batch_GetPoolNodeCounts_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16916,7 +16916,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolNodeCounts_ShortVersion_Convenience()
+        public void Example_Batch_GetPoolNodeCounts_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16929,7 +16929,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolNodeCounts_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetPoolNodeCounts_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16942,7 +16942,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolNodeCounts_AllParameters()
+        public void Example_Batch_GetPoolNodeCounts_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16987,7 +16987,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolNodeCounts_AllParameters_Async()
+        public async Task Example_Batch_GetPoolNodeCounts_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17032,7 +17032,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetPoolNodeCounts_AllParameters_Convenience()
+        public void Example_Batch_GetPoolNodeCounts_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17045,7 +17045,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetPoolNodeCounts_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetPoolNodeCounts_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17058,7 +17058,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobs_ShortVersion()
+        public void Example_Batch_GetJobs_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17073,7 +17073,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobs_ShortVersion_Async()
+        public async Task Example_Batch_GetJobs_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17088,7 +17088,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobs_ShortVersion_Convenience()
+        public void Example_Batch_GetJobs_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17101,7 +17101,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobs_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobs_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17114,7 +17114,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobs_AllParameters()
+        public void Example_Batch_GetJobs_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17398,7 +17398,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobs_AllParameters_Async()
+        public async Task Example_Batch_GetJobs_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17682,7 +17682,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobs_AllParameters_Convenience()
+        public void Example_Batch_GetJobs_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17695,7 +17695,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobs_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobs_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17708,7 +17708,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobsFromSchedules_ShortVersion()
+        public void Example_Batch_GetJobsFromSchedules_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17723,7 +17723,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobsFromSchedules_ShortVersion_Async()
+        public async Task Example_Batch_GetJobsFromSchedules_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17738,7 +17738,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobsFromSchedules_ShortVersion_Convenience()
+        public void Example_Batch_GetJobsFromSchedules_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17751,7 +17751,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobsFromSchedules_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobsFromSchedules_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17764,7 +17764,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobsFromSchedules_AllParameters()
+        public void Example_Batch_GetJobsFromSchedules_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18048,7 +18048,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobsFromSchedules_AllParameters_Async()
+        public async Task Example_Batch_GetJobsFromSchedules_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18332,7 +18332,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobsFromSchedules_AllParameters_Convenience()
+        public void Example_Batch_GetJobsFromSchedules_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18345,7 +18345,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobsFromSchedules_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobsFromSchedules_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18358,7 +18358,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_ShortVersion()
+        public void Example_Batch_GetJobPreparationAndReleaseTaskStatuses_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18373,7 +18373,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Async()
+        public async Task Example_Batch_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18388,7 +18388,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience()
+        public void Example_Batch_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18401,7 +18401,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18414,7 +18414,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_AllParameters()
+        public void Example_Batch_GetJobPreparationAndReleaseTaskStatuses_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18463,7 +18463,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Async()
+        public async Task Example_Batch_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18512,7 +18512,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Convenience()
+        public void Example_Batch_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18525,7 +18525,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobPreparationAndReleaseTaskStatuses_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18538,7 +18538,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedules_ShortVersion()
+        public void Example_Batch_GetJobSchedules_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18553,7 +18553,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedules_ShortVersion_Async()
+        public async Task Example_Batch_GetJobSchedules_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18568,7 +18568,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedules_ShortVersion_Convenience()
+        public void Example_Batch_GetJobSchedules_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18581,7 +18581,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedules_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetJobSchedules_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18594,7 +18594,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedules_AllParameters()
+        public void Example_Batch_GetJobSchedules_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18880,7 +18880,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedules_AllParameters_Async()
+        public async Task Example_Batch_GetJobSchedules_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19166,7 +19166,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetJobSchedules_AllParameters_Convenience()
+        public void Example_Batch_GetJobSchedules_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19179,7 +19179,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetJobSchedules_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetJobSchedules_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19192,7 +19192,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTasks_ShortVersion()
+        public void Example_Batch_GetTasks_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19207,7 +19207,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTasks_ShortVersion_Async()
+        public async Task Example_Batch_GetTasks_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19222,7 +19222,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTasks_ShortVersion_Convenience()
+        public void Example_Batch_GetTasks_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19235,7 +19235,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTasks_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetTasks_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19248,7 +19248,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTasks_AllParameters()
+        public void Example_Batch_GetTasks_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19365,7 +19365,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTasks_AllParameters_Async()
+        public async Task Example_Batch_GetTasks_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19482,7 +19482,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTasks_AllParameters_Convenience()
+        public void Example_Batch_GetTasks_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19495,7 +19495,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTasks_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetTasks_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19508,7 +19508,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSubTasks_ShortVersion()
+        public void Example_Batch_GetSubTasks_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19523,7 +19523,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSubTasks_ShortVersion_Async()
+        public async Task Example_Batch_GetSubTasks_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19538,7 +19538,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSubTasks_ShortVersion_Convenience()
+        public void Example_Batch_GetSubTasks_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19551,7 +19551,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSubTasks_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetSubTasks_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19564,7 +19564,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSubTasks_AllParameters()
+        public void Example_Batch_GetSubTasks_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19601,7 +19601,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSubTasks_AllParameters_Async()
+        public async Task Example_Batch_GetSubTasks_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19638,7 +19638,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetSubTasks_AllParameters_Convenience()
+        public void Example_Batch_GetSubTasks_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19651,7 +19651,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetSubTasks_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetSubTasks_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19664,7 +19664,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFiles_ShortVersion()
+        public void Example_Batch_GetTaskFiles_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19679,7 +19679,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFiles_ShortVersion_Async()
+        public async Task Example_Batch_GetTaskFiles_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19694,7 +19694,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFiles_ShortVersion_Convenience()
+        public void Example_Batch_GetTaskFiles_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19707,7 +19707,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFiles_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetTaskFiles_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19720,7 +19720,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFiles_AllParameters()
+        public void Example_Batch_GetTaskFiles_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19742,7 +19742,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFiles_AllParameters_Async()
+        public async Task Example_Batch_GetTaskFiles_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19764,7 +19764,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetTaskFiles_AllParameters_Convenience()
+        public void Example_Batch_GetTaskFiles_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19777,7 +19777,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetTaskFiles_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetTaskFiles_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19790,7 +19790,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodes_ShortVersion()
+        public void Example_Batch_GetNodes_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19805,7 +19805,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodes_ShortVersion_Async()
+        public async Task Example_Batch_GetNodes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19820,7 +19820,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodes_ShortVersion_Convenience()
+        public void Example_Batch_GetNodes_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19833,7 +19833,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodes_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodes_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19846,7 +19846,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodes_AllParameters()
+        public void Example_Batch_GetNodes_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19952,7 +19952,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodes_AllParameters_Async()
+        public async Task Example_Batch_GetNodes_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20058,7 +20058,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodes_AllParameters_Convenience()
+        public void Example_Batch_GetNodes_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20071,7 +20071,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodes_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodes_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20084,7 +20084,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtensions_ShortVersion()
+        public void Example_Batch_GetNodeExtensions_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20099,7 +20099,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtensions_ShortVersion_Async()
+        public async Task Example_Batch_GetNodeExtensions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20114,7 +20114,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtensions_ShortVersion_Convenience()
+        public void Example_Batch_GetNodeExtensions_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20127,7 +20127,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtensions_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodeExtensions_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20140,7 +20140,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtensions_AllParameters()
+        public void Example_Batch_GetNodeExtensions_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20175,7 +20175,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtensions_AllParameters_Async()
+        public async Task Example_Batch_GetNodeExtensions_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20210,7 +20210,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeExtensions_AllParameters_Convenience()
+        public void Example_Batch_GetNodeExtensions_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20223,7 +20223,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeExtensions_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodeExtensions_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20236,7 +20236,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFiles_ShortVersion()
+        public void Example_Batch_GetNodeFiles_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20251,7 +20251,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFiles_ShortVersion_Async()
+        public async Task Example_Batch_GetNodeFiles_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20266,7 +20266,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFiles_ShortVersion_Convenience()
+        public void Example_Batch_GetNodeFiles_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20279,7 +20279,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFiles_ShortVersion_Convenience_Async()
+        public async Task Example_Batch_GetNodeFiles_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20292,7 +20292,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFiles_AllParameters()
+        public void Example_Batch_GetNodeFiles_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20314,7 +20314,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFiles_AllParameters_Async()
+        public async Task Example_Batch_GetNodeFiles_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20336,7 +20336,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_GetNodeFiles_AllParameters_Convenience()
+        public void Example_Batch_GetNodeFiles_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20349,7 +20349,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_GetNodeFiles_AllParameters_Convenience_Async()
+        public async Task Example_Batch_GetNodeFiles_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
