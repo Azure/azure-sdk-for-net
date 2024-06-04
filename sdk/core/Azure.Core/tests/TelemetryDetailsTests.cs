@@ -123,8 +123,8 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase("»-Browser¢sample", "azsdk-net-Core.Tests%2F1.0.0-alpha.20240604.1+(.NET+Framework+4.8.9241.0%3B+%C2%BB-Browser%C2%A2sample)")]
-        [TestCase("NixOS 24.11 (Vicuña)", "azsdk-net-Core.Tests%2F1.0.0-alpha.20240604.1+(.NET+Framework+4.8.9241.0%3B+NixOS+24.11+(Vicu%C3%B1a))")]
+        [TestCase("»-Browser¢sample", "%C2%BB-Browser%C2%A2sample")]
+        [TestCase("NixOS 24.11 (Vicuña)", "NixOS+24.11+(Vicu%C3%B1a)")]
         public void NonAsciiCharactersAreUrlEncoded(string input, string output)
         {
             var mockRuntimeInformation = new MockRuntimeInformation { OSDescriptionMock = input, FrameworkDescriptionMock = RuntimeInformation.FrameworkDescription };
@@ -139,7 +139,9 @@ namespace Azure.Core.Tests
 
             var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
 
-            Assert.AreEqual(output, target.ToString());
+            Assert.AreEqual(
+                    $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
+                    target.ToString());
         }
 
         private class MockRuntimeInformation : RuntimeInformationWrapper

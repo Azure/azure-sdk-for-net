@@ -92,17 +92,18 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
-
-            var userAgentValue = applicationId != null
-                ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
-                : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
 
             // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
             // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
             // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
             // This was added to support operating systems with non-ascii characters in their release names.
-            return ContainsNonAscii(userAgentValue) ? WebUtility.UrlEncode(userAgentValue) : userAgentValue;
+            var osDescription = ContainsNonAscii(runtimeInformation.OSDescription) ? WebUtility.UrlEncode(runtimeInformation.OSDescription) : runtimeInformation.OSDescription;
+
+            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
+
+            return applicationId != null
+                ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
+                : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
         }
 
         /// <summary>
