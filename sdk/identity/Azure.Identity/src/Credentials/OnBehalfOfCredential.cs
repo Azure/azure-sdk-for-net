@@ -87,7 +87,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -95,11 +95,11 @@ namespace Azure.Identity
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public OnBehalfOfCredential(string tenantId, string clientId, Func<CancellationToken, Task<string>> clientAssertionCallback, string userAssertion, OnBehalfOfCredentialOptions options = null)
-            : this(tenantId, clientId, null, clientAssertionCallback, userAssertion, null, null, null)
+            : this(tenantId, clientId, null, clientAssertionCallback, userAssertion, options, null, null)
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>

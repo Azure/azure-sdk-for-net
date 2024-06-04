@@ -1,6 +1,6 @@
 # AzurePipelinesCredential Example
 
-This example demonstrates authenticating the `SecretClient` using the `AzurePipelinesCredential` in an Azure Pipelines environment with [service connections](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints).
+This example demonstrates authenticating the Key Vault `SecretClient` using the `AzurePipelinesCredential` in an Azure Pipelines environment with [service connections](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints).
 
 ```C# Snippet:AzurePipelinesCredential_Example
 // Replace the following values with the actual values for the service connection.
@@ -20,7 +20,7 @@ var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"),
 
 # OnBehalfOfCredential with Managed Identity FIC Example
 
-This example demonstrates the use of the `OnBehalfOfCredential` to authenticate the `SecretClient` using a managed identity as the client assertion. More information about the On Behalf Of Flow can be found [here](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow).
+This example demonstrates the use of the `OnBehalfOfCredential` to authenticate the Key Vault `SecretClient` using a managed identity as the client assertion. More information about the On Behalf Of Flow can be found [here](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow).
 
 ```C# Snippet:FederatedOboWithManagedIdentityCredential_Example
 // Replace the following values with the actual values for your tenant and client ids.
