@@ -6,6 +6,8 @@ extends:
     PreSteps:
       - task: AzureCLI@2
         displayName: Set OIDC variables
+        env:
+          ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
         inputs:
           azureSubscription: azure-sdk-tests
           scriptType: pscore
@@ -31,5 +33,4 @@ extends:
         ServiceConnection: azure-sdk-tests
     EnvVars:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
     UseFederatedAuth: true
