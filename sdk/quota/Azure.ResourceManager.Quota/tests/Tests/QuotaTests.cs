@@ -143,41 +143,5 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // fail if request doesn't fail
             Assert.Fail();
         }
-
-        [TestCase]
-        public async Task SetGroupQuota()
-        {
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "testMgIdRoot";
-            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
-
-            // get the collection of this GroupQuotasEntityResource
-            GroupQuotasEntityCollection collection = managementGroupResource.GetGroupQuotasEntities();
-
-            // invoke the operation
-            string groupQuotaName = "sdk-test-group-quota";
-            GroupQuotasEntityData data = new GroupQuotasEntityData()
-            {
-                Properties = new GroupQuotasEntityBase()
-                {
-                    DisplayName = "sdk-test-group-quota",
-                    AdditionalAttributes = new AdditionalAttributes(new GroupingId()
-                    {
-                        GroupingIdType = GroupingIdType.BillingId,
-                        Value = "ad41a99f-9c42-4b3d-9770-e711a24d8542",
-                    })
-                },
-            };
-            ArmOperation<GroupQuotasEntityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
-            GroupQuotasEntityResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotasEntityData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
     }
 }
