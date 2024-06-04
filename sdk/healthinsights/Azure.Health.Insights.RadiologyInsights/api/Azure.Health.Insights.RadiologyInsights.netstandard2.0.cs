@@ -773,6 +773,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         protected RadiologyInsightsClient() { }
         public RadiologyInsightsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public RadiologyInsightsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions options) { }
+        public RadiologyInsightsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public RadiologyInsightsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> expand = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsJob resource, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -987,6 +989,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class HealthInsightsRadiologyInsightsClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClient, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions> AddRadiologyInsightsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClient, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions> AddRadiologyInsightsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClient, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions> AddRadiologyInsightsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
