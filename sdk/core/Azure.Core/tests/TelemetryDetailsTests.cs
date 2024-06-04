@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Azure.Core.Pipeline;
@@ -95,6 +96,50 @@ namespace Azure.Core.Tests
             Assert.AreEqual(
                     $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
                     target.ToString());
+        }
+
+        [Test]
+        [TestCase("Win64; x64", "Win64; x64")]
+        [TestCase("Intel Mac OS X 10_15_7", "Intel Mac OS X 10_15_7")]
+        [TestCase("Android 10; SM-G973F", "Android 10; SM-G973F")]
+        [TestCase("Win64; x64; Xbox; Xbox One", "Win64; x64; Xbox; Xbox One")]
+        public void AsciiDoesNotEncode(string input, string output)
+        {
+            var mockRuntimeInformation = new MockRuntimeInformation { OSDescriptionMock = input, FrameworkDescriptionMock = RuntimeInformation.FrameworkDescription };
+            var assembly = Assembly.GetAssembly(GetType());
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            string version = versionAttribute.InformationalVersion;
+            int hashSeparator = version.IndexOfOrdinal('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
+
+            Assert.AreEqual(
+                    $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
+                    target.ToString());
+        }
+
+        [Test]
+        [TestCase("»-Browser¢sample", "azsdk-net-Core.Tests%2F1.0.0-alpha.20240604.1+(.NET+Framework+4.8.9241.0%3B+%C2%BB-Browser%C2%A2sample)")]
+        [TestCase("NixOS 24.11 (Vicuña)", "azsdk-net-Core.Tests%2F1.0.0-alpha.20240604.1+(.NET+Framework+4.8.9241.0%3B+NixOS+24.11+(Vicu%C3%B1a))")]
+        public void NonAsciiCharactersAreUrlEncoded(string input, string output)
+        {
+            var mockRuntimeInformation = new MockRuntimeInformation { OSDescriptionMock = input, FrameworkDescriptionMock = RuntimeInformation.FrameworkDescription };
+            var assembly = Assembly.GetAssembly(GetType());
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            string version = versionAttribute.InformationalVersion;
+            int hashSeparator = version.IndexOfOrdinal('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
+
+            Assert.AreEqual(output, target.ToString());
         }
 
         private class MockRuntimeInformation : RuntimeInformationWrapper

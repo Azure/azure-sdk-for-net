@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
@@ -89,11 +92,17 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var platformInformation = WebUtility.HtmlEncode(EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})"));
+            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
 
-            return applicationId != null
+            var userAgentValue = applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
                 : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
+
+            // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
+            // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
+            // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
+            // This was added to support operating systems with non-ascii characters in their release names.
+            return ContainsNonAscii(userAgentValue) ? WebUtility.UrlEncode(userAgentValue) : userAgentValue;
         }
 
         /// <summary>
@@ -161,6 +170,19 @@ namespace Azure.Core
             }
             sb.Append(')');
             return sb.ToString();
+        }
+
+        // Would be nice to use https://learn.microsoft.com/dotnet/api/system.text.ascii.isvalid (.NET 8+) in the future
+        private static bool ContainsNonAscii(string value)
+        {
+            foreach (char c in value)
+            {
+                if ((int)c > 0x7f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
