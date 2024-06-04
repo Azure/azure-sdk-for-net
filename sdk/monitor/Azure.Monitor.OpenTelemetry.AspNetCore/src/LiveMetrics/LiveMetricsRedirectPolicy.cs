@@ -9,8 +9,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 {
     internal sealed class LiveMetricsRedirectPolicy : HttpPipelinePolicy
     {
-        // To prevent circular redirects, max redirect is set to 1.
-        internal const int MaxRedirect = 1;
         private string? _redirectHostValue;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -51,16 +49,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 ProcessNext(message, pipeline);
             }
 
-            // Check for redirection
-            uint redirectCount = 1;
-            Response response = message.Response;
-
-            while (redirectCount <= MaxRedirect && IsRedirection(response, out string? redirectionValue))
+            // Check for redirection and retry
+            if (IsRedirection(message.Response, out string? redirectionValue))
             {
                 Debug.WriteLine($"OnPing: Received Redirection: {redirectionValue}");
                 AzureMonitorAspNetCoreEventSource.Log.LiveMetricsRedirectReceived(redirectionValue);
 
-                response.Dispose();
+                message.Response.Dispose();
 
                 // ORIGINAL VALUE (default endpoint):
                 // https://rt.services.visualstudio.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=00000000-0000-0000-0000-000000000000
@@ -86,10 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 {
                     ProcessNext(message, pipeline);
                 }
-
-                response = message.Response;
-
-                redirectCount++;
             }
 
             message.SetProperty("redirectionComplete", true);
