@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.Query
 {
-    /// <summary> Cloud audiences available for MetricsClient. </summary>
+    /// <summary> Cloud audiences available for <see cref="MetricsClient"/>. </summary>
     public readonly partial struct MetricsClientAudience : IEquatable<MetricsClientAudience>
     {
         private readonly string _value;
@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricsClientAudience"/> object.
         /// </summary>
-        /// <param name="value">The Microsoft Entra audience to use when forming authorization scopes. For the language service, this value corresponds to a URL that identifies the Azure cloud where the resource is located. For more information: <see href="https://learn.microsoft.com/en-us/azure/azure-government/documentation-government-manage-oms" />.</param>
+        /// <param name="value">The Microsoft Entra audience to use when forming authorization scopes. This value corresponds to a URL that identifies the Azure cloud where the resource is located.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         /// <remarks>Use one of the constant members over creating a custom value, unless you have special needs for doing so.</remarks>
         public MetricsClientAudience(string value)

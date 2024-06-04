@@ -260,6 +260,17 @@ namespace Azure.Monitor.Query.Tests
         public void CreateClientsWithOptions()
         {
             #region Snippet:CreateClientsWithOptions
+            // MetricsClient
+            var metricsClientOptions = new MetricsClientOptions
+            {
+                Audience = MetricsClientAudience.AzureGovernment
+            };
+            var metricsClient = new MetricsClient(
+                new Uri("https://usgovvirginia.metrics.monitor.azure.us"),
+                new DefaultAzureCredential(),
+                metricsClientOptions);
+
+            // MetricsQueryClient
             var metricsQueryClientOptions = new MetricsQueryClientOptions
             {
                 Audience = MetricsQueryAudience.AzureGovernment
@@ -268,6 +279,7 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential(),
                 metricsQueryClientOptions);
 
+            // LogsQueryClient
             var logsQueryClientOptions = new LogsQueryClientOptions
             {
                 Audience = LogsQueryAudience.AzureChina
