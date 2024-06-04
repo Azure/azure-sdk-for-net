@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Azure.Core;
 using System;
 using Azure.ResourceManager.OracleDatabase.Models;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 {
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private const string VnetIdFormat = "{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/{2}";
         private const string DefaultSubnetName = "delegated";
 
-        private const string DefaultVnetName = "SDKTestingVirtualNetwork";
-        private const string DefaultResourceGroupName = "SDKTesting";
+        private const string DefaultVnetName = "NetSdkTestVnet";
+        private const string DefaultResourceGroupName = "NetSdkTestRg";
 
         private string _autonomousDatabaseName;
 
@@ -44,6 +45,9 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         }
 
         private AutonomousDatabaseData GetAutonomousDatabaseData() {
+            Console.WriteLine("HERE: GetAutonomousDatabaseData");
+            Console.WriteLine("HERE: SubnetId: " + string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
+            Console.WriteLine("HERE: VnetId " + string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
             return new AutonomousDatabaseData(AzureLocation.EastUS) {
                 DisplayName = _autonomousDatabaseName,
                 DataBaseType = DataBaseType.Regular,
@@ -56,6 +60,28 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
                 SubnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName)),
                 VnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName)),
             };
+        }
+
+        private AutonomousDatabasePatch GetAutonomousDatabasePatch(string tagName, string tagValue) {
+            // TODO
+            ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
+            {
+                new KeyValuePair<string, string>(tagName, tagValue)
+            };
+            var customerContact = new CustomerContact() {
+                Email = Recording.GenerateAssetName("Email")
+            };
+            AutonomousMaintenanceScheduleType autonomousMaintenanceScheduleType = new AutonomousMaintenanceScheduleType();
+            IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
+            ScheduledOperationsTypeUpdate scheduledOperationsTypeUpdate = new ScheduledOperationsTypeUpdate();
+            DatabaseEditionType databaseEditionType = new DatabaseEditionType();
+            OpenModeType openModeType = new OpenModeType();
+            PermissionLevelType permissionLevelType = new PermissionLevelType();
+            RoleType roleType = new RoleType();
+            return new AutonomousDatabasePatch(tags, default, autonomousMaintenanceScheduleType,
+            default, default, customerContacts, default, default, _autonomousDatabaseName, true, true, default, true, true,
+            LicenseModel.LicenseIncluded, scheduledOperationsTypeUpdate, databaseEditionType, default, openModeType, permissionLevelType,
+            roleType, default, new List<string>{}, default);
         }
 
         [TestCase]
@@ -74,26 +100,49 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Assert.IsTrue(createAutonomousDatabaseOperation.HasValue);
 
             // Get
+            Console.WriteLine("HERE: TestAutonomousDatabaseOperations Get");
             Response<AutonomousDatabaseResource> getAutonomousDatabaseResponse = await _autonomousDatabaseCollection.GetAsync(_autonomousDatabaseName);
             AutonomousDatabaseResource autonomousDatabaseResource = getAutonomousDatabaseResponse.Value;
             Assert.IsNotNull(autonomousDatabaseResource);
 
-            // // ListByResourceGroup
-            // AsyncPageable<AutonomousDatabaseResource> autonomousDatabases = _autonomousDatabaseCollection.GetAllAsync();
-            // List<AutonomousDatabaseResource> autonomousDatabaseResult = await autonomousDatabases.ToEnumerableAsync();
-            // Assert.NotNull(autonomousDatabaseResult);
-            // Assert.IsTrue(autonomousDatabaseResult.Count >= 1);
+            // ListByResourceGroup
+            Console.WriteLine("HERE: TestAutonomousDatabaseOperations ListByResourceGroup");
+            AsyncPageable<AutonomousDatabaseResource> autonomousDatabases = _autonomousDatabaseCollection.GetAllAsync();
+            List<AutonomousDatabaseResource> autonomousDatabaseResult = await autonomousDatabases.ToEnumerableAsync();
+            Assert.NotNull(autonomousDatabaseResult);
+            Assert.IsTrue(autonomousDatabaseResult.Count >= 1);
 
-            // // ListBySubscription
-            // autonomousDatabases = OracleExtensions.GetAutonomousDatabaseAsync(DefaultSubscription);
-            // autonomousDatabaseResult = await autonomousDatabases.ToEnumerableAsync();
-            // Assert.NotNull(autonomousDatabaseResult);
-            // Assert.IsTrue(autonomousDatabaseResult.Count >= 1);
+            // ListBySubscription
+            Console.WriteLine("HERE: TestAutonomousDatabaseOperations ListBySubscription");
+            autonomousDatabases = OracleDatabaseExtensions.GetAutonomousDatabasesAsync(DefaultSubscription);
+            autonomousDatabaseResult = await autonomousDatabases.ToEnumerableAsync();
+            Assert.NotNull(autonomousDatabaseResult);
+            Assert.IsTrue(autonomousDatabaseResult.Count >= 1);
 
-            // // Delete
-            // var deleteAutonomousDatabaseOperation = await autonomousDatabaseResource.DeleteAsync(WaitUntil.Completed);
-            // await deleteAutonomousDatabaseOperation.WaitForCompletionResponseAsync();
-            // Assert.IsTrue(deleteAutonomousDatabaseOperation.HasCompleted);
+            // // Update
+            // Console.WriteLine("HERE: TestAutonomousDatabaseOperations Update");
+            // var tagName = Recording.GenerateAssetName("TagName");
+            // var tagValue = Recording.GenerateAssetName("TagValue");
+            // AutonomousDatabasePatch adbsParameter = GetAutonomousDatabasePatch(tagName, tagValue);
+            // // AutonomousDatabasePatch adbsParameter = new() {
+            // //     Tags = tags
+            // // };
+            // var updateAdbsOperation = await autonomousDatabaseResource.UpdateAsync(WaitUntil.Completed, adbsParameter);
+            // Assert.IsTrue(updateAdbsOperation.HasCompleted);
+            // Assert.IsTrue(updateAdbsOperation.HasValue);
+
+            // // Get after Update
+            // Console.WriteLine("HERE: TestExaInfraOperations Get2");
+            // getAutonomousDatabaseResponse = await _autonomousDatabaseCollection.GetAsync(_autonomousDatabaseName);
+            // autonomousDatabaseResource = getAutonomousDatabaseResponse.Value;
+            // Assert.IsNotNull(autonomousDatabaseResource);
+            // Assert.IsTrue(autonomousDatabaseResource.Data.Tags.ContainsKey(tagName));
+
+            // Delete
+            Console.WriteLine("HERE: TestAutonomousDatabaseOperations Delete");
+            var deleteAutonomousDatabaseOperation = await autonomousDatabaseResource.DeleteAsync(WaitUntil.Completed);
+            await deleteAutonomousDatabaseOperation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(deleteAutonomousDatabaseOperation.HasCompleted);
         }
     }
 }
