@@ -330,7 +330,7 @@ directive:
       delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
       $.ServerProperties.properties.privateEndpointConnections.items['$ref'] = '../../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection';
   # An abstract model should not be flatten
-- from: common-types.json
+  - from: common-types.json
     where: $.definitions.OperationProgressResult
     transform: >
       $.properties.properties['x-ms-client-flatten'] = false;
