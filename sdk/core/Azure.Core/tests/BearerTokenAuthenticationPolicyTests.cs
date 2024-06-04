@@ -266,6 +266,53 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BearerTokenAuthenticationPolicy_TokenNotAlmostExpiredWithRefreshOnNow()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(10), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue(), refreshOn: currentTime);
+                },
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
+
+            Assert.AreEqual(2, callCount);
+
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
+            Assert.True(transport.Requests[3].Headers.TryGetValue("Authorization", out string auth4Value));
+
+            Assert.AreEqual(auth1Value, auth2Value);
+            Assert.AreEqual(auth2Value, auth3Value);
+            Assert.AreNotEqual(auth3Value, auth4Value);
+        }
+
+        [Test]
         public async Task BearerTokenAuthenticationPolicy_TokenAlmostExpired_NoRefresh()
         {
             var requestMre = new ManualResetEventSlim(true);

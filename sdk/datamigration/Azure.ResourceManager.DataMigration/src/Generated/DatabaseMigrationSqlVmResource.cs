@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlVm_cancel</description>
+        /// <description>DatabaseMigrationsSqlVm_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlVm_cancel</description>
+        /// <description>DatabaseMigrationsSqlVm_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlVm_cutover</description>
+        /// <description>DatabaseMigrationsSqlVm_Cutover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlVm_cutover</description>
+        /// <description>DatabaseMigrationsSqlVm_Cutover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

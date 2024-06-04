@@ -16,9 +16,7 @@ App server send a request to Face API to create a liveness session.
 
 ### Creating a `FaceSessionClient`
 
-To create a new `FaceSessionClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Face API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
-
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `FaceSessionClient` you need the endpoint and credentials from your resource. In the sample below you'll use a `DefaultAzureCredential` object to authenticate. You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application. See [Authenticate the client][README_authticate] for instructions.
 
 ```C# Snippet:CreateFaceSessionClient
 Uri endpoint = new Uri("<your endpoint>");
@@ -143,5 +141,6 @@ sessionClient.DeleteLivenessWithVerifySession(sessionId);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
+[README_authticate]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#authenticate-the-client
 [face_liveness]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
 [perform_liveness_detection_with_face_verification]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#perform-liveness-detection-with-face-verification

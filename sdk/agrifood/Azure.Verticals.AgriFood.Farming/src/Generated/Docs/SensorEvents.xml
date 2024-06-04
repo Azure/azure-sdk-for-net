@@ -7,7 +7,7 @@ This sample shows how to call GetSensorEventsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
 Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", null, null, null, null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetSensorEventsAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
 Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
@@ -40,7 +40,7 @@ This sample shows how to call GetSensorEvents and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
 Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", null, null, null, null);
 
@@ -51,7 +51,7 @@ This sample shows how to call GetSensorEvents with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
 Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
