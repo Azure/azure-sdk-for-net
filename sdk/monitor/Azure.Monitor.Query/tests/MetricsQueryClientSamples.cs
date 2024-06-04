@@ -198,9 +198,15 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.StorageAccountId;
+#if SNIPPET
             var client = new MetricsClient(
-                new Uri(TestEnvironment.DataplaneEndpoint),
+                new Uri("https://<region>.metrics.monitor.azure.com"),
                 new DefaultAzureCredential());
+#else
+            var client = new MetricsClient(
+                new Uri(TestEnvironment.GetMetricsClientAudience()),
+                new DefaultAzureCredential());
+#endif
 #endif
             Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -232,7 +238,7 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             var client = new MetricsClient(
-                new Uri(TestEnvironment.DataplaneEndpoint),
+                new Uri(TestEnvironment.GetMetricsClientAudience()),
                 new DefaultAzureCredential());
 #endif
             #endregion Snippet:CreateMetricsClient
