@@ -108,5 +108,4 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
-        ${{ each var in parameters.EnvVars }}:
-          ${{ var.key }}: ${{ var.value }}
+        ${{ insert }}: ${{ parameters.EnvVars }}
