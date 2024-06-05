@@ -28,7 +28,7 @@ internal class PageableResultHelpers
             _getNextPage = getNextPage;
         }
 
-        public override async IAsyncEnumerable<PageResult<T>> AsPages(string? pageToken = default)
+        protected override async IAsyncEnumerable<PageResult<T>> AsPagesCore(string? pageToken = default)
         {
             Func<string?, Task<PageResult<T>>>? getPage = _getInitialPage;
 
@@ -60,7 +60,7 @@ internal class PageableResultHelpers
             _getNextPage = getNextPage;
         }
 
-        public override IEnumerable<PageResult<T>> AsPages(string? pageToken = default)
+        protected override IEnumerable<PageResult<T>> AsPagesCore(string? pageToken = default)
         {
             Func<string?, PageResult<T>>? getPage = _getInitialPage;
 

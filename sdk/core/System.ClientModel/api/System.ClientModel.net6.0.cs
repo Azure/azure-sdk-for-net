@@ -16,8 +16,10 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableResult<T> : System.ClientModel.AsyncCollectionResult<T>
     {
         protected AsyncPageableResult() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string pageToken = "FIRST_PAGE") { throw null; }
+        protected abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesCore(string pageToken);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.PageResult<T>> GetPageAsync(string pageToken) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -64,8 +66,10 @@ namespace System.ClientModel
     public abstract partial class PageableResult<T> : System.ClientModel.CollectionResult<T>
     {
         protected PageableResult() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string pageToken = "FIRST_PAGE") { throw null; }
+        protected abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesCore(string pageToken);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        public virtual System.ClientModel.Primitives.PageResult<T> GetPage(string pageToken) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives

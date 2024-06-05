@@ -12,6 +12,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class PageResult<T> : ClientResult
 {
+    internal const string FirstPageToken = "FIRST_PAGE";
+
     private PageResult(IReadOnlyList<T> values,
         PipelineResponse response,
         string? nextPageToken,
