@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration, options);
             }
-            if (Optional.IsDefined(ExpirationTimeUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
-                writer.WriteStringValue(ExpirationTimeUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
