@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public class ClusterOperationTests : HDInsightContainersOperationTestsBase
     {
+        private string resourcesGroupName = "GA-Test";
+        private string clusterpoolName = "pool12";
+        private string ClusterPoolVersion = "1.2";
+
         public ClusterOperationTests(bool isAsync) : base(isAsync)
         {
         }
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         {
             Location = "west us 3";
 
-            // Create cluster pool
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
             string clusterName = Recording.GenerateAssetName("sdk-test-cluster-");
             Response<HDInsightNameAvailabilityResult> response = await Subscription.CheckHDInsightNameAvailabilityAsync(Location, new HDInsightNameAvailabilityContent()
@@ -57,23 +60,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         public async Task TestTrinoCluster()
         {
             Location = "west us 3";
-            string ClusterPoolVersion = "1.1";
-
-            // Create cluster pool
-            string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
-
-            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.Properties.ClusterPoolVersion = ClusterPoolVersion;
-            string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
-
-            HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
-            ArmOperation<HDInsightClusterPoolResource> clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
 
             // Call get available cluster pool version API to get the supported versions per cluster type
             string clusterType = "Trino";
             var clusterVersions = await Subscription.GetAvailableClusterVersionsByLocationAsync(Location).ToEnumerableAsync().ConfigureAwait(false);
-            var availableClusterVersionResult = clusterVersions.Where(version => version.Properties.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            var availableClusterVersionResult = clusterVersions.Where(version => version.Properties.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).Where(version => version.Properties.ClusterPoolVersion.Equals(ClusterPoolVersion)).FirstOrDefault();
 
             // Create trino cluster
             string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
@@ -83,11 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             UserAssignedIdentityCollection userAssignedIdentityCollection = ResourceGroup.GetUserAssignedIdentities();
             UserAssignedIdentityData userAssignedIdentityData = new UserAssignedIdentityData(Location);
             var userMsi = await userAssignedIdentityCollection.CreateOrUpdateAsync(WaitUntil.Completed, msiName, userAssignedIdentityData).ConfigureAwait(false);
-
-            // set the IdentityProfile
             string msiClientId = userMsi.Value.Data.ClientId.ToString();
             string msiObjectId = userMsi.Value.Data.PrincipalId.ToString();
-            var identityProfile = new HDInsightIdentityProfile(msiResourceId: userMsi.Value.Id, msiClientId: msiClientId, msiObjectId: msiObjectId);
 
             // authorization profile
             // my user Id
@@ -98,18 +86,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // trino profile
             string vmSize = "Standard_D16a_v4";
             int workerCount = 5;
-            ClusterComputeNodeProfile nodeProfile = new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
-            var clusterData = new HDInsightClusterData(Location);
-            clusterData.Properties.ClusterType = clusterType;
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
+            {
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster", userMsi.Value.Id, msiClientId, msiObjectId) }
+            };
 
-            clusterData.Properties.ComputeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { nodeProfile });
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
 
-            clusterData.Properties.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.Properties.ClusterVersion, ossVersion: availableClusterVersionResult.Properties.OssVersion, authorizationProfile: authorizationProfile);
-            clusterData.Properties.ClusterProfile.IdentityProfile = identityProfile;
             // set trino profile
-            clusterData.Properties.ClusterProfile.TrinoProfile = new TrinoProfile();
+            clusterProfile.TrinoProfile = new TrinoProfile();
 
-            var clusterCollection = clusterPoolResult.Value.GetHDInsightClusters();
+            Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
+            Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
+
+            var clusterCollection = ClusterPool.Value.GetHDInsightClusters();
             var trinoClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
 
             // Get trino cluster instance view
@@ -123,10 +117,153 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         }
 
         [RecordedTest]
-        public async Task TestUpdateSparkCluster()
+        public async Task TestTrinoClusterWithHMS()
         {
             Location = "west us 3";
-            string ClusterPoolVersion = "1.0";
+
+            string userMsiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/psmsi";
+            string msiClientId = "00000000-0000-0000-0000-000000000000";
+            string msiObjectId = "00000000-0000-0000-0000-000000000000";
+
+            // define the HMS configurations
+            string metastoreDbConnectionPasswordSecret = "sqlpassword";
+            string metastoreDbConnectionURL = "jdbc:sqlserver://ycgaserver.database.windows.net;database=trinohms;encrypt=true;trustServerCertificate=true;create=false;loginTimeout=30";
+            string metastoreDbConnectionUserName = "hdi";
+            string metastoreWarehouseDir = "abfs://trino122@hilostorage.dfs.core.windows.net/warehouse";
+
+            // Secret cofig
+            string keyVaultResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hilocli-test/providers/Microsoft.KeyVault/vaults/HiloCLIKV";
+            string keyVaultObjectName = "sqlpassword";
+            string referenceName = "sqlpassword";
+
+            // Call get available cluster pool version API to get the supported versions per cluster type
+            string clusterType = "Trino";
+            var clusterVersions = await Subscription.GetAvailableClusterVersionsByLocationAsync(Location).ToEnumerableAsync().ConfigureAwait(false);
+            var availableClusterVersionResult = clusterVersions.Where(version => version.Properties.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).Where(version => version.Properties.ClusterPoolVersion.Equals(ClusterPoolVersion)).FirstOrDefault();
+
+            // Create trino cluster
+            string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
+
+            // authorization profile
+            // my user Id
+            var userIds = "00000000-0000-0000-0000-000000000000";
+            var authorizationProfile = new AuthorizationProfile();
+            authorizationProfile.UserIds.Add(userIds);
+
+            // trino profile
+            string vmSize = "Standard_D16a_v4";
+            int workerCount = 5;
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
+            {
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster", new ResourceIdentifier(userMsiId), msiClientId, msiObjectId) }
+            };
+
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
+
+            // set trino profile
+            clusterProfile.TrinoProfile = new TrinoProfile();
+
+            // initialize the ClusterServiceConfigsProfile for HMS
+            ClusterServiceConfigsProfile clusterServiceConfigsProfile = new ClusterServiceConfigsProfile(serviceName: "trino", new ClusterServiceConfig[] {
+                new ClusterServiceConfig(component: "common", new ClusterConfigFile[] { new ClusterConfigFile("config.properties")
+                    {
+                        Values = {
+                                ["hive.metastore.hdi.metastoreDbConnectionAuthenticationMode"] = "SqlAuth",
+                                ["hive.metastore.hdi.metastoreDbConnectionPasswordSecret"] = metastoreDbConnectionPasswordSecret,
+                                ["hive.metastore.hdi.metastoreDbConnectionURL"] = metastoreDbConnectionURL,
+                                ["hive.metastore.hdi.metastoreDbConnectionUserName"] = metastoreDbConnectionUserName,
+                                ["hive.metastore.hdi.metastoreWarehouseDir"] = metastoreWarehouseDir
+                        }
+                    }
+                })
+            });
+            clusterProfile.ServiceConfigsProfiles.Add(clusterServiceConfigsProfile);
+
+            ClusterSecretsProfile clusterSecretsProfile = new ClusterSecretsProfile(new ResourceIdentifier(keyVaultResourceId));
+            clusterSecretsProfile.Secrets.Add(new ClusterSecretReference(referenceName, KeyVaultObjectType.Secret, keyVaultObjectName));
+            clusterProfile.SecretsProfile = clusterSecretsProfile;
+
+            Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
+            Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
+
+            var clusterCollection = ClusterPool.Value.GetHDInsightClusters();
+            var trinoClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        public async Task TestTrinoClusterAzZone()
+        {
+            Location = "west us 3";
+
+            // Call get available cluster pool version API to get the supported versions per cluster type
+            string clusterType = "Trino";
+            var clusterVersions = await Subscription.GetAvailableClusterVersionsByLocationAsync(Location).ToEnumerableAsync().ConfigureAwait(false);
+            var availableClusterVersionResult = clusterVersions.Where(version => version.Properties.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).Where(version => version.Properties.ClusterPoolVersion.Equals(ClusterPoolVersion)).FirstOrDefault();
+
+            // Create trino cluster
+            string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
+
+            // create managed user assigned identity with the new package
+            string msiName = Recording.GenerateAssetName($"sdk-{clusterName}-msi-");
+            UserAssignedIdentityCollection userAssignedIdentityCollection = ResourceGroup.GetUserAssignedIdentities();
+            UserAssignedIdentityData userAssignedIdentityData = new UserAssignedIdentityData(Location);
+            var userMsi = await userAssignedIdentityCollection.CreateOrUpdateAsync(WaitUntil.Completed, msiName, userAssignedIdentityData).ConfigureAwait(false);
+            string msiClientId = userMsi.Value.Data.ClientId.ToString();
+            string msiObjectId = userMsi.Value.Data.PrincipalId.ToString();
+
+            // authorization profile
+            // my user Id
+            var userIds = "00000000-0000-0000-0000-000000000000";
+            var authorizationProfile = new AuthorizationProfile();
+            authorizationProfile.UserIds.Add(userIds);
+
+            // trino profile
+            string vmSize = "Standard_D16a_v4";
+            int workerCount = 5;
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+
+            // set availability zones
+            nodeProfile.AvailabilityZones.Add("1");
+            nodeProfile.AvailabilityZones.Add("2");
+
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
+            {
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster", userMsi.Value.Id, msiClientId, msiObjectId) }
+            };
+
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
+
+            // set trino profile
+            clusterProfile.TrinoProfile = new TrinoProfile();
+
+            Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
+            Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
+
+            var clusterCollection = ClusterPool.Value.GetHDInsightClusters();
+            var trinoClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
+
+            // Get trino cluster instance view
+            var clusterInstanceViewResult = await trinoClusterResult.Value.GetInstanceViewAsync().ConfigureAwait(false);
+
+            // Get trino cluster service configurations
+            var clusterServiceConfigurations = await trinoClusterResult.Value.GetServiceConfigsAsync().ToEnumerableAsync().ConfigureAwait(false);
+
+            // Delete the trino cluster
+            await trinoClusterResult.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [RecordedTest]
+        public async Task TestSparkCluster()
+        {
+            Location = "west us 3";
+            string ClusterPoolVersion = "1.2";
 
             // Call get available cluster pool version API to get the supported versions per cluster type
             string clusterType = "Spark";
@@ -136,10 +273,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // Create spark cluster
             string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
 
-            // set the IdentityProfile
+            string userMsiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/psmsi";
             string msiClientId = "00000000-0000-0000-0000-000000000000";
             string msiObjectId = "00000000-0000-0000-0000-000000000000";
-            var identityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testmsi"), msiClientId: msiClientId, msiObjectId: msiObjectId);
 
             // authorization profile
             // my user Id
@@ -148,27 +284,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             authorizationProfile.UserIds.Add(userIds);
 
             // spark profile
-            string vmSize = "Standard_D16a_v4";
-            int workerCount = 5;
-            ClusterComputeNodeProfile nodeProfile = new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
-            var clusterData = new HDInsightClusterData(Location);
-            clusterData.Properties.ClusterType = clusterType;
-
-            clusterData.Properties.ComputeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { nodeProfile });
-
-            clusterData.Properties.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.Properties.ClusterVersion, ossVersion: availableClusterVersionResult.Properties.OssVersion, authorizationProfile: authorizationProfile);
-            clusterData.Properties.ClusterProfile.IdentityProfile = identityProfile;
-            // set saprk profile
-
-            clusterData.Properties.ClusterProfile.SparkProfile = new SparkProfile()
+            string vmSize = "Standard_E8ads_v5";
+            int workerCount = 2;
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
             {
-                DefaultStorageUriString = "abfs://sparkps@hilostorage.dfs.core.windows.net",
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(userMsiId), msiClientId, msiObjectId) }
             };
 
-            string resourcesGroupName = "testGroup";
-            string clusterpoolName = "DemoPool125";
-            Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
 
+            // set saprk profile
+            clusterProfile.SparkProfile = new SparkProfile()
+            {
+                DefaultStorageUriString = "abfs://spark@hilostorage.dfs.core.windows.net",
+            };
+
+            Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
             Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
 
             var clusterCollection = ClusterPool.Value.GetHDInsightClusters();
@@ -197,13 +332,51 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
             HDInsightClusterResource value = sparkClusterResult.Value.UpdateAsync(WaitUntil.Completed, patch).Result.Value;
             Assert.AreEqual(value.Data.Properties.ClusterProfile.ServiceConfigsProfiles.Count, 1);
+
+            // Test set autoscale on spark cluster
+            HDInsightClusterPatch autoscalePatch = new HDInsightClusterPatch()
+            {
+                ClusterProfile = new UpdatableClusterProfile()
+                {
+                    AutoscaleProfile = new ClusterAutoscaleProfile(true)
+                    {
+                        GracefulDecommissionTimeout = -1,
+                        AutoscaleType = ClusterAutoscaleType.ScheduleBased,
+                        ScheduleBasedConfig = new ScheduleBasedConfig("UTC", 3, new AutoscaleSchedule[]{
+                                new AutoscaleSchedule("00:00","12:00",3,new AutoscaleScheduleDay[]
+                                {
+                                    new AutoscaleScheduleDay("Monday, Tuesday, Wednesday")
+                                }),
+                            }),
+                    },
+                },
+            };
+
+            sparkClusterResult = await sparkClusterResult.Value.UpdateAsync(WaitUntil.Completed, autoscalePatch);
+
+            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].StartOn, "00:00");
+            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].EndOn, "12:00");
+            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].Days.Count, 1);
+
+            // Test manage cluster libraries
+            PyPiLibraryProperties pyPiLibraryProperties = new PyPiLibraryProperties("pandas");
+            List<ClusterLibrary> clusterLibraries = new List<ClusterLibrary> { new ClusterLibrary(pyPiLibraryProperties) };
+            ClusterLibraryManagementOperation clusterLibraryManagementOperation = new ClusterLibraryManagementOperation(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, clusterLibraries));
+            ArmOperation armOperation = await sparkClusterResult.Value.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, clusterLibraryManagementOperation);
+
+            // Test list cluster libraries
+            AsyncPageable<ClusterLibrary> asyncPageable = sparkClusterResult.Value.GetClusterLibrariesAsync(Category.Custom);
+            await foreach (var lib in asyncPageable)
+            {
+                Assert.NotNull(lib);
+            }
         }
 
         [RecordedTest]
-        public async Task TestSubmitJobToFlinkCluster()
+        public async Task TestFlinkCluster()
         {
             Location = "west us 3";
-            string ClusterPoolVersion = "1.1";
+            string ClusterPoolVersion = "1.2";
 
             // Call get available cluster pool version API to get the supported versions per cluster type
             string clusterType = "Flink";
@@ -213,16 +386,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // Create flink cluster
             string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
 
-            // create managed user assigned identity with the new package
-            string msiName = Recording.GenerateAssetName($"sdk-{clusterName}-msi-");
-            UserAssignedIdentityCollection userAssignedIdentityCollection = ResourceGroup.GetUserAssignedIdentities();
-            UserAssignedIdentityData userAssignedIdentityData = new UserAssignedIdentityData(Location);
-            var userMsi = await userAssignedIdentityCollection.CreateOrUpdateAsync(WaitUntil.Completed, msiName, userAssignedIdentityData).ConfigureAwait(false);
-
-            // set the IdentityProfile
+            string userMsiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/psmsi";
             string msiClientId = "00000000-0000-0000-0000-000000000000";
             string msiObjectId = "00000000-0000-0000-0000-000000000000";
-            var identityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testmsi"), msiClientId: msiClientId, msiObjectId: msiObjectId);
 
             // authorization profile
             // my user Id
@@ -230,29 +396,30 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             var authorizationProfile = new AuthorizationProfile();
             authorizationProfile.UserIds.Add(userIds);
 
-            // flink profile
-            string vmSize = "Standard_D16a_v4";
-            int workerCount = 3;
-            ClusterComputeNodeProfile nodeProfile = new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
-            var clusterData = new HDInsightClusterData(Location);
-            clusterData.Properties.ClusterType = clusterType;
+            // cluster profile
+            string vmSize = "Standard_E8ads_v5";
+            int workerCount = 5;
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
+            {
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(userMsiId), msiClientId, msiObjectId) }
+            };
 
-            clusterData.Properties.ComputeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { nodeProfile });
-
-            clusterData.Properties.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.Properties.ClusterVersion, ossVersion: availableClusterVersionResult.Properties.OssVersion, authorizationProfile: authorizationProfile);
-            clusterData.Properties.ClusterProfile.IdentityProfile = identityProfile;
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
             // set flink profile
-            clusterData.Properties.ClusterProfile.FlinkProfile = new FlinkProfile() {
-                    JobManager = new ComputeResourceRequirement(1, 2000),
-                    TaskManager = new ComputeResourceRequirement(6, 49016),
-                    Storage = new FlinkStorageProfile()
-                    {
-                       StorageUriString = "abfs://cluster2024221@cluster202422113392st0lz.dfs.core.windows.net"
-                    }
-                };
+            clusterData.Properties.ClusterProfile.FlinkProfile = new FlinkProfile()
+            {
+                JobManager = new ComputeResourceRequirement(1, 2000),
+                TaskManager = new ComputeResourceRequirement(6, 49016),
+                Storage = new FlinkStorageProfile()
+                {
+                    StorageUriString = "abfs://flink@hilostorage.dfs.core.windows.net"
+                }
+            };
 
-            string resourcesGroupName = "testGroup";
-            string clusterpoolName = "hilopool";
             Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
 
             Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
@@ -263,8 +430,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             ClusterJob clusterJob = new ClusterJob(new FlinkJobProperties()
             {
                 JobName = "flink-job-name",
-                JobJarDirectory = "abfs://storage@flinkdemo.dfs.core.windows.net/jars",
-                JarName = "FlinkJobDemo-1.0-SNAPSHOT.jar",
+                JobJarDirectory = "abfs://flink-app@hilostorage.dfs.core.windows.net/job-jars",
+                JarName = "JobDemo.jar",
                 EntryClass = "org.example.SleepJob",
                 Action = FlinkJobAction.New,
                 FlinkConfiguration =
@@ -278,23 +445,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         }
 
         [RecordedTest]
-        public async Task TestAutoScaleSparkCluster()
+        public async Task TestKafkaCluster()
         {
             Location = "west us 3";
-            string ClusterPoolVersion = "1.0";
+            string ClusterPoolVersion = "1.2";
 
             // Call get available cluster pool version API to get the supported versions per cluster type
-            string clusterType = "Spark";
+            string clusterType = "Kafka";
             var clusterVersions = await Subscription.GetAvailableClusterVersionsByLocationAsync(Location).ToEnumerableAsync().ConfigureAwait(false);
             var availableClusterVersionResult = clusterVersions.Where(version => version.Properties.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).Where(version => version.Properties.ClusterPoolVersion.Equals(ClusterPoolVersion)).FirstOrDefault();
 
             // Create spark cluster
             string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
 
-            // set the IdentityProfile
+            string userMsiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/psmsi";
             string msiClientId = "00000000-0000-0000-0000-000000000000";
             string msiObjectId = "00000000-0000-0000-0000-000000000000";
-            var identityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testmsi"), msiClientId: msiClientId, msiObjectId: msiObjectId);
 
             // authorization profile
             // my user Id
@@ -302,56 +468,33 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             var authorizationProfile = new AuthorizationProfile();
             authorizationProfile.UserIds.Add(userIds);
 
-            // spark profile
-            string vmSize = "Standard_D16a_v4";
+            // cluster profile
+            string vmSize = "Standard_E8ads_v5";
             int workerCount = 5;
-            ClusterComputeNodeProfile nodeProfile = new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
-            var clusterData = new HDInsightClusterData(Location);
-            clusterData.Properties.ClusterType = clusterType;
-
-            clusterData.Properties.ComputeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { nodeProfile });
-
-            clusterData.Properties.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.Properties.ClusterVersion, ossVersion: availableClusterVersionResult.Properties.OssVersion, authorizationProfile: authorizationProfile);
-            clusterData.Properties.ClusterProfile.IdentityProfile = identityProfile;
-
-            // set saprk profile
-            clusterData.Properties.ClusterProfile.SparkProfile = new SparkProfile()
+            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersionResult.Properties.ClusterVersion, availableClusterVersionResult.Properties.OssVersion, authorizationProfile)
             {
-                DefaultStorageUriString = "abfs://sparkautoscale@hilostorage.dfs.core.windows.net",
+                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(userMsiId), msiClientId, msiObjectId) }
             };
 
-            string resourcesGroupName = "testGroup";
-            string clusterpoolName = "DemoPool125";
+            var clusterData = new HDInsightClusterData(Location)
+            {
+                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+            };
+            // set kafka profile
+            clusterData.Properties.ClusterProfile.KafkaProfile = new KafkaProfile(new DiskStorageProfile(8,DataDiskType.StandardSSDLRS))
+            {
+               EnableKRaft = true,
+               EnablePublicEndpoints = true,
+               RemoteStorageUriString = "abfs://kafka@hilostorage.dfs.core.windows.net/"
+            };
+
             Response<Resources.ResourceGroupResource> RG = await Subscription.GetResourceGroupAsync(resourcesGroupName);
 
             Response<HDInsightClusterPoolResource> ClusterPool = await RG.Value.GetHDInsightClusterPoolAsync(clusterpoolName);
 
             var clusterCollection = ClusterPool.Value.GetHDInsightClusters();
-            var sparkClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
-
-            HDInsightClusterPatch patch = new HDInsightClusterPatch()
-                {
-                    ClusterProfile = new UpdatableClusterProfile()
-                    {
-                        AutoscaleProfile = new ClusterAutoscaleProfile(true)
-                        {
-                            GracefulDecommissionTimeout = -1,
-                            AutoscaleType = ClusterAutoscaleType.ScheduleBased,
-                            ScheduleBasedConfig = new ScheduleBasedConfig("UTC", 3, new AutoscaleSchedule[]{
-                                new AutoscaleSchedule("00:00","12:00",3,new AutoscaleScheduleDay[]
-                                {
-                                    new AutoscaleScheduleDay("Monday, Tuesday, Wednesday")
-                                }),
-                            }),
-                        },
-                    },
-                };
-
-            sparkClusterResult = await sparkClusterResult.Value.UpdateAsync(WaitUntil.Completed, patch);
-
-            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].StartOn, "00:00");
-            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].EndOn, "12:00");
-            Assert.AreEqual(sparkClusterResult.Value.Data.Properties.ClusterProfile.AutoscaleProfile.ScheduleBasedConfig.Schedules[0].Days.Count, 1);
+            var flinkClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
         }
     }
 }

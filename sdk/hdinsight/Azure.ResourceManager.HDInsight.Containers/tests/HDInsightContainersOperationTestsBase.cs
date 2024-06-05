@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
         protected async Task Initialize()
         {
-            Location = "eastus2";
+            Location = "westus3";
             ArmClientOptions options = new ArmClientOptions()
             {
                 Diagnostics =

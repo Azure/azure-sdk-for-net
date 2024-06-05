@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("enablePublicEndpoints"u8);
                 writer.WriteBooleanValue(EnablePublicEndpoints.Value);
             }
-            if (Optional.IsDefined(RemoteStorageUri))
+            if (Optional.IsDefined(RemoteStorageUriString))
             {
                 writer.WritePropertyName("remoteStorageUri"u8);
-                writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
+                writer.WriteStringValue(RemoteStorageUriString);
             }
             writer.WritePropertyName("diskStorage"u8);
             writer.WriteObjectValue(DiskStorage, options);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             bool? enableKRaft = default;
             bool? enablePublicEndpoints = default;
-            Uri remoteStorageUri = default;
+            string remoteStorageUri = default;
             DiskStorageProfile diskStorage = default;
             KafkaConnectivityEndpoints connectivityEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,11 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("remoteStorageUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    remoteStorageUri = new Uri(property.Value.GetString());
+                    remoteStorageUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("diskStorage"u8))

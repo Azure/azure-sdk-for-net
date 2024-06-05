@@ -299,16 +299,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="Models.KafkaProfile"/>. </summary>
         /// <param name="enableKRaft"> Expose Kafka cluster in KRaft mode. </param>
         /// <param name="enablePublicEndpoints"> Expose worker nodes as public endpoints. </param>
-        /// <param name="remoteStorageUri"> Fully qualified path of Azure Storage container used for Tiered Storage. </param>
+        /// <param name="remoteStorageUriString"> Fully qualified path of Azure Storage container used for Tiered Storage. </param>
         /// <param name="diskStorage"> Kafka disk storage profile. </param>
         /// <param name="connectivityEndpoints"> Kafka bootstrap server and brokers related connectivity endpoints. </param>
         /// <returns> A new <see cref="Models.KafkaProfile"/> instance for mocking. </returns>
-        public static KafkaProfile KafkaProfile(bool? enableKRaft = null, bool? enablePublicEndpoints = null, Uri remoteStorageUri = null, DiskStorageProfile diskStorage = null, KafkaConnectivityEndpoints connectivityEndpoints = null)
+        public static KafkaProfile KafkaProfile(bool? enableKRaft = null, bool? enablePublicEndpoints = null, string remoteStorageUriString = null, DiskStorageProfile diskStorage = null, KafkaConnectivityEndpoints connectivityEndpoints = null)
         {
             return new KafkaProfile(
                 enableKRaft,
                 enablePublicEndpoints,
-                remoteStorageUri,
+                remoteStorageUriString,
                 diskStorage,
                 connectivityEndpoints,
                 serializedAdditionalRawData: null);

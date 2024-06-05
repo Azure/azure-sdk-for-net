@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public class ClusterPoolOperationTests : HDInsightContainersOperationTestsBase
     {
-        public ClusterPoolOperationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ClusterPoolOperationTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -44,11 +44,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
-            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.Properties.ClusterPoolVersion = "1.2";
-
-            string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
+            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
+            {
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                {
+                    ClusterPoolVersion = "1.2"
+                }
+            };
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
@@ -69,27 +71,34 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         }
 
         [RecordedTest]
-        public async Task TestGetClusterPoolAvailableupgrades()
+        public async Task TesClusterPoolUpgrade()
         {
             Location = "westus2";
 
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
-            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.Properties.ClusterPoolVersion = "1.0";
-
-            string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
+            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
+            {
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                {
+                    ClusterPoolVersion = "1.1"
+                }
+            };
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
 
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
 
-            // Test get cluster pool
-            var getClusterPoolResult = await clusterPoolCollection.GetAsync(clusterPoolResult.Value.Data.Name).ConfigureAwait(false);
+            // Test get cluster pool available upgrades
+            AsyncPageable<ClusterPoolAvailableUpgrade> availableUpgrades = clusterPoolResult.Value.GetClusterPoolAvailableUpgradesAsync();
+            await foreach (var availableUpgrade in availableUpgrades)
+            {
+                Assert.NotNull(availableUpgrade);
+            }
 
-            AsyncPageable<ClusterPoolAvailableUpgrade> asyncPageable = clusterPoolResult.Value.GetClusterPoolAvailableUpgradesAsync();
-            await foreach (var availableUpgrade in asyncPageable)
+            // Test get cluster pool upgrade histories
+            AsyncPageable<ClusterPoolUpgradeHistory> upgradeHistories = clusterPoolResult.Value.GetClusterPoolUpgradeHistoriesAsync();
+            await foreach (var availableUpgrade in upgradeHistories)
             {
                 Assert.NotNull(availableUpgrade);
             }
@@ -98,28 +107,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         [RecordedTest]
         public async Task TestClusterPoolWithPrivateNetwork()
         {
-            Location = "westus3";
+            Location = "westus2";
 
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
-            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.Properties.ClusterPoolVersion = "1.1";
+            // Create a network profile with private API server enabled
+            Core.ResourceIdentifier networkId = new Core.ResourceIdentifier("/subscriptions/10e32bab-26da-4cc4-a441-52b318f824e6/resourceGroups/Yuchen-GA-Test/providers/Microsoft.Network/virtualNetworks/GA-VN-wus2/subnets/default");
+            ClusterPoolNetworkProfile clusterPoolNetworkProfile = new ClusterPoolNetworkProfile(networkId)
+            {
+                EnablePrivateApiServer = true,
+                OutboundType = OutboundType.LoadBalancer
+            };
 
-            string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
-
-            ClusterPoolNetworkProfile clusterPoolNetworkProfile = new ClusterPoolNetworkProfile(
-                new Core.ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.Network/virtualNetworks/hilonetwork/subnets/default"));
-            clusterPoolNetworkProfile.EnablePrivateApiServer = true;
-            clusterPoolData.Properties.NetworkProfile = clusterPoolNetworkProfile;
+            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
+            {
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                {
+                    ClusterPoolVersion = "1.2",
+                    NetworkProfile = clusterPoolNetworkProfile
+                }
+            };
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
-
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
 
             // Test get cluster pool
-            var getClusterPoolResult = await clusterPoolCollection.GetAsync(clusterPoolResult.Value.Data.Name).ConfigureAwait(false);
-            Assert.NotNull(getClusterPoolResult.Value);
+            var clusterPool = await clusterPoolCollection.GetAsync(clusterPoolResult.Value.Data.Name).ConfigureAwait(false);
+            Assert.AreEqual(clusterPool.Value.Data.Properties.NetworkProfile.SubnetId, networkId);
+
+            // Test update cluster pool tags
+            await clusterPool.Value.AddTagAsync("SDK", "Test");
+            clusterPool = await clusterPoolCollection.GetAsync(clusterPoolResult.Value.Data.Name).ConfigureAwait(false);
+            Assert.AreEqual(clusterPool.Value.Data.Tags["SDK"], "Test");
         }
     }
 }
