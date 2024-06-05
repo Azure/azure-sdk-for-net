@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
                         var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
                         if (failedSubResponse == null)
                         {
-                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
+                            return Response.FromValue((IReadOnlyList<Response>)responses, message.Response);
                         }
 
                         RequestFailedException rfex = new(failedSubResponse);
@@ -116,7 +116,7 @@ namespace Azure.Data.Tables
                         var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
                         if (failedSubResponse == null)
                         {
-                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
+                            return Response.FromValue((IReadOnlyList<Response>)responses, message.Response);
                         }
 
                         RequestFailedException rfex = new(failedSubResponse);
