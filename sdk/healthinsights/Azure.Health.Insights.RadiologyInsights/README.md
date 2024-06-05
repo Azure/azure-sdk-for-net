@@ -96,6 +96,10 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[nuget]: https://www.nuget.org
+[azure_portal]: https://portal.azure.com
+[azure_cli]: https://docs.microsoft.com/cli/azure
 [health_insights]: https://learn.microsoft.com/azure/azure-health-insights/overview?branch=main
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide

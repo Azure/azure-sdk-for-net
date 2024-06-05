@@ -187,7 +187,9 @@ jobs:
               /p:BuildInParallel=${{ parameters.BuildInParallel }}
               /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
               /p:EnableSourceLink=false
-              $(AdditionalTestArguments)
+              $(AdditionalTestArguments);
+              Write-Host "Last exit code: $LASTEXITCODE";
+              exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
             ${{ each var in parameters.EnvVars }}:
