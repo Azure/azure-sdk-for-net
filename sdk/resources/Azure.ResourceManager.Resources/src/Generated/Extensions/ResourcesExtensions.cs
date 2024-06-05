@@ -44,21 +44,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a collection of DeploymentStackResources in the ArmClient.
+        /// Gets a collection of ArmDeploymentStackResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDeploymentStacks(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentStacks(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
-        public static DeploymentStackCollection GetDeploymentStacks(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
+        public static ArmDeploymentStackCollection GetArmDeploymentStacks(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetDeploymentStacks(scope);
+            return GetMockableResourcesArmClient(client).GetArmDeploymentStacks(scope);
         }
 
         /// <summary>
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDeploymentStackAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentStackAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(this ArmClient client, ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(this ArmClient client, ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResourcesArmClient(client).GetDeploymentStackAsync(scope, deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesArmClient(client).GetArmDeploymentStackAsync(scope, deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDeploymentStack(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentStack(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DeploymentStackResource> GetDeploymentStack(this ArmClient client, ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static Response<ArmDeploymentStackResource> GetArmDeploymentStack(this ArmClient client, ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetDeploymentStack(scope, deploymentStackName, cancellationToken);
+            return GetMockableResourcesArmClient(client).GetArmDeploymentStack(scope, deploymentStackName, cancellationToken);
         }
 
         /// <summary>
@@ -292,22 +292,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentStackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeploymentStackResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentStackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArmDeploymentStackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmDeploymentStackResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentStackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDeploymentStackResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentStackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeploymentStackResource"/> object. </returns>
-        public static DeploymentStackResource GetDeploymentStackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArmDeploymentStackResource"/> object. </returns>
+        public static ArmDeploymentStackResource GetArmDeploymentStackResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetDeploymentStackResource(id);
+            return GetMockableResourcesArmClient(client).GetArmDeploymentStackResource(id);
         }
 
         /// <summary>
