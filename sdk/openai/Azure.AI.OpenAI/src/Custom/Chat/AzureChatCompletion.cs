@@ -12,7 +12,7 @@ namespace Azure.AI.OpenAI;
 
 public static partial class AzureChatCompletionExtensions
 {
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
@@ -20,7 +20,7 @@ public static partial class AzureChatCompletionExtensions
             "prompt_filter_results")?[0];
     }
 
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static ContentFilterResultForResponse GetContentFilterResultForResponse(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(
@@ -28,7 +28,7 @@ public static partial class AzureChatCompletionExtensions
             "content_filter_results");
     }
 
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static AzureChatMessageContext GetAzureMessageContext(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<AzureChatMessageContext>(

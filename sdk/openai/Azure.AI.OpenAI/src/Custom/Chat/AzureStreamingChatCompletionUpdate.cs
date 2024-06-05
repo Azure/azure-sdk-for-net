@@ -12,7 +12,7 @@ namespace Azure.AI.OpenAI;
 
 public static partial class AzureStreamingChatCompletionUpdateExtensions
 {
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static AzureChatMessageContext GetAzureMessageContext(this StreamingChatCompletionUpdate chatUpdate)
     {
         if (chatUpdate.Choices?.Count > 0)
@@ -24,7 +24,7 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
         return null;
     }
 
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this StreamingChatCompletionUpdate chatUpdate)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
@@ -32,7 +32,7 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
             "prompt_filter_results")?[0];
     }
 
-    [Experimental("OPENAI002")]
+    [Experimental("AOAI001")]
     public static ContentFilterResultForResponse GetContentFilterResultForResponse(this StreamingChatCompletionUpdate chatUpdate)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(

@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;OPENAI001;OPENAI002</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;OPENAI001;AOAI001</NoWarn>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
@@ -16,7 +16,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
-    <PackageReference Include="OpenAI" VersionOverride="2.0.0-alpha.2024052801" />
   </ItemGroup>
 
   <ItemGroup>

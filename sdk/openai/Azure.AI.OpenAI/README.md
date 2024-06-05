@@ -102,7 +102,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples from OpenAI's .NET library](https://github.com/openai/openai-dotnet/tree/main/samples) or [Azure.AI.OpenAI-specific samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
+You can familiarize yourself with different APIs using [Samples from OpenAI's .NET library](https://github.com/openai/openai-dotnet/tree/main/samples) or [Azure.AI.OpenAI-specific samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples). The vast majority of OpenAI capabilities are available on both Azure OpenAI and OpenAI using the same scenario clients and methods, so not all scenarios will be redundantly covered here.
 
 ### Get a chat completion
 
@@ -344,7 +344,7 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 ```C# Snippet:ChatUsingYourOwnData
 // Extension methods to use data sources with options are subject to SDK surface changes. Suppress the
 // warning to acknowledge and this and use the subject-to-change AddDataSource method.
-#pragma warning disable OPENAI002
+#pragma warning disable AOAI001
 
 ChatCompletionOptions options = new();
 options.AddDataSource(new AzureSearchChatDataSource()
@@ -371,6 +371,89 @@ foreach (AzureChatCitation citation in onYourDataContext?.Citations ?? [])
     Console.WriteLine($"Citation: {citation.Content}");
 }
 ```
+
+### Use Assistants and stream a run
+
+[Assistants](https://platform.openai.com/docs/assistants/overview) provide a stateful, service-persisted conversational
+model that can be enriched with a larger array of tools than Chat Completions.
+
+Creating an `AssistantClient` is similar to other scenario clients. An important difference is that Assistants features
+are marked as `[Experimental]` to reflect the API's beta status, and thus you'll need to suppress the corresponding
+warning to instantiate a client. This can be done in the `.csproj` file via the `<NoWarn>` element or, as below, in
+the code itself with a `#pragma` directive.
+
+```C# Snippet:Assistants:CreateClient
+AzureOpenAIClient azureClient = new(
+    new Uri("https://your-azure-openai-resource.com"),
+    new DefaultAzureCredential());
+
+// The Assistants feature area is in beta, with API specifics subject to change.
+// Suppress the [Experimental] warning via .csproj or, as here, in the code to acknowledge.
+#pragma warning disable OPENAI001
+AssistantClient assistantClient = azureClient.GetAssistantClient();
+```
+
+With a client, you can then create Assistants, Threads, and new Messages on a thread in preparation to start a run.
+Note that, as is the case for other shared API surfaces, you should use an Azure OpenAI model deployment name wherever
+a model name is requested.
+
+```C# Snippet:Assistants:PrepareToRun
+Assistant assistant = await assistantClient.CreateAssistantAsync(
+    model: "my-gpt-4o-deployment",
+    new AssistantCreationOptions()
+    {
+        Name = "My Friendly Test Assistant",
+        Instructions = "You politely help with math questions. Use the code interpreter tool when asked to "
+            + "visualize numbers.",
+        Tools = { ToolDefinition.CreateCodeInterpreter() },
+    });
+ThreadInitializationMessage initialMessage = new(
+    [
+        "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9."
+    ]);
+AssistantThread thread = await assistantClient.CreateThreadAsync(new ThreadCreationOptions()
+{
+    InitialMessages = { initialMessage },
+});
+```
+
+You can then start a run and stream updates as they arrive using the `Streaming` method variants, handling the updates
+you're interested in using the enumerated kind of event it is and/or one of the several derived types for the streaming
+update class, as shown here for content:
+
+```C# Snippet:Assistants:StreamRun
+RunCreationOptions runOptions = new()
+{
+    AdditionalInstructions = "When possible, talk like a pirate."
+};
+await foreach (StreamingUpdate streamingUpdate
+    in assistantClient.CreateRunStreamingAsync(thread, assistant, runOptions))
+{
+    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    {
+        Console.WriteLine($"--- Run started! ---");
+    }
+    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    {
+        Console.Write(contentUpdate.Text);
+        if (contentUpdate.ImageFileId is not null)
+        {
+            Console.WriteLine($"[Image content file ID: {contentUpdate.ImageFileId}");
+        }
+    }
+}
+```
+
+Remember that things like Assistants, Threads, and Vector Stores are persistent resources: you can save their IDs to
+reuse them later or, as below, delete them when no longer desired.
+
+```C# Snippet:Assistants:Cleanup
+// Optionally, delete persistent resources that are no longer needed.
+_ = await assistantClient.DeleteAssistantAsync(assistant);
+_ = await assistantClient.DeleteThreadAsync(thread);
+```
+
+## Next steps
 
 ## Troubleshooting
 
