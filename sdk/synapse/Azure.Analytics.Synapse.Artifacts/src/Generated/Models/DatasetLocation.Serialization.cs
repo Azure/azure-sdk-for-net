@@ -58,6 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
                     case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
                     case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }
             }
