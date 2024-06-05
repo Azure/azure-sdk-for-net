@@ -1664,7 +1664,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
             {
                 EnablePaidBursting = true,
-                PaidBurstingMaxIops = 10000,
+                PaidBurstingMaxIops = 5000,
                 PaidBurstingMaxBandwidthMibps = 1000
             };
 
@@ -1674,7 +1674,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
             Assert.IsTrue(response.Value.EnablePaidBursting);
-            Assert.AreEqual(10000, response.Value.PaidBurstingMaxIops);
+            Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
             Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
         }
 
