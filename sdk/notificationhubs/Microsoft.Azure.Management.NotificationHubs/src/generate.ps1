@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "notificationhubs/resource-manager" -AutoRestVersion "v2"

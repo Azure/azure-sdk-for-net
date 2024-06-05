@@ -1,7 +1,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ProjectReference Include="$(RepoEngPath)\..\sdk\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
-    <ProjectReference Include="$(RepoEngPath)\..\sdk\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" />
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />

@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "datashare/resource-manager" -AutoRestVersion "v2"

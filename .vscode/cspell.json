@@ -47,7 +47,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
