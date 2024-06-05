@@ -99,7 +99,13 @@ namespace Azure.Provisioning.PostgreSql.Tests
 
             infrastructure.Build(GetOutputPath());
 
-            await ValidateBicepAsync();
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "password" },
+                        adminPassword = new { value = "password" },
+                    }),
+                    interactiveMode: true);
         }
     }
 }
