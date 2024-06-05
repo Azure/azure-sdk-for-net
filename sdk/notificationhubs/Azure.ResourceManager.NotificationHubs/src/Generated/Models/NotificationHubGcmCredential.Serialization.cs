@@ -33,11 +33,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("gcmEndpoint"u8);
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(GcmApiKey))
-            {
-                writer.WritePropertyName("googleApiKey"u8);
-                writer.WriteStringValue(GcmApiKey);
-            }
+            writer.WritePropertyName("googleApiKey"u8);
+            writer.WriteStringValue(GcmApiKey);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
