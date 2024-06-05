@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-C-");
-            var stackId = "/subscription/" + subscription.Id +  "/Microsoft.Resources/deploymentStacks/" + deploymentStackName;
-            var deploymentStackData = CreateDeploymentStackDataWithEmptyTemplate(stackId, "westus");
-            DeploymentStackResource deploymentStack =  (await Client.GetDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
+            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-CreateOrUpdate-");
+            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            ArmDeploymentStackResource deploymentStack =  (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
 
             Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
+
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
         }
 
         [TestCase]
@@ -35,17 +36,18 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task List()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-C-");
-            var stackId = "/subscription/" + subscription.Id +  "/Microsoft.Resources/deploymentStacks/" + deploymentStackName;
-            var deploymentStackData = CreateDeploymentStackDataWithEmptyTemplate(stackId, "westus");
-            _ = (await Client.GetDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
+            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-List-");
+            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            _ = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStacks = Client.GetDeploymentStacks(new ResourceIdentifier(subscription.Id));
+            var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
                 count++;
+                await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
             }
+
             Assert.AreEqual(count, 1);
         }
 
@@ -54,34 +56,18 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-C-");
-            var stackId = "/subscription/" + subscription.Id +  "/Microsoft.Resources/deploymentStacks/" + deploymentStackName;
-            var deploymentStackData = CreateDeploymentStackDataWithEmptyTemplate(stackId, "westus");
-            var deploymentStack = (await Client.GetDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
+            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Get-");
+            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            var deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStackGet = Client.GetDeploymentStack(new ResourceIdentifier(subscription.Id), deploymentStackName);
+            var deploymentStackGet = (await Client.GetArmDeploymentStackAsync(new ResourceIdentifier(subscription.Id), deploymentStackName)).Value;
+
             AssertValidDeploymentStack(deploymentStack, deploymentStackGet);
+
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task Export()
-        {
-            // SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            // string deploymentStackName = Recording.GenerateAssetName("deployStackEx-C-");
-            // var stackId = "/subscription/" + subscription.Id +  "/Microsoft.Resources/deploymentStacks/" + deploymentStackName;
-            // var deploymentStackData = CreateDeploymentStackDataWithEmptyTemplate(stackId, "westus");
-            // var deploymentStackCollection = Client.GetDeploymentStacks(new ResourceIdentifier(subscription.Id));
-            
-            // var _ = await deploymentStackCollection.CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData);
-            // var deploymentStackTemplate = deploymentStackCollection.Get()
-
-            // var deploymentStackGet = Client.GetDeploymentStack(new ResourceIdentifier(subscription.Id), deploymentStackName);
-            // AssertValidDeploymentStack(deploymentStack, deploymentStackGet);
-        }
-
-
-        private static void AssertValidDeploymentStack(DeploymentStackResource model, DeploymentStackResource getResult)
+        private static void AssertValidDeploymentStack(ArmDeploymentStackResource model, ArmDeploymentStackResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);

@@ -12,8 +12,10 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 using System.Security.Policy;
+using System.Text;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -137,19 +139,46 @@ namespace Azure.ResourceManager.Resources.Tests
             Location = location
         };
 
-        protected static DeploymentStackData CreateDeploymentStackDataWithEmptyTemplate(string stackId, AzureLocation location) {
-            var data = new DeploymentStackData() {
-                Template = BinaryData.FromObjectAsJson(new JsonObject()),
-                DenySettings = new DenySettings() {
-                    Mode = DenySettingsMode.None,
-                },
-                ActionOnUnmanage = new ActionOnUnmanage() {
-                    Resources = DeploymentStacksDeleteDetachEnum.Detach,
-                    ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
-                    ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
-                },
-                BypassStackOutOfSyncError = false
+        protected static ArmDeploymentStackData CreateDeploymentStackDataWithEmptyTemplate(string stackId, AzureLocation location)
+        {
+            var data = new ArmDeploymentStackData(location);
+
+            data.Template = BinaryData.FromString("{}");
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
             };
+
+            data.BypassStackOutOfSyncError = false;
+
+            return data;
+        }
+
+        protected static ArmDeploymentStackData CreateDeploymentStackDataWithTemplate(AzureLocation location) {
+            var data = new ArmDeploymentStackData(location);
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"rg-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage() {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            //data.Parameters.Add("rgname", new DeploymentParameter { DeploymentParameterType = "string", Value = BinaryData.FromString("\"stacksTest4321\"") });
 
             return data;
         }
