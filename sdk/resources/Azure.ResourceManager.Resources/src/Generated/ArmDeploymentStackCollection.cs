@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeploymentStacks_ListAtCope</description>
+        /// <description>DeploymentStacks_ListAtScope</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -254,8 +254,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmDeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtScopeNextPageRequest(nextLink, Id);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentStackResource(Client, ArmDeploymentStackData.DeserializeArmDeploymentStackData(e)), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, "ArmDeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeploymentStacks_ListAtCope</description>
+        /// <description>DeploymentStacks_ListAtScope</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmDeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentStackResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtScopeNextPageRequest(nextLink, Id);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentStackResource(Client, ArmDeploymentStackData.DeserializeArmDeploymentStackData(e)), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, "ArmDeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
