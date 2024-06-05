@@ -27,6 +27,7 @@
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
@@ -41,6 +42,7 @@
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
+    <Compile Include="Shared\StorageEventSource.cs" />
     <Compile Include="Shared\StorageExceptionExtensions.cs" />
     <Compile Include="Shared\StorageConnectionString.cs" />
     <Compile Include="Shared\StorageResponseClassifier.cs" />
