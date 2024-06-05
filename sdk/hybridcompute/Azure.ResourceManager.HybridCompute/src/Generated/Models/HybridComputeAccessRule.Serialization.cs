@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class AccessRule : IUtf8JsonSerializable, IJsonModel<AccessRule>
+    public partial class HybridComputeAccessRule : IUtf8JsonSerializable, IJsonModel<HybridComputeAccessRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeAccessRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        AccessRule IJsonModel<AccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeAccessRule IJsonModel<HybridComputeAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRule(document.RootElement, options);
+            return DeserializeHybridComputeAccessRule(document.RootElement, options);
         }
 
-        internal static AccessRule DeserializeAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeAccessRule DeserializeHybridComputeAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            AccessRuleDirection? direction = default;
+            HybridComputeAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            direction = new AccessRuleDirection(property0.Value.GetString());
+                            direction = new HybridComputeAccessRuleDirection(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("addressPrefixes"u8))
@@ -140,38 +140,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessRule(name, direction, addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HybridComputeAccessRule(name, direction, addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccessRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeAccessRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccessRule IPersistableModel<AccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeAccessRule IPersistableModel<HybridComputeAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccessRule(document.RootElement, options);
+                        return DeserializeHybridComputeAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

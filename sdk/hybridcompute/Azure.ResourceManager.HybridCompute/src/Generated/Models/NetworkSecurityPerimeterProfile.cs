@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfile"/>. </summary>
         internal NetworkSecurityPerimeterProfile()
         {
-            AccessRules = new ChangeTrackingList<AccessRule>();
+            AccessRules = new ChangeTrackingList<HybridComputeAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
         /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfile(string name, int? accessRulesVersion, IReadOnlyList<AccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProfile(string name, int? accessRulesVersion, IReadOnlyList<HybridComputeAccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Access rules version number. </summary>
         public int? AccessRulesVersion { get; }
         /// <summary> Collection of access rules for the profile. </summary>
-        public IReadOnlyList<AccessRule> AccessRules { get; }
+        public IReadOnlyList<HybridComputeAccessRule> AccessRules { get; }
         /// <summary> Diagnostic settings version number. </summary>
         public int? DiagnosticSettingsVersion { get; }
         /// <summary> Collection of enabled log categories for the profile. </summary>

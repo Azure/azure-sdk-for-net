@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ResourceAssociation : IUtf8JsonSerializable, IJsonModel<ResourceAssociation>
+    public partial class HybridComputeResourceAssociation : IUtf8JsonSerializable, IJsonModel<HybridComputeResourceAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeResourceAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeResourceAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        ResourceAssociation IJsonModel<ResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeResourceAssociation IJsonModel<HybridComputeResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeResourceAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceAssociation(document.RootElement, options);
+            return DeserializeHybridComputeResourceAssociation(document.RootElement, options);
         }
 
-        internal static ResourceAssociation DeserializeResourceAssociation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeResourceAssociation DeserializeHybridComputeResourceAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            AccessMode? accessMode = default;
+            HybridComputeAccessMode? accessMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    accessMode = new AccessMode(property.Value.GetString());
+                    accessMode = new HybridComputeAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceAssociation(name, accessMode, serializedAdditionalRawData);
+            return new HybridComputeResourceAssociation(name, accessMode, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceAssociation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeResourceAssociation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeResourceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceAssociation IPersistableModel<ResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeResourceAssociation IPersistableModel<HybridComputeResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeResourceAssociation(document.RootElement, options);
+                        return DeserializeHybridComputeResourceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeResourceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

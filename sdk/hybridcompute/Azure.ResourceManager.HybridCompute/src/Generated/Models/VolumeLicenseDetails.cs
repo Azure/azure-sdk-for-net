@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="programYear"> Describes the program year the volume license is for. </param>
         /// <param name="invoiceId"> The invoice id for the volume license. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeLicenseDetails(ProgramYear? programYear, string invoiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeLicenseDetails(HybridComputeProgramYear? programYear, string invoiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProgramYear = programYear;
             InvoiceId = invoiceId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the program year the volume license is for. </summary>
-        public ProgramYear? ProgramYear { get; set; }
+        public HybridComputeProgramYear? ProgramYear { get; set; }
         /// <summary> The invoice id for the volume license. </summary>
         public string InvoiceId { get; set; }
     }

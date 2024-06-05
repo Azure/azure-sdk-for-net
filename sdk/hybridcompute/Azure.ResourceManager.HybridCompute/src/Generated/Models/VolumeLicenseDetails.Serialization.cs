@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            ProgramYear? programYear = default;
+            HybridComputeProgramYear? programYear = default;
             string invoiceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    programYear = new ProgramYear(property.Value.GetString());
+                    programYear = new HybridComputeProgramYear(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceId"u8))

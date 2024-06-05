@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ProvisioningIssue : IUtf8JsonSerializable, IJsonModel<ProvisioningIssue>
+    public partial class HybridComputeProvisioningIssue : IUtf8JsonSerializable, IJsonModel<HybridComputeProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProvisioningIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProvisioningIssue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        ProvisioningIssue IJsonModel<ProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeProvisioningIssue IJsonModel<HybridComputeProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningIssue(document.RootElement, options);
+            return DeserializeHybridComputeProvisioningIssue(document.RootElement, options);
         }
 
-        internal static ProvisioningIssue DeserializeProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeProvisioningIssue DeserializeHybridComputeProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            ProvisioningIssueType? issueType = default;
-            ProvisioningIssueSeverity? severity = default;
+            HybridComputeProvisioningIssueType? issueType = default;
+            HybridComputeProvisioningIssueSeverity? severity = default;
             string description = default;
             IReadOnlyList<string> suggestedResourceIds = default;
-            IReadOnlyList<AccessRule> suggestedAccessRules = default;
+            IReadOnlyList<HybridComputeAccessRule> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            issueType = new ProvisioningIssueType(property0.Value.GetString());
+                            issueType = new HybridComputeProvisioningIssueType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("severity"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            severity = new ProvisioningIssueSeverity(property0.Value.GetString());
+                            severity = new HybridComputeProvisioningIssueSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            List<AccessRule> array = new List<AccessRule>();
+                            List<HybridComputeAccessRule> array = new List<HybridComputeAccessRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AccessRule.DeserializeAccessRule(item, options));
+                                array.Add(HybridComputeAccessRule.DeserializeHybridComputeAccessRule(item, options));
                             }
                             suggestedAccessRules = array;
                             continue;
@@ -191,45 +191,45 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProvisioningIssue(
+            return new HybridComputeProvisioningIssue(
                 name,
                 issueType,
                 severity,
                 description,
                 suggestedResourceIds ?? new ChangeTrackingList<string>(),
-                suggestedAccessRules ?? new ChangeTrackingList<AccessRule>(),
+                suggestedAccessRules ?? new ChangeTrackingList<HybridComputeAccessRule>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProvisioningIssue>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeProvisioningIssue>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProvisioningIssue IPersistableModel<ProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeProvisioningIssue IPersistableModel<HybridComputeProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProvisioningIssue(document.RootElement, options);
+                        return DeserializeHybridComputeProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

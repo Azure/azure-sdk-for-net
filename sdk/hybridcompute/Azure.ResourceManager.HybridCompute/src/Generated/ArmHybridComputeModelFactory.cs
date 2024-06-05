@@ -821,9 +821,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="resourceAssociation"> The Resource Association. </param>
         /// <param name="profile"> Network Security Perimeter profile. </param>
         /// <returns> A new <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, ResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterProfile profile = null)
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, IEnumerable<HybridComputeProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, HybridComputeResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterProfile profile = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<HybridComputeProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationData(
                 id,
@@ -838,20 +838,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the provisioning issue. </param>
         /// <param name="issueType"> Issue type. </param>
         /// <param name="severity"> Severity of the provisioning issue. </param>
         /// <param name="description"> Description of the provisioning issue. </param>
         /// <param name="suggestedResourceIds"> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the perimeter to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueType? issueType = null, ProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<string> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
+        /// <returns> A new <see cref="Models.HybridComputeProvisioningIssue"/> instance for mocking. </returns>
+        public static HybridComputeProvisioningIssue HybridComputeProvisioningIssue(string name = null, HybridComputeProvisioningIssueType? issueType = null, HybridComputeProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<string> suggestedResourceIds = null, IEnumerable<HybridComputeAccessRule> suggestedAccessRules = null)
         {
             suggestedResourceIds ??= new List<string>();
-            suggestedAccessRules ??= new List<AccessRule>();
+            suggestedAccessRules ??= new List<HybridComputeAccessRule>();
 
-            return new ProvisioningIssue(
+            return new HybridComputeProvisioningIssue(
                 name,
                 issueType,
                 severity,
@@ -861,16 +861,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes that are allowed access. </param>
-        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
-        public static AccessRule AccessRule(string name = null, AccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null)
+        /// <returns> A new <see cref="Models.HybridComputeAccessRule"/> instance for mocking. </returns>
+        public static HybridComputeAccessRule HybridComputeAccessRule(string name = null, HybridComputeAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null)
         {
             addressPrefixes ??= new List<string>();
 
-            return new AccessRule(name, direction, addressPrefixes?.ToList(), serializedAdditionalRawData: null);
+            return new HybridComputeAccessRule(name, direction, addressPrefixes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
@@ -883,13 +883,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the Resource Association. </param>
         /// <param name="accessMode"> The access mode. </param>
-        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
-        public static ResourceAssociation ResourceAssociation(string name = null, AccessMode? accessMode = null)
+        /// <returns> A new <see cref="Models.HybridComputeResourceAssociation"/> instance for mocking. </returns>
+        public static HybridComputeResourceAssociation HybridComputeResourceAssociation(string name = null, HybridComputeAccessMode? accessMode = null)
         {
-            return new ResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
+            return new HybridComputeResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterProfile"/>. </summary>
@@ -899,9 +899,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
         /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, int? accessRulesVersion = null, IEnumerable<AccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, int? accessRulesVersion = null, IEnumerable<HybridComputeAccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
         {
-            accessRules ??= new List<AccessRule>();
+            accessRules ??= new List<HybridComputeAccessRule>();
             enabledLogCategories ??= new List<string>();
 
             return new NetworkSecurityPerimeterProfile(

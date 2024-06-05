@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Details on issues that occurred during provisioning. </summary>
-    public partial class ProvisioningIssue
+    public partial class HybridComputeProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssue"/>. </summary>
+        internal HybridComputeProvisioningIssue()
         {
             SuggestedResourceIds = new ChangeTrackingList<string>();
-            SuggestedAccessRules = new ChangeTrackingList<AccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<HybridComputeAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the provisioning issue. </param>
         /// <param name="issueType"> Issue type. </param>
         /// <param name="severity"> Severity of the provisioning issue. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="suggestedResourceIds"> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the perimeter to remediate the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueType? issueType, ProvisioningIssueSeverity? severity, string description, IReadOnlyList<string> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeProvisioningIssue(string name, HybridComputeProvisioningIssueType? issueType, HybridComputeProvisioningIssueSeverity? severity, string description, IReadOnlyList<string> suggestedResourceIds, IReadOnlyList<HybridComputeAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IssueType = issueType;
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Name of the provisioning issue. </summary>
         public string Name { get; }
         /// <summary> Issue type. </summary>
-        public ProvisioningIssueType? IssueType { get; }
+        public HybridComputeProvisioningIssueType? IssueType { get; }
         /// <summary> Severity of the provisioning issue. </summary>
-        public ProvisioningIssueSeverity? Severity { get; }
+        public HybridComputeProvisioningIssueSeverity? Severity { get; }
         /// <summary> Description of the provisioning issue. </summary>
         public string Description { get; }
         /// <summary> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </summary>
         public IReadOnlyList<string> SuggestedResourceIds { get; }
         /// <summary> Access rules that can be added to the perimeter to remediate the issue. </summary>
-        public IReadOnlyList<AccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<HybridComputeAccessRule> SuggestedAccessRules { get; }
     }
 }

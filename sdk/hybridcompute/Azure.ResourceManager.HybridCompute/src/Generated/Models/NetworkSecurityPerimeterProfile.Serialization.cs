@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IReadOnlyList<AccessRule> accessRules = default;
+            IReadOnlyList<HybridComputeAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IReadOnlyList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<HybridComputeAccessRule> array = new List<HybridComputeAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(HybridComputeAccessRule.DeserializeHybridComputeAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkSecurityPerimeterProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<AccessRule>(),
+                accessRules ?? new ChangeTrackingList<HybridComputeAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

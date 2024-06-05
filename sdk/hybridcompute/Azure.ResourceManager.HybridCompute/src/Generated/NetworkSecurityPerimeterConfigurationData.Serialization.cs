@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceType type = default;
             SystemData systemData = default;
             string provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<HybridComputeProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
+            HybridComputeResourceAssociation resourceAssociation = default;
             NetworkSecurityPerimeterProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                            List<HybridComputeProvisioningIssue> array = new List<HybridComputeProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                                array.Add(HybridComputeProvisioningIssue.DeserializeHybridComputeProvisioningIssue(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(property0.Value, options);
+                            resourceAssociation = HybridComputeResourceAssociation.DeserializeHybridComputeResourceAssociation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridCompute
                 type,
                 systemData,
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<HybridComputeProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,

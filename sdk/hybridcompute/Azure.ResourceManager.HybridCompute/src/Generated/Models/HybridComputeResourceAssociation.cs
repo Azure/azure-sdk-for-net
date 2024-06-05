@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Access rule. </summary>
-    public partial class AccessRule
+    /// <summary> Properties that define a Resource Association. </summary>
+    public partial class HybridComputeResourceAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeResourceAssociation"/>. </summary>
+        internal HybridComputeResourceAssociation()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        /// <param name="name"> Name of the access rule. </param>
-        /// <param name="direction"> Direction of the access rule. </param>
-        /// <param name="addressPrefixes"> Address prefixes that are allowed access. </param>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeResourceAssociation"/>. </summary>
+        /// <param name="name"> Name of the Resource Association. </param>
+        /// <param name="accessMode"> The access mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeResourceAssociation(string name, HybridComputeAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Direction = direction;
-            AddressPrefixes = addressPrefixes;
+            AccessMode = accessMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the access rule. </summary>
+        /// <summary> Name of the Resource Association. </summary>
         public string Name { get; }
-        /// <summary> Direction of the access rule. </summary>
-        public AccessRuleDirection? Direction { get; }
-        /// <summary> Address prefixes that are allowed access. </summary>
-        public IReadOnlyList<string> AddressPrefixes { get; }
+        /// <summary> The access mode. </summary>
+        public HybridComputeAccessMode? AccessMode { get; }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationData()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<HybridComputeProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="resourceAssociation"> The Resource Association. </param>
         /// <param name="profile"> Network Security Perimeter profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityPerimeterProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, IReadOnlyList<HybridComputeProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, HybridComputeResourceAssociation resourceAssociation, NetworkSecurityPerimeterProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
         public string ProvisioningState { get; }
         /// <summary> Provisioning issues. </summary>
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<HybridComputeProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> The Network Security Perimeter associated with this configuration. </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
         /// <summary> The Resource Association. </summary>
-        public ResourceAssociation ResourceAssociation { get; }
+        public HybridComputeResourceAssociation ResourceAssociation { get; }
         /// <summary> Network Security Perimeter profile. </summary>
         public NetworkSecurityPerimeterProfile Profile { get; }
     }

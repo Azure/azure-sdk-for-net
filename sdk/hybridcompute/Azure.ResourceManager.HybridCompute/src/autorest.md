@@ -9,7 +9,7 @@ csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
 require: https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2023-10
+#tag: package-preview-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -55,6 +55,14 @@ prepend-rp-prefix:
   - ServiceStatus
   - ServiceStatuses
   - WindowsParameters
+  - AccessMode
+  - ResourceAssociation
+  - AccessRule
+  - AccessRuleDirection
+  - ProgramYear
+  - ProvisioningIssue
+  - ProvisioningIssueSeverity
+  - ProvisioningIssueType
 
 list-exception: 
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
