@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     //replace HIDDEN with actual value
                     Destination = new WebHookEventSubscriptionDestination()
                     {
-                        Endpoint = new Uri("https://prod-29.eastus.logic.azure.com:443/workflows/e3b43dc73eb244b78a1cd55996703378/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Sanitized"),
+                        Endpoint = new Uri("https://prod-29.eastus.logic.azure.com:443/workflows/e3b43dc73eb244b78a1cd55996703378/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=Sanitized&sig=Sanitized"),
                     },
                 }
             };
