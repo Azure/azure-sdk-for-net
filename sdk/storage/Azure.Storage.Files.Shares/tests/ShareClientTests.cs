@@ -566,6 +566,38 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task CreateAsync_PaidBursting()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnablePaidBursting = true,
+                PaidBurstingMaxIops = 100000,
+                PaidBurstingMaxBandwidthMibps = 1000
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.IsTrue(response.Value.EnablePaidBursting);
+                Assert.AreEqual(10000, response.Value.PaidBurstingMaxIops);
+                Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [RecordedTest]
         public async Task GetPermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
