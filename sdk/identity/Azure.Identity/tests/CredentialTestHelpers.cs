@@ -589,7 +589,7 @@ namespace Azure.Identity.Tests
 
                 payloadJson.WriteString("jti", Guid.NewGuid());
                 payloadJson.WriteString("aud", audience);
-                payloadJson.WriteString("iss", clientId);
+                payloadJson.WriteString("iss", tenantId);
                 payloadJson.WriteString("sub", clientId);
                 payloadJson.WriteNumber("nbf", DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 payloadJson.WriteNumber("exp", (DateTimeOffset.UtcNow + TimeSpan.FromMinutes(30)).ToUnixTimeSeconds());

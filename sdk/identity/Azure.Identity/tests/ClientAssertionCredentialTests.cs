@@ -1,6 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -42,7 +47,18 @@ namespace Azure.Identity.Tests
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
+
+            var cert = new X509Certificate2(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx"));
+            if (IsAsync)
+            {
+                Func<CancellationToken, Task<string>> assertionCallback = (ct) => Task.FromResult(CredentialTestHelpers.CreateClientAssertionJWT(options.AuthorityHost, ClientId, config.TenantId, cert));
+                return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, assertionCallback, options));
+            }
+            else
+            {
+                Func<string> assertionCallback = () => CredentialTestHelpers.CreateClientAssertionJWT(options.AuthorityHost, ClientId, config.TenantId, cert);
+                return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, assertionCallback, options));
+            }
         }
     }
 }
