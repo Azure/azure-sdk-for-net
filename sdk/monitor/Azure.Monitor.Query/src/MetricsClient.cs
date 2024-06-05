@@ -40,7 +40,9 @@ namespace Azure.Monitor.Query
             _clientDiagnostics = new ClientDiagnostics(options);
 
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsClientAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "//.default";
             var scopes = new List<string> { authorizationScope };
+
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
