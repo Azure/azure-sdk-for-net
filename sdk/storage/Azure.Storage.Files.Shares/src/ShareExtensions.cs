@@ -828,6 +828,9 @@ namespace Azure.Storage.Files.Shares
                 Metadata = metadata,
                 EnableSnapshotVirtualDirectoryAccess = sharePropertiesInternal.EnableSnapshotVirtualDirectoryAccess,
                 QuotaInGB = sharePropertiesInternal.Quota,
+                EnablePaidBursting = sharePropertiesInternal.PaidBurstingEnabled,
+                PaidBurstingMaxIops = sharePropertiesInternal.PaidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMiBps
             };
         }
 

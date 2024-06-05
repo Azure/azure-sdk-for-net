@@ -590,6 +590,15 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.IsTrue(response.Value.EnablePaidBursting);
                 Assert.AreEqual(10000, response.Value.PaidBurstingMaxIops);
                 Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+
+                // Act
+                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+                ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
+
+                // Assert
+                Assert.IsTrue(shareItem.Properties.EnablePaidBursting);
+                Assert.AreEqual(10000, shareItem.Properties.PaidBurstingMaxIops);
+                Assert.AreEqual(1000, shareItem.Properties.PaidBurstingMaxBandwidthMibps);
             }
             finally
             {
