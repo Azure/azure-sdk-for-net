@@ -91,7 +91,12 @@ namespace Azure.Core
             // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
             // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
             // This was added to support operating systems with non-ascii characters in their release names.
-            var osDescription = ContainsNonAscii(runtimeInformation.OSDescription) ? WebUtility.UrlEncode(runtimeInformation.OSDescription) : runtimeInformation.OSDescription;
+            string osDescription;
+#if NET8_0_OR_GREATER
+            osDescription = Ascii.IsValid(runtimeInformation.OSDescription) ? runtimeInformation.OSDescription : WebUtility.UrlEncode(runtimeInformation.OSDescription);
+#else
+            osDescription = ContainsNonAscii(runtimeInformation.OSDescription) ? WebUtility.UrlEncode(runtimeInformation.OSDescription) : runtimeInformation.OSDescription;
+#endif
 
             var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
 
@@ -167,7 +172,6 @@ namespace Azure.Core
             return sb.ToString();
         }
 
-        // Would be nice to use https://learn.microsoft.com/dotnet/api/system.text.ascii.isvalid (.NET 8+) in the future
         private static bool ContainsNonAscii(string value)
         {
             foreach (char c in value)

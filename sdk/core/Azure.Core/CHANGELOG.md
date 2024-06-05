@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters.
+
 ### Other Changes
 
 ## 1.39.0 (2024-04-18)
