@@ -22,9 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
-        internal AzureBlobFSWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties, object blockSizeInMB) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        internal AzureBlobFSWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IList<MetadataItem> metadata, IDictionary<string, object> additionalProperties, object blockSizeInMB) : base(type, maxConcurrentConnections, copyBehavior, metadata, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
             Type = type ?? "AzureBlobFSWriteSettings";

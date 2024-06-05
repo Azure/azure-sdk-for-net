@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Dns.Models
             DnsRecordType.SOA => "SOA",
             DnsRecordType.SRV => "SRV",
             DnsRecordType.TXT => "TXT",
+            DnsRecordType.Tlsa => "TLSA",
+            DnsRecordType.DS => "DS",
+            DnsRecordType.Naptr => "NAPTR",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsRecordType value.")
         };
 
@@ -38,6 +41,9 @@ namespace Azure.ResourceManager.Dns.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SOA")) return DnsRecordType.SOA;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SRV")) return DnsRecordType.SRV;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TXT")) return DnsRecordType.TXT;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLSA")) return DnsRecordType.Tlsa;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DS")) return DnsRecordType.DS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NAPTR")) return DnsRecordType.Naptr;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsRecordType value.");
         }
     }
