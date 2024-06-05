@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 503:
                     {
                         ServiceError value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response, _host, message.Request.Uri.Host);
                         return new QuickPulseResponse(success: false);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 case 503:
                     {
                         ServiceError value = default;
-                        if (message.Response.Headers.ContentLength != 0)
+                        if (message.Response.Headers.ContentLength is not null && message.Response.Headers.ContentLength != 0)
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
@@ -141,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response, _host, message.Request.Uri.Host);
                         return new QuickPulseResponse(success: false);
                     }
                 default:
