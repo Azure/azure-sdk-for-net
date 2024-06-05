@@ -491,5 +491,15 @@ namespace Azure.Storage.Files.Shares.Models
                 changedOn: changedOn,
                 lastModified: lastModified,
                 eTag: etag);
+
+        /// <summary>
+        /// Creates a new ShareFilePermission instance for mocking.
+        /// </summary>
+        public static ShareFilePermission ShareFilePermission(
+            FilePermissionKeyFormat? permissionKeyFormat,
+            string permission)
+            => new ShareFilePermission(
+                filePermissionKeyFormat: permissionKeyFormat,
+                permission: permission);
     }
 }

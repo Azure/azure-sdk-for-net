@@ -3157,6 +3157,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey">
         /// The file permission key.
         /// </param>
+        /// <param name="filePermissionKeyFormat">
+        /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
+        /// If filePermissionKeyFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// returned in SSDL format.
+        /// If filePermissionKeyFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// base64 string representing the binary encoding of the permission in self-relative format.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3164,14 +3171,48 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{String}"/> file permission.
         /// </returns>
-        public virtual Response<string> GetPermission(
-            string filePermissionKey = default,
+        public virtual Response<ShareFilePermission> GetPermission(
+            string filePermissionKey,
+            FilePermissionKeyFormat? filePermissionKeyFormat = default,
             CancellationToken cancellationToken = default) =>
             GetPermissionInternal(
-                filePermissionKey,
+                filePermissionKey: filePermissionKey,
+                filePermissionKeyFormat: filePermissionKeyFormat,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="filePermissionKeyFormat">
+        /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
+        /// If filePermissionKeyFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// returned in SSDL format.
+        /// If filePermissionKeyFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// base64 string representing the binary encoding of the permission in self-relative format.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual async Task<Response<ShareFilePermission>> GetPermissionAsync(
+            string filePermissionKey,
+            FilePermissionKeyFormat? filePermissionKeyFormat = default,
+            CancellationToken cancellationToken = default) =>
+            await GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionKeyFormat: filePermissionKeyFormat,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
@@ -3187,17 +3228,61 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{String}"/> file permission.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<string> GetPermission(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string filePermissionKey,
+            CancellationToken cancellationToken)
+        {
+            Response<ShareFilePermission> response = GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionKeyFormat: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+            return Response.FromValue(
+                response.Value.Permission,
+                response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<string>> GetPermissionAsync(
-            string filePermissionKey = default,
-            CancellationToken cancellationToken = default) =>
-            await GetPermissionInternal(
-                filePermissionKey,
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string filePermissionKey,
+            CancellationToken cancellationToken)
+        {
+            Response<ShareFilePermission> response = await GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionKeyFormat: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        private async Task<Response<string>> GetPermissionInternal(
+            return Response.FromValue(
+                response.Value.Permission,
+                response.GetRawResponse());
+        }
+
+        private async Task<Response<ShareFilePermission>> GetPermissionInternal(
             string filePermissionKey,
+            FilePermissionKeyFormat? filePermissionKeyFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3219,6 +3304,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.GetPermissionAsync(
                             filePermissionKey: filePermissionKey,
+                            filePermissionKeyFormat: filePermissionKeyFormat,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3226,12 +3312,11 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.GetPermission(
                             filePermissionKey: filePermissionKey,
+                            filePermissionKeyFormat: filePermissionKeyFormat,
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(
-                        response.Value.Permission,
-                        response.GetRawResponse());
+                    return response.ToShareFilePermission();
                 }
                 catch (Exception ex)
                 {

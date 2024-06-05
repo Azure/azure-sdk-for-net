@@ -974,5 +974,14 @@ namespace Azure.Storage.Files.Shares
 
             return lastModified;
         }
+
+        internal static Response<ShareFilePermission> ToShareFilePermission(this ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response)
+        {
+            return Response.FromValue(
+                new ShareFilePermission(
+                    filePermissionKeyFormat: response.Value.Format,
+                    permission: response.Value.Permission),
+                response.GetRawResponse());
+        }
     }
 }

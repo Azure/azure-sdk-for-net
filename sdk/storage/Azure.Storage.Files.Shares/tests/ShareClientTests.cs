@@ -480,6 +480,36 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase(null)]
+        [TestCase(FilePermissionKeyFormat.Sddl)]
+        [TestCase(FilePermissionKeyFormat.Binary)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task CreateAndGetPermissionAsync_FilePermissionKeyFormat(FilePermissionKeyFormat? filePermissionKeyFormat)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+
+            // Act
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionKeyFormat);
+
+            // Assert
+            Assert.AreEqual(filePermissionKeyFormat, getResponse.Value.PermissionKeyFormat);
+
+            if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
+            {
+                Assert.AreEqual(permission, getResponse.Value.Permission);
+            }
+            else
+            {
+                Assert.AreEqual("", getResponse.Value.Permission);
+            }
+        }
+
+        [RecordedTest]
         public async Task CreatePermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
