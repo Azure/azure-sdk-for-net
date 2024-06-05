@@ -49,12 +49,12 @@ namespace Azure.Data.AppConfiguration
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     tags = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (JsonElement tag in property.Value.EnumerateArray())
                     {
-                        tags.Add(item.GetString());
+                        tags.Add(tag.GetString());
                     }
                     continue;
                 }

@@ -24,31 +24,16 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 Tags = { { "someKey", "someValue" } }
             };
-            var betaInstances = new ConfigurationSetting("instances", "1", "beta")
-            {
-                Tags = { { "someKey", "someValue" } }
-            };
-            var productionEndpoint = new ConfigurationSetting("endpoint", "https://production.endpoint.com", "production")
-            {
-                Tags = { { "someKey", "otherValue" } }
-            };
-            var productionInstances = new ConfigurationSetting("instances", "1", "production")
-            {
-                Tags = { { "someKey", "otherValue" } }
-            };
             #endregion
 
             #region Snippet:AzConfigSample12_AddConfigurationSettingAsync
             await client.AddConfigurationSettingAsync(betaEndpoint);
-            await client.AddConfigurationSettingAsync(betaInstances);
-            await client.AddConfigurationSettingAsync(productionEndpoint);
-            await client.AddConfigurationSettingAsync(productionInstances);
             #endregion
 
             #region Snippet:AzConfigSample12_GetConfigurationSettingsAsync
-            var selector = new SettingSelector { TagsFilter = new string[] { "someKey=otherValue" } };
+            var selector = new SettingSelector { TagsFilter = new string[] { "someKey=someValue" } };
 
-            Debug.WriteLine("Settings for production filtered by tag:");
+            Debug.WriteLine("Settings for beta filtered by tag:");
             await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
             {
                 Console.WriteLine(setting);
@@ -58,9 +43,6 @@ namespace Azure.Data.AppConfiguration.Samples
             // Delete the Configuration Settings from the Configuration Store.
             #region Snippet:AzConfigSample12_DeleteConfigurationSettingAsync
             await client.DeleteConfigurationSettingAsync(betaEndpoint.Key, betaEndpoint.Label);
-            await client.DeleteConfigurationSettingAsync(betaInstances.Key, betaInstances.Label);
-            await client.DeleteConfigurationSettingAsync(productionEndpoint.Key, productionEndpoint.Label);
-            await client.DeleteConfigurationSettingAsync(productionInstances.Key, productionInstances.Label);
             #endregion
         }
     }
