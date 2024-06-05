@@ -22,14 +22,14 @@ namespace Azure.Storage.Blobs.Tests
         public void AccountSasStringToSignLogging()
         {
             // Arrange
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
             BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(1);
-
-            listener.EventWritten += (sender, e) => {
-                Assert.IsTrue(false);
-                Assert.AreEqual($"stringToSign:\n{service.AccountName}\nw\nb\nsco\n{expiresOn}\n{_serviceVersion}", e.ToString());
-            };
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) =>
+                {
+                    Assert.AreEqual($"Generated string to sign:\n{service.AccountName}\nw\nb\nsco\n\n{SasExtensions.FormatTimesForSasSigning(expiresOn)}\n\n\n{SasQueryParametersInternals.DefaultSasVersionInternal}\n\n", message);
+                },
+                EventLevel.Verbose);
 
             // Act
             Uri sasUri = service.GenerateAccountSasUri(
