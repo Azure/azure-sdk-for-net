@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="state"> Gets or sets the workflow health state. </param>
         /// <param name="error"> Gets or sets the workflow error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowHealth(WorkflowHealthState state, ErrorEntity error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowHealth(WorkflowHealthState state, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Error = error;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.AppService.Models
         public WorkflowHealthState State { get; }
         /// <summary> Gets or sets the workflow error. </summary>
         [WirePath("error")]
-        public ErrorEntity Error { get; }
+        public ResponseError Error { get; }
     }
 }

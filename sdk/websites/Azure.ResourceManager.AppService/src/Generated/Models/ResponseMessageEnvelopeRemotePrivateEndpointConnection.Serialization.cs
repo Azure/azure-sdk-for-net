@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                JsonSerializer.Serialize(writer, Error);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             RemotePrivateEndpointConnection properties = default;
             AppServiceSkuDescription sku = default;
             string status = default;
-            ErrorEntity error = default;
+            ResponseError error = default;
             ManagedServiceIdentity identity = default;
             IReadOnlyList<string> zones = default;
             ResourceIdentifier id = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = ErrorEntity.DeserializeErrorEntity(property.Value, options);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

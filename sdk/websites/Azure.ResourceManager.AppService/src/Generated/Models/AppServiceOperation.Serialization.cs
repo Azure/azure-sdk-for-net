@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
             string id = default;
             string name = default;
             AppServiceOperationStatus? status = default;
-            IReadOnlyList<ErrorEntity> errors = default;
+            IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdTime = default;
             DateTimeOffset? modifiedTime = default;
             DateTimeOffset? expirationTime = default;
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<ErrorEntity> array = new List<ErrorEntity>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorEntity.DeserializeErrorEntity(item, options));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     errors = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 status,
-                errors ?? new ChangeTrackingList<ErrorEntity>(),
+                errors ?? new ChangeTrackingList<ResponseError>(),
                 createdTime,
                 modifiedTime,
                 expirationTime,

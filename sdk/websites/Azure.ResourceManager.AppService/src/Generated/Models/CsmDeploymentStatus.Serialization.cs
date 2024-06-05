@@ -91,15 +91,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteStartArray();
-                foreach (var item in Errors)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                JsonSerializer.Serialize(writer, Errors);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -151,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? numberOfInstancesSuccessful = default;
             int? numberOfInstancesFailed = default;
             IList<string> failedInstancesLogs = default;
-            IList<ErrorEntity> errors = default;
+            ResponseError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,12 +250,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            List<ErrorEntity> array = new List<ErrorEntity>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ErrorEntity.DeserializeErrorEntity(item, options));
-                            }
-                            errors = array;
+                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -283,7 +273,7 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesSuccessful,
                 numberOfInstancesFailed,
                 failedInstancesLogs ?? new ChangeTrackingList<string>(),
-                errors ?? new ChangeTrackingList<ErrorEntity>(),
+                errors,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -504,18 +494,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(Errors))
+                if (Optional.IsDefined(Errors))
                 {
-                    if (Errors.Any())
-                    {
-                        builder.Append("    errors: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Errors)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    errors: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
+                    builder.Append("    errors: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Errors, options, 4, false, "    errors: ");
                 }
             }
 

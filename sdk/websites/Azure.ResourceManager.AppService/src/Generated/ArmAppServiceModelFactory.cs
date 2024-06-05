@@ -1260,9 +1260,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expireOn"> Time when operation will expire. </param>
         /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
         /// <returns> A new <see cref="Models.AppServiceOperation"/> instance for mocking. </returns>
-        public static AppServiceOperation AppServiceOperation(string id = null, string name = null, AppServiceOperationStatus? status = null, IEnumerable<ErrorEntity> errors = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? expireOn = null, Guid? geoMasterOperationId = null)
+        public static AppServiceOperation AppServiceOperation(string id = null, string name = null, AppServiceOperationStatus? status = null, IEnumerable<ResponseError> errors = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? expireOn = null, Guid? geoMasterOperationId = null)
         {
-            errors ??= new List<ErrorEntity>();
+            errors ??= new List<ResponseError>();
 
             return new AppServiceOperation(
                 id,
@@ -3750,7 +3750,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ErrorEntity error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
+        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -4458,7 +4458,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameAnalysisResult"/> instance for mocking. </returns>
-        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ErrorEntity customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
+        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ResponseError customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
         {
             cNameRecords ??= new List<string>();
             txtRecords ??= new List<string>();
@@ -5291,13 +5291,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numberOfInstancesSuccessful"> Number of site instances provisioned successfully. </param>
         /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
-        /// <param name="errors"> List of errors. </param>
+        /// <param name="errors"> Raw failure information if DNS verification fails. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CsmDeploymentStatus"/> instance for mocking. </returns>
-        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ErrorEntity> errors = null, string kind = null)
+        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, ResponseError errors = null, string kind = null)
         {
             failedInstancesLogs ??= new List<string>();
-            errors ??= new List<ErrorEntity>();
 
             return new CsmDeploymentStatus(
                 id,
@@ -5310,7 +5309,7 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesSuccessful,
                 numberOfInstancesFailed,
                 failedInstancesLogs?.ToList(),
-                errors?.ToList(),
+                errors,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -6528,7 +6527,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="state"> Gets or sets the workflow health state. </param>
         /// <param name="error"> Gets or sets the workflow error. </param>
         /// <returns> A new <see cref="Models.WorkflowHealth"/> instance for mocking. </returns>
-        public static WorkflowHealth WorkflowHealth(WorkflowHealthState state = default, ErrorEntity error = null)
+        public static WorkflowHealth WorkflowHealth(WorkflowHealthState state = default, ResponseError error = null)
         {
             return new WorkflowHealth(state, error, serializedAdditionalRawData: null);
         }
