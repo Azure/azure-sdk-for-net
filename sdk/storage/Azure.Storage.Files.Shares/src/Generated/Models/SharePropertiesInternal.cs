@@ -49,8 +49,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="enableSnapshotVirtualDirectoryAccess"></param>
         /// <param name="paidBurstingEnabled"></param>
         /// <param name="paidBurstingMaxIops"></param>
-        /// <param name="paidBurstingMaxBandwidthMiBps"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMiBps)
+        /// <param name="paidBurstingMaxBandwidthMibps"></param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.Shares.Models
             EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess;
             PaidBurstingEnabled = paidBurstingEnabled;
             PaidBurstingMaxIops = paidBurstingMaxIops;
-            PaidBurstingMaxBandwidthMiBps = paidBurstingMaxBandwidthMiBps;
+            PaidBurstingMaxBandwidthMibps = paidBurstingMaxBandwidthMibps;
         }
 
         /// <summary> Gets the last modified. </summary>
@@ -118,7 +118,7 @@ namespace Azure.Storage.Files.Shares.Models
         public bool? PaidBurstingEnabled { get; }
         /// <summary> Gets the paid bursting max iops. </summary>
         public long? PaidBurstingMaxIops { get; }
-        /// <summary> Gets the paid bursting max bandwidth mi bps. </summary>
-        public long? PaidBurstingMaxBandwidthMiBps { get; }
+        /// <summary> Gets the paid bursting max bandwidth mibps. </summary>
+        public long? PaidBurstingMaxBandwidthMibps { get; }
     }
 }
