@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // Authenticate the client
             var credential = new AzurePowerShellCredential();
             var armClient = new ArmClient(credential);
-            #region Snippet:Readme_CreateSimpleTrinoCluster
+            #region Snippet:Readme_CreateTrinoClusterAvailabilityZone
             // define the prerequisites information: subscription, resource group and location where you want to create the resource
             string subscriptionResourceId = "/subscriptions/{subscription id}"; // your subscription resource id like /subscriptions/{subscription id}
             string resourceGroupName = "{your resource group}"; // your resource group name
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             var clusterCollection = clusterPoolCollection.Get(clusterPoolName).Value.GetHDInsightClusters();
 
             var clusterResult = clusterCollection.CreateOrUpdate(Azure.WaitUntil.Completed, clusterName, clusterData);
-            #endregion Snippet:Readme_CreateSimpleTrinoCluster
+            #endregion Snippet:Readme_CreateTrinoClusterAvailabilityZone
         }
     }
 }
