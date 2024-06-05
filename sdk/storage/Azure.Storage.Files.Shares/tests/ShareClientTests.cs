@@ -452,10 +452,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
-            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value);
+            Assert.AreEqual(permission, getResponse.Value.Permission);
         }
 
         [RecordedTest]
@@ -473,10 +473,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
-            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value);
+            Assert.AreEqual(permission, getResponse.Value.Permission);
         }
 
         [RecordedTest]
@@ -497,15 +497,17 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionKeyFormat);
 
             // Assert
-            Assert.AreEqual(filePermissionKeyFormat, getResponse.Value.PermissionKeyFormat);
 
             if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
             {
                 Assert.AreEqual(permission, getResponse.Value.Permission);
+                Assert.AreEqual(FilePermissionKeyFormat.Sddl, getResponse.Value.PermissionKeyFormat);
             }
             else
             {
-                Assert.AreEqual("", getResponse.Value.Permission);
+                Assert.AreEqual(
+                    "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=",
+                    getResponse.Value.Permission);
             }
         }
 
