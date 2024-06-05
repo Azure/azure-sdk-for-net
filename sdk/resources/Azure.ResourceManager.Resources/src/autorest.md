@@ -487,7 +487,7 @@ directive:
           "tags": [
             "DeploymentStacks"
           ],
-          "operationId": "DeploymentStacks_ListAtCope",
+          "operationId": "DeploymentStacks_ListAtScope",
           "description": "Lists all the Deployment stacks within the specified scope.",
           "parameters": [
             {

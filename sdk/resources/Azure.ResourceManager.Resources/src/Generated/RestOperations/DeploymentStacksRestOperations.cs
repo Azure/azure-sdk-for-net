@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateListAtCopeRequestUri(string scope)
+        internal RequestUriBuilder CreateListAtScopeRequestUri(string scope)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListAtCopeRequest(string scope)
+        internal Core.HttpMessage CreateListAtScopeRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentStackListResult>> ListAtCopeAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentStackListResult>> ListAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListAtCopeRequest(scope);
+            using var message = CreateListAtScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentStackListResult> ListAtCope(string scope, CancellationToken cancellationToken = default)
+        public Response<DeploymentStackListResult> ListAtScope(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListAtCopeRequest(scope);
+            using var message = CreateListAtScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateListAtCopeNextPageRequestUri(string nextLink, string scope)
+        internal RequestUriBuilder CreateListAtScopeNextPageRequestUri(string nextLink, string scope)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListAtCopeNextPageRequest(string nextLink, string scope)
+        internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -603,12 +603,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentStackListResult>> ListAtCopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentStackListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListAtCopeNextPageRequest(nextLink, scope);
+            using var message = CreateListAtScopeNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -629,12 +629,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentStackListResult> ListAtCopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
+        public Response<DeploymentStackListResult> ListAtScopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListAtCopeNextPageRequest(nextLink, scope);
+            using var message = CreateListAtScopeNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
