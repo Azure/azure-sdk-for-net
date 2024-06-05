@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
                 Assert.Ignore("AzurePipelinesCredentialLiveTests disabled because required environment variables are not set");
             }
 
-            var cred = new AzurePipelinesCredential(systemAccessToken, clientId, tenantId, serviceConnectionId);
+            var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken);
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { "https://management.azure.com//.default" }), CancellationToken.None);
 

@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
                 Pipeline = CredentialPipeline.GetInstance(null),
             };
 
-            return InstrumentClient(new AzurePipelinesCredential("mytoken", ClientId, TenantId, Guid.NewGuid().ToString(), options: pipelineOptions));
+            return InstrumentClient(new AzurePipelinesCredential(TenantId, ClientId, Guid.NewGuid().ToString(), "mytoken", options: pipelineOptions));
         }
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
 
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new AzurePipelinesCredential("mytoken", ClientId, config.TenantId, "myConnectionId", options: options));
+            return InstrumentClient(new AzurePipelinesCredential(config.TenantId, ClientId, "myConnectionId", "mytoken", options: options));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Azure.Identity.Tests
                 { "SYSTEM_OIDCREQUESTURI", null },
             }))
             {
-                var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mytoken", "myClientId", "myTenantId", "myConnectionId"), new MockCredential());
+                var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("myTenantId", "myClientId", "myConnectionId", "mytoken"), new MockCredential());
 
                 AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
 
@@ -114,7 +114,7 @@ namespace Azure.Identity.Tests
                             $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}"));
 
                 var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
-                var cred = new AzurePipelinesCredential(systemAccessToken, clientId, tenantId, serviceConnectionId, options);
+                var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
 
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
             }

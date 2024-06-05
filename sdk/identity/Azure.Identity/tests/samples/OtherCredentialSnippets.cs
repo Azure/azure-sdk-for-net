@@ -17,7 +17,7 @@ namespace Azure.Identity.Tests.samples
             string serviceConnectionId = "<the value of service connection Id>";
 
             // Construct the credential.
-            var credential = new AzurePipelinesCredential(Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"), clientId, tenantId, serviceConnectionId);
+            var credential = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"));
 
             // Use the credential to authenticate with the Key Vault client.
             var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);

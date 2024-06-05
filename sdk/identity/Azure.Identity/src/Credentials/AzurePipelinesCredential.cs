@@ -34,13 +34,13 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePipelinesCredential"/>.
         /// </summary>
-        /// <param name="systemAccessToken">The pipeline's <see href="https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops%26tabs=yaml#systemaccesstoken">System.AccessToken</see> value.</param>
-        /// <param name="clientId">The client ID for the service connection.</param>
         /// <param name="tenantId">The tenant ID for the service connection.</param>
+        /// <param name="clientId">The client ID for the service connection.</param>
         /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline.</param>
+        /// <param name="systemAccessToken">The pipeline's <see href="https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops%26tabs=yaml#systemaccesstoken">System.AccessToken</see> value.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
-        public AzurePipelinesCredential(string systemAccessToken, string clientId, string tenantId, string serviceConnectionId, AzurePipelinesCredentialOptions options = default)
+        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, AzurePipelinesCredentialOptions options = default)
         {
             Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));
             Argument.AssertNotNull(clientId, nameof(clientId));
