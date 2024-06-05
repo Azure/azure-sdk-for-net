@@ -196,7 +196,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.Cors = null;
+            properties.Value.Protocol = null;
 
             // Act
             await service.SetPropertiesAsync(properties: properties.Value);
