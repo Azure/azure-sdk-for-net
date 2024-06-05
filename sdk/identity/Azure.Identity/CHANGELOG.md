@@ -3,6 +3,7 @@
 ## 1.12.0-beta.3 (Unreleased)
 
 ### Features Added
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
 
 ### Breaking Changes
 

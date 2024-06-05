@@ -322,6 +322,8 @@ namespace Azure.Identity
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<string> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options) { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, string userAssertion) { }
