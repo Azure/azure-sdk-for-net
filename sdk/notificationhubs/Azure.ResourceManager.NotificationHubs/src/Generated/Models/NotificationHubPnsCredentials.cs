@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub PNS Credentials. </summary>
+    /// <summary>
+    /// Description of a NotificationHub PNS Credentials. This is a response of the POST requests that return namespace or hubs
+    /// PNS credentials.
+    /// </summary>
     public partial class NotificationHubPnsCredentials : TrackedResourceData
     {
         /// <summary>
@@ -60,23 +63,27 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="apnsCredential"> The ApnsCredential of the created NotificationHub. </param>
-        /// <param name="wnsCredential"> The WnsCredential of the created NotificationHub. </param>
-        /// <param name="gcmCredential"> The GcmCredential of the created NotificationHub. </param>
-        /// <param name="mpnsCredential"> The MpnsCredential of the created NotificationHub. </param>
-        /// <param name="admCredential"> The AdmCredential of the created NotificationHub. </param>
-        /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
+        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
+        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
+        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
+        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
+        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
+        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
+        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
+        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPnsCredentials(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubPnsCredentials(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubAdmCredential admCredential, NotificationHubApnsCredential apnsCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubWnsCredential wnsCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            AdmCredential = admCredential;
             ApnsCredential = apnsCredential;
-            WnsCredential = wnsCredential;
+            BaiduCredential = baiduCredential;
+            BrowserCredential = browserCredential;
             GcmCredential = gcmCredential;
             MpnsCredential = mpnsCredential;
-            AdmCredential = admCredential;
-            BaiduCredential = baiduCredential;
-            Sku = sku;
+            WnsCredential = wnsCredential;
+            XiaomiCredential = xiaomiCredential;
+            FcmV1Credential = fcmV1Credential;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,19 +92,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
         }
 
-        /// <summary> The ApnsCredential of the created NotificationHub. </summary>
-        public NotificationHubApnsCredential ApnsCredential { get; set; }
-        /// <summary> The WnsCredential of the created NotificationHub. </summary>
-        public NotificationHubWnsCredential WnsCredential { get; set; }
-        /// <summary> The GcmCredential of the created NotificationHub. </summary>
-        public NotificationHubGcmCredential GcmCredential { get; set; }
-        /// <summary> The MpnsCredential of the created NotificationHub. </summary>
-        public NotificationHubMpnsCredential MpnsCredential { get; set; }
-        /// <summary> The AdmCredential of the created NotificationHub. </summary>
+        /// <summary> Description of a NotificationHub AdmCredential. </summary>
         public NotificationHubAdmCredential AdmCredential { get; set; }
-        /// <summary> The BaiduCredential of the created NotificationHub. </summary>
+        /// <summary> Description of a NotificationHub ApnsCredential. </summary>
+        public NotificationHubApnsCredential ApnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub BaiduCredential. </summary>
         public NotificationHubBaiduCredential BaiduCredential { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubSku Sku { get; set; }
+        /// <summary> Description of a NotificationHub BrowserCredential. </summary>
+        public BrowserCredential BrowserCredential { get; set; }
+        /// <summary> Description of a NotificationHub GcmCredential. </summary>
+        public NotificationHubGcmCredential GcmCredential { get; set; }
+        /// <summary> Description of a NotificationHub MpnsCredential. </summary>
+        public NotificationHubMpnsCredential MpnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub WnsCredential. </summary>
+        public NotificationHubWnsCredential WnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub XiaomiCredential. </summary>
+        public XiaomiCredential XiaomiCredential { get; set; }
+        /// <summary> Description of a NotificationHub FcmV1Credential. </summary>
+        public FcmV1Credential FcmV1Credential { get; set; }
     }
 }

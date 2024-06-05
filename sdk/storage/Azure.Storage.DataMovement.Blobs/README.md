@@ -235,7 +235,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         new BlobStorageResourceContainerOptions()
         {
             // Block blobs are the default if not specified
-            BlobType = BlobType.Block,
+            BlobType = new(BlobType.Block),
             BlobDirectoryPrefix = optionalDestinationPrefix,
         }));
 ```
@@ -296,7 +296,7 @@ destinationResource: blobs.FromContainer(
     {
         // all source blobs will be copied as a single type of destination blob
         // defaults to block blobs if unspecified
-        BlobType = BlobType.Block,
+        BlobType = new(BlobType.Block),
         BlobDirectoryPrefix = downloadPath
     }));
 await dataTransfer.WaitForCompletionAsync();

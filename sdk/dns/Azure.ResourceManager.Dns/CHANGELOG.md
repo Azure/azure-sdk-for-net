@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2024-06-01)
+
+### Features Added
+
+- Added `trafficManagementProfile` property in some classes.
+- Added `serializedAdditionalRawData` property in some classes
+- Added resources: `DnsNaptrRecord`, `DnsTlsaRecord`, `DnsDSRecord`, and `DnssecConfig`.
+- Added `SigningKeys` property in DnsZoneData
 
 ## 1.1.1 (2024-04-29)
 

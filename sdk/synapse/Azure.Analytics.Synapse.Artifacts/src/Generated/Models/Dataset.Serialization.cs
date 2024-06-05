@@ -125,6 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element);
                     case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element);
                     case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element);
+                    case "GoogleBigQueryV2Object": return GoogleBigQueryV2ObjectDataset.DeserializeGoogleBigQueryV2ObjectDataset(element);
                     case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element);
                     case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element);
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element);
@@ -134,6 +135,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
                     case "Json": return JsonDataset.DeserializeJsonDataset(element);
+                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
                     case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);
@@ -153,6 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element);
                     case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element);
                     case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element);
+                    case "PostgreSqlV2Table": return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element);
                     case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element);
                     case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element);
                     case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element);
@@ -161,6 +164,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SalesforceMarketingCloudObject": return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element);
                     case "SalesforceObject": return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element);
                     case "SalesforceServiceCloudObject": return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element);
+                    case "SalesforceServiceCloudV2Object": return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element);
+                    case "SalesforceV2Object": return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element);
                     case "SapBwCube": return SapBwCubeDataset.DeserializeSapBwCubeDataset(element);
                     case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element);
                     case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element);
@@ -169,15 +174,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element);
+                    case "ServiceNowV2Object": return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element);
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element);
+                    case "SnowflakeV2Table": return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element);
                     case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element);
                     case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element);
                     case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element);
                     case "SybaseTable": return SybaseTableDataset.DeserializeSybaseTableDataset(element);
                     case "TeradataTable": return TeradataTableDataset.DeserializeTeradataTableDataset(element);
                     case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element);
+                    case "WarehouseTable": return WarehouseTableDataset.DeserializeWarehouseTableDataset(element);
                     case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element);
                     case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element);
                     case "Xml": return XmlDataset.DeserializeXmlDataset(element);

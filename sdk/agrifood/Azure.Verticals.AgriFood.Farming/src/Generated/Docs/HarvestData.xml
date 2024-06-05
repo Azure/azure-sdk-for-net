@@ -7,7 +7,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -20,7 +20,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -45,7 +45,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -83,7 +83,7 @@ This sample shows how to call GetHarvestDataAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", null);
 
@@ -94,7 +94,7 @@ This sample shows how to call GetHarvestDataAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", null);
 
@@ -151,7 +151,7 @@ This sample shows how to call GetHarvestData and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", null);
 
@@ -162,7 +162,7 @@ This sample shows how to call GetHarvestData with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", null);
 
@@ -219,7 +219,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<harvestDataId>", content);
@@ -231,7 +231,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -315,7 +315,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<harvestDataId>", content);
@@ -327,7 +327,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -411,7 +411,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>");
 
@@ -421,7 +421,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>");
 
@@ -434,7 +434,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.Delete("<partyId>", "<harvestDataId>");
 
@@ -444,7 +444,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Response response = client.Delete("<partyId>", "<harvestDataId>");
 
@@ -457,7 +457,7 @@ This sample shows how to call GetAllHarvestDataAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 await foreach (BinaryData item in client.GetAllHarvestDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -469,7 +469,7 @@ This sample shows how to call GetAllHarvestDataAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 await foreach (BinaryData item in client.GetAllHarvestDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -527,7 +527,7 @@ This sample shows how to call GetAllHarvestData and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 foreach (BinaryData item in client.GetAllHarvestData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -539,7 +539,7 @@ This sample shows how to call GetAllHarvestData with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 foreach (BinaryData item in client.GetAllHarvestData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -597,7 +597,7 @@ This sample shows how to call GetAllHarvestDataByPartyIdAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 await foreach (BinaryData item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -609,7 +609,7 @@ This sample shows how to call GetAllHarvestDataByPartyIdAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 await foreach (BinaryData item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -667,7 +667,7 @@ This sample shows how to call GetAllHarvestDataByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 foreach (BinaryData item in client.GetAllHarvestDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -679,7 +679,7 @@ This sample shows how to call GetAllHarvestDataByPartyId with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 foreach (BinaryData item in client.GetAllHarvestDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -737,7 +737,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
 BinaryData responseData = operation.Value;
@@ -751,7 +751,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
 BinaryData responseData = operation.Value;
@@ -777,7 +777,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
 BinaryData responseData = operation.Value;
@@ -791,7 +791,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
 BinaryData responseData = operation.Value;
