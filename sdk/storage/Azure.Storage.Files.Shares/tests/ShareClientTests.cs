@@ -1645,6 +1645,31 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task SetPropertiesAsync_PaidBursting()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            await using DisposingShare test = await GetTestShareAsync(service);
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                EnablePaidBursting = true,
+                PaidBurstingMaxIops = 10000,
+                PaidBurstingMaxBandwidthMibps = 1000
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnablePaidBursting);
+            Assert.AreEqual(10000, response.Value.PaidBurstingMaxIops);
+            Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+        }
+
+        [RecordedTest]
         public async Task SetQuotaAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();

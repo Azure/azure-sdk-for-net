@@ -1990,6 +1990,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: options?.AccessTier,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -2026,6 +2029,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: options?.AccessTier,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -2054,6 +2060,18 @@ namespace Azure.Storage.Files.Shares
         /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
         /// If not specified, the default is true.
         /// </param>
+        /// <param name="enablePaidBursting">
+        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  This property enables paid bursting on premium file storage accounts.
+        /// </param>
+        /// <param name="paidBurstingMaxIops">
+        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
+        /// </param>
+        /// <param name="paidBurstingMaxBandwidthMibps">
+        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2081,6 +2099,9 @@ namespace Azure.Storage.Files.Shares
             ShareAccessTier? accessTier,
             ShareRootSquash? rootSquash,
             bool? enableSnapshotVirtualDirectoryAccess,
+            bool? enablePaidBursting,
+            long? paidBurstingMaxIops,
+            long? paidBurstingMaxBandwidthMibps,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2110,6 +2131,9 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             rootSquash: rootSquash,
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
+                            paidBurstingEnabled: enablePaidBursting,
+                            paidBurstingMaxIops: paidBurstingMaxIops,
+                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2121,6 +2145,9 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             rootSquash: rootSquash,
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
+                            paidBurstingEnabled: enablePaidBursting,
+                            paidBurstingMaxIops: paidBurstingMaxIops,
+                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2182,6 +2209,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2225,6 +2255,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2266,6 +2299,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2306,6 +2342,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,

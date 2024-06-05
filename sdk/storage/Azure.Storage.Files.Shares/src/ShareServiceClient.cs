@@ -889,6 +889,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -938,6 +941,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -992,6 +998,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1046,6 +1055,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
