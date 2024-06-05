@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyKey))
-            {
-                writer.WritePropertyName("policyKey"u8);
-                writer.WriteStringValue(PolicyKey);
-            }
+            writer.WritePropertyName("policyKey"u8);
+            writer.WriteStringValue(PolicyKey);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

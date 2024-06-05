@@ -53,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element);
                     case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element);
                     case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element);
+                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element);
                     case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element);
                 }
             }

@@ -49,22 +49,15 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(Properties))
             {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
+                writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(Properties))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(Properties))
                 {
-                    writer.WriteNull("properties");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (Optional.IsDefined(IsDataAction))
             {
@@ -143,7 +136,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        properties = null;
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());

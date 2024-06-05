@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -1283,18 +1281,68 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task PurgeMessages()
+        public async Task PurgeMessagesWithOneCall()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
-                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete.
                 await Task.Delay(TimeSpan.FromSeconds(2));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync();
+
+                Assert.AreEqual(messageCount, numMessagesDeleted);
+
+                // All messages should have been deleted.
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithTwoCalls()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount + 10;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                // Delay a moment to ensure that the messages are available to
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync();
+
+                Assert.AreEqual(messageCount, numMessagesDeleted);
+
+                // All messages should have been deleted.
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithMultipleCalls()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = (ServiceBusReceiver.MaxDeleteMessageCount * 4) + 5;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                // Delay a moment to ensure that the messages are available to
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
@@ -1314,12 +1362,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
-                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                var messageCount = (ServiceBusReceiver.MaxDeleteMessageCount * 3) + 2;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
-                // read/delete.
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 // Mark the time for deleting.
                 var targetDate = DateTime.UtcNow;

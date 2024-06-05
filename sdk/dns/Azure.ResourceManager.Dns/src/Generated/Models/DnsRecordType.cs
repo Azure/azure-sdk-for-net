@@ -29,6 +29,12 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> SRV. </summary>
         SRV,
         /// <summary> TXT. </summary>
-        TXT
+        TXT,
+        /// <summary> TLSA. </summary>
+        Tlsa,
+        /// <summary> DS. </summary>
+        DS,
+        /// <summary> NAPTR. </summary>
+        Naptr
     }
 }
