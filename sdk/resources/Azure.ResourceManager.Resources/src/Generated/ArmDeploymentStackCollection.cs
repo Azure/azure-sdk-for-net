@@ -17,28 +17,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeploymentStackResource"/> and their operations.
-    /// Each <see cref="DeploymentStackResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DeploymentStackCollection"/> instance call the GetDeploymentStacks method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="ArmDeploymentStackResource"/> and their operations.
+    /// Each <see cref="ArmDeploymentStackResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="ArmDeploymentStackCollection"/> instance call the GetArmDeploymentStacks method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class DeploymentStackCollection : ArmCollection, IEnumerable<DeploymentStackResource>, IAsyncEnumerable<DeploymentStackResource>
+    public partial class ArmDeploymentStackCollection : ArmCollection, IEnumerable<ArmDeploymentStackResource>, IAsyncEnumerable<ArmDeploymentStackResource>
     {
-        private readonly ClientDiagnostics _deploymentStackClientDiagnostics;
-        private readonly DeploymentStacksRestOperations _deploymentStackRestClient;
+        private readonly ClientDiagnostics _armDeploymentStackDeploymentStacksClientDiagnostics;
+        private readonly DeploymentStacksRestOperations _armDeploymentStackDeploymentStacksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentStackCollection"/> class for mocking. </summary>
-        protected DeploymentStackCollection()
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentStackCollection"/> class for mocking. </summary>
+        protected ArmDeploymentStackCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentStackCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentStackCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DeploymentStackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArmDeploymentStackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeploymentStackResource.ResourceType, out string deploymentStackApiVersion);
-            _deploymentStackRestClient = new DeploymentStacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion);
+            _armDeploymentStackDeploymentStacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentStackResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ArmDeploymentStackResource.ResourceType, out string armDeploymentStackDeploymentStacksApiVersion);
+            _armDeploymentStackDeploymentStacksRestClient = new DeploymentStacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentStackDeploymentStacksApiVersion);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentStackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmDeploymentStackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.CreateOrUpdate");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deploymentStackRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentStackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _armDeploymentStackDeploymentStacksRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentStackName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ArmDeploymentStackResource>(new ArmDeploymentStackOperationSource(Client), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeploymentStackResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmDeploymentStackResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.CreateOrUpdate");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deploymentStackRestClient.CreateOrUpdateAtScope(Id, deploymentStackName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _armDeploymentStackDeploymentStacksRestClient.CreateOrUpdateAtScope(Id, deploymentStackName, data, cancellationToken);
+                var operation = new ResourcesArmOperation<ArmDeploymentStackResource>(new ArmDeploymentStackOperationSource(Client), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,18 +164,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        public virtual async Task<Response<DeploymentStackResource>> GetAsync(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentStackResource>> GetAsync(string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.Get");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deploymentStackRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentStackDeploymentStacksRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,18 +209,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        public virtual Response<DeploymentStackResource> Get(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentStackResource> Get(string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.Get");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.Get");
             scope.Start();
             try
             {
-                var response = _deploymentStackRestClient.GetAtScope(Id, deploymentStackName, cancellationToken);
+                var response = _armDeploymentStackDeploymentStacksRestClient.GetAtScope(Id, deploymentStackName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,17 +246,17 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentStackResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmDeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmDeploymentStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentStackRestClient.CreateListAtCopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentStackRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeploymentStackResource(Client, DeploymentStackData.DeserializeDeploymentStackData(e)), _deploymentStackClientDiagnostics, Pipeline, "DeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentStackResource(Client, ArmDeploymentStackData.DeserializeArmDeploymentStackData(e)), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, "ArmDeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,17 +276,17 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentStackResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmDeploymentStackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmDeploymentStackResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentStackRestClient.CreateListAtCopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentStackRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeploymentStackResource(Client, DeploymentStackData.DeserializeDeploymentStackData(e)), _deploymentStackClientDiagnostics, Pipeline, "DeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentStackDeploymentStacksRestClient.CreateListAtCopeNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentStackResource(Client, ArmDeploymentStackData.DeserializeArmDeploymentStackData(e)), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, "ArmDeploymentStackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,11 +318,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.Exists");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deploymentStackRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentStackDeploymentStacksRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.Exists");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deploymentStackRestClient.GetAtScope(Id, deploymentStackName, cancellationToken: cancellationToken);
+                var response = _armDeploymentStackDeploymentStacksRestClient.GetAtScope(Id, deploymentStackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,18 +400,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DeploymentStackResource>> GetIfExistsAsync(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ArmDeploymentStackResource>> GetIfExistsAsync(string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.GetIfExists");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deploymentStackRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentStackDeploymentStacksRestClient.GetAtScopeAsync(Id, deploymentStackName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<DeploymentStackResource>(response.GetRawResponse());
-                return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ArmDeploymentStackResource>(response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,18 +445,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        public virtual NullableResponse<DeploymentStackResource> GetIfExists(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ArmDeploymentStackResource> GetIfExists(string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
 
-            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackCollection.GetIfExists");
+            using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deploymentStackRestClient.GetAtScope(Id, deploymentStackName, cancellationToken: cancellationToken);
+                var response = _armDeploymentStackDeploymentStacksRestClient.GetAtScope(Id, deploymentStackName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<DeploymentStackResource>(response.GetRawResponse());
-                return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ArmDeploymentStackResource>(response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<DeploymentStackResource> IEnumerable<DeploymentStackResource>.GetEnumerator()
+        IEnumerator<ArmDeploymentStackResource> IEnumerable<ArmDeploymentStackResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DeploymentStackResource> IAsyncEnumerable<DeploymentStackResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ArmDeploymentStackResource> IAsyncEnumerable<ArmDeploymentStackResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Resources.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentStackResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ArmDeploymentStackResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
-        public virtual DeploymentStackCollection GetDeploymentStacks(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
+        public virtual ArmDeploymentStackCollection GetArmDeploymentStacks(ResourceIdentifier scope)
         {
-            return new DeploymentStackCollection(Client, scope);
+            return new ArmDeploymentStackCollection(Client, scope);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            return await GetDeploymentStacks(scope).GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetArmDeploymentStacks(scope).GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
+        /// <description><see cref="ArmDeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeploymentStackResource> GetDeploymentStack(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentStackResource> GetArmDeploymentStack(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            return GetDeploymentStacks(scope).Get(deploymentStackName, cancellationToken);
+            return GetArmDeploymentStacks(scope).Get(deploymentStackName, cancellationToken);
         }
 
         /// <summary>
@@ -206,15 +206,15 @@ namespace Azure.ResourceManager.Resources.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentStackResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeploymentStackResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentStackResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ArmDeploymentStackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmDeploymentStackResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentStackResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentStackResource"/> object. </returns>
-        public virtual DeploymentStackResource GetDeploymentStackResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArmDeploymentStackResource"/> object. </returns>
+        public virtual ArmDeploymentStackResource GetArmDeploymentStackResource(ResourceIdentifier id)
         {
-            DeploymentStackResource.ValidateResourceId(id);
-            return new DeploymentStackResource(Client, id);
+            ArmDeploymentStackResource.ValidateResourceId(id);
+            return new ArmDeploymentStackResource(Client, id);
         }
     }
 }

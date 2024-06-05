@@ -28,23 +28,19 @@ enable-bicep-serialization: true
 rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
+  DeploymentStack: ArmDeploymentStack
 
 patch-initializer-customization:
   ArmDeploymentContent:
     Properties: 'new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental)'
 
 request-path-to-parent:
-  #/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}
-  #/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}
   # setting these to the same parent will automatically merge these operations
   /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
-  #/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}: /{scope}/providers/Microsoft.Resources/deploymentStacks
-  #/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}: /{scope}/providers/Microsoft.Resources/deploymentStacks
-  #/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}: /{scope}/providers/Microsoft.Resources/deploymentStacks
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}:
     - subscriptions
@@ -420,7 +416,7 @@ directive:
           }
         }
       };
-      $['/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate'] = {
+      $['/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate'] = {
         "post": {
           "tags": [
             "DeploymentStacks"
