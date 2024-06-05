@@ -135,7 +135,6 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
         }
 
-        [RecordedTest]
         public async Task BatchNodeExtension()
         {
             var client = CreateBatchClient();
@@ -177,6 +176,75 @@ namespace Azure.Compute.Batch.Tests.Integration
                     BatchNodeVMExtension batchNodeVMExtension = await client.GetNodeExtensionAsync(poolID, batchNodeID, item.VmExtension.Name);
                     Assert.NotNull(batchNodeVMExtension);
                 }
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetRemoteLoginSettings()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "GetRemoteLoginSettings", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(2);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+
+                BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
+                Assert.NotNull(batchNodeRemoteLoginSettings);
+                Assert.IsNotEmpty(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task Scheduling()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "Scheduling", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+                BatchNodeDisableSchedulingContent batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingContent()
+                {
+                    NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.TaskCompletion,
+                };
+                Response response = await client.DisableNodeSchedulingAsync(poolID, batchNodeID, batchNodeDisableSchedulingContent);
+                Assert.AreEqual(200, response.Status);
+
+                response = await client.EnableNodeSchedulingAsync(poolID, batchNodeID);
+                Assert.AreEqual(200, response.Status);
+
+                UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("http://fake.com", DateTimeOffset.Now);
+
+                UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
+                Assert.NotNull(uploadBatchServiceLogsResult);
+                Assert.IsNotEmpty(uploadBatchServiceLogsResult.VirtualDirectoryName);
             }
             finally
             {
