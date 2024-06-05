@@ -137,6 +137,23 @@ namespace Azure.ResourceManager.Resources.Tests
             Location = location
         };
 
+        protected static DeploymentStackData CreateDeploymentStackDataWithEmptyTemplate(string stackId, AzureLocation location) {
+            var data = new DeploymentStackData() {
+                Template = BinaryData.FromObjectAsJson(new JsonObject()),
+                DenySettings = new DenySettings() {
+                    Mode = DenySettingsMode.None,
+                },
+                ActionOnUnmanage = new ActionOnUnmanage() {
+                    Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                    ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                    ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+                },
+                BypassStackOutOfSyncError = false
+            };
+
+            return data;
+        }
+
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {
             var userAssignedIdentities = new GenericResourceData(AzureLocation.WestUS2);
