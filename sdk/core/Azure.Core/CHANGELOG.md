@@ -1,16 +1,19 @@
 # Release History
 
-## 1.40.0-beta.1 (Unreleased)
+## 1.40.0 (2024-06-06)
 
 ### Features Added
 
-### Breaking Changes
+- Added `RefreshOn` property to `AccessToken` and updated `BearerTokenAuthenticationPolicy` to refresh long-lived credentials according to this value [#43836](https://github.com/Azure/azure-sdk-for-net/issues/43836).
 
 ### Bugs Fixed
 
-- Fix for operation id not set of incomplete long-running operation.
+- Fixed case where Operation.Id was not being set for incomplete long-running operations [#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098).
 
 ### Other Changes
+
+- Improved memory performance for HTTP message sanitization [#43818](https://github.com/Azure/azure-sdk-for-net/pull/43818).
+- Added `DynamicallyAccessedMembers` attribute to type parameter in `Operation<T>.Rehydrate` method [#44208](https://github.com/Azure/azure-sdk-for-net/pull/44208).
 
 ## 1.39.0 (2024-04-18)
 
