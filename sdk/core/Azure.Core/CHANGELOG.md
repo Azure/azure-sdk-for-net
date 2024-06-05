@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters.
 - Fix for operation id not set of incomplete long-running operation.
 
 ### Other Changes
