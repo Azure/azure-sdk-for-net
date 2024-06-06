@@ -42,7 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         //[Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
-            var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
             Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
 
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
@@ -111,23 +110,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
             await VerifyTelemetry(
                 description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated");
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
 
             await VerifyTelemetry(
                 description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated");
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
 
             await VerifyTelemetry(
                 description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{RoleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{RoleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated");
 
             await VerifyTelemetry(
                 description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{RoleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
 
             await VerifyTelemetry(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated");
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
         }
 
         private async Task VerifyTelemetry(string description, string query)
