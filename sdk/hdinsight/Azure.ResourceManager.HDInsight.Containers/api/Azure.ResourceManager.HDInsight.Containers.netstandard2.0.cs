@@ -20,12 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     public partial class HDInsightClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData>
     {
         public HDInsightClusterData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile { get { throw null; } set { } }
-        public string ClusterType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> ComputeNodes { get { throw null; } set { } }
-        public string DeploymentId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
-        public string Status { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -52,16 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     public partial class HDInsightClusterPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData>
     {
         public HDInsightClusterPoolData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile { get { throw null; } }
-        public string AksManagedResourceGroupName { get { throw null; } }
-        public string ClusterPoolVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ComputeProfile { get { throw null; } set { } }
-        public string DeploymentId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
-        public string ManagedResourceGroupName { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
-        public string Status { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -83,6 +69,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade> GetClusterPoolAvailableUpgrades(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade> GetClusterPoolAvailableUpgradesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory> GetClusterPoolUpgradeHistories(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory> GetClusterPoolUpgradeHistoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> GetHDInsightCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> GetHDInsightClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterCollection GetHDInsightClusters() { throw null; }
@@ -117,12 +105,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade> GetClusterAvailableUpgradesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob> GetClusterJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob> GetClusterJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary> GetClusterLibraries(Azure.ResourceManager.HDInsight.Containers.Models.Category category, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary> GetClusterLibrariesAsync(Azure.ResourceManager.HDInsight.Containers.Models.Category category, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory> GetClusterUpgradeHistories(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory> GetClusterUpgradeHistoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult> GetInstanceViews(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult> GetInstanceViewsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult> GetServiceConfigs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult> GetServiceConfigsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ManageLibrariesClusterLibrary(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ManageLibrariesClusterLibraryAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -140,6 +134,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgrade clusterUpgradeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgrade clusterUpgradeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> UpgradeManualRollback(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback clusterRollbackUpgradeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> UpgradeManualRollbackAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback clusterRollbackUpgradeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class HDInsightContainersExtensions
     {
@@ -204,26 +200,42 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         public static Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile(Azure.Core.ResourceIdentifier aksClusterResourceId = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile ClusterAccessProfile(bool enableInternalIngress = false, Azure.Core.ResourceIdentifier privateLinkServiceId = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade ClusterAvailableUpgrade(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem ClusterComponentItem(string name = null, string version = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile ClusterConnectivityProfile(Azure.ResourceManager.HDInsight.Containers.Models.WebConnectivityEndpoint web = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint> ssh = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> serviceStatuses = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties ClusterInstanceViewProperties(Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> serviceStatuses = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties ClusterInstanceViewResultProperties(Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> serviceStatuses = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus ClusterInstanceViewStatus(string ready = null, string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob ClusterJob(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterJobProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion ClusterPoolVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterPoolVersionValue = null, string aksVersion = null, bool? isPreview = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile clusterAccessProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, bool? rangerPluginProfileEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile rangerProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent ClusterResizeContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? targetWorkerNodeCount = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult ClusterServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> defaultKeys = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary ClusterLibrary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent ClusterLibraryManagementContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties ClusterLibraryProperties(string libraryType = null, string remarks = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.ResourceManager.HDInsight.Containers.Models.Status? status = default(Azure.ResourceManager.HDInsight.Containers.Models.Status?), string message = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade ClusterPoolAvailableUpgrade(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = default(int?), System.Collections.Generic.IEnumerable<string> availabilityZones = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties ClusterPoolResourceProperties(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile aksClusterProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile networkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory ClusterPoolUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion ClusterPoolVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec> identityList = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile clusterAccessProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, bool? rangerPluginProfileEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile rangerProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent ClusterResizeContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? clusterResizeTargetWorkerNodeCount = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties ClusterResourceProperties(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string clusterType = null, string deploymentId = null, Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult ClusterServiceConfigResult(Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity ClusterServiceConfigValueEntity(string value = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile ClusterSshProfile(int count = 0, string podPrefix = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile ClusterSshProfile(int count = 0, string podPrefix = null, string vmSize = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory ClusterUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties ClusterVersionProperties(string clusterType = null, string clusterVersion = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobProperties FlinkJobProperties(string runId = null, string jobName = null, string jobJarDirectory = null, string jarName = null, string entryClass = null, string args = null, string savePointName = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction? action = default(Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction?), System.Collections.Generic.IDictionary<string, string> flinkConfiguration = null, string jobId = null, string status = null, string jobOutput = null, string actionResult = null, string lastSavePoint = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string clusterType = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> computeNodes = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile = null, string status = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile aksClusterProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile networkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion HDInsightClusterVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterType = null, string clusterVersion = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion HDInsightClusterVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus HDInsightServiceStatus(string kind = null, string ready = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints KafkaConnectivityEndpoints(string bootstrapServerEndpoint = null, System.Collections.Generic.IEnumerable<string> brokerEndpoints = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile(bool? enableKRaft = default(bool?), bool? enablePublicEndpoints = default(bool?), System.Uri remoteStorageUri = null, Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile clusterIdentity = null, Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints connectivityEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile(bool? enableKRaft = default(bool?), bool? enablePublicEndpoints = default(bool?), string remoteStorageUriString = null, Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage = null, Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints connectivityEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties MavenLibraryProperties(string remarks = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.ResourceManager.HDInsight.Containers.Models.Status? status = default(Azure.ResourceManager.HDInsight.Containers.Models.Status?), string message = null, string groupId = null, string name = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties PyPiLibraryProperties(string remarks = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.ResourceManager.HDInsight.Containers.Models.Status? status = default(Azure.ResourceManager.HDInsight.Containers.Models.Status?), string message = null, string name = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties ServiceConfigListResultProperties(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> defaultKeys = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties ServiceConfigResultProperties(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> defaultKeys = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint SshConnectivityEndpoint(string endpoint = null, string privateSshEndpoint = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.WebConnectivityEndpoint WebConnectivityEndpoint(string fqdn = null, string privateFqdn = null) { throw null; }
     }
@@ -274,6 +286,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay left, Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Category : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.Category>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Category(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Category Custom { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Category Predefined { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.Category other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.Category left, Azure.ResourceManager.HDInsight.Containers.Models.Category right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.Category (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.Category left, Azure.ResourceManager.HDInsight.Containers.Models.Category right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ClusterAccessProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile>
     {
         public ClusterAccessProfile(bool enableInternalIngress) { }
@@ -284,6 +314,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterAksPatchUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>
+    {
+        public ClusterAksPatchUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        public string NewVersion { get { throw null; } set { } }
+        public string OriginalVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAksPatchUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterAKSPatchVersionUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAKSPatchVersionUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAKSPatchVersionUpgradeProperties>
     {
@@ -326,14 +367,74 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ClusterAvailableInPlaceUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>
+    {
+        public ClusterAvailableInPlaceUpgradeProperties() { }
+        public string ComponentName { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string ExtendedProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.Severity? Severity { get { throw null; } set { } }
+        public string SourceBuildNumber { get { throw null; } set { } }
+        public string SourceClusterVersion { get { throw null; } set { } }
+        public string SourceOssVersion { get { throw null; } set { } }
+        public string TargetBuildNumber { get { throw null; } set { } }
+        public string TargetClusterVersion { get { throw null; } set { } }
+        public string TargetOssVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterAvailableUpgrade : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>
     {
         public ClusterAvailableUpgrade() { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgrade>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterAvailableUpgradeAksPatchUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>
+    {
+        public ClusterAvailableUpgradeAksPatchUpgradeProperties() { }
+        public string CurrentVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus? CurrentVersionStatus { get { throw null; } set { } }
+        public string LatestVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeAksPatchUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterAvailableUpgradeHotfixUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>
+    {
+        public ClusterAvailableUpgradeHotfixUpgradeProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeHotfixUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterAvailableUpgradePatchVersionUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableInPlaceUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>
+    {
+        public ClusterAvailableUpgradePatchVersionUpgradeProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradePatchVersionUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ClusterAvailableUpgradeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>
+    {
+        protected ClusterAvailableUpgradeProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAvailableUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterComponentItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem>
     {
@@ -383,30 +484,93 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterHotfixUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>
+    public partial class ClusterHotfixUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>
+    {
+        public ClusterHotfixUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterHotfixUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>
     {
         public ClusterHotfixUpgradeProperties() { }
-        public string ComponentName { get { throw null; } set { } }
-        public string TargetBuildNumber { get { throw null; } set { } }
-        public string TargetClusterVersion { get { throw null; } set { } }
-        public string TargetOssVersion { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterHotfixUpgradeRollbackHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>
+    {
+        public ClusterHotfixUpgradeRollbackHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterHotfixUpgradeRollbackHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterInPlaceUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>
+    {
+        public ClusterInPlaceUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        public string ComponentName { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType? Severity { get { throw null; } set { } }
+        public string SourceBuildNumber { get { throw null; } set { } }
+        public string SourceClusterVersion { get { throw null; } set { } }
+        public string SourceOssVersion { get { throw null; } set { } }
+        public string TargetBuildNumber { get { throw null; } set { } }
+        public string TargetClusterVersion { get { throw null; } set { } }
+        public string TargetOssVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterInPlaceUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>
+    {
+        public ClusterInPlaceUpgradeProperties() { }
+        public string ComponentName { get { throw null; } set { } }
+        public string TargetBuildNumber { get { throw null; } set { } }
+        public string TargetClusterVersion { get { throw null; } set { } }
+        public string TargetOssVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterInstanceViewProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>
+    {
+        internal ClusterInstanceViewProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> ServiceStatuses { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus Status { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterInstanceViewResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>
     {
         internal ClusterInstanceViewResult() { }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> ServiceStatuses { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus Status { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties Properties { get { throw null; } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterInstanceViewResultProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>
+    {
+        internal ClusterInstanceViewResultProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterInstanceViewStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus>
     {
@@ -439,6 +603,50 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJobProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJobProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterLibrary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>
+    {
+        public ClusterLibrary(Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties properties) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterLibraryManagementContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>
+    {
+        public ClusterLibraryManagementContent(Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties properties) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterLibraryManagementOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>
+    {
+        public ClusterLibraryManagementOperationProperties(Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction action, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary> libraries) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction Action { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibrary> Libraries { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryManagementOperationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ClusterLibraryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>
+    {
+        protected ClusterLibraryProperties() { }
+        public string Message { get { throw null; } }
+        public string Remarks { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.Status? Status { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterLogAnalyticsApplicationLogs : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsApplicationLogs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsApplicationLogs>
     {
         public ClusterLogAnalyticsApplicationLogs() { }
@@ -462,6 +670,46 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterPatchVersionUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>
+    {
+        public ClusterPatchVersionUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPatchVersionUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>
+    {
+        public ClusterPatchVersionUpgradeProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPatchVersionUpgradeRollbackHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInPlaceUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>
+    {
+        public ClusterPatchVersionUpgradeRollbackHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType)) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPatchVersionUpgradeRollbackHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPoolAksPatchUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>
+    {
+        public ClusterPoolAksPatchUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType)) { }
+        public string NewVersion { get { throw null; } set { } }
+        public string OriginalVersion { get { throw null; } set { } }
+        public bool? UpgradeAllClusterNodes { get { throw null; } set { } }
+        public bool? UpgradeClusterPool { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAksPatchUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterPoolAKSPatchVersionUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAKSPatchVersionUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAKSPatchVersionUpgradeProperties>
     {
         public ClusterPoolAKSPatchVersionUpgradeProperties() { }
@@ -477,15 +725,48 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterPoolAvailableUpgrade : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>
     {
         public ClusterPoolAvailableUpgrade() { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgrade>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterPoolAvailableUpgradeAksPatchUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>
+    {
+        public ClusterPoolAvailableUpgradeAksPatchUpgradeProperties() { }
+        public string CurrentVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus? CurrentVersionStatus { get { throw null; } set { } }
+        public string LatestVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeAksPatchUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPoolAvailableUpgradeNodeOSUpgradeProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>
+    {
+        public ClusterPoolAvailableUpgradeNodeOSUpgradeProperties() { }
+        public string LatestVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeNodeOSUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ClusterPoolAvailableUpgradeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>
+    {
+        protected ClusterPoolAvailableUpgradeProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolAvailableUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterPoolComputeProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile>
     {
         public ClusterPoolComputeProfile(string vmSize) { }
+        public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public int? Count { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -527,6 +808,35 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSImageUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSImageUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterPoolNodeOSUpgradeHistoryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>
+    {
+        public ClusterPoolNodeOSUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType upgradeResult) : base (default(string), default(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType)) { }
+        public string NewNodeOS { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNodeOSUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPoolResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>
+    {
+        public ClusterPoolResourceProperties(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile { get { throw null; } }
+        public string AksManagedResourceGroupName { get { throw null; } }
+        public string ClusterPoolVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ComputeProfile { get { throw null; } set { } }
+        public string DeploymentId { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
+        public string ManagedResourceGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
+        public string Status { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClusterPoolUpgrade : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade>
     {
         public ClusterPoolUpgrade(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeProperties properties) { }
@@ -536,6 +846,45 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgrade>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPoolUpgradeHistory : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>
+    {
+        public ClusterPoolUpgradeHistory(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties properties) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ClusterPoolUpgradeHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>
+    {
+        protected ClusterPoolUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType upgradeResult) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType UpgradeResult { get { throw null; } set { } }
+        public string UtcTime { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterPoolUpgradeHistoryUpgradeResultType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterPoolUpgradeHistoryUpgradeResultType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType Failed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType Succeed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryUpgradeResultType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class ClusterPoolUpgradeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeProperties>
     {
@@ -549,14 +898,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterPoolVersion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>
     {
         public ClusterPoolVersion() { }
-        public string AksVersion { get { throw null; } set { } }
-        public string ClusterPoolVersionValue { get { throw null; } set { } }
-        public bool? IsPreview { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterPoolVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>
+    {
+        public ClusterPoolVersionProperties() { }
+        public string AksVersion { get { throw null; } set { } }
+        public string ClusterPoolVersion { get { throw null; } set { } }
+        public bool? IsPreview { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile>
     {
@@ -568,6 +927,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> Components { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile ConnectivityProfile { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile FlinkProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec> IdentityList { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile IdentityProfile { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile { get { throw null; } set { } }
@@ -592,12 +952,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterResizeContent : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>
     {
         public ClusterResizeContent(Azure.Core.AzureLocation location) { }
-        public int? TargetWorkerNodeCount { get { throw null; } set { } }
+        public int? ClusterResizeTargetWorkerNodeCount { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>
+    {
+        public ClusterResourceProperties(string clusterType, Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile computeProfile, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile { get { throw null; } set { } }
+        public string ClusterType { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile ComputeProfile { get { throw null; } set { } }
+        public string DeploymentId { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
+        public string Status { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterSecretReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretReference>
     {
@@ -637,14 +1012,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterServiceConfigResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult>
     {
         internal ClusterServiceConfigResult() { }
-        public string ComponentName { get { throw null; } }
-        public string Content { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomKeys { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> DefaultKeys { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public string Path { get { throw null; } }
-        public string ServiceConfigListResultPropertiesType { get { throw null; } }
-        public string ServiceName { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties Properties { get { throw null; } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -678,6 +1046,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public ClusterSshProfile(int count) { }
         public int Count { get { throw null; } set { } }
         public string PodPrefix { get { throw null; } }
+        public string VmSize { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -694,6 +1063,65 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgrade>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgrade>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClusterUpgradeHistory : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>
+    {
+        public ClusterUpgradeHistory(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties properties) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ClusterUpgradeHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>
+    {
+        protected ClusterUpgradeHistoryProperties(string utcTime, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType upgradeResult) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType UpgradeResult { get { throw null; } set { } }
+        public string UtcTime { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterUpgradeHistorySeverityType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterUpgradeHistorySeverityType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType Critical { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType High { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType Low { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistorySeverityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterUpgradeHistoryUpgradeResultType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterUpgradeHistoryUpgradeResultType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType Failed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType Succeed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeHistoryUpgradeResultType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class ClusterUpgradeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties>
     {
         protected ClusterUpgradeProperties() { }
@@ -702,6 +1130,52 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterUpgradeRollback : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>
+    {
+        public ClusterUpgradeRollback(Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties properties) { }
+        public string ClusterUpgradeHistory { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollback>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterUpgradeRollbackProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>
+    {
+        public ClusterUpgradeRollbackProperties(string upgradeHistory) { }
+        public string UpgradeHistory { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterUpgradeRollbackProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>
+    {
+        public ClusterVersionProperties() { }
+        public string ClusterPoolVersion { get { throw null; } set { } }
+        public string ClusterType { get { throw null; } set { } }
+        public string ClusterVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> Components { get { throw null; } }
+        public bool? IsPreview { get { throw null; } set { } }
+        public string OssVersion { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>
+    {
+        public ComputeProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> nodes) { }
+        public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> Nodes { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ComputeResourceRequirement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement>
     {
@@ -713,6 +1187,42 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CurrentClusterAksVersionStatus : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CurrentClusterAksVersionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus Deprecated { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus Supported { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus left, Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus left, Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterAksVersionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CurrentClusterPoolAksVersionStatus : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CurrentClusterPoolAksVersionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus Deprecated { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus Supported { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus left, Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus left, Azure.ResourceManager.HDInsight.Containers.Models.CurrentClusterPoolAksVersionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataDiskType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType>
@@ -913,12 +1423,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class HDInsightClusterVersion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion>
     {
         public HDInsightClusterVersion() { }
-        public string ClusterPoolVersion { get { throw null; } set { } }
-        public string ClusterType { get { throw null; } set { } }
-        public string ClusterVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> Components { get { throw null; } }
-        public bool? IsPreview { get { throw null; } set { } }
-        public string OssVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersionProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1070,12 +1575,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class KafkaProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>
     {
         public KafkaProfile(Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile ClusterIdentity { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints ConnectivityEndpoints { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile DiskStorage { get { throw null; } set { } }
         public bool? EnableKRaft { get { throw null; } set { } }
         public bool? EnablePublicEndpoints { get { throw null; } set { } }
-        public System.Uri RemoteStorageUri { get { throw null; } set { } }
+        public string RemoteStorageUriString { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1101,6 +1605,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType left, Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LibraryManagementAction : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LibraryManagementAction(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction Install { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction Uninstall { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction left, Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction left, Azure.ResourceManager.HDInsight.Containers.Models.LibraryManagementAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LoadBasedConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig>
     {
         public LoadBasedConfig(int minNodes, int maxNodes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScalingRule> scalingRules) { }
@@ -1114,6 +1636,50 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedIdentitySpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>
+    {
+        public ManagedIdentitySpec(Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType identityType, Azure.Core.ResourceIdentifier resourceId, string clientId, string objectId) { }
+        public string ClientId { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType IdentityType { get { throw null; } set { } }
+        public string ObjectId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentitySpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType Cluster { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType Internal { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType left, Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType left, Azure.ResourceManager.HDInsight.Containers.Models.ManagedIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MavenLibraryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>
+    {
+        public MavenLibraryProperties(string groupId, string name) { }
+        public string GroupId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.MavenLibraryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetastoreDBConnectionAuthenticationMode : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.MetastoreDBConnectionAuthenticationMode>
@@ -1150,6 +1716,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.OutboundType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.OutboundType left, Azure.ResourceManager.HDInsight.Containers.Models.OutboundType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PyPiLibraryProperties : Azure.ResourceManager.HDInsight.Containers.Models.ClusterLibraryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>
+    {
+        public PyPiLibraryProperties(string name) { }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.PyPiLibraryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RangerAdminSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.RangerAdminSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.RangerAdminSpec>
     {
@@ -1278,6 +1855,52 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ServiceConfigListResultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>
+    {
+        internal ServiceConfigListResultProperties() { }
+        public string ComponentName { get { throw null; } }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomKeys { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> DefaultKeys { get { throw null; } }
+        public string FileName { get { throw null; } }
+        public string Path { get { throw null; } }
+        public string ServiceConfigListResultPropertiesType { get { throw null; } }
+        public string ServiceName { get { throw null; } }
+        Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceConfigResultProperties : Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>
+    {
+        internal ServiceConfigResultProperties() { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.Severity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Severity(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Severity Critical { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Severity High { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Severity Low { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Severity Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.Severity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.Severity left, Azure.ResourceManager.HDInsight.Containers.Models.Severity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.Severity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.Severity left, Azure.ResourceManager.HDInsight.Containers.Models.Severity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SparkMetastoreSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.SparkMetastoreSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.SparkMetastoreSpec>
     {
         public SparkMetastoreSpec(string dbServerHost, string dbName) { }
@@ -1327,18 +1950,49 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.Status>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Status(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Status Installed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Status InstallFailed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Status Installing { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Status UninstallFailed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.Status Uninstalling { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.Status other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.Status left, Azure.ResourceManager.HDInsight.Containers.Models.Status right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.Status (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.Status left, Azure.ResourceManager.HDInsight.Containers.Models.Status right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TrinoCoordinator : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>
     {
         public TrinoCoordinator() { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig Debug { get { throw null; } set { } }
         public bool? HighAvailabilityEnabled { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public int? Port { get { throw null; } set { } }
-        public bool? Suspend { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrinoDebugConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>
+    {
+        public TrinoDebugConfig() { }
+        public bool? Enable { get { throw null; } set { } }
+        public int? Port { get { throw null; } set { } }
+        public bool? Suspend { get { throw null; } set { } }
+        Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrinoProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile>
     {
@@ -1347,7 +2001,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator Coordinator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.TrinoUserPlugin> Plugins { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.TrinoTelemetryConfig UserTelemetrySpecStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker Worker { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig WorkerDebug { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1379,18 +2033,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoUserPlugin>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoUserPlugin>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrinoWorker : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>
-    {
-        public TrinoWorker() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public int? Port { get { throw null; } set { } }
-        public bool? Suspend { get { throw null; } set { } }
-        Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoWorker>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class UpdatableClusterProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile>
     {
         public UpdatableClusterProfile() { }
@@ -1401,8 +2043,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public bool? RangerPluginProfileEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile RangerProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> ScriptActionProfiles { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile SecretsProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> ServiceConfigsProfiles { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile SshProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile TrinoProfile { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
