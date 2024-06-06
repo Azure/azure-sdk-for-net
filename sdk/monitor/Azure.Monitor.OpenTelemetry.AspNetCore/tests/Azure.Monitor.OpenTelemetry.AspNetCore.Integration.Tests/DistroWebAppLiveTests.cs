@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -16,6 +18,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -38,9 +41,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        //[Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
+            Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
+
+            // DEVELOPER TIP: This test implicitly checks for telemetry within the last 30 minutes.
+            // When working locally, this has the benefit of "priming" telemetry so that additional runs can complete faster without waiting for ingestion.
+            // This can negatively impact the test results if you are debugging locally and making changes to the telemetry.
+            // To mitigate this, you can include a timestamp in the query to only check for telemetry created since this test started.
+            // IMPORTANT: we cannot include timestamps in the Recorded test because it breaks queries during playback.
+            // C#:      var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            // QUERY:   | where TimeGenerated >= datetime({ testStartTimeStamp})
+
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
@@ -73,6 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .ConfigureResource(x => x.AddAttributes(resourceAttributes))
                 .UseAzureMonitor(options =>
                 {
+                    options.EnableLiveMetrics = false;
                     options.ConnectionString = TestEnvironment.ConnectionString;
                 });
 
@@ -104,40 +117,97 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ASSERT
             // NOTE: The following queries are using the LogAnalytics schema.
-            // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
-            await VerifyTelemetry(
+            await QueryAndVerifyDependency(
                 description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                expectedAppDependency: new ExpectedAppDependency
+                {
+                    Data = TestServerUrl,
+                    AppRoleName = RoleName,
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyRequest(
                 description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                expectedAppRequest: new ExpectedAppRequest
+                {
+                    Url = TestServerUrl,
+                    AppRoleName = RoleName,
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyMetric(
                 description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{RoleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.client.request.duration",
+                    AppRoleName = RoleName,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("server.address", "localhost"),
+                    },
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyMetric(
                 description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.server.request.duration",
+                    AppRoleName = RoleName,
+                    Properties = new(),
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyTrace(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                expectedAppTrace: new ExpectedAppTrace
+                {
+                    Message = LogMessage,
+                    AppRoleName = RoleName,
+                });
         }
 
-        private async Task VerifyTelemetry(string description, string query)
+        private async Task QueryAndVerifyDependency(string description, string query, ExpectedAppDependency expectedAppDependency)
         {
-            LogsTable? table = await _logsQueryClient!.CheckForRecordAsync(query);
+            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppDependency);
+        }
 
-            var rowCount = table?.Rows.Count;
+        private async Task QueryAndVerifyRequest(string description, string query, ExpectedAppRequest expectedAppRequest)
+        {
+            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppRequest);
+        }
+
+        private async Task QueryAndVerifyMetric(string description, string query, ExpectedAppMetric expectedAppMetric)
+        {
+            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppMetric);
+        }
+
+        private async Task QueryAndVerifyTrace(string description, string query, ExpectedAppTrace expectedAppTrace)
+        {
+            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppTrace);
+        }
+
+        private async Task<LogsTable> QueryTelemetryAsync(string description, string query)
+        {
+            Debug.WriteLine($"UnitTest: Query Telemetry ({description})");
+            TestContext.Out.WriteLine($"Query Telemetry ({description})");
+
+            LogsTable? resultTable = await _logsQueryClient!.CheckForRecordAsync(query);
+
+            var rowCount = resultTable?.Rows.Count;
             if (rowCount == null || rowCount == 0)
             {
                 Assert.Fail($"No telemetry records were found: {description}");
+                return null!;
             }
             else
             {
-                Assert.Pass();
+                return resultTable!;
             }
         }
     }
