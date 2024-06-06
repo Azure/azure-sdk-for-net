@@ -5,13 +5,19 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.Identity
+    UseFederatedAuth: true
     CloudConfig:
       Public:
-        SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
-          - $(sub-config-communication-services-cloud-test-resources-common)
-          - $(sub-config-communication-services-cloud-test-resources-net)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePath: eng/common/TestResources/sub-config/AzurePublicMsft.json
+        # SubscriptionConfigurations:
+        #   - $(sub-config-azure-cloud-test-resources)
+        # These resources are hosted OUTSIDE the MSFT tenant:
+        #   - $(sub-config-communication-services-cloud-test-resources-common)
+        #   - $(sub-config-communication-services-cloud-test-resources-net)
       PPE:
+        ServiceConnection: azure-sdk-tests-communication-torus
+        SubscriptionConfigurationFilePath: sdk/communication/communication-ppe-torus.json
         SubscriptionConfigurations:
           - $(sub-config-communication-ppe-test-resources-common)
           - $(sub-config-communication-ppe-test-resources-net)
@@ -22,3 +28,6 @@ extends:
     Clouds: Public,PPE,Int
     TestResourceDirectories:
       - communication/
+
+
+
