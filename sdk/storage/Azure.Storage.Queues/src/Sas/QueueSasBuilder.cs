@@ -250,7 +250,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version);
 
-            StorageEventSource.Singleton.GenerateUserDelegationSasStringToSign(stringToSign);
+            StorageEventSource.Singleton.GenerateServiceSasStringToSign(stringToSign);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
