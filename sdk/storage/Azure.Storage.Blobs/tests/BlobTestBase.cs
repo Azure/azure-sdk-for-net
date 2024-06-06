@@ -176,16 +176,13 @@ namespace Azure.Storage.Test.Shared
         public TokenCredential GetTokenCredential_TargetKeyClient()
             => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
 
-        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+        private Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
             => new Security.KeyVault.Keys.KeyClient(
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
-            => new Identity.ClientSecretCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        private  TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => TestEnvironment.Credential;
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
             string containerName,

@@ -161,10 +161,6 @@
     <KeyVaultConfiguration>
       <VaultName>ClientsideEncryptionKeyvault</VaultName>
       <VaultEndpoint>https://KEYVAULT NAME.vault.azure.net/</VaultEndpoint>
-      <ActiveDirectoryApplicationId>ActiveDirectoryApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryTenantId>ActiveDirectoryTenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryApplicationSecret>ActiveDirectoryApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
 
