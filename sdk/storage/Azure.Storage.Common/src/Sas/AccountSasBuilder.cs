@@ -221,7 +221,7 @@ namespace Azure.Storage.Sas
                 EncryptionScope,
                 string.Empty);  // That's right, the account SAS requires a terminating extra newline
 
-            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
+            StorageEventSource.Singleton.GenerateAccountSasStringToSign(stringToSign);
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(

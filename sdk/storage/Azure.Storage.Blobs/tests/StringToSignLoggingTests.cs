@@ -20,6 +20,24 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task SharedKeyStringToSignLogging()
+        {
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
+
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) =>
+                {
+                    if (e.EventName == "GenerateSharedKeyStringToSign")
+                    {
+                        Assert.IsTrue(message.Contains("Generated string to sign:\n"));
+                    }
+                },
+                EventLevel.Verbose);
+
+            await serviceClient.GetBlobContainersAsync().ToListAsync();
+        }
+
+        [RecordedTest]
         public void AccountSasStringToSignLogging()
         {
             // Arrange
@@ -28,6 +46,7 @@ namespace Azure.Storage.Blobs.Tests
             using AzureEventSourceListener listener = new AzureEventSourceListener(
                 (e, message) =>
                 {
+                    Assert.AreEqual("GenerateAccountSasStringToSign", e.EventName);
                     Assert.IsTrue(message.Contains("Generated string to sign:\n"));
                 },
                 EventLevel.Verbose);
@@ -51,6 +70,7 @@ namespace Azure.Storage.Blobs.Tests
             using AzureEventSourceListener listener = new AzureEventSourceListener(
                 (e, message) =>
                 {
+                    Assert.AreEqual("GenerateServiceSasStringToSign", e.EventName);
                     Assert.IsTrue(message.Contains("Generated string to sign:\n"));
                 },
             EventLevel.Verbose);
@@ -77,6 +97,7 @@ namespace Azure.Storage.Blobs.Tests
             using AzureEventSourceListener listener = new AzureEventSourceListener(
                 (e, message) =>
                 {
+                    Assert.AreEqual("GenerateUserDelegationSasStringToSign", e.EventName);
                     Assert.IsTrue(message.Contains("Generated string to sign:\n"));
                 },
                 EventLevel.Verbose);

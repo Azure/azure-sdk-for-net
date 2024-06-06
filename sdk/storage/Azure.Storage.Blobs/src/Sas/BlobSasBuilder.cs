@@ -367,7 +367,7 @@ namespace Azure.Storage.Sas
                 ContentLanguage,
                 ContentType);
 
-            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
+            StorageEventSource.Singleton.GenerateServiceSasStringToSign(stringToSign);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
@@ -444,7 +444,7 @@ namespace Azure.Storage.Sas
                     ContentLanguage,
                     ContentType);
 
-            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
+            StorageEventSource.Singleton.GenerateUserDelegationSasStringToSign(stringToSign);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 

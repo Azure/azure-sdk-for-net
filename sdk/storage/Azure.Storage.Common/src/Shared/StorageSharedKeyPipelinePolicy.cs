@@ -55,7 +55,7 @@ namespace Azure.Storage
             }
 
             var stringToSign = BuildStringToSign(message);
-            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
+            StorageEventSource.Singleton.GenerateSharedKeyStringToSign(stringToSign);
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
 
             var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
