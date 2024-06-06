@@ -2,20 +2,20 @@
 
 [CmdletBinding()]
 param (
-  [Parameter(Mandatory = $true)]  
+  [Parameter(Mandatory = $true)]
   [string] $PackageName,
-  [Parameter(Mandatory = $true)] 
+  [Parameter(Mandatory = $true)]
   [string] $ArtifactPath,
   [Parameter(Mandatory=$True)]
   [string] $RepoRoot,
   [Parameter(Mandatory=$True)]
-  [string] $APIKey,  
+  [string] $APIKey,
   [Parameter(Mandatory=$True)]
   [string] $ConfigFileDir,
   [string] $BuildDefinition,
   [string] $PipelineUrl,
   [string] $APIViewUri,
-  [string] $Devops_pat = $env:DEVOPS_PAT,
+  [string] $AccessToken = $null,
   [bool] $IsReleaseBuild = $false
 )
 Set-StrictMode -Version 3
@@ -24,16 +24,12 @@ Set-StrictMode -Version 3
 . ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 . ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
 
-if (!$Devops_pat) {
+if (!$AccessToken) {
   az account show *> $null
   if (!$?) {
     Write-Host 'Running az login...'
     az login *> $null
   }
-}
-else {
-  # Login using PAT
-  LoginToAzureDevops $Devops_pat
 }
 
 az extension show -n azure-devops *> $null
@@ -57,12 +53,12 @@ function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
             Message = ""
         }
         $changeLogFullPath = Join-Path $RepoRoot $changeLogPath
-        Write-Host "Path to change log: [$changeLogFullPath]"        
+        Write-Host "Path to change log: [$changeLogFullPath]"
         if (Test-Path $changeLogFullPath)
         {
             Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true -ChangeLogStatus $ChangeLogStatus -SuppressErrors $true
             $validationStatus.Status = if ($ChangeLogStatus.IsValid) { "Success" } else { "Failed" }
-            $validationStatus.Message = $ChangeLogStatus.Message 
+            $validationStatus.Message = $ChangeLogStatus.Message
         }
         else {
             $validationStatus.Status = "Failed"
@@ -83,7 +79,7 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
     $APIReviewValidation = [PSCustomObject]@{
         Name = "API Review Approval"
         Status = "Pending"
-        Message = ""    
+        Message = ""
     }
     $PackageNameValidation = [PSCustomObject]@{
         Name = "Package Name Approval"
@@ -101,7 +97,7 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
             IsApproved = $false
             Details = ""
         }
-        Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]." 
+        Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]."
         Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus $packageNameStatus
 
         Write-Host "API review approval details: $($apiStatus.Details)"
@@ -132,14 +128,14 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
 
 function IsVersionShipped($packageName, $packageVersion)
 {
-    # This function will decide if a package version is already shipped or not  
+    # This function will decide if a package version is already shipped or not
     Write-Host "Checking if a version is already shipped for package $packageName with version $packageVersion."
     $parsedNewVersion = [AzureEngSemanticVersion]::new($packageVersion)
     $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
     $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $packageName -version $versionMajorMinor -includeClosed $true -outputCommand $false
     if ($workItem)
     {
-        # Check if the package version is already shipped    
+        # Check if the package version is already shipped
         $shippedVersionSet = ParseVersionSetFromMDField $workItem.fields["Custom.ShippedPackages"]
         if ($shippedVersionSet.ContainsKey($packageVersion)) {
             return $true
@@ -163,8 +159,8 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         $setReleaseState = $false
         $plannedDate = "unknown"
     }
-        
-    # Create or update package work item  
+
+    # Create or update package work item
     &$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
         -language $LanguageDisplayName `
         -packageName $packageName `
@@ -176,8 +172,8 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
         -inRelease $IsReleaseBuild `
-        -devops_pat $Devops_pat
-    
+        -accessToken $AccessToken
+
     if ($LASTEXITCODE -ne 0)
     {
         Write-Host "Update of the Devops Release WorkItem failed."
@@ -244,7 +240,7 @@ $updatedWi = CreateUpdatePackageWorkItem $pkgInfo
 # Update validation status in package work item
 if ($updatedWi) {
     Write-Host "Updating validation status in package work item."
-    $updatedWi = UpdateValidationStatus $pkgValidationDetails $BuildDefinition $PipelineUrl    
+    $updatedWi = UpdateValidationStatus $pkgValidationDetails $BuildDefinition $PipelineUrl
 }
 
 # Fail the build if any validation is not successful for a release build
@@ -254,7 +250,7 @@ Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
 
 if ($IsReleaseBuild)
 {
-    if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {        
+    if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {
         Write-Error "At least one of the Validations above failed for package $pkgName with version $versionString."
         exit 1
     }

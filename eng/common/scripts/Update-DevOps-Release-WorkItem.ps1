@@ -15,7 +15,7 @@ param(
   [string]$packageNewLibrary = "true",
   [string]$relatedWorkItemId = $null,
   [string]$tag = $null,
-  [string]$devops_pat = $env:DEVOPS_PAT,
+  [string]$accessToken = $null,
   [bool]$inRelease = $true
 )
 #Requires -Version 6.0
@@ -29,16 +29,12 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
-if (!$devops_pat) {
+if (!$accessToken) {
   az account show *> $null
   if (!$?) {
     Write-Host 'Running az login...'
     az login *> $null
   }
-}
-else {
-  # Login using PAT
-  LoginToAzureDevops $devops_pat
 }
 
 az extension show -n azure-devops *> $null

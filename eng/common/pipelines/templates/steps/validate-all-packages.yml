@@ -10,20 +10,23 @@ steps:
       displayName: "Set as release build"
       condition: and(succeeded(), eq(variables['SetAsReleaseBuild'], ''))
 
-    - task: Powershell@2
+    - task: AzureCLI@2
       inputs:
-        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1
-        arguments: >
-          -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
-          -ArtifactPath ${{ parameters.ArtifactPath }}
-          -RepoRoot $(Build.SourcesDirectory)
-          -APIKey $(azuresdk-apiview-apikey)
-          -ConfigFileDir '${{ parameters.ConfigFileDir }}'
-          -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId)
-          -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
-          -Devops_pat '$(azuresdk-azure-sdk-devops-release-work-item-pat)'
-          -IsReleaseBuild $$(SetAsReleaseBuild)
-        pwsh: true
+        azureSubscription: opensource-api-connection
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: |
+          $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+          $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
+            -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
+            -ArtifactPath ${{ parameters.ArtifactPath }} `
+            -RepoRoot $(Build.SourcesDirectory) `
+            -APIKey $(azuresdk-apiview-apikey) `
+            -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
+            -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
+            -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
+            -AccessToken $accessToken `
+            -IsReleaseBuild $$(SetAsReleaseBuild)
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
       continueOnError: true
