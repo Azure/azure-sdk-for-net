@@ -10,11 +10,16 @@ namespace System.ClientModel.Primitives;
 /// from a cloud service returning a collection of values sequentially over
 /// one or more calls to the service (i.e. a paged collection).
 /// </summary>
-public class PageResult<T> : ClientResult
+public class ClientPage<T> : ClientResult
 {
-    internal const string FirstPageToken = "FIRST_PAGE";
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    // TODO: Think about the difference between this and FirstPageToken property --
+    // what is the DevEx there and is it confusing?
+    public const string First = "";
 
-    private PageResult(IReadOnlyList<T> values,
+    private ClientPage(IReadOnlyList<T> values,
         PipelineResponse response,
         string? nextPageToken,
         string? previousPageToken)
@@ -26,7 +31,7 @@ public class PageResult<T> : ClientResult
     }
 
     /// <summary>
-    /// Creates a new <see cref="PageResult{T}"/>.
+    /// Creates a new <see cref="ClientPage{T}"/>.
     /// </summary>
     /// <param name="values">The values contained in <paramref name="response"/>.
     /// </param>
@@ -39,16 +44,16 @@ public class PageResult<T> : ClientResult
     /// service does not provide such a token.</param>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// collection values returned by the service.</param>
-    /// <returns>An instance of <see cref="PageResult{T}"/> holding the provided
+    /// <returns>An instance of <see cref="ClientPage{T}"/> holding the provided
     /// values.</returns>
-    public static PageResult<T> Create(IReadOnlyList<T> values,
+    public static ClientPage<T> Create(IReadOnlyList<T> values,
         PipelineResponse response,
         string? nextPageToken,
         string? previousPageToken = default)
         => new(values, response, nextPageToken, previousPageToken);
 
     /// <summary>
-    /// Gets the values in this <see cref="PageResult{T}"/>.
+    /// Gets the values in this <see cref="ClientPage{T}"/>.
     /// </summary>
     public IReadOnlyList<T> Values { get; }
 

@@ -26,11 +26,11 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public virtual PageResult<T> GetPage(string pageToken = PageResult<T>.FirstPageToken)
+    public virtual ClientPage<T> GetPage(string pageToken = ClientPage<T>.First)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-        foreach (PageResult<T> page in AsPages(pageToken))
+        foreach (ClientPage<T> page in AsPages(pageToken))
         {
             return page;
         }
@@ -49,11 +49,11 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// <paramref name="pageToken"/> value is specified, the first page in the
     /// returned collection will be the first page of values returned from the
     /// service.</param>
-    /// <returns>An enumerable of <see cref="PageResult{T}"/> that enumerates the
+    /// <returns>An enumerable of <see cref="ClientPage{T}"/> that enumerates the
     /// collection's pages instead of the collection's individual values,
     /// starting at the page indicated by <paramref name="pageToken"/>.
     /// </returns>
-    public IEnumerable<PageResult<T>> AsPages(string pageToken = PageResult<T>.FirstPageToken)
+    public IEnumerable<ClientPage<T>> AsPages(string pageToken = ClientPage<T>.First)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
@@ -63,7 +63,7 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    protected abstract IEnumerable<PageResult<T>> AsPagesCore(string pageToken);
+    protected abstract IEnumerable<ClientPage<T>> AsPagesCore(string pageToken);
 
     /// <summary>
     /// Return an enumerator that iterates through the collection values. This
@@ -73,7 +73,7 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// collection values.</returns>
     public override IEnumerator<T> GetEnumerator()
     {
-        foreach (PageResult<T> page in AsPages(PageResult<T>.FirstPageToken))
+        foreach (ClientPage<T> page in AsPages())
         {
             foreach (T value in page.Values)
             {

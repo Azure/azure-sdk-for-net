@@ -16,10 +16,10 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableResult<T> : System.ClientModel.AsyncCollectionResult<T>
     {
         protected AsyncPageableResult() { }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string pageToken = "FIRST_PAGE") { throw null; }
-        protected abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesCore(string pageToken);
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string pageToken = "") { throw null; }
+        protected abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string pageToken);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.PageResult<T>> GetPageAsync(string pageToken = "FIRST_PAGE") { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.ClientPage<T>> GetPageAsync(string pageToken = "") { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -66,10 +66,10 @@ namespace System.ClientModel
     public abstract partial class PageableResult<T> : System.ClientModel.CollectionResult<T>
     {
         protected PageableResult() { }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string pageToken = "FIRST_PAGE") { throw null; }
-        protected abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesCore(string pageToken);
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string pageToken = "") { throw null; }
+        protected abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string pageToken);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-        public virtual System.ClientModel.Primitives.PageResult<T> GetPage(string pageToken = "FIRST_PAGE") { throw null; }
+        public virtual System.ClientModel.Primitives.ClientPage<T> GetPage(string pageToken = "") { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -88,6 +88,15 @@ namespace System.ClientModel.Primitives
     {
         Default = 0,
         NoThrow = 1,
+    }
+    public partial class ClientPage<T> : System.ClientModel.ClientResult
+    {
+        internal ClientPage() { }
+        public const string First = "";
+        public string? NextPageToken { get { throw null; } }
+        public string? PreviousPageToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
+        public static System.ClientModel.Primitives.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.Primitives.PipelineResponse response, string? nextPageToken, string? previousPageToken = null) { throw null; }
     }
     public sealed partial class ClientPipeline
     {
@@ -162,14 +171,6 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-    }
-    public partial class PageResult<T> : System.ClientModel.ClientResult
-    {
-        internal PageResult() { }
-        public string? NextPageToken { get { throw null; } }
-        public string? PreviousPageToken { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        public static System.ClientModel.Primitives.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.Primitives.PipelineResponse response, string? nextPageToken, string? previousPageToken = null) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

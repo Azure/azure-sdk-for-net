@@ -29,11 +29,11 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public virtual async Task<PageResult<T>> GetPageAsync(string pageToken = PageResult<T>.FirstPageToken)
+    public virtual async Task<ClientPage<T>> GetPageAsync(string pageToken = ClientPage<T>.First)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-        await foreach (PageResult<T> page in AsPages(pageToken).ConfigureAwait(false))
+        await foreach (ClientPage<T> page in AsPages(pageToken).ConfigureAwait(false))
         {
             return page;
         }
@@ -52,11 +52,11 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <paramref name="pageToken"/> value is specified, the first page in the
     /// returned collection will be the first page of values returned from the
     /// service.</param>
-    /// <returns>An enumerable of <see cref="PageResult{T}"/> that enumerates the
+    /// <returns>An enumerable of <see cref="ClientPage{T}"/> that enumerates the
     /// collection's pages instead of the collection's individual values,
     /// starting at the page indicated by <paramref name="pageToken"/>.
     /// </returns>
-    public IAsyncEnumerable<PageResult<T>> AsPages(string pageToken = PageResult<T>.FirstPageToken)
+    public IAsyncEnumerable<ClientPage<T>> AsPages(string pageToken = ClientPage<T>.First)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
@@ -66,7 +66,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    protected abstract IAsyncEnumerable<PageResult<T>> AsPagesCore(string pageToken);
+    protected abstract IAsyncEnumerable<ClientPage<T>> AsPagesCore(string pageToken);
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection
@@ -78,7 +78,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// asynchronously through the collection values.</returns>
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (PageResult<T> page in AsPages(PageResult<T>.FirstPageToken).ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ClientPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page.Values)
             {

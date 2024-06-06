@@ -11,26 +11,26 @@ namespace ClientModel.Tests.Internal;
 
 internal class PageableResultHelpers
 {
-    public static PageableResult<T> Create<T>(Func<string?, PageResult<T>> getInitialPage, Func<string?, PageResult<T>>? getNextPage) where T : notnull
+    public static PageableResult<T> Create<T>(Func<string?, ClientPage<T>> getInitialPage, Func<string?, ClientPage<T>>? getNextPage) where T : notnull
         => new FuncPageable<T>(getInitialPage, getNextPage);
 
-    public static AsyncPageableResult<T> Create<T>(Func<string?, Task<PageResult<T>>> getInitialPage, Func<string?, Task<PageResult<T>>>? getNextPage) where T : notnull
+    public static AsyncPageableResult<T> Create<T>(Func<string?, Task<ClientPage<T>>> getInitialPage, Func<string?, Task<ClientPage<T>>>? getNextPage) where T : notnull
         => new FuncAsyncPageable<T>(getInitialPage, getNextPage);
 
     private class FuncAsyncPageable<T> : AsyncPageableResult<T> where T : notnull
     {
-        private readonly Func<string?, Task<PageResult<T>>> _getInitialPage;
-        private readonly Func<string?, Task<PageResult<T>>>? _getNextPage;
+        private readonly Func<string?, Task<ClientPage<T>>> _getInitialPage;
+        private readonly Func<string?, Task<ClientPage<T>>>? _getNextPage;
 
-        public FuncAsyncPageable(Func<string?, Task<PageResult<T>>> getInitialPage, Func<string?, Task<PageResult<T>>>? getNextPage)
+        public FuncAsyncPageable(Func<string?, Task<ClientPage<T>>> getInitialPage, Func<string?, Task<ClientPage<T>>>? getNextPage)
         {
             _getInitialPage = getInitialPage;
             _getNextPage = getNextPage;
         }
 
-        protected override async IAsyncEnumerable<PageResult<T>> AsPagesCore(string? pageToken = default)
+        protected override async IAsyncEnumerable<ClientPage<T>> AsPagesCore(string? pageToken = default)
         {
-            Func<string?, Task<PageResult<T>>>? getPage = _getInitialPage;
+            Func<string?, Task<ClientPage<T>>>? getPage = _getInitialPage;
 
             if (getPage == null)
             {
@@ -39,7 +39,7 @@ internal class PageableResultHelpers
 
             do
             {
-                PageResult<T> page = await getPage(pageToken).ConfigureAwait(false);
+                ClientPage<T> page = await getPage(pageToken).ConfigureAwait(false);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
                 pageToken = page.NextPageToken;
@@ -51,18 +51,18 @@ internal class PageableResultHelpers
 
     private class FuncPageable<T> : PageableResult<T> where T : notnull
     {
-        private readonly Func<string?, PageResult<T>> _getInitialPage;
-        private readonly Func<string?, PageResult<T>>? _getNextPage;
+        private readonly Func<string?, ClientPage<T>> _getInitialPage;
+        private readonly Func<string?, ClientPage<T>>? _getNextPage;
 
-        public FuncPageable(Func<string?, PageResult<T>> getInitialPage, Func<string?, PageResult<T>>? getNextPage)
+        public FuncPageable(Func<string?, ClientPage<T>> getInitialPage, Func<string?, ClientPage<T>>? getNextPage)
         {
             _getInitialPage = getInitialPage;
             _getNextPage = getNextPage;
         }
 
-        protected override IEnumerable<PageResult<T>> AsPagesCore(string? pageToken = default)
+        protected override IEnumerable<ClientPage<T>> AsPagesCore(string? pageToken = default)
         {
-            Func<string?, PageResult<T>>? getPage = _getInitialPage;
+            Func<string?, ClientPage<T>>? getPage = _getInitialPage;
 
             if (getPage == null)
             {
@@ -71,7 +71,7 @@ internal class PageableResultHelpers
 
             do
             {
-                PageResult<T> page = getPage(pageToken);
+                ClientPage<T> page = getPage(pageToken);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
                 pageToken = page.NextPageToken;
