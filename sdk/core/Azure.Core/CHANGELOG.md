@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters.
 - Fixed case where Operation.Id was not being set for incomplete long-running operations ([#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098)).
 
 ### Other Changes

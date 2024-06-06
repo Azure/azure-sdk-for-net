@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Full endpoint url of an event subscription. </summary>
+    /// <summary> Full endpoint URL of an event subscription. </summary>
     public partial class EventSubscriptionFullUri
     {
         /// <summary>

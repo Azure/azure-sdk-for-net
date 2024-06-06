@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
         public TopicSpacesConfiguration()
         {
+            CustomDomains = new ChangeTrackingList<CustomDomainConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
@@ -69,8 +70,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Min allowed value is 1 and max allowed value is 100.
         /// </param>
         /// <param name="routingIdentityInfo"> Routing identity info for topic spaces configuration. </param>
+        /// <param name="customDomains"> List of custom domain configurations for the namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             RouteTopicResourceId = routeTopicResourceId;
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             MaximumSessionExpiryInHours = maximumSessionExpiryInHours;
             MaximumClientSessionsPerAuthenticationName = maximumClientSessionsPerAuthenticationName;
             RoutingIdentityInfo = routingIdentityInfo;
+            CustomDomains = customDomains;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,18 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Routing enrichments for topic spaces configuration. </summary>
         public RoutingEnrichments RoutingEnrichments { get; set; }
         /// <summary> Client authentication settings for topic spaces configuration. </summary>
-        internal ClientAuthenticationSettings ClientAuthentication { get; set; }
-        /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>
-        public IList<AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources
-        {
-            get
-            {
-                if (ClientAuthentication is null)
-                    ClientAuthentication = new ClientAuthenticationSettings();
-                return ClientAuthentication.AlternativeAuthenticationNameSources;
-            }
-        }
-
+        public ClientAuthenticationSettings ClientAuthentication { get; set; }
         /// <summary>
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.
@@ -120,5 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public int? MaximumClientSessionsPerAuthenticationName { get; set; }
         /// <summary> Routing identity info for topic spaces configuration. </summary>
         public RoutingIdentityInfo RoutingIdentityInfo { get; set; }
+        /// <summary> List of custom domain configurations for the namespace. </summary>
+        public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }

@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
                 writer.WriteObjectValue(TopicSpacesConfiguration, options);
             }
+            if (Optional.IsDefined(TopicsConfiguration))
+            {
+                writer.WritePropertyName("topicsConfiguration"u8);
+                writer.WriteObjectValue(TopicsConfiguration, options);
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -113,6 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             ManagedServiceIdentity identity = default;
             NamespaceSku sku = default;
             UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
+            UpdateTopicsConfigurationInfo topicsConfiguration = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -169,6 +175,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                             topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("topicsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            topicsConfiguration = UpdateTopicsConfigurationInfo.DeserializeUpdateTopicsConfigurationInfo(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +221,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 identity,
                 sku,
                 topicSpacesConfiguration,
+                topicsConfiguration,
                 publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
                 serializedAdditionalRawData);
