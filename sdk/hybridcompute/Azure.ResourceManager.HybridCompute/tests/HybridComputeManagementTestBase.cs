@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
-        public string privateEndpointConnectionName = "myprivateendpoint.bf6b920a-5de7-4e0c-97cf-e01cbcc19239";
+        public string privateEndpointConnectionName = "myprivateendpoint.dc6c8829-b4b5-4059-b130-e9f309c83173";
         public string runCommandName = "myRunCommand";
         public string esuLicenseName = "myEsuLicense";
         public string resourceGroupNameNSP = "adrielk_test";
