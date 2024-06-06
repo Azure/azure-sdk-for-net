@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2024-07-02)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f517936b7f0d1a3049c2afba9392fbbebb8ff3a9/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md.
+    - Cluster Pool
+        - Enabled get cluster pool upgrade history.
+    - Cluster
+        - Enabled get cluster upgrade history.
+        - Ebabled rollback cluster upgrade.
+        - Enabled manage cluster library.
+        - Enabled multiple managedIdentity, cluster version is required to be above 1.2.0.
 
 ## 1.0.0-beta.3 (2024-03-23)
 
