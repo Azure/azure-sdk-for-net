@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureSdkLoggingTests
     {
-        [Theory]
+        [Theory(Skip = "investigation")]
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        [Theory(Skip = "investigation")]
+        [Theory]
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
