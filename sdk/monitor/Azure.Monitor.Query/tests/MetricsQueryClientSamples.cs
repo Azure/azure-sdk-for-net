@@ -204,8 +204,12 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             var client = new MetricsClient(
-                new Uri(TestEnvironment.GetMetricsClientAudience()),
-                new DefaultAzureCredential());
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
+                new DefaultAzureCredential(),
+                new MetricsClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsClientAudience()
+                });
 #endif
 #endif
             Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
@@ -238,8 +242,12 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             var client = new MetricsClient(
-                new Uri(TestEnvironment.GetMetricsClientAudience()),
-                new DefaultAzureCredential());
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
+                new DefaultAzureCredential(),
+                new MetricsClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsClientAudience()
+                });
 #endif
             #endregion Snippet:CreateMetricsClient
             var options = new MetricsQueryResourcesOptions

@@ -37,35 +37,13 @@ namespace Azure.Monitor.Query.Tests
         private MetricsClient CreateMetricsClient()
         {
             return InstrumentClient(new MetricsClient(
-                new Uri(ConstructMetricsClientUri()),
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsClientOptions()
                 {
                     Audience = TestEnvironment.GetMetricsClientAudience()
                 })
             ));
-        }
-
-        private string ConstructMetricsClientUri()
-        {
-            string uri = "https://" + TestEnvironment.Location + ".metrics.monitor.azure.";
-            var audience = TestEnvironment.GetMetricsClientAudience();
-
-            // Depending on which cloud, append the correct regional suffix
-            if (audience == MetricsClientAudience.AzureChina.ToString())
-            {
-                uri += "cn";
-            }
-            else if (audience == MetricsClientAudience.AzureGovernment.ToString())
-            {
-                uri += "us";
-            }
-            else
-            {
-                uri += "com";
-            }
-
-            return uri;
         }
 
         [SetUp]
