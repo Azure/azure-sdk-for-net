@@ -29,7 +29,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public virtual async Task<PageResult<T>> GetPageAsync(string pageToken)
+    public virtual async Task<PageResult<T>> GetPageAsync(string pageToken = PageResult<T>.FirstPageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 

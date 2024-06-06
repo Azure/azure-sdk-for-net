@@ -26,7 +26,7 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public virtual PageResult<T> GetPage(string pageToken)
+    public virtual PageResult<T> GetPage(string pageToken = PageResult<T>.FirstPageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
