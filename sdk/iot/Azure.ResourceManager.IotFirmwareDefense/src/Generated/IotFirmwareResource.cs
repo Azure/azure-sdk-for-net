@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateDownloadUri</description>
+        /// <description>Firmwares_GenerateDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateDownloadUri</description>
+        /// <description>Firmwares_GenerateDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateFilesystemDownloadUri</description>
+        /// <description>Firmwares_GenerateFilesystemDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateFilesystemDownloadUri</description>
+        /// <description>Firmwares_GenerateFilesystemDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

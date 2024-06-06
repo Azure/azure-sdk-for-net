@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_GetTimeSeries</description>
+        /// <description>Reports_GetTimeseries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_GetTimeSeries</description>
+        /// <description>Reports_GetTimeseries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
