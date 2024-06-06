@@ -22,8 +22,4 @@
     <PackageReference Include="OpenAI" VersionOverride="2.0.0-*" />
   </ItemGroup>
 
-  <ItemGroup>
-    <InternalsVisibileTo Include="Azure.AI.OpenAI.Tests" />
-  </ItemGroup>
-
 </Project>
