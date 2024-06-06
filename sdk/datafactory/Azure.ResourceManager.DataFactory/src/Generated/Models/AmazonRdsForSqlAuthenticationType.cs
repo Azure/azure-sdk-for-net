@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string WindowsValue = "Windows";
 
         /// <summary> SQL. </summary>
-        public static AmazonRdsForSqlAuthenticationType SQL { get; } = new AmazonRdsForSqlAuthenticationType(SQLValue);
+        public static AmazonRdsForSqlAuthenticationType Sql { get; } = new AmazonRdsForSqlAuthenticationType(SqlValue);
         /// <summary> Windows. </summary>
         public static AmazonRdsForSqlAuthenticationType Windows { get; } = new AmazonRdsForSqlAuthenticationType(WindowsValue);
         /// <summary> Determines if two <see cref="AmazonRdsForSqlAuthenticationType"/> values are the same. </summary>

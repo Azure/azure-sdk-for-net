@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string ServicePrincipalValue = "ServicePrincipal";
         private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> SQL. </summary>
-        public static AzureSqlMIAuthenticationType SQL { get; } = new AzureSqlMIAuthenticationType(SQLValue);
+        public static AzureSqlMIAuthenticationType Sql { get; } = new AzureSqlMIAuthenticationType(SqlValue);
         /// <summary> ServicePrincipal. </summary>
         public static AzureSqlMIAuthenticationType ServicePrincipal { get; } = new AzureSqlMIAuthenticationType(ServicePrincipalValue);
         /// <summary> SystemAssignedManagedIdentity. </summary>

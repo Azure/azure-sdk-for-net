@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string WindowsValue = "Windows";
 
         /// <summary> SQL. </summary>
-        public static SqlServerAuthenticationType SQL { get; } = new SqlServerAuthenticationType(SQLValue);
+        public static SqlServerAuthenticationType Sql { get; } = new SqlServerAuthenticationType(SqlValue);
         /// <summary> Windows. </summary>
         public static SqlServerAuthenticationType Windows { get; } = new SqlServerAuthenticationType(WindowsValue);
         /// <summary> Determines if two <see cref="SqlServerAuthenticationType"/> values are the same. </summary>

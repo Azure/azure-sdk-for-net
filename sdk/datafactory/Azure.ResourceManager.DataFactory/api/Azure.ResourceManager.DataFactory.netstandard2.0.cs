@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AmazonRdsForSqlAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2247,7 +2247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private readonly int _dummyPrimitive;
         public AzureSqlDatabaseAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType ServicePrincipal { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType other) { throw null; }
@@ -2310,7 +2310,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private readonly int _dummyPrimitive;
         public AzureSqlDWAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType ServicePrincipal { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType other) { throw null; }
@@ -2384,7 +2384,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private readonly int _dummyPrimitive;
         public AzureSqlMIAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType ServicePrincipal { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType other) { throw null; }
@@ -10807,7 +10807,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SqlServerAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

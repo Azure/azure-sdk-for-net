@@ -70,6 +70,7 @@ acronym-mapping:
   Ml: ML
   VNet: Vnet
   Bw: BW
+  SQL: Sql
 
 keep-plural-enums:
   - ActivityOnInactiveMarkAs
