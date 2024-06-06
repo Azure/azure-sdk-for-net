@@ -561,7 +561,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -605,7 +605,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_HttpAuthorization()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1002,7 +1002,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_OAuth()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1067,7 +1067,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
 
             // Convert TokenCredential to HttpAuthorization
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential();
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             string[] scopes = new string[] { "https://storage.azure.com/.default" };
             AccessToken accessToken = await tokenCredential.GetTokenAsync(new TokenRequestContext(scopes), CancellationToken.None);
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
@@ -1099,7 +1099,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_HttpAuthorization()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1679,7 +1679,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             await using DisposingContainer testContainer = await GetTestContainerAsync(
                 service,
                 containerName,

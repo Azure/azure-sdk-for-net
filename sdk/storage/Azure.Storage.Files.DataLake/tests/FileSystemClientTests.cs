@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             try
             {
-                TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+                TokenCredential tokenCredential = TestEnvironment.Credential;
                 Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}").ToHttps();
                 DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, tokenCredential, GetOptions()));
 
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -3344,7 +3344,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
         }
 
         private IEnumerable<AccessConditionParameters> Conditions_Data

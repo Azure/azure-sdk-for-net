@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlockBlobClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlockBlobClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task StageBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task StageBlockFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3369,7 +3369,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3404,7 +3404,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3573,7 +3573,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

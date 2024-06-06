@@ -93,12 +93,15 @@ namespace Azure.Storage.Test.Shared
             return InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    Tenants.GetOAuthCredential(config),
+                    TestEnvironment.Credential,
                     options));
         }
 
         public BlobServiceClient GetServiceClient_OauthAccount_TenantDiscovery() =>
             GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, true);
+
+        public BlobServiceClient GetServiceClient_OAuth()
+            => BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,

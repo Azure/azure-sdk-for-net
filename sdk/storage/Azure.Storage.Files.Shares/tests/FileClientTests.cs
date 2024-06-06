@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -157,7 +157,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -186,7 +186,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -811,7 +811,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -939,7 +939,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -1262,7 +1262,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -1539,7 +1539,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -1653,7 +1653,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -2251,7 +2251,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -2534,7 +2534,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -2857,7 +2857,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -3189,7 +3189,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -3430,7 +3430,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -3695,7 +3695,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -3951,7 +3951,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -4541,7 +4541,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
             ShareClient oauthShareClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName));
 
             // Arrange
@@ -4647,7 +4647,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -4730,7 +4730,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -4829,7 +4829,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -4921,7 +4921,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -5021,7 +5021,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -5150,7 +5150,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -5299,7 +5299,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
@@ -6304,7 +6304,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
 
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));

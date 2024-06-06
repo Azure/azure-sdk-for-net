@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues.Test
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(Tenants.TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -115,7 +115,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -134,7 +134,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -153,7 +153,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -619,7 +619,7 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
-            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), TestEnvironment.Credential, new QueueClientOptions()).Object;
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Microsoft.Extensions.Options;
 
 namespace Azure.Storage.Queues.Tests
 {
@@ -82,6 +83,9 @@ namespace Azure.Storage.Queues.Tests
                 new QueueServiceClient(
                     new Uri($"{TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
+
+        public QueueServiceClient GetServiceClient_OAuth(QueueClientOptions options = default)
+            => QueuesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential, options);
 
         public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
             => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);

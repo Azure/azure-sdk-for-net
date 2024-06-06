@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlobContainerClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -395,7 +395,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -494,7 +494,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -4058,7 +4058,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
 
         #region Secondary Storage

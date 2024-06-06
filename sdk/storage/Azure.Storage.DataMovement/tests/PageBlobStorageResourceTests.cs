@@ -568,7 +568,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -615,7 +615,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_HttpAuthorization()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
 
             // Convert TokenCredential to HttpAuthorization
-            TokenCredential sourceBearerToken = Tenants.GetOAuthCredential();
+            TokenCredential sourceBearerToken = TestEnvironment.Credential;
             string[] scopes = new string[] { "https://storage.azure.com/.default" };
             AccessToken accessToken = await sourceBearerToken.GetTokenAsync(new TokenRequestContext(scopes), CancellationToken.None);
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
@@ -1130,7 +1130,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_HttpAuthorization()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1712,7 +1712,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             await using DisposingContainer testContainer = await GetTestContainerAsync(
                 service,
                 containerName,
