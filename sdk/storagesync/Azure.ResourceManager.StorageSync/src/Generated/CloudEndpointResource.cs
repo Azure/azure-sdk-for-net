@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_Restoreheartbeat</description>
+        /// <description>CloudEndpoints_restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -644,9 +644,9 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RestoreHeartbeatAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestoreheartbeatAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
             scope.Start();
             try
             {
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_Restoreheartbeat</description>
+        /// <description>CloudEndpoints_restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -682,9 +682,9 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RestoreHeartbeat(CancellationToken cancellationToken = default)
+        public virtual Response Restoreheartbeat(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
             scope.Start();
             try
             {

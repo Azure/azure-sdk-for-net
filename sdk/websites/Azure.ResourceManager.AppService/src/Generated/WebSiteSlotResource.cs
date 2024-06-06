@@ -5765,7 +5765,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_SwapSlot</description>
+        /// <description>WebApps_SwapSlotSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -5811,7 +5811,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_SwapSlot</description>
+        /// <description>WebApps_SwapSlotSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

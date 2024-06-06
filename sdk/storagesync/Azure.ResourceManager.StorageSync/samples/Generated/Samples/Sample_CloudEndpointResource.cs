@@ -241,10 +241,10 @@ IsDirectory = false,
         // CloudEndpoints_restoreheartbeat
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RestoreHeartbeat_CloudEndpointsRestoreheartbeat()
+        public async Task Restoreheartbeat_CloudEndpointsRestoreheartbeat()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_RestoreHeatbeat.json
-            // this example is just showing the usage of "CloudEndpoints_Restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudEndpoints_restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -262,7 +262,7 @@ IsDirectory = false,
             CloudEndpointResource cloudEndpoint = client.GetCloudEndpointResource(cloudEndpointResourceId);
 
             // invoke the operation
-            await cloudEndpoint.RestoreHeartbeatAsync();
+            await cloudEndpoint.RestoreheartbeatAsync();
 
             Console.WriteLine($"Succeeded");
         }
