@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(DeploymentParameterType))
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DeploymentParameterType);
+                writer.WriteStringValue(DeploymentType);
             }
             if (Optional.IsDefined(Reference))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentParameterType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -160,17 +160,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
             else
             {
-                if (Optional.IsDefined(DeploymentParameterType))
+                if (Optional.IsDefined(DeploymentType))
                 {
                     builder.Append("  type: ");
-                    if (DeploymentParameterType.Contains(Environment.NewLine))
+                    if (DeploymentType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{DeploymentParameterType}'''");
+                        builder.AppendLine($"{DeploymentType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{DeploymentParameterType}'");
+                        builder.AppendLine($"'{DeploymentType}'");
                     }
                 }
             }

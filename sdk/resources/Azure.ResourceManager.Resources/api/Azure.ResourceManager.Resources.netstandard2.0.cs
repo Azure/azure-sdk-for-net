@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DeploymentParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DeploymentParameter>
     {
         public DeploymentParameter() { }
-        public string DeploymentParameterType { get { throw null; } set { } }
+        public string DeploymentType { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.KeyVaultParameterReference Reference { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
         Azure.ResourceManager.Resources.Models.DeploymentParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DeploymentParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
