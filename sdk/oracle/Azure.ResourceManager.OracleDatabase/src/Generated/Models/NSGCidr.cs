@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> A rule for allowing inbound (INGRESS) IP packets. </summary>
-    public partial class NSGCidr
+    public partial class NsgCidr
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSGCidr"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NsgCidr"/>. </summary>
         /// <param name="source"> Conceptually, this is the range of IP addresses that a packet coming into the instance can come from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public NSGCidr(string source)
+        public NsgCidr(string source)
         {
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSGCidr"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NsgCidr"/>. </summary>
         /// <param name="source"> Conceptually, this is the range of IP addresses that a packet coming into the instance can come from. </param>
         /// <param name="destinationPortRange"> Destination port range to specify particular destination ports for TCP rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSGCidr(string source, PortRange destinationPortRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NsgCidr(string source, PortRange destinationPortRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             DestinationPortRange = destinationPortRange;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSGCidr"/> for deserialization. </summary>
-        internal NSGCidr()
+        /// <summary> Initializes a new instance of <see cref="NsgCidr"/> for deserialization. </summary>
+        internal NsgCidr()
         {
         }
 

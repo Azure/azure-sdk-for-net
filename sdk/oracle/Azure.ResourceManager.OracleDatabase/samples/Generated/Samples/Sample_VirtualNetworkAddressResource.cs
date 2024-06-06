@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
@@ -71,8 +72,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             VirtualNetworkAddressData data = new VirtualNetworkAddressData()
             {
-                IPAddress = "192.168.0.1",
-                VmOcid = "ocid1..aaaa",
+                Properties = new VirtualNetworkAddressProperties()
+                {
+                    IPAddress = "192.168.0.1",
+                    VmOcid = "ocid1..aaaa",
+                },
             };
             ArmOperation<VirtualNetworkAddressResource> lro = await virtualNetworkAddress.UpdateAsync(WaitUntil.Completed, data);
             VirtualNetworkAddressResource result = lro.Value;

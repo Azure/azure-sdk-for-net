@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary> PROVISIONING value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static CloudExadataInfrastructureLifecycleState Provisioning { get; } = new CloudExadataInfrastructureLifecycleState(ProvisioningValue);
-        /// <summary> AVAILABLE value. </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static CloudExadataInfrastructureLifecycleState Available { get; } = new CloudExadataInfrastructureLifecycleState(AvailableValue);
-        /// <summary> UPDATING value. </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static CloudExadataInfrastructureLifecycleState Updating { get; } = new CloudExadataInfrastructureLifecycleState(UpdatingValue);
-        /// <summary> TERMINATING value. </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static CloudExadataInfrastructureLifecycleState Terminating { get; } = new CloudExadataInfrastructureLifecycleState(TerminatingValue);
-        /// <summary> TERMINATED value. </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static CloudExadataInfrastructureLifecycleState Terminated { get; } = new CloudExadataInfrastructureLifecycleState(TerminatedValue);
-        /// <summary> MAINTENANCE_IN_PROGRESS value. </summary>
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static CloudExadataInfrastructureLifecycleState MaintenanceInProgress { get; } = new CloudExadataInfrastructureLifecycleState(MaintenanceInProgressValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static CloudExadataInfrastructureLifecycleState Failed { get; } = new CloudExadataInfrastructureLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="CloudExadataInfrastructureLifecycleState"/> values are the same. </summary>
         public static bool operator ==(CloudExadataInfrastructureLifecycleState left, CloudExadataInfrastructureLifecycleState right) => left.Equals(right);

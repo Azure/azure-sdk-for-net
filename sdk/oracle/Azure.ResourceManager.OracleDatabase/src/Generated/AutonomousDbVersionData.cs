@@ -61,35 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="version"> Supported Autonomous Db versions. </param>
-        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
-        /// <param name="isDefaultForFree"> True if this version of the Oracle Database software's default is free. </param>
-        /// <param name="isDefaultForPaid"> True if this version of the Oracle Database software's default is paid. </param>
-        /// <param name="isFreeTierEnabled"> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </param>
-        /// <param name="isPaidEnabled"> True if this version of the Oracle Database software has payments enabled. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDbVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, WorkloadType? dbWorkload, bool? isDefaultForFree, bool? isDefaultForPaid, bool? isFreeTierEnabled, bool? isPaidEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutonomousDbVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDbVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Version = version;
-            DbWorkload = dbWorkload;
-            IsDefaultForFree = isDefaultForFree;
-            IsDefaultForPaid = isDefaultForPaid;
-            IsFreeTierEnabled = isFreeTierEnabled;
-            IsPaidEnabled = isPaidEnabled;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Supported Autonomous Db versions. </summary>
-        public string Version { get; }
-        /// <summary> The Autonomous Database workload type. </summary>
-        public WorkloadType? DbWorkload { get; }
-        /// <summary> True if this version of the Oracle Database software's default is free. </summary>
-        public bool? IsDefaultForFree { get; }
-        /// <summary> True if this version of the Oracle Database software's default is paid. </summary>
-        public bool? IsDefaultForPaid { get; }
-        /// <summary> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </summary>
-        public bool? IsFreeTierEnabled { get; }
-        /// <summary> True if this version of the Oracle Database software has payments enabled. </summary>
-        public bool? IsPaidEnabled { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public AutonomousDbVersionProperties Properties { get; set; }
     }
 }

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,49 +53,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
-            }
-            if (Optional.IsDefined(VmOcid))
-            {
-                writer.WritePropertyName("vmOcid"u8);
-                writer.WriteStringValue(VmOcid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
-            {
-                writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Domain))
-            {
-                writer.WritePropertyName("domain"u8);
-                writer.WriteStringValue(Domain);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
-            {
-                writer.WritePropertyName("lifecycleDetails"u8);
-                writer.WriteStringValue(LifecycleDetails);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
-            {
-                writer.WritePropertyName("lifecycleState"u8);
-                writer.WriteStringValue(LifecycleState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeAssigned))
-            {
-                writer.WritePropertyName("timeAssigned"u8);
-                writer.WriteStringValue(TimeAssigned.Value, "O");
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,22 +91,24 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            VirtualNetworkAddressProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string ipAddress = default;
-            string vmOcid = default;
-            string ocid = default;
-            string domain = default;
-            string lifecycleDetails = default;
-            AzureResourceProvisioningState? provisioningState = default;
-            VirtualNetworkAddressLifecycleState? lifecycleState = default;
-            DateTimeOffset? timeAssigned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = VirtualNetworkAddressProperties.DeserializeVirtualNetworkAddressProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -169,70 +133,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("ipAddress"u8))
-                        {
-                            ipAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmOcid"u8))
-                        {
-                            vmOcid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ocid"u8))
-                        {
-                            ocid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("domain"u8))
-                        {
-                            domain = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleDetails"u8))
-                        {
-                            lifecycleDetails = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AzureResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lifecycleState = new VirtualNetworkAddressLifecycleState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("timeAssigned"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeAssigned = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -244,14 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 name,
                 type,
                 systemData,
-                ipAddress,
-                vmOcid,
-                ocid,
-                domain,
-                lifecycleDetails,
-                provisioningState,
-                lifecycleState,
-                timeAssigned,
+                properties,
                 serializedAdditionalRawData);
         }
 

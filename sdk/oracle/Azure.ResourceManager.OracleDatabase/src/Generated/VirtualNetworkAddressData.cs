@@ -61,43 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ipAddress"> Virtual network Address address. </param>
-        /// <param name="vmOcid"> Virtual Machine OCID. </param>
-        /// <param name="ocid"> Application VIP OCID. </param>
-        /// <param name="domain"> Virtual network address fully qualified domain name. </param>
-        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </param>
-        /// <param name="provisioningState"> Azure resource provisioning state. </param>
-        /// <param name="lifecycleState"> virtual network address lifecycle state. </param>
-        /// <param name="timeAssigned"> The date and time when the create operation for the application virtual IP (VIP) address completed. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAddressData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ipAddress, string vmOcid, string ocid, string domain, string lifecycleDetails, AzureResourceProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? timeAssigned, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal VirtualNetworkAddressData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualNetworkAddressProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            IPAddress = ipAddress;
-            VmOcid = vmOcid;
-            Ocid = ocid;
-            Domain = domain;
-            LifecycleDetails = lifecycleDetails;
-            ProvisioningState = provisioningState;
-            LifecycleState = lifecycleState;
-            TimeAssigned = timeAssigned;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Virtual network Address address. </summary>
-        public string IPAddress { get; set; }
-        /// <summary> Virtual Machine OCID. </summary>
-        public string VmOcid { get; set; }
-        /// <summary> Application VIP OCID. </summary>
-        public string Ocid { get; }
-        /// <summary> Virtual network address fully qualified domain name. </summary>
-        public string Domain { get; }
-        /// <summary> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </summary>
-        public string LifecycleDetails { get; }
-        /// <summary> Azure resource provisioning state. </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> virtual network address lifecycle state. </summary>
-        public VirtualNetworkAddressLifecycleState? LifecycleState { get; }
-        /// <summary> The date and time when the create operation for the application virtual IP (VIP) address completed. </summary>
-        public DateTimeOffset? TimeAssigned { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public VirtualNetworkAddressProperties Properties { get; set; }
     }
 }

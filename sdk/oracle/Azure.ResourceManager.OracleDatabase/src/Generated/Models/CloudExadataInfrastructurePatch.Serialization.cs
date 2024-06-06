@@ -47,39 +47,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeCount))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("computeCount"u8);
-                writer.WriteNumberValue(ComputeCount.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(StorageCount))
-            {
-                writer.WritePropertyName("storageCount"u8);
-                writer.WriteNumberValue(StorageCount.Value);
-            }
-            if (Optional.IsDefined(MaintenanceWindow))
-            {
-                writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
-            }
-            if (Optional.IsCollectionDefined(CustomerContacts))
-            {
-                writer.WritePropertyName("customerContacts"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomerContacts)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,11 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
-            int? computeCount = default;
-            int? storageCount = default;
-            MaintenanceWindow maintenanceWindow = default;
-            IList<CustomerContact> customerContacts = default;
-            string displayName = default;
+            CloudExadataInfrastructureUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,58 +129,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("computeCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            computeCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("customerContacts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CustomerContact> array = new List<CustomerContact>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CustomerContact.DeserializeCustomerContact(item, options));
-                            }
-                            customerContacts = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = CloudExadataInfrastructureUpdateProperties.DeserializeCloudExadataInfrastructureUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -221,15 +140,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CloudExadataInfrastructurePatch(
-                zones ?? new ChangeTrackingList<string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                computeCount,
-                storageCount,
-                maintenanceWindow,
-                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
-                displayName,
-                serializedAdditionalRawData);
+            return new CloudExadataInfrastructurePatch(zones ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudExadataInfrastructurePatch>.Write(ModelReaderWriterOptions options)

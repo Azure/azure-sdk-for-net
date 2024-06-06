@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> ConsumerGroup enum. </summary>
+    /// <summary> Consumer group enum. </summary>
     public readonly partial struct ConsumerGroup : IEquatable<ConsumerGroup>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TpValue = "Tp";
         private const string TpurgentValue = "Tpurgent";
 
-        /// <summary> HIGH value. </summary>
+        /// <summary> High group. </summary>
         public static ConsumerGroup High { get; } = new ConsumerGroup(HighValue);
-        /// <summary> MEDIUM value. </summary>
+        /// <summary> Medium group. </summary>
         public static ConsumerGroup Medium { get; } = new ConsumerGroup(MediumValue);
-        /// <summary> LOW value. </summary>
+        /// <summary> Low group. </summary>
         public static ConsumerGroup Low { get; } = new ConsumerGroup(LowValue);
-        /// <summary> TP value. </summary>
+        /// <summary> TP group. </summary>
         public static ConsumerGroup Tp { get; } = new ConsumerGroup(TpValue);
-        /// <summary> TPURGENT value. </summary>
+        /// <summary> TPurgent group. </summary>
         public static ConsumerGroup Tpurgent { get; } = new ConsumerGroup(TpurgentValue);
         /// <summary> Determines if two <see cref="ConsumerGroup"/> values are the same. </summary>
         public static bool operator ==(ConsumerGroup left, ConsumerGroup right) => left.Equals(right);

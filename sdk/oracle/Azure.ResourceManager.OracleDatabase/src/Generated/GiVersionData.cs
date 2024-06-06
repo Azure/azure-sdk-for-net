@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
@@ -60,15 +61,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GiVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GiVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GiVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Version = version;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal GiVersionProperties Properties { get; set; }
         /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
-        public string Version { get; }
+        public string GiVersion
+        {
+            get => Properties is null ? default : Properties.Version;
+            set => Properties = new GiVersionProperties(value);
+        }
     }
 }

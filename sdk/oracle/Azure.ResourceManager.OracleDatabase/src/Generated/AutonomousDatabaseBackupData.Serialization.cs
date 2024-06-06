@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,84 +53,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AutonomousDatabaseId))
-            {
-                writer.WritePropertyName("autonomousDatabaseId"u8);
-                writer.WriteStringValue(AutonomousDatabaseId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInTBs))
-            {
-                writer.WritePropertyName("databaseSizeInTBs"u8);
-                writer.WriteNumberValue(DatabaseSizeInTBs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbVersion))
-            {
-                writer.WritePropertyName("dbVersion"u8);
-                writer.WriteStringValue(DbVersion);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
-            {
-                writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsAutomatic))
-            {
-                writer.WritePropertyName("isAutomatic"u8);
-                writer.WriteBooleanValue(IsAutomatic.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsRestorable))
-            {
-                writer.WritePropertyName("isRestorable"u8);
-                writer.WriteBooleanValue(IsRestorable.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
-            {
-                writer.WritePropertyName("lifecycleDetails"u8);
-                writer.WriteStringValue(LifecycleDetails);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
-            {
-                writer.WritePropertyName("lifecycleState"u8);
-                writer.WriteStringValue(LifecycleState.Value.ToString());
-            }
-            if (Optional.IsDefined(RetentionPeriodInDays))
-            {
-                writer.WritePropertyName("retentionPeriodInDays"u8);
-                writer.WriteNumberValue(RetentionPeriodInDays.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SizeInTBs))
-            {
-                writer.WritePropertyName("sizeInTBs"u8);
-                writer.WriteNumberValue(SizeInTBs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeAvailableTil))
-            {
-                writer.WritePropertyName("timeAvailableTil"u8);
-                writer.WriteStringValue(TimeAvailableTil.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeEnded))
-            {
-                writer.WritePropertyName("timeEnded"u8);
-                writer.WriteStringValue(TimeEnded);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -164,29 +91,24 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            AutonomousDatabaseBackupProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ResourceIdentifier autonomousDatabaseId = default;
-            int? databaseSizeInTBs = default;
-            string dbVersion = default;
-            string displayName = default;
-            string ocid = default;
-            bool? isAutomatic = default;
-            bool? isRestorable = default;
-            string lifecycleDetails = default;
-            AutonomousDatabaseBackupLifecycleState? lifecycleState = default;
-            int? retentionPeriodInDays = default;
-            int? sizeInTBs = default;
-            DateTimeOffset? timeAvailableTil = default;
-            string timeEnded = default;
-            AutonomousDatabaseBackupType? type0 = default;
-            AzureResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AutonomousDatabaseBackupProperties.DeserializeAutonomousDatabaseBackupProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -211,133 +133,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("autonomousDatabaseId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autonomousDatabaseId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("databaseSizeInTBs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            databaseSizeInTBs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbVersion"u8))
-                        {
-                            dbVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ocid"u8))
-                        {
-                            ocid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isAutomatic"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isAutomatic = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isRestorable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isRestorable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleDetails"u8))
-                        {
-                            lifecycleDetails = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lifecycleState = new AutonomousDatabaseBackupLifecycleState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("retentionPeriodInDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retentionPeriodInDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("sizeInTBs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sizeInTBs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeAvailableTil"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeAvailableTil = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("timeEnded"u8))
-                        {
-                            timeEnded = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("type"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            type0 = new AutonomousDatabaseBackupType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AzureResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -349,21 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 name,
                 type,
                 systemData,
-                autonomousDatabaseId,
-                databaseSizeInTBs,
-                dbVersion,
-                displayName,
-                ocid,
-                isAutomatic,
-                isRestorable,
-                lifecycleDetails,
-                lifecycleState,
-                retentionPeriodInDays,
-                sizeInTBs,
-                timeAvailableTil,
-                timeEnded,
-                type0,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

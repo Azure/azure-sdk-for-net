@@ -185,48 +185,43 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string cloudvmclustername = "cluster1";
             CloudVmClusterData data = new CloudVmClusterData(new AzureLocation("eastus"))
             {
-                DataStorageSizeInTbs = 1000,
-                DbNodeStorageSizeInGbs = 1000,
-                MemorySizeInGbs = 1000,
-                TimeZone = "UTC",
-                Hostname = "hostname1",
-                Domain = "domain1",
-                CpuCoreCount = 2,
-                OcpuCount = 3,
-                ClusterName = "cluster1",
-                DataStoragePercentage = 100,
-                IsLocalBackupEnabled = false,
-                CloudExadataInfrastructureId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/cloudExadataInfrastructures/infra1"),
-                IsSparseDiskgroupEnabled = false,
-                SshPublicKeys =
-{
+                Properties = new CloudVmClusterProperties("hostname1", 2, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/cloudExadataInfrastructures/infra1"), new string[]
+            {
 "ssh-key 1"
-},
-                LicenseModel = LicenseModel.LicenseIncluded,
-                ScanListenerPortTcp = 1050,
-                ScanListenerPortTcpSsl = 1025,
-                VnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1"),
-                GiVersion = "19.0.0.0",
-                SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
-                BackupSubnetCidr = "172.17.5.0/24",
-                NsgCidrs =
+            }, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1"), "19.0.0.0", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"), "cluster 1")
+                {
+                    DataStorageSizeInTbs = 1000,
+                    DbNodeStorageSizeInGbs = 1000,
+                    MemorySizeInGbs = 1000,
+                    TimeZone = "UTC",
+                    Domain = "domain1",
+                    OcpuCount = 3,
+                    ClusterName = "cluster1",
+                    DataStoragePercentage = 100,
+                    IsLocalBackupEnabled = false,
+                    IsSparseDiskgroupEnabled = false,
+                    LicenseModel = LicenseModel.LicenseIncluded,
+                    ScanListenerPortTcp = 1050,
+                    ScanListenerPortTcpSsl = 1025,
+                    BackupSubnetCidr = "172.17.5.0/24",
+                    NsgCidrs =
 {
-new NSGCidr("10.0.0.0/16")
+new NsgCidr("10.0.0.0/16")
 {
 DestinationPortRange = new PortRange(1520,1522),
-},new NSGCidr("10.10.0.0/24")
+},new NsgCidr("10.10.0.0/24")
 },
-                DataCollectionConfig = new DataCollectionConfig()
-                {
-                    IsDiagnosticsEventsEnabled = false,
-                    IsHealthMonitoringEnabled = false,
-                    IsIncidentLogsEnabled = false,
-                },
-                DisplayName = "cluster 1",
-                DbServers =
+                    DataCollectionConfig = new DataCollectionConfig()
+                    {
+                        IsDiagnosticsEventsEnabled = false,
+                        IsHealthMonitoringEnabled = false,
+                        IsIncidentLogsEnabled = false,
+                    },
+                    DbServers =
 {
 "ocid1..aaaa"
 },
+                },
                 Tags =
 {
 ["tagK1"] = "tagV1",

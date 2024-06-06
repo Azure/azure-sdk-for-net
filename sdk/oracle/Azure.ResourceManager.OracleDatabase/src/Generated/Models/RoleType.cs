@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> RoleType enum. </summary>
+    /// <summary> Role type enum. </summary>
     public readonly partial struct RoleType : IEquatable<RoleType>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string BackupCopyValue = "BackupCopy";
         private const string SnapshotStandbyValue = "SnapshotStandby";
 
-        /// <summary> PRIMARY value. </summary>
+        /// <summary> Primary role. </summary>
         public static RoleType Primary { get; } = new RoleType(PrimaryValue);
-        /// <summary> STANDBY value. </summary>
+        /// <summary> Standby role. </summary>
         public static RoleType Standby { get; } = new RoleType(StandbyValue);
-        /// <summary> DISABLED_STANDBY value. </summary>
+        /// <summary> DisabledStandby role. </summary>
         public static RoleType DisabledStandby { get; } = new RoleType(DisabledStandbyValue);
-        /// <summary> BACKUP_COPY value. </summary>
+        /// <summary> BackupCopy role. </summary>
         public static RoleType BackupCopy { get; } = new RoleType(BackupCopyValue);
-        /// <summary> SNAPSHOT_STANDBY value. </summary>
+        /// <summary> SnapshotStandby role. </summary>
         public static RoleType SnapshotStandby { get; } = new RoleType(SnapshotStandbyValue);
         /// <summary> Determines if two <see cref="RoleType"/> values are the same. </summary>
         public static bool operator ==(RoleType left, RoleType right) => left.Equals(right);

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
@@ -187,10 +188,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 "1"
             })
             {
-                ComputeCount = 100,
-                StorageCount = 10,
-                Shape = "EXADATA.X9M",
-                DisplayName = "infra 1",
+                Properties = new CloudExadataInfrastructureProperties("EXADATA.X9M", "infra 1")
+                {
+                    ComputeCount = 100,
+                    StorageCount = 10,
+                },
                 Tags =
 {
 ["tagK1"] = "tagV1",

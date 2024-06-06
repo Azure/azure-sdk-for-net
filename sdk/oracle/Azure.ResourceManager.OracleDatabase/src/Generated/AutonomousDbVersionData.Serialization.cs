@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,39 +53,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbWorkload))
-            {
-                writer.WritePropertyName("dbWorkload"u8);
-                writer.WriteStringValue(DbWorkload.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsDefaultForFree))
-            {
-                writer.WritePropertyName("isDefaultForFree"u8);
-                writer.WriteBooleanValue(IsDefaultForFree.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsDefaultForPaid))
-            {
-                writer.WritePropertyName("isDefaultForPaid"u8);
-                writer.WriteBooleanValue(IsDefaultForPaid.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsFreeTierEnabled))
-            {
-                writer.WritePropertyName("isFreeTierEnabled"u8);
-                writer.WriteBooleanValue(IsFreeTierEnabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsPaidEnabled))
-            {
-                writer.WritePropertyName("isPaidEnabled"u8);
-                writer.WriteBooleanValue(IsPaidEnabled.Value);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,20 +91,24 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            AutonomousDbVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string version = default;
-            WorkloadType? dbWorkload = default;
-            bool? isDefaultForFree = default;
-            bool? isDefaultForPaid = default;
-            bool? isFreeTierEnabled = default;
-            bool? isPaidEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AutonomousDbVersionProperties.DeserializeAutonomousDbVersionProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -157,68 +133,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbWorkload"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dbWorkload = new WorkloadType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isDefaultForFree"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDefaultForFree = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isDefaultForPaid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDefaultForPaid = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isFreeTierEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isFreeTierEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isPaidEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isPaidEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -230,12 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 name,
                 type,
                 systemData,
-                version,
-                dbWorkload,
-                isDefaultForFree,
-                isDefaultForPaid,
-                isFreeTierEnabled,
-                isPaidEnabled,
+                properties,
                 serializedAdditionalRawData);
         }
 

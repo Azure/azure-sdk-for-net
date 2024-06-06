@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
@@ -60,91 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="shapeFamily"> The family of the shape used for the DB system. </param>
-        /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
-        /// <param name="minimumCoreCount"> The minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
-        /// <param name="runtimeMinimumCoreCount"> The runtime minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
-        /// <param name="coreCountIncrement"> The discrete number by which the CPU core count for this shape can be increased or decreased. </param>
-        /// <param name="minStorageCount"> The minimum number of Exadata storage servers available for the Exadata infrastructure. </param>
-        /// <param name="maxStorageCount"> The maximum number of Exadata storage servers available for the Exadata infrastructure. </param>
-        /// <param name="availableDataStoragePerServerInTbs"> The maximum data storage available per storage server for this shape. Only applicable to ExaCC Elastic shapes. </param>
-        /// <param name="availableMemoryPerNodeInGbs"> The maximum memory available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
-        /// <param name="availableDbNodePerNodeInGbs"> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
-        /// <param name="minCoreCountPerNode"> The minimum number of CPU cores that can be enabled per node for this shape. </param>
-        /// <param name="availableMemoryInGbs"> The maximum memory that can be enabled for this shape. </param>
-        /// <param name="minMemoryPerNodeInGbs"> The minimum memory that need be allocated per node for this shape. </param>
-        /// <param name="availableDbNodeStorageInGbs"> The maximum Db Node storage that can be enabled for this shape. </param>
-        /// <param name="minDbNodeStoragePerNodeInGbs"> The minimum Db Node storage that need be allocated per node for this shape. </param>
-        /// <param name="availableDataStorageInTbs"> The maximum DATA storage that can be enabled for this shape. </param>
-        /// <param name="minDataStorageInTbs"> The minimum data storage that need be allocated for this shape. </param>
-        /// <param name="minimumNodeCount"> The minimum number of database nodes available for this shape. </param>
-        /// <param name="maximumNodeCount"> The maximum number of database nodes available for this shape. </param>
-        /// <param name="availableCoreCountPerNode"> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DbSystemShapeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string shapeFamily, int? availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDbNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDbNodeStorageInGbs, int? minDbNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DbSystemShapeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DbSystemShapeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ShapeFamily = shapeFamily;
-            AvailableCoreCount = availableCoreCount;
-            MinimumCoreCount = minimumCoreCount;
-            RuntimeMinimumCoreCount = runtimeMinimumCoreCount;
-            CoreCountIncrement = coreCountIncrement;
-            MinStorageCount = minStorageCount;
-            MaxStorageCount = maxStorageCount;
-            AvailableDataStoragePerServerInTbs = availableDataStoragePerServerInTbs;
-            AvailableMemoryPerNodeInGbs = availableMemoryPerNodeInGbs;
-            AvailableDbNodePerNodeInGbs = availableDbNodePerNodeInGbs;
-            MinCoreCountPerNode = minCoreCountPerNode;
-            AvailableMemoryInGbs = availableMemoryInGbs;
-            MinMemoryPerNodeInGbs = minMemoryPerNodeInGbs;
-            AvailableDbNodeStorageInGbs = availableDbNodeStorageInGbs;
-            MinDbNodeStoragePerNodeInGbs = minDbNodeStoragePerNodeInGbs;
-            AvailableDataStorageInTbs = availableDataStorageInTbs;
-            MinDataStorageInTbs = minDataStorageInTbs;
-            MinimumNodeCount = minimumNodeCount;
-            MaximumNodeCount = maximumNodeCount;
-            AvailableCoreCountPerNode = availableCoreCountPerNode;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The family of the shape used for the DB system. </summary>
-        public string ShapeFamily { get; }
-        /// <summary> The maximum number of CPU cores that can be enabled on the DB system for this shape. </summary>
-        public int? AvailableCoreCount { get; }
-        /// <summary> The minimum number of CPU cores that can be enabled on the DB system for this shape. </summary>
-        public int? MinimumCoreCount { get; }
-        /// <summary> The runtime minimum number of CPU cores that can be enabled on the DB system for this shape. </summary>
-        public int? RuntimeMinimumCoreCount { get; }
-        /// <summary> The discrete number by which the CPU core count for this shape can be increased or decreased. </summary>
-        public int? CoreCountIncrement { get; }
-        /// <summary> The minimum number of Exadata storage servers available for the Exadata infrastructure. </summary>
-        public int? MinStorageCount { get; }
-        /// <summary> The maximum number of Exadata storage servers available for the Exadata infrastructure. </summary>
-        public int? MaxStorageCount { get; }
-        /// <summary> The maximum data storage available per storage server for this shape. Only applicable to ExaCC Elastic shapes. </summary>
-        public double? AvailableDataStoragePerServerInTbs { get; }
-        /// <summary> The maximum memory available per database node for this shape. Only applicable to ExaCC Elastic shapes. </summary>
-        public int? AvailableMemoryPerNodeInGbs { get; }
-        /// <summary> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </summary>
-        public int? AvailableDbNodePerNodeInGbs { get; }
-        /// <summary> The minimum number of CPU cores that can be enabled per node for this shape. </summary>
-        public int? MinCoreCountPerNode { get; }
-        /// <summary> The maximum memory that can be enabled for this shape. </summary>
-        public int? AvailableMemoryInGbs { get; }
-        /// <summary> The minimum memory that need be allocated per node for this shape. </summary>
-        public int? MinMemoryPerNodeInGbs { get; }
-        /// <summary> The maximum Db Node storage that can be enabled for this shape. </summary>
-        public int? AvailableDbNodeStorageInGbs { get; }
-        /// <summary> The minimum Db Node storage that need be allocated per node for this shape. </summary>
-        public int? MinDbNodeStoragePerNodeInGbs { get; }
-        /// <summary> The maximum DATA storage that can be enabled for this shape. </summary>
-        public int? AvailableDataStorageInTbs { get; }
-        /// <summary> The minimum data storage that need be allocated for this shape. </summary>
-        public int? MinDataStorageInTbs { get; }
-        /// <summary> The minimum number of database nodes available for this shape. </summary>
-        public int? MinimumNodeCount { get; }
-        /// <summary> The maximum number of database nodes available for this shape. </summary>
-        public int? MaximumNodeCount { get; }
-        /// <summary> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </summary>
-        public int? AvailableCoreCountPerNode { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public DbSystemShapeProperties Properties { get; set; }
     }
 }

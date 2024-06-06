@@ -53,22 +53,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionPatch"/>. </summary>
         /// <param name="plan"> Details of the resource plan. </param>
-        /// <param name="productCode"> Product code for the term unit. </param>
-        /// <param name="intent"> Intent for the update operation. </param>
+        /// <param name="properties"> The updatable properties of the OracleSubscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleSubscriptionPatch(ArmPlan plan, string productCode, Intent? intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleSubscriptionPatch(ArmPlan plan, OracleSubscriptionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Plan = plan;
-            ProductCode = productCode;
-            Intent = intent;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details of the resource plan. </summary>
         public ArmPlan Plan { get; set; }
-        /// <summary> Product code for the term unit. </summary>
-        public string ProductCode { get; set; }
-        /// <summary> Intent for the update operation. </summary>
-        public Intent? Intent { get; set; }
+        /// <summary> The updatable properties of the OracleSubscription. </summary>
+        public OracleSubscriptionUpdateProperties Properties { get; set; }
     }
 }

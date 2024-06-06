@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> AutonomousDatabaseBackupType enum. </summary>
+    /// <summary> Autonomous database backup type enum. </summary>
     public readonly partial struct AutonomousDatabaseBackupType : IEquatable<AutonomousDatabaseBackupType>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FullValue = "Full";
         private const string LongTermValue = "LongTerm";
 
-        /// <summary> Incremental. </summary>
+        /// <summary> Incremental backup. </summary>
         public static AutonomousDatabaseBackupType Incremental { get; } = new AutonomousDatabaseBackupType(IncrementalValue);
-        /// <summary> Full. </summary>
+        /// <summary> Full backup. </summary>
         public static AutonomousDatabaseBackupType Full { get; } = new AutonomousDatabaseBackupType(FullValue);
-        /// <summary> LongTerm. </summary>
+        /// <summary> LongTerm backup. </summary>
         public static AutonomousDatabaseBackupType LongTerm { get; } = new AutonomousDatabaseBackupType(LongTermValue);
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupType"/> values are the same. </summary>
         public static bool operator ==(AutonomousDatabaseBackupType left, AutonomousDatabaseBackupType right) => left.Equals(right);

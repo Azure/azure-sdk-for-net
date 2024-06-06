@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
@@ -60,15 +61,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="characterSet"> The Oracle Autonomous Database supported character sets. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseCharacterSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string characterSet, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutonomousDatabaseCharacterSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDatabaseCharacterSetProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            CharacterSet = characterSet;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal AutonomousDatabaseCharacterSetProperties Properties { get; set; }
         /// <summary> The Oracle Autonomous Database supported character sets. </summary>
-        public string CharacterSet { get; }
+        public string AutonomousDatabaseCharacterSet
+        {
+            get => Properties is null ? default : Properties.CharacterSet;
+            set => Properties = new AutonomousDatabaseCharacterSetProperties(value);
+        }
     }
 }

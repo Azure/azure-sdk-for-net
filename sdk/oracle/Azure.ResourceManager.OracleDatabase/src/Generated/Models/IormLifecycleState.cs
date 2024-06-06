@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> IORMLifecycleState enum. </summary>
+    /// <summary> ORM lifecycle state enum. </summary>
     public readonly partial struct IormLifecycleState : IEquatable<IormLifecycleState>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string UpdatingValue = "Updating";
         private const string FailedValue = "Failed";
 
-        /// <summary> BOOTSTRAPPING value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static IormLifecycleState BootStrapping { get; } = new IormLifecycleState(BootStrappingValue);
-        /// <summary> ENABLED value. </summary>
+        /// <summary> Indicates that resource in Enabled state. </summary>
         public static IormLifecycleState Enabled { get; } = new IormLifecycleState(EnabledValue);
-        /// <summary> DISABLED value. </summary>
+        /// <summary> Indicates that resource in Disabled state. </summary>
         public static IormLifecycleState Disabled { get; } = new IormLifecycleState(DisabledValue);
-        /// <summary> UPDATING value. </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static IormLifecycleState Updating { get; } = new IormLifecycleState(UpdatingValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static IormLifecycleState Failed { get; } = new IormLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="IormLifecycleState"/> values are the same. </summary>
         public static bool operator ==(IormLifecycleState left, IormLifecycleState right) => left.Equals(right);

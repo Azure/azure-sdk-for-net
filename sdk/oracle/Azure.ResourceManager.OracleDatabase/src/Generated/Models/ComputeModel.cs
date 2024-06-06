@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> ComputeModel enum. </summary>
+    /// <summary> Compute model enum. </summary>
     public readonly partial struct ComputeModel : IEquatable<ComputeModel>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string EcpuValue = "ECPU";
         private const string OcpuValue = "OCPU";
 
-        /// <summary> ECPU value. </summary>
+        /// <summary> ECPU model type. </summary>
         public static ComputeModel Ecpu { get; } = new ComputeModel(EcpuValue);
-        /// <summary> OCPU value. </summary>
+        /// <summary> OCPU model type. </summary>
         public static ComputeModel Ocpu { get; } = new ComputeModel(OcpuValue);
         /// <summary> Determines if two <see cref="ComputeModel"/> values are the same. </summary>
         public static bool operator ==(ComputeModel left, ComputeModel right) => left.Equals(right);

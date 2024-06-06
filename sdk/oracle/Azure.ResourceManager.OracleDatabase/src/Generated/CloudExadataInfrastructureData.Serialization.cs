@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("zones"u8);
             writer.WriteStartArray();
             foreach (var item in Zones)
@@ -68,169 +73,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
-            {
-                writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
-            }
-            if (Optional.IsDefined(ComputeCount))
-            {
-                writer.WritePropertyName("computeCount"u8);
-                writer.WriteNumberValue(ComputeCount.Value);
-            }
-            if (Optional.IsDefined(StorageCount))
-            {
-                writer.WritePropertyName("storageCount"u8);
-                writer.WriteNumberValue(StorageCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalStorageSizeInGbs))
-            {
-                writer.WritePropertyName("totalStorageSizeInGbs"u8);
-                writer.WriteNumberValue(TotalStorageSizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AvailableStorageSizeInGbs))
-            {
-                writer.WritePropertyName("availableStorageSizeInGbs"u8);
-                writer.WriteNumberValue(AvailableStorageSizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
-            {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
-            {
-                writer.WritePropertyName("lifecycleDetails"u8);
-                writer.WriteStringValue(LifecycleDetails);
-            }
-            if (Optional.IsDefined(MaintenanceWindow))
-            {
-                writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedPatchingTime))
-            {
-                writer.WritePropertyName("estimatedPatchingTime"u8);
-                writer.WriteObjectValue(EstimatedPatchingTime, options);
-            }
-            if (Optional.IsCollectionDefined(CustomerContacts))
-            {
-                writer.WritePropertyName("customerContacts"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomerContacts)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
-            {
-                writer.WritePropertyName("lifecycleState"u8);
-                writer.WriteStringValue(LifecycleState.Value.ToString());
-            }
-            if (Optional.IsDefined(Shape))
-            {
-                writer.WritePropertyName("shape"u8);
-                writer.WriteStringValue(Shape);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OciUri))
-            {
-                writer.WritePropertyName("ociUrl"u8);
-                writer.WriteStringValue(OciUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CpuCount))
-            {
-                writer.WritePropertyName("cpuCount"u8);
-                writer.WriteNumberValue(CpuCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxCpuCount))
-            {
-                writer.WritePropertyName("maxCpuCount"u8);
-                writer.WriteNumberValue(MaxCpuCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeInGbs))
-            {
-                writer.WritePropertyName("memorySizeInGbs"u8);
-                writer.WriteNumberValue(MemorySizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGbs))
-            {
-                writer.WritePropertyName("maxMemoryInGbs"u8);
-                writer.WriteNumberValue(MaxMemoryInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
-            {
-                writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageSizeInGbs))
-            {
-                writer.WritePropertyName("maxDbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(MaxDbNodeStorageSizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataStorageSizeInTbs))
-            {
-                writer.WritePropertyName("dataStorageSizeInTbs"u8);
-                writer.WriteNumberValue(DataStorageSizeInTbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxDataStorageInTbs))
-            {
-                writer.WritePropertyName("maxDataStorageInTbs"u8);
-                writer.WriteNumberValue(MaxDataStorageInTbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbServerVersion))
-            {
-                writer.WritePropertyName("dbServerVersion"u8);
-                writer.WriteStringValue(DbServerVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageServerVersion))
-            {
-                writer.WritePropertyName("storageServerVersion"u8);
-                writer.WriteStringValue(StorageServerVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ActivatedStorageCount))
-            {
-                writer.WritePropertyName("activatedStorageCount"u8);
-                writer.WriteNumberValue(ActivatedStorageCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalStorageCount))
-            {
-                writer.WritePropertyName("additionalStorageCount"u8);
-                writer.WriteNumberValue(AdditionalStorageCount.Value);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunId))
-            {
-                writer.WritePropertyName("lastMaintenanceRunId"u8);
-                writer.WriteStringValue(LastMaintenanceRunId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunId))
-            {
-                writer.WritePropertyName("nextMaintenanceRunId"u8);
-                writer.WriteStringValue(NextMaintenanceRunId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyDbServerVersion))
-            {
-                writer.WritePropertyName("monthlyDbServerVersion"u8);
-                writer.WriteStringValue(MonthlyDbServerVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyStorageServerVersion))
-            {
-                writer.WritePropertyName("monthlyStorageServerVersion"u8);
-                writer.WriteStringValue(MonthlyStorageServerVersion);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -269,6 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            CloudExadataInfrastructureProperties properties = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -276,41 +119,19 @@ namespace Azure.ResourceManager.OracleDatabase
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string ocid = default;
-            int? computeCount = default;
-            int? storageCount = default;
-            int? totalStorageSizeInGbs = default;
-            int? availableStorageSizeInGbs = default;
-            string timeCreated = default;
-            string lifecycleDetails = default;
-            MaintenanceWindow maintenanceWindow = default;
-            EstimatedPatchingTime estimatedPatchingTime = default;
-            IList<CustomerContact> customerContacts = default;
-            AzureResourceProvisioningState? provisioningState = default;
-            CloudExadataInfrastructureLifecycleState? lifecycleState = default;
-            string shape = default;
-            Uri ociUrl = default;
-            int? cpuCount = default;
-            int? maxCpuCount = default;
-            int? memorySizeInGbs = default;
-            int? maxMemoryInGbs = default;
-            int? dbNodeStorageSizeInGbs = default;
-            int? maxDbNodeStorageSizeInGbs = default;
-            double? dataStorageSizeInTbs = default;
-            double? maxDataStorageInTbs = default;
-            string dbServerVersion = default;
-            string storageServerVersion = default;
-            int? activatedStorageCount = default;
-            int? additionalStorageCount = default;
-            string displayName = default;
-            string lastMaintenanceRunId = default;
-            string nextMaintenanceRunId = default;
-            string monthlyDbServerVersion = default;
-            string monthlyStorageServerVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = CloudExadataInfrastructureProperties.DeserializeCloudExadataInfrastructureProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("zones"u8))
                 {
                     List<string> array = new List<string>();
@@ -364,258 +185,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("ocid"u8))
-                        {
-                            ocid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("computeCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            computeCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("availableStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availableStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeCreated"u8))
-                        {
-                            timeCreated = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleDetails"u8))
-                        {
-                            lifecycleDetails = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("estimatedPatchingTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            estimatedPatchingTime = EstimatedPatchingTime.DeserializeEstimatedPatchingTime(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("customerContacts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CustomerContact> array = new List<CustomerContact>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CustomerContact.DeserializeCustomerContact(item, options));
-                            }
-                            customerContacts = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AzureResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lifecycleState = new CloudExadataInfrastructureLifecycleState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("shape"u8))
-                        {
-                            shape = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ociUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ociUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("cpuCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cpuCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxCpuCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxCpuCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("memorySizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            memorySizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxMemoryInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxMemoryInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbNodeStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dbNodeStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxDbNodeStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxDbNodeStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataStorageSizeInTbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataStorageSizeInTbs = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxDataStorageInTbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxDataStorageInTbs = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbServerVersion"u8))
-                        {
-                            dbServerVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageServerVersion"u8))
-                        {
-                            storageServerVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("activatedStorageCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            activatedStorageCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalStorageCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            additionalStorageCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastMaintenanceRunId"u8))
-                        {
-                            lastMaintenanceRunId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("nextMaintenanceRunId"u8))
-                        {
-                            nextMaintenanceRunId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyDbServerVersion"u8))
-                        {
-                            monthlyDbServerVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyStorageServerVersion"u8))
-                        {
-                            monthlyStorageServerVersion = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -629,38 +198,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 zones,
-                ocid,
-                computeCount,
-                storageCount,
-                totalStorageSizeInGbs,
-                availableStorageSizeInGbs,
-                timeCreated,
-                lifecycleDetails,
-                maintenanceWindow,
-                estimatedPatchingTime,
-                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
-                provisioningState,
-                lifecycleState,
-                shape,
-                ociUrl,
-                cpuCount,
-                maxCpuCount,
-                memorySizeInGbs,
-                maxMemoryInGbs,
-                dbNodeStorageSizeInGbs,
-                maxDbNodeStorageSizeInGbs,
-                dataStorageSizeInTbs,
-                maxDataStorageInTbs,
-                dbServerVersion,
-                storageServerVersion,
-                activatedStorageCount,
-                additionalStorageCount,
-                displayName,
-                lastMaintenanceRunId,
-                nextMaintenanceRunId,
-                monthlyDbServerVersion,
-                monthlyStorageServerVersion,
                 serializedAdditionalRawData);
         }
 

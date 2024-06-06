@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DeletedValue = "Deleted";
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
 
-        /// <summary> CREATING value. </summary>
+        /// <summary> Indicates that resource in Creating state. </summary>
         public static DbServerProvisioningState Creating { get; } = new DbServerProvisioningState(CreatingValue);
-        /// <summary> AVAILABLE value. </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static DbServerProvisioningState Available { get; } = new DbServerProvisioningState(AvailableValue);
-        /// <summary> UNAVAILABLE value. </summary>
+        /// <summary> Indicates that resource in Unavailable state. </summary>
         public static DbServerProvisioningState Unavailable { get; } = new DbServerProvisioningState(UnavailableValue);
-        /// <summary> DELETING value. </summary>
+        /// <summary> Indicates that resource in Deleting state. </summary>
         public static DbServerProvisioningState Deleting { get; } = new DbServerProvisioningState(DeletingValue);
-        /// <summary> DELETED value. </summary>
+        /// <summary> Indicates that resource in Deleted state. </summary>
         public static DbServerProvisioningState Deleted { get; } = new DbServerProvisioningState(DeletedValue);
-        /// <summary> MAINTENANCE_IN_PROGRESS value. </summary>
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static DbServerProvisioningState MaintenanceInProgress { get; } = new DbServerProvisioningState(MaintenanceInProgressValue);
         /// <summary> Determines if two <see cref="DbServerProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DbServerProvisioningState left, DbServerProvisioningState right) => left.Equals(right);

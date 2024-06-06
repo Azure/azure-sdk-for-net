@@ -32,19 +32,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ProductCode))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("productCode"u8);
-                writer.WriteStringValue(ProductCode);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Intent))
-            {
-                writer.WritePropertyName("intent"u8);
-                writer.WriteStringValue(Intent.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,8 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             ArmPlan plan = default;
-            string productCode = default;
-            Intent? intent = default;
+            OracleSubscriptionUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,26 +94,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("productCode"u8))
-                        {
-                            productCode = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("intent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            intent = new Intent(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = OracleSubscriptionUpdateProperties.DeserializeOracleSubscriptionUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +105,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OracleSubscriptionPatch(plan, productCode, intent, serializedAdditionalRawData);
+            return new OracleSubscriptionPatch(plan, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OracleSubscriptionPatch>.Write(ModelReaderWriterOptions options)

@@ -37,74 +37,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(StorageSizeInGbs))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("storageSizeInGbs"u8);
-                writer.WriteNumberValue(StorageSizeInGbs.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(DataStorageSizeInTbs))
-            {
-                writer.WritePropertyName("dataStorageSizeInTbs"u8);
-                writer.WriteNumberValue(DataStorageSizeInTbs.Value);
-            }
-            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
-            {
-                writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
-            }
-            if (Optional.IsDefined(MemorySizeInGbs))
-            {
-                writer.WritePropertyName("memorySizeInGbs"u8);
-                writer.WriteNumberValue(MemorySizeInGbs.Value);
-            }
-            if (Optional.IsDefined(CpuCoreCount))
-            {
-                writer.WritePropertyName("cpuCoreCount"u8);
-                writer.WriteNumberValue(CpuCoreCount.Value);
-            }
-            if (Optional.IsDefined(OcpuCount))
-            {
-                writer.WritePropertyName("ocpuCount"u8);
-                writer.WriteNumberValue(OcpuCount.Value);
-            }
-            if (Optional.IsCollectionDefined(SshPublicKeys))
-            {
-                writer.WritePropertyName("sshPublicKeys"u8);
-                writer.WriteStartArray();
-                foreach (var item in SshPublicKeys)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(LicenseModel))
-            {
-                writer.WritePropertyName("licenseModel"u8);
-                writer.WriteStringValue(LicenseModel.Value.ToString());
-            }
-            if (Optional.IsDefined(DataCollectionConfig))
-            {
-                writer.WritePropertyName("dataCollectionConfig"u8);
-                writer.WriteObjectValue(DataCollectionConfig, options);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsCollectionDefined(ComputeNodes))
-            {
-                writer.WritePropertyName("computeNodes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ComputeNodes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -144,17 +81,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            int? storageSizeInGbs = default;
-            double? dataStorageSizeInTbs = default;
-            int? dbNodeStorageSizeInGbs = default;
-            int? memorySizeInGbs = default;
-            int? cpuCoreCount = default;
-            float? ocpuCount = default;
-            IList<string> sshPublicKeys = default;
-            LicenseModel? licenseModel = default;
-            DataCollectionConfig dataCollectionConfig = default;
-            string displayName = default;
-            IList<string> computeNodes = default;
+            CloudVmClusterUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,117 +104,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("storageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataStorageSizeInTbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataStorageSizeInTbs = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbNodeStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dbNodeStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("memorySizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            memorySizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("cpuCoreCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cpuCoreCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("ocpuCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ocpuCount = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("sshPublicKeys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            sshPublicKeys = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("licenseModel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            licenseModel = new LicenseModel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataCollectionConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataCollectionConfig = DataCollectionConfig.DeserializeDataCollectionConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("computeNodes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            computeNodes = array;
-                            continue;
-                        }
-                    }
+                    properties = CloudVmClusterUpdateProperties.DeserializeCloudVmClusterUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -296,20 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CloudVmClusterPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                storageSizeInGbs,
-                dataStorageSizeInTbs,
-                dbNodeStorageSizeInGbs,
-                memorySizeInGbs,
-                cpuCoreCount,
-                ocpuCount,
-                sshPublicKeys ?? new ChangeTrackingList<string>(),
-                licenseModel,
-                dataCollectionConfig,
-                displayName,
-                computeNodes ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+            return new CloudVmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudVmClusterPatch>.Write(ModelReaderWriterOptions options)

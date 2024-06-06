@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,129 +53,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
-            {
-                writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CompartmentId))
-            {
-                writer.WritePropertyName("compartmentId"u8);
-                writer.WriteStringValue(CompartmentId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExadataInfrastructureId))
-            {
-                writer.WritePropertyName("exadataInfrastructureId"u8);
-                writer.WriteStringValue(ExadataInfrastructureId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CpuCoreCount))
-            {
-                writer.WritePropertyName("cpuCoreCount"u8);
-                writer.WriteNumberValue(CpuCoreCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbServerPatchingDetails))
-            {
-                writer.WritePropertyName("dbServerPatchingDetails"u8);
-                writer.WriteObjectValue(DbServerPatchingDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGbs))
-            {
-                writer.WritePropertyName("maxMemoryInGbs"u8);
-                writer.WriteNumberValue(MaxMemoryInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
-            {
-                writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VmClusterIds))
-            {
-                writer.WritePropertyName("vmClusterIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmClusterIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DbNodeIds))
-            {
-                writer.WritePropertyName("dbNodeIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in DbNodeIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
-            {
-                writer.WritePropertyName("lifecycleDetails"u8);
-                writer.WriteStringValue(LifecycleDetails);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
-            {
-                writer.WritePropertyName("lifecycleState"u8);
-                writer.WriteStringValue(LifecycleState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxCpuCount))
-            {
-                writer.WritePropertyName("maxCpuCount"u8);
-                writer.WriteNumberValue(MaxCpuCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVmClusterIds))
-            {
-                writer.WritePropertyName("autonomousVmClusterIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in AutonomousVmClusterIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVirtualMachineIds))
-            {
-                writer.WritePropertyName("autonomousVirtualMachineIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in AutonomousVirtualMachineIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageInGbs))
-            {
-                writer.WritePropertyName("maxDbNodeStorageInGbs"u8);
-                writer.WriteNumberValue(MaxDbNodeStorageInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeInGbs))
-            {
-                writer.WritePropertyName("memorySizeInGbs"u8);
-                writer.WriteNumberValue(MemorySizeInGbs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Shape))
-            {
-                writer.WritePropertyName("shape"u8);
-                writer.WriteStringValue(Shape);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
-            {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -209,34 +91,24 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            DbServerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string ocid = default;
-            string displayName = default;
-            string compartmentId = default;
-            string exadataInfrastructureId = default;
-            int? cpuCoreCount = default;
-            DbServerPatchingDetails dbServerPatchingDetails = default;
-            int? maxMemoryInGbs = default;
-            int? dbNodeStorageSizeInGbs = default;
-            IReadOnlyList<string> vmClusterIds = default;
-            IReadOnlyList<string> dbNodeIds = default;
-            string lifecycleDetails = default;
-            DbServerProvisioningState? lifecycleState = default;
-            int? maxCpuCount = default;
-            IReadOnlyList<string> autonomousVmClusterIds = default;
-            IReadOnlyList<string> autonomousVirtualMachineIds = default;
-            int? maxDbNodeStorageInGbs = default;
-            int? memorySizeInGbs = default;
-            string shape = default;
-            DateTimeOffset? timeCreated = default;
-            ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DbServerProperties.DeserializeDbServerProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -261,194 +133,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("ocid"u8))
-                        {
-                            ocid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("compartmentId"u8))
-                        {
-                            compartmentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("exadataInfrastructureId"u8))
-                        {
-                            exadataInfrastructureId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cpuCoreCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cpuCoreCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbServerPatchingDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dbServerPatchingDetails = DbServerPatchingDetails.DeserializeDbServerPatchingDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("maxMemoryInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxMemoryInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dbNodeStorageSizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dbNodeStorageSizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmClusterIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            vmClusterIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dbNodeIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            dbNodeIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleDetails"u8))
-                        {
-                            lifecycleDetails = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lifecycleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lifecycleState = new DbServerProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("maxCpuCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxCpuCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("autonomousVmClusterIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            autonomousVmClusterIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("autonomousVirtualMachineIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            autonomousVirtualMachineIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("maxDbNodeStorageInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxDbNodeStorageInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("memorySizeInGbs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            memorySizeInGbs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("shape"u8))
-                        {
-                            shape = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeCreated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeCreated = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -460,26 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 name,
                 type,
                 systemData,
-                ocid,
-                displayName,
-                compartmentId,
-                exadataInfrastructureId,
-                cpuCoreCount,
-                dbServerPatchingDetails,
-                maxMemoryInGbs,
-                dbNodeStorageSizeInGbs,
-                vmClusterIds ?? new ChangeTrackingList<string>(),
-                dbNodeIds ?? new ChangeTrackingList<string>(),
-                lifecycleDetails,
-                lifecycleState,
-                maxCpuCount,
-                autonomousVmClusterIds ?? new ChangeTrackingList<string>(),
-                autonomousVirtualMachineIds ?? new ChangeTrackingList<string>(),
-                maxDbNodeStorageInGbs,
-                memorySizeInGbs,
-                shape,
-                timeCreated,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

@@ -26,14 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionPeriodInDays))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("retentionPeriodInDays"u8);
-                writer.WriteNumberValue(RetentionPeriodInDays.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,7 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            int? retentionPeriodInDays = default;
+            AutonomousDatabaseBackupUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,21 +78,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("retentionPeriodInDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retentionPeriodInDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                    }
+                    properties = AutonomousDatabaseBackupUpdateProperties.DeserializeAutonomousDatabaseBackupUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +89,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutonomousDatabaseBackupPatch(retentionPeriodInDays, serializedAdditionalRawData);
+            return new AutonomousDatabaseBackupPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutonomousDatabaseBackupPatch>.Write(ModelReaderWriterOptions options)

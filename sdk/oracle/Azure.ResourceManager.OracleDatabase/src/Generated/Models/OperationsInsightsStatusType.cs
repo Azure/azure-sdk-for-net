@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> OperationsInsightsStatusType enum. </summary>
+    /// <summary> Operations Insights status type enum. </summary>
     public readonly partial struct OperationsInsightsStatusType : IEquatable<OperationsInsightsStatusType>
     {
         private readonly string _value;
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedEnablingValue = "FailedEnabling";
         private const string FailedDisablingValue = "FailedDisabling";
 
-        /// <summary> ENABLING value. </summary>
+        /// <summary> Enabling status. </summary>
         public static OperationsInsightsStatusType Enabling { get; } = new OperationsInsightsStatusType(EnablingValue);
-        /// <summary> ENABLED value. </summary>
+        /// <summary> Enabled status. </summary>
         public static OperationsInsightsStatusType Enabled { get; } = new OperationsInsightsStatusType(EnabledValue);
-        /// <summary> DISABLING value. </summary>
+        /// <summary> Disabling status. </summary>
         public static OperationsInsightsStatusType Disabling { get; } = new OperationsInsightsStatusType(DisablingValue);
-        /// <summary> NOT_ENABLED value. </summary>
+        /// <summary> NotEnabled status. </summary>
         public static OperationsInsightsStatusType NotEnabled { get; } = new OperationsInsightsStatusType(NotEnabledValue);
-        /// <summary> FAILED_ENABLING value. </summary>
+        /// <summary> FailedEnabling status. </summary>
         public static OperationsInsightsStatusType FailedEnabling { get; } = new OperationsInsightsStatusType(FailedEnablingValue);
-        /// <summary> FAILED_DISABLING value. </summary>
+        /// <summary> FailedDisabling status. </summary>
         public static OperationsInsightsStatusType FailedDisabling { get; } = new OperationsInsightsStatusType(FailedDisablingValue);
         /// <summary> Determines if two <see cref="OperationsInsightsStatusType"/> values are the same. </summary>
         public static bool operator ==(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => left.Equals(right);

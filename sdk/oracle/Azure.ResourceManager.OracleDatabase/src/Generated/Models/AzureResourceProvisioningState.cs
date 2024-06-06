@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static AzureResourceProvisioningState Failed { get; } = new AzureResourceProvisioningState(FailedValue);
         /// <summary> Resource creation was canceled. </summary>
         public static AzureResourceProvisioningState Canceled { get; } = new AzureResourceProvisioningState(CanceledValue);
-        /// <summary> Provisioning value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static AzureResourceProvisioningState Provisioning { get; } = new AzureResourceProvisioningState(ProvisioningValue);
         /// <summary> Determines if two <see cref="AzureResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AzureResourceProvisioningState left, AzureResourceProvisioningState right) => left.Equals(right);

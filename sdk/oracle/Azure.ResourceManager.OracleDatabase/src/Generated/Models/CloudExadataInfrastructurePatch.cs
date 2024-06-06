@@ -50,27 +50,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
-            CustomerContacts = new ChangeTrackingList<CustomerContact>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructurePatch"/>. </summary>
         /// <param name="zones"> CloudExadataInfrastructure zones. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
-        /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
-        /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
-        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
-        /// <param name="displayName"> The name for the Exadata infrastructure. </param>
+        /// <param name="properties"> The updatable properties of the CloudExadataInfrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructurePatch(IList<string> zones, IDictionary<string, string> tags, int? computeCount, int? storageCount, MaintenanceWindow maintenanceWindow, IList<CustomerContact> customerContacts, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructurePatch(IList<string> zones, IDictionary<string, string> tags, CloudExadataInfrastructureUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
             Tags = tags;
-            ComputeCount = computeCount;
-            StorageCount = storageCount;
-            MaintenanceWindow = maintenanceWindow;
-            CustomerContacts = customerContacts;
-            DisplayName = displayName;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,15 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IList<string> Zones { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The number of compute servers for the cloud Exadata infrastructure. </summary>
-        public int? ComputeCount { get; set; }
-        /// <summary> The number of storage servers for the cloud Exadata infrastructure. </summary>
-        public int? StorageCount { get; set; }
-        /// <summary> maintenanceWindow property. </summary>
-        public MaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </summary>
-        public IList<CustomerContact> CustomerContacts { get; }
-        /// <summary> The name for the Exadata infrastructure. </summary>
-        public string DisplayName { get; set; }
+        /// <summary> The updatable properties of the CloudExadataInfrastructure. </summary>
+        public CloudExadataInfrastructureUpdateProperties Properties { get; set; }
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             OracleSubscriptionData data = new OracleSubscriptionData()
             {
+                Properties = new OracleSubscriptionProperties(),
                 Plan = new ArmPlan("plan1", "publisher1", "product1")
                 {
                     PromotionCode = "none",

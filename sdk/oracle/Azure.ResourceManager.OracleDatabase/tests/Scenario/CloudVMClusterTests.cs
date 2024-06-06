@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private const string VnetIdFormat = "{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/{2}";
         private const string DefaultSubnetName = "delegated";
 
-        private const string DefaultVnetName = "SDKTestingVirtualNetwork";
-        private const string DefaultResourceGroupName = "SDKTesting";
+        private const string DefaultVnetName = "NetSdkTestVnet";
+        private const string DefaultResourceGroupName = "NetSdkTestRg";
 
         private string _vmClusterName;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             //     DataStorageSizeInTbs = 2,
             //     DbNodeStorageSizeInGbs = 120,
             //     DbServers = new List<string>() {_dbServerResources[0].Data.Ocid, _dbServerResources[1].Data.Ocid},
-            //     ClusterName = "SDKCluster",
+            //     ClusterName = "NetSdkTestVmCluster",
             //     DisplayName = _vmClusterName,
             //     GiVersion = "19.0.0.0",
             //     Hostname = "net-sdk-test",
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             //     MemorySizeInGbs = 60,
             //     TimeZone = "UTC",
             //     VnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName)),
-            //     SshPublicKeys = new List<string>() {"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDrgWI+76BPb8E+/KRgM+JWizRyMuaX/Pdot14fXir+i0BoAOmfcgmO2D6L+5MfL0+ToXhhZmQZnH02h5t1gsTnlYgdAZfRv/qnAjyML5qXTyWSalKvwD9C3hPYMSQXoWk2cR2lrP1DWtOUWEht3ot+OFR0DJ0uTPo6dUyLqsPsFWJyZYn3KdztX8BFCy5T6u+b2Y2AUJ3/iooJeRt79V3zFJ705towYW2d+iBouThLLnKvbf27MnVd9AdM/EPt0kJiTj4NssixrXWGVWNREOdpWMccbK7VMc7vTbWhm/QdMMNQBjJk7JazxPhZQ+o7mdrrNZCVRuSgspBze04Imgl2pmoX+XD7TBMsEaNiePV7AuggR1/JncGnZztETLv90nClR+pvoYthgtneZ4xu68c3JATXb5KMgRa0afPR1eEZfwJzPXegsMGKskaIKhthZbBYBrJNSOppgTzNg6Wsj9qiyA4fm2GpkZoDGwGDGE2xFOS4CKe6ArTK3Onqi/HWiU= generated-by-azure"}
+            //     SshPublicKeys = new List<string>() {"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDN1WFUF/ciSh4GZUBmPlINBDs+zbr4MilqqPYw2jvpbr5Xi5onKUi797eLWApk9xZOzw53j7vQzDvhTIf/jpjhYYolVgu8DWgI9U53UU5HWfC3+LeMEaQ4n1TTo87aQOeMr+eTkWA0DV7Ag69ITRafNN5sD7sNLFPSKGe9YSPFHqQFOigrDet1MtfahOISg8yNcrPUawU5o9RFyTrRQmU1+Eo1CHP0jKpjKKNuE739n2r/l5wugHvYf5f59G5mEyxsb8wDghcIKbd91jD7H1ltXyZ8ubGLMdE9R5gUvJ8g7RqCiZyD7tdBAY+a+z48GL0HCmnY6T/0y+KCtA3lh2gCkycti2RefjRFTeqTFuGGeJaFC/zU6FX1XFFySJnXDdK6895WKvTr/6vj+SrTzgu0cllJbjcPDLKIGBEeGADnfKGx0q4/vaAJMzZrVlJ1POYaTeOYf0DekfPaYpHl4IToenG8u3tU1x3JhEJriOs3ORzApDWlhmnojyePMLTupFU= generated-by-azure"}
             // };
         }
 

@@ -51,15 +51,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupPatch"/>. </summary>
-        /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="properties"> The updatable properties of the AutonomousDatabaseBackup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupPatch(int? retentionPeriodInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupPatch(AutonomousDatabaseBackupUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RetentionPeriodInDays = retentionPeriodInDays;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The updatable properties of the AutonomousDatabaseBackup. </summary>
+        internal AutonomousDatabaseBackupUpdateProperties Properties { get; set; }
         /// <summary> Retention period, in days, for long-term backups. </summary>
-        public int? RetentionPeriodInDays { get; set; }
+        public int? AutonomousDatabaseBackupUpdateRetentionPeriodInDays
+        {
+            get => Properties is null ? default : Properties.RetentionPeriodInDays;
+            set
+            {
+                if (Properties is null)
+                    Properties = new AutonomousDatabaseBackupUpdateProperties();
+                Properties.RetentionPeriodInDays = value;
+            }
+        }
     }
 }

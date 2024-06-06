@@ -553,6 +553,78 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetGiVersions(location).Get(giversionname, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SystemVersionResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <returns> An object representing collection of SystemVersionResources and their operations over a SystemVersionResource. </returns>
+        public virtual SystemVersionCollection GetSystemVersions(AzureLocation location)
+        {
+            return new SystemVersionCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Get a SystemVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="systemversionname"> SystemVersion name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SystemVersionResource>> GetSystemVersionAsync(AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        {
+            return await GetSystemVersions(location).GetAsync(systemversionname, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SystemVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="systemversionname"> SystemVersion name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SystemVersionResource> GetSystemVersion(AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        {
+            return GetSystemVersions(location).Get(systemversionname, cancellationToken);
+        }
+
         /// <summary> Gets an object representing a OracleSubscriptionResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
         /// <returns> Returns a <see cref="OracleSubscriptionResource"/> object. </returns>
         public virtual OracleSubscriptionResource GetOracleSubscription()

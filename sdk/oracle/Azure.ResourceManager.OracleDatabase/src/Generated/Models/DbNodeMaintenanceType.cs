@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string VmdbRebootMigrationValue = "VmdbRebootMigration";
 
-        /// <summary> Provisioning value. </summary>
+        /// <summary> VMDB reboot migration maintenance type. </summary>
         public static DbNodeMaintenanceType VmdbRebootMigration { get; } = new DbNodeMaintenanceType(VmdbRebootMigrationValue);
         /// <summary> Determines if two <see cref="DbNodeMaintenanceType"/> values are the same. </summary>
         public static bool operator ==(DbNodeMaintenanceType left, DbNodeMaintenanceType right) => left.Equals(right);

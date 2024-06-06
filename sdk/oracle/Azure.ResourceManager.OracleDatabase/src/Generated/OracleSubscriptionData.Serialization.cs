@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.OracleDatabase
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
@@ -53,44 +58,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(SaasSubscriptionId))
-            {
-                writer.WritePropertyName("saasSubscriptionId"u8);
-                writer.WriteStringValue(SaasSubscriptionId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CloudAccountId))
-            {
-                writer.WritePropertyName("cloudAccountId"u8);
-                writer.WriteStringValue(CloudAccountId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CloudAccountState))
-            {
-                writer.WritePropertyName("cloudAccountState"u8);
-                writer.WriteStringValue(CloudAccountState.Value.ToString());
-            }
-            if (Optional.IsDefined(TermUnit))
-            {
-                writer.WritePropertyName("termUnit"u8);
-                writer.WriteStringValue(TermUnit);
-            }
-            if (Optional.IsDefined(ProductCode))
-            {
-                writer.WritePropertyName("productCode"u8);
-                writer.WriteStringValue(ProductCode);
-            }
-            if (Optional.IsDefined(Intent))
-            {
-                writer.WritePropertyName("intent"u8);
-                writer.WriteStringValue(Intent.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,22 +96,25 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
+            OracleSubscriptionProperties properties = default;
             ArmPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            OracleSubscriptionProvisioningState? provisioningState = default;
-            string saasSubscriptionId = default;
-            string cloudAccountId = default;
-            CloudAccountProvisioningState? cloudAccountState = default;
-            string termUnit = default;
-            string productCode = default;
-            Intent? intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = OracleSubscriptionProperties.DeserializeOracleSubscriptionProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("plan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,65 +148,6 @@ namespace Azure.ResourceManager.OracleDatabase
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new OracleSubscriptionProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("saasSubscriptionId"u8))
-                        {
-                            saasSubscriptionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cloudAccountId"u8))
-                        {
-                            cloudAccountId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cloudAccountState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cloudAccountState = new CloudAccountProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("termUnit"u8))
-                        {
-                            termUnit = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("productCode"u8))
-                        {
-                            productCode = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("intent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            intent = new Intent(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -248,14 +159,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 name,
                 type,
                 systemData,
+                properties,
                 plan,
-                provisioningState,
-                saasSubscriptionId,
-                cloudAccountId,
-                cloudAccountState,
-                termUnit,
-                productCode,
-                intent,
                 serializedAdditionalRawData);
         }
 
