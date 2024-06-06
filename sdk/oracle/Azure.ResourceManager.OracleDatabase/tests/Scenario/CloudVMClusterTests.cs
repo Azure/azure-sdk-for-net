@@ -7,6 +7,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Core;
 using System;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 {
@@ -72,8 +73,16 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         }
 
         private CloudVmClusterData GetCloudVmClusterData() {
-            return new CloudVmClusterData(AzureLocation.EastUS);
-            // return new CloudVmClusterData(AzureLocation.EastUS) {
+            CloudVmClusterProperties cloudVmClusterProperties = GetCloudVmClusterProperties();
+            return new CloudVmClusterData(AzureLocation.EastUS) {
+                Properties = cloudVmClusterProperties
+            };
+        }
+
+        private CloudVmClusterProperties GetCloudVmClusterProperties() {
+            // TODO
+            return new CloudVmClusterProperties();
+            // return new CloudVmClusterProperties() {
             //     SubnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName)),
             //     CloudExadataInfrastructureId = _cloudExadataInfrastructureResource.Data.Id,
             //     CpuCoreCount = 4,
