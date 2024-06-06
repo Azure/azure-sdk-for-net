@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// <description>WorkloadNetworks_GetVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// <description>WorkloadNetworks_GetVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVmGroup</description>
+        /// <description>WorkloadNetworks_DeleteVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVmGroup</description>
+        /// <description>WorkloadNetworks_DeleteVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVmGroup</description>
+        /// <description>WorkloadNetworks_UpdateVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVmGroup</description>
+        /// <description>WorkloadNetworks_UpdateVMGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
