@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Console.WriteLine("HERE: GetAutonomousDatabaseData");
             Console.WriteLine("HERE: SubnetId: " + string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
             Console.WriteLine("HERE: VnetId " + string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
+            AutonomousDatabaseProperties autonomousDatabaseProperties = GetAutonomousDatabaseProperties();
             return new AutonomousDatabaseData(AzureLocation.EastUS) {
+                Properties = autonomousDatabaseProperties
+            };
+        }
+
+        private AutonomousDatabaseProperties GetAutonomousDatabaseProperties() {
+            return new AutonomousDatabaseProperties() {
                 DisplayName = _autonomousDatabaseName,
                 DataBaseType = DataBaseType.Regular,
                 DbWorkload = WorkloadType.DW,
@@ -61,25 +68,12 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         }
 
         private AutonomousDatabasePatch GetAutonomousDatabasePatch(string tagName, string tagValue) {
-            // TODO
             ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
             {
                 new KeyValuePair<string, string>(tagName, tagValue)
             };
-            var customerContact = new CustomerContact() {
-                Email = Recording.GenerateAssetName("Email")
-            };
-            AutonomousMaintenanceScheduleType autonomousMaintenanceScheduleType = new AutonomousMaintenanceScheduleType();
-            IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
-            ScheduledOperationsTypeUpdate scheduledOperationsTypeUpdate = new ScheduledOperationsTypeUpdate();
-            DatabaseEditionType databaseEditionType = new DatabaseEditionType();
-            OpenModeType openModeType = new OpenModeType();
-            PermissionLevelType permissionLevelType = new PermissionLevelType();
-            RoleType roleType = new RoleType();
-            return new AutonomousDatabasePatch(tags, default, autonomousMaintenanceScheduleType,
-            default, default, customerContacts, default, default, _autonomousDatabaseName, true, true, default, true, true,
-            LicenseModel.LicenseIncluded, scheduledOperationsTypeUpdate, databaseEditionType, default, openModeType, permissionLevelType,
-            roleType, default, new List<string>{}, default);
+            AutonomousDatabaseUpdateProperties adbsUpdateProperties = new AutonomousDatabaseUpdateProperties();
+            return new AutonomousDatabasePatch(tags, adbsUpdateProperties, default);
         }
 
         [TestCase]
