@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Zones = new ChangeTrackingList<string>();
             Containers = containers.ToList();
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             OSType = osType;
@@ -69,6 +68,7 @@ namespace Azure.ResourceManager.ContainerInstance
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
             InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -103,10 +102,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="extensions"> extensions used by virtual kubelet. </param>
         /// <param name="confidentialComputeProperties"> The properties for confidential container group. </param>
         /// <param name="priority"> The priority of the container group. </param>
+        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Zones = zones;
             Identity = identity;
             ProvisioningState = provisioningState;
             Containers = containers;
@@ -125,6 +124,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Extensions = extensions;
             ConfidentialComputeProperties = confidentialComputeProperties;
             Priority = priority;
+            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,8 +133,6 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
-        /// <summary> The zones for the container group. </summary>
-        public IList<string> Zones { get; }
         /// <summary> The identity of the container group, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
@@ -201,5 +199,7 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary> The priority of the container group. </summary>
         public ContainerGroupPriority? Priority { get; set; }
+        /// <summary> The zones for the container group. </summary>
+        public IList<string> Zones { get; }
     }
 }
