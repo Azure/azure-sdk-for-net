@@ -38,7 +38,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * **AzureVMResourceDetector**: Adds resource attributes for the applications running in an Azure Virtual Machine.
   * **AzureContainerAppsResourceDetector**: Adds resource attributes for the applications running in Azure Container Apps.
 
-   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.ResourceDetectors.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
+   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Resources.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
 
 * [Live Metrics](https://learn.microsoft.com/azure/azure-monitor/app/live-stream)
   * Integrated support for live metrics enabling real-time monitoring of application performance.
