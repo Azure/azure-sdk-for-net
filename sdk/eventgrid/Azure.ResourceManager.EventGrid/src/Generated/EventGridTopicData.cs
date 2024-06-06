@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="extendedLocation"> Extended location of the resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
         /// <param name="endpoint"> Endpoint for the topic. </param>
         /// <param name="eventTypeInfo">
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
         public ResourceKind? Kind { get; set; }
         /// <summary> Extended location of the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the topic. </summary>
         public EventGridTopicProvisioningState? ProvisioningState { get; }
