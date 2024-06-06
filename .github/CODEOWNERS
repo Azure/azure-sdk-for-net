@@ -967,10 +967,10 @@
 
 
 # PRLabel: %ARM
-/sdk/resources/Azure.ResourceManager.*/                            @anamikapan
+/sdk/resources/Azure.ResourceManager.*/                            @azure/arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
-# ServiceOwners:                                                   @anamikapan
+# ServiceOwners:                                                   @azure/arm-sdk-owners
 
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
