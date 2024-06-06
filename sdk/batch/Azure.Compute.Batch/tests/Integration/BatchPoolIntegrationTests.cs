@@ -274,5 +274,35 @@ namespace Azure.Compute.Batch.Tests.Integration
                 await client.DeletePoolAsync(poolID);
             }
         }
+
+        [RecordedTest]
+        public async Task PatchPool()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PatchPool", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool orginalPool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+
+                // update pool
+                BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
+                updateContent.Metadata.Add(new MetadataItem("name", "value"));
+                updateContent.ApplicationPackageReferences.Add(new BatchApplicationPackageReference("dotnotsdkbatchapplication1")
+                {
+                    Version = "1"
+                });
+
+                Response response = await client.UpdatePoolAsync(poolID, updateContent);
+                BatchPool patchPool = await client.GetPoolAsync(poolID);
+                Assert.AreEqual(patchPool.ApplicationPackageReferences.First().ApplicationId, "dotnotsdkbatchapplication1");
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
     }
 }

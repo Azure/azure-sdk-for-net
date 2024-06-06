@@ -375,7 +375,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response<BatchFileProperties> GetNodeFileProperties(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFileProperties");
             scope.Start();
             try
             {

@@ -224,5 +224,64 @@ namespace Azure.Compute.Batch.Tests.Integration
                 await client.DeleteJobScheduleAsync(jobScheduleId);
             }
         }
+
+        [RecordedTest]
+        public async Task JobSchedulePatch()
+        {
+            var client = CreateBatchClient();
+            string jobScheduleId = "jobSchedulePatch";
+            DateTime unboundDNRU = DateTime.UtcNow.AddYears(1);
+            BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
+            {
+                DoNotRunUntil = unboundDNRU,
+            };
+            // create a new pool
+            ImageReference imageReference = new ImageReference()
+            {
+                Publisher = "MicrosoftWindowsServer",
+                Offer = "WindowsServer",
+                Sku = "2019-datacenter-smalldisk",
+                Version = "latest"
+            };
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
+
+            BatchPoolSpecification batchPoolSpecification = new BatchPoolSpecification("STANDARD_D1_v2")
+            {
+                VirtualMachineConfiguration = virtualMachineConfiguration,
+                TargetDedicatedNodes = 0,
+            };
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            {
+                KeepAlive = false,
+                Pool = batchPoolSpecification,
+            };
+            BatchPoolInfo poolInfo = new BatchPoolInfo()
+            {
+                AutoPoolSpecification = autoPoolSpecification,
+            };
+            BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
+
+            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+
+            try
+            {
+                Response response = await client.CreateJobScheduleAsync(jobSchedule);
+
+                BatchJobScheduleUpdateContent batchJobScheduleUpdateContent = new BatchJobScheduleUpdateContent();
+                batchJobScheduleUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+
+                response = await client.UpdateJobScheduleAsync(jobScheduleId, batchJobScheduleUpdateContent);
+                Assert.AreEqual(200, response.Status);
+
+                BatchJobSchedule patchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
+
+                Assert.IsNotNull(patchJobSchedule);
+                Assert.AreEqual(patchJobSchedule.Metadata.First().Value, "value");
+            }
+            finally
+            {
+                await client.DeleteJobScheduleAsync(jobScheduleId);
+            }
+        }
     }
 }

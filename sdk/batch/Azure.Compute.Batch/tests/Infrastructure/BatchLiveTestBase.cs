@@ -78,5 +78,40 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             }
             return skipInstrumenting ? client : InstrumentClient(client);
         }
+
+        /// <summary>
+        /// Poll all the tasks in the given job and wait for them to reach the completed state.
+        /// </summary>
+        /// <param name="jobId">The ID of the job to poll</param>
+        /// <returns>A task that will complete when all Batch tasks have completed.</returns>
+        /// <exception cref="TimeoutException">Thrown if all tasks haven't reached the completed state after a certain period of time</exception>
+        public async Task waitForTasksToComplete(BatchClient client, String jobId, bool isPlayBackMode = false)
+        {
+            // Note that this timeout should take into account the time it takes for the pool to scale up
+            var timeoutAfter = DateTime.Now.AddMinutes(10);
+            while (DateTime.Now < timeoutAfter)
+            {
+                var allComplete = true;
+                var tasks = client.GetTasksAsync(jobId, select: new string[] { "id", "state" });
+                await foreach (BatchTask task in tasks)
+                {
+                    if (task.State != BatchTaskState.Completed)
+                    {
+                        allComplete = false;
+                        break;
+                    }
+                }
+
+                if (allComplete)
+                {
+                    return;
+                }
+
+                if (isPlayBackMode == false)
+                { await Task.Delay(10000); }
+            }
+
+            throw new TimeoutException("Task(s) did not complete within the specified time");
+        }
     }
 }
