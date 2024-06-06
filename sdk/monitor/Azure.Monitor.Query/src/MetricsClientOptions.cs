@@ -47,7 +47,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Gets or sets the audience to use for authentication with Microsoft Entra ID. The audience is not considered when using a shared key.
+        /// Gets or sets the audience to use for authentication with Microsoft Entra ID.
         /// </summary>
         /// <value>If <c>null</c>, <see cref="MetricsClientAudience.AzurePublicCloud" /> will be assumed.</value>
         public MetricsClientAudience? Audience { get; set; }
