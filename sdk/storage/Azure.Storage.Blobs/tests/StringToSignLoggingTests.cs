@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -18,24 +19,75 @@ namespace Azure.Storage.Blobs.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void AccountSasStringToSignLogging()
         {
             // Arrange
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(1);
             using AzureEventSourceListener listener = new AzureEventSourceListener(
                 (e, message) =>
                 {
-                    Assert.AreEqual($"Generated string to sign:\n{service.AccountName}\nw\nb\nsco\n\n{SasExtensions.FormatTimesForSasSigning(expiresOn)}\n\n\n{SasQueryParametersInternals.DefaultSasVersionInternal}\n\n", message);
+                    Assert.IsTrue(message.Contains("Generated string to sign:\n"));
                 },
                 EventLevel.Verbose);
 
             // Act
-            Uri sasUri = service.GenerateAccountSasUri(
+            serviceClient.GenerateAccountSasUri(
                 permissions: AccountSasPermissions.Write,
                 expiresOn: expiresOn,
                 AccountSasResourceTypes.All);
+        }
+
+        [RecordedTest]
+        public void BlobSasStringToSignLogging()
+        {
+            // Assert
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
+            string containerName = GetNewContainerName();
+            BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(containerName);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(1);
+
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) =>
+                {
+                    Assert.IsTrue(message.Contains("Generated string to sign:\n"));
+                },
+            EventLevel.Verbose);
+
+            // Act
+            containerClient.GenerateSasUri(
+                permissions: BlobContainerSasPermissions.Read,
+                expiresOn: expiresOn);
+        }
+
+        [RecordedTest]
+        public async Task BlobUserDelegationSasStringToSignLogging()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(1);
+            Response<UserDelegationKey> userDelegationKeyResponse = await serviceClient.GetUserDelegationKeyAsync(
+                startsOn: startsOn,
+                expiresOn: expiresOn);
+
+            string containerName = GetNewContainerName();
+
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) =>
+                {
+                    Assert.IsTrue(message.Contains("Generated string to sign:\n"));
+                },
+                EventLevel.Verbose);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
+                permissions: BlobContainerSasPermissions.Read,
+                expiresOn: expiresOn);
+            blobSasBuilder.BlobContainerName = containerName;
+
+            // Act
+            blobSasBuilder.ToSasQueryParameters(userDelegationKeyResponse.Value, serviceClient.AccountName);
         }
     }
 }

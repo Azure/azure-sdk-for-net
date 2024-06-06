@@ -22,7 +22,7 @@ namespace Azure.Storage
 
         public static StorageEventSource Singleton { get; } = new StorageEventSource();
 
-        [Event(GenerateStringToSignEvent, Level = EventLevel.Verbose, Message = "Generated string to sign\n{0}")]
+        [Event(GenerateStringToSignEvent, Level = EventLevel.Verbose, Message = "Generated string to sign:\n{0}")]
         public void GenerateStringToSign(string stringToSign)
         {
             WriteEvent(GenerateStringToSignEvent, stringToSign);

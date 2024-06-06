@@ -367,6 +367,8 @@ namespace Azure.Storage.Sas
                 ContentLanguage,
                 ContentType);
 
+            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
+
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
             BlobSasQueryParameters p = new BlobSasQueryParameters(
@@ -441,6 +443,8 @@ namespace Azure.Storage.Sas
                     ContentEncoding,
                     ContentLanguage,
                     ContentType);
+
+            StorageEventSource.Singleton.GenerateStringToSign(stringToSign);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
