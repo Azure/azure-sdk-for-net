@@ -267,7 +267,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(batchApplicationPackageReferences, metadataIems);
                 Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
                 BatchPool replacePool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(replacePool.ApplicationPackageReferences.First().ApplicationId, "dotnotsdkbatchapplication1");
+                Assert.AreEqual(replacePool.Metadata.First().Value, "value");
             }
             finally
             {
@@ -297,7 +297,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 Response response = await client.UpdatePoolAsync(poolID, updateContent);
                 BatchPool patchPool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(patchPool.ApplicationPackageReferences.First().ApplicationId, "dotnotsdkbatchapplication1");
+                Assert.AreEqual(patchPool.Metadata.First().Value, "value");
             }
             finally
             {
