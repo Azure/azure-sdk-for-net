@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Azure.ResourceManager.OracleDatabase.Models;
+using Castle.Components.DictionaryAdapter;
 namespace Azure.ResourceManager.OracleDatabase.Tests
 {
     public class OracleDatabaseManagementTestBase : ManagementRecordedTestBase<OracleDatabaseManagementTestEnvironment>
@@ -59,12 +60,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
         }
 
         protected static CloudExadataInfrastructureData GetDefaultCloudExadataInfrastructureData(string exaInfraName) {
-            return new CloudExadataInfrastructureData(AzureLocation.EastUS, new
-            List<string>{ "2" }) {
+            string shape = "Exadata.X9M";
+            CloudExadataInfrastructureProperties exaInfraProperties = new CloudExadataInfrastructureProperties(shape, exaInfraName) {
                 ComputeCount = 2,
                 StorageCount = 3,
-                Shape = "Exadata.X9M",
-                DisplayName = exaInfraName
+            };
+            return new CloudExadataInfrastructureData(AzureLocation.EastUS, new List<string>{ "2" }) {
+                Properties = exaInfraProperties
             };
         }
     }

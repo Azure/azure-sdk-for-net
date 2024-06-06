@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
     [TestFixture]
     public class ExaInfraTests : OracleDatabaseManagementTestBase
     {
-        private string cloudExadataInfrastructureName;
+        private CloudExadataInfrastructureCollection _cloudExadataInfrastructureCollection;
+        private string _cloudExadataInfrastructureName;
         public ExaInfraTests() : base(true, RecordedTestMode.Record)
         {
         }
@@ -37,49 +38,51 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             {
                 new KeyValuePair<string, string>(tagName, tagValue)
             };
-            var customerContact = new CustomerContact() {
-                Email = Recording.GenerateAssetName("Email")
-            };
-            IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
+            CloudExadataInfrastructureUpdateProperties exaInfraUpdateProperties = new CloudExadataInfrastructureUpdateProperties();
             return new CloudExadataInfrastructurePatch(
-                new List<string>{ "2" }, tags, 2, 3, default, customerContacts, cloudExadataInfrastructureName, default);
+                new List<string>{ "2" }, tags, exaInfraUpdateProperties, default);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestExaInfraOperations()
         {
+            Console.WriteLine("HERE: TestExaInfraOperations");
             var resourceGroupName = Recording.GenerateAssetName("NetSdkTestRg");
             await TryRegisterResourceGroupAsync(ResourceGroupsOperations, "eastus", resourceGroupName);
-            CloudExadataInfrastructureCollection cloudExadataInfrastructureCollection = await GetCloudExadataInfrastructureCollectionAsync(resourceGroupName);
-            cloudExadataInfrastructureName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfra");
-            CloudExadataInfrastructureData exadataInfrastructureData = GetDefaultCloudExadataInfrastructureData(cloudExadataInfrastructureName);
+            _cloudExadataInfrastructureCollection = await GetCloudExadataInfrastructureCollectionAsync(resourceGroupName);
+            _cloudExadataInfrastructureName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfra");
+            CloudExadataInfrastructureData exadataInfrastructureData = GetDefaultCloudExadataInfrastructureData(_cloudExadataInfrastructureName);
 
             // Create
-            var createExadataOperation = await cloudExadataInfrastructureCollection.CreateOrUpdateAsync(WaitUntil.Completed,
-            cloudExadataInfrastructureName, exadataInfrastructureData);
+            Console.WriteLine("HERE: TestExaInfraOperations Create");
+            var createExadataOperation = await _cloudExadataInfrastructureCollection.CreateOrUpdateAsync(WaitUntil.Completed,
+            _cloudExadataInfrastructureName, exadataInfrastructureData);
             await createExadataOperation.WaitForCompletionAsync();
             Assert.IsTrue(createExadataOperation.HasCompleted);
             Assert.IsTrue(createExadataOperation.HasValue);
 
             // Get
-            Response<CloudExadataInfrastructureResource> getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
+            Console.WriteLine("HERE: TestExaInfraOperations Get");
+            Response<CloudExadataInfrastructureResource> getExaInfraResponse = await _cloudExadataInfrastructureCollection.GetAsync(_cloudExadataInfrastructureName);
             CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
             Assert.IsNotNull(exaInfraResource);
 
             // ListByResourceGroup
-            AsyncPageable<CloudExadataInfrastructureResource> exaInfras = cloudExadataInfrastructureCollection.GetAllAsync();
+            Console.WriteLine("HERE: TestExaInfraOperations ListByResourceGroup");
+            AsyncPageable<CloudExadataInfrastructureResource> exaInfras = _cloudExadataInfrastructureCollection.GetAllAsync();
             List<CloudExadataInfrastructureResource> exaInfraResult = await exaInfras.ToEnumerableAsync();
             Assert.NotNull(exaInfraResult);
             Assert.IsTrue(exaInfraResult.Count >= 1);
 
             // ListBySubscription
+            Console.WriteLine("HERE: TestExaInfraOperations ListBySubscription");
             exaInfras = OracleDatabaseExtensions.GetCloudExadataInfrastructuresAsync(DefaultSubscription);
             exaInfraResult = await exaInfras.ToEnumerableAsync();
             Assert.NotNull(exaInfraResult);
             Assert.IsTrue(exaInfraResult.Count >= 1);
 
-            // // Update - TODO: Updating ExaInfra currently unsupported, add this back when updates are supported.
+            // // Update - TODO: Updating ExaInfra is currently unsupported, add this back when updates are supported.
             // var tagName = Recording.GenerateAssetName("TagName");
             // var tagValue = Recording.GenerateAssetName("TagValue");
             // CloudExadataInfrastructurePatch exaInfraParameter = GetCloudExadataInfrastructurePatch(tagName, tagValue);
@@ -88,12 +91,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Assert.IsTrue(updateExaInfraOperation.HasValue);
 
             // // Get after Update
-            // getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
+            // getExaInfraResponse = await _cloudExadataInfrastructureCollection.GetAsync(_cloudExadataInfrastructureName);
             // exaInfraResource = getExaInfraResponse.Value;
             // Assert.IsNotNull(exaInfraResource);
             // Assert.IsTrue(exaInfraResource.Data.Tags.ContainsKey(tagName));
 
             // Delete
+            Console.WriteLine("HERE: TestExaInfraOperations Delete");
             var deleteExaInfraOperation = await exaInfraResource.DeleteAsync(WaitUntil.Completed);
             await deleteExaInfraOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deleteExaInfraOperation.HasCompleted);
