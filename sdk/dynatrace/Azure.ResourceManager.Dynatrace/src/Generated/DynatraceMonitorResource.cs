@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetVmHostPayload</description>
+        /// <description>Monitors_GetVMHostPayload</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetVmHostPayload</description>
+        /// <description>Monitors_GetVMHostPayload</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetSsoDetails</description>
+        /// <description>Monitors_GetSSODetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetSsoDetails</description>
+        /// <description>Monitors_GetSSODetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
