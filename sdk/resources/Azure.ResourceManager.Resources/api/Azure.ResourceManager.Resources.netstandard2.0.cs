@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmDeploymentStackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmDeploymentStackResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmDeploymentStackData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentStackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentStackData>
+    public partial class ArmDeploymentStackData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentStackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentStackData>
     {
         public ArmDeploymentStackData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ActionOnUnmanage ActionOnUnmanage { get { throw null; } set { } }

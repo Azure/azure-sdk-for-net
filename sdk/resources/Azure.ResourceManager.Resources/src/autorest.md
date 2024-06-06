@@ -29,7 +29,7 @@ rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
   DeploymentStack: ArmDeploymentStack
-  DeploymentParameter.type: DeploymentType
+  DeploymentParameter.type: DeploymentParameterType
 
 patch-initializer-customization:
   ArmDeploymentContent:

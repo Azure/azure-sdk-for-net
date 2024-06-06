@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 using System.Security.Policy;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -139,11 +140,16 @@ namespace Azure.ResourceManager.Resources.Tests
             Location = location
         };
 
-        protected static ArmDeploymentStackData CreateDeploymentStackDataWithEmptyTemplate(string stackId, AzureLocation location)
+        protected static ArmDeploymentStackData CreateRGDeploymentStackDataWithTemplate()
         {
-            var data = new ArmDeploymentStackData(location);
+            var data = new ArmDeploymentStackData(AzureLocation.WestUS);
+            data.Location = null;
 
-            data.Template = BinaryData.FromString("{}");
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"rg-stack-template.json")));
 
             data.DenySettings = new DenySettings(DenySettingsMode.None);
 
@@ -156,21 +162,25 @@ namespace Azure.ResourceManager.Resources.Tests
 
             data.BypassStackOutOfSyncError = false;
 
+            data.Parameters.Add("templateSpecName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestTemplate4321\"") });
+
             return data;
         }
 
-        protected static ArmDeploymentStackData CreateDeploymentStackDataWithTemplate(AzureLocation location) {
+        protected static ArmDeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location)
+        {
             var data = new ArmDeploymentStackData(location);
 
             data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     "Scenario",
                     "DeploymentTemplates",
-                    $"rg-template.json")));
+                    $"sub-stack-template,json")));
 
             data.DenySettings = new DenySettings(DenySettingsMode.None);
 
-            data.ActionOnUnmanage = new ActionOnUnmanage() {
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
                 Resources = DeploymentStacksDeleteDetachEnum.Detach,
                 ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
                 ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
@@ -178,7 +188,33 @@ namespace Azure.ResourceManager.Resources.Tests
 
             data.BypassStackOutOfSyncError = false;
 
-            //data.Parameters.Add("rgname", new DeploymentParameter { DeploymentParameterType = "string", Value = BinaryData.FromString("\"stacksTest4321\"") });
+            data.Parameters.Add("rgName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestRG4321\"") } );
+
+            return data;
+        }
+
+        protected static ArmDeploymentStackData CreateMGDeploymentStackDataWithTemplate(AzureLocation location)
+        {
+            var data = new ArmDeploymentStackData(location);
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"mg-stack-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            data.Parameters.Add("message", new DeploymentParameter { Value = BinaryData.FromString("\"hello world\"") });
 
             return data;
         }

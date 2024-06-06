@@ -8,6 +8,7 @@ using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -23,8 +24,9 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
             string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Delete-");
-            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             await deploymentStack.DeleteAsync(WaitUntil.Completed);
 
@@ -37,8 +39,9 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task Export()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
             string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Export-");
-            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             var deploymentStackCollection = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
 
             ArmDeploymentStackResource deploymentStack = (await deploymentStackCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
