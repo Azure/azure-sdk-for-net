@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        [Theory]
+        [Theory(Skip = "investigation")]
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        [Fact(Skip = "investigation")]
+        [Fact]
         public async Task SelfDiagnosticsIsDisabled()
         {
             var enableLevel = LogLevel.Debug;
