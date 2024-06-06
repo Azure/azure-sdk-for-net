@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ConnectionStateProperties(actionsRequired, description, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactory.CredentialResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryServiceCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -886,10 +886,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
         /// </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <returns> A new <see cref="DataFactory.CredentialResourceData"/> instance for mocking. </returns>
-        public static CredentialResourceData CredentialResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryCredential properties = null, ETag? eTag = null)
+        /// <returns> A new <see cref="DataFactory.DataFactoryServiceCredentialData"/> instance for mocking. </returns>
+        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryCredential properties = null, ETag? eTag = null)
         {
-            return new CredentialResourceData(
+            return new DataFactoryServiceCredentialData(
                 id,
                 name,
                 resourceType,

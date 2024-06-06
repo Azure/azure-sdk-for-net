@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a CredentialResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CredentialResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetCredentialResource method.
+    /// A Class representing a DataFactoryServiceCredential along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryServiceCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryServiceCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryServiceCredential method.
     /// </summary>
-    public partial class CredentialResource : ArmResource
+    public partial class DataFactoryServiceCredentialResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CredentialResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataFactoryServiceCredentialResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="factoryName"> The factoryName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.DataFactory
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _credentialResourceCredentialOperationsClientDiagnostics;
-        private readonly CredentialRestOperations _credentialResourceCredentialOperationsRestClient;
-        private readonly CredentialResourceData _data;
+        private readonly ClientDiagnostics _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics;
+        private readonly CredentialRestOperations _dataFactoryServiceCredentialCredentialOperationsRestClient;
+        private readonly DataFactoryServiceCredentialData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/credentials";
 
-        /// <summary> Initializes a new instance of the <see cref="CredentialResource"/> class for mocking. </summary>
-        protected CredentialResource()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryServiceCredentialResource"/> class for mocking. </summary>
+        protected DataFactoryServiceCredentialResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryServiceCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CredentialResource(ArmClient client, CredentialResourceData data) : this(client, data.Id)
+        internal DataFactoryServiceCredentialResource(ArmClient client, DataFactoryServiceCredentialData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryServiceCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CredentialResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryServiceCredentialResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _credentialResourceCredentialOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string credentialResourceCredentialOperationsApiVersion);
-            _credentialResourceCredentialOperationsRestClient = new CredentialRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, credentialResourceCredentialOperationsApiVersion);
+            _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataFactoryServiceCredentialCredentialOperationsApiVersion);
+            _dataFactoryServiceCredentialCredentialOperationsRestClient = new CredentialRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryServiceCredentialCredentialOperationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CredentialResourceData Data
+        public virtual DataFactoryServiceCredentialData Data
         {
             get
             {
@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryServiceCredentialResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Get");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Get");
             scope.Start();
             try
             {
-                var response = await _credentialResourceCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryServiceCredentialCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryServiceCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,22 +146,22 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryServiceCredentialResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Get");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Get");
             scope.Start();
             try
             {
-                var response = _credentialResourceCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryServiceCredentialCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryServiceCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Delete");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Delete");
             scope.Start();
             try
             {
-                var response = await _credentialResourceCredentialOperationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _credentialResourceCredentialOperationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _dataFactoryServiceCredentialCredentialOperationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Delete");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Delete");
             scope.Start();
             try
             {
-                var response = _credentialResourceCredentialOperationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _credentialResourceCredentialOperationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _dataFactoryServiceCredentialCredentialOperationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,18 +284,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the credential entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CredentialResource>> UpdateAsync(WaitUntil waitUntil, CredentialResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryServiceCredentialResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryServiceCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Update");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Update");
             scope.Start();
             try
             {
-                var response = await _credentialResourceCredentialOperationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _credentialResourceCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var response = await _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<CredentialResource>(Response.FromValue(new CredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryServiceCredentialResource>(Response.FromValue(new DataFactoryServiceCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialResource"/></description>
+        /// <description><see cref="DataFactoryServiceCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,18 +333,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the credential entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CredentialResource> Update(WaitUntil waitUntil, CredentialResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryServiceCredentialResource> Update(WaitUntil waitUntil, DataFactoryServiceCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResource.Update");
+            using var scope = _dataFactoryServiceCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryServiceCredentialResource.Update");
             scope.Start();
             try
             {
-                var response = _credentialResourceCredentialOperationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var uri = _credentialResourceCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var response = _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var uri = _dataFactoryServiceCredentialCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<CredentialResource>(Response.FromValue(new CredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryServiceCredentialResource>(Response.FromValue(new DataFactoryServiceCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

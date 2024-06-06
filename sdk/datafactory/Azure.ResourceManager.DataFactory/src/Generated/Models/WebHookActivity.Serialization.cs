@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)

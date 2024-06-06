@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Method = method;
             Uri = uri;
-            Headers = new ChangeTrackingDictionary<string, BinaryData>();
+            RequestHeaders = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "WebHook";
         }
 
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> WebHook activity target endpoint and path. Type: string (or Expression with resultType string). </param>
         /// <param name="timeout"> The timeout within which the webhook should be called back. If there is no value specified, it defaults to 10 minutes. Type: string. Pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="headers"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestHeaders"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Authentication method used for calling the endpoint. </param>
         /// <param name="reportStatusOnCallBack"> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal WebHookActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, WebHookActivityMethod method, DataFactoryElement<string> uri, string timeout, IDictionary<string, BinaryData> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, DataFactoryElement<bool> reportStatusOnCallBack) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal WebHookActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, WebHookActivityMethod method, DataFactoryElement<string> uri, string timeout, IDictionary<string, BinaryData> requestHeaders, DataFactoryElement<string> body, WebActivityAuthentication authentication, DataFactoryElement<bool> reportStatusOnCallBack) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             Method = method;
             Uri = uri;
             Timeout = timeout;
-            Headers = headers;
+            RequestHeaders = requestHeaders;
             Body = body;
             Authentication = authentication;
             ReportStatusOnCallBack = reportStatusOnCallBack;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Headers { get; }
+        public IDictionary<string, BinaryData> RequestHeaders { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>

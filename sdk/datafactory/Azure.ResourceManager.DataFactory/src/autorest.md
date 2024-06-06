@@ -174,7 +174,6 @@ rename-mapping:
   LinkedServiceResource: DataFactoryLinkedService
   ManagedIdentityCredential: DataFactoryManagedIdentityCredentialProperties
   ManagedIdentityCredential.typeProperties.resourceId: -|arm-id
-  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
   ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   ManagedPrivateEndpoint: DataFactoryPrivateEndpointProperties
   ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
@@ -210,7 +209,7 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
-  ScriptActivityScriptBlock.type: ScriptType
+  ScriptActivityScriptBlock.type: QueryType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
@@ -246,6 +245,10 @@ rename-mapping:
   VariableType: PipelineVariableType
   WranglingDataFlow: DataFactoryWranglingDataFlowProperties
   XmlDataset.typeProperties.location: DataLocation
+  CredentialResource: DataFactoryServiceCredential
+  AzureFunctionActivity.typeProperties.headers: RequestHeaders
+  WebActivity.typeProperties.headers: RequestHeaders
+  WebHookActivity.typeProperties.headers: RequestHeaders
 
 prepend-rp-prefix:
   - BlobEventsTrigger

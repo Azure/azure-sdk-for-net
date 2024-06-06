@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
             JsonSerializer.Serialize(writer, FunctionName);
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)

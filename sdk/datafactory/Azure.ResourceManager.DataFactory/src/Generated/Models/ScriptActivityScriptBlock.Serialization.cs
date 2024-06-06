@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("text"u8);
             JsonSerializer.Serialize(writer, Text);
             writer.WritePropertyName("type"u8);
-            JsonSerializer.Serialize(writer, ScriptType);
+            JsonSerializer.Serialize(writer, QueryType);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
