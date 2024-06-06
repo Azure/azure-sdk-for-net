@@ -1011,7 +1011,8 @@
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
         "Puid",
-        "Decompile"
+        "Decompile",
+        "Decompiled"
       ]
     },
     {
