@@ -94,15 +94,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings"u8);
+                if (Settings != null)
+                {
+                    writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Settings))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(Settings))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("settings");
+                }
             }
             if (Optional.IsDefined(SourceJobId))
             {
@@ -394,6 +401,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        settings = null;
                         continue;
                     }
                     settings = BinaryData.FromString(property.Value.GetRawText());
