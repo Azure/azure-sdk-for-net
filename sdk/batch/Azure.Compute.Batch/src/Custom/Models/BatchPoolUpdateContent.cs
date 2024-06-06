@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Parameters for replacing properties on an Azure Batch Pool. </summary>
-    public partial class BatchPoolReplaceContent
+    /// <summary> Parameters for updating an Azure Batch Pool. </summary>
+    public partial class BatchPoolUpdateContent
     {
     }
 }

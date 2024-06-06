@@ -10,6 +10,7 @@ using Azure.Compute.Batch.Custom;
 using System.Threading.Tasks;
 using static Azure.Core.HttpPipelineExtensions;
 using System.Threading;
+using System.Security.Cryptography;
 
 namespace Azure.Compute.Batch
 {
@@ -386,6 +387,222 @@ namespace Azure.Compute.Batch
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool to get. </param>
+        /// <param name="pool"> The pool properties to update. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="pool"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdatePoolAsync(string poolId, BatchPoolUpdateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNull(pool, nameof(pool));
+
+            using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdatePoolAsync(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool to get. </param>
+        /// <param name="pool"> The pool properties to update. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="pool"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdatePool(string poolId, BatchPoolUpdateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNull(pool, nameof(pool));
+
+            using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdatePool(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
+        /// <param name="job"> The options to use for updating the Job.. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateJobAsync(string jobId, BatchJobUpdateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(job, nameof(job));
+
+            using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
+        /// <param name="job"> The options to use for updating the Job. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdateJob(string jobId, BatchJobUpdateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(job, nameof(job));
+
+            using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Job Schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
+        /// <param name="jobSchedule"> The options to use for updating the Job Schedule. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> or <paramref name="jobSchedule"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateJobScheduleAsync(string jobScheduleId, BatchJobScheduleUpdateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
+            Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
+
+            using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the properties of the specified Job Schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
+        /// <param name="jobSchedule"> The options to use for updating the Job Schedule. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> or <paramref name="jobSchedule"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdateJobSchedule(string jobScheduleId, BatchJobScheduleUpdateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
+            Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
+
+            using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            return response;
         }
     }
 }
