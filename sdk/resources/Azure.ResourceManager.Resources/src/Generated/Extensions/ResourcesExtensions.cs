@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="content"> Decompile operation request supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DecompileOperationSuccessResponse>> BicepDecompileAsync(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DecompileOperationSuccessResult>> BicepDecompileAsync(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="content"> Decompile operation request supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DecompileOperationSuccessResponse> BicepDecompile(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
+        public static Response<DecompileOperationSuccessResult> BicepDecompile(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

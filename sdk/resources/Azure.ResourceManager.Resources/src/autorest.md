@@ -25,6 +25,10 @@ enable-bicep-serialization: true
 #mgmt-debug:
 #  show-serialized-names: true
 
+rename-mapping:
+  DecompileOperationSuccessResponse: DecompileOperationSuccessResult
+  FileDefinition: DecompiledFileDefinition
+
 patch-initializer-customization:
   ArmDeploymentContent:
     Properties: 'new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental)'

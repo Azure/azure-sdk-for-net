@@ -830,24 +830,24 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResult"/>. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
-        /// <returns> A new <see cref="Models.DecompileOperationSuccessResponse"/> instance for mocking. </returns>
-        public static DecompileOperationSuccessResponse DecompileOperationSuccessResponse(IEnumerable<FileDefinition> files = null, string entryPoint = null)
+        /// <returns> A new <see cref="Models.DecompileOperationSuccessResult"/> instance for mocking. </returns>
+        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files = null, string entryPoint = null)
         {
-            files ??= new List<FileDefinition>();
+            files ??= new List<DecompiledFileDefinition>();
 
-            return new DecompileOperationSuccessResponse(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
+            return new DecompileOperationSuccessResult(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FileDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DecompiledFileDefinition"/>. </summary>
         /// <param name="path"></param>
         /// <param name="contents"></param>
-        /// <returns> A new <see cref="Models.FileDefinition"/> instance for mocking. </returns>
-        public static FileDefinition FileDefinition(string path = null, string contents = null)
+        /// <returns> A new <see cref="Models.DecompiledFileDefinition"/> instance for mocking. </returns>
+        public static DecompiledFileDefinition DecompiledFileDefinition(string path = null, string contents = null)
         {
-            return new FileDefinition(path, contents, serializedAdditionalRawData: null);
+            return new DecompiledFileDefinition(path, contents, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>

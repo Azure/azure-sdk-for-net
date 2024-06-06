@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // invoke the operation
             DecompileOperationContent content = new DecompileOperationContent("{\r\n \"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\",\r\n \"contentVersion\": \"1.0.0.0\",\r\n \"metadata\": {\r\n \"_generator\": {\r\n \"name\": \"bicep\",\r\n \"version\": \"0.15.31.15270\",\r\n \"templateHash\": \"9249505596133208719\"\r\n }\r\n },\r\n \"parameters\": {\r\n \"storageAccountName\": {\r\n \"type\": \"string\"\r\n }\r\n },\r\n \"resources\": []\r\n}");
-            DecompileOperationSuccessResponse result = await subscriptionResource.BicepDecompileAsync(content);
+            DecompileOperationSuccessResult result = await subscriptionResource.BicepDecompileAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

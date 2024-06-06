@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="content"> Decompile operation request supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DecompileOperationSuccessResponse>> BicepDecompileAsync(DecompileOperationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DecompileOperationSuccessResult>> BicepDecompileAsync(DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="content"> Decompile operation request supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DecompileOperationSuccessResponse> BicepDecompile(DecompileOperationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DecompileOperationSuccessResult> BicepDecompile(DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
