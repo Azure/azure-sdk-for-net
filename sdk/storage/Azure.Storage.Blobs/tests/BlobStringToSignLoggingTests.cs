@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -12,9 +13,9 @@ using EventLevel = System.Diagnostics.Tracing.EventLevel;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public class StringToSignLoggingTests : BlobTestBase
+    public class BlobStringToSignLoggingTests : BlobTestBase
     {
-        public StringToSignLoggingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public BlobStringToSignLoggingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -61,10 +62,10 @@ namespace Azure.Storage.Blobs.Tests
         [RecordedTest]
         public void BlobSasStringToSignLogging()
         {
-            // Assert
+            // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
             string containerName = GetNewContainerName();
-            BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(containerName);
+            BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(containerName));
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(1);
 
             using AzureEventSourceListener listener = new AzureEventSourceListener(
@@ -73,7 +74,7 @@ namespace Azure.Storage.Blobs.Tests
                     Assert.AreEqual("GenerateServiceSasStringToSign", e.EventName);
                     Assert.IsTrue(message.Contains("Generated string to sign:\n"));
                 },
-            EventLevel.Verbose);
+                EventLevel.Verbose);
 
             // Act
             containerClient.GenerateSasUri(

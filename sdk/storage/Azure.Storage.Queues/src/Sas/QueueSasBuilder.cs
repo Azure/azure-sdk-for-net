@@ -236,11 +236,11 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
@@ -249,8 +249,12 @@ namespace Azure.Storage.Sas
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
-            var p = SasQueryParametersInternals.Create(
+
+            StorageEventSource.Singleton.GenerateUserDelegationSasStringToSign(stringToSign);
+
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,
