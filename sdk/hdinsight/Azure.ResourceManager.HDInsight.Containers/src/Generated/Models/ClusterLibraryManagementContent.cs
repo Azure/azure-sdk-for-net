@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Library management operation. </summary>
-    public partial class ClusterLibraryManagementOperation : ResourceData
+    public partial class ClusterLibraryManagementContent : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +47,31 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementContent"/>. </summary>
         /// <param name="properties"> Properties of a library management operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ClusterLibraryManagementOperation(ClusterLibraryManagementOperationProperties properties)
+        public ClusterLibraryManagementContent(ClusterLibraryManagementOperationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a library management operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterLibraryManagementOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterLibraryManagementOperationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ClusterLibraryManagementContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterLibraryManagementOperationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementOperation"/> for deserialization. </summary>
-        internal ClusterLibraryManagementOperation()
+        /// <summary> Initializes a new instance of <see cref="ClusterLibraryManagementContent"/> for deserialization. </summary>
+        internal ClusterLibraryManagementContent()
         {
         }
 

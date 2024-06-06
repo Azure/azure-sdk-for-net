@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterLibraryManagementOperation : IUtf8JsonSerializable, IJsonModel<ClusterLibraryManagementOperation>
+    public partial class ClusterLibraryManagementContent : IUtf8JsonSerializable, IJsonModel<ClusterLibraryManagementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterLibraryManagementOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterLibraryManagementContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClusterLibraryManagementOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterLibraryManagementContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterLibraryManagementOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterLibraryManagementContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        ClusterLibraryManagementOperation IJsonModel<ClusterLibraryManagementOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterLibraryManagementContent IJsonModel<ClusterLibraryManagementContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterLibraryManagementOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterLibraryManagementContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterLibraryManagementOperation(document.RootElement, options);
+            return DeserializeClusterLibraryManagementContent(document.RootElement, options);
         }
 
-        internal static ClusterLibraryManagementOperation DeserializeClusterLibraryManagementOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterLibraryManagementContent DeserializeClusterLibraryManagementContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterLibraryManagementOperation(
+            return new ClusterLibraryManagementContent(
                 id,
                 name,
                 type,
@@ -140,35 +140,35 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterLibraryManagementOperation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterLibraryManagementContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterLibraryManagementOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterLibraryManagementContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClusterLibraryManagementOperation IPersistableModel<ClusterLibraryManagementOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterLibraryManagementContent IPersistableModel<ClusterLibraryManagementContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterLibraryManagementContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterLibraryManagementOperation(document.RootElement, options);
+                        return DeserializeClusterLibraryManagementContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterLibraryManagementOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterLibraryManagementContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterLibraryManagementOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterLibraryManagementContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

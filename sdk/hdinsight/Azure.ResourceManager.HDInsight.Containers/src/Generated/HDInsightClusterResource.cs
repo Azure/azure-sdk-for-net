@@ -1149,22 +1149,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operation"> The library management operation. </param>
+        /// <param name="content"> The library management operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
-        public virtual async Task<ArmOperation> ManageLibrariesClusterLibraryAsync(WaitUntil waitUntil, ClusterLibraryManagementOperation operation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ManageLibrariesClusterLibraryAsync(WaitUntil waitUntil, ClusterLibraryManagementContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operation, nameof(operation));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _clusterLibrariesClientDiagnostics.CreateScope("HDInsightClusterResource.ManageLibrariesClusterLibrary");
             scope.Start();
             try
             {
-                var response = await _clusterLibrariesRestClient.ManageLibrariesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation, cancellationToken).ConfigureAwait(false);
-                var operation1 = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation).Request, response, OperationFinalStateVia.Location);
+                var response = await _clusterLibrariesRestClient.ManageLibrariesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation1.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation1;
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -1191,22 +1191,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operation"> The library management operation. </param>
+        /// <param name="content"> The library management operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
-        public virtual ArmOperation ManageLibrariesClusterLibrary(WaitUntil waitUntil, ClusterLibraryManagementOperation operation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ManageLibrariesClusterLibrary(WaitUntil waitUntil, ClusterLibraryManagementContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operation, nameof(operation));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _clusterLibrariesClientDiagnostics.CreateScope("HDInsightClusterResource.ManageLibrariesClusterLibrary");
             scope.Start();
             try
             {
-                var response = _clusterLibrariesRestClient.ManageLibraries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation, cancellationToken);
-                var operation1 = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation).Request, response, OperationFinalStateVia.Location);
+                var response = _clusterLibrariesRestClient.ManageLibraries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation1.WaitForCompletionResponse(cancellationToken);
-                return operation1;
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

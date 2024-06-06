@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // Test manage cluster libraries
             PyPiLibraryProperties pyPiLibraryProperties = new PyPiLibraryProperties("pandas");
             List<ClusterLibrary> clusterLibraries = new List<ClusterLibrary> { new ClusterLibrary(pyPiLibraryProperties) };
-            ClusterLibraryManagementOperation clusterLibraryManagementOperation = new ClusterLibraryManagementOperation(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, clusterLibraries));
+            ClusterLibraryManagementContent clusterLibraryManagementOperation = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, clusterLibraries));
             ArmOperation armOperation = await sparkClusterResult.Value.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, clusterLibraryManagementOperation);
 
             // Test list cluster libraries

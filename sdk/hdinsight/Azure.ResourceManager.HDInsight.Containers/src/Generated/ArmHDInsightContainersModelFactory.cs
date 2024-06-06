@@ -645,16 +645,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterLibraryManagementOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterLibraryManagementContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a library management operation. </param>
-        /// <returns> A new <see cref="Models.ClusterLibraryManagementOperation"/> instance for mocking. </returns>
-        public static ClusterLibraryManagementOperation ClusterLibraryManagementOperation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ClusterLibraryManagementOperationProperties properties = null)
+        /// <returns> A new <see cref="Models.ClusterLibraryManagementContent"/> instance for mocking. </returns>
+        public static ClusterLibraryManagementContent ClusterLibraryManagementContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ClusterLibraryManagementOperationProperties properties = null)
         {
-            return new ClusterLibraryManagementOperation(
+            return new ClusterLibraryManagementContent(
                 id,
                 name,
                 resourceType,

@@ -43,6 +43,7 @@ rename-mapping:
   ClusterPoolVersionsListResult: ClusterPoolVersionListResult
   ClusterPrometheusProfile.enabled: IsEnabled
   ClusterResizeData: ClusterResizeContent
+  ClusterLibraryManagementOperation: ClusterLibraryManagementContent
   ClusterVersion: HDInsightClusterVersion
   ClusterVersionsListResult: HDInsightClusterVersionListResult
   ComparisonOperator: HDInsightComparisonOperator

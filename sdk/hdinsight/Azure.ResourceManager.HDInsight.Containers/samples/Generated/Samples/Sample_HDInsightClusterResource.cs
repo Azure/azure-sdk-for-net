@@ -715,7 +715,7 @@ AutoscaleScheduleDay.Sunday
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterLibraryManagementOperation operation = new ClusterLibraryManagementOperation(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, new ClusterLibrary[]
+            ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, new ClusterLibrary[]
             {
 new ClusterLibrary(new PyPiLibraryProperties("requests")
 {
@@ -727,7 +727,7 @@ Version = "3.0.2-1.18",
 Remarks = "Maven packages.",
 })
             }));
-            await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, operation);
+            await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -755,11 +755,11 @@ Remarks = "Maven packages.",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterLibraryManagementOperation operation = new ClusterLibraryManagementOperation(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Uninstall, new ClusterLibrary[]
+            ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Uninstall, new ClusterLibrary[]
             {
 new ClusterLibrary(new PyPiLibraryProperties("tensorflow")),new ClusterLibrary(new MavenLibraryProperties("org.apache.flink","flink-connector-hudi"))
             }));
-            await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, operation);
+            await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
