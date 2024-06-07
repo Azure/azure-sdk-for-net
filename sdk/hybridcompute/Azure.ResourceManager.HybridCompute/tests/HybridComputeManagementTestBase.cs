@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string subscriptionId = "b24cc8ee-df4f-48ac-94cf-46edf36b0fae";
         public string resourceGroupName = "ytongtest";
         public string scopeName = "myPrivateLinkScope";
-        public string machineName = "testmachine";
+        public string machineName = "testmachine2";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
-        public string privateEndpointConnectionName = "myprivateendpoint.ff32f930-e567-4782-bebd-e38ba513f954";
+        public string privateEndpointConnectionName = "myprivateendpoint.dc6c8829-b4b5-4059-b130-e9f309c83173";
         public string runCommandName = "myRunCommand";
         public string esuLicenseName = "myEsuLicense";
         public string resourceGroupNameNSP = "adrielk_test";
