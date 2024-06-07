@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_StorageAccountPatchEncryptionScope()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountPatchEncryptionScope.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountPatchEncryptionScope.json
             // this example is just showing the usage of "EncryptionScopes_Patch" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Samples
             // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "resource-group-name";
-            string accountName = "{storage-account-name}";
+            string accountName = "accountname";
             string encryptionScopeName = "{encryption-scope-name}";
             ResourceIdentifier encryptionScopeResourceId = EncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
             EncryptionScopeResource encryptionScope = client.GetEncryptionScopeResource(encryptionScopeResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_StorageAccountGetEncryptionScope()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetEncryptionScope.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetEncryptionScope.json
             // this example is just showing the usage of "EncryptionScopes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Samples
             // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "resource-group-name";
-            string accountName = "{storage-account-name}";
+            string accountName = "accountname";
             string encryptionScopeName = "{encryption-scope-name}";
             ResourceIdentifier encryptionScopeResourceId = EncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
             EncryptionScopeResource encryptionScope = client.GetEncryptionScopeResource(encryptionScopeResourceId);
