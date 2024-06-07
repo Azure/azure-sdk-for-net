@@ -2958,7 +2958,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
-                    source: srcBlob.Uri,
+                    source: srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     options);
 
                 // Assert
