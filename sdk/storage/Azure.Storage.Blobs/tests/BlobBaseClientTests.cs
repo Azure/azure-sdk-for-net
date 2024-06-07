@@ -2577,7 +2577,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri));
+                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
                 // Act
                 try
