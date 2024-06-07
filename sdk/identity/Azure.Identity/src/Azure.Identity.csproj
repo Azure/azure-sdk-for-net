@@ -22,7 +22,9 @@
     </When>
   </Choose>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- TODO: Revert after Azure.Core ships
+      <PackageReference Include="Azure.Core" /> -->
+    <projectreference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />

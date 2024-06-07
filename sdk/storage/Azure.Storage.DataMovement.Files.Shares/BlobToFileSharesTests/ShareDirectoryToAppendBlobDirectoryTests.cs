@@ -137,7 +137,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Append });
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Append) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {

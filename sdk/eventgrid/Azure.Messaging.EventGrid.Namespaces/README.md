@@ -6,9 +6,7 @@ Use the client library for Azure Event Grid to:
 - Publish events to Event Grid topics using the Cloud Event schema
 - Consume and settle events
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/messaging.eventgrid-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/event-grid/pull-delivery-overview) | [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples)
 
 ## Getting started
 

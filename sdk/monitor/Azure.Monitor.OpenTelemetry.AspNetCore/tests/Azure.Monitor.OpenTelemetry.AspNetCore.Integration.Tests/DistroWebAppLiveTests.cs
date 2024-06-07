@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        [Ignore("Test fails in Mac-OS.")]
+        //[Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)

@@ -7,24 +7,28 @@
  "Enums": [
   {
    "$id": "2",
-   "Kind": "Enum",
+   "Kind": "enum",
    "Name": "CommunicationMessageKind",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "3",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "3",
+     "$id": "4",
      "Name": "text",
      "Value": "text",
      "Description": "Text message type."
     },
     {
-     "$id": "4",
+     "$id": "5",
      "Name": "image",
      "Value": "image",
      "Description": "Image message type."
     },
     {
-     "$id": "5",
+     "$id": "6",
      "Name": "template",
      "Value": "template",
      "Description": "Template message type."
@@ -37,19 +41,23 @@
    "Usage": "Input"
   },
   {
-   "$id": "6",
-   "Kind": "Enum",
+   "$id": "7",
+   "Kind": "enum",
    "Name": "RepeatabilityResult",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "8",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "7",
+     "$id": "9",
      "Name": "accepted",
      "Value": "accepted",
      "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation."
     },
     {
-     "$id": "8",
+     "$id": "10",
      "Name": "rejected",
      "Value": "rejected",
      "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
@@ -62,31 +70,35 @@
    "Usage": "Output"
   },
   {
-   "$id": "9",
-   "Kind": "Enum",
+   "$id": "11",
+   "Kind": "enum",
    "Name": "MessageTemplateStatus",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "12",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "10",
+     "$id": "13",
      "Name": "approved",
      "Value": "approved",
      "Description": "Message template is approved."
     },
     {
-     "$id": "11",
+     "$id": "14",
      "Name": "rejected",
      "Value": "rejected",
      "Description": "Message template is rejected."
     },
     {
-     "$id": "12",
+     "$id": "15",
      "Name": "pending",
      "Value": "pending",
      "Description": "Message template is pending."
     },
     {
-     "$id": "13",
+     "$id": "16",
      "Name": "paused",
      "Value": "paused",
      "Description": "Message template is paused."
@@ -99,13 +111,17 @@
    "Usage": "Output"
   },
   {
-   "$id": "14",
-   "Kind": "Enum",
+   "$id": "17",
+   "Kind": "enum",
    "Name": "CommunicationMessagesChannel",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "18",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "15",
+     "$id": "19",
      "Name": "whatsApp",
      "Value": "whatsApp",
      "Description": "The WhatsApp communication messages channel type."
@@ -118,43 +134,47 @@
    "Usage": "Output"
   },
   {
-   "$id": "16",
-   "Kind": "Enum",
+   "$id": "20",
+   "Kind": "enum",
    "Name": "MessageTemplateValueKind",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "21",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "17",
+     "$id": "22",
      "Name": "text",
      "Value": "text",
      "Description": "The text template parameter type."
     },
     {
-     "$id": "18",
+     "$id": "23",
      "Name": "image",
      "Value": "image",
      "Description": "The image template parameter type."
     },
     {
-     "$id": "19",
+     "$id": "24",
      "Name": "document",
      "Value": "document",
      "Description": "The document template parameter type."
     },
     {
-     "$id": "20",
+     "$id": "25",
      "Name": "video",
      "Value": "video",
      "Description": "The video template parameter type."
     },
     {
-     "$id": "21",
+     "$id": "26",
      "Name": "location",
      "Value": "location",
      "Description": "The location template parameter type."
     },
     {
-     "$id": "22",
+     "$id": "27",
      "Name": "quickAction",
      "Value": "quickAction",
      "Description": "The quick action template parameter type."
@@ -167,13 +187,17 @@
    "Usage": "Input"
   },
   {
-   "$id": "23",
-   "Kind": "Enum",
+   "$id": "28",
+   "Kind": "enum",
    "Name": "MessageTemplateBindingsKind",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "29",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "24",
+     "$id": "30",
      "Name": "whatsApp",
      "Value": "whatsApp",
      "Description": "The WhatsApp template type."
@@ -186,19 +210,23 @@
    "Usage": "Input"
   },
   {
-   "$id": "25",
-   "Kind": "Enum",
+   "$id": "31",
+   "Kind": "enum",
    "Name": "WhatsAppMessageButtonSubType",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "32",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "26",
+     "$id": "33",
      "Name": "quickReply",
      "Value": "quickReply",
      "Description": "The WhatsApp button sub type is quick reply."
     },
     {
-     "$id": "27",
+     "$id": "34",
      "Name": "url",
      "Value": "url",
      "Description": "The WhatsApp button sub type is url."
@@ -211,13 +239,17 @@
    "Usage": "Input"
   },
   {
-   "$id": "28",
-   "Kind": "Enum",
+   "$id": "35",
+   "Kind": "enum",
    "Name": "Versions",
-   "EnumValueType": "String",
-   "AllowedValues": [
+   "ValueType": {
+    "$id": "36",
+    "Kind": "string",
+    "IsNullable": false
+   },
+   "Values": [
     {
-     "$id": "29",
+     "$id": "37",
      "Name": "c2024_02_01",
      "Value": "2024-02-01",
      "Description": "Azure Communication Messages 2024-02-01 api version"
@@ -232,7 +264,7 @@
  ],
  "Models": [
   {
-   "$id": "30",
+   "$id": "38",
    "Kind": "Model",
    "Name": "NotificationContent",
    "Namespace": "Azure.Communication.MessagesService",
@@ -242,32 +274,31 @@
    "Usage": "Input",
    "Properties": [
     {
-     "$id": "31",
+     "$id": "39",
      "Name": "channelRegistrationId",
      "SerializedName": "channelRegistrationId",
      "Description": "The Channel Registration ID for the Business Identifier.",
      "Type": {
-      "$id": "32",
-      "Kind": "Primitive",
-      "Name": "Guid",
-      "IsNullable": false
+      "$id": "40",
+      "Kind": "uuid",
+      "IsNullable": false,
+      "Encode": "string"
      },
      "IsRequired": true,
      "IsReadOnly": false
     },
     {
-     "$id": "33",
+     "$id": "41",
      "Name": "to",
      "SerializedName": "to",
      "Description": "The native external platform user identifiers of the recipient.",
      "Type": {
-      "$id": "34",
+      "$id": "42",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$id": "35",
-       "Kind": "Primitive",
-       "Name": "String",
+       "$id": "43",
+       "Kind": "string",
        "IsNullable": false
       },
       "IsNullable": false
@@ -276,7 +307,7 @@
      "IsReadOnly": false
     },
     {
-     "$id": "36",
+     "$id": "44",
      "Name": "kind",
      "SerializedName": "kind",
      "Description": "The type discriminator describing a notification type.",
@@ -290,7 +321,7 @@
    ]
   },
   {
-   "$id": "37",
+   "$id": "45",
    "Kind": "Model",
    "Name": "SendMessageResult",
    "Namespace": "Azure.Communication.MessagesService",
@@ -299,16 +330,16 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "38",
+     "$id": "46",
      "Name": "receipts",
      "SerializedName": "receipts",
      "Description": "Receipts of the send message operation.",
      "Type": {
-      "$id": "39",
+      "$id": "47",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$id": "40",
+       "$id": "48",
        "Kind": "Model",
        "Name": "MessageReceipt",
        "Namespace": "Azure.Communication.MessagesService",
@@ -317,28 +348,26 @@
        "Usage": "Output",
        "Properties": [
         {
-         "$id": "41",
+         "$id": "49",
          "Name": "messageId",
          "SerializedName": "messageId",
          "Description": "The message id.",
          "Type": {
-          "$id": "42",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "50",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
          "IsReadOnly": false
         },
         {
-         "$id": "43",
+         "$id": "51",
          "Name": "to",
          "SerializedName": "to",
          "Description": "The native external platform user identifier of the recipient.",
          "Type": {
-          "$id": "44",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "52",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -354,10 +383,10 @@
    ]
   },
   {
-   "$ref": "40"
+   "$ref": "48"
   },
   {
-   "$id": "45",
+   "$id": "53",
    "Kind": "Model",
    "Name": "PagedMessageTemplateItem",
    "Namespace": "Azure.Core.Foundations",
@@ -366,16 +395,16 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "46",
+     "$id": "54",
      "Name": "value",
      "SerializedName": "value",
      "Description": "The MessageTemplateItem items on this page",
      "Type": {
-      "$id": "47",
+      "$id": "55",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$id": "48",
+       "$id": "56",
        "Kind": "Model",
        "Name": "MessageTemplateItem",
        "Namespace": "Azure.Communication.MessagesService",
@@ -385,51 +414,49 @@
        "Usage": "Output",
        "Properties": [
         {
-         "$id": "49",
+         "$id": "57",
          "Name": "name",
          "SerializedName": "name",
          "Description": "The template's name.",
          "Type": {
-          "$id": "50",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "58",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
          "IsReadOnly": true
         },
         {
-         "$id": "51",
+         "$id": "59",
          "Name": "language",
          "SerializedName": "language",
          "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
          "Type": {
-          "$id": "52",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "60",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
          "IsReadOnly": false
         },
         {
-         "$id": "53",
+         "$id": "61",
          "Name": "status",
          "SerializedName": "status",
          "Description": "The aggregated template status.",
          "Type": {
-          "$ref": "9"
+          "$ref": "11"
          },
          "IsRequired": true,
          "IsReadOnly": false
         },
         {
-         "$id": "54",
+         "$id": "62",
          "Name": "kind",
          "SerializedName": "kind",
          "Description": "The type discriminator describing a template type.",
          "Type": {
-          "$ref": "14"
+          "$ref": "17"
          },
          "IsRequired": true,
          "IsReadOnly": false,
@@ -443,14 +470,13 @@
      "IsReadOnly": false
     },
     {
-     "$id": "55",
+     "$id": "63",
      "Name": "nextLink",
      "SerializedName": "nextLink",
      "Description": "The link to the next page of items",
      "Type": {
-      "$id": "56",
-      "Kind": "Primitive",
-      "Name": "Uri",
+      "$id": "64",
+      "Kind": "url",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -459,10 +485,10 @@
    ]
   },
   {
-   "$ref": "48"
+   "$ref": "56"
   },
   {
-   "$id": "57",
+   "$id": "65",
    "Kind": "Model",
    "Name": "TextNotificationContent",
    "Namespace": "Azure.Communication.MessagesService",
@@ -471,18 +497,17 @@
    "DiscriminatorValue": "text",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "30"
+    "$ref": "38"
    },
    "Properties": [
     {
-     "$id": "58",
+     "$id": "66",
      "Name": "content",
      "SerializedName": "content",
      "Description": "Message content.",
      "Type": {
-      "$id": "59",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "67",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -491,7 +516,7 @@
    ]
   },
   {
-   "$id": "60",
+   "$id": "68",
    "Kind": "Model",
    "Name": "MediaNotificationContent",
    "Namespace": "Azure.Communication.MessagesService",
@@ -500,32 +525,30 @@
    "DiscriminatorValue": "image",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "30"
+    "$ref": "38"
    },
    "Properties": [
     {
-     "$id": "61",
+     "$id": "69",
      "Name": "content",
      "SerializedName": "content",
      "Description": "Optional text content.",
      "Type": {
-      "$id": "62",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "70",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "63",
+     "$id": "71",
      "Name": "mediaUri",
      "SerializedName": "mediaUri",
      "Description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
      "Type": {
-      "$id": "64",
-      "Kind": "Primitive",
-      "Name": "Uri",
+      "$id": "72",
+      "Kind": "url",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -534,7 +557,7 @@
    ]
   },
   {
-   "$id": "65",
+   "$id": "73",
    "Kind": "Model",
    "Name": "TemplateNotificationContent",
    "Namespace": "Azure.Communication.MessagesService",
@@ -543,16 +566,16 @@
    "DiscriminatorValue": "template",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "30"
+    "$ref": "38"
    },
    "Properties": [
     {
-     "$id": "66",
+     "$id": "74",
      "Name": "template",
      "SerializedName": "template",
      "Description": "The template object used to create templates.",
      "Type": {
-      "$id": "67",
+      "$id": "75",
       "Kind": "Model",
       "Name": "MessageTemplate",
       "Namespace": "Azure.Communication.MessagesService",
@@ -561,44 +584,42 @@
       "Usage": "Input",
       "Properties": [
        {
-        "$id": "68",
+        "$id": "76",
         "Name": "name",
         "SerializedName": "name",
         "Description": "Name of the template.",
         "Type": {
-         "$id": "69",
-         "Kind": "Primitive",
-         "Name": "String",
+         "$id": "77",
+         "Kind": "string",
          "IsNullable": false
         },
         "IsRequired": true,
         "IsReadOnly": false
        },
        {
-        "$id": "70",
+        "$id": "78",
         "Name": "language",
         "SerializedName": "language",
         "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
         "Type": {
-         "$id": "71",
-         "Kind": "Primitive",
-         "Name": "String",
+         "$id": "79",
+         "Kind": "string",
          "IsNullable": false
         },
         "IsRequired": true,
         "IsReadOnly": false
        },
        {
-        "$id": "72",
+        "$id": "80",
         "Name": "values",
         "SerializedName": "values",
         "Description": "The template values.",
         "Type": {
-         "$id": "73",
+         "$id": "81",
          "Kind": "Array",
          "Name": "Array",
          "ElementType": {
-          "$id": "74",
+          "$id": "82",
           "Kind": "Model",
           "Name": "MessageTemplateValue",
           "Namespace": "Azure.Communication.MessagesService",
@@ -608,26 +629,25 @@
           "Usage": "Input",
           "Properties": [
            {
-            "$id": "75",
+            "$id": "83",
             "Name": "name",
             "SerializedName": "name",
             "Description": "Template binding reference name",
             "Type": {
-             "$id": "76",
-             "Kind": "Primitive",
-             "Name": "String",
+             "$id": "84",
+             "Kind": "string",
              "IsNullable": false
             },
             "IsRequired": true,
             "IsReadOnly": false
            },
            {
-            "$id": "77",
+            "$id": "85",
             "Name": "kind",
             "SerializedName": "kind",
             "Description": "The type discriminator describing a template parameter type.",
             "Type": {
-             "$ref": "16"
+             "$ref": "20"
             },
             "IsRequired": true,
             "IsReadOnly": false,
@@ -641,12 +661,12 @@
         "IsReadOnly": false
        },
        {
-        "$id": "78",
+        "$id": "86",
         "Name": "bindings",
         "SerializedName": "bindings",
         "Description": "The binding object to link values to the template specific locations",
         "Type": {
-         "$id": "79",
+         "$id": "87",
          "Kind": "Model",
          "Name": "MessageTemplateBindings",
          "Namespace": "Azure.Communication.MessagesService",
@@ -656,12 +676,12 @@
          "Usage": "Input",
          "Properties": [
           {
-           "$id": "80",
+           "$id": "88",
            "Name": "kind",
            "SerializedName": "kind",
            "Description": "The type discriminator describing a template bindings type.",
            "Type": {
-            "$ref": "23"
+            "$ref": "28"
            },
            "IsRequired": true,
            "IsReadOnly": false,
@@ -680,16 +700,16 @@
    ]
   },
   {
-   "$ref": "67"
+   "$ref": "75"
   },
   {
-   "$ref": "74"
+   "$ref": "82"
   },
   {
-   "$ref": "79"
+   "$ref": "87"
   },
   {
-   "$id": "81",
+   "$id": "89",
    "Kind": "Model",
    "Name": "MessageTemplateText",
    "Namespace": "Azure.Communication.MessagesService",
@@ -698,18 +718,17 @@
    "DiscriminatorValue": "text",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "82",
+     "$id": "90",
      "Name": "text",
      "SerializedName": "text",
      "Description": "The text value.",
      "Type": {
-      "$id": "83",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "91",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -718,7 +737,7 @@
    ]
   },
   {
-   "$id": "84",
+   "$id": "92",
    "Kind": "Model",
    "Name": "MessageTemplateImage",
    "Namespace": "Azure.Communication.MessagesService",
@@ -727,46 +746,43 @@
    "DiscriminatorValue": "image",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "85",
+     "$id": "93",
      "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
-      "$id": "86",
-      "Kind": "Primitive",
-      "Name": "Uri",
+      "$id": "94",
+      "Kind": "url",
       "IsNullable": false
      },
      "IsRequired": true,
      "IsReadOnly": false
     },
     {
-     "$id": "87",
+     "$id": "95",
      "Name": "caption",
      "SerializedName": "caption",
      "Description": "The [optional] caption of the media object.",
      "Type": {
-      "$id": "88",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "96",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "89",
+     "$id": "97",
      "Name": "fileName",
      "SerializedName": "fileName",
      "Description": "The [optional] filename of the media file.",
      "Type": {
-      "$id": "90",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "98",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -775,7 +791,7 @@
    ]
   },
   {
-   "$id": "91",
+   "$id": "99",
    "Kind": "Model",
    "Name": "MessageTemplateDocument",
    "Namespace": "Azure.Communication.MessagesService",
@@ -784,46 +800,43 @@
    "DiscriminatorValue": "document",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "92",
+     "$id": "100",
      "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
-      "$id": "93",
-      "Kind": "Primitive",
-      "Name": "Uri",
+      "$id": "101",
+      "Kind": "url",
       "IsNullable": false
      },
      "IsRequired": true,
      "IsReadOnly": false
     },
     {
-     "$id": "94",
+     "$id": "102",
      "Name": "caption",
      "SerializedName": "caption",
      "Description": "The [optional] caption of the media object.",
      "Type": {
-      "$id": "95",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "103",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "96",
+     "$id": "104",
      "Name": "fileName",
      "SerializedName": "fileName",
      "Description": "The [optional] filename of the media file.",
      "Type": {
-      "$id": "97",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "105",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -832,7 +845,7 @@
    ]
   },
   {
-   "$id": "98",
+   "$id": "106",
    "Kind": "Model",
    "Name": "MessageTemplateVideo",
    "Namespace": "Azure.Communication.MessagesService",
@@ -841,46 +854,43 @@
    "DiscriminatorValue": "video",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "99",
+     "$id": "107",
      "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
-      "$id": "100",
-      "Kind": "Primitive",
-      "Name": "Uri",
+      "$id": "108",
+      "Kind": "url",
       "IsNullable": false
      },
      "IsRequired": true,
      "IsReadOnly": false
     },
     {
-     "$id": "101",
+     "$id": "109",
      "Name": "caption",
      "SerializedName": "caption",
      "Description": "The [optional] caption of the media object.",
      "Type": {
-      "$id": "102",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "110",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "103",
+     "$id": "111",
      "Name": "fileName",
      "SerializedName": "fileName",
      "Description": "The [optional] filename of the media file.",
      "Type": {
-      "$id": "104",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "112",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -889,7 +899,7 @@
    ]
   },
   {
-   "$id": "105",
+   "$id": "113",
    "Kind": "Model",
    "Name": "MessageTemplateLocation",
    "Namespace": "Azure.Communication.MessagesService",
@@ -898,60 +908,56 @@
    "DiscriminatorValue": "location",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "106",
+     "$id": "114",
      "Name": "locationName",
      "SerializedName": "locationName",
      "Description": "The [Optional] name of the location.",
      "Type": {
-      "$id": "107",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "115",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "108",
+     "$id": "116",
      "Name": "address",
      "SerializedName": "address",
      "Description": "The [Optional] address of the location.",
      "Type": {
-      "$id": "109",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "117",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "110",
+     "$id": "118",
      "Name": "latitude",
      "SerializedName": "latitude",
      "Description": "The latitude of the location.",
      "Type": {
-      "$id": "111",
-      "Kind": "Primitive",
-      "Name": "Float64",
+      "$id": "119",
+      "Kind": "float64",
       "IsNullable": false
      },
      "IsRequired": true,
      "IsReadOnly": false
     },
     {
-     "$id": "112",
+     "$id": "120",
      "Name": "longitude",
      "SerializedName": "longitude",
      "Description": "The longitude of the location.",
      "Type": {
-      "$id": "113",
-      "Kind": "Primitive",
-      "Name": "Float64",
+      "$id": "121",
+      "Kind": "float64",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -960,7 +966,7 @@
    ]
   },
   {
-   "$id": "114",
+   "$id": "122",
    "Kind": "Model",
    "Name": "MessageTemplateQuickAction",
    "Namespace": "Azure.Communication.MessagesService",
@@ -969,32 +975,30 @@
    "DiscriminatorValue": "quickAction",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "74"
+    "$ref": "82"
    },
    "Properties": [
     {
-     "$id": "115",
+     "$id": "123",
      "Name": "text",
      "SerializedName": "text",
      "Description": "The [Optional] quick action text",
      "Type": {
-      "$id": "116",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "124",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
      "IsReadOnly": false
     },
     {
-     "$id": "117",
+     "$id": "125",
      "Name": "payload",
      "SerializedName": "payload",
      "Description": "The [Optional] quick action payload",
      "Type": {
-      "$id": "118",
-      "Kind": "Primitive",
-      "Name": "String",
+      "$id": "126",
+      "Kind": "string",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1003,7 +1007,7 @@
    ]
   },
   {
-   "$id": "119",
+   "$id": "127",
    "Kind": "Model",
    "Name": "WhatsAppMessageTemplateBindings",
    "Namespace": "Azure.Communication.MessagesService",
@@ -1012,20 +1016,20 @@
    "DiscriminatorValue": "whatsApp",
    "Usage": "Input",
    "BaseModel": {
-    "$ref": "79"
+    "$ref": "87"
    },
    "Properties": [
     {
-     "$id": "120",
+     "$id": "128",
      "Name": "header",
      "SerializedName": "header",
      "Description": "The header template bindings",
      "Type": {
-      "$id": "121",
+      "$id": "129",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$id": "122",
+       "$id": "130",
        "Kind": "Model",
        "Name": "WhatsAppMessageTemplateBindingsComponent",
        "Namespace": "Azure.Communication.MessagesService",
@@ -1034,14 +1038,13 @@
        "Usage": "Input",
        "Properties": [
         {
-         "$id": "123",
+         "$id": "131",
          "Name": "refValue",
          "SerializedName": "refValue",
          "Description": "The name of the referenced item in the template values.",
          "Type": {
-          "$id": "124",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "132",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1055,16 +1058,16 @@
      "IsReadOnly": false
     },
     {
-     "$id": "125",
+     "$id": "133",
      "Name": "body",
      "SerializedName": "body",
      "Description": "The body template bindings",
      "Type": {
-      "$id": "126",
+      "$id": "134",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$ref": "122"
+       "$ref": "130"
       },
       "IsNullable": false
      },
@@ -1072,16 +1075,16 @@
      "IsReadOnly": false
     },
     {
-     "$id": "127",
+     "$id": "135",
      "Name": "footer",
      "SerializedName": "footer",
      "Description": "The footer template bindings",
      "Type": {
-      "$id": "128",
+      "$id": "136",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$ref": "122"
+       "$ref": "130"
       },
       "IsNullable": false
      },
@@ -1089,16 +1092,16 @@
      "IsReadOnly": false
     },
     {
-     "$id": "129",
+     "$id": "137",
      "Name": "buttons",
      "SerializedName": "buttons",
      "Description": "The button template bindings",
      "Type": {
-      "$id": "130",
+      "$id": "138",
       "Kind": "Array",
       "Name": "Array",
       "ElementType": {
-       "$id": "131",
+       "$id": "139",
        "Kind": "Model",
        "Name": "WhatsAppMessageTemplateBindingsButton",
        "Namespace": "Azure.Communication.MessagesService",
@@ -1107,25 +1110,24 @@
        "Usage": "Input",
        "Properties": [
         {
-         "$id": "132",
+         "$id": "140",
          "Name": "subType",
          "SerializedName": "subType",
          "Description": "The WhatsApp button sub type",
          "Type": {
-          "$ref": "25"
+          "$ref": "31"
          },
          "IsRequired": true,
          "IsReadOnly": false
         },
         {
-         "$id": "133",
+         "$id": "141",
          "Name": "refValue",
          "SerializedName": "refValue",
          "Description": "The name of the referenced item in the template values.",
          "Type": {
-          "$id": "134",
-          "Kind": "Primitive",
-          "Name": "String",
+          "$id": "142",
+          "Kind": "string",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1141,13 +1143,13 @@
    ]
   },
   {
-   "$ref": "122"
+   "$ref": "130"
   },
   {
-   "$ref": "131"
+   "$ref": "139"
   },
   {
-   "$id": "135",
+   "$id": "143",
    "Kind": "Model",
    "Name": "WhatsAppMessageTemplateItem",
    "Namespace": "Azure.Communication.MessagesService",
@@ -1156,18 +1158,17 @@
    "DiscriminatorValue": "whatsApp",
    "Usage": "Output",
    "BaseModel": {
-    "$ref": "48"
+    "$ref": "56"
    },
    "Properties": [
     {
-     "$id": "136",
+     "$id": "144",
      "Name": "content",
      "SerializedName": "content",
      "Description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
      "Type": {
-      "$id": "137",
-      "Kind": "Intrinsic",
-      "Name": "unknown",
+      "$id": "145",
+      "Kind": "any",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1178,25 +1179,24 @@
  ],
  "Clients": [
   {
-   "$id": "138",
+   "$id": "146",
    "Name": "NotificationMessagesClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "139",
+     "$id": "147",
      "Name": "send",
      "ResourceName": "NotificationMessagesClient",
      "Description": "Sends a notification message from Business to User.",
      "Parameters": [
       {
-       "$id": "140",
+       "$id": "148",
        "Name": "endpoint",
        "NameInRequest": "endpoint",
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
-        "$id": "141",
-        "Kind": "Primitive",
-        "Name": "Uri",
+        "$id": "149",
+        "Kind": "uri",
         "IsNullable": false
        },
        "Location": "Uri",
@@ -1210,23 +1210,21 @@
        "Kind": "Client"
       },
       {
-       "$id": "142",
+       "$id": "150",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "143",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "151",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Query",
        "DefaultValue": {
-        "$id": "144",
+        "$id": "152",
         "Type": {
-         "$id": "145",
-         "Kind": "Primitive",
-         "Name": "String",
+         "$id": "153",
+         "Kind": "string",
          "IsNullable": false
         },
         "Value": "2024-02-01"
@@ -1241,14 +1239,13 @@
        "Kind": "Client"
       },
       {
-       "$id": "146",
+       "$id": "154",
        "Name": "repeatabilityRequestId",
        "NameInRequest": "Repeatability-Request-ID",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "147",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "155",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Header",
@@ -1262,15 +1259,20 @@
        "Kind": "Method"
       },
       {
-       "$id": "148",
+       "$id": "156",
        "Name": "repeatabilityFirstSent",
        "NameInRequest": "Repeatability-First-Sent",
        "Description": "Specifies the date and time at which the request was first created.",
        "Type": {
-        "$id": "149",
-        "Kind": "Primitive",
-        "Name": "DateTimeRFC7231",
-        "IsNullable": false
+        "$id": "157",
+        "Kind": "utcDateTime",
+        "IsNullable": false,
+        "Encode": "rfc7231",
+        "WireType": {
+         "$id": "158",
+         "Kind": "string",
+         "IsNullable": false
+        }
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1283,15 +1285,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "150",
+       "$id": "159",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "151",
-        "Kind": "Primitive",
-        "Name": "Guid",
-        "IsNullable": false
+        "$id": "160",
+        "Kind": "uuid",
+        "IsNullable": false,
+        "Encode": "string"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1304,12 +1306,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "152",
+       "$id": "161",
        "Name": "NotificationContent",
        "NameInRequest": "NotificationContent",
        "Description": "Details of the message to send.",
        "Type": {
-        "$ref": "30"
+        "$ref": "38"
        },
        "Location": "Body",
        "IsRequired": true,
@@ -1322,13 +1324,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "153",
+       "$id": "162",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "154",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "163",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Header",
@@ -1341,21 +1342,20 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "155",
+        "$id": "164",
         "Type": {
-         "$ref": "154"
+         "$ref": "163"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "156",
+       "$id": "165",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "157",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "166",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Header",
@@ -1368,9 +1368,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "158",
+        "$id": "167",
         "Type": {
-         "$ref": "157"
+         "$ref": "166"
         },
         "Value": "application/json"
        }
@@ -1378,34 +1378,34 @@
      ],
      "Responses": [
       {
-       "$id": "159",
+       "$id": "168",
        "StatusCodes": [
         202
        ],
        "BodyType": {
-        "$ref": "37"
+        "$ref": "45"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "160",
+         "$id": "169",
          "Name": "Repeatability-Result",
          "NameInResponse": "repeatabilityResult",
          "Description": "Indicates whether the repeatable request was accepted or rejected.",
          "Type": {
-          "$ref": "6"
+          "$ref": "7"
          }
         },
         {
-         "$id": "161",
+         "$id": "170",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "162",
-          "Kind": "Primitive",
-          "Name": "Guid",
-          "IsNullable": false
+          "$id": "171",
+          "Kind": "uuid",
+          "IsNullable": false,
+          "Encode": "string"
          }
         }
        ],
@@ -1427,29 +1427,28 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "163",
+     "$id": "172",
      "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
      "Description": "Download the Media payload from a User to Business message.",
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "140"
+       "$ref": "148"
       },
       {
-       "$id": "164",
+       "$id": "173",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "165",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "174",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "144"
+        "$ref": "152"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1461,14 +1460,13 @@
        "Kind": "Client"
       },
       {
-       "$id": "166",
+       "$id": "175",
        "Name": "id",
        "NameInRequest": "id",
        "Description": "The stream ID.",
        "Type": {
-        "$id": "167",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "176",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Path",
@@ -1482,15 +1480,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "168",
+       "$id": "177",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "169",
-        "Kind": "Primitive",
-        "Name": "Guid",
-        "IsNullable": false
+        "$id": "178",
+        "Kind": "uuid",
+        "IsNullable": false,
+        "Encode": "string"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1503,13 +1501,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "170",
+       "$id": "179",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "171",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "180",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Header",
@@ -1522,9 +1519,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "172",
+        "$id": "181",
         "Type": {
-         "$ref": "171"
+         "$ref": "180"
         },
         "Value": "application/octet-stream"
        }
@@ -1532,28 +1529,28 @@
      ],
      "Responses": [
       {
-       "$id": "173",
+       "$id": "182",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "174",
-        "Kind": "Primitive",
-        "Name": "Bytes",
-        "IsNullable": false
+        "$id": "183",
+        "Kind": "bytes",
+        "IsNullable": false,
+        "Encode": "base64"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "175",
+         "$id": "184",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "176",
-          "Kind": "Primitive",
-          "Name": "Guid",
-          "IsNullable": false
+          "$id": "185",
+          "Kind": "uuid",
+          "IsNullable": false,
+          "Encode": "string"
          }
         }
        ],
@@ -1573,43 +1570,42 @@
     }
    ],
    "Protocol": {
-    "$id": "177"
+    "$id": "186"
    },
    "Creatable": true,
    "Parameters": [
     {
-     "$ref": "140"
+     "$ref": "148"
     }
    ]
   },
   {
-   "$id": "178",
+   "$id": "187",
    "Name": "MessageTemplateClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "179",
+     "$id": "188",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
      "Description": "List all templates for given Azure Communication Services channel",
      "Parameters": [
       {
-       "$ref": "140"
+       "$ref": "148"
       },
       {
-       "$id": "180",
+       "$id": "189",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "181",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "190",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "144"
+        "$ref": "152"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1621,15 +1617,15 @@
        "Kind": "Client"
       },
       {
-       "$id": "182",
+       "$id": "191",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "The registration ID of the channel.",
        "Type": {
-        "$id": "183",
-        "Kind": "Primitive",
-        "Name": "Guid",
-        "IsNullable": false
+        "$id": "192",
+        "Kind": "uuid",
+        "IsNullable": false,
+        "Encode": "string"
        },
        "Location": "Path",
        "IsRequired": true,
@@ -1642,14 +1638,13 @@
        "Kind": "Method"
       },
       {
-       "$id": "184",
+       "$id": "193",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "185",
-        "Kind": "Primitive",
-        "Name": "Int32",
+        "$id": "194",
+        "Kind": "int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -1663,15 +1658,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "186",
+       "$id": "195",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "187",
-        "Kind": "Primitive",
-        "Name": "Guid",
-        "IsNullable": false
+        "$id": "196",
+        "Kind": "uuid",
+        "IsNullable": false,
+        "Encode": "string"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1684,13 +1679,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "188",
+       "$id": "197",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "189",
-        "Kind": "Primitive",
-        "Name": "String",
+        "$id": "198",
+        "Kind": "string",
         "IsNullable": false
        },
        "Location": "Header",
@@ -1703,9 +1697,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "190",
+        "$id": "199",
         "Type": {
-         "$ref": "189"
+         "$ref": "198"
         },
         "Value": "application/json"
        }
@@ -1713,25 +1707,25 @@
      ],
      "Responses": [
       {
-       "$id": "191",
+       "$id": "200",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "45"
+        "$ref": "53"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "192",
+         "$id": "201",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "193",
-          "Kind": "Primitive",
-          "Name": "Guid",
-          "IsNullable": false
+          "$id": "202",
+          "Kind": "uuid",
+          "IsNullable": false,
+          "Encode": "string"
          }
         }
        ],
@@ -1747,7 +1741,7 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "194",
+      "$id": "203",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -1756,24 +1750,24 @@
     }
    ],
    "Protocol": {
-    "$id": "195"
+    "$id": "204"
    },
    "Creatable": true,
    "Parameters": [
     {
-     "$ref": "140"
+     "$ref": "148"
     }
    ]
   }
  ],
  "Auth": {
-  "$id": "196",
+  "$id": "205",
   "ApiKey": {
-   "$id": "197",
+   "$id": "206",
    "Name": "Authorization"
   },
   "OAuth2": {
-   "$id": "198",
+   "$id": "207",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]
