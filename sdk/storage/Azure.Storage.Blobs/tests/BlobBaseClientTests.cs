@@ -3229,7 +3229,8 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
-            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
+            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)));
 
             // Assert
             Assert.IsNotNull(response.Value.VersionId);
