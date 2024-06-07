@@ -3001,7 +3001,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.StartCopyIncrementalAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     // dummy snapshot value.
                     snapshot: "2019-03-29T18:12:15.6608647Z"),
                 e =>
@@ -3072,7 +3072,6 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
@@ -3094,7 +3093,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     snapshot: snapshot);
                 await operation.WaitForCompletionAsync();
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
