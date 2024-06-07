@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS);
             ResourceGroupResource rg = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData)).Value;
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackExRG-CreateOrUpdate-");
+            string deploymentStackName = Recording.GenerateAssetName("deployStackRG-CreateOrUpdate-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStack =  (await rg.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
 
             Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
 
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Get-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            var deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStack = (await rg.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStackGet = (await Client.GetArmDeploymentStackAsync(new ResourceIdentifier(rg.Id), deploymentStackName)).Value;
+            var deploymentStackGet = (await rg.GetArmDeploymentStackAsync(deploymentStackName)).Value;
 
             AssertValidDeploymentStack(deploymentStack, deploymentStackGet);
 
@@ -73,14 +73,9 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-List-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            _ = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            _ = (await rg.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id));
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-List-");
-            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            _ = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
-
-            var deploymentStacks = subscription.GetArmDeploymentStacks();
+            var deploymentStacks = rg.GetArmDeploymentStacks();
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
@@ -100,24 +95,9 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-CreateOrUpdate-");
+            string deploymentStackName = Recording.GenerateAssetName("deployStackSub-CreateOrUpdate-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
-
-            Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
-
-            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task ValidateSub()
-        {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-CreateOrUpdate-");
-            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
 
@@ -130,8 +110,8 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Get-");
-            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Get-");
+            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             var deploymentStack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             var deploymentStackGet = (await subscription.GetArmDeploymentStackAsync(deploymentStackName)).Value;
@@ -149,9 +129,9 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackSub-List-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            var stack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var stack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
+            var deploymentStacks = subscription.GetArmDeploymentStacks();
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
@@ -174,7 +154,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackExMG-CreateOrUpdate-");
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await managementGroup.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
 
@@ -189,9 +169,9 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Get-");
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            var deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStack = (await managementGroup.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStackGet = (await Client.GetArmDeploymentStackAsync(new ResourceIdentifier(managementGroup.Id), deploymentStackName)).Value;
+            var deploymentStackGet = (await managementGroup.GetArmDeploymentStackAsync(deploymentStackName)).Value;
 
             AssertValidDeploymentStack(deploymentStack, deploymentStackGet);
 
@@ -206,9 +186,9 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackExMG-List-");
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            _ = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            _ = (await managementGroup.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id));
+            var deploymentStacks = managementGroup.GetArmDeploymentStacks();
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
