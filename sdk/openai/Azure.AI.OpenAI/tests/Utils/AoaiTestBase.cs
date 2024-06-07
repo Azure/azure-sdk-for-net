@@ -39,10 +39,10 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         : base(isAsync, mode)
     {
         TestConfig = new TestConfig();
-        if (TestConfig.GetConfig("") is null && TestConfig.GetConfig("chat") is null)
+        if (TestConfig.GetConfig("chat").Endpoint is null)
         {
             // TODO: as a temporary CI exclusion, make forced live tests inconclusive. Remove this for development and as soon as recording support is available.
-            Assert.Inconclusive();
+            Assert.Inconclusive($"Tests are currently disabled via inconclusivity if both default and chat configuration settings are not available.");
         }
         Assets = new Assets(TestEnvironment);
     }
