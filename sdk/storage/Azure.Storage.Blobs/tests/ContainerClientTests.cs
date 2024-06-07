@@ -635,6 +635,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live tests accounts")]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -1259,7 +1260,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = new[]
             {
                 new BlobSignedIdentifier
@@ -1271,7 +1271,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
@@ -1303,12 +1302,10 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
@@ -1318,7 +1315,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
 
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
             Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
             Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
@@ -1523,7 +1519,6 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateIfNotExistsAsync();
-                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
                 BlobRequestConditions accessConditions = BuildContainerAccessConditions(
@@ -1533,7 +1528,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<BlobContainerInfo> response = await container.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers,
                     conditions: accessConditions
                 );
@@ -1577,7 +1571,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = new[]
             {
                 new BlobSignedIdentifier
@@ -1594,13 +1587,11 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
             Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
