@@ -16,8 +16,8 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableResult<T> : System.ClientModel.AsyncCollectionResult<T>
     {
         protected AsyncPageableResult() { }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string pageToken = "") { throw null; }
-        protected abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string pageToken);
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string startPageToken = "") { throw null; }
+        protected abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string startPageToken);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.ClientPage<T>> GetPageAsync(string pageToken = "") { throw null; }
     }
@@ -66,8 +66,8 @@ namespace System.ClientModel
     public abstract partial class PageableResult<T> : System.ClientModel.CollectionResult<T>
     {
         protected PageableResult() { }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string pageToken = "") { throw null; }
-        protected abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string pageToken);
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPages(string startPageToken = "") { throw null; }
+        protected abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientPage<T>> AsPagesCore(string startPageToken);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         public virtual System.ClientModel.Primitives.ClientPage<T> GetPage(string pageToken = "") { throw null; }
     }
