@@ -159,9 +159,6 @@
 # PRLabel: %Batch
 /sdk/batch/                                                        @wiboris @dpwatrous
 
-# PRLabel: %Batch
-/sdk/batch/Azure.Compute.Batch                                     @wiboris @dpwatrous
-
 # ServiceLabel: %Batch
 # ServiceOwners:                                                   @wiboris @dpwatrous
 
