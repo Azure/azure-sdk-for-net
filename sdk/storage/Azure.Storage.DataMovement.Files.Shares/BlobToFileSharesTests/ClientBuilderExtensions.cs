@@ -103,7 +103,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
