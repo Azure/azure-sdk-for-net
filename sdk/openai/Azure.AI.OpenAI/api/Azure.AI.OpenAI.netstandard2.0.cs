@@ -11,6 +11,11 @@ namespace Azure.AI.OpenAI
         public static void AddDataSource(this OpenAI.Chat.ChatCompletionOptions options, Azure.AI.OpenAI.Chat.AzureChatDataSource dataSource) { }
         public static System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Chat.AzureChatDataSource> GetDataSources(this OpenAI.Chat.ChatCompletionOptions options) { throw null; }
     }
+    public static partial class AzureGeneratedImageExtensions
+    {
+        public static Azure.AI.OpenAI.ImageContentFilterResultForPrompt GetContentFilterResultForPrompt(this OpenAI.Images.GeneratedImage image) { throw null; }
+        public static Azure.AI.OpenAI.ImageContentFilterResultForResponse GetContentFilterResultForResponse(this OpenAI.Images.GeneratedImage image) { throw null; }
+    }
     public partial class AzureOpenAIClient : OpenAI.OpenAIClient
     {
         protected AzureOpenAIClient() { }
@@ -447,13 +452,5 @@ namespace Azure.AI.OpenAI.Chat
         Azure.AI.OpenAI.Chat.PineconeChatDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.PineconeChatDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.PineconeChatDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.PineconeChatDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Azure.AI.OpenAI.Images
-{
-    public static partial class AzureGeneratedImageExtensions
-    {
-        public static Azure.AI.OpenAI.ImageContentFilterResultForPrompt GetContentFilterResultForPrompt(this OpenAI.Images.GeneratedImage image) { throw null; }
-        public static Azure.AI.OpenAI.ImageContentFilterResultForResponse GetContentFilterResultForResponse(this OpenAI.Images.GeneratedImage image) { throw null; }
     }
 }

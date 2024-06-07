@@ -38,9 +38,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Live)
         : base(isAsync, mode)
     {
-        // TODO: as a temporary CI exclusion, make forced live tests inconclusive. Remove this for development and as soon as recording support is available.
-        Assert.Inconclusive();
         TestConfig = new TestConfig();
+        if (TestConfig.GetConfig("") is null && TestConfig.GetConfig("chat") is null)
+        {
+            // TODO: as a temporary CI exclusion, make forced live tests inconclusive. Remove this for development and as soon as recording support is available.
+            Assert.Inconclusive();
+        }
         Assets = new Assets(TestEnvironment);
     }
 
