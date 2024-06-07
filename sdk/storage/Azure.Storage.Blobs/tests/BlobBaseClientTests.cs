@@ -2901,7 +2901,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)), options);
 
             // Assert
             Response<GetBlobTagResult> response = await destBlob.GetTagsAsync();
