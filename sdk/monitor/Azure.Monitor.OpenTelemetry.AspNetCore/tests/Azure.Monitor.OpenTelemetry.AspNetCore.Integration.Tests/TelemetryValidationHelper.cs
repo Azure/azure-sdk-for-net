@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     var jsonString = row[property.Name].ToString();
                     Assert.IsNotNull(jsonString, $"({description}) Expected a non-null value for {property.Name}");
                     var expectedProperties = property.GetValue(expectedTelemetry, null) as List<KeyValuePair<string, string>>;
-                    Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {property.Name}.");
+                    Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {nameof(expectedTelemetry)}.Properties");
 
                     ValidateProperties(
                         description: description,
@@ -42,9 +42,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Assert.AreEqual(
                         expected: property.GetValue(expectedTelemetry, null),
                         actual: row[property.Name],
-                        message: $"({description}) Expected {property.Name} to be {property.GetValue(expectedTelemetry, null)} but found {logsTable.Rows[0][property.Name]}.");
+                        message: $"({description}) Expected {property.Name} to be '{property.GetValue(expectedTelemetry, null)}' but found '{logsTable.Rows[0][property.Name]}'.");
                 }
             }
+
+            TestContext.Out.WriteLine();
         }
 
         private static void ValidateProperties(string description, string jsonString, List<KeyValuePair<string, string>> expectedProperties)
@@ -55,14 +57,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             foreach (var expectedProperty in expectedProperties)
             {
-                var actualValue = jsonNode![expectedProperty.Key]!.ToString();
+                var jsonValue = jsonNode![expectedProperty.Key];
+                Assert.IsNotNull(jsonValue, $"({description}) Expected a non-null JSON value for Properties.'{expectedProperty.Key}'.");
+                var actualValue = jsonValue!.ToString();
 
                 TestContext.Out.WriteLine($"Properties.'{expectedProperty.Key}' ExpectedValue: '{expectedProperty.Value}' ActualValue: '{actualValue}'");
 
                 Assert.AreEqual(
                     expected: expectedProperty.Value,
                     actual: actualValue,
-                    message: $"({description}) Expected {expectedProperty.Key} to be {expectedProperty.Value} but found {actualValue}.");
+                    message: $"({description}) Expected Properties.'{expectedProperty.Key}' to be '{expectedProperty.Value}' but found '{actualValue}'.");
             }
 #endif
         }
