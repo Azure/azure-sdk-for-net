@@ -523,6 +523,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live test accounts.")]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -1110,13 +1111,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task GetPropertiesAsync()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.FileSystem);
+            await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Act
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(PublicAccessType.FileSystem, response.Value.PublicAccess);
+            Assert.AreEqual(PublicAccessType.None, response.Value.PublicAccess);
         }
 
         [RecordedTest]
@@ -2361,19 +2362,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await test.FileSystem.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
-            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
-
             Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
@@ -2417,6 +2413,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live test accounts.")]
         public async Task SetAccessPolicy_PublicAccessPolicy()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2585,7 +2582,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
@@ -2593,7 +2589,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
@@ -2604,7 +2599,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
                 // Arrange
-                PublicAccessType publicAccessType = PublicAccessType.FileSystem;
                 DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
@@ -2617,7 +2611,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 Response<FileSystemInfo> response = await fileSystem.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers,
                     conditions: conditions);
 
@@ -2659,7 +2652,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = new[]
             {
                 new DataLakeSignedIdentifier
@@ -2676,14 +2668,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await test.FileSystem.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
-            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
-
             Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 

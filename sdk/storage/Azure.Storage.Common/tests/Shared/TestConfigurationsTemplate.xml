@@ -101,6 +101,8 @@
       <QueueServiceSecondaryEndpoint>http://NAMESPACE-ACCOUNT-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
       <FileServiceSecondaryEndpoint>http://NAMESPACE-ACCOUNT-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://NAMESPACE-ACCOUNT-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=ACCOUNT;AccountKey=ACCOUNT-KEY;EndpointSuffix=core.windows.net</ConnectionString>
+      <EncryptionScope>encryption scope</EncryptionScope>
     </TenantConfiguration>
 
     <!-- A managed disk storage account -->
