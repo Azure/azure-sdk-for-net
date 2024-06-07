@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageAccountMigrationResource>> GetStorageAccountMigrationAsync(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountMigrationResource>> GetStorageAccountMigrationAsync(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             return await GetStorageAccountMigrations().GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
         }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<StorageAccountMigrationResource> GetStorageAccountMigration(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountMigrationResource> GetStorageAccountMigration(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             return GetStorageAccountMigrations().Get(migrationName, cancellationToken);
         }

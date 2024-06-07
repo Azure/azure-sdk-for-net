@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Samples
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             ResourceIdentifier storageAccountMigrationResourceId = StorageAccountMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, migrationName);
             StorageAccountMigrationResource storageAccountMigration = client.GetStorageAccountMigrationResource(storageAccountMigrationResourceId);
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Samples
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             ResourceIdentifier storageAccountMigrationResourceId = StorageAccountMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, migrationName);
             StorageAccountMigrationResource storageAccountMigration = client.GetStorageAccountMigrationResource(storageAccountMigrationResourceId);
 

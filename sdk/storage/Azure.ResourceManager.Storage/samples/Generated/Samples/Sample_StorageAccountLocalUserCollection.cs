@@ -242,7 +242,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 },
                 HasSshPassword = true,
                 GroupId = 2000,
-                AllowAclAuthorization = true,
+                IsAclAuthorizationAllowed = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
             StorageAccountLocalUserResource result = lro.Value;
@@ -286,7 +286,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 {
 1001,1005,2005
 },
-                IsNFSv3Enabled = true,
+                IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
             StorageAccountLocalUserResource result = lro.Value;
@@ -331,12 +331,12 @@ Key = "ssh-rsa keykeykeykeykey=",
                 HasSshKey = false,
                 HasSshPassword = false,
                 GroupId = 3000,
-                AllowAclAuthorization = false,
+                IsAclAuthorizationAllowed = false,
                 ExtendedGroups =
 {
 1001,1005,2005
 },
-                IsNFSv3Enabled = true,
+                IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, username, data);
             StorageAccountLocalUserResource result = lro.Value;

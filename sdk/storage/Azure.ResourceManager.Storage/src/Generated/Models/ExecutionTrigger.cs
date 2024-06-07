@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="triggerType"> The trigger type of the storage task assignment execution. </param>
         /// <param name="parameters"> The trigger parameters of the storage task assignment execution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public ExecutionTrigger(TriggerType triggerType, TriggerParameters parameters)
+        public ExecutionTrigger(ExecutionTriggerType triggerType, ExecutionTriggerParameters parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="triggerType"> The trigger type of the storage task assignment execution. </param>
         /// <param name="parameters"> The trigger parameters of the storage task assignment execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionTrigger(TriggerType triggerType, TriggerParameters parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutionTrigger(ExecutionTriggerType triggerType, ExecutionTriggerParameters parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TriggerType = triggerType;
             Parameters = parameters;
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The trigger type of the storage task assignment execution. </summary>
         [WirePath("type")]
-        public TriggerType TriggerType { get; set; }
+        public ExecutionTriggerType TriggerType { get; set; }
         /// <summary> The trigger parameters of the storage task assignment execution. </summary>
         [WirePath("parameters")]
-        public TriggerParameters Parameters { get; set; }
+        public ExecutionTriggerParameters Parameters { get; set; }
     }
 }

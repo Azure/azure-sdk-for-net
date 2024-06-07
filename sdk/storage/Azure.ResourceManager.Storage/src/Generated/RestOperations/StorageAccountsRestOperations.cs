@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal RequestUriBuilder CreateGetCustomerInitiatedMigrationRequestUri(string subscriptionId, string resourceGroupName, string accountName, MigrationName migrationName)
+        internal RequestUriBuilder CreateGetCustomerInitiatedMigrationRequestUri(string subscriptionId, string resourceGroupName, string accountName, StorageAccountMigrationName migrationName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.Storage
             return uri;
         }
 
-        internal HttpMessage CreateGetCustomerInitiatedMigrationRequest(string subscriptionId, string resourceGroupName, string accountName, MigrationName migrationName)
+        internal HttpMessage CreateGetCustomerInitiatedMigrationRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountMigrationName migrationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountMigrationData>> GetCustomerInitiatedMigrationAsync(string subscriptionId, string resourceGroupName, string accountName, MigrationName migrationName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountMigrationData>> GetCustomerInitiatedMigrationAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountMigrationData> GetCustomerInitiatedMigration(string subscriptionId, string resourceGroupName, string accountName, MigrationName migrationName, CancellationToken cancellationToken = default)
+        public Response<StorageAccountMigrationData> GetCustomerInitiatedMigration(string subscriptionId, string resourceGroupName, string accountName, StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

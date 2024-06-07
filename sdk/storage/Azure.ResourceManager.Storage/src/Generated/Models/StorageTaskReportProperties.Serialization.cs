@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishTime))
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishTime"u8);
-                writer.WriteStringValue(FinishTime);
+                writer.WriteStringValue(FinishedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ObjectsTargetedCount))
             {
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
             ResourceIdentifier taskAssignmentId = default;
             ResourceIdentifier storageAccountId = default;
-            string startTime = default;
-            string finishTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? finishTime = default;
             string objectsTargetedCount = default;
             string objectsOperatedOnCount = default;
             string objectFailedCount = default;
             string objectsSucceededCount = default;
             string runStatusError = default;
-            RunStatusEnum? runStatusEnum = default;
+            StorageTaskRunStatus? runStatusEnum = default;
             string summaryReportPath = default;
             ResourceIdentifier taskId = default;
             string taskVersion = default;
-            RunResult? runResult = default;
+            StorageTaskRunResult? runResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,12 +173,20 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("finishTime"u8))
                 {
-                    finishTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("objectsTargetedCount"u8))
@@ -212,7 +220,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    runStatusEnum = new RunStatusEnum(property.Value.GetString());
+                    runStatusEnum = new StorageTaskRunStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summaryReportPath"u8))
@@ -240,7 +248,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    runResult = new RunResult(property.Value.GetString());
+                    runResult = new StorageTaskRunResult(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -308,7 +316,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  startTime: ");
@@ -316,22 +324,15 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(StartTime))
+                if (Optional.IsDefined(StartedOn))
                 {
                     builder.Append("  startTime: ");
-                    if (StartTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StartTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StartTime}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FinishTime), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FinishedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  finishTime: ");
@@ -339,18 +340,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(FinishTime))
+                if (Optional.IsDefined(FinishedOn))
                 {
                     builder.Append("  finishTime: ");
-                    if (FinishTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FinishTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FinishTime}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(FinishedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 

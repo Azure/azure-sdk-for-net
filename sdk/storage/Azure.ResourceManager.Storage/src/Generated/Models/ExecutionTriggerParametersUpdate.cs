@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The trigger parameters update for the storage task assignment execution. </summary>
-    public partial class TriggerParametersUpdate
+    public partial class ExecutionTriggerParametersUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TriggerParametersUpdate"/>. </summary>
-        public TriggerParametersUpdate()
+        /// <summary> Initializes a new instance of <see cref="ExecutionTriggerParametersUpdate"/>. </summary>
+        public ExecutionTriggerParametersUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerParametersUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionTriggerParametersUpdate"/>. </summary>
         /// <param name="startFrom"> When to start task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="interval"> Run interval of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="intervalUnit"> Run interval unit of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="endBy"> When to end task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="startOn"> When to start task execution. This is a mutable field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerParametersUpdate(DateTimeOffset? startFrom, int? interval, IntervalUnit? intervalUnit, DateTimeOffset? endBy, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutionTriggerParametersUpdate(DateTimeOffset? startFrom, int? interval, ExecutionIntervalUnit? intervalUnit, DateTimeOffset? endBy, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartFrom = startFrom;
             Interval = interval;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
         public int? Interval { get; set; }
         /// <summary> Run interval unit of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("intervalUnit")]
-        public IntervalUnit? IntervalUnit { get; set; }
+        public ExecutionIntervalUnit? IntervalUnit { get; set; }
         /// <summary> When to end task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("endBy")]
         public DateTimeOffset? EndBy { get; set; }

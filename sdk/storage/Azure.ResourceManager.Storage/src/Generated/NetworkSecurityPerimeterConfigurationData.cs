@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationData()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network Security Perimeter profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Storage
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> List of Provisioning Issues if any. </summary>
         [WirePath("properties.provisioningIssues")]
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> NetworkSecurityPerimeter related information. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }

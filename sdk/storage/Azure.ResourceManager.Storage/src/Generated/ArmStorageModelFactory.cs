@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="networkRuleSet"> Network rule set. </param>
         /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
         /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="enableExtendedGroups"> Enables extended group support with local users feature, if set to true. </param>
+        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
         /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
         /// <param name="geoReplicationStats"> Geo Replication Stats. </param>
         /// <param name="isFailoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
@@ -663,9 +663,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
-        /// <param name="accountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
+        /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
         /// <returns> A new <see cref="Storage.StorageAccountData"/> instance for mocking. </returns>
-        public static StorageAccountData StorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageSku sku = null, StorageKind? kind = null, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, StorageProvisioningState? provisioningState = null, StorageAccountEndpoints primaryEndpoints = null, AzureLocation? primaryLocation = null, StorageAccountStatus? statusOfPrimary = null, DateTimeOffset? lastGeoFailoverOn = null, AzureLocation? secondaryLocation = null, StorageAccountStatus? statusOfSecondary = null, DateTimeOffset? createdOn = null, StorageCustomDomain customDomain = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageAccountKeyCreationTime keyCreationTime = null, StorageAccountEndpoints secondaryEndpoints = null, StorageAccountEncryption encryption = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? enableExtendedGroups = null, bool? isHnsEnabled = null, GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = null, LargeFileSharesState? largeFileSharesState = null, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = null, StorageRoutingPreference routingPreference = null, BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, StoragePublicNetworkAccess? publicNetworkAccess = null, ImmutableStorageAccount immutableStorageWithVersioning = null, AllowedCopyScope? allowedCopyScope = null, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, StorageDnsEndpointType? dnsEndpointType = null, bool? isSkuConversionBlocked = null, bool? accountMigrationInProgress = null)
+        public static StorageAccountData StorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageSku sku = null, StorageKind? kind = null, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, StorageProvisioningState? provisioningState = null, StorageAccountEndpoints primaryEndpoints = null, AzureLocation? primaryLocation = null, StorageAccountStatus? statusOfPrimary = null, DateTimeOffset? lastGeoFailoverOn = null, AzureLocation? secondaryLocation = null, StorageAccountStatus? statusOfSecondary = null, DateTimeOffset? createdOn = null, StorageCustomDomain customDomain = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageAccountKeyCreationTime keyCreationTime = null, StorageAccountEndpoints secondaryEndpoints = null, StorageAccountEncryption encryption = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? isExtendedGroupEnabled = null, bool? isHnsEnabled = null, GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = null, LargeFileSharesState? largeFileSharesState = null, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = null, StorageRoutingPreference routingPreference = null, BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, StoragePublicNetworkAccess? publicNetworkAccess = null, ImmutableStorageAccount immutableStorageWithVersioning = null, AllowedCopyScope? allowedCopyScope = null, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, StorageDnsEndpointType? dnsEndpointType = null, bool? isSkuConversionBlocked = null, bool? isAccountMigrationInProgress = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<StoragePrivateEndpointConnectionData>();
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Storage.Models
                 networkRuleSet,
                 isSftpEnabled,
                 isLocalUserEnabled,
-                enableExtendedGroups,
+                isExtendedGroupEnabled,
                 isHnsEnabled,
                 geoReplicationStats,
                 isFailoverInProgress,
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Storage.Models
                 storageAccountSkuConversionStatus,
                 dnsEndpointType,
                 isSkuConversionBlocked,
-                accountMigrationInProgress,
+                isAccountMigrationInProgress,
                 serializedAdditionalRawData: null);
         }
 
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="migrationFailedReason"> Error code for migration failure. </param>
         /// <param name="migrationFailedDetailedReason"> Reason for migration failure. </param>
         /// <returns> A new <see cref="Storage.StorageAccountMigrationData"/> instance for mocking. </returns>
-        public static StorageAccountMigrationData StorageAccountMigrationData(string id = null, string name = null, string resourceType = null, StorageSkuName targetSkuName = default, MigrationStatus? migrationStatus = null, string migrationFailedReason = null, string migrationFailedDetailedReason = null)
+        public static StorageAccountMigrationData StorageAccountMigrationData(string id = null, string name = null, ResourceType? resourceType = null, StorageSkuName targetSkuName = default, StorageAccountMigrationStatus? migrationStatus = null, string migrationFailedReason = null, string migrationFailedDetailedReason = null)
         {
             return new StorageAccountMigrationData(
                 id,
@@ -1138,11 +1138,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="hasSshPassword"> Indicates whether ssh password exists. Set it to false to remove existing SSH password. </param>
         /// <param name="userId"> A unique Identifier that is generated by the server. </param>
         /// <param name="groupId"> An identifier for associating a group of users. </param>
-        /// <param name="allowAclAuthorization"> Indicates whether ACL authorization is allowed for this user. Set it to false to disallow using ACL authorization. </param>
+        /// <param name="isAclAuthorizationAllowed"> Indicates whether ACL authorization is allowed for this user. Set it to false to disallow using ACL authorization. </param>
         /// <param name="extendedGroups"> Supplementary group membership. Only applicable for local users enabled for NFSv3 access. </param>
-        /// <param name="isNFSv3Enabled"> Indicates if the local user is enabled for access with NFSv3 protocol. </param>
+        /// <param name="isNfsV3Enabled"> Indicates if the local user is enabled for access with NFSv3 protocol. </param>
         /// <returns> A new <see cref="Storage.StorageAccountLocalUserData"/> instance for mocking. </returns>
-        public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<StoragePermissionScope> permissionScopes = null, string homeDirectory = null, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys = null, string sid = null, bool? hasSharedKey = null, bool? hasSshKey = null, bool? hasSshPassword = null, int? userId = null, int? groupId = null, bool? allowAclAuthorization = null, IEnumerable<int> extendedGroups = null, bool? isNFSv3Enabled = null)
+        public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<StoragePermissionScope> permissionScopes = null, string homeDirectory = null, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys = null, string sid = null, bool? hasSharedKey = null, bool? hasSshKey = null, bool? hasSshPassword = null, int? userId = null, int? groupId = null, bool? isAclAuthorizationAllowed = null, IEnumerable<int> extendedGroups = null, bool? isNfsV3Enabled = null)
         {
             permissionScopes ??= new List<StoragePermissionScope>();
             sshAuthorizedKeys ??= new List<StorageSshPublicKey>();
@@ -1162,9 +1162,9 @@ namespace Azure.ResourceManager.Storage.Models
                 hasSshPassword,
                 userId,
                 groupId,
-                allowAclAuthorization,
+                isAclAuthorizationAllowed,
                 extendedGroups?.ToList(),
-                isNFSv3Enabled,
+                isNfsV3Enabled,
                 serializedAdditionalRawData: null);
         }
 
@@ -1278,9 +1278,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network Security Perimeter profile. </param>
         /// <returns> A new <see cref="Storage.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterConfigurationPropertiesProfile profile = null)
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterConfigurationPropertiesProfile profile = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<NetworkSecurityPerimeterProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationData(
                 id,
@@ -1295,23 +1295,23 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of provisioning issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueProperties properties = null)
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProvisioningIssue NetworkSecurityPerimeterProvisioningIssue(string name = null, NetworkSecurityPerimeterProvisioningIssueProperties properties = null)
         {
-            return new ProvisioningIssue(name, properties, serializedAdditionalRawData: null);
+            return new NetworkSecurityPerimeterProvisioningIssue(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = null, Severity? severity = null, string description = null)
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProvisioningIssueProperties NetworkSecurityPerimeterProvisioningIssueProperties(NetworkSecurityPerimeterProvisioningIssueType? issueType = null, NetworkSecurityPerimeterProvisioningIssueSeverity? severity = null, string description = null)
         {
-            return new ProvisioningIssueProperties(issueType, severity, description, serializedAdditionalRawData: null);
+            return new NetworkSecurityPerimeterProvisioningIssueProperties(issueType, severity, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
@@ -1429,8 +1429,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskReportProperties"/>. </summary>
         /// <param name="taskAssignmentId"> Represents the Storage Task Assignment Id associated with the storage task that provided an execution context. </param>
         /// <param name="storageAccountId"> Represents the Storage Account Id where the storage task definition was applied and executed. </param>
-        /// <param name="startTime"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="finishTime"> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
+        /// <param name="startedOn"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
+        /// <param name="finishedOn"> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectsTargetedCount"> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectsOperatedOnCount"> Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectFailedCount"> Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
@@ -1442,13 +1442,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="taskVersion"> Storage Task Version. </param>
         /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
         /// <returns> A new <see cref="Models.StorageTaskReportProperties"/> instance for mocking. </returns>
-        public static StorageTaskReportProperties StorageTaskReportProperties(ResourceIdentifier taskAssignmentId = null, ResourceIdentifier storageAccountId = null, string startTime = null, string finishTime = null, string objectsTargetedCount = null, string objectsOperatedOnCount = null, string objectFailedCount = null, string objectsSucceededCount = null, string runStatusError = null, RunStatusEnum? runStatusEnum = null, string summaryReportPath = null, ResourceIdentifier taskId = null, string taskVersion = null, RunResult? runResult = null)
+        public static StorageTaskReportProperties StorageTaskReportProperties(ResourceIdentifier taskAssignmentId = null, ResourceIdentifier storageAccountId = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, string objectsTargetedCount = null, string objectsOperatedOnCount = null, string objectFailedCount = null, string objectsSucceededCount = null, string runStatusError = null, StorageTaskRunStatus? runStatusEnum = null, string summaryReportPath = null, ResourceIdentifier taskId = null, string taskVersion = null, StorageTaskRunResult? runResult = null)
         {
             return new StorageTaskReportProperties(
                 taskAssignmentId,
                 storageAccountId,
-                startTime,
-                finishTime,
+                startedOn,
+                finishedOn,
                 objectsTargetedCount,
                 objectsOperatedOnCount,
                 objectFailedCount,
@@ -1462,20 +1462,20 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentPatchProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="reportPrefix"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
-        /// <returns> A new <see cref="Models.StorageTaskAssignmentUpdateProperties"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentUpdateProperties StorageTaskAssignmentUpdateProperties(string taskId = null, bool? enabled = null, string description = null, StorageTaskAssignmentUpdateExecutionContext executionContext = null, string reportPrefix = null, StorageProvisioningState? provisioningState = null, StorageTaskReportProperties runStatus = null)
+        /// <returns> A new <see cref="Models.StorageTaskAssignmentPatchProperties"/> instance for mocking. </returns>
+        public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId = null, bool? isEnabled = null, string description = null, StorageTaskAssignmentUpdateExecutionContext executionContext = null, string reportPrefix = null, StorageProvisioningState? provisioningState = null, StorageTaskReportProperties runStatus = null)
         {
-            return new StorageTaskAssignmentUpdateProperties(
+            return new StorageTaskAssignmentPatchProperties(
                 taskId,
-                enabled,
+                isEnabled,
                 description,
                 executionContext,
                 reportPrefix != null ? new StorageTaskAssignmentUpdateReport(reportPrefix, serializedAdditionalRawData: null) : null,
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType)
         {
-            return StorageAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, kind: kind, identity: identity, extendedLocation: extendedLocation, provisioningState: provisioningState, primaryEndpoints: primaryEndpoints, primaryLocation: primaryLocation, statusOfPrimary: statusOfPrimary, lastGeoFailoverOn: lastGeoFailoverOn, secondaryLocation: secondaryLocation, statusOfSecondary: statusOfSecondary, createdOn: createdOn, customDomain: customDomain, sasPolicy: sasPolicy, keyExpirationPeriodInDays: keyExpirationPeriodInDays, keyCreationTime: keyCreationTime, secondaryEndpoints: secondaryEndpoints, encryption: encryption, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, networkRuleSet: networkRuleSet, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, enableExtendedGroups: default, isHnsEnabled: isHnsEnabled, geoReplicationStats: geoReplicationStats, isFailoverInProgress: isFailoverInProgress, largeFileSharesState: largeFileSharesState, privateEndpointConnections: privateEndpointConnections, routingPreference: routingPreference, blobRestoreStatus: blobRestoreStatus, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, publicNetworkAccess: publicNetworkAccess, immutableStorageWithVersioning: immutableStorageWithVersioning, allowedCopyScope: allowedCopyScope, storageAccountSkuConversionStatus: storageAccountSkuConversionStatus, dnsEndpointType: dnsEndpointType, isSkuConversionBlocked: default, accountMigrationInProgress: default);
+            return StorageAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, kind: kind, identity: identity, extendedLocation: extendedLocation, provisioningState: provisioningState, primaryEndpoints: primaryEndpoints, primaryLocation: primaryLocation, statusOfPrimary: statusOfPrimary, lastGeoFailoverOn: lastGeoFailoverOn, secondaryLocation: secondaryLocation, statusOfSecondary: statusOfSecondary, createdOn: createdOn, customDomain: customDomain, sasPolicy: sasPolicy, keyExpirationPeriodInDays: keyExpirationPeriodInDays, keyCreationTime: keyCreationTime, secondaryEndpoints: secondaryEndpoints, encryption: encryption, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, networkRuleSet: networkRuleSet, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, isExtendedGroupEnabled: default, isHnsEnabled: isHnsEnabled, geoReplicationStats: geoReplicationStats, isFailoverInProgress: isFailoverInProgress, largeFileSharesState: largeFileSharesState, privateEndpointConnections: privateEndpointConnections, routingPreference: routingPreference, blobRestoreStatus: blobRestoreStatus, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, publicNetworkAccess: publicNetworkAccess, immutableStorageWithVersioning: immutableStorageWithVersioning, allowedCopyScope: allowedCopyScope, storageAccountSkuConversionStatus: storageAccountSkuConversionStatus, dnsEndpointType: dnsEndpointType, isSkuConversionBlocked: default, isAccountMigrationInProgress: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.Models.GeoReplicationStatistics" />. </summary>
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<StoragePermissionScope> permissionScopes, string homeDirectory, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword)
         {
-            return StorageAccountLocalUserData(id: id, name: name, resourceType: resourceType, systemData: systemData, permissionScopes: permissionScopes, homeDirectory: homeDirectory, sshAuthorizedKeys: sshAuthorizedKeys, sid: sid, hasSharedKey: hasSharedKey, hasSshKey: hasSshKey, hasSshPassword: hasSshPassword, userId: default, groupId: default, allowAclAuthorization: default, extendedGroups: default, isNFSv3Enabled: default);
+            return StorageAccountLocalUserData(id: id, name: name, resourceType: resourceType, systemData: systemData, permissionScopes: permissionScopes, homeDirectory: homeDirectory, sshAuthorizedKeys: sshAuthorizedKeys, sid: sid, hasSharedKey: hasSharedKey, hasSshKey: hasSshKey, hasSshPassword: hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
         }
     }
 }

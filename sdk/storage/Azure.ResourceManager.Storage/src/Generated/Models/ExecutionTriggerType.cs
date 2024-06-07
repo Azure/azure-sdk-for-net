@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The trigger type of the storage task assignment execution. </summary>
-    public enum TriggerType
+    public enum ExecutionTriggerType
     {
         /// <summary> RunOnce. </summary>
         RunOnce,

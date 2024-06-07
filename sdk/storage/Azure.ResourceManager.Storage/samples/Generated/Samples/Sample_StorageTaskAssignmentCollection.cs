@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             string storageTaskAssignmentName = "myassignment1";
-            StorageTaskAssignmentData data = new StorageTaskAssignmentData(new StorageTaskAssignmentProperties(new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.StorageActions/storageTasks/mytask1"), true, "My Storage task assignment", new StorageTaskAssignmentExecutionContext(new ExecutionTrigger(TriggerType.RunOnce, new TriggerParameters()
+            StorageTaskAssignmentData data = new StorageTaskAssignmentData(new StorageTaskAssignmentProperties(new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.StorageActions/storageTasks/mytask1"), true, "My Storage task assignment", new StorageTaskAssignmentExecutionContext(new ExecutionTrigger(ExecutionTriggerType.RunOnce, new ExecutionTriggerParameters()
             {
                 StartOn = DateTimeOffset.Parse("2022-11-15T21:52:47.8145095Z"),
             }))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             string storageTaskAssignmentName = "myassignment1";
-            StorageTaskAssignmentData data = new StorageTaskAssignmentData(new StorageTaskAssignmentProperties(new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.StorageActions/storageTasks/mytask1"), true, "My Storage task assignment", new StorageTaskAssignmentExecutionContext(new ExecutionTrigger(TriggerType.RunOnce, new TriggerParameters()
+            StorageTaskAssignmentData data = new StorageTaskAssignmentData(new StorageTaskAssignmentProperties(new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.StorageActions/storageTasks/mytask1"), true, "My Storage task assignment", new StorageTaskAssignmentExecutionContext(new ExecutionTrigger(ExecutionTriggerType.RunOnce, new ExecutionTriggerParameters()
             {
                 StartOn = DateTimeOffset.Parse("2022-11-15T21:52:47.8145095Z"),
             })), new StorageTaskAssignmentReport("container1")));

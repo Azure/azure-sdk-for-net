@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentPatch"/>. </summary>
         /// <param name="properties"> Properties of the storage task assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentPatch(StorageTaskAssignmentUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentPatch(StorageTaskAssignmentPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Properties of the storage task assignment. </summary>
         [WirePath("properties")]
-        public StorageTaskAssignmentUpdateProperties Properties { get; set; }
+        public StorageTaskAssignmentPatchProperties Properties { get; set; }
     }
 }

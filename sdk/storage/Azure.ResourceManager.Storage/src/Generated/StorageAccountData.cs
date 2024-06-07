@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="networkRuleSet"> Network rule set. </param>
         /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
         /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="enableExtendedGroups"> Enables extended group support with local users feature, if set to true. </param>
+        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
         /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
         /// <param name="geoReplicationStats"> Geo Replication Stats. </param>
         /// <param name="isFailoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
-        /// <param name="accountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
+        /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? enableExtendedGroups, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? accountMigrationInProgress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage
             NetworkRuleSet = networkRuleSet;
             IsSftpEnabled = isSftpEnabled;
             IsLocalUserEnabled = isLocalUserEnabled;
-            EnableExtendedGroups = enableExtendedGroups;
+            IsExtendedGroupEnabled = isExtendedGroupEnabled;
             IsHnsEnabled = isHnsEnabled;
             GeoReplicationStats = geoReplicationStats;
             IsFailoverInProgress = isFailoverInProgress;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage
             StorageAccountSkuConversionStatus = storageAccountSkuConversionStatus;
             DnsEndpointType = dnsEndpointType;
             IsSkuConversionBlocked = isSkuConversionBlocked;
-            AccountMigrationInProgress = accountMigrationInProgress;
+            IsAccountMigrationInProgress = isAccountMigrationInProgress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage
         public bool? IsLocalUserEnabled { get; set; }
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
         [WirePath("properties.enableExtendedGroups")]
-        public bool? EnableExtendedGroups { get; set; }
+        public bool? IsExtendedGroupEnabled { get; set; }
         /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
         [WirePath("properties.isHnsEnabled")]
         public bool? IsHnsEnabled { get; set; }
@@ -307,6 +307,6 @@ namespace Azure.ResourceManager.Storage
         public bool? IsSkuConversionBlocked { get; }
         /// <summary> If customer initiated account migration is in progress, the value will be true else it will be null. </summary>
         [WirePath("properties.accountMigrationInProgress")]
-        public bool? AccountMigrationInProgress { get; }
+        public bool? IsAccountMigrationInProgress { get; }
     }
 }

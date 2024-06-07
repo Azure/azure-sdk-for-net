@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteNumberValue(GroupId.Value);
             }
-            if (Optional.IsDefined(AllowAclAuthorization))
+            if (Optional.IsDefined(IsAclAuthorizationAllowed))
             {
                 writer.WritePropertyName("allowAclAuthorization"u8);
-                writer.WriteBooleanValue(AllowAclAuthorization.Value);
+                writer.WriteBooleanValue(IsAclAuthorizationAllowed.Value);
             }
             if (Optional.IsCollectionDefined(ExtendedGroups))
             {
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsNFSv3Enabled))
+            if (Optional.IsDefined(IsNfsV3Enabled))
             {
                 writer.WritePropertyName("isNFSv3Enabled"u8);
-                writer.WriteBooleanValue(IsNFSv3Enabled.Value);
+                writer.WriteBooleanValue(IsNfsV3Enabled.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowAclAuthorization), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAclAuthorizationAllowed), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    allowAclAuthorization: ");
@@ -607,10 +607,10 @@ namespace Azure.ResourceManager.Storage
             }
             else
             {
-                if (Optional.IsDefined(AllowAclAuthorization))
+                if (Optional.IsDefined(IsAclAuthorizationAllowed))
                 {
                     builder.Append("    allowAclAuthorization: ");
-                    var boolValue = AllowAclAuthorization.Value == true ? "true" : "false";
+                    var boolValue = IsAclAuthorizationAllowed.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNFSv3Enabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNfsV3Enabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    isNFSv3Enabled: ");
@@ -646,10 +646,10 @@ namespace Azure.ResourceManager.Storage
             }
             else
             {
-                if (Optional.IsDefined(IsNFSv3Enabled))
+                if (Optional.IsDefined(IsNfsV3Enabled))
                 {
                     builder.Append("    isNFSv3Enabled: ");
-                    var boolValue = IsNFSv3Enabled.Value == true ? "true" : "false";
+                    var boolValue = IsNfsV3Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

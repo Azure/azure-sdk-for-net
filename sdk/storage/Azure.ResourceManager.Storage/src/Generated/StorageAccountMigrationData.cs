@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="migrationFailedReason"> Error code for migration failure. </param>
         /// <param name="migrationFailedDetailedReason"> Reason for migration failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountMigrationData(string id, string name, string resourceType, StorageSkuName targetSkuName, MigrationStatus? migrationStatus, string migrationFailedReason, string migrationFailedDetailedReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountMigrationData(string id, string name, ResourceType? resourceType, StorageSkuName targetSkuName, StorageAccountMigrationStatus? migrationStatus, string migrationFailedReason, string migrationFailedDetailedReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -90,13 +91,13 @@ namespace Azure.ResourceManager.Storage
         public string Name { get; set; }
         /// <summary> SrpAccountMigrationType in ARM contract which is 'accountMigrations'. </summary>
         [WirePath("type")]
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary> Target sku name for the account. </summary>
         [WirePath("properties.targetSkuName")]
         public StorageSkuName TargetSkuName { get; set; }
         /// <summary> Current status of migration. </summary>
         [WirePath("properties.migrationStatus")]
-        public MigrationStatus? MigrationStatus { get; }
+        public StorageAccountMigrationStatus? MigrationStatus { get; }
         /// <summary> Error code for migration failure. </summary>
         [WirePath("properties.migrationFailedReason")]
         public string MigrationFailedReason { get; }

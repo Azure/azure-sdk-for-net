@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportProperties"/>. </summary>
         /// <param name="taskAssignmentId"> Represents the Storage Task Assignment Id associated with the storage task that provided an execution context. </param>
         /// <param name="storageAccountId"> Represents the Storage Account Id where the storage task definition was applied and executed. </param>
-        /// <param name="startTime"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="finishTime"> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
+        /// <param name="startedOn"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
+        /// <param name="finishedOn"> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectsTargetedCount"> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectsOperatedOnCount"> Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
         /// <param name="objectFailedCount"> Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="taskVersion"> Storage Task Version. </param>
         /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startTime, string finishTime, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, RunStatusEnum? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, RunResult? runResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskAssignmentId = taskAssignmentId;
             StorageAccountId = storageAccountId;
-            StartTime = startTime;
-            FinishTime = finishTime;
+            StartedOn = startedOn;
+            FinishedOn = finishedOn;
             ObjectsTargetedCount = objectsTargetedCount;
             ObjectsOperatedOnCount = objectsOperatedOnCount;
             ObjectFailedCount = objectFailedCount;
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Storage.Models
         public ResourceIdentifier StorageAccountId { get; }
         /// <summary> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("startTime")]
-        public string StartTime { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("finishTime")]
-        public string FinishTime { get; }
+        public DateTimeOffset? FinishedOn { get; }
         /// <summary> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("objectsTargetedCount")]
         public string ObjectsTargetedCount { get; }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string RunStatusError { get; }
         /// <summary> Represents the status of the execution. </summary>
         [WirePath("runStatusEnum")]
-        public RunStatusEnum? RunStatusEnum { get; }
+        public StorageTaskRunStatus? RunStatusEnum { get; }
         /// <summary> Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account. </summary>
         [WirePath("summaryReportPath")]
         public string SummaryReportPath { get; }
@@ -127,6 +127,6 @@ namespace Azure.ResourceManager.Storage.Models
         public string TaskVersion { get; }
         /// <summary> Represents the overall result of the execution for the run instance. </summary>
         [WirePath("runResult")]
-        public RunResult? RunResult { get; }
+        public StorageTaskRunResult? RunResult { get; }
     }
 }

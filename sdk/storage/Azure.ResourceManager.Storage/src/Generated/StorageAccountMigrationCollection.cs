@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountMigrationResource>> GetAsync(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountMigrationResource>> GetAsync(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.Get");
             scope.Start();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountMigrationResource> Get(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountMigrationResource> Get(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.Get");
             scope.Start();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.Exists");
             scope.Start();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.Exists");
             scope.Start();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<StorageAccountMigrationResource>> GetIfExistsAsync(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<StorageAccountMigrationResource>> GetIfExistsAsync(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.GetIfExists");
             scope.Start();
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="migrationName"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<StorageAccountMigrationResource> GetIfExists(MigrationName migrationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<StorageAccountMigrationResource> GetIfExists(StorageAccountMigrationName migrationName, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountMigrationStorageAccountsClientDiagnostics.CreateScope("StorageAccountMigrationCollection.GetIfExists");
             scope.Start();
