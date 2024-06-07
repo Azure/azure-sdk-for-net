@@ -12,11 +12,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System.Collections.Generic;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
-using System.Security.Policy;
-using System.Text;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -175,7 +171,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     "Scenario",
                     "DeploymentTemplates",
-                    $"sub-stack-template,json")));
+                    $"sub-stack-template.json")));
 
             data.DenySettings = new DenySettings(DenySettingsMode.None);
 

@@ -7,8 +7,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -19,14 +17,64 @@ namespace Azure.ResourceManager.Resources.Tests
         {
         }
 
+        /* RG Scoped Deployment Stack Tests */
+
         [TestCase]
         [RecordedTest]
-        public async Task Delete()
+        public async Task DeleteRG()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Delete-");
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS);
+            ResourceGroupResource rg = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData)).Value;
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Delete-");
+            var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
+            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            await deploymentStack.DeleteAsync(WaitUntil.Completed);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
+            Assert.AreEqual(404, ex.Status);
+            await rg.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ExportRG()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS);
+            ResourceGroupResource rg = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData)).Value;
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Export-");
+            var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
+            var deploymentStackCollection = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
+
+            ArmDeploymentStackResource deploymentStack = (await deploymentStackCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
+            Assert.IsNotNull(deploymentStackTemplate);
+
+            // TODO: Output is off by a little and may be how the template is being read.
+            //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
+
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+            await rg.DeleteAsync(WaitUntil.Completed);
+        }
+
+        /* Sub Scoped Deployment Stack Tests */
+
+        [TestCase]
+        [RecordedTest]
+        public async Task DeleteSub()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Delete-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+
             ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             await deploymentStack.DeleteAsync(WaitUntil.Completed);
 
@@ -36,13 +84,50 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Export()
+        public async Task ExportSub()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Export-");
+            string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Export-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             var deploymentStackCollection = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
+
+            ArmDeploymentStackResource deploymentStack = (await deploymentStackCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
+            Assert.IsNotNull(deploymentStackTemplate);
+
+            // TODO: Output is off by a little and may be how the template is being read.
+            //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
+
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+        }
+
+        /* MG Scoped Deployment Stack Tests */
+
+        [TestCase]
+        [RecordedTest]
+        public async Task DeleteMG()
+        {
+            ManagementGroupResource managementGroup = Client.GetManagementGroupResource(ManagementGroupResource.CreateResourceIdentifier("StacksSDKTest"));
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Delete-");
+            var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            await deploymentStack.DeleteAsync(WaitUntil.Completed);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
+            Assert.AreEqual(404, ex.Status);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ExportMG()
+        {
+            ManagementGroupResource managementGroup = Client.GetManagementGroupResource(ManagementGroupResource.CreateResourceIdentifier("StacksSDKTest"));
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Export-");
+            var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            var deploymentStackCollection = Client.GetArmDeploymentStacks(new ResourceIdentifier(managementGroup.Id));
 
             ArmDeploymentStackResource deploymentStack = (await deploymentStackCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;

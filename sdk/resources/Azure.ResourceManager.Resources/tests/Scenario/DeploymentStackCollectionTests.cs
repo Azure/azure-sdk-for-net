@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -18,6 +16,8 @@ namespace Azure.ResourceManager.Resources.Tests
             : base(isAsync)//, RecordedTestMode.Record
         {
         }
+
+        /* RG Scoped Deployment Stack Tests */
 
         [TestCase]
         [RecordedTest]
@@ -106,6 +106,21 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task ValidateSub()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
+            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-CreateOrUpdate-");
+            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            ArmDeploymentStackResource deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+
+            Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
+
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task GetSub()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -129,17 +144,19 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackSub-List-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            _ = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var stack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id));
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
                 count++;
-                await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
             }
 
-            Assert.AreEqual(count, 1);
+            await stack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+
+            // There are more stacks in the sub than just the one created for the test:
+            Assert.GreaterOrEqual(count, 1);
         }
 
         /* MG Scoped Deployment Stack Tests */
