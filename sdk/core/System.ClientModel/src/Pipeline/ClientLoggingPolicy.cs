@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace System.ClientModel.Primitives;
 
@@ -46,7 +47,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _assemblyName = loggingOptions.LoggedClientAssemblyName;
         _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
         _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
-        _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters, loggingOptions.AllowedHeaderNames);
+        _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
 
         string logNameToUse = logName ?? DefaultEventSourceName;
         EventSourceSingleton = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));
