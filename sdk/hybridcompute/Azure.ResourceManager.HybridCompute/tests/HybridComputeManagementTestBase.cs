@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string subscriptionId = "b24cc8ee-df4f-48ac-94cf-46edf36b0fae";
         public string resourceGroupName = "ytongtest";
         public string scopeName = "myPrivateLinkScope";
-        public string machineName = "testmachine2";
+        public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
         public string privateEndpointConnectionName = "myprivateendpoint.dc6c8829-b4b5-4059-b130-e9f309c83173";
