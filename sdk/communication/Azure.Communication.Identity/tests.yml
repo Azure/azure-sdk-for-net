@@ -10,7 +10,8 @@ extends:
       Public:
         ServiceConnection: azure-sdk-tests
         SubscriptionConfigurationFilePath: eng/common/TestResources/sub-config/AzurePublicMsft.json
-        # SubscriptionConfigurations:
+        SubscriptionConfigurations:
+          - $(sub-config-communication-services-cloud-test-identity-cte)
         #   - $(sub-config-azure-cloud-test-resources)
         # These resources are hosted OUTSIDE the MSFT tenant:
         #   - $(sub-config-communication-services-cloud-test-resources-common)
