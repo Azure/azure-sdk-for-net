@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -41,8 +46,6 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -244,8 +247,8 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -274,6 +277,15 @@ namespace Azure.ResourceManager.Resources
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -286,11 +298,6 @@ namespace Azure.ResourceManager.Resources
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -529,8 +536,8 @@ namespace Azure.ResourceManager.Resources
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 error,
                 template,
                 templateLink,
@@ -596,8 +603,11 @@ namespace Azure.ResourceManager.Resources
             }
             else
             {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

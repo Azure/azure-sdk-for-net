@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Resources.Tests
             _ = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             var deploymentStacks = Client.GetArmDeploymentStacks(new ResourceIdentifier(rg.Id));
+            string deploymentStackName = Recording.GenerateAssetName("deployStackEx-List-");
+            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            _ = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
+
+            var deploymentStacks = subscription.GetArmDeploymentStacks();
             int count = 0;
             await foreach (var deploymentStack in deploymentStacks)
             {
@@ -126,10 +131,10 @@ namespace Azure.ResourceManager.Resources.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackEx-Get-");
-            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            var deploymentStack = (await Client.GetArmDeploymentStacks(new ResourceIdentifier(subscription.Id)).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            var deploymentStackData = CreateDeploymentStackDataWithTemplate(AzureLocation.WestUS);
+            var deploymentStack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
-            var deploymentStackGet = (await Client.GetArmDeploymentStackAsync(new ResourceIdentifier(subscription.Id), deploymentStackName)).Value;
+            var deploymentStackGet = (await subscription.GetArmDeploymentStackAsync(deploymentStackName)).Value;
 
             AssertValidDeploymentStack(deploymentStack, deploymentStackGet);
 

@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentParameter"/>. </summary>
         /// <param name="value"> Input value to the parameter. </param>
-        /// <param name="deploymentType"> Type of the value. </param>
+        /// <param name="deploymentParameterType"> Type of the value. </param>
         /// <param name="reference"> Azure Key Vault parameter reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentParameter(BinaryData value, string deploymentType, KeyVaultParameterReference reference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentParameter(BinaryData value, string deploymentParameterType, KeyVaultParameterReference reference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
-            DeploymentType = deploymentType;
+            DeploymentParameterType = deploymentParameterType;
             Reference = reference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
         public BinaryData Value { get; set; }
         /// <summary> Type of the value. </summary>
         [WirePath("type")]
-        public string DeploymentType { get; set; }
+        public string DeploymentParameterType { get; set; }
         /// <summary> Azure Key Vault parameter reference. </summary>
         [WirePath("reference")]
         public KeyVaultParameterReference Reference { get; set; }

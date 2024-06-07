@@ -57,6 +57,10 @@ request-path-to-scope-resource-types:
     - subscriptions
     - resourceGroups
     - managementGroups
+  /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
   /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate:
     - subscriptions
     - resourceGroups

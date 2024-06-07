@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Resources
     /// A Class representing an ArmDeploymentStack along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmDeploymentStackResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetArmDeploymentStackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetArmDeploymentStack method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/> or <see cref="ManagementGroupResource"/> using the GetArmDeploymentStack method.
     /// </summary>
     public partial class ArmDeploymentStackResource : ArmResource
     {

@@ -13,13 +13,14 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArmDeploymentStackResource"/> and their operations.
-    /// Each <see cref="ArmDeploymentStackResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get an <see cref="ArmDeploymentStackCollection"/> instance call the GetArmDeploymentStacks method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="ArmDeploymentStackResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/> or <see cref="ManagementGroupResource"/>.
+    /// To get an <see cref="ArmDeploymentStackCollection"/> instance call the GetArmDeploymentStacks method from an instance of <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/> or <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class ArmDeploymentStackCollection : ArmCollection, IEnumerable<ArmDeploymentStackResource>, IAsyncEnumerable<ArmDeploymentStackResource>
     {
