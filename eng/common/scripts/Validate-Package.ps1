@@ -25,8 +25,8 @@ Set-StrictMode -Version 3
 
 az account show *> $null
 if (!$?) {
-Write-Host 'Running az login...'
-az login *> $null
+  Write-Host 'Running az login...'
+  az login *> $null
 }
 
 az extension show -n azure-devops *> $null

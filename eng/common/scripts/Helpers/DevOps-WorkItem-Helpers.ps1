@@ -9,7 +9,7 @@ function Get-DevOpsRestHeaders()
   $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
 
   if ([System.String]::IsNullOrEmpty($headerAccessToken)) {
-    throw "Unable to create the DevOpsRestHeader due to access token being null or empy. The calling script needs to be pass an the accessToken value OR the calling script needs to be run in an azure authenticated environment."
+    throw "Unable to create the DevOpsRestHeader due to access token being null or empty. The caller needs to be logged in with az login to an account with enough permissions to edit work items in the azure-sdk Release team project."
   }
 
   $headers = @{ Authorization = "Bearer $headerAccessToken" }
