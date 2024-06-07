@@ -28,9 +28,9 @@ public class BatchTests : AoaiTestBase<BatchClient>
 {
     private static readonly JsonSerializerOptions JSON_OPTIONS = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        // PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
         PropertyNameCaseInsensitive = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        // DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         Converters =
         {
             new ModelReaderWriterConverter()
@@ -139,7 +139,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         public BinaryContent ToBinaryContent()
         {
             using MemoryStream stream = new MemoryStream();
-            JsonSerializer.Serialize(stream, this, JSON_OPTIONS);
+            JsonSerializer.Serialize(stream, typeof(BatchRequest), JSON_OPTIONS);
 
             stream.Seek(0, SeekOrigin.Begin);
             var data = BinaryData.FromStream(stream);
@@ -182,7 +182,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         public static BatchObject From(BinaryData data)
         {
             using var stream = data.ToStream();
-            return JsonSerializer.Deserialize<BatchObject>(stream, JSON_OPTIONS)
+            return JsonSerializer.Deserialize<BatchObject>(data, JSON_OPTIONS)
                 ?? throw new InvalidOperationException("Response was null JSON");
         }
 
@@ -239,7 +239,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
 
             using MemoryStream stream = new MemoryStream();
-            JsonSerializer.Serialize(stream, _operations, JSON_OPTIONS);
+            // JsonSerializer.Serialize(stream, _operations, JSON_OPTIONS);
             stream.Seek(0, SeekOrigin.Begin);
             var data = BinaryData.FromStream(stream);
 

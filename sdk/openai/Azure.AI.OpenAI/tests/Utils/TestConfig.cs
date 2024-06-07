@@ -48,8 +48,8 @@ internal class TestConfig
                         return JsonSerializer.Deserialize<Dictionary<string, Config>>(json, new JsonSerializerOptions()
                         {
                             PropertyNameCaseInsensitive = true,
-                            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                            DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower,
+                            // PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                            // DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower,
                             Converters =
                             {
                                 new UnSnakeCaseDictConverter()
@@ -203,7 +203,7 @@ internal class TestConfig
 
             if (ExtensionData?.TryGetValue(name, out JsonElement element) == true)
             {
-                val = element.Deserialize<T>()!;
+                // val = element.Deserialize<T>()!;
             }
 
             return val ?? default(T)!;
@@ -240,7 +240,7 @@ internal class TestConfig
                 _converter = (JsonConverter<TValue>)options.GetConverter(typeof(TValue));
             }
 
-            public override Dictionary<string, TValue>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override Dictionary<string, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 if (reader.TokenType != JsonTokenType.StartObject)
                 {
