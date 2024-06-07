@@ -5,7 +5,7 @@ using Azure.AI.OpenAI.Internal;
 using OpenAI.Images;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Images;
+namespace Azure.AI.OpenAI;
 
 public static class AzureGeneratedImageExtensions
 {

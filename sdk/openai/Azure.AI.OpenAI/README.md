@@ -102,7 +102,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples from OpenAI's .NET library](https://github.com/openai/openai-dotnet/tree/main/samples) or [Azure.AI.OpenAI-specific samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples). The vast majority of OpenAI capabilities are available on both Azure OpenAI and OpenAI using the same scenario clients and methods, so not all scenarios will be redundantly covered here.
+You can familiarize yourself with different APIs using [Samples from OpenAI's .NET library](https://github.com/openai/openai-dotnet/tree/main/examples) or [Azure.AI.OpenAI-specific samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples). The vast majority of OpenAI capabilities are available on both Azure OpenAI and OpenAI using the same scenario clients and methods, so not all scenarios will be redundantly covered here.
 
 ### Get a chat completion
 
