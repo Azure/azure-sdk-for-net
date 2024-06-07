@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/storage/Azure.Storage.Files.DataLake",
-  "Tag": "net/storage/Azure.Storage.Files.DataLake_1cb77f3902"
+  "Tag": "net/storage/Azure.Storage.Files.DataLake_fb7d986e17"
 }
