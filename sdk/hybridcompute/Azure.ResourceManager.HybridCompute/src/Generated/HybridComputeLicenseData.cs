@@ -8,12 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HybridCompute.Models
+namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary> Describes a license in a hybrid machine. </summary>
-    public partial class HybridComputeLicense : TrackedResourceData
+    /// <summary>
+    /// A class representing the HybridComputeLicense data model.
+    /// Describes a license in a hybrid machine.
+    /// </summary>
+    public partial class HybridComputeLicenseData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +51,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicense"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public HybridComputeLicense(AzureLocation location) : base(location)
+        public HybridComputeLicenseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicense"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLicense(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, Guid? tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeLicenseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, Guid? tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             TenantId = tenantId;
@@ -74,8 +78,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicense"/> for deserialization. </summary>
-        internal HybridComputeLicense()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseData"/> for deserialization. </summary>
+        internal HybridComputeLicenseData()
         {
         }
 

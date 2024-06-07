@@ -10,36 +10,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HybridCompute.Models
+namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class HybridComputeLicense : IUtf8JsonSerializable, IJsonModel<HybridComputeLicense>
+    public partial class NetworkSecurityPerimeterConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeLicense>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridComputeLicense>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -65,22 +53,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(TenantId))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("provisioningIssues"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProvisioningIssues)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
-                writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WritePropertyName("networkSecurityPerimeter"u8);
+                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
             }
-            if (Optional.IsDefined(LicenseDetails))
+            if (Optional.IsDefined(ResourceAssociation))
             {
-                writer.WritePropertyName("licenseDetails"u8);
-                writer.WriteObjectValue(LicenseDetails, options);
+                writer.WritePropertyName("resourceAssociation"u8);
+                writer.WriteObjectValue(ResourceAssociation, options);
+            }
+            if (Optional.IsDefined(Profile))
+            {
+                writer.WritePropertyName("profile"u8);
+                writer.WriteObjectValue(Profile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -101,19 +99,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        HybridComputeLicense IJsonModel<HybridComputeLicense>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterConfigurationData IJsonModel<NetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridComputeLicense(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, options);
         }
 
-        internal static HybridComputeLicense DeserializeHybridComputeLicense(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterConfigurationData DeserializeNetworkSecurityPerimeterConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -121,39 +119,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            HybridComputeProvisioningState? provisioningState = default;
-            Guid? tenantId = default;
-            HybridComputeLicenseType? licenseType = default;
-            HybridComputeLicenseDetails licenseDetails = default;
+            string provisioningState = default;
+            IReadOnlyList<HybridComputeProvisioningIssue> provisioningIssues = default;
+            NetworkSecurityPerimeter networkSecurityPerimeter = default;
+            HybridComputeResourceAssociation resourceAssociation = default;
+            NetworkSecurityPerimeterProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -189,38 +167,48 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new HybridComputeProvisioningState(property0.Value.GetString());
+                            provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"u8))
+                        if (property0.NameEquals("provisioningIssues"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            tenantId = property0.Value.GetGuid();
+                            List<HybridComputeProvisioningIssue> array = new List<HybridComputeProvisioningIssue>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(HybridComputeProvisioningIssue.DeserializeHybridComputeProvisioningIssue(item, options));
+                            }
+                            provisioningIssues = array;
                             continue;
                         }
-                        if (property0.NameEquals("licenseType"u8))
+                        if (property0.NameEquals("networkSecurityPerimeter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            licenseType = new HybridComputeLicenseType(property0.Value.GetString());
+                            networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("licenseDetails"u8))
+                        if (property0.NameEquals("resourceAssociation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value, options);
+                            resourceAssociation = HybridComputeResourceAssociation.DeserializeHybridComputeResourceAssociation(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("profile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            profile = NetworkSecurityPerimeterProfile.DeserializeNetworkSecurityPerimeterProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -232,49 +220,48 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeLicense(
+            return new NetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 provisioningState,
-                tenantId,
-                licenseType,
-                licenseDetails,
+                provisioningIssues ?? new ChangeTrackingList<HybridComputeProvisioningIssue>(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HybridComputeLicense>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridComputeLicense IPersistableModel<HybridComputeLicense>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterConfigurationData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHybridComputeLicense(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridComputeLicense>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
