@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.AI.OpenAI.Tests.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -48,11 +49,11 @@ internal class TestConfig
                         return JsonSerializer.Deserialize<Dictionary<string, Config>>(json, new JsonSerializerOptions()
                         {
                             PropertyNameCaseInsensitive = true,
-                            // PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                            // DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower,
+                            PropertyNamingPolicy = JsonHelpers.SnakeCaseLower,
+                            DictionaryKeyPolicy = JsonHelpers.SnakeCaseLower,
                             Converters =
                             {
-                                new UnSnakeCaseDictConverter()
+                                new UnSnakeCaseDictKeyConverter()
                             }
                         });
                     }
@@ -203,14 +204,14 @@ internal class TestConfig
 
             if (ExtensionData?.TryGetValue(name, out JsonElement element) == true)
             {
-                // val = element.Deserialize<T>()!;
+                val = element.Deserialize<T>()!;
             }
 
             return val ?? default(T)!;
         }
     }
 
-    private class UnSnakeCaseDictConverter : JsonConverterFactory
+    private class UnSnakeCaseDictKeyConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
@@ -232,12 +233,43 @@ internal class TestConfig
 
         private class InnerConverter<TValue> : JsonConverter<Dictionary<string, TValue>>
         {
-            private readonly JsonConverter<TValue> _converter;
-            private readonly Type _valueType = typeof(TValue);
+            private JsonSerializerOptions _options;
 
             public InnerConverter(JsonSerializerOptions options)
             {
-                _converter = (JsonConverter<TValue>)options.GetConverter(typeof(TValue));
+#if NETFRAMEWORK
+                _options = new()
+                {
+                    AllowTrailingCommas = options.AllowTrailingCommas,
+                    DefaultBufferSize = options.DefaultBufferSize,
+                    DictionaryKeyPolicy = options.DictionaryKeyPolicy,
+                    Encoder = options.Encoder,
+                    IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties,
+                    MaxDepth = options.MaxDepth,
+                    PropertyNameCaseInsensitive = options.PropertyNameCaseInsensitive,
+                    PropertyNamingPolicy = options.PropertyNamingPolicy,
+                    ReadCommentHandling = options.ReadCommentHandling,
+                    WriteIndented = options.WriteIndented,
+                    IgnoreNullValues = options.IgnoreNullValues,
+                };
+#else
+                _options = new(options);
+                _options.Converters.Clear();
+#endif
+
+                if (options.Converters?.Count > 0)
+                {
+                    var thisType = GetType();
+
+                    foreach (var conv in options.Converters)
+                    {
+                        if (conv is not UnSnakeCaseDictKeyConverter
+                            && !thisType.IsAssignableFrom(conv.GetType()))
+                        {
+                            _options.Converters.Add(conv);
+                        }
+                    }
+                }
             }
 
             public override Dictionary<string, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -285,7 +317,7 @@ internal class TestConfig
                     builder.Clear();
 
                     reader.Read();
-                    TValue? val = _converter.Read(ref reader, _valueType, options);
+                    TValue? val = JsonSerializer.Deserialize<TValue>(ref reader, _options);
 
                     dict[propertyName] = val!;
                 }
