@@ -36,7 +36,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedule1";
-            DateTime unboundDNRU = DateTime.Parse("08/18/2026 07:22:16");
+            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
+
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
                 DoNotRunUntil = unboundDNRU,
@@ -173,7 +174,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedule3";
-            DateTime unboundDNRU = DateTime.Parse("08/18/2026 07:22:16");
+            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
                 DoNotRunUntil = unboundDNRU,
@@ -230,7 +231,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedulePatch";
-            DateTime unboundDNRU = DateTime.Parse("08/18/2026 07:22:16");
+            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
                 DoNotRunUntil = unboundDNRU,

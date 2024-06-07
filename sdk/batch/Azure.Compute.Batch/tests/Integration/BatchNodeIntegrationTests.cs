@@ -240,7 +240,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableNodeSchedulingAsync(poolID, batchNodeID);
                 Assert.AreEqual(200, response.Status);
 
-                UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("http://fake.com", DateTimeOffset.Parse("05/01/2026"));
+                UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("http://fake.com", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
                 UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
                 Assert.NotNull(uploadBatchServiceLogsResult);
