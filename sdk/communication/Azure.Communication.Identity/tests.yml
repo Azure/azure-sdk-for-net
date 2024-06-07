@@ -16,8 +16,8 @@ extends:
         #   - $(sub-config-communication-services-cloud-test-resources-common)
         #   - $(sub-config-communication-services-cloud-test-resources-net)
       PPE:
-        ServiceConnection: azure-sdk-tests-communication-torus
-        SubscriptionConfigurationFilePath: sdk/communication/communication-ppe-torus.json
+        # ServiceConnection: azure-sdk-tests-communication-torus
+        # SubscriptionConfigurationFilePath: sdk/communication/communication-ppe-torus.json
         SubscriptionConfigurations:
           - $(sub-config-communication-ppe-test-resources-common)
           - $(sub-config-communication-ppe-test-resources-net)
