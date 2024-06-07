@@ -24,7 +24,7 @@ public class ClientPipelineOptions
     private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
-    private LoggingOptions? _loggingOptions;
+    private LoggingOptions _loggingOptions = new();
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -92,7 +92,7 @@ public class ClientPipelineOptions
     /// <summary>
     /// TODO
     /// </summary>
-    public LoggingOptions? LoggingOptions
+    public LoggingOptions LoggingOptions
     {
         get => _loggingOptions;
         set
