@@ -75,12 +75,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         {
             public string Data { get; set; }
             public string AppRoleName { get; set; }
+
+            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
         }
 
         public struct ExpectedAppRequest
         {
             public string Url { get; set; }
             public string AppRoleName { get; set; }
+
+            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
         }
 
         public struct ExpectedAppMetric
@@ -88,12 +92,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             public string Name { get; set; }
             public string AppRoleName { get; set; }
             public List<KeyValuePair<string, string>> Properties { get; set; }
+
+            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
         }
 
         public struct ExpectedAppTrace
         {
             public string Message { get; set; }
             public string AppRoleName { get; set; }
+
+            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
         }
     }
 }
