@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             StorageTaskAssignmentPatch patch = new StorageTaskAssignmentPatch()
             {
-                Properties = new StorageTaskAssignmentUpdateProperties()
+                Properties = new StorageTaskAssignmentPatchProperties()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Description = "My Storage task assignment",
                     ExecutionContext = new StorageTaskAssignmentUpdateExecutionContext()
                     {
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Storage.Samples
                         },
                         Trigger = new ExecutionTriggerUpdate()
                         {
-                            TriggerType = TriggerType.RunOnce,
-                            Parameters = new TriggerParametersUpdate()
+                            TriggerType = ExecutionTriggerType.RunOnce,
+                            Parameters = new ExecutionTriggerParametersUpdate()
                             {
                                 StartOn = DateTimeOffset.Parse("2022-11-15T21:52:47.8145095Z"),
                             },

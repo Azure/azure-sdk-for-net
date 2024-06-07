@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of the storage task update assignment. </summary>
-    public partial class StorageTaskAssignmentUpdateProperties
+    public partial class StorageTaskAssignmentPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentUpdateProperties"/>. </summary>
-        public StorageTaskAssignmentUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentPatchProperties"/>. </summary>
+        public StorageTaskAssignmentPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentPatchProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentUpdateProperties(string taskId, bool? enabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string TaskId { get; }
         /// <summary> Whether the storage task assignment is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
         [WirePath("description")]
         public string Description { get; set; }

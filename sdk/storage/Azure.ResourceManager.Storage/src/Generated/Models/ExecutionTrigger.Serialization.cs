@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            TriggerType type = default;
-            TriggerParameters parameters = default;
+            ExecutionTriggerType type = default;
+            ExecutionTriggerParameters parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToTriggerType();
+                    type = property.Value.GetString().ToExecutionTriggerType();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = TriggerParameters.DeserializeTriggerParameters(property.Value, options);
+                    parameters = ExecutionTriggerParameters.DeserializeExecutionTriggerParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

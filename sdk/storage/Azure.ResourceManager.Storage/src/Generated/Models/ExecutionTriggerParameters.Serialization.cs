@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class TriggerParameters : IUtf8JsonSerializable, IJsonModel<TriggerParameters>
+    public partial class ExecutionTriggerParameters : IUtf8JsonSerializable, IJsonModel<ExecutionTriggerParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionTriggerParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TriggerParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExecutionTriggerParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionTriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionTriggerParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        TriggerParameters IJsonModel<TriggerParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExecutionTriggerParameters IJsonModel<ExecutionTriggerParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionTriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionTriggerParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriggerParameters(document.RootElement, options);
+            return DeserializeExecutionTriggerParameters(document.RootElement, options);
         }
 
-        internal static TriggerParameters DeserializeTriggerParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExecutionTriggerParameters DeserializeExecutionTriggerParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             DateTimeOffset? startFrom = default;
             int? interval = default;
-            IntervalUnit? intervalUnit = default;
+            ExecutionIntervalUnit? intervalUnit = default;
             DateTimeOffset? endBy = default;
             DateTimeOffset? startOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    intervalUnit = new IntervalUnit(property.Value.GetString());
+                    intervalUnit = new ExecutionIntervalUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endBy"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TriggerParameters(
+            return new ExecutionTriggerParameters(
                 startFrom,
                 interval,
                 intervalUnit,
@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TriggerParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExecutionTriggerParameters>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionTriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -263,26 +263,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionTriggerParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TriggerParameters IPersistableModel<TriggerParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExecutionTriggerParameters IPersistableModel<ExecutionTriggerParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionTriggerParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTriggerParameters(document.RootElement, options);
+                        return DeserializeExecutionTriggerParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionTriggerParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TriggerParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExecutionTriggerParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

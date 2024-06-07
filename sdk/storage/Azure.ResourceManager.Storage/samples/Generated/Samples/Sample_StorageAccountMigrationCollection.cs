@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             StorageAccountMigrationResource result = await collection.GetAsync(migrationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             bool result = await collection.ExistsAsync(migrationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             NullableResponse<StorageAccountMigrationResource> response = await collection.GetIfExistsAsync(migrationName);
             StorageAccountMigrationResource result = response.HasValue ? response.Value : null;
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             StorageAccountMigrationResource result = await collection.GetAsync(migrationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             bool result = await collection.ExistsAsync(migrationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountMigrationCollection collection = storageAccount.GetStorageAccountMigrations();
 
             // invoke the operation
-            MigrationName migrationName = MigrationName.Default;
+            StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
             NullableResponse<StorageAccountMigrationResource> response = await collection.GetIfExistsAsync(migrationName);
             StorageAccountMigrationResource result = response.HasValue ? response.Value : null;
 

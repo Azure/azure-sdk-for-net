@@ -238,6 +238,27 @@ rename-mapping:
   StorageAccountInternetEndpoints.dfs: DfsUri
   FailoverType: StorageAccountFailoverType
   ListEncryptionScopesInclude: EncryptionScopesIncludeType
+  StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
+  StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
+  LocalUser.properties.isNFSv3Enabled: IsNfsV3Enabled
+  StorageAccountMigration.type: ResourceType|resource-type
+  IntervalUnit: ExecutionIntervalUnit
+  IssueType: NetworkSecurityPerimeterProvisioningIssueType
+  MigrationName: StorageAccountMigrationName
+  MigrationStatus: StorageAccountMigrationStatus
+  ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
+  RunResult: StorageTaskRunResult
+  RunStatusEnum: StorageTaskRunStatus
+  Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
+  StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
+  StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
+  StorageTaskReportProperties.startTime: StartedOn|date-time
+  StorageTaskReportProperties.finishTime: FinishedOn|date-time
+  TriggerParameters: ExecutionTriggerParameters
+  TriggerParametersUpdate: ExecutionTriggerParametersUpdate
+  TriggerType: ExecutionTriggerType
 
 directive:
   - from: swagger-document

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType type = default;
             SystemData systemData = default;
             NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
             NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default;
             NetworkSecurityPerimeterConfigurationPropertiesProfile profile = default;
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                            List<NetworkSecurityPerimeterProvisioningIssue> array = new List<NetworkSecurityPerimeterProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                                array.Add(NetworkSecurityPerimeterProvisioningIssue.DeserializeNetworkSecurityPerimeterProvisioningIssue(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage
                 type,
                 systemData,
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,

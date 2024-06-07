@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(EnableExtendedGroups))
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
             {
                 writer.WritePropertyName("enableExtendedGroups"u8);
-                writer.WriteBooleanValue(EnableExtendedGroups.Value);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
             }
             if (Optional.IsDefined(IsHnsEnabled))
             {
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("isSkuConversionBlocked"u8);
                 writer.WriteBooleanValue(IsSkuConversionBlocked.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountMigrationInProgress))
+            if (options.Format != "W" && Optional.IsDefined(IsAccountMigrationInProgress))
             {
                 writer.WritePropertyName("accountMigrationInProgress"u8);
-                writer.WriteBooleanValue(AccountMigrationInProgress.Value);
+                writer.WriteBooleanValue(IsAccountMigrationInProgress.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableExtendedGroups), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExtendedGroupEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    enableExtendedGroups: ");
@@ -1411,10 +1411,10 @@ namespace Azure.ResourceManager.Storage
             }
             else
             {
-                if (Optional.IsDefined(EnableExtendedGroups))
+                if (Optional.IsDefined(IsExtendedGroupEnabled))
                 {
                     builder.Append("    enableExtendedGroups: ");
-                    var boolValue = EnableExtendedGroups.Value == true ? "true" : "false";
+                    var boolValue = IsExtendedGroupEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -1720,7 +1720,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountMigrationInProgress), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccountMigrationInProgress), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    accountMigrationInProgress: ");
@@ -1728,10 +1728,10 @@ namespace Azure.ResourceManager.Storage
             }
             else
             {
-                if (Optional.IsDefined(AccountMigrationInProgress))
+                if (Optional.IsDefined(IsAccountMigrationInProgress))
                 {
                     builder.Append("    accountMigrationInProgress: ");
-                    var boolValue = AccountMigrationInProgress.Value == true ? "true" : "false";
+                    var boolValue = IsAccountMigrationInProgress.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

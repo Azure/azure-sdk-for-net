@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Storage
             }
             string id = default;
             string name = default;
-            string type = default;
+            ResourceType? type = default;
             StorageSkuName targetSkuName = default;
-            MigrationStatus? migrationStatus = default;
+            StorageAccountMigrationStatus? migrationStatus = default;
             string migrationFailedReason = default;
             string migrationFailedDetailedReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -124,7 +124,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            migrationStatus = new MigrationStatus(property0.Value.GetString());
+                            migrationStatus = new StorageAccountMigrationStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("migrationFailedReason"u8))

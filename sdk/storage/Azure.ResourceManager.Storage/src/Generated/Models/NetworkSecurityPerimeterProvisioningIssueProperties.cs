@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Describes provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
-    public partial class ProvisioningIssue
+    /// <summary> Properties of provisioning issue. </summary>
+    public partial class NetworkSecurityPerimeterProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,32 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        internal NetworkSecurityPerimeterProvisioningIssueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"> Properties of provisioning issue. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        /// <param name="issueType"> Type of issue. </param>
+        /// <param name="severity"> Severity of the issue. </param>
+        /// <param name="description"> Description of the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProvisioningIssueProperties(NetworkSecurityPerimeterProvisioningIssueType? issueType, NetworkSecurityPerimeterProvisioningIssueSeverity? severity, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Properties = properties;
+            IssueType = issueType;
+            Severity = severity;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the issue. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-        /// <summary> Properties of provisioning issue. </summary>
-        [WirePath("properties")]
-        public ProvisioningIssueProperties Properties { get; }
+        /// <summary> Type of issue. </summary>
+        [WirePath("issueType")]
+        public NetworkSecurityPerimeterProvisioningIssueType? IssueType { get; }
+        /// <summary> Severity of the issue. </summary>
+        [WirePath("severity")]
+        public NetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
+        /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
+        public string Description { get; }
     }
 }

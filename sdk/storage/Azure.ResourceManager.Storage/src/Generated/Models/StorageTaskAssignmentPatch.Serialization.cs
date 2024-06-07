@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            StorageTaskAssignmentUpdateProperties properties = default;
+            StorageTaskAssignmentPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = StorageTaskAssignmentUpdateProperties.DeserializeStorageTaskAssignmentUpdateProperties(property.Value, options);
+                    properties = StorageTaskAssignmentPatchProperties.DeserializeStorageTaskAssignmentPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
