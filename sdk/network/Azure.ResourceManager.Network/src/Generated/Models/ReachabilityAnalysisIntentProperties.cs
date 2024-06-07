@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The ReachabilityAnalysisIntentProperties. </summary>
+    /// <summary> Represents the Reachability Analysis Intent properties. </summary>
     public partial class ReachabilityAnalysisIntentProperties
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisIntentProperties"/>. </summary>
         /// <param name="sourceResourceId"></param>
         /// <param name="destinationResourceId"></param>
-        /// <param name="ipTraffic"></param>
+        /// <param name="ipTraffic"> Ip traffic information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="destinationResourceId"/> or <paramref name="ipTraffic"/> is null. </exception>
         public ReachabilityAnalysisIntentProperties(string sourceResourceId, string destinationResourceId, IPTraffic ipTraffic)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"></param>
         /// <param name="sourceResourceId"></param>
         /// <param name="destinationResourceId"></param>
-        /// <param name="ipTraffic"></param>
+        /// <param name="ipTraffic"> Ip traffic information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReachabilityAnalysisIntentProperties(NetworkProvisioningState? provisioningState, string description, string sourceResourceId, string destinationResourceId, IPTraffic ipTraffic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
         public string SourceResourceId { get; set; }
         /// <summary> Gets or sets the destination resource id. </summary>
         public string DestinationResourceId { get; set; }
-        /// <summary> Gets or sets the ip traffic. </summary>
+        /// <summary> Ip traffic information. </summary>
         public IPTraffic IPTraffic { get; set; }
     }
 }

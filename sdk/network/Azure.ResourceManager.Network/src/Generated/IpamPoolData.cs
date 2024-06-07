@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
         public IpamPoolProperties Properties { get; set; }
     }
 }

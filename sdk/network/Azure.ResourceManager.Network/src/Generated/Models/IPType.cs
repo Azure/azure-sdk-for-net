@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IPType. </summary>
+    /// <summary> Enumeration to indicate the IP type. </summary>
     public readonly partial struct IPType : IEquatable<IPType>
     {
         private readonly string _value;

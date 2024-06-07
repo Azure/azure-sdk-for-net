@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal CustomIPPrefixData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<string> zones, string asn, string cidr, string signedMessage, string authorizationMessage, WritableSubResource parentCustomIPPrefix, IReadOnlyList<WritableSubResource> childCustomIPPrefixList, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
+        internal CustomIPPrefixData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<string> zones, string asn, string cidr, string signedMessage, string authorizationMessage, WritableSubResource parentCustomIPPrefix, IReadOnlyList<WritableSubResource> childCustomIPPrefixList, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;

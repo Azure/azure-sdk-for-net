@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ReachabilityAnalysisIntentData"/> instance for mocking. </returns>
         public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReachabilityAnalysisIntentProperties properties = null, ETag? etag = null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ReachabilityAnalysisRunData"/> instance for mocking. </returns>
         public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReachabilityAnalysisRunProperties properties = null, ETag? etag = null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="Models.ReachabilityAnalysisRunProperties"/>. </summary>
         /// <param name="description"></param>
         /// <param name="intentId"></param>
-        /// <param name="intentContent"></param>
+        /// <param name="intentContent"> Intent information. </param>
         /// <param name="analysisResult"></param>
         /// <param name="errorMessage"></param>
         /// <param name="provisioningState"> The current provisioning state. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"></param>
         /// <param name="sourceResourceId"></param>
         /// <param name="destinationResourceId"></param>
-        /// <param name="ipTraffic"></param>
+        /// <param name="ipTraffic"> Ip traffic information. </param>
         /// <returns> A new <see cref="Models.IntentContent"/> instance for mocking. </returns>
         public static IntentContent IntentContent(string description = null, string sourceResourceId = null, string destinationResourceId = null, IPTraffic ipTraffic = null)
         {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VerifierWorkspaceData"/> instance for mocking. </returns>
         public static VerifierWorkspaceData VerifierWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VerifierWorkspaceProperties properties = null, ETag? etag = null)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
         public static IpamPoolData IpamPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IpamPoolProperties properties = null)
         {
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(string id = null, string name = null, string resourceType = null, SystemData systemData = null)
+        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, string resourceType = null, SystemData systemData = null)
         {
             return new NetworkTrackedResourceData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of StaticCidr resource. </param>
         /// <returns> A new <see cref="Network.StaticCidrData"/> instance for mocking. </returns>
         public static StaticCidrData StaticCidrData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StaticCidrProperties properties = null)
         {
@@ -1360,7 +1360,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="targetResourceId"> ID of network security group to which flow log will be applied. </param>
         /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
@@ -1370,7 +1369,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
-        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ManagedServiceIdentity identity = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1382,7 +1381,6 @@ namespace Azure.ResourceManager.Network.Models
                 tags,
                 serializedAdditionalRawData: null,
                 etag,
-                identity,
                 targetResourceId,
                 targetResourceGuid,
                 storageId,
@@ -2946,7 +2944,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.CustomIPPrefixData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -2971,7 +2969,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Network.CustomIPPrefixData"/> instance for mocking. </returns>
-        public static CustomIPPrefixData CustomIPPrefixData(string id = null, string name = null, string resourceType = null, SystemData systemData = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<string> zones = null, string asn = null, string cidr = null, string signedMessage = null, string authorizationMessage = null, ResourceIdentifier parentCustomIPPrefixId = null, IEnumerable<WritableSubResource> childCustomIPPrefixList = null, CommissionedState? commissionedState = null, bool? expressRouteAdvertise = null, CidrAdvertisingGeoCode? geo = null, bool? noInternetAdvertise = null, CustomIPPrefixType? prefixType = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, Guid? resourceGuid = null, string failedReason = null, NetworkProvisioningState? provisioningState = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        public static CustomIPPrefixData CustomIPPrefixData(ResourceIdentifier id = null, string name = null, string resourceType = null, SystemData systemData = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<string> zones = null, string asn = null, string cidr = null, string signedMessage = null, string authorizationMessage = null, ResourceIdentifier parentCustomIPPrefixId = null, IEnumerable<WritableSubResource> childCustomIPPrefixList = null, CommissionedState? commissionedState = null, bool? expressRouteAdvertise = null, CidrAdvertisingGeoCode? geo = null, bool? noInternetAdvertise = null, CustomIPPrefixType? prefixType = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, Guid? resourceGuid = null, string failedReason = null, NetworkProvisioningState? provisioningState = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             zones ??= new List<string>();
             childCustomIPPrefixList ??= new List<WritableSubResource>();
@@ -3007,7 +3005,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.DdosCustomPolicyData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -3017,7 +3015,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        public static DdosCustomPolicyData DdosCustomPolicyData(string id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3776,7 +3774,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.FirewallPolicyData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -3801,7 +3799,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyData"/> instance for mocking. </returns>
-        public static FirewallPolicyData FirewallPolicyData(string id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, ManagedServiceIdentity identity = null, string size = null, IEnumerable<WritableSubResource> ruleCollectionGroups = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier basePolicyId = null, IEnumerable<WritableSubResource> firewalls = null, IEnumerable<WritableSubResource> childPolicies = null, AzureFirewallThreatIntelMode? threatIntelMode = null, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, FirewallPolicyInsights insights = null, FirewallPolicySnat snat = null, bool? allowSqlRedirect = null, DnsSettings dnsSettings = null, FirewallPolicyExplicitProxy explicitProxy = null, FirewallPolicyIntrusionDetection intrusionDetection = null, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = null, FirewallPolicySkuTier? skuTier = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        public static FirewallPolicyData FirewallPolicyData(ResourceIdentifier id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, ManagedServiceIdentity identity = null, string size = null, IEnumerable<WritableSubResource> ruleCollectionGroups = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier basePolicyId = null, IEnumerable<WritableSubResource> firewalls = null, IEnumerable<WritableSubResource> childPolicies = null, AzureFirewallThreatIntelMode? threatIntelMode = null, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, FirewallPolicyInsights insights = null, FirewallPolicySnat snat = null, bool? allowSqlRedirect = null, DnsSettings dnsSettings = null, FirewallPolicyExplicitProxy explicitProxy = null, FirewallPolicyIntrusionDetection intrusionDetection = null, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = null, FirewallPolicySkuTier? skuTier = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             ruleCollectionGroups ??= new List<WritableSubResource>();
             firewalls ??= new List<WritableSubResource>();
@@ -7657,7 +7655,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.ExpressRouteGatewayData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -7670,7 +7668,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Network.ExpressRouteGatewayData"/> instance for mocking. </returns>
-        public static ExpressRouteGatewayData ExpressRouteGatewayData(string id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds autoScaleBounds = null, IEnumerable<ExpressRouteConnectionData> expressRouteConnectionList = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier virtualHubId = null, bool? allowNonVirtualWanTraffic = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        public static ExpressRouteGatewayData ExpressRouteGatewayData(ResourceIdentifier id = null, string name = null, string resourceType = null, SystemData systemData = null, ETag? etag = null, ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds autoScaleBounds = null, IEnumerable<ExpressRouteConnectionData> expressRouteConnectionList = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier virtualHubId = null, bool? allowNonVirtualWanTraffic = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             expressRouteConnectionList ??= new List<ExpressRouteConnectionData>();
             tags ??= new Dictionary<string, string>();
@@ -8356,28 +8354,6 @@ namespace Azure.ResourceManager.Network.Models
         public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, bool? defaultOutboundAccess)
         {
             return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: defaultOutboundAccess);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.FlowLogData" />. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="targetResourceId"> ID of network security group to which flow log will be applied. </param>
-        /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
-        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
-        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
-        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"> Parameters that define the flow log format. </param>
-        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
-        /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.FlowLogData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, NetworkProvisioningState? provisioningState)
-        {
-            return FlowLogData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: default, targetResourceId: targetResourceId, targetResourceGuid: targetResourceGuid, storageId: storageId, enabled: enabled, retentionPolicy: retentionPolicy, format: format, trafficAnalyticsConfiguration: trafficAnalyticsConfiguration, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ExpressRouteCircuitData" />. </summary>

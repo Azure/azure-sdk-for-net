@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The PoolUsage. </summary>
+    /// <summary> IpamPool usage information. </summary>
     public partial class PoolUsage
     {
         /// <summary>

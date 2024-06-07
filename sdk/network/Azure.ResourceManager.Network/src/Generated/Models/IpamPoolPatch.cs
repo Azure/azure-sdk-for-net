@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IpamPoolPatch. </summary>
+    /// <summary> Represents the IpamPool update API request interface. </summary>
     public partial class IpamPoolPatch
     {
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="IpamPoolPatch"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the IpamPool update properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IpamPoolPatch(IDictionary<string, string> tags, IpamPoolUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Represents the IpamPool update properties. </summary>
         public IpamPoolUpdateProperties Properties { get; set; }
     }
 }

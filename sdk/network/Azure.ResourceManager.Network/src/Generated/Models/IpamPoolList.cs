@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IpamPoolList. </summary>
+    /// <summary> List of IpamPool. </summary>
     internal partial class IpamPoolList
     {
         /// <summary>

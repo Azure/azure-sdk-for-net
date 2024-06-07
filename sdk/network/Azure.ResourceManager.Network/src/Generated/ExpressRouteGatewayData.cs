@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ExpressRouteGatewayData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
+        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
         {
             ETag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;

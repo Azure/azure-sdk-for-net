@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The VerifierWorkspaceUpdateProperties. </summary>
+    /// <summary> Represents the VerifierWorkspace update properties. </summary>
     internal partial class VerifierWorkspaceUpdateProperties
     {
         /// <summary>

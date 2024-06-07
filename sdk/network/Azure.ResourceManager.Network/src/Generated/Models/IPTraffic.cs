@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IPTraffic. </summary>
+    /// <summary> Ip traffic information. </summary>
     public partial class IPTraffic
     {
         /// <summary>

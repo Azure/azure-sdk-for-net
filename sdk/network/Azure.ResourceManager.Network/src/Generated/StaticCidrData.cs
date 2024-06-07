@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the StaticCidr data model. </summary>
+    /// <summary>
+    /// A class representing the StaticCidr data model.
+    /// Instance of StaticCidr resource.
+    /// </summary>
     public partial class StaticCidrData : ResourceData
     {
         /// <summary>
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of StaticCidr resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticCidrData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticCidrProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Network
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Properties of StaticCidr resource. </summary>
         public StaticCidrProperties Properties { get; set; }
     }
 }

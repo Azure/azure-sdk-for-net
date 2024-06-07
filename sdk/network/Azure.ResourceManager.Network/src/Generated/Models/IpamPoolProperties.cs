@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IpamPoolProperties. </summary>
+    /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
     public partial class IpamPoolProperties
     {
         /// <summary>

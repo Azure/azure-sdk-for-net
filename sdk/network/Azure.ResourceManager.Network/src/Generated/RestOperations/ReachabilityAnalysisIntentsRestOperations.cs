@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Gets list of Reachability Analysis Intents . </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -151,15 +152,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gets list of Reachability Analysis Intents . </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -228,11 +230,12 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Get the Reachability Analysis Intent. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -262,11 +265,12 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Get the Reachability Analysis Intent. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -342,12 +346,13 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Creates Reachability Analysis Intent. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="ReachabilityAnalysisIntentData"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
+        /// <param name="data"> Reachability Analysis Intent object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/>, <paramref name="reachabilityAnalysisIntentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -377,12 +382,13 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Creates Reachability Analysis Intent. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="ReachabilityAnalysisIntentData"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
+        /// <param name="data"> Reachability Analysis Intent object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/>, <paramref name="reachabilityAnalysisIntentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -412,6 +418,106 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisIntentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/verifierWorkspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/reachabilityAnalysisIntents/", false);
+            uri.AppendPath(reachabilityAnalysisIntentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisIntentName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/verifierWorkspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/reachabilityAnalysisIntents/", false);
+            uri.AppendPath(reachabilityAnalysisIntentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes Reachability Analysis Intent. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(reachabilityAnalysisIntentName, nameof(reachabilityAnalysisIntentName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, reachabilityAnalysisIntentName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes Reachability Analysis Intent. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(reachabilityAnalysisIntentName, nameof(reachabilityAnalysisIntentName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, reachabilityAnalysisIntentName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string skipToken, int? skip, int? top, string sortKey, string sortValue)
         {
             var uri = new RawRequestUriBuilder();
@@ -434,16 +540,17 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Gets list of Reachability Analysis Intents . </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -471,16 +578,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gets list of Reachability Analysis Intents . </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>

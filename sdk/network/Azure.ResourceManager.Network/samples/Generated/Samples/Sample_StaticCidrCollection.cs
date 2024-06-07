@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_StaticCidrCollection
     {
-        // StaticCidr_List
+        // StaticCidrs_List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_StaticCidrList()
+        public async Task GetAll_StaticCidrsList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidr_List.json
-            // this example is just showing the usage of "StaticCidr_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidrs_List.json
+            // this example is just showing the usage of "StaticCidrs_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // StaticCidr_Create
+        // StaticCidrs_Create
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_StaticCidrCreate()
+        public async Task CreateOrUpdate_StaticCidrsCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidr_Create.json
-            // this example is just showing the usage of "StaticCidr_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidrs_Create.json
+            // this example is just showing the usage of "StaticCidrs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StaticCidr_Get
+        // StaticCidrs_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_StaticCidrGet()
+        public async Task Get_StaticCidrsGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidr_Get.json
-            // this example is just showing the usage of "StaticCidr_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidrs_Get.json
+            // this example is just showing the usage of "StaticCidrs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StaticCidr_Get
+        // StaticCidrs_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_StaticCidrGet()
+        public async Task Exists_StaticCidrsGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidr_Get.json
-            // this example is just showing the usage of "StaticCidr_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidrs_Get.json
+            // this example is just showing the usage of "StaticCidrs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StaticCidr_Get
+        // StaticCidrs_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_StaticCidrGet()
+        public async Task GetIfExists_StaticCidrsGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidr_Get.json
-            // this example is just showing the usage of "StaticCidr_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2024-01-01-preview/examples/StaticCidrs_Get.json
+            // this example is just showing the usage of "StaticCidrs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

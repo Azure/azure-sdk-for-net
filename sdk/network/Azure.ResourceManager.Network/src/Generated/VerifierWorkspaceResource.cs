@@ -98,6 +98,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Get the Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Get the Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reachabilityAnalysisIntentName"> The <see cref="string"/> to use. </param>
+        /// <param name="reachabilityAnalysisIntentName"> Reachability Analysis Intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reachabilityAnalysisIntentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reachabilityAnalysisIntentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -165,6 +167,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reachabilityAnalysisRunName"> The <see cref="string"/> to use. </param>
+        /// <param name="reachabilityAnalysisRunName"> Reachability Analysis Run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reachabilityAnalysisRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reachabilityAnalysisRunName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -195,6 +198,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reachabilityAnalysisRunName"> The <see cref="string"/> to use. </param>
+        /// <param name="reachabilityAnalysisRunName"> Reachability Analysis Run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reachabilityAnalysisRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reachabilityAnalysisRunName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -225,6 +229,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -264,6 +269,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -303,6 +309,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deletes Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -344,6 +351,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deletes Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -385,6 +393,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -404,7 +413,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The <see cref="VerifierWorkspacePatch"/> to use. </param>
+        /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<VerifierWorkspaceResource>> UpdateAsync(VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
@@ -426,6 +435,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -445,7 +455,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The <see cref="VerifierWorkspacePatch"/> to use. </param>
+        /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<VerifierWorkspaceResource> Update(VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)

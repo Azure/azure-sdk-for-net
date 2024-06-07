@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ReachabilityAnalysisRun data model. </summary>
+    /// <summary>
+    /// A class representing the ReachabilityAnalysisRun data model.
+    /// Configuration information for analysis run.
+    /// </summary>
     public partial class ReachabilityAnalysisRunData : ResourceData
     {
         /// <summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Network
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunData"/>. </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ReachabilityAnalysisRunData(ReachabilityAnalysisRunProperties properties)
         {
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReachabilityAnalysisRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReachabilityAnalysisRunProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Represents the Reachability Analysis Run properties. </summary>
         public ReachabilityAnalysisRunProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }

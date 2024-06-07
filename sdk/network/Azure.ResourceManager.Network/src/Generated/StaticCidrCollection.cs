@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
     public partial class StaticCidrCollection : ArmCollection, IEnumerable<StaticCidrResource>, IAsyncEnumerable<StaticCidrResource>
     {
         private readonly ClientDiagnostics _staticCidrClientDiagnostics;
-        private readonly StaticCidrRestOperations _staticCidrRestClient;
+        private readonly StaticCidrsRestOperations _staticCidrRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="StaticCidrCollection"/> class for mocking. </summary>
         protected StaticCidrCollection()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _staticCidrClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", StaticCidrResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StaticCidrResource.ResourceType, out string staticCidrApiVersion);
-            _staticCidrRestClient = new StaticCidrRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticCidrApiVersion);
+            _staticCidrRestClient = new StaticCidrsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticCidrApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Create</description>
+        /// <description>StaticCidrs_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Create</description>
+        /// <description>StaticCidrs_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_List</description>
+        /// <description>StaticCidrs_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_List</description>
+        /// <description>StaticCidrs_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

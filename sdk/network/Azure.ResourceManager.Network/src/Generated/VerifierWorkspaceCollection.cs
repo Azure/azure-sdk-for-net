@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Creates Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -72,8 +73,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="VerifierWorkspaceData"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="data"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Creates Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -122,8 +124,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="VerifierWorkspaceData"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="data"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -152,6 +154,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
@@ -196,6 +199,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
@@ -240,6 +244,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets list of Verifier Workspaces.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -259,11 +264,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VerifierWorkspaceResource> GetAllAsync(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
@@ -274,6 +279,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets list of Verifier Workspaces.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -293,11 +299,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VerifierWorkspaceResource> GetAll(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
@@ -328,7 +334,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
@@ -371,7 +377,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
@@ -414,7 +420,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
@@ -459,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>

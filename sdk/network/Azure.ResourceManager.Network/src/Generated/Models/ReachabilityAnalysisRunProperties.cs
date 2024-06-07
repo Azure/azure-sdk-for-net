@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The ReachabilityAnalysisRunProperties. </summary>
+    /// <summary> Represents the Reachability Analysis Run properties. </summary>
     public partial class ReachabilityAnalysisRunProperties
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunProperties"/>. </summary>
         /// <param name="description"></param>
         /// <param name="intentId"></param>
-        /// <param name="intentContent"></param>
+        /// <param name="intentContent"> Intent information. </param>
         /// <param name="analysisResult"></param>
         /// <param name="errorMessage"></param>
         /// <param name="provisioningState"> The current provisioning state. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Description { get; set; }
         /// <summary> Gets or sets the intent id. </summary>
         public string IntentId { get; set; }
-        /// <summary> Gets the intent content. </summary>
+        /// <summary> Intent information. </summary>
         public IntentContent IntentContent { get; }
         /// <summary> Gets the analysis result. </summary>
         public string AnalysisResult { get; }

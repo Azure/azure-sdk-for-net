@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         }
 
         private readonly ClientDiagnostics _ipamPoolClientDiagnostics;
-        private readonly IpamPoolRestOperations _ipamPoolRestClient;
+        private readonly IpamPoolsRestOperations _ipamPoolRestClient;
         private readonly IpamPoolData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         {
             _ipamPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string ipamPoolApiVersion);
-            _ipamPoolRestClient = new IpamPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipamPoolApiVersion);
+            _ipamPoolRestClient = new IpamPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipamPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StaticCidr_Get</description>
+        /// <description>StaticCidrs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Delete</description>
+        /// <description>IpamPools_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Delete</description>
+        /// <description>IpamPools_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Update</description>
+        /// <description>IpamPools_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Update</description>
+        /// <description>IpamPools_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Usage</description>
+        /// <description>IpamPools_GetPoolUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,13 +430,13 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PoolUsage>> UsageAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PoolUsage>> GetPoolUsageAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.Usage");
+            using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
             try
             {
-                var response = await _ipamPoolRestClient.UsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _ipamPoolRestClient.GetPoolUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Usage</description>
+        /// <description>IpamPools_GetPoolUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -468,13 +468,13 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PoolUsage> Usage(CancellationToken cancellationToken = default)
+        public virtual Response<PoolUsage> GetPoolUsage(CancellationToken cancellationToken = default)
         {
-            using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.Usage");
+            using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
             try
             {
-                var response = _ipamPoolRestClient.Usage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _ipamPoolRestClient.GetPoolUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_ListAssociation</description>
+        /// <description>IpamPools_ListAssociatedResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PoolAssociation> GetAssociationAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PoolAssociation> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociation", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_ListAssociation</description>
+        /// <description>IpamPools_ListAssociatedResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -537,11 +537,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PoolAssociation> GetAssociation(CancellationToken cancellationToken = default)
+        public virtual Pageable<PoolAssociation> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociation", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

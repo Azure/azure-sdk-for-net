@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Network
 
         private readonly ClientDiagnostics _reachabilityAnalysisIntentClientDiagnostics;
         private readonly ReachabilityAnalysisIntentsRestOperations _reachabilityAnalysisIntentRestClient;
-        private readonly ClientDiagnostics _reachabilityAnalysisIntentClientDiagnostics0;
-        private readonly ReachabilityAnalysisIntentRestOperations _reachabilityAnalysisIntentRestClient0;
         private readonly ReachabilityAnalysisIntentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -65,9 +63,6 @@ namespace Azure.ResourceManager.Network
             _reachabilityAnalysisIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string reachabilityAnalysisIntentApiVersion);
             _reachabilityAnalysisIntentRestClient = new ReachabilityAnalysisIntentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisIntentApiVersion);
-            _reachabilityAnalysisIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string reachabilityAnalysisIntentApiVersion);
-            _reachabilityAnalysisIntentRestClient = new ReachabilityAnalysisIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisIntentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,6 +90,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Get the Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -134,6 +130,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Get the Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -173,6 +170,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deletes Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -180,7 +178,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisIntent_Delete</description>
+        /// <description>ReachabilityAnalysisIntents_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -216,6 +214,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deletes Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisIntent_Delete</description>
+        /// <description>ReachabilityAnalysisIntents_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,6 +258,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Creates Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="ReachabilityAnalysisIntentData"/> to use. </param>
+        /// <param name="data"> Reachability Analysis Intent object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ReachabilityAnalysisIntentResource>> UpdateAsync(WaitUntil waitUntil, ReachabilityAnalysisIntentData data, CancellationToken cancellationToken = default)
@@ -306,6 +306,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Creates Reachability Analysis Intent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="ReachabilityAnalysisIntentData"/> to use. </param>
+        /// <param name="data"> Reachability Analysis Intent object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ReachabilityAnalysisIntentResource> Update(WaitUntil waitUntil, ReachabilityAnalysisIntentData data, CancellationToken cancellationToken = default)

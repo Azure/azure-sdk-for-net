@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The PoolAssociationList. </summary>
+    /// <summary> List of PoolAssociation. </summary>
     internal partial class PoolAssociationList
     {
         /// <summary>

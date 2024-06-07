@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
     public partial class IpamPoolCollection : ArmCollection, IEnumerable<IpamPoolResource>, IAsyncEnumerable<IpamPoolResource>
     {
         private readonly ClientDiagnostics _ipamPoolClientDiagnostics;
-        private readonly IpamPoolRestOperations _ipamPoolRestClient;
+        private readonly IpamPoolsRestOperations _ipamPoolRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="IpamPoolCollection"/> class for mocking. </summary>
         protected IpamPoolCollection()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _ipamPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IpamPoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(IpamPoolResource.ResourceType, out string ipamPoolApiVersion);
-            _ipamPoolRestClient = new IpamPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipamPoolApiVersion);
+            _ipamPoolRestClient = new IpamPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipamPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Create</description>
+        /// <description>IpamPools_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Create</description>
+        /// <description>IpamPools_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_List</description>
+        /// <description>IpamPools_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_List</description>
+        /// <description>IpamPools_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpamPool_Get</description>
+        /// <description>IpamPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The Firewall Policy SKU. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal FirewallPolicyData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
+        internal FirewallPolicyData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
         {
             ETag = etag;
             Identity = identity;

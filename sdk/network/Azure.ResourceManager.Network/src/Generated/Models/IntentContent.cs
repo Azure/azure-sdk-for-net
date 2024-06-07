@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IntentContent. </summary>
+    /// <summary> Intent information. </summary>
     public partial class IntentContent
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="IntentContent"/>. </summary>
         /// <param name="sourceResourceId"></param>
         /// <param name="destinationResourceId"></param>
-        /// <param name="ipTraffic"></param>
+        /// <param name="ipTraffic"> Ip traffic information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="destinationResourceId"/> or <paramref name="ipTraffic"/> is null. </exception>
         internal IntentContent(string sourceResourceId, string destinationResourceId, IPTraffic ipTraffic)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"></param>
         /// <param name="sourceResourceId"></param>
         /// <param name="destinationResourceId"></param>
-        /// <param name="ipTraffic"></param>
+        /// <param name="ipTraffic"> Ip traffic information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IntentContent(string description, string sourceResourceId, string destinationResourceId, IPTraffic ipTraffic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
         public string SourceResourceId { get; }
         /// <summary> Gets the destination resource id. </summary>
         public string DestinationResourceId { get; }
-        /// <summary> Gets the ip traffic. </summary>
+        /// <summary> Ip traffic information. </summary>
         public IPTraffic IPTraffic { get; }
     }
 }

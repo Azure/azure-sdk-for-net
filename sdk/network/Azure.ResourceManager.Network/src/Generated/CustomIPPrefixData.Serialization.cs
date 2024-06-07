@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
             IList<string> zones = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             string type = default;
             SystemData systemData = default;
@@ -296,7 +296,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The PoolAssociation. </summary>
+    /// <summary> IpamPool association information. </summary>
     public partial class PoolAssociation
     {
         /// <summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The VerifierWorkspacePatch. </summary>
+    /// <summary> Represents the VerifierWorkspace update API request interface. </summary>
     public partial class VerifierWorkspacePatch
     {
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VerifierWorkspacePatch"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Represents the VerifierWorkspace update properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VerifierWorkspacePatch(IDictionary<string, string> tags, VerifierWorkspaceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Represents the VerifierWorkspace update properties. </summary>
         internal VerifierWorkspaceUpdateProperties Properties { get; set; }
         /// <summary> Gets or sets the verifier workspace update description. </summary>
         public string VerifierWorkspaceUpdateDescription

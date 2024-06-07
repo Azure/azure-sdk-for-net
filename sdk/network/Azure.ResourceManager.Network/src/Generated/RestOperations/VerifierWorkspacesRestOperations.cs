@@ -112,14 +112,15 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Gets list of Verifier Workspaces. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -145,14 +146,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gets list of Verifier Workspaces. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -216,10 +218,11 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Gets Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -248,10 +251,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gets Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -322,11 +326,12 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Creates Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="VerifierWorkspaceData"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="data"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -355,11 +360,12 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Creates Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="data"> The <see cref="VerifierWorkspaceData"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="data"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -430,11 +436,12 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Updates Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="patch"> The <see cref="VerifierWorkspacePatch"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -462,11 +469,12 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Updates Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
-        /// <param name="patch"> The <see cref="VerifierWorkspacePatch"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
+        /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -532,10 +540,11 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Deletes Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -558,10 +567,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Deletes Verifier Workspace. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="workspaceName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -606,15 +616,16 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
+        /// <summary> Gets list of Verifier Workspaces. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -641,15 +652,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Gets list of Verifier Workspaces. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
-        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
-        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="int"/>? to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="sortKey"> The <see cref="string"/> to use. </param>
-        /// <param name="sortValue"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> Network Manager resource name. </param>
+        /// <param name="skipToken"> Optional skip token. </param>
+        /// <param name="skip"> Optional num entries to skip. </param>
+        /// <param name="top"> Optional num entries to show. </param>
+        /// <param name="sortKey"> Optional key by which to sort. </param>
+        /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>

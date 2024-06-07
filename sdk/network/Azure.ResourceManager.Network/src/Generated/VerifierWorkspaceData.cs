@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VerifierWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the VerifierWorkspace data model.
+    /// Instance of Verifier Workspace.
+    /// </summary>
     public partial class VerifierWorkspaceData : TrackedResourceData
     {
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VerifierWorkspaceProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Properties of Verifier Workspace resource. </summary>
         public VerifierWorkspaceProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }

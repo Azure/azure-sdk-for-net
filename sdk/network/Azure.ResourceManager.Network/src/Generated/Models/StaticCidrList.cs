@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The StaticCidrList. </summary>
+    /// <summary> List of StaticCidr. </summary>
     internal partial class StaticCidrList
     {
         /// <summary>

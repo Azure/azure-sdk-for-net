@@ -15,20 +15,20 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class IpamPoolRestOperations
+    internal partial class IpamPoolsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of IpamPoolRestOperations. </summary>
+        /// <summary> Initializes a new instance of IpamPoolsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IpamPoolRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public IpamPoolsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("");
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateUsageRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal RequestUriBuilder CreateGetPoolUsageRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateUsageRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal HttpMessage CreateGetPoolUsageRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -642,14 +642,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PoolUsage>> UsageAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public async Task<Response<PoolUsage>> GetPoolUsageAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateUsageRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateGetPoolUsageRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -673,14 +673,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PoolUsage> Usage(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public Response<PoolUsage> GetPoolUsage(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateUsageRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateGetPoolUsageRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateListAssociationRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal RequestUriBuilder CreateListAssociatedResourcesRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateListAssociationRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal HttpMessage CreateListAssociatedResourcesRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -744,14 +744,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PoolAssociationList>> ListAssociationAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public async Task<Response<PoolAssociationList>> ListAssociatedResourcesAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListAssociationRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateListAssociatedResourcesRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -775,14 +775,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PoolAssociationList> ListAssociation(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public Response<PoolAssociationList> ListAssociatedResources(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListAssociationRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateListAssociatedResourcesRequest(subscriptionId, resourceGroupName, networkManagerName, poolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateListAssociationNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal RequestUriBuilder CreateListAssociatedResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateListAssociationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
+        internal HttpMessage CreateListAssociatedResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PoolAssociationList>> ListAssociationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public async Task<Response<PoolAssociationList>> ListAssociatedResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListAssociationNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateListAssociatedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkManagerName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PoolAssociationList> ListAssociationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
+        public Response<PoolAssociationList> ListAssociatedResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListAssociationNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkManagerName, poolName);
+            using var message = CreateListAssociatedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkManagerName, poolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

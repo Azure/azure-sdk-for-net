@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The ResourceBasics. </summary>
+    /// <summary> Representation of basic Azure resource information. </summary>
     public partial class ResourceBasics
     {
         /// <summary>
