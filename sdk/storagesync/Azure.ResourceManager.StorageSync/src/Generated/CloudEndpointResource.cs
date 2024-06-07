@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_restoreheartbeat</description>
+        /// <description>CloudEndpoints_Restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_restoreheartbeat</description>
+        /// <description>CloudEndpoints_Restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

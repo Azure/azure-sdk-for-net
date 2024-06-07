@@ -198,9 +198,19 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.StorageAccountId;
+#if SNIPPET
             var client = new MetricsClient(
-                new Uri(TestEnvironment.DataplaneEndpoint),
+                new Uri("https://<region>.metrics.monitor.azure.com"),
                 new DefaultAzureCredential());
+#else
+            var client = new MetricsClient(
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
+                new DefaultAzureCredential(),
+                new MetricsClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsClientAudience()
+                });
+#endif
 #endif
             Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -232,8 +242,12 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential());
 #else
             var client = new MetricsClient(
-                new Uri(TestEnvironment.DataplaneEndpoint),
-                new DefaultAzureCredential());
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
+                new DefaultAzureCredential(),
+                new MetricsClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsClientAudience()
+                });
 #endif
             #endregion Snippet:CreateMetricsClient
             var options = new MetricsQueryResourcesOptions
@@ -260,6 +274,17 @@ namespace Azure.Monitor.Query.Tests
         public void CreateClientsWithOptions()
         {
             #region Snippet:CreateClientsWithOptions
+            // MetricsClient
+            var metricsClientOptions = new MetricsClientOptions
+            {
+                Audience = MetricsClientAudience.AzureGovernment
+            };
+            var metricsClient = new MetricsClient(
+                new Uri("https://usgovvirginia.metrics.monitor.azure.us"),
+                new DefaultAzureCredential(),
+                metricsClientOptions);
+
+            // MetricsQueryClient
             var metricsQueryClientOptions = new MetricsQueryClientOptions
             {
                 Audience = MetricsQueryAudience.AzureGovernment
@@ -268,6 +293,7 @@ namespace Azure.Monitor.Query.Tests
                 new DefaultAzureCredential(),
                 metricsQueryClientOptions);
 
+            // LogsQueryClient
             var logsQueryClientOptions = new LogsQueryClientOptions
             {
                 Audience = LogsQueryAudience.AzureChina

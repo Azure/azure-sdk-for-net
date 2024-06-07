@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckAmlFSSubnets_CheckAmlFSSubnets()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/checkAmlFSSubnets.json
-            // this example is just showing the usage of "checkAmlFSSubnets" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/checkAmlFSSubnets.json
+            // this example is just showing the usage of "CheckAmlFSSubnets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRequiredAmlFSSubnetsSize_GetRequiredAmlFilesystemSubnetsSize()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/getRequiredAmlFSSubnetsSize.json
-            // this example is just showing the usage of "getRequiredAmlFSSubnetsSize" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/getRequiredAmlFSSubnetsSize.json
+            // this example is just showing the usage of "GetRequiredAmlFSSubnetsSize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetStorageCacheSkus_SkusList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/Skus_List.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/Skus_List.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsageModels_UsageModelsList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/UsageModels_List.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/UsageModels_List.json
             // this example is just showing the usage of "UsageModels_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetStorageCacheUsages_AscUsagesList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/AscResourceUsages_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/AscResourceUsages_Get.json
             // this example is just showing the usage of "AscUsages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

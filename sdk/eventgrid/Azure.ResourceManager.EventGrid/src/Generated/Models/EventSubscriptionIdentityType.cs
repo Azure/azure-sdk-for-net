@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </summary>
+    /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
     public readonly partial struct EventSubscriptionIdentityType : IEquatable<EventSubscriptionIdentityType>
     {
         private readonly string _value;

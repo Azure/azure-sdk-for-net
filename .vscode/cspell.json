@@ -846,7 +846,8 @@
       "filename": "**/sdk/notificationhubs/**/*.cs",
       "words": [
         "availiable",
-        "mpns"
+        "mpns",
+        "xiaomi"
       ]
     },
     {
@@ -1232,7 +1233,8 @@
         "Asana",
         "Ename",
         "Evalue",
-        "Twilio"
+        "Twilio",
+        "Soql"
       ]
     },
     {
@@ -1387,6 +1389,13 @@
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "Byok"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "AOAI",
+        "Rerank"
       ]
     }
   ],

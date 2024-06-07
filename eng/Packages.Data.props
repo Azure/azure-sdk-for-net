@@ -108,9 +108,9 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
-    <PackageReference Update="Azure.Core" Version="1.39.0" />
+    <PackageReference Update="Azure.Core" Version="1.40.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.33" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.34" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
@@ -129,7 +129,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.16" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.11.1" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.3" />
@@ -152,13 +152,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.61.1" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.61.1" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.61.3" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.61.3" />
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.Broker which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.61.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.61.3" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -223,7 +223,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240528.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240607.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240429.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -381,7 +381,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20240516.2</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20240604.2</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
