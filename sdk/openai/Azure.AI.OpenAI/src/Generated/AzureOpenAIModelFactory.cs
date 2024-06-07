@@ -325,6 +325,154 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
+        /// <param name="content"> The contents of the system message. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestSystemMessage"/> instance for mocking. </returns>
+        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
+        {
+            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
+        /// <param name="text"> The content of the message. </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageTextContentItem"/> instance for mocking. </returns>
+        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
+        {
+            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestAssistantMessage"/>. </summary>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <param name="toolCalls">
+        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
+        /// </param>
+        /// <param name="functionCall">
+        /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestAssistantMessage"/> instance for mocking. </returns>
+        public static ChatRequestAssistantMessage ChatRequestAssistantMessage(string content = null, string name = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null, FunctionCall functionCall = null)
+        {
+            toolCalls ??= new List<ChatCompletionsToolCall>();
+
+            return new ChatRequestAssistantMessage(
+                ChatRole.Assistant,
+                serializedAdditionalRawData: null,
+                content,
+                name,
+                toolCalls?.ToList(),
+                functionCall);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestToolMessage"/>. </summary>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestToolMessage"/> instance for mocking. </returns>
+        public static ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null)
+        {
+            return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestFunctionMessage"/>. </summary>
+        /// <param name="name"> The name of the function that was called to produce output. </param>
+        /// <param name="content"> The output of the function as requested by the function call. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestFunctionMessage"/> instance for mocking. </returns>
+        public static ChatRequestFunctionMessage ChatRequestFunctionMessage(string name = null, string content = null)
+        {
+            return new ChatRequestFunctionMessage(ChatRole.Function, serializedAdditionalRawData: null, name, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The API key to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null)
+        {
+            return new OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType.ApiKey, serializedAdditionalRawData: null, key);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>. </summary>
+        /// <param name="connectionString"> The connection string to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null)
+        {
+            return new OnYourDataConnectionStringAuthenticationOptions(OnYourDataAuthenticationType.ConnectionString, serializedAdditionalRawData: null, connectionString);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The key to use for authentication. </param>
+        /// <param name="keyId"> The key ID to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null)
+        {
+            return new OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType.KeyAndKeyId, serializedAdditionalRawData: null, key, keyId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="encodedApiKey"> The encoded API key to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null)
+        {
+            return new OnYourDataEncodedApiKeyAuthenticationOptions(OnYourDataAuthenticationType.EncodedApiKey, serializedAdditionalRawData: null, encodedApiKey);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>. </summary>
+        /// <param name="accessToken"> The access token to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null)
+        {
+            return new OnYourDataAccessTokenAuthenticationOptions(OnYourDataAuthenticationType.AccessToken, serializedAdditionalRawData: null, accessToken);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataUserAssignedManagedIdentityAuthenticationOptions OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId = null)
+        {
+            return new OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType.UserAssignedManagedIdentity, serializedAdditionalRawData: null, managedIdentityResourceId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/>. </summary>
+        /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
+        /// <param name="authentication">
+        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(Uri endpoint = null, OnYourDataAuthenticationOptions authentication = null)
+        {
+            return new OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType.Endpoint, serializedAdditionalRawData: null, endpoint, authentication);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>. </summary>
+        /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataDeploymentNameVectorizationSource OnYourDataDeploymentNameVectorizationSource(string deploymentName = null)
+        {
+            return new OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType.DeploymentName, serializedAdditionalRawData: null, deploymentName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>. </summary>
+        /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch®. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null)
+        {
+            return new OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType.ModelId, serializedAdditionalRawData: null, modelId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/>. </summary>
+        /// <param name="function"> The function definition details for the function tool. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
+        {
+            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
@@ -462,6 +610,14 @@ namespace Azure.AI.OpenAI
             utf8ByteValues ??= new List<int>();
 
             return new ChatTokenLogProbabilityInfo(token, logProbability, utf8ByteValues?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
+        /// <param name="stop"> The token sequence that the model terminated with. </param>
+        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
+        public static StopFinishDetails StopFinishDetails(string stop = null)
+        {
+            return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatEnhancements"/>. </summary>
@@ -655,162 +811,6 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
-        /// <param name="content"> The contents of the system message. </param>
-        /// <param name="name"> An optional name for the participant. </param>
-        /// <returns> A new <see cref="OpenAI.ChatRequestSystemMessage"/> instance for mocking. </returns>
-        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
-        {
-            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
-        /// <param name="text"> The content of the message. </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageTextContentItem"/> instance for mocking. </returns>
-        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
-        {
-            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestAssistantMessage"/>. </summary>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="name"> An optional name for the participant. </param>
-        /// <param name="toolCalls">
-        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
-        /// completions request to resolve as configured.
-        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
-        /// </param>
-        /// <param name="functionCall">
-        /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
-        /// completions request to resolve as configured.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ChatRequestAssistantMessage"/> instance for mocking. </returns>
-        public static ChatRequestAssistantMessage ChatRequestAssistantMessage(string content = null, string name = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null, FunctionCall functionCall = null)
-        {
-            toolCalls ??= new List<ChatCompletionsToolCall>();
-
-            return new ChatRequestAssistantMessage(
-                ChatRole.Assistant,
-                serializedAdditionalRawData: null,
-                content,
-                name,
-                toolCalls?.ToList(),
-                functionCall);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestToolMessage"/>. </summary>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
-        /// <returns> A new <see cref="OpenAI.ChatRequestToolMessage"/> instance for mocking. </returns>
-        public static ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null)
-        {
-            return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestFunctionMessage"/>. </summary>
-        /// <param name="name"> The name of the function that was called to produce output. </param>
-        /// <param name="content"> The output of the function as requested by the function call. </param>
-        /// <returns> A new <see cref="OpenAI.ChatRequestFunctionMessage"/> instance for mocking. </returns>
-        public static ChatRequestFunctionMessage ChatRequestFunctionMessage(string name = null, string content = null)
-        {
-            return new ChatRequestFunctionMessage(ChatRole.Function, serializedAdditionalRawData: null, name, content);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
-        /// <param name="key"> The API key to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null)
-        {
-            return new OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType.ApiKey, serializedAdditionalRawData: null, key);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>. </summary>
-        /// <param name="connectionString"> The connection string to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null)
-        {
-            return new OnYourDataConnectionStringAuthenticationOptions(OnYourDataAuthenticationType.ConnectionString, serializedAdditionalRawData: null, connectionString);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
-        /// <param name="key"> The key to use for authentication. </param>
-        /// <param name="keyId"> The key ID to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null)
-        {
-            return new OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType.KeyAndKeyId, serializedAdditionalRawData: null, key, keyId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>. </summary>
-        /// <param name="encodedApiKey"> The encoded API key to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null)
-        {
-            return new OnYourDataEncodedApiKeyAuthenticationOptions(OnYourDataAuthenticationType.EncodedApiKey, serializedAdditionalRawData: null, encodedApiKey);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>. </summary>
-        /// <param name="accessToken"> The access token to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null)
-        {
-            return new OnYourDataAccessTokenAuthenticationOptions(OnYourDataAuthenticationType.AccessToken, serializedAdditionalRawData: null, accessToken);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
-        /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/> instance for mocking. </returns>
-        public static OnYourDataUserAssignedManagedIdentityAuthenticationOptions OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId = null)
-        {
-            return new OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType.UserAssignedManagedIdentity, serializedAdditionalRawData: null, managedIdentityResourceId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/>. </summary>
-        /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
-        /// <param name="authentication">
-        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
-        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> instance for mocking. </returns>
-        public static OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(Uri endpoint = null, OnYourDataAuthenticationOptions authentication = null)
-        {
-            return new OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType.Endpoint, serializedAdditionalRawData: null, endpoint, authentication);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>. </summary>
-        /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/> instance for mocking. </returns>
-        public static OnYourDataDeploymentNameVectorizationSource OnYourDataDeploymentNameVectorizationSource(string deploymentName = null)
-        {
-            return new OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType.DeploymentName, serializedAdditionalRawData: null, deploymentName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>. </summary>
-        /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch®. </param>
-        /// <returns> A new <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/> instance for mocking. </returns>
-        public static OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null)
-        {
-            return new OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType.ModelId, serializedAdditionalRawData: null, modelId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/>. </summary>
-        /// <param name="function"> The function definition details for the function tool. </param>
-        /// <returns> A new <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
-        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
-        {
-            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
-        /// <param name="stop"> The token sequence that the model terminated with. </param>
-        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
-        public static StopFinishDetails StopFinishDetails(string stop = null)
-        {
-            return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
         }
     }
 }
