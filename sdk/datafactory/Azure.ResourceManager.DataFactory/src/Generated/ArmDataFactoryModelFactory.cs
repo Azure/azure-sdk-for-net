@@ -875,17 +875,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ConnectionStateProperties(actionsRequired, description, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryManagedIdentityCredentialData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryServiceCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Managed Identity Credential properties. </param>
+        /// <param name="properties">
+        /// Properties of credentials.
+        /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
+        /// </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryManagedIdentityCredentialData"/> instance for mocking. </returns>
-        public static DataFactoryManagedIdentityCredentialData DataFactoryManagedIdentityCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryManagedIdentityCredentialProperties properties = null, ETag? eTag = null)
+        /// <returns> A new <see cref="DataFactory.DataFactoryServiceCredentialData"/> instance for mocking. </returns>
+        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryCredential properties = null, ETag? eTag = null)
         {
-            return new DataFactoryManagedIdentityCredentialData(
+            return new DataFactoryServiceCredentialData(
                 id,
                 name,
                 resourceType,
