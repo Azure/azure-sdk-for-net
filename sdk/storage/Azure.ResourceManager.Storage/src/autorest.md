@@ -20,6 +20,9 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/accountMigrations/{migrationName}
