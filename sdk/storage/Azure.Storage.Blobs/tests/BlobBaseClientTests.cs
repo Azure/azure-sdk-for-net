@@ -2845,7 +2845,8 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream);
 
             // Act
-            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(sourceBlob.Uri);
+            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
+                sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)));
 
             // Assert
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
@@ -3031,7 +3032,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
-                    source: srcBlob.Uri,
+                    source: srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     options);
 
                 // Assert
@@ -3103,7 +3104,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
-                srcBlob.Uri,
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                 options: options);
         }
 
@@ -3127,7 +3128,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.SyncCopyFromUriAsync(
-                    srcBlob.Uri,
+                    srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     options: options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
@@ -3173,7 +3174,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await destBlob.SyncCopyFromUriAsync(
-                srcBlob.Uri,
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                 options);
 
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
