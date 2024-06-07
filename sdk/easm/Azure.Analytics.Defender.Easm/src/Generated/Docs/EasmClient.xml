@@ -343,8 +343,8 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    properties = new object(),
     kind = "logAnalytics",
+    properties = new object(),
 });
 Response response = await client.ValidateDataConnectionAsync(content);
 
@@ -359,12 +359,12 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
+    kind = "logAnalytics",
     properties = new
     {
         apiKey = "<apiKey>",
         workspaceId = "<workspaceId>",
     },
-    kind = "logAnalytics",
     name = "<name>",
     content = "assets",
     frequency = "daily",
@@ -390,8 +390,8 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    properties = new object(),
     kind = "logAnalytics",
+    properties = new object(),
 });
 Response response = client.ValidateDataConnection(content);
 
@@ -406,12 +406,12 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
+    kind = "logAnalytics",
     properties = new
     {
         apiKey = "<apiKey>",
         workspaceId = "<workspaceId>",
     },
-    kind = "logAnalytics",
     name = "<name>",
     content = "assets",
     frequency = "daily",
@@ -611,8 +611,8 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    properties = new object(),
     kind = "logAnalytics",
+    properties = new object(),
 });
 Response response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", content);
 
@@ -628,12 +628,12 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
+    kind = "logAnalytics",
     properties = new
     {
         apiKey = "<apiKey>",
         workspaceId = "<workspaceId>",
     },
-    kind = "logAnalytics",
     name = "<name>",
     content = "assets",
     frequency = "daily",
@@ -666,8 +666,8 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    properties = new object(),
     kind = "logAnalytics",
+    properties = new object(),
 });
 Response response = client.CreateOrReplaceDataConnection("<dataConnectionName>", content);
 
@@ -683,12 +683,12 @@ EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
+    kind = "logAnalytics",
     properties = new
     {
         apiKey = "<apiKey>",
         workspaceId = "<workspaceId>",
     },
-    kind = "logAnalytics",
     name = "<name>",
     content = "assets",
     frequency = "daily",
