@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
+using NUnit.Framework;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
@@ -16,8 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         public static void SetQueryWorkSpaceId(this LogsQueryClient client, string workspaceId) => s_workspaceId = workspaceId;
 
-        public static async Task<LogsTable?> CheckForRecordAsync(this LogsQueryClient client, string query)
+        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string description, string query)
         {
+            Debug.WriteLine($"UnitTest: Query Telemetry ({description})");
+            TestContext.Out.WriteLine($"Query Telemetry ({description})");
+
             // Try every 30 secs for total of 5 minutes.
             int maxTries = 10;
             for (int attempt = 1; attempt <= maxTries; attempt++)
@@ -32,8 +36,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     return response.Value.Table;
                 }
 
-                Debug.WriteLine($"UnitTest: query attempt {attempt}/{maxTries} returned no records...");
-
+                Debug.WriteLine($"UnitTest: Query attempt {attempt}/{maxTries} returned no records. Waiting {s_queryDelay.TotalSeconds} seconds...");
+                TestContext.Out.WriteLine($"Query attempt {attempt}/{maxTries} returned no records. Waiting {s_queryDelay.TotalSeconds} seconds...");
                 await Task.Delay(s_queryDelay);
             }
 

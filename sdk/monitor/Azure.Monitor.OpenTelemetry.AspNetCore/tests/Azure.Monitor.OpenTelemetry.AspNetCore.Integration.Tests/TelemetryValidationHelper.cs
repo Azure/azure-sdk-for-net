@@ -13,20 +13,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     internal static class TelemetryValidationHelper
     {
-        public static void ValidateExpectedTelemetry(string description, LogsTable logsTable, object expectedTelemetry)
+        public static void ValidateExpectedTelemetry(string description, LogsTable? logsTable, object expectedTelemetry)
         {
             TestContext.Out.WriteLine($"{nameof(ValidateExpectedTelemetry)}: '{description}'");
 
-            Assert.AreEqual(1, logsTable.Rows.Count, $"Expected 1 row in the table for {description} but found {logsTable.Rows.Count} rows.");
+            Assert.IsNotNull(logsTable, $"({description}) Expected a non-null table.");
+            Assert.AreEqual(1, logsTable!.Rows.Count, $"({description}) Expected 1 row in the table but found {logsTable.Rows.Count} rows.");
 
             var row = logsTable.Rows[0];
             foreach (PropertyInfo property in expectedTelemetry.GetType().GetProperties())
             {
                 if (property.Name == "Properties")
                 {
-                    // TODO: NULL CHECKS
                     var jsonString = row[property.Name].ToString();
+                    Assert.IsNotNull(jsonString, $"({description}) Expected a non-null value for {property.Name}");
                     var expectedProperties = property.GetValue(expectedTelemetry, null) as List<KeyValuePair<string, string>>;
+                    Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {property.Name}.");
 
                     ValidateProperties(
                         description: description,
@@ -48,10 +50,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private static void ValidateProperties(string description, string jsonString, List<KeyValuePair<string, string>> expectedProperties)
         {
 #if NET6_0_OR_GREATER
-            // TODO: NULL CHECKS
-            var jsonNode = JsonNode.Parse(jsonString!);
+            var jsonNode = JsonNode.Parse(jsonString);
+            Assert.IsNotNull(jsonNode, $"({description}) Expected a non-null JSON node.");
 
-            foreach (var expectedProperty in expectedProperties!)
+            foreach (var expectedProperty in expectedProperties)
             {
                 var actualValue = jsonNode![expectedProperty.Key]!.ToString();
 

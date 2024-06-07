@@ -170,45 +170,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         private async Task QueryAndVerifyDependency(string description, string query, ExpectedAppDependency expectedAppDependency)
         {
-            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppDependency);
         }
 
         private async Task QueryAndVerifyRequest(string description, string query, ExpectedAppRequest expectedAppRequest)
         {
-            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppRequest);
         }
 
         private async Task QueryAndVerifyMetric(string description, string query, ExpectedAppMetric expectedAppMetric)
         {
-            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppMetric);
         }
 
         private async Task QueryAndVerifyTrace(string description, string query, ExpectedAppTrace expectedAppTrace)
         {
-            LogsTable logsTable = await QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppTrace);
-        }
-
-        private async Task<LogsTable> QueryTelemetryAsync(string description, string query)
-        {
-            Debug.WriteLine($"UnitTest: Query Telemetry ({description})");
-            TestContext.Out.WriteLine($"Query Telemetry ({description})");
-
-            LogsTable? resultTable = await _logsQueryClient!.CheckForRecordAsync(query);
-
-            var rowCount = resultTable?.Rows.Count;
-            if (rowCount == null || rowCount == 0)
-            {
-                Assert.Fail($"No telemetry records were found: {description}");
-                return null!;
-            }
-            else
-            {
-                return resultTable!;
-            }
         }
     }
 }
