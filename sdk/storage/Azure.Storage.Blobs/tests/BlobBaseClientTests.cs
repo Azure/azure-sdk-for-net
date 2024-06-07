@@ -2577,7 +2577,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri));
 
                 // Act
                 try
@@ -2810,6 +2810,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            Uri srcBlobSasUri = srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1));
+            srcBlob = InstrumentClient(new BlobBaseClient(srcBlobSasUri, GetOptions()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
