@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (2024-06-07)
 
 **Please note**: This update brings a *major* set of changes to the Azure.AI.OpenAI library.
 
@@ -31,8 +31,6 @@ With the release of the official [OpenAI .NET client library](https://github.com
 ### Breaking Changes
 
 Given the nature of this update, breaking changes are extensive. Please see the README and the [OpenAI library README](https://github.com/openai/openai-dotnet/blob/master/README.md) for usage details. OpenAI's library carries forward many of the same design concepts as the Azure.AI.OpenAI library used as a standalone library, but considerable improvements have been made to the surface that will require significant code adjustments.
-
-### Other Changes
 
 ## 1.0.0-beta.17 (2024-05-03)
 
