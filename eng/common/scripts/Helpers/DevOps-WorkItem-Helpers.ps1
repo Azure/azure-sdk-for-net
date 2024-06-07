@@ -5,17 +5,8 @@ $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("
 
 function Get-DevOpsRestHeaders()
 {
-  $headers = $null
-  $headerAccessToken = $null
-  if (Get-Variable -Name "accessToken" -ValueOnly -ErrorAction "Ignore")
-  {
-    $headerAccessToken = $accessToken
-  }
-  else
-  {
-    # Get a temp access token from the logged in az cli user for azure devops resource
-    $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
-  }
+  # Get a temp access token from the logged in az cli user for azure devops resource
+  $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
 
   if ([System.String]::IsNullOrEmpty($headerAccessToken)) {
     throw "Unable to create the DevOpsRestHeader due to access token being null or empy. The calling script needs to be pass an the accessToken value OR the calling script needs to be run in an azure authenticated environment."

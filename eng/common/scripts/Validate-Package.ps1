@@ -15,7 +15,6 @@ param (
   [string] $BuildDefinition,
   [string] $PipelineUrl,
   [string] $APIViewUri,
-  [string] $AccessToken = $null,
   [bool] $IsReleaseBuild = $false
 )
 Set-StrictMode -Version 3
@@ -24,12 +23,10 @@ Set-StrictMode -Version 3
 . ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 . ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
 
-if (!$AccessToken) {
-  az account show *> $null
-  if (!$?) {
-    Write-Host 'Running az login...'
-    az login *> $null
-  }
+az account show *> $null
+if (!$?) {
+Write-Host 'Running az login...'
+az login *> $null
 }
 
 az extension show -n azure-devops *> $null
@@ -171,8 +168,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -packageNewLibrary $pkgInfo.IsNewSDK `
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
-        -inRelease $IsReleaseBuild `
-        -accessToken $AccessToken
+        -inRelease $IsReleaseBuild
 
     if ($LASTEXITCODE -ne 0)
     {

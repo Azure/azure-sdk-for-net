@@ -16,7 +16,6 @@ steps:
         scriptType: pscore
         scriptLocation: inlineScript
         inlineScript: |
-          $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
           $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
             -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
             -ArtifactPath ${{ parameters.ArtifactPath }} `
@@ -25,7 +24,6 @@ steps:
             -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
             -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
             -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
-            -AccessToken $accessToken `
             -IsReleaseBuild $$(SetAsReleaseBuild)
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
