@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
         private CloudExadataInfrastructureResource _cloudExadataInfrastructureResource;
 
-        private List<DbServerResource> _dbServerResources;
-
         private const string SubnetIdFormat = "{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/{2}/subnets/{3}";
         private const string VnetIdFormat = "{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/{2}";
         private const string DefaultSubnetName = "delegated";
@@ -44,6 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         [OneTimeTearDown]
         public void Cleanup()
         {
+            // TODO: delete exainfra
             CleanupResourceGroups();
         }
 
@@ -64,12 +63,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Console.WriteLine("HERE: CreateExaInfra Get ExaInfra");
             Response<CloudExadataInfrastructureResource> getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
             _cloudExadataInfrastructureResource = getExaInfraResponse.Value;
-
-            // List DBServers
-            Console.WriteLine("HERE: CreateExaInfra List DBServers");
-            DbServerCollection dbServerCollection = _cloudExadataInfrastructureResource.GetDbServers();
-            AsyncPageable<DbServerResource> dbServers = dbServerCollection.GetAllAsync();
-            _dbServerResources = await dbServers.ToEnumerableAsync();
         }
 
         private CloudVmClusterData GetCloudVmClusterData() {
@@ -81,27 +74,20 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
         private CloudVmClusterProperties GetCloudVmClusterProperties() {
             // TODO
-            return new CloudVmClusterProperties();
-            // return new CloudVmClusterProperties() {
-            //     SubnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName)),
-            //     CloudExadataInfrastructureId = _cloudExadataInfrastructureResource.Data.Id,
-            //     CpuCoreCount = 4,
-            //     DataStoragePercentage = 80,
-            //     DataStorageSizeInTbs = 2,
-            //     DbNodeStorageSizeInGbs = 120,
-            //     DbServers = new List<string>() {_dbServerResources[0].Data.Ocid, _dbServerResources[1].Data.Ocid},
-            //     ClusterName = "NetSdkTestVmCluster",
-            //     DisplayName = _vmClusterName,
-            //     GiVersion = "19.0.0.0",
-            //     Hostname = "net-sdk-test",
-            //     IsLocalBackupEnabled = false,
-            //     IsSparseDiskgroupEnabled = false,
-            //     LicenseModel = "LicenseIncluded",
-            //     MemorySizeInGbs = 60,
-            //     TimeZone = "UTC",
-            //     VnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName)),
-            //     SshPublicKeys = new List<string>() {"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDN1WFUF/ciSh4GZUBmPlINBDs+zbr4MilqqPYw2jvpbr5Xi5onKUi797eLWApk9xZOzw53j7vQzDvhTIf/jpjhYYolVgu8DWgI9U53UU5HWfC3+LeMEaQ4n1TTo87aQOeMr+eTkWA0DV7Ag69ITRafNN5sD7sNLFPSKGe9YSPFHqQFOigrDet1MtfahOISg8yNcrPUawU5o9RFyTrRQmU1+Eo1CHP0jKpjKKNuE739n2r/l5wugHvYf5f59G5mEyxsb8wDghcIKbd91jD7H1ltXyZ8ubGLMdE9R5gUvJ8g7RqCiZyD7tdBAY+a+z48GL0HCmnY6T/0y+KCtA3lh2gCkycti2RefjRFTeqTFuGGeJaFC/zU6FX1XFFySJnXDdK6895WKvTr/6vj+SrTzgu0cllJbjcPDLKIGBEeGADnfKGx0q4/vaAJMzZrVlJ1POYaTeOYf0DekfPaYpHl4IToenG8u3tU1x3JhEJriOs3ORzApDWlhmnojyePMLTupFU= generated-by-azure"}
-            // };
+            string hostName = "net-sdk-test";
+            int cpuCoreCount = 4;
+            ResourceIdentifier cloudExadataInfrastructureId = _cloudExadataInfrastructureResource.Data.Id;
+            // orpsandbox2
+            // List<string> sshPublicKeys = new List<string>() {"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDN1WFUF/ciSh4GZUBmPlINBDs+zbr4MilqqPYw2jvpbr5Xi5onKUi797eLWApk9xZOzw53j7vQzDvhTIf/jpjhYYolVgu8DWgI9U53UU5HWfC3+LeMEaQ4n1TTo87aQOeMr+eTkWA0DV7Ag69ITRafNN5sD7sNLFPSKGe9YSPFHqQFOigrDet1MtfahOISg8yNcrPUawU5o9RFyTrRQmU1+Eo1CHP0jKpjKKNuE739n2r/l5wugHvYf5f59G5mEyxsb8wDghcIKbd91jD7H1ltXyZ8ubGLMdE9R5gUvJ8g7RqCiZyD7tdBAY+a+z48GL0HCmnY6T/0y+KCtA3lh2gCkycti2RefjRFTeqTFuGGeJaFC/zU6FX1XFFySJnXDdK6895WKvTr/6vj+SrTzgu0cllJbjcPDLKIGBEeGADnfKGx0q4/vaAJMzZrVlJ1POYaTeOYf0DekfPaYpHl4IToenG8u3tU1x3JhEJriOs3ORzApDWlhmnojyePMLTupFU= generated-by-azure"};
+            // orpsandbox8
+            List<string> sshPublicKeys = new List<string>() {"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEZ1wctWAnyIfSvt2rhE7JgV/guNJbDSq7KGo9j6hb+TgPaWhs0DVGcGQnc1LbQShD4Weg5PQogdYaCAjXzxCT/c5ULjlEUUAk9za4q7mnKMW9/poQwvMu+SAmR6u3lSXWv7uj9GuzWtBHykdW9UDWFwMFuj0SrmI4fcpa3nrZ4YcO+kEjxPSODLWwySDQozD4a75grYMA3SA7IMViZHYtpi4Z4UtZxAUIT5vCOJNVkzfrSo3+u1WPXXXhegxkGXuBkb2CRHr5ntWoMXWHI9OqR3ENBVYoq8dy5B4IocRY1En4+Z9X1oMyc6mJsEDRA0ZrkG4CLMN8mXmU9rwU1fxI15ennWr6eBBpsyJYRY7vxTVkV21bI/mrbP+cszXnmqFqC+abQX+EIxVb0cPeSDTzyZos+Rk/NBuiDyRNSFVb7PtLiHyxGhKVYsxtgeL4qhnuz6VYDm9LD75DwoBtyq/vDqy6TInhQruMZHVDc2Iq3QQ/rKbauISMDeDvHe3jz4k= generated-by-azure"};
+            ResourceIdentifier vnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
+            string giVersion = "19.0.0.0";
+            ResourceIdentifier subnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
+            string displayName = _vmClusterName;
+            return new CloudVmClusterProperties(hostName, cpuCoreCount, cloudExadataInfrastructureId, sshPublicKeys, vnetId, giVersion, subnetId, displayName) {
+                LicenseModel = LicenseModel.LicenseIncluded
+            };
         }
 
         [TestCase]
@@ -122,22 +108,22 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             CloudVmClusterResource vmClusterResource = getVmClusterResponse.Value;
             Assert.IsNotNull(vmClusterResource);
 
-            // // ListByResourceGroup
-            // AsyncPageable<CloudVmClusterResource> vmClusters = _cloudVMClusterCollection.GetAllAsync();
-            // List<CloudVmClusterResource> vmClusterResult = await vmClusters.ToEnumerableAsync();
-            // Assert.NotNull(vmClusterResult);
-            // Assert.IsTrue(vmClusterResult.Count >= 1);
+            // ListByResourceGroup
+            AsyncPageable<CloudVmClusterResource> vmClusters = _cloudVMClusterCollection.GetAllAsync();
+            List<CloudVmClusterResource> vmClusterResult = await vmClusters.ToEnumerableAsync();
+            Assert.NotNull(vmClusterResult);
+            Assert.IsTrue(vmClusterResult.Count >= 1);
 
-            // // ListBySubscription
-            // vmClusters = OracleDatabaseExtensions.GetCloudVmClustersAsync(DefaultSubscription);
-            // vmClusterResult = await vmClusters.ToEnumerableAsync();
-            // Assert.NotNull(vmClusterResult);
-            // Assert.IsTrue(vmClusterResult.Count >= 1);
+            // ListBySubscription
+            vmClusters = OracleDatabaseExtensions.GetCloudVmClustersAsync(DefaultSubscription);
+            vmClusterResult = await vmClusters.ToEnumerableAsync();
+            Assert.NotNull(vmClusterResult);
+            Assert.IsTrue(vmClusterResult.Count >= 1);
 
-            // // Delete
-            // var deleteVmClusterOperation = await vmClusterResource.DeleteAsync(WaitUntil.Completed);
-            // await deleteVmClusterOperation.WaitForCompletionResponseAsync();
-            // Assert.IsTrue(deleteVmClusterOperation.HasCompleted);
+            // Delete
+            var deleteVmClusterOperation = await vmClusterResource.DeleteAsync(WaitUntil.Completed);
+            await deleteVmClusterOperation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(deleteVmClusterOperation.HasCompleted);
         }
     }
 }
