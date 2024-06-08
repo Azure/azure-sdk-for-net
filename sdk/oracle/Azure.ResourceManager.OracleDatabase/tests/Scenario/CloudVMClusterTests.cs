@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         [OneTimeTearDown]
         public void Cleanup()
         {
-            // TODO: delete exainfra
+            // DeleteExaInfra();
             CleanupResourceGroups();
         }
 
@@ -65,6 +65,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             _cloudExadataInfrastructureResource = getExaInfraResponse.Value;
         }
 
+        private void DeleteExaInfra() {
+            // Delete ExaInfra
+            if (_cloudExadataInfrastructureResource != null) {
+                var deleteExaInfraOperation = _cloudExadataInfrastructureResource.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
         private CloudVmClusterData GetCloudVmClusterData() {
             CloudVmClusterProperties cloudVmClusterProperties = GetCloudVmClusterProperties();
             return new CloudVmClusterData(AzureLocation.EastUS) {
@@ -73,7 +80,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         }
 
         private CloudVmClusterProperties GetCloudVmClusterProperties() {
-            // TODO
             string hostName = "net-sdk-test";
             int cpuCoreCount = 4;
             ResourceIdentifier cloudExadataInfrastructureId = _cloudExadataInfrastructureResource.Data.Id;
@@ -90,6 +96,15 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             };
         }
 
+        private CloudVmClusterPatch GetCloudVmClusterPatch(string tagName, string tagValue) {
+            ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
+            {
+                new KeyValuePair<string, string>(tagName, tagValue)
+            };
+            CloudVmClusterUpdateProperties vmClusterUpdateProperties = new CloudVmClusterUpdateProperties();
+            return new CloudVmClusterPatch(tags, vmClusterUpdateProperties, default);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task TestCloudVMClusterOperations()
@@ -104,26 +119,48 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Assert.IsTrue(createVmClusterOperation.HasValue);
 
             // Get
+            Console.WriteLine("HERE: TestCloudVMClusterOperations Get");
             Response<CloudVmClusterResource> getVmClusterResponse = await _cloudVMClusterCollection.GetAsync(_vmClusterName);
             CloudVmClusterResource vmClusterResource = getVmClusterResponse.Value;
             Assert.IsNotNull(vmClusterResource);
 
             // ListByResourceGroup
+            Console.WriteLine("HERE: TestCloudVMClusterOperations ListByResourceGroup");
             AsyncPageable<CloudVmClusterResource> vmClusters = _cloudVMClusterCollection.GetAllAsync();
             List<CloudVmClusterResource> vmClusterResult = await vmClusters.ToEnumerableAsync();
             Assert.NotNull(vmClusterResult);
             Assert.IsTrue(vmClusterResult.Count >= 1);
 
             // ListBySubscription
+            Console.WriteLine("HERE: TestCloudVMClusterOperations ListBySubscription");
             vmClusters = OracleDatabaseExtensions.GetCloudVmClustersAsync(DefaultSubscription);
             vmClusterResult = await vmClusters.ToEnumerableAsync();
             Assert.NotNull(vmClusterResult);
             Assert.IsTrue(vmClusterResult.Count >= 1);
 
+            // // Update
+            // Console.WriteLine("HERE: TestCloudVMClusterOperations Update");
+            // var tagName = Recording.GenerateAssetName("TagName");
+            // var tagValue = Recording.GenerateAssetName("TagValue");
+            // CloudVmClusterPatch vmClusterParameter = GetCloudVmClusterPatch(tagName, tagValue);
+            // var updateVmClusterOperation = await vmClusterResource.UpdateAsync(WaitUntil.Completed, vmClusterParameter);
+            // Assert.IsTrue(updateVmClusterOperation.HasCompleted);
+            // Assert.IsTrue(updateVmClusterOperation.HasValue);
+
+            // // Get after Update
+            // Console.WriteLine("HERE: TestCloudVMClusterOperations Get2");
+            // getVmClusterResponse = await _cloudVMClusterCollection.GetAsync(_vmClusterName);
+            // vmClusterResource = getVmClusterResponse.Value;
+            // Assert.IsNotNull(vmClusterResource);
+            // Assert.IsTrue(vmClusterResource.Data.Tags.ContainsKey(tagName));
+
             // Delete
+            Console.WriteLine("HERE: TestCloudVMClusterOperations Delete");
             var deleteVmClusterOperation = await vmClusterResource.DeleteAsync(WaitUntil.Completed);
             await deleteVmClusterOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deleteVmClusterOperation.HasCompleted);
+
+            DeleteExaInfra();
         }
     }
 }
