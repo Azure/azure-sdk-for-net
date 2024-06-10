@@ -5,6 +5,8 @@
 ### Other Changes
 
 * Includes all changes from 1.3.0-beta.1 and 1.3.0-beta.2
+* Changed `AzureMonitorLogExporter` to be internal.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
 
 ## 1.3.0-beta.2 (2024-05-08)
 
@@ -23,8 +25,8 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
-  - OpenTelemetry 1.8.0
+  ([#43688](https://github.com/Azure/azure-sdk-for-net/pull/43688))
+  - OpenTelemetry 1.8.1
 
 ## 1.3.0-beta.1 (2024-02-08)
 
