@@ -16,6 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class AzurePipelinesCredential : TokenCredential
     {
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azurepipelinescredential/troubleshoot";
         internal readonly string[] AdditionallyAllowedTenantIds;
         internal string SystemAccessToken { get; }
         internal string TenantId { get; }
@@ -88,13 +89,13 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
 
         internal HttpMessage CreateOidcRequestMessage(AzurePipelinesCredentialOptions options)
         {
-            string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_OIDCREQUESTURI is not set.");
+            string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: Ensure that you're running this task in an Azure Pipeline so that following missing system variable(s) can be defined: SYSTEM_OIDCREQUESTURI is not set.");
             string systemToken = SystemAccessToken;
 
             var message = Pipeline.HttpPipeline.CreateMessage();
@@ -126,7 +127,7 @@ namespace Azure.Identity
             }
             if (oidcToken is null)
             {
-                string error = $"OIDC token not found in response.";
+                string error = $"OIDC token not found in response. " + Troubleshooting;
                 if (message.Response.Status != 200)
                 {
                     error = error + $"\n\nResponse= {message.Response.Content}";
