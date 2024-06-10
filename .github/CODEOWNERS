@@ -959,6 +959,11 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @eelhomsi1
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @eelhomsi1
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
