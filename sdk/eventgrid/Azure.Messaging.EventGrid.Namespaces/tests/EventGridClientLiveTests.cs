@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.Tests
 #else
             var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
-            ReceiveResult result = await receiverClient.ReceiveAsync(topicName, subscriptionName, maxEvents: 3);
+            ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
             // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result
             var toRelease = new List<string>();
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toRelease.Count > 0)
             {
-                ReleaseResult releaseResult = await receiverClient.ReleaseAsync(topicName, subscriptionName, toRelease);
+                ReleaseResult releaseResult = await receiverClient.ReleaseAsync(toRelease);
 
                 // Inspect the Release result
                 Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toAcknowledge.Count > 0)
             {
-                AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(topicName, subscriptionName, toAcknowledge);
+                AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(toAcknowledge);
 
                 // Inspect the Acknowledge result
                 Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toReject.Count > 0)
             {
-                RejectResult rejectResult = await receiverClient.RejectAsync(topicName, subscriptionName, toReject);
+                RejectResult rejectResult = await receiverClient.RejectAsync(toReject);
 
                 // Inspect the Reject result
                 Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");
@@ -210,8 +210,7 @@ namespace Azure.Messaging.EventGrid.Tests
 #endif
 
             ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 1);
-            RenewLocksResult renewResult = await receiverClient.RenewLocksAsync(topicName, subscriptionName,
-                new[] { result.Details.First().BrokerProperties.LockToken });
+            RenewLocksResult renewResult = await receiverClient.RenewLocksAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(renewResult.FailedLockTokens);
         }
 
@@ -235,8 +234,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
                 new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
-            ReceiveResult result = await receiver.ReceiveAsync(topicName, subscriptionName, maxEvents: 1);
-            ReleaseResult releaseResult = await receiver.ReleaseAsync(topicName, subscriptionName,
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            ReleaseResult releaseResult = await receiver.ReleaseAsync(
                 new[] { result.Details.First().BrokerProperties.LockToken },
                 releaseDelayInSeconds: ReleaseDelay.TenSeconds);
             Assert.IsEmpty(releaseResult.FailedLockTokens);
@@ -262,8 +261,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
                 new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
-            ReceiveResult result = await receiver.ReceiveAsync(topicName, subscriptionName, maxEvents: 1);
-            RejectResult rejectResult = await receiver.RejectAsync(topicName, subscriptionName, new[] { result.Details.First().BrokerProperties.LockToken });
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            RejectResult rejectResult = await receiver.RejectAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(rejectResult.FailedLockTokens);
         }
 
@@ -287,8 +286,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
                 new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
-            ReceiveResult result = await receiver.ReceiveAsync(topicName, subscriptionName, maxEvents: 1);
-            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(topicName, subscriptionName, new[] { result.Details.First().BrokerProperties.LockToken });
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
         }
 
@@ -320,9 +319,8 @@ namespace Azure.Messaging.EventGrid.Tests
             ReceiveResult results;
             do
             {
-                results = await client.ReceiveAsync(topicName, subscriptionName, maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
-                await client.AcknowledgeAsync(topicName, subscriptionName,
-                    results.Details.Select(r => r.BrokerProperties.LockToken).ToList());
+                results = await client.ReceiveAsync(maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
+                await client.AcknowledgeAsync(results.Details.Select(r => r.BrokerProperties.LockToken).ToList());
             } while (results.Details.Count > 0);
         }
     }

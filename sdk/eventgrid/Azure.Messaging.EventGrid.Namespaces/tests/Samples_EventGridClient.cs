@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 type = "<type>",
                 specversion = "<specversion>",
             });
-            Response response = await client.SendAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 datacontenttype = "<datacontenttype>",
                 subject = "<subject>",
             });
-            Response response = client.Send("<topicName>", content);
+            Response response = client.SendEvent(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 datacontenttype = "<datacontenttype>",
                 subject = "<subject>",
             });
-            Response response = await client.SendAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -213,7 +213,7 @@ type = "<type>",
 specversion = "<specversion>",
 }
             });
-            Response response = await client.SendAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());

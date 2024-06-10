@@ -40,7 +40,7 @@ There are three different actions you can take on a received event:
 ```C# Snippet:ReceiveAndProcessEvents
 // Construct the client using an Endpoint for a namespace as well as the shared access key
 var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
-ReceiveResult result = await receiverClient.ReceiveAsync(topicName, subscriptionName, maxEvents: 3);
+ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
 // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result
 var toRelease = new List<string>();
@@ -76,7 +76,7 @@ foreach (ReceiveDetails detail in result.Details)
 
 if (toRelease.Count > 0)
 {
-    ReleaseResult releaseResult = await receiverClient.ReleaseAsync(topicName, subscriptionName, toRelease);
+    ReleaseResult releaseResult = await receiverClient.ReleaseAsync(toRelease);
 
     // Inspect the Release result
     Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
@@ -96,7 +96,7 @@ if (toRelease.Count > 0)
 
 if (toAcknowledge.Count > 0)
 {
-    AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(topicName, subscriptionName, toAcknowledge);
+    AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(toAcknowledge);
 
     // Inspect the Acknowledge result
     Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
@@ -116,7 +116,7 @@ if (toAcknowledge.Count > 0)
 
 if (toReject.Count > 0)
 {
-    RejectResult rejectResult = await receiverClient.RejectAsync(topicName, subscriptionName, toReject);
+    RejectResult rejectResult = await receiverClient.RejectAsync(toReject);
 
     // Inspect the Reject result
     Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");
