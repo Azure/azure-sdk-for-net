@@ -1,5 +1,15 @@
 namespace Azure.Data.SchemaRegistry
 {
+    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
+    {
+        public LruCache(int capacity) { }
+        public int Count { get { throw null; } }
+        public int TotalLength { get { throw null; } }
+        public void AddOrUpdate(TKey key, TValue? val, int length) { }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGet(TKey key, out TValue? value) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SchemaFormat : System.IEquatable<Azure.Data.SchemaRegistry.SchemaFormat>
     {
@@ -9,7 +19,6 @@ namespace Azure.Data.SchemaRegistry
         public static Azure.Data.SchemaRegistry.SchemaFormat Avro { get { throw null; } }
         public static Azure.Data.SchemaRegistry.SchemaFormat Custom { get { throw null; } }
         public static Azure.Data.SchemaRegistry.SchemaFormat Json { get { throw null; } }
-        public static Azure.Data.SchemaRegistry.SchemaFormat Protobuf { get { throw null; } }
         public bool Equals(Azure.Data.SchemaRegistry.SchemaFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -69,16 +78,23 @@ namespace Azure.Data.SchemaRegistry
         public string Definition { get { throw null; } }
         public Azure.Data.SchemaRegistry.SchemaProperties Properties { get { throw null; } }
     }
+    public abstract partial class SchemaValidator
+    {
+        protected SchemaValidator() { }
+        public abstract string GenerateSchema(System.Type dataType);
+        public abstract bool TryValidate(object data, System.Type dataType, string schemaDefinition, out System.Collections.Generic.IEnumerable<System.Exception> validationErrors);
+        public virtual void Validate(object data, System.Type dataType, string schemaDefinition) { }
+    }
 }
 namespace Azure.Data.SchemaRegistry.Serialization
 {
     public partial class SchemaRegistrySerializer
     {
         protected SchemaRegistrySerializer() { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.SchemaValidator schemaValidator) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.SchemaValidator schemaValidator) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Data.SchemaRegistry.SchemaValidator schemaValidator) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Data.SchemaRegistry.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Data.SchemaRegistry.SchemaValidator schemaValidator) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Data.SchemaRegistry.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
         public object Deserialize(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<object> DeserializeAsync(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<TData> DeserializeAsync<TData>(Azure.Messaging.MessageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

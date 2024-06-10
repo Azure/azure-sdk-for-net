@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Core
+namespace Azure.Data.SchemaRegistry
 {
     /// <summary>
     /// This abstract class allows any available library to be used to generate schemas from .NET types and validate

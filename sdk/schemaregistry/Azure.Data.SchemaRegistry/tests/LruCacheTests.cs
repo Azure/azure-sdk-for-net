@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using Azure.Core;
+using Azure.Data.SchemaRegistry;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Data.SchemaRegistry.Tests
 {
     public class LruCacheTests
     {
