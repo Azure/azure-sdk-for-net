@@ -10,6 +10,11 @@
 ### Bugs Fixed
 - Managed identity bug fixes.
 
+## 1.11.4 (2024-06-10)
+
+### Bugs Fixed
+- Managed identity bug fixes.
+
 ## 1.12.0-beta.2 (2024-05-07)
 
 ### Features Added
