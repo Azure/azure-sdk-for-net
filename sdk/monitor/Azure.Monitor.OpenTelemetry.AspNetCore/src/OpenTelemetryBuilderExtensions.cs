@@ -157,7 +157,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
                     {
                         var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
+                        loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
 
+                        // TODO:WILL RE-ENABLE IN NEXT BETA
+                        /*
                         bool enableLogSampling = false;
                         try
                         {
@@ -169,17 +172,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
                         }
 
-                        // TODO: WILL RE-ENABLE IN NEXT BETA
-                        //if (enableLogSampling)
-                        //{
-                        //    var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                        //    azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                        //    loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        //}
-                        //else
-                        //{
-                        //    loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        //}
+                        if (enableLogSampling)
+                        {
+                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
+                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
+                        }
+                        else
+                        {
+                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                        }
+                        */
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
