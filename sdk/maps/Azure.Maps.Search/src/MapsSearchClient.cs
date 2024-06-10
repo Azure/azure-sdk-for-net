@@ -154,7 +154,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
                 }
 
                 return await RestClient.GetGeocodingAsync(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken).ConfigureAwait(false);
@@ -192,7 +192,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Latitude , (double)options.Coordinates?.Longitude };
+                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
                 }
 
                 return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken);
@@ -245,7 +245,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
                 }
                 return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
             }
@@ -276,7 +276,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Boundary> GetPolygon(GetPolygonOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<Boundary> GetPolygon(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
@@ -291,7 +291,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
                 }
                 return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
             }
@@ -309,7 +309,7 @@ namespace Azure.Maps.Search
         /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, GetReverseGeocodingOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, GetReverseGeocodingOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
@@ -324,7 +324,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinatesList = null;
                 if (coordinates != null)
                 {
-                    coordinatesList = new[] { coordinates.Latitude, coordinates.Longitude };
+                    coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
 
                 return await RestClient.GetReverseGeocodingAsync(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken).ConfigureAwait(false);
@@ -343,7 +343,7 @@ namespace Azure.Maps.Search
         /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, GetReverseGeocodingOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, GetReverseGeocodingOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
@@ -358,7 +358,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinatesList = null;
                 if (coordinates != null)
                 {
-                    coordinatesList = new[] { coordinates.Latitude, coordinates.Longitude };
+                    coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
                 return RestClient.GetReverseGeocoding(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken);
             }

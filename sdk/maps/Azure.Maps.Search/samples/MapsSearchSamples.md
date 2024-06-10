@@ -65,7 +65,7 @@ Translate a coordinate (example: 37.786505, -122.3862) into a human understandab
 
 
 ```C# Snippet:GetReverseGeocoding
-IList<double> coordinates = new[] { -122.138685, 47.6305637, -122.138685, 47.6305637 };
+GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
 Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
 ```
 
