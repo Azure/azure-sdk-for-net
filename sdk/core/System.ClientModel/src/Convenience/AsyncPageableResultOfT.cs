@@ -29,17 +29,21 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public virtual async Task<ClientPage<T>> GetPageAsync(string pageToken = ClientPage<T>.First)
+    public async Task<ClientPage<T>> GetPageAsync(string pageToken = ClientPage<T>.DefaultFirstPageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-        await foreach (ClientPage<T> page in AsPages(pageToken).ConfigureAwait(false))
-        {
-            return page;
-        }
-
-        throw new ArgumentOutOfRangeException(nameof(pageToken), $"No pages returned for pageToken '{pageToken}'.");
+        return await GetPageCoreAsync(pageToken).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="pageToken"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">If no page can be retrieved
+    /// from <paramref name="pageToken"/>.</exception>
+    protected abstract Task<ClientPage<T>> GetPageCoreAsync(string pageToken = ClientPage<T>.DefaultFirstPageToken);
 
     /// <summary>
     /// Convert this <see cref="PageableResult{T}"/> to a collection of pages
@@ -47,26 +51,47 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <typeparamref name="T"/>. Enumerating this collection will typically
     /// make one service request for each page item.
     /// </summary>
-    /// <param name="startPageToken">A token indicating the first page that will be
+    /// <param name="fromPage">A token indicating the first page that will be
     /// requested when the returned collection is enumerated. If no
-    /// <paramref name="startPageToken"/> value is specified, the first page in the
+    /// <paramref name="fromPage"/> value is specified, the first page in the
     /// returned collection will be the first page of values returned from the
     /// service.</param>
     /// <returns>An enumerable of <see cref="ClientPage{T}"/> that enumerates the
     /// collection's pages instead of the collection's individual values,
-    /// starting at the page indicated by <paramref name="startPageToken"/>.
+    /// starting at the page indicated by <paramref name="fromPage"/>.
     /// </returns>
-    public IAsyncEnumerable<ClientPage<T>> AsPages(string startPageToken = ClientPage<T>.First)
+    public IAsyncEnumerable<ClientPage<T>> AsPages(string fromPage = ClientPage<T>.DefaultFirstPageToken)
     {
-        Argument.AssertNotNull(startPageToken, nameof(startPageToken));
+        Argument.AssertNotNull(fromPage, nameof(fromPage));
 
-        return AsPagesCore(startPageToken);
+        return new AsyncPageCollection(this, fromPage);
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    protected abstract IAsyncEnumerable<ClientPage<T>> AsPagesCore(string startPageToken);
+    // TODO: Qn - AsPagesAsync?  Why or why not?  What is the "correct" .NET pattern
+    // here?
+    private class AsyncPageCollection : IAsyncEnumerable<ClientPage<T>>
+    {
+        private readonly AsyncPageableResult<T> _pageable;
+        private readonly string _fromPage;
+
+        public AsyncPageCollection(AsyncPageableResult<T> pageable, string fromPage)
+        {
+            _pageable = pageable;
+            _fromPage = fromPage;
+        }
+
+        public async IAsyncEnumerator<ClientPage<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            string? pageToken = _fromPage;
+            while (pageToken != null)
+            {
+                ClientPage<T> page = await _pageable.GetPageAsync(pageToken).ConfigureAwait(false);
+                _pageable.SetRawResponse(page.GetRawResponse());
+                yield return page;
+                pageToken = page.NextPageToken;
+            }
+        }
+    }
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection
