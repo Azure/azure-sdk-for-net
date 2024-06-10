@@ -1392,6 +1392,13 @@
       "words": [
         "Byok"
       ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "AOAI",
+        "Rerank"
+      ]
     }
   ],
   "allowCompoundWords": true
