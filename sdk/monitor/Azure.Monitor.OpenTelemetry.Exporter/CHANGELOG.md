@@ -4,7 +4,6 @@
 
 ### Other Changes
 
-* Includes all changes from 1.3.0-beta.1 and 1.3.0-beta.2
 * Changed `AzureMonitorLogExporter` to be internal.
   This will be changed back to public in our next Beta while we experiment with options to enable log filtering.
   ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
