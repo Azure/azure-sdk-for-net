@@ -8,6 +8,7 @@ The Azure Batch C# client is now under the MIT license. Prior to March 10 2017 i
 
 ## Changing the Azure Batch client
 
+simple change
 Depending on the type of change you want to make, the work required varies. If you follow this process you shouldn't miss anything:
 
 1. Update the Azure Batch Swagger specification, which resides in the [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) GitHub repository (specifically [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/batch/data-plane))
