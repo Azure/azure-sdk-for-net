@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MessagingEventGridNamespacesModelFactory
+    public static partial class EventGridNamespacesModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
