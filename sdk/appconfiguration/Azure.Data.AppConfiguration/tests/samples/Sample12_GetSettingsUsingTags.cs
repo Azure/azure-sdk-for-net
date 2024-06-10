@@ -31,7 +31,8 @@ namespace Azure.Data.AppConfiguration.Samples
             #endregion
 
             #region Snippet:AzConfigSample12_GetConfigurationSettingsAsync
-            var selector = new SettingSelector { TagsFilter = new string[] { "someKey=someValue" } };
+            var selector = new SettingSelector();
+            selector.TagsFilter.Add("someKey=someValue");
 
             Debug.WriteLine("Settings for beta filtered by tag:");
             await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))

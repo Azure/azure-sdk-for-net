@@ -607,15 +607,18 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(setting);
                 await service.SetConfigurationSettingAsync(testSettingUpdate);
 
-                var parsedTags = testSettingUpdate.Tags.Select(t => $"{t.Key}={t.Value}").ToArray();
-
                 // Test
                 var selector = new SettingSelector
                 {
                     KeyFilter = setting.Key,
-                    AcceptDateTime = DateTimeOffset.MaxValue,
-                    TagsFilter = parsedTags
+                    AcceptDateTime = DateTimeOffset.MaxValue
                 };
+
+                foreach (var tag in testSettingUpdate.Tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
 
                 int resultsReturned = 0;
                 await foreach (ConfigurationSetting value in service.GetRevisionsAsync(selector, CancellationToken.None))
@@ -1619,7 +1622,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
                 var tags = expectedTags.Select(t => $"{t.Key}={t.Value}").ToArray();
-                var selector = new SettingSelector { TagsFilter = tags };
+                var selector = new SettingSelector();
+                foreach (var tag in expectedTags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1654,8 +1662,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var parsedTags = tags.Select(t => $"{t.Key}={t.Value}").ToArray();
-                var selector = new SettingSelector { TagsFilter = parsedTags };
+                var selector = new SettingSelector();
+                foreach (var tag in tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -2206,10 +2218,20 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 await service.AddConfigurationSettingAsync(testSetting);
+                var settingsFilter = new ConfigurationSettingsFilter(testSetting.Key);
 
-                var parsedTags = testSetting.Tags.Select(t => $"{t.Key}={t.Value}").ToArray();
-                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) { Tags = parsedTags } });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
+                foreach (var tag in testSetting.Tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    settingsFilter.Tags.Add(parsedTag);
+                }
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(
+                    new ConfigurationSettingsFilter[]
+                    {
+                        settingsFilter
+                    });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilters);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -2339,16 +2361,19 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(thirdSetting);
                 await service.AddConfigurationSettingAsync(fourthSetting);
 
-                var parsedTags = expectedTags.Select(t => $"{t.Key}={t.Value}").ToArray();
-                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
+                var settingsFilter = new ConfigurationSettingsFilter("KeyBar-*");
+                foreach (var tag in expectedTags)
                 {
-                    new ConfigurationSettingsFilter("KeyBar-*")
-                    {
-                        Tags = parsedTags
-                    }
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    settingsFilter.Tags.Add(parsedTag);
+                }
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
+                {
+                    settingsFilter
                 });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters));
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
@@ -2405,15 +2430,15 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(thirdSetting);
                 await service.AddConfigurationSettingAsync(fourthSetting);
 
-                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
+                var settingFilter = new ConfigurationSettingsFilter("KeyBar-*");
+                settingFilter.Tags.Add("uknown=tag");
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
                 {
-                    new ConfigurationSettingsFilter("KeyBar-*")
-                    {
-                        Tags = new string[] { "uknown=tag" }
-                    }
+                    settingFilter
                 });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters));
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();

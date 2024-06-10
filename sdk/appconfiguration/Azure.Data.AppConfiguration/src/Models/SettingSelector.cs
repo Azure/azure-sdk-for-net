@@ -40,7 +40,7 @@ namespace Azure.Data.AppConfiguration
         /// Each tag in the list should be expressed as a string in the format `tag=value`.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> TagsFilter { get; set; }
+        public IList<string> TagsFilter { get; }
 
         /// <summary>
         /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
@@ -59,7 +59,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         public SettingSelector()
         {
-            TagsFilter = new ChangeTrackingList<string>();
+            TagsFilter = new List<string>();
         }
 
         #region nobody wants to see these

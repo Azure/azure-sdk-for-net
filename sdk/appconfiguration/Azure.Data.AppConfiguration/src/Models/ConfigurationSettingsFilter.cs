@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
-            Tags = new ChangeTrackingList<string>();
+            Tags = new List<string>();
         }
 
         /// <summary> Initializes a new instance of KeyValueFilter. </summary>
@@ -40,6 +40,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Filters key-values by their tags field.
         /// Each tag in the list should be expressed as a string in the format `tag=value`.
         /// </summary>
-        public IList<string> Tags { get; set; }
+        public IList<string> Tags { get; }
     }
 }

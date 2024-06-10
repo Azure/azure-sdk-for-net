@@ -38,7 +38,7 @@ To gather all the information available for settings grouped by a specific tag, 
 ```C# Snippet:AzConfigSample12_GetConfigurationSettingsAsync
 var selector = new SettingSelector { TagsFilter = new string[] { "someKey=someValue" } };
 
-Debug.WriteLine("Settings for beta filtered by tag:");
+Console.WriteLine("Settings for beta filtered by tag:");
 await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
 {
     Console.WriteLine(setting);

@@ -535,10 +535,11 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = CreateTestService(mockTransport);
 
             var parsedTags = mockTags.Select(t => $"{t.Key}={t.Value}").ToList();
-            var query = new SettingSelector()
+            var query = new SettingSelector();
+            foreach (var tag in mockTags)
             {
-                TagsFilter = parsedTags
-            };
+                query.TagsFilter.Add($"{tag.Key}={tag.Value}");
+            }
             int keyIndex = 0;
 
             await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
