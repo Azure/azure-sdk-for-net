@@ -15,7 +15,7 @@ Use the client library for Azure Event Grid to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.EventGrid.Namespaces --prerelease
+dotnet add package Azure.Messaging.EventGrid.Namespaces
 ```
 
 ### Prerequisites

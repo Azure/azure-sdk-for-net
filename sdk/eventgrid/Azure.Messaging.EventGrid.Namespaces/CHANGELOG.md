@@ -6,7 +6,7 @@
 
 - Initial GA release of Azure.Messaging.EventGrid.Namespaces.
 
-### Breaking Changes
+### Other Changes
 
 - `EventGridClient` was split into `EventGridSenderClient` and `EventGridReceiverClient`.
 - `ReceiveResult.Value` was renamed to `ReceiveResult.Details`.
