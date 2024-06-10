@@ -13,6 +13,11 @@
 
 ### Other Changes
 
+## 1.11.4 (2024-06-10)
+
+### Bugs Fixed
+- Managed identity bug fixes.
+
 ## 1.11.3 (2024-05-07)
 
 ### Bugs Fixed
