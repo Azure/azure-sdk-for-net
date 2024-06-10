@@ -45,10 +45,9 @@ namespace System.ClientModel
         internal ClientPage() { }
         public const string DefaultFirstPageToken = "";
         public string? NextPageToken { get { throw null; } }
-        public string PageToken { get { throw null; } }
         public string? PreviousPageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        public static System.ClientModel.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.Primitives.PipelineResponse response, string pageToken, string? nextPageToken, string? previousPageToken = null) { throw null; }
+        public static System.ClientModel.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.Primitives.PipelineResponse response, string? nextPageToken, string? previousPageToken = null) { throw null; }
     }
     public partial class ClientResult
     {

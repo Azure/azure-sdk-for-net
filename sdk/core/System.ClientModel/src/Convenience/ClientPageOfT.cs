@@ -20,13 +20,11 @@ public class ClientPage<T> : ClientResult
 
     private ClientPage(IReadOnlyList<T> values,
         PipelineResponse response,
-        string pageToken,
         string? nextPageToken,
         string? previousPageToken)
         : base(response)
     {
         Values = values;
-        PageToken = pageToken;
         NextPageToken = nextPageToken;
         PreviousPageToken = previousPageToken;
     }
@@ -36,8 +34,6 @@ public class ClientPage<T> : ClientResult
     /// </summary>
     /// <param name="values">The values contained in <paramref name="response"/>.
     /// </param>
-    /// <param name="pageToken">The token that was used to request the current
-    /// page of values.</param>
     /// <param name="nextPageToken">A token that can be used to request
     /// the next page of results from the service, or <c>null</c> if this page
     /// holds the final subset of values.</param>
@@ -51,10 +47,9 @@ public class ClientPage<T> : ClientResult
     /// values.</returns>
     public static ClientPage<T> Create(IReadOnlyList<T> values,
         PipelineResponse response,
-        string pageToken,
         string? nextPageToken,
         string? previousPageToken = default)
-        => new(values, response, pageToken, nextPageToken, previousPageToken);
+        => new(values, response, nextPageToken, previousPageToken);
 
     /// <summary>
     /// Gets the values in this <see cref="ClientPage{T}"/>.
@@ -69,11 +64,6 @@ public class ClientPage<T> : ClientResult
     /// the collection.
     /// </summary>
     public string? NextPageToken { get; }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public string PageToken { get; }
 
     /// <summary>
     /// Gets a token that can be used to request the previous page of results
