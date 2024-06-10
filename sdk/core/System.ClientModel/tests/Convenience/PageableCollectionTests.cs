@@ -11,6 +11,9 @@ namespace System.ClientModel.Tests.Results;
 
 public class PageableCollectionTests
 {
+    // TODO: Add tests for:
+    //   - GetPage and AsPages throw if you pass null to them
+
     private static readonly string[] MockPageContents = { """
             [
                 { "intValue" : 0, "stringValue" : "0" },
