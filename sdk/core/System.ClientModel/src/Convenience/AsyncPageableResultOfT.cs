@@ -29,7 +29,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <summary>
     /// TBD.
     /// </summary>
-    public async Task<ClientPage<T>> GetPageAsync(string pageToken = ClientPage<T>.DefaultFirstPageToken)
+    public async Task<ClientPage<T>> GetPageAsync(string pageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
@@ -43,7 +43,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException">If no page can be retrieved
     /// from <paramref name="pageToken"/>.</exception>
-    protected abstract Task<ClientPage<T>> GetPageCoreAsync(string pageToken = ClientPage<T>.DefaultFirstPageToken);
+    protected abstract Task<ClientPage<T>> GetPageCoreAsync(string pageToken);
 
     /// <summary>
     /// Convert this <see cref="PageableResult{T}"/> to a collection of pages
