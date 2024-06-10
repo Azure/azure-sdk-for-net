@@ -8,8 +8,10 @@
 - ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
 
 ### Breaking Changes
+- The constructor of `AzurePipelinesCredential` now includes additional required parameters for the Azure Pipelines service connection.
 
 ### Bugs Fixed
+- Bug fixes for `AzurePipelinesCredential`
 
 ### Other Changes
 
