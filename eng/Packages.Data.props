@@ -28,7 +28,7 @@
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
 
-    <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
 
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
