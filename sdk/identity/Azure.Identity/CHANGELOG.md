@@ -14,8 +14,6 @@
 - Bug fixes for `AzurePipelinesCredential`
 - Managed identity bug fixes.
 
-### Other Changes
-
 ## 1.11.4 (2024-06-10)
 
 ### Bugs Fixed
