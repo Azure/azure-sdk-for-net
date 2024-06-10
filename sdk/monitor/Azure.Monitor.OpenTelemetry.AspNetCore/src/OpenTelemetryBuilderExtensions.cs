@@ -169,16 +169,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
                         }
 
-                        if (enableLogSampling)
-                        {
-                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        }
-                        else
-                        {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        }
+                        // TODO: WILL RE-ENABLE IN NEXT BETA
+                        //if (enableLogSampling)
+                        //{
+                        //    var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                        //    azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
+                        //    loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
+                        //}
+                        //else
+                        //{
+                        //    loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                        //}
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
@@ -200,20 +201,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
                     });
 
+            // TODO: WILL RE-ENABLE IN NEXT BETA
             // Register Azure SDK log forwarder in the case it was not registered by the user application.
-            builder.Services.AddHostedService(sp =>
-            {
-                var logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
+            //builder.Services.AddHostedService(sp =>
+            //{
+            //    var logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
 
-                if (logForwarderType != null && sp.GetService(logForwarderType) != null)
-                {
-                    AzureMonitorAspNetCoreEventSource.Log.LogForwarderIsAlreadyRegistered();
-                    return AzureEventSourceLogForwarder.Noop;
-                }
+            //    if (logForwarderType != null && sp.GetService(logForwarderType) != null)
+            //    {
+            //        AzureMonitorAspNetCoreEventSource.Log.LogForwarderIsAlreadyRegistered();
+            //        return AzureEventSourceLogForwarder.Noop;
+            //    }
 
-                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                return new AzureEventSourceLogForwarder(loggerFactory);
-            });
+            //    var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+            //    return new AzureEventSourceLogForwarder(loggerFactory);
+            //});
 
             // Register Manager as a singleton
             builder.Services.AddSingleton<Manager>(sp =>
