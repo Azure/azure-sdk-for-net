@@ -14,8 +14,8 @@ namespace Azure.AI.OpenAI.FineTuning;
 /// </remarks>
 internal partial class AzureFineTuningClient : FineTuningClient
 {
-    private readonly Uri _endpoint;
-    private readonly string _apiVersion;
+    internal readonly Uri _endpoint;
+    internal readonly string _apiVersion;
 
     internal AzureFineTuningClient(
         ClientPipeline pipeline,

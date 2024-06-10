@@ -66,6 +66,19 @@ internal partial class AzureFineTuningClient : FineTuningClient
         return ClientResult.FromResponse(response);
     }
 
+    public override ClientResult GetJobCheckpoints(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    {
+        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    public override async Task<ClientResult> GetJobCheckpointsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    {
+        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
+        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+        return ClientResult.FromResponse(response);
+    }
+
     public override ClientResult CancelJob(string fineTuningJobId, RequestOptions options)
     {
         using PipelineMessage message = CreateCancelJobRequestMessage(fineTuningJobId, options);
@@ -82,7 +95,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
     private PipelineMessage CreateCreateJobRequestMessage(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
-            .WithPath("fine_tuning")
+            .WithPath("fine_tuning", "jobs")
             .WithContent(content, "application/json")
             .WithAccept("application/json")
             .WithOptions(options)
@@ -91,7 +104,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
     private PipelineMessage CreateGetJobsRequestMessage(string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning")
+            .WithPath("fine_tuning", "jobs")
             .WithOptionalQueryParameter("after", after)
             .WithOptionalQueryParameter("limit", limit)
             .WithAccept("application/json")
@@ -101,7 +114,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
     private PipelineMessage CreateGetJobRequestMessage(string jobId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning", jobId)
+            .WithPath("fine_tuning", "jobs", jobId)
             .WithAccept("application/json")
             .WithOptions(options)
             .Build();
@@ -109,7 +122,17 @@ internal partial class AzureFineTuningClient : FineTuningClient
     private PipelineMessage CreateGetJobEventsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning", jobId, "events")
+            .WithPath("fine_tuning", "jobs", jobId, "events")
+            .WithOptionalQueryParameter("after", after)
+            .WithOptionalQueryParameter("limit", limit)
+            .WithAccept("application/json")
+            .WithOptions(options)
+            .Build();
+
+    private PipelineMessage CreateGetJobCheckpointsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
+        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
+            .WithMethod("GET")
+            .WithPath("fine_tuning", "jobs", jobId, "checkpoints")
             .WithOptionalQueryParameter("after", after)
             .WithOptionalQueryParameter("limit", limit)
             .WithAccept("application/json")
@@ -119,7 +142,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
     private PipelineMessage CreateCancelJobRequestMessage(string jobId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
-            .WithPath("fine_tuning", jobId, "cancel")
+            .WithPath("fine_tuning", "jobs", jobId, "cancel")
             .WithAccept("application/json")
             .WithOptions(options)
             .Build();

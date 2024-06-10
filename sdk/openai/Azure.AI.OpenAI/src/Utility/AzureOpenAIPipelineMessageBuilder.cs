@@ -97,7 +97,7 @@ internal class AzureOpenAIPipelineMessageBuilder
         Argument.AssertNotNullOrWhiteSpace(_method, nameof(_method));
 
         PipelineMessage message = _pipeline.CreateMessage();
-        message.ResponseClassifier = AzureOpenAIClient.PipelineMessageClassifier200;
+        message.ResponseClassifier = AzureOpenAIClient.PipelineMessageClassifier;
         if (_bufferResponse.HasValue)
         {
             message.BufferResponse = _bufferResponse.Value;

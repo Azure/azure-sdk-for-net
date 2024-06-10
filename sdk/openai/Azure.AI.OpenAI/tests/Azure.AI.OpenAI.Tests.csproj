@@ -28,31 +28,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\edit_sample_image.png">
+    <None Include="Assets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\edit_sample_mask.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\french.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\hello_world.m4a">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\speed-talking.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\stop_sign.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\variation_sample_image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\**\*">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
-    <None Include="SessionRecords\**\*" />
-  </ItemGroup>
+    <Compile Include="..\src\Polyfill\**\*.cs">
+      <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
+    </Compile>
+</ItemGroup>
   
 </Project>
