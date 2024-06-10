@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
+using Azure.Maps.Search.Models.Options;
 
 namespace Azure.Maps.Search
 {
@@ -129,48 +131,33 @@ namespace Azure.Maps.Search
         /// <summary>
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
-        /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
-        /// <param name="addressLine">
-        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="countryRegion">
-        /// Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./ If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="boundingBox">
-        /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
-        ///
-        /// Example: lon1,lat1,lon2,lat2
-        /// </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
-        /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="adminDistrict">
-        /// The country subdivision portion of an address, such as WA. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="adminDistrict2">
-        /// The county for the structured address, such as King. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="adminDistrict3">
-        /// The named area for the structured address. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="locality">
-        /// The locality portion of an address, such as Seattle. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="postalCode">
-        /// The postal code portion of an address. If query is given, should not use this parameter.
-        /// </param>
+        /// <param name = "options" > additional options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, GetGeocodingOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
             try
             {
-                return await RestClient.GetGeocodingAsync(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken).ConfigureAwait(false);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> boundingBox = null;
+                if (options?.BoundingBox != null)
+                {
+                    boundingBox = new[] { options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East };
+                }
+                IEnumerable<double> coordinates = null;
+                if (options?.Coordinates != null)
+                {
+                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                }
+
+                return await RestClient.GetGeocodingAsync(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -182,52 +169,33 @@ namespace Azure.Maps.Search
         /// <summary>
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
-        /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
-        /// <param name="addressLine">
-        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="countryRegion">
-        /// Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./
-        ///
-        /// If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="boundingBox">
-        /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
-        ///
-        /// Example: lon1,lat1,lon2,lat2
-        /// </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
-        /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="adminDistrict">
-        /// The country subdivision portion of an address, such as WA. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="adminDistrict2">
-        /// The county for the structured address, such as King.
-        ///
-        /// If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="adminDistrict3">
-        /// The named area for the structured address. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="locality">
-        /// The locality portion of an address, such as Seattle. If query is given, should not use this parameter.
-        /// </param>
-        /// <param name="postalCode">
-        /// The postal code portion of an address. If query is given, should not use this parameter.
-        /// </param>
+        /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, GetGeocodingOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
             try
             {
-                return RestClient.GetGeocoding(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> boundingBox = null;
+                if (options?.BoundingBox != null)
+                {
+                    boundingBox = new[] { options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East };
+                }
+                IEnumerable<double> coordinates = null;
+                if (options?.Coordinates != null)
+                {
+                    coordinates = new[] { (double)options.Coordinates?.Latitude , (double)options.Coordinates?.Longitude };
+                }
+
+                return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken);
             }
             catch (Exception e)
             {
@@ -275,22 +243,26 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
-        /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
-        /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
+        /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Boundary>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
             try
             {
-                return await RestClient.GetPolygonAsync(coordinates, view, resultType, resolution, cancellationToken).ConfigureAwait(false);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> coordinates = null;
+                if (options?.Coordinates != null)
+                {
+                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                }
+                return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -302,22 +274,26 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
-        /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
-        /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
+        /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Boundary> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public virtual Response<Boundary> GetPolygon(GetPolygonOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
             try
             {
-                return RestClient.GetPolygon(coordinates, view, resultType, resolution, cancellationToken);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> coordinates = null;
+                if (options?.Coordinates != null)
+                {
+                    coordinates = new[] { (double)options.Coordinates?.Latitude, (double)options.Coordinates?.Longitude };
+                }
+                return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
             }
             catch (Exception e)
             {
@@ -330,36 +306,28 @@ namespace Azure.Maps.Search
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="resultTypes">
-        /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
-        /// Default value is all possible entities.
-        /// A comma separated list of entity types selected from the following options.
-        ///
-        /// <list type="bullet">
-        /// <item>Address</item>
-        /// <item>Neighborhood</item>
-        /// <item>PopulatedPlace</item>
-        /// <item>Postcode1</item>
-        /// <item>AdminDivision1</item>
-        /// <item>AdminDivision2</item>
-        /// <item>CountryRegion</item>
-        /// </list>
-        /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
-        /// </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
+        /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, GetReverseGeocodingOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
             try
             {
-                return await RestClient.GetReverseGeocodingAsync(coordinates, resultTypes, view, cancellationToken).ConfigureAwait(false);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> coordinatesList = null;
+                if (coordinates != null)
+                {
+                    coordinatesList = new[] { coordinates.Latitude, coordinates.Longitude };
+                }
+
+                return await RestClient.GetReverseGeocodingAsync(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -372,36 +340,27 @@ namespace Azure.Maps.Search
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="resultTypes">
-        /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
-        /// Default value is all possible entities.
-        /// A comma separated list of entity types selected from the following options.
-        ///
-        /// <list type="bullet">
-        /// <item>Address</item>
-        /// <item>Neighborhood</item>
-        /// <item>PopulatedPlace</item>
-        /// <item>Postcode1</item>
-        /// <item>AdminDivision1</item>
-        /// <item>AdminDivision2</item>
-        /// <item>CountryRegion</item>
-        /// </list>
-        /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
-        /// </param>
-        /// <param name="view">
-        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
-        ///
-        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
-        /// </param>
+        /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual Response<GeocodingResponse> GetReverseGeocoding(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, GetReverseGeocodingOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
             try
             {
-                return RestClient.GetReverseGeocoding(coordinates, resultTypes, view, cancellationToken);
+                string localizedMapView = null;
+                if (options?.LocalizedMapView != null)
+                {
+                    localizedMapView = options?.LocalizedMapView.ToString();
+                }
+
+                IEnumerable<double> coordinatesList = null;
+                if (coordinates != null)
+                {
+                    coordinatesList = new[] { coordinates.Latitude, coordinates.Longitude };
+                }
+                return RestClient.GetReverseGeocoding(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
