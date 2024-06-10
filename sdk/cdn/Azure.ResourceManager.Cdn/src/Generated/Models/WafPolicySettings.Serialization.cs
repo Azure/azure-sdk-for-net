@@ -55,22 +55,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
-                if (DefaultCustomBlockResponseBody != null)
-                {
-                    writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
+                writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultCustomBlockResponseBody);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(DefaultCustomBlockResponseBody))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(DefaultCustomBlockResponseBody))
                 {
-                    writer.WriteNull("defaultCustomBlockResponseBody");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +153,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultCustomBlockResponseBody = null;
                         continue;
                     }
                     defaultCustomBlockResponseBody = BinaryData.FromString(property.Value.GetRawText());

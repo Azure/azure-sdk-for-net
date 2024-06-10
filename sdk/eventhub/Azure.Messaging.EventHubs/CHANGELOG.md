@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
+
 ## 5.12.0-beta.1 (2024-05-17)
 
 ### Features Added

@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Post</description>
+        /// <description>CheckNameAvailability_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope0.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.PostAsync(scope, content, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityRestClient.CheckAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Post</description>
+        /// <description>CheckNameAvailability_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope0.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.Post(scope, content, cancellationToken);
+                var response = CheckNameAvailabilityRestClient.CheckAvailability(scope, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

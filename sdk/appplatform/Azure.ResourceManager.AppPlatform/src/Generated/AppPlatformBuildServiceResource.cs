@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BuildService_GetResourceUploadUrl</description>
+        /// <description>BuildService_GetResourceUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BuildService_GetResourceUploadUrl</description>
+        /// <description>BuildService_GetResourceUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

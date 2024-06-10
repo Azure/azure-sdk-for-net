@@ -3,6 +3,9 @@
 ## 1.12.0-beta.3 (Unreleased)
 
 ### Features Added
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
 
 ### Breaking Changes
 
@@ -57,6 +60,9 @@
 - `AzureCliCredential` utilizes the new `expires_on` property returned by `az account get-access-token` to determine token expiration.
 
 ## 1.10.4 (2023-11-13)
+
+### Breaking Changes
+- One of Azure.Identity's dependencies, Microsoft.Identity.Client, inadvertently added a dependency to `WindowsForms` when targeting `netX.0-windows` instead of `netX.0` in version 4.56.0. An additional installation of .NET Desktop Runtime may be necessary. Manually adding a reference to the latest Microsoft.Identity.Client will remove the need for the .NET Desktop Runtime. [#44232](https://github.com/Azure/azure-sdk-for-net/issues/44232)
 
 ### Other Changes
 - Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
