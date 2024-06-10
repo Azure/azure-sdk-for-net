@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace System.ClientModel.Primitives;
 
@@ -46,7 +47,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _assemblyName = loggingOptions.LoggedClientAssemblyName;
         _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
         _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
-        _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters, loggingOptions.AllowedHeaderNames);
+        _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
 
         string logNameToUse = logName ?? DefaultEventSourceName;
         EventSourceSingleton = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));
@@ -129,12 +130,22 @@ public class ClientLoggingPolicy : PipelinePolicy
         string responseId = GetResponseIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
 
         LogResponse(response, responseId, elapsed);
-        await LogResponseContent(response, responseId, message.BufferResponse, async, message.CancellationToken).ConfigureAwait(false);
+        LogResponseContent(response, responseId, message.BufferResponse, async, message.CancellationToken);
 
         if (elapsed > RequestTooLongTime)
         {
             EventSourceSingleton.ResponseDelay(responseId, elapsed);
         }
+    }
+
+    internal string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
+    {
+        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
+        {
+            return null;
+        }
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        return clientRequestId;
     }
 
     private void LogRequest(PipelineRequest request, string? requestId)
@@ -186,7 +197,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
     }
 
-    private async Task LogResponseContent(PipelineResponse response, string? responseId, bool contentBuffered, bool async, CancellationToken cancellationToken)
+    private void LogResponseContent(PipelineResponse response, string? responseId, bool contentBuffered, bool async, CancellationToken cancellationToken)
     {
         var logErrorResponseContent = response.IsError && EventSourceSingleton.IsEnabled(EventLevel.Warning, EventKeywords.All);
         var logResponseContent = EventSourceSingleton.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
@@ -217,20 +228,11 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
 
         // We check content stream is not null above
-        if (response.ContentStream!.CanSeek)
+        if (response.ContentStream.CanSeek)
         {
-            using var memoryStream = new MaxLengthStream(_maxLength);
-            if (async)
-            {
-                await response.ContentStream!.CopyToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                response.ContentStream!.CopyTo(memoryStream, cancellationToken);
-            }
+            byte[] bytes = new byte[_maxLength];
+            response.ContentStream.Read(bytes, 0, _maxLength);
             response.ContentStream.Seek(0, SeekOrigin.Begin);
-
-            byte[] bytes = memoryStream.ToArray();
 
             LogFormattedResponseContent(response.IsError, responseId, bytes, responseTextEncoding);
 
@@ -253,16 +255,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     }
 
     private string? GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
-    {
-        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
-        return clientRequestId;
-    }
-
-    private string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
         if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
         {

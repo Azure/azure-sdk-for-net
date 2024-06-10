@@ -155,6 +155,11 @@ public sealed partial class ClientPipeline
         {
             PipelinePolicy loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: loggingOptions);
             policies[index++] = loggingPolicy;
+            ClientRetryPolicy? retryPolicy = options.RetryPolicy as ClientRetryPolicy;
+            if (retryPolicy != null)
+            {
+                retryPolicy.ClientLoggingPolicyIndex = index;
+            }
         }
 
         // Before transport policies come before the transport.
