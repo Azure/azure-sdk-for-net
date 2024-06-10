@@ -53,8 +53,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             #region Snippet:PublishBatchOfEvents
 #if SNIPPET
-            await client.PublishCloudEventsAsync(
-                topicName,
+            await client.SendAsync(
                 new[] {
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
@@ -79,7 +78,7 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:ReceiveAndProcessEvents
 #if SNIPPET
             // Construct the client using an Endpoint for a namespace as well as the shared access key
-            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
 #else
             var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
@@ -204,7 +203,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
 #if SNIPPET
             // Construct the receiver client using an Endpoint for a namespace as well as the DefaultAzureCredential
-            var receiverClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName, subscriptionName);
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName, subscriptionName);
 #else
             var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
