@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
         /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
-        /// <param name="deploymentId"> ID of the Azure OpenAI model deployment on the designated resource. </param>
+        /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
         /// <param name="authIdentity">
         /// The user-assigned managed identity used for outbound connections.
@@ -27,10 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
-        internal AzureOpenAIParameters(Uri resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity, AzureOpenAIModelName? modelName)
+        internal AzureOpenAIParameters(Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authIdentity, AzureOpenAIModelName? modelName)
         {
             ResourceUri = resourceUri;
-            DeploymentId = deploymentId;
+            DeploymentName = deploymentName;
             ApiKey = apiKey;
             AuthIdentity = authIdentity;
             ModelName = modelName;
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
         public Uri ResourceUri { get; set; }
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
-        public string DeploymentId { get; set; }
+        public string DeploymentName { get; set; }
         /// <summary> API key of the designated Azure OpenAI resource. </summary>
         public string ApiKey { get; set; }
         /// <summary>

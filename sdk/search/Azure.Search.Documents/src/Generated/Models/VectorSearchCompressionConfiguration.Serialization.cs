@@ -50,6 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "binaryQuantization": return BinaryQuantizationCompressionConfiguration.DeserializeBinaryQuantizationCompressionConfiguration(element);
                     case "scalarQuantization": return ScalarQuantizationCompressionConfiguration.DeserializeScalarQuantizationCompressionConfiguration(element);
                 }
             }

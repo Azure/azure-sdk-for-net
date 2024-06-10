@@ -19,10 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
-            if (Optional.IsDefined(Vectorizer))
+            if (Optional.IsDefined(VectorizerName))
             {
                 writer.WritePropertyName("vectorizer"u8);
-                writer.WriteStringValue(Vectorizer);
+                writer.WriteStringValue(VectorizerName);
             }
             if (Optional.IsDefined(CompressionConfigurationName))
             {

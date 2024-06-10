@@ -21,10 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
+                writer.WriteStringValue(DeploymentName);
             }
             if (Optional.IsDefined(ApiKey))
             {
