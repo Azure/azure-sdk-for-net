@@ -853,6 +853,80 @@ namespace Azure.Identity.Tests
             await Task.CompletedTask;
         }
 
+        [Test]
+        public void VerifyArcIdentitySourceFilePathValidation_DoesNotEndInDotKey()
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", "https://identity.constoso.com" },
+                    { "IMDS_ENDPOINT", "https://imds.constoso.com" },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+
+            var mockTransport = new MockTransport(request =>
+            {
+                var response = new MockResponse(401);
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    response.AddHeader("WWW-Authenticate", "file=c:\\ProgramData\\AzureConnectedMachineAgent\\Tokens\\secret.foo");
+                }
+                else
+                {
+                    response.AddHeader("WWW-Authenticate", "file=/var/opt/azcmagent/tokens/secret.foo");
+                }
+                return response;
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain("File name is invalid."));
+        }
+
+        [Test]
+        public void VerifyArcIdentitySourceFilePathValidation_FilePathInvalid()
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", "https://identity.constoso.com" },
+                    { "IMDS_ENDPOINT", "https://imds.constoso.com" },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+
+            var mockTransport = new MockTransport(request =>
+            {
+                var response = new MockResponse(401);
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    response.AddHeader("WWW-Authenticate", "file=c:\\ProgramData\\bugus\\AzureConnectedMachineAgent\\Tokens\\secret.key");
+                }
+                else
+                {
+                    response.AddHeader("WWW-Authenticate", "file=/var/opt/bogus/azcmagent/tokens/secret.key");
+                }
+                return response;
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain("File path is invalid."));
+        }
+
         private static IEnumerable<TestCaseData> ResourceAndClientIds()
         {
             yield return new TestCaseData(new object[] { null, false });
