@@ -1297,7 +1297,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1317,12 +1320,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1342,12 +1348,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                await Task.Delay(TimeSpan.FromSeconds(15));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1367,7 +1376,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                await Task.Delay(TimeSpan.FromSeconds(15));
 
                 // Mark the time for deleting.
                 var targetDate = DateTime.UtcNow;
@@ -1378,9 +1387,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var message = new ServiceBusMessage("Eye of the tiger") { MessageId = "survivor" };
                 await client.CreateSender(scope.QueueName).SendMessageAsync(message);
 
+                // Set a long timeout to ensure that the purge operation has time to complete, but
+                // can act as a guard to avoid an infinite loop.
+                using var cancellationSource = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
+                while (numMessagesDeleted < messageCount)
+                {
+                    numMessagesDeleted += await receiver.PurgeMessagesAsync(targetDate, cancellationSource.Token);
+                }
+
+                // Because of the secondary loop, we should always see these equal if there was no cancellation.
                 Assert.AreEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted, except for our designated survivor.
