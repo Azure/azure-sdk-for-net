@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> The result of the RenewLock operation. </summary>
-    public partial class RenewCloudEventLocksResult
+    public partial class RenewLocksResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RenewCloudEventLocksResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failedLockTokens"/> or <paramref name="succeededLockTokens"/> is null. </exception>
-        internal RenewCloudEventLocksResult(IEnumerable<FailedLockToken> failedLockTokens, IEnumerable<string> succeededLockTokens)
+        internal RenewLocksResult(IEnumerable<FailedLockToken> failedLockTokens, IEnumerable<string> succeededLockTokens)
         {
             Argument.AssertNotNull(failedLockTokens, nameof(failedLockTokens));
             Argument.AssertNotNull(succeededLockTokens, nameof(succeededLockTokens));
@@ -59,19 +59,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             SucceededLockTokens = succeededLockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenewCloudEventLocksResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenewCloudEventLocksResult(IReadOnlyList<FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RenewLocksResult(IReadOnlyList<FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailedLockTokens = failedLockTokens;
             SucceededLockTokens = succeededLockTokens;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenewCloudEventLocksResult"/> for deserialization. </summary>
-        internal RenewCloudEventLocksResult()
+        /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/> for deserialization. </summary>
+        internal RenewLocksResult()
         {
         }
 
