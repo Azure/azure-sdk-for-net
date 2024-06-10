@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -180,6 +181,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> SendEventAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -218,7 +220,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SendEvent(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response SendEvent(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -256,7 +259,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SendEventsAsync(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> SendEventsAsync(RequestContent content, RequestContext context = null)
         {
             return await SendEventsAsync(_topicName, content, context).ConfigureAwait(false);
         }
@@ -281,6 +285,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response SendEvents(RequestContent content, RequestContext context = null)
         {
             return SendEvents(_topicName, content, context);

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -101,7 +102,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ReceiveResult> Receive(int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReceiveResult> Receive(int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
         {
             return Receive(_topicName, _subscriptionName, maxEvents, maxWaitTime, cancellationToken);
         }
@@ -125,7 +126,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReceiveAsync(int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> ReceiveAsync(int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             return await ReceiveAsync(_topicName, _subscriptionName, maxEvents, maxWaitTime, context).ConfigureAwait(false);
         }
@@ -150,7 +152,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Receive(int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Receive(int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             return Receive(_topicName, _subscriptionName, maxEvents, maxWaitTime, context);
         }
@@ -159,7 +162,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return await AcknowledgeAsync(_topicName, _subscriptionName, lockTokens, cancellationToken).ConfigureAwait(false);
         }
@@ -168,7 +171,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual Response<AcknowledgeResult> Acknowledge(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual Response<AcknowledgeResult> Acknowledge(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return Acknowledge(_topicName, _subscriptionName, lockTokens, cancellationToken);
         }
@@ -193,7 +196,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AcknowledgeAsync(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> AcknowledgeAsync(RequestContent content, RequestContext context = null)
         {
             return await AcknowledgeAsync(_topicName, _subscriptionName, content, context).ConfigureAwait(false);
         }
@@ -218,7 +222,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Acknowledge(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Acknowledge(RequestContent content, RequestContext context = null)
         {
             return Acknowledge(_topicName, _subscriptionName, content, context);
         }
@@ -228,7 +233,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReleaseResult>> ReleaseAsync(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
         {
             return await ReleaseAsync(_topicName, _subscriptionName, lockTokens, releaseDelayInSeconds, cancellationToken).ConfigureAwait(false);
         }
@@ -238,7 +243,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual Response<ReleaseResult> Release(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReleaseResult> Release(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
         {
             return Release(_topicName, _subscriptionName, lockTokens, releaseDelayInSeconds, cancellationToken);
         }
@@ -264,7 +269,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReleaseAsync(RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> ReleaseAsync(RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
         {
             return await ReleaseAsync(_topicName, _subscriptionName, content, releaseDelayInSeconds, context).ConfigureAwait(false);
         }
@@ -290,7 +296,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Release(RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Release(RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
         {
             return Release(_topicName, _subscriptionName, content, releaseDelayInSeconds, context);
         }
@@ -299,7 +306,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual async Task<Response<RejectResult>> RejectAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RejectResult>> RejectAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return await RejectAsync(_topicName, _subscriptionName, lockTokens, cancellationToken).ConfigureAwait(false);
         }
@@ -308,7 +315,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual Response<RejectResult> Reject(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual Response<RejectResult> Reject(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return Reject(_topicName, _subscriptionName, lockTokens, cancellationToken);
         }
@@ -333,7 +340,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RejectAsync(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> RejectAsync(RequestContent content, RequestContext context = null)
         {
             return await RejectAsync(_topicName, _subscriptionName, content, context).ConfigureAwait(false);
         }
@@ -358,7 +366,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Reject(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Reject(RequestContent content, RequestContext context = null)
         {
             return Reject(_topicName, _subscriptionName, content, context);
         }
@@ -367,7 +376,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return await RenewLocksAsync(_topicName, _subscriptionName, lockTokens, cancellationToken).ConfigureAwait(false);
         }
@@ -376,7 +385,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        internal virtual Response<RenewLocksResult> RenewLocks(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual Response<RenewLocksResult> RenewLocks(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             return RenewLocks(_topicName, _subscriptionName, lockTokens, cancellationToken);
         }
@@ -401,7 +410,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RenewLocksAsync(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> RenewLocksAsync(RequestContent content, RequestContext context = null)
         {
             return await RenewLocksAsync(_topicName, _subscriptionName, content, context).ConfigureAwait(false);
         }
@@ -426,7 +436,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RenewLocks(RequestContent content, RequestContext context = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response RenewLocks(RequestContent content, RequestContext context = null)
         {
             return RenewLocks(_topicName, _subscriptionName, content, context);
         }
