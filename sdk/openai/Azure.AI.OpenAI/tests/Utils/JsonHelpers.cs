@@ -38,7 +38,7 @@ internal static class JsonHelpers
     public static JsonSerializerOptions AzureJsonOptions { get; } = new()
     {
         PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = SnakeCaseLower,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 #if NETFRAMEWORK
         IgnoreNullValues = true,
 #else
