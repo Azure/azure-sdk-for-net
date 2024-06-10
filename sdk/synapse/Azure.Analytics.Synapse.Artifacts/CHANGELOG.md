@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.21 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.20 (2024-06-07)
 ### Features Added
 - Model Dataset has a new parameter LakeHouseLocation
