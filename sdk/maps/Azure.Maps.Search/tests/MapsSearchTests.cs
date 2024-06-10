@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
 using Azure.Maps.Search.Models;
 using NUnit.Framework;
@@ -103,7 +104,7 @@ namespace Azure.Maps.Search.Tests
         public async Task GetReverseGeocodingTest()
         {
             var client = CreateClient();
-            IList<double> coordinates = new[] { -122.34255, 47.0 };
+            GeoPosition coordinates = new GeoPosition(-122.34255, 47.0);
             var response = await client.GetReverseGeocodingAsync(coordinates);
             Assert.AreEqual("Graham", response.Value.Features[0].Properties.Address.Locality);
         }
@@ -113,7 +114,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             // "The provided coordinates in query are invalid, out of range, or not in the expected format"
-            IList<double> coordinates = new[] { 121.0, -100.0 };
+            GeoPosition coordinates = new GeoPosition(121.0, -100.0);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.GetReverseGeocodingAsync(coordinates));
             Assert.AreEqual(400, ex.Status);

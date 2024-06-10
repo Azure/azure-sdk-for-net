@@ -15,6 +15,7 @@ using Azure.ResourceManager.Maps.Models;
 #endregion
 
 using NUnit.Framework;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -128,7 +129,7 @@ namespace Azure.Maps.Search.Tests
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetReverseGeocoding
-            IList<double> coordinates = new[] { -122.138685, 47.6305637, -122.138685, 47.6305637 };
+            GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
             Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
             #endregion
         }

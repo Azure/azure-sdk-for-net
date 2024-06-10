@@ -9,14 +9,14 @@ namespace Azure.Maps.Search
         public MapsSearchClient(Azure.AzureSasCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Search.MapsSearchClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetGeocoding(string query = null, string addressLine = null, string countryRegion = null, System.Collections.Generic.IEnumerable<double> boundingBox = null, string view = null, System.Collections.Generic.IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetGeocodingAsync(string query = null, string addressLine = null, string countryRegion = null, System.Collections.Generic.IEnumerable<double> boundingBox = null, string view = null, System.Collections.Generic.IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetGeocoding(string query = null, Azure.Maps.Search.Models.Options.GetGeocodingOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetGeocodingAsync(string query = null, Azure.Maps.Search.Models.Options.GetGeocodingOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetGeocodingBatch(Azure.Maps.Search.Models.GeocodingBatchRequestBody geocodingBatchRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetGeocodingBatchAsync(Azure.Maps.Search.Models.GeocodingBatchRequestBody geocodingBatchRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.Boundary> GetPolygon(System.Collections.Generic.IEnumerable<double> coordinates, string view = null, Azure.Maps.Search.Models.BoundaryResultTypeEnum? resultType = default(Azure.Maps.Search.Models.BoundaryResultTypeEnum?), Azure.Maps.Search.Models.ResolutionEnum? resolution = default(Azure.Maps.Search.Models.ResolutionEnum?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.Boundary>> GetPolygonAsync(System.Collections.Generic.IEnumerable<double> coordinates, string view = null, Azure.Maps.Search.Models.BoundaryResultTypeEnum? resultType = default(Azure.Maps.Search.Models.BoundaryResultTypeEnum?), Azure.Maps.Search.Models.ResolutionEnum? resolution = default(Azure.Maps.Search.Models.ResolutionEnum?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetReverseGeocoding(System.Collections.Generic.IEnumerable<double> coordinates, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetReverseGeocodingAsync(System.Collections.Generic.IEnumerable<double> coordinates, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.Boundary> GetPolygon(Azure.Maps.Search.Models.Options.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.Boundary>> GetPolygonAsync(Azure.Maps.Search.Models.Options.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetReverseGeocoding(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.Options.GetReverseGeocodingOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetReverseGeocodingAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.Options.GetReverseGeocodingOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetReverseGeocodingBatch(Azure.Maps.Search.Models.ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(Azure.Maps.Search.Models.ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -568,5 +568,39 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.UsageTypeEnum (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.UsageTypeEnum left, Azure.Maps.Search.Models.UsageTypeEnum right) { throw null; }
         public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Maps.Search.Models.Options
+{
+    public partial class BaseOptions
+    {
+        public BaseOptions() { }
+        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+    }
+    public partial class GetGeocodingOptions : Azure.Maps.Search.Models.Options.BaseOptions
+    {
+        public GetGeocodingOptions() { }
+        public string AddressLine { get { throw null; } set { } }
+        public string AdminDistrict { get { throw null; } set { } }
+        public string AdminDistrict2 { get { throw null; } set { } }
+        public string AdminDistrict3 { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
+        public string CountryRegion { get { throw null; } set { } }
+        public string Locality { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class GetPolygonOptions : Azure.Maps.Search.Models.Options.BaseOptions
+    {
+        public GetPolygonOptions() { }
+        public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
+        public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }
+    }
+    public partial class GetReverseGeocodingOptions
+    {
+        public GetReverseGeocodingOptions() { }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum> ResultTypes { get { throw null; } set { } }
     }
 }

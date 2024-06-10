@@ -172,7 +172,7 @@ Console.WriteLine(results);
 ### Example Get Reverse Geocoding
 
 ```C# Snippet:GetReverseGeocoding
-IList<double> coordinates = new[] { -122.138685, 47.6305637, -122.138685, 47.6305637 };
+GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
 Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
 ```
 
