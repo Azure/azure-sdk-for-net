@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 /// <summary>
 /// Represents the subset (or page) of values contained in a single response
@@ -62,7 +63,7 @@ public class ClientPage<T> : ClientResult
 
     /// <summary>
     /// Gets a token that can be used to request the next page of results from
-    /// a <see cref="PageableResult{T}"/>, <see cref="AsyncPageableResult{T}"/>,
+    /// a <see cref="ClientPageable{T}"/>, <see cref="AsyncClientPageable{T}"/>,
     /// or a client method that returns one of these types.
     /// May be <c>null</c> or empty when no values remain to be returned from
     /// the collection.
@@ -76,8 +77,8 @@ public class ClientPage<T> : ClientResult
 
     /// <summary>
     /// Gets a token that can be used to request the previous page of results
-    /// from a <see cref="PageableResult{T}"/>,
-    /// <see cref="AsyncPageableResult{T}"/>, or a client method that returns
+    /// from a <see cref="ClientPageable{T}"/>,
+    /// <see cref="AsyncClientPageable{T}"/>, or a client method that returns
     /// one of these types.
     /// May be <c>null</c> when no page preceeds the current page, or when no
     /// token is available for the previous page.

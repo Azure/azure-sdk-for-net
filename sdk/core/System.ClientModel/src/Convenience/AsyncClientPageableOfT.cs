@@ -13,16 +13,16 @@ namespace System.ClientModel;
 /// Represents a collection of values returned from a cloud service operation
 /// sequentially over one or more calls to the service.
 /// </summary>
-public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
+public abstract class AsyncClientPageable<T> : AsyncCollectionResult<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="AsyncPageableResult{T}"/>.
+    /// Create a new instance of <see cref="AsyncClientPageable{T}"/>.
     /// </summary>
     /// <remarks>This constructor does not take a <see cref="PipelineResponse"/>
     /// because derived types are expected to defer the first service call
     /// until the collection is enumerated using <c>await foreach</c>.
     /// </remarks>
-    protected AsyncPageableResult() : base()
+    protected AsyncClientPageable() : base()
     {
     }
 
@@ -46,7 +46,7 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     protected abstract Task<ClientPage<T>> GetPageCoreAsync(string pageToken);
 
     /// <summary>
-    /// Convert this <see cref="PageableResult{T}"/> to a collection of pages
+    /// Convert this <see cref="ClientPageable{T}"/> to a collection of pages
     /// instead of a collection of the individual values of type
     /// <typeparamref name="T"/>. Enumerating this collection will typically
     /// make one service request for each page item.
@@ -71,10 +71,10 @@ public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
     // here?
     private class AsyncPageCollection : IAsyncEnumerable<ClientPage<T>>
     {
-        private readonly AsyncPageableResult<T> _pageable;
+        private readonly AsyncClientPageable<T> _pageable;
         private readonly string _fromPage;
 
-        public AsyncPageCollection(AsyncPageableResult<T> pageable, string fromPage)
+        public AsyncPageCollection(AsyncClientPageable<T> pageable, string fromPage)
         {
             _pageable = pageable;
             _fromPage = fromPage;
