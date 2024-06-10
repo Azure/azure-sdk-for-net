@@ -2924,8 +2924,6 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class WebApiSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
-        public WebApiSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public WebApiSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, string uri) { }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AuthResourceId { get { throw null; } set { } }
