@@ -1,15 +1,5 @@
 namespace Azure.Data.SchemaRegistry
 {
-    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
-    {
-        public LruCache(int capacity) { }
-        public int Count { get { throw null; } }
-        public int TotalLength { get { throw null; } }
-        public void AddOrUpdate(TKey key, TValue? val, int length) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGet(TKey key, out TValue? value) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SchemaFormat : System.IEquatable<Azure.Data.SchemaRegistry.SchemaFormat>
     {
