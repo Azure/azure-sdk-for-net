@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class NSGCidr : IUtf8JsonSerializable, IJsonModel<NSGCidr>
+    public partial class NsgCidr : IUtf8JsonSerializable, IJsonModel<NsgCidr>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSGCidr>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NsgCidr>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NSGCidr>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NsgCidr>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSGCidr>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NsgCidr>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSGCidr)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NsgCidr)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WriteEndObject();
         }
 
-        NSGCidr IJsonModel<NSGCidr>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NsgCidr IJsonModel<NsgCidr>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSGCidr>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NsgCidr>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSGCidr)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NsgCidr)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSGCidr(document.RootElement, options);
+            return DeserializeNsgCidr(document.RootElement, options);
         }
 
-        internal static NSGCidr DeserializeNSGCidr(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NsgCidr DeserializeNsgCidr(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSGCidr(source, destinationPortRange, serializedAdditionalRawData);
+            return new NsgCidr(source, destinationPortRange, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NSGCidr>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NsgCidr>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSGCidr>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NsgCidr>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NSGCidr)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NsgCidr)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSGCidr IPersistableModel<NSGCidr>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NsgCidr IPersistableModel<NsgCidr>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSGCidr>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NsgCidr>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSGCidr(document.RootElement, options);
+                        return DeserializeNsgCidr(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSGCidr)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NsgCidr)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSGCidr>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NsgCidr>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

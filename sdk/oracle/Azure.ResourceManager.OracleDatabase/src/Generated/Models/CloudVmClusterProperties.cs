@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             VnetId = vnetId;
             GiVersion = giVersion;
             SubnetId = subnetId;
-            NsgCidrs = new ChangeTrackingList<NSGCidr>();
+            NsgCidrs = new ChangeTrackingList<NsgCidr>();
             DisplayName = displayName;
             ComputeNodes = new ChangeTrackingList<string>();
             DbServers = new ChangeTrackingList<string>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="compartmentId"> Cluster compartmentId. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NSGCidr> nsgCidrs, DataCollectionConfig dataCollectionConfig, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NsgCidr> nsgCidrs, DataCollectionConfig dataCollectionConfig, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. </summary>
         public bool? IsSparseDiskgroupEnabled { get; set; }
         /// <summary> Operating system version of the image. </summary>
-        public string SystemVersion { get; }
+        public string SystemVersion { get; set; }
         /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
         public IList<string> SshPublicKeys { get; }
         /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </summary>
         public string BackupSubnetCidr { get; set; }
         /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
-        public IList<NSGCidr> NsgCidrs { get; }
+        public IList<NsgCidr> NsgCidrs { get; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
         public DataCollectionConfig DataCollectionConfig { get; set; }
         /// <summary> Display Name. </summary>

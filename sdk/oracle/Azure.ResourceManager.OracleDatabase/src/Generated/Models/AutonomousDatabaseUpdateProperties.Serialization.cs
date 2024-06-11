@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("databaseEdition"u8);
                 writer.WriteStringValue(DatabaseEdition.Value.ToString());
             }
+            if (Optional.IsDefined(LongTermBackupSchedule))
+            {
+                writer.WritePropertyName("longTermBackupSchedule"u8);
+                writer.WriteObjectValue(LongTermBackupSchedule, options);
+            }
             if (Optional.IsDefined(LocalAdgAutoFailoverMaxDataLossLimit))
             {
                 writer.WritePropertyName("localAdgAutoFailoverMaxDataLossLimit"u8);
@@ -200,6 +205,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             LicenseModel? licenseModel = default;
             ScheduledOperationsTypeUpdate scheduledOperations = default;
             DatabaseEditionType? databaseEdition = default;
+            LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
             OpenModeType? openMode = default;
             PermissionLevelType? permissionLevel = default;
@@ -347,6 +353,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     databaseEdition = new DatabaseEditionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("longTermBackupSchedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("localAdgAutoFailoverMaxDataLossLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -429,6 +444,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 licenseModel,
                 scheduledOperations,
                 databaseEdition,
+                longTermBackupSchedule,
                 localAdgAutoFailoverMaxDataLossLimit,
                 openMode,
                 permissionLevel,

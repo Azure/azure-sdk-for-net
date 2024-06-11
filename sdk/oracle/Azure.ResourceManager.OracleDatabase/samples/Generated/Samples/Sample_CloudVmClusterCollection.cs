@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     BackupSubnetCidr = "172.17.5.0/24",
                     NsgCidrs =
 {
-new NSGCidr("10.0.0.0/16")
+new NsgCidr("10.0.0.0/16")
 {
 DestinationPortRange = new PortRange(1520,1522),
-},new NSGCidr("10.10.0.0/24")
+},new NsgCidr("10.10.0.0/24")
 },
                     DataCollectionConfig = new DataCollectionConfig()
                     {

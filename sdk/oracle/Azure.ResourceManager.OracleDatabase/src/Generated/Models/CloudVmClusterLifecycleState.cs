@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> CloudVmClusterLifecycleState enum. </summary>
+    /// <summary> Cloud VM Cluster lifecycle state enum. </summary>
     public readonly partial struct CloudVmClusterLifecycleState : IEquatable<CloudVmClusterLifecycleState>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary> PROVISIONING value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static CloudVmClusterLifecycleState Provisioning { get; } = new CloudVmClusterLifecycleState(ProvisioningValue);
-        /// <summary> AVAILABLE value. </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static CloudVmClusterLifecycleState Available { get; } = new CloudVmClusterLifecycleState(AvailableValue);
-        /// <summary> UPDATING value. </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static CloudVmClusterLifecycleState Updating { get; } = new CloudVmClusterLifecycleState(UpdatingValue);
-        /// <summary> TERMINATING value. </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static CloudVmClusterLifecycleState Terminating { get; } = new CloudVmClusterLifecycleState(TerminatingValue);
-        /// <summary> TERMINATED value. </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static CloudVmClusterLifecycleState Terminated { get; } = new CloudVmClusterLifecycleState(TerminatedValue);
-        /// <summary> MAINTENANCE_IN_PROGRESS value. </summary>
+        /// <summary> Indicates that resource Maintenance in progress state. </summary>
         public static CloudVmClusterLifecycleState MaintenanceInProgress { get; } = new CloudVmClusterLifecycleState(MaintenanceInProgressValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static CloudVmClusterLifecycleState Failed { get; } = new CloudVmClusterLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="CloudVmClusterLifecycleState"/> values are the same. </summary>
         public static bool operator ==(CloudVmClusterLifecycleState left, CloudVmClusterLifecycleState right) => left.Equals(right);

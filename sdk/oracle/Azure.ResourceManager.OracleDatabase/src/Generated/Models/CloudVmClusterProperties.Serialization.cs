@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("isSparseDiskgroupEnabled"u8);
                 writer.WriteBooleanValue(IsSparseDiskgroupEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemVersion))
+            if (Optional.IsDefined(SystemVersion))
             {
                 writer.WritePropertyName("systemVersion"u8);
                 writer.WriteStringValue(SystemVersion);
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri nsgUrl = default;
             ResourceIdentifier subnetId = default;
             string backupSubnetCidr = default;
-            IList<NSGCidr> nsgCidrs = default;
+            IList<NsgCidr> nsgCidrs = default;
             DataCollectionConfig dataCollectionConfig = default;
             string displayName = default;
             IList<string> computeNodes = default;
@@ -662,10 +662,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<NSGCidr> array = new List<NSGCidr>();
+                    List<NsgCidr> array = new List<NsgCidr>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NSGCidr.DeserializeNSGCidr(item, options));
+                        array.Add(NsgCidr.DeserializeNsgCidr(item, options));
                     }
                     nsgCidrs = array;
                     continue;
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 nsgUrl,
                 subnetId,
                 backupSubnetCidr,
-                nsgCidrs ?? new ChangeTrackingList<NSGCidr>(),
+                nsgCidrs ?? new ChangeTrackingList<NsgCidr>(),
                 dataCollectionConfig,
                 displayName,
                 computeNodes ?? new ChangeTrackingList<string>(),

@@ -278,6 +278,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("inMemoryAreaInGbs"u8);
                 writer.WriteNumberValue(InMemoryAreaInGbs.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NextLongTermBackupTimeStamp))
+            {
+                writer.WritePropertyName("nextLongTermBackupTimeStamp"u8);
+                writer.WriteStringValue(NextLongTermBackupTimeStamp.Value, "O");
+            }
+            if (Optional.IsDefined(LongTermBackupSchedule))
+            {
+                writer.WritePropertyName("longTermBackupSchedule"u8);
+                writer.WriteObjectValue(LongTermBackupSchedule, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);

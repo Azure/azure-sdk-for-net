@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Db Server patching status enum. </summary>
+    /// <summary> DB Server patching status enum. </summary>
     public readonly partial struct DbServerPatchingStatus : IEquatable<DbServerPatchingStatus>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedValue = "Failed";
         private const string CompleteValue = "Complete";
 
-        /// <summary> SCHEDULED value. </summary>
+        /// <summary> Patching scheduled. </summary>
         public static DbServerPatchingStatus Scheduled { get; } = new DbServerPatchingStatus(ScheduledValue);
-        /// <summary> MAINTENANCE_IN_PROGRESS value. </summary>
+        /// <summary> Patching in progress. </summary>
         public static DbServerPatchingStatus MaintenanceInProgress { get; } = new DbServerPatchingStatus(MaintenanceInProgressValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Patching failed. </summary>
         public static DbServerPatchingStatus Failed { get; } = new DbServerPatchingStatus(FailedValue);
-        /// <summary> COMPLETE value. </summary>
+        /// <summary> Patching completed. </summary>
         public static DbServerPatchingStatus Complete { get; } = new DbServerPatchingStatus(CompleteValue);
         /// <summary> Determines if two <see cref="DbServerPatchingStatus"/> values are the same. </summary>
         public static bool operator ==(DbServerPatchingStatus left, DbServerPatchingStatus right) => left.Equals(right);

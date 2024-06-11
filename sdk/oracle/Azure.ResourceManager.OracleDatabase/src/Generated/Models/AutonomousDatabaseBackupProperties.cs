@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -47,15 +46,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupProperties"/>. </summary>
-        /// <param name="autonomousDatabaseId"> The OCID of the Autonomous Database. </param>
-        public AutonomousDatabaseBackupProperties(ResourceIdentifier autonomousDatabaseId)
+        public AutonomousDatabaseBackupProperties()
         {
-            AutonomousDatabaseId = autonomousDatabaseId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupProperties"/>. </summary>
-        /// <param name="autonomousDatabaseId"> The OCID of the Autonomous Database. </param>
-        /// <param name="databaseSizeInTBs"> The size of the database in terabytes at the time the backup was taken. </param>
+        /// <param name="autonomousDatabaseOcid"> The OCID of the Autonomous Database. </param>
+        /// <param name="databaseSizeInTbs"> The size of the database in terabytes at the time the backup was taken. </param>
         /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
         /// <param name="displayName"> The user-friendly name for the backup. The name does not have to be unique. </param>
         /// <param name="ocid"> The OCID of the Autonomous Database backup. </param>
@@ -64,16 +61,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="lifecycleState"> The current state of the backup. </param>
         /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="sizeInTBs"> The backup size in terabytes (TB). </param>
+        /// <param name="sizeInTbs"> The backup size in terabytes (TB). </param>
         /// <param name="timeAvailableTil"> Timestamp until when the backup will be available. </param>
+        /// <param name="timeStarted"> The date and time the backup started. </param>
         /// <param name="timeEnded"> The date and time the backup completed. </param>
         /// <param name="backupType"> The type of backup. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupProperties(ResourceIdentifier autonomousDatabaseId, int? databaseSizeInTBs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, int? sizeInTBs, DateTimeOffset? timeAvailableTil, string timeEnded, AutonomousDatabaseBackupType? backupType, AzureResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupProperties(string autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, AzureResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AutonomousDatabaseId = autonomousDatabaseId;
-            DatabaseSizeInTBs = databaseSizeInTBs;
+            AutonomousDatabaseOcid = autonomousDatabaseOcid;
+            DatabaseSizeInTbs = databaseSizeInTbs;
             DbVersion = dbVersion;
             DisplayName = displayName;
             Ocid = ocid;
@@ -82,23 +80,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             LifecycleDetails = lifecycleDetails;
             LifecycleState = lifecycleState;
             RetentionPeriodInDays = retentionPeriodInDays;
-            SizeInTBs = sizeInTBs;
+            SizeInTbs = sizeInTbs;
             TimeAvailableTil = timeAvailableTil;
+            TimeStarted = timeStarted;
             TimeEnded = timeEnded;
             BackupType = backupType;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupProperties"/> for deserialization. </summary>
-        internal AutonomousDatabaseBackupProperties()
-        {
-        }
-
         /// <summary> The OCID of the Autonomous Database. </summary>
-        public ResourceIdentifier AutonomousDatabaseId { get; }
+        public string AutonomousDatabaseOcid { get; }
         /// <summary> The size of the database in terabytes at the time the backup was taken. </summary>
-        public int? DatabaseSizeInTBs { get; }
+        public double? DatabaseSizeInTbs { get; }
         /// <summary> A valid Oracle Database version for Autonomous Database. </summary>
         public string DbVersion { get; }
         /// <summary> The user-friendly name for the backup. The name does not have to be unique. </summary>
@@ -116,9 +110,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Retention period, in days, for long-term backups. </summary>
         public int? RetentionPeriodInDays { get; set; }
         /// <summary> The backup size in terabytes (TB). </summary>
-        public int? SizeInTBs { get; }
+        public double? SizeInTbs { get; }
         /// <summary> Timestamp until when the backup will be available. </summary>
         public DateTimeOffset? TimeAvailableTil { get; }
+        /// <summary> The date and time the backup started. </summary>
+        public string TimeStarted { get; }
         /// <summary> The date and time the backup completed. </summary>
         public string TimeEnded { get; }
         /// <summary> The type of backup. </summary>

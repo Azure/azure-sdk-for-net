@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DisasterRecoveryType enum. </summary>
+    /// <summary> Disaster recovery type enum. </summary>
     public readonly partial struct DisasterRecoveryType : IEquatable<DisasterRecoveryType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AdgValue = "Adg";
         private const string BackupBasedValue = "BackupBased";
 
-        /// <summary> ADG value. </summary>
+        /// <summary> ADG type. </summary>
         public static DisasterRecoveryType Adg { get; } = new DisasterRecoveryType(AdgValue);
-        /// <summary> BACKUP_BASED value. </summary>
+        /// <summary> Backup based type. </summary>
         public static DisasterRecoveryType BackupBased { get; } = new DisasterRecoveryType(BackupBasedValue);
         /// <summary> Determines if two <see cref="DisasterRecoveryType"/> values are the same. </summary>
         public static bool operator ==(DisasterRecoveryType left, DisasterRecoveryType right) => left.Equals(right);

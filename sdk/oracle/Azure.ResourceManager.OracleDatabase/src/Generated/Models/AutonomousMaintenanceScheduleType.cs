@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> AutonomousMaintenanceScheduleType enum. </summary>
+    /// <summary> Autonomous database maintenance schedule type enum. </summary>
     public readonly partial struct AutonomousMaintenanceScheduleType : IEquatable<AutonomousMaintenanceScheduleType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string EarlyValue = "Early";
         private const string RegularValue = "Regular";
 
-        /// <summary> EARLY value. </summary>
+        /// <summary> Early maintenance schedule. </summary>
         public static AutonomousMaintenanceScheduleType Early { get; } = new AutonomousMaintenanceScheduleType(EarlyValue);
-        /// <summary> REGULAR value. </summary>
+        /// <summary> Regular maintenance schedule. </summary>
         public static AutonomousMaintenanceScheduleType Regular { get; } = new AutonomousMaintenanceScheduleType(RegularValue);
         /// <summary> Determines if two <see cref="AutonomousMaintenanceScheduleType"/> values are the same. </summary>
         public static bool operator ==(AutonomousMaintenanceScheduleType left, AutonomousMaintenanceScheduleType right) => left.Equals(right);

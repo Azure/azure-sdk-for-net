@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> RefreshableStatusType enum. </summary>
+    /// <summary> Refreshable status type enum. </summary>
     public readonly partial struct RefreshableStatusType : IEquatable<RefreshableStatusType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RefreshingValue = "Refreshing";
         private const string NotRefreshingValue = "NotRefreshing";
 
-        /// <summary> REFRESHING value. </summary>
+        /// <summary> Refreshing status. </summary>
         public static RefreshableStatusType Refreshing { get; } = new RefreshableStatusType(RefreshingValue);
-        /// <summary> NOT_REFRESHING value. </summary>
+        /// <summary> NotRefreshing status. </summary>
         public static RefreshableStatusType NotRefreshing { get; } = new RefreshableStatusType(NotRefreshingValue);
         /// <summary> Determines if two <see cref="RefreshableStatusType"/> values are the same. </summary>
         public static bool operator ==(RefreshableStatusType left, RefreshableStatusType right) => left.Equals(right);

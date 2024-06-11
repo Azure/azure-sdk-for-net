@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> ZoneType enum. </summary>
+    /// <summary> Zone type enum. </summary>
     public readonly partial struct ZoneType : IEquatable<ZoneType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Primary value. </summary>
+        /// <summary> Primary zone. </summary>
         public static ZoneType Primary { get; } = new ZoneType(PrimaryValue);
-        /// <summary> Secondary value. </summary>
+        /// <summary> Secondary zone. </summary>
         public static ZoneType Secondary { get; } = new ZoneType(SecondaryValue);
         /// <summary> Determines if two <see cref="ZoneType"/> values are the same. </summary>
         public static bool operator ==(ZoneType left, ZoneType right) => left.Equals(right);

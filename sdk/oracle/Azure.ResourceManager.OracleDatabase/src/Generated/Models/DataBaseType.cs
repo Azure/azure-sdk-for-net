@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DataBaseType enum. </summary>
+    /// <summary> Database type enum. </summary>
     internal readonly partial struct DataBaseType : IEquatable<DataBaseType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RegularValue = "Regular";
         private const string CloneValue = "Clone";
 
-        /// <summary> REGULAR value. </summary>
+        /// <summary> Regular DB. </summary>
         public static DataBaseType Regular { get; } = new DataBaseType(RegularValue);
-        /// <summary> CLONE value. </summary>
+        /// <summary> Clone DB. </summary>
         public static DataBaseType Clone { get; } = new DataBaseType(CloneValue);
         /// <summary> Determines if two <see cref="DataBaseType"/> values are the same. </summary>
         public static bool operator ==(DataBaseType left, DataBaseType right) => left.Equals(right);

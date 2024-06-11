@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DataSafeStatusType enum. </summary>
+    /// <summary> DataSafe status type enum. </summary>
     public readonly partial struct DataSafeStatusType : IEquatable<DataSafeStatusType>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string NotRegisteredValue = "NotRegistered";
         private const string FailedValue = "Failed";
 
-        /// <summary> REGISTERING value. </summary>
+        /// <summary> Registering status. </summary>
         public static DataSafeStatusType Registering { get; } = new DataSafeStatusType(RegisteringValue);
-        /// <summary> REGISTERED value. </summary>
+        /// <summary> Registered status. </summary>
         public static DataSafeStatusType Registered { get; } = new DataSafeStatusType(RegisteredValue);
-        /// <summary> DEREGISTERING value. </summary>
+        /// <summary> Deregistering status. </summary>
         public static DataSafeStatusType Deregistering { get; } = new DataSafeStatusType(DeregisteringValue);
-        /// <summary> NOT_REGISTERED value. </summary>
+        /// <summary> NotRegistered status. </summary>
         public static DataSafeStatusType NotRegistered { get; } = new DataSafeStatusType(NotRegisteredValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Failed status. </summary>
         public static DataSafeStatusType Failed { get; } = new DataSafeStatusType(FailedValue);
         /// <summary> Determines if two <see cref="DataSafeStatusType"/> values are the same. </summary>
         public static bool operator ==(DataSafeStatusType left, DataSafeStatusType right) => left.Equals(right);

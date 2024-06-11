@@ -312,6 +312,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("inMemoryAreaInGbs"u8);
                 writer.WriteNumberValue(InMemoryAreaInGbs.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NextLongTermBackupTimeStamp))
+            {
+                writer.WritePropertyName("nextLongTermBackupTimeStamp"u8);
+                writer.WriteStringValue(NextLongTermBackupTimeStamp.Value, "O");
+            }
+            if (Optional.IsDefined(LongTermBackupSchedule))
+            {
+                writer.WritePropertyName("longTermBackupSchedule"u8);
+                writer.WriteObjectValue(LongTermBackupSchedule, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
@@ -546,6 +556,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DatabaseEditionType? databaseEdition = default;
             ResourceIdentifier autonomousDatabaseId = default;
             int? inMemoryAreaInGbs = default;
+            DateTimeOffset? nextLongTermBackupTimeStamp = default;
+            LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             bool? isPreview = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
             int? memoryPerOracleComputeUnitInGbs = default;
@@ -1042,6 +1054,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     inMemoryAreaInGbs = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("nextLongTermBackupTimeStamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLongTermBackupTimeStamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("longTermBackupSchedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("isPreview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -1297,6 +1327,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseEdition,
                 autonomousDatabaseId,
                 inMemoryAreaInGbs,
+                nextLongTermBackupTimeStamp,
+                longTermBackupSchedule,
                 isPreview,
                 localAdgAutoFailoverMaxDataLossLimit,
                 memoryPerOracleComputeUnitInGbs,

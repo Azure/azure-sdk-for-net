@@ -223,6 +223,25 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SystemVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SystemVersionResource.CreateResourceIdentifier" /> to create a <see cref="SystemVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetSystemVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SystemVersionResource"/> object. </returns>
+        public static SystemVersionResource GetSystemVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetSystemVersionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="OracleSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OracleSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="OracleSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1266,6 +1285,102 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetGiVersion(location, giversionname, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SystemVersionResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetSystemVersions(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of SystemVersionResources and their operations over a SystemVersionResource. </returns>
+        public static SystemVersionCollection GetSystemVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetSystemVersions(location);
+        }
+
+        /// <summary>
+        /// Get a SystemVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetSystemVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="systemversionname"> SystemVersion name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SystemVersionResource>> GetSystemVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetSystemVersionAsync(location, systemversionname, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SystemVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetSystemVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="systemversionname"> SystemVersion name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SystemVersionResource> GetSystemVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetSystemVersion(location, systemversionname, cancellationToken);
         }
 
         /// <summary>

@@ -48,6 +48,37 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // AutonomousDatabases_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_AutonomousDatabasesGet()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            AutonomousDatabaseResource result = await autonomousDatabase.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Get Autonomous Database
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -139,6 +170,42 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // AutonomousDatabases_Failover
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Failover_AutonomousDatabasesFailover()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_failover.json
+            // this example is just showing the usage of "AutonomousDatabases_Failover" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            PeerDbDetails details = new PeerDbDetails()
+            {
+                PeerDbId = "peerDbId",
+            };
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.FailoverAsync(WaitUntil.Completed, details);
+            AutonomousDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Perform failover action on Autonomous Database
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -205,6 +272,140 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseWalletFile result = await autonomousDatabase.GenerateWalletAsync(details);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // AutonomousDatabases_Restore
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restore_AutonomousDatabasesRestore()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_restore.json
+            // this example is just showing the usage of "AutonomousDatabases_Restore" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            RestoreAutonomousDatabaseDetails details = new RestoreAutonomousDatabaseDetails(DateTimeOffset.Parse("2024-04-23T00:00:00.000Z"));
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.RestoreAsync(WaitUntil.Completed, details);
+            AutonomousDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Perform restore action on Autonomous Database
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restore_PerformRestoreActionOnAutonomousDatabase()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_restore.json
+            // this example is just showing the usage of "AutonomousDatabases_Restore" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            RestoreAutonomousDatabaseDetails details = new RestoreAutonomousDatabaseDetails(DateTimeOffset.Parse("2024-04-23T00:00:00.000Z"));
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.RestoreAsync(WaitUntil.Completed, details);
+            AutonomousDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Perform shrink action on Autonomous Database
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Shrink_PerformShrinkActionOnAutonomousDatabase()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_shrink.json
+            // this example is just showing the usage of "AutonomousDatabases_Shrink" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.ShrinkAsync(WaitUntil.Completed);
+            AutonomousDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // AutonomousDatabases_Switchover
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Switchover_AutonomousDatabasesSwitchover()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_switchover.json
+            // this example is just showing the usage of "AutonomousDatabases_Switchover" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // invoke the operation
+            PeerDbDetails details = new PeerDbDetails()
+            {
+                PeerDbId = "peerDbId",
+            };
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.SwitchoverAsync(WaitUntil.Completed, details);
+            AutonomousDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         // Perform switchover action on Autonomous Database

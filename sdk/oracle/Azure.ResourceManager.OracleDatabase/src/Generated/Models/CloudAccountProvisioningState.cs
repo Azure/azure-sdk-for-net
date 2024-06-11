@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string ProvisioningValue = "Provisioning";
         private const string AvailableValue = "Available";
 
-        /// <summary> Pending value. </summary>
+        /// <summary> Pending - Initial state when Oracle cloud account is not configured. </summary>
         public static CloudAccountProvisioningState Pending { get; } = new CloudAccountProvisioningState(PendingValue);
-        /// <summary> Provisioning value. </summary>
+        /// <summary> Provisioning - State when Oracle cloud account is being provisioned. </summary>
         public static CloudAccountProvisioningState Provisioning { get; } = new CloudAccountProvisioningState(ProvisioningValue);
-        /// <summary> Available value. </summary>
+        /// <summary> Available - State when Oracle cloud account cloud linking is complete and it is available. </summary>
         public static CloudAccountProvisioningState Available { get; } = new CloudAccountProvisioningState(AvailableValue);
         /// <summary> Determines if two <see cref="CloudAccountProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => left.Equals(right);

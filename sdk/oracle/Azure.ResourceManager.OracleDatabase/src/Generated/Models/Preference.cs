@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string NoPreferenceValue = "NoPreference";
         private const string CustomPreferenceValue = "CustomPreference";
 
-        /// <summary> NoPreference value. </summary>
+        /// <summary> No preference. </summary>
         public static Preference NoPreference { get; } = new Preference(NoPreferenceValue);
-        /// <summary> CustomPreference value. </summary>
+        /// <summary> Custom preference. </summary>
         public static Preference CustomPreference { get; } = new Preference(CustomPreferenceValue);
         /// <summary> Determines if two <see cref="Preference"/> values are the same. </summary>
         public static bool operator ==(Preference left, Preference right) => left.Equals(right);

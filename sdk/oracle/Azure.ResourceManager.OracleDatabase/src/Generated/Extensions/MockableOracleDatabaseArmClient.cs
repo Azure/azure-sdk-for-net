@@ -155,6 +155,18 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SystemVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SystemVersionResource.CreateResourceIdentifier" /> to create a <see cref="SystemVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SystemVersionResource"/> object. </returns>
+        public virtual SystemVersionResource GetSystemVersionResource(ResourceIdentifier id)
+        {
+            SystemVersionResource.ValidateResourceId(id);
+            return new SystemVersionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="OracleSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OracleSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="OracleSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

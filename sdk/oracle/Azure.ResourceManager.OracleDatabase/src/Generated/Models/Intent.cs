@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RetainValue = "Retain";
         private const string ResetValue = "Reset";
 
-        /// <summary> Retain value. </summary>
+        /// <summary> Retain intent. </summary>
         public static Intent Retain { get; } = new Intent(RetainValue);
-        /// <summary> Reset value. </summary>
+        /// <summary> Reset intent. </summary>
         public static Intent Reset { get; } = new Intent(ResetValue);
         /// <summary> Determines if two <see cref="Intent"/> values are the same. </summary>
         public static bool operator ==(Intent left, Intent right) => left.Equals(right);

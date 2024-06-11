@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AutoValue = "Auto";
         private const string BasicValue = "Basic";
 
-        /// <summary> LOW_LATENCY value. </summary>
+        /// <summary> Low latency objective. </summary>
         public static Objective LowLatency { get; } = new Objective(LowLatencyValue);
-        /// <summary> HIGH_THROUGHPUT value. </summary>
+        /// <summary> High throughput objective. </summary>
         public static Objective HighThroughput { get; } = new Objective(HighThroughputValue);
-        /// <summary> BALANCED value. </summary>
+        /// <summary> Balanced objective. </summary>
         public static Objective Balanced { get; } = new Objective(BalancedValue);
-        /// <summary> AUTO value. </summary>
+        /// <summary> Auto objective. </summary>
         public static Objective Auto { get; } = new Objective(AutoValue);
-        /// <summary> BASIC value. </summary>
+        /// <summary> Basic objective. </summary>
         public static Objective Basic { get; } = new Objective(BasicValue);
         /// <summary> Determines if two <see cref="Objective"/> values are the same. </summary>
         public static bool operator ==(Objective left, Objective right) => left.Equals(right);

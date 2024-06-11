@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? maxDbNodeStorageSizeInGbs = default;
-            int? dataStorageSizeInTbs = default;
+            double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
             string storageServerVersion = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataStorageSizeInTbs = property.Value.GetInt32();
+                    dataStorageSizeInTbs = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("maxDataStorageInTbs"u8))

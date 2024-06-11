@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DnsPrivateZones lifecycle state enum. </summary>
+    /// <summary> DNS Private Zones lifecycle state enum. </summary>
     public readonly partial struct DnsPrivateZonesLifecycleState : IEquatable<DnsPrivateZonesLifecycleState>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Active value. </summary>
+        /// <summary> DNS Private Zones is active. </summary>
         public static DnsPrivateZonesLifecycleState Active { get; } = new DnsPrivateZonesLifecycleState(ActiveValue);
-        /// <summary> Creating value. </summary>
+        /// <summary> DNS Private Zones is creating. </summary>
         public static DnsPrivateZonesLifecycleState Creating { get; } = new DnsPrivateZonesLifecycleState(CreatingValue);
-        /// <summary> Deleted value. </summary>
+        /// <summary> DNS Private Zones is deleted. </summary>
         public static DnsPrivateZonesLifecycleState Deleted { get; } = new DnsPrivateZonesLifecycleState(DeletedValue);
-        /// <summary> Deleting value. </summary>
+        /// <summary> DNS Private Zones is deleting. </summary>
         public static DnsPrivateZonesLifecycleState Deleting { get; } = new DnsPrivateZonesLifecycleState(DeletingValue);
-        /// <summary> Updating value. </summary>
+        /// <summary> DNS Private Zones is updating. </summary>
         public static DnsPrivateZonesLifecycleState Updating { get; } = new DnsPrivateZonesLifecycleState(UpdatingValue);
         /// <summary> Determines if two <see cref="DnsPrivateZonesLifecycleState"/> values are the same. </summary>
         public static bool operator ==(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => left.Equals(right);

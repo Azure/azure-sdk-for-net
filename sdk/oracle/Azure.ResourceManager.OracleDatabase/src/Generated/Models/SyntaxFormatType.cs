@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> SyntaxFormatType enum. </summary>
+    /// <summary> Syntax format type enum. </summary>
     public readonly partial struct SyntaxFormatType : IEquatable<SyntaxFormatType>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string EzconnectValue = "Ezconnect";
         private const string EzconnectplusValue = "Ezconnectplus";
 
-        /// <summary> LONG value. </summary>
+        /// <summary> Long format. </summary>
         public static SyntaxFormatType Long { get; } = new SyntaxFormatType(LongValue);
-        /// <summary> EZCONNECT value. </summary>
+        /// <summary> Ezconnect format. </summary>
         public static SyntaxFormatType Ezconnect { get; } = new SyntaxFormatType(EzconnectValue);
-        /// <summary> EZCONNECTPLUS value. </summary>
+        /// <summary> Ezconnectplus format. </summary>
         public static SyntaxFormatType Ezconnectplus { get; } = new SyntaxFormatType(EzconnectplusValue);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are the same. </summary>
         public static bool operator ==(SyntaxFormatType left, SyntaxFormatType right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> PatchingMode enum. </summary>
+    /// <summary> Patching mode enum. </summary>
     public readonly partial struct PatchingMode : IEquatable<PatchingMode>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RollingValue = "Rolling";
         private const string NonRollingValue = "NonRolling";
 
-        /// <summary> Rolling value. </summary>
+        /// <summary> Rolling patching. </summary>
         public static PatchingMode Rolling { get; } = new PatchingMode(RollingValue);
-        /// <summary> Non Rolling value. </summary>
+        /// <summary> Non Rolling patching. </summary>
         public static PatchingMode NonRolling { get; } = new PatchingMode(NonRollingValue);
         /// <summary> Determines if two <see cref="PatchingMode"/> values are the same. </summary>
         public static bool operator ==(PatchingMode left, PatchingMode right) => left.Equals(right);

@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(AutonomousDatabaseOcid))
             {
-                writer.WritePropertyName("autonomousDatabaseId"u8);
-                writer.WriteStringValue(AutonomousDatabaseId);
+                writer.WritePropertyName("autonomousDatabaseOcid"u8);
+                writer.WriteStringValue(AutonomousDatabaseOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInTBs))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInTbs))
             {
-                writer.WritePropertyName("databaseSizeInTBs"u8);
-                writer.WriteNumberValue(DatabaseSizeInTBs.Value);
+                writer.WritePropertyName("databaseSizeInTbs"u8);
+                writer.WriteNumberValue(DatabaseSizeInTbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DbVersion))
             {
@@ -76,15 +76,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("retentionPeriodInDays"u8);
                 writer.WriteNumberValue(RetentionPeriodInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeInTBs))
+            if (options.Format != "W" && Optional.IsDefined(SizeInTbs))
             {
-                writer.WritePropertyName("sizeInTBs"u8);
-                writer.WriteNumberValue(SizeInTBs.Value);
+                writer.WritePropertyName("sizeInTbs"u8);
+                writer.WriteNumberValue(SizeInTbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeAvailableTil))
             {
                 writer.WritePropertyName("timeAvailableTil"u8);
                 writer.WriteStringValue(TimeAvailableTil.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeStarted))
+            {
+                writer.WritePropertyName("timeStarted"u8);
+                writer.WriteStringValue(TimeStarted);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeEnded))
             {
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             if (options.Format != "W" && Optional.IsDefined(BackupType))
             {
-                writer.WritePropertyName("type"u8);
+                writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -139,8 +144,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier autonomousDatabaseId = default;
-            int? databaseSizeInTBs = default;
+            string autonomousDatabaseOcid = default;
+            double? databaseSizeInTbs = default;
             string dbVersion = default;
             string displayName = default;
             string ocid = default;
@@ -149,27 +154,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             AutonomousDatabaseBackupLifecycleState? lifecycleState = default;
             int? retentionPeriodInDays = default;
-            int? sizeInTBs = default;
+            double? sizeInTbs = default;
             DateTimeOffset? timeAvailableTil = default;
+            string timeStarted = default;
             string timeEnded = default;
-            AutonomousDatabaseBackupType? type = default;
+            AutonomousDatabaseBackupType? backupType = default;
             AzureResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autonomousDatabaseId"u8))
+                if (property.NameEquals("autonomousDatabaseOcid"u8))
                 {
-                    autonomousDatabaseId = new ResourceIdentifier(property.Value.GetString());
+                    autonomousDatabaseOcid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseSizeInTBs"u8))
+                if (property.NameEquals("databaseSizeInTbs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseSizeInTBs = property.Value.GetInt32();
+                    databaseSizeInTbs = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("dbVersion"u8))
@@ -228,13 +234,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     retentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sizeInTBs"u8))
+                if (property.NameEquals("sizeInTbs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sizeInTBs = property.Value.GetInt32();
+                    sizeInTbs = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("timeAvailableTil"u8))
@@ -246,18 +252,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     timeAvailableTil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("timeStarted"u8))
+                {
+                    timeStarted = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("timeEnded"u8))
                 {
                     timeEnded = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("backupType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new AutonomousDatabaseBackupType(property.Value.GetString());
+                    backupType = new AutonomousDatabaseBackupType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -276,8 +287,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new AutonomousDatabaseBackupProperties(
-                autonomousDatabaseId,
-                databaseSizeInTBs,
+                autonomousDatabaseOcid,
+                databaseSizeInTbs,
                 dbVersion,
                 displayName,
                 ocid,
@@ -286,10 +297,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 lifecycleState,
                 retentionPeriodInDays,
-                sizeInTBs,
+                sizeInTbs,
                 timeAvailableTil,
+                timeStarted,
                 timeEnded,
-                type,
+                backupType,
                 provisioningState,
                 serializedAdditionalRawData);
         }

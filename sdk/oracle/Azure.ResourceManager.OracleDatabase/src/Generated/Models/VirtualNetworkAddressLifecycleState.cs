@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TerminatedValue = "Terminated";
         private const string FailedValue = "Failed";
 
-        /// <summary> Provisioning value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static VirtualNetworkAddressLifecycleState Provisioning { get; } = new VirtualNetworkAddressLifecycleState(ProvisioningValue);
-        /// <summary> Available value. </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static VirtualNetworkAddressLifecycleState Available { get; } = new VirtualNetworkAddressLifecycleState(AvailableValue);
-        /// <summary> Terminating value. </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static VirtualNetworkAddressLifecycleState Terminating { get; } = new VirtualNetworkAddressLifecycleState(TerminatingValue);
-        /// <summary> Terminated value. </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static VirtualNetworkAddressLifecycleState Terminated { get; } = new VirtualNetworkAddressLifecycleState(TerminatedValue);
-        /// <summary> Failed value. </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static VirtualNetworkAddressLifecycleState Failed { get; } = new VirtualNetworkAddressLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="VirtualNetworkAddressLifecycleState"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => left.Equals(right);

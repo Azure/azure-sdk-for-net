@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string LicenseIncludedValue = "LicenseIncluded";
         private const string BringYourOwnLicenseValue = "BringYourOwnLicense";
 
-        /// <summary> LicenseIncluded value. </summary>
+        /// <summary> License included. </summary>
         public static LicenseModel LicenseIncluded { get; } = new LicenseModel(LicenseIncludedValue);
-        /// <summary> BringYourOwnLicense value. </summary>
+        /// <summary> Bring Your Own License. </summary>
         public static LicenseModel BringYourOwnLicense { get; } = new LicenseModel(BringYourOwnLicenseValue);
         /// <summary> Determines if two <see cref="LicenseModel"/> values are the same. </summary>
         public static bool operator ==(LicenseModel left, LicenseModel right) => left.Equals(right);

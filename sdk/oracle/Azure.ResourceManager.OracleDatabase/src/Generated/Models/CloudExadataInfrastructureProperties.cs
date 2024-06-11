@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="monthlyDbServerVersion"> Monthly Db Server version. </param>
         /// <param name="monthlyStorageServerVersion"> Monthly Storage Server version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, int? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ComputeCount = computeCount;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The total local node storage available in GBs. </summary>
         public int? MaxDbNodeStorageSizeInGbs { get; }
         /// <summary> The quantity of data in the database, in terabytes. </summary>
-        public int? DataStorageSizeInTbs { get; }
+        public double? DataStorageSizeInTbs { get; }
         /// <summary> The total available DATA disk group size. </summary>
         public double? MaxDataStorageInTbs { get; }
         /// <summary> The software version of the database servers (dom0) in the Exadata infrastructure. </summary>

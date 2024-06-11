@@ -32,23 +32,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TerminatedValue = "Terminated";
         private const string FailedValue = "Failed";
 
-        /// <summary> PROVISIONING value. </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static DbNodeProvisioningState Provisioning { get; } = new DbNodeProvisioningState(ProvisioningValue);
-        /// <summary> AVAILABLE value. </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static DbNodeProvisioningState Available { get; } = new DbNodeProvisioningState(AvailableValue);
-        /// <summary> UPDATING value. </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static DbNodeProvisioningState Updating { get; } = new DbNodeProvisioningState(UpdatingValue);
-        /// <summary> STOPPING value. </summary>
+        /// <summary> Indicates that resource in Stopping state. </summary>
         public static DbNodeProvisioningState Stopping { get; } = new DbNodeProvisioningState(StoppingValue);
-        /// <summary> STOPPED value. </summary>
+        /// <summary> Indicates that resource in Stopped state. </summary>
         public static DbNodeProvisioningState Stopped { get; } = new DbNodeProvisioningState(StoppedValue);
-        /// <summary> STARTING value. </summary>
+        /// <summary> Indicates that resource in Starting state. </summary>
         public static DbNodeProvisioningState Starting { get; } = new DbNodeProvisioningState(StartingValue);
-        /// <summary> TERMINATING value. </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static DbNodeProvisioningState Terminating { get; } = new DbNodeProvisioningState(TerminatingValue);
-        /// <summary> TERMINATED value. </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static DbNodeProvisioningState Terminated { get; } = new DbNodeProvisioningState(TerminatedValue);
-        /// <summary> FAILED value. </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static DbNodeProvisioningState Failed { get; } = new DbNodeProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DbNodeProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DbNodeProvisioningState left, DbNodeProvisioningState right) => left.Equals(right);

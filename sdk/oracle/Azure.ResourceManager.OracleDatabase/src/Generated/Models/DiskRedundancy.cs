@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DiskRedundancy enum. </summary>
+    /// <summary> Disk redundancy enum. </summary>
     public readonly partial struct DiskRedundancy : IEquatable<DiskRedundancy>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string HighValue = "High";
         private const string NormalValue = "Normal";
 
-        /// <summary> High value. </summary>
+        /// <summary> High redundancy. </summary>
         public static DiskRedundancy High { get; } = new DiskRedundancy(HighValue);
-        /// <summary> Normal value. </summary>
+        /// <summary> Normal redundancy. </summary>
         public static DiskRedundancy Normal { get; } = new DiskRedundancy(NormalValue);
         /// <summary> Determines if two <see cref="DiskRedundancy"/> values are the same. </summary>
         public static bool operator ==(DiskRedundancy left, DiskRedundancy right) => left.Equals(right);

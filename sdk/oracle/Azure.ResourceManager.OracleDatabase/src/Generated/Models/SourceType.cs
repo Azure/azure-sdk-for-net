@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> SourceType enum. </summary>
+    /// <summary> Source type enum. </summary>
     public readonly partial struct SourceType : IEquatable<SourceType>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string CrossRegionDataguardValue = "CrossRegionDataguard";
         private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
 
-        /// <summary> NONE value. </summary>
+        /// <summary> None source. </summary>
         public static SourceType None { get; } = new SourceType(NoneValue);
-        /// <summary> DATABASE value. </summary>
+        /// <summary> Database source. </summary>
         public static SourceType Database { get; } = new SourceType(DatabaseValue);
-        /// <summary> BACKUP_FROM_ID value. </summary>
+        /// <summary> Backup from ID source. </summary>
         public static SourceType BackupFromId { get; } = new SourceType(BackupFromIdValue);
-        /// <summary> BACKUP_FROM_TIMESTAMP value. </summary>
+        /// <summary> Backup from timestamp source. </summary>
         public static SourceType BackupFromTimestamp { get; } = new SourceType(BackupFromTimestampValue);
-        /// <summary> CLONE_TO_REFRESHABLE value. </summary>
+        /// <summary> Clone to refreshable source. </summary>
         public static SourceType CloneToRefreshable { get; } = new SourceType(CloneToRefreshableValue);
-        /// <summary> CROSS_REGION_DATAGUARD value. </summary>
+        /// <summary> Cross region dataguard source. </summary>
         public static SourceType CrossRegionDataguard { get; } = new SourceType(CrossRegionDataguardValue);
-        /// <summary> CROSS_REGION_DISASTER_RECOVERY value. </summary>
+        /// <summary> cross region disaster recovery source. </summary>
         public static SourceType CrossRegionDisasterRecovery { get; } = new SourceType(CrossRegionDisasterRecoveryValue);
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);

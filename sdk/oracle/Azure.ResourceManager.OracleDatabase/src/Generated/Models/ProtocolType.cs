@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> ProtocolType enum. </summary>
+    /// <summary> Protocol type enum. </summary>
     public readonly partial struct ProtocolType : IEquatable<ProtocolType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TCPValue = "TCP";
         private const string TcpsValue = "TCPS";
 
-        /// <summary> TCP value. </summary>
+        /// <summary> TCP protocol. </summary>
         public static ProtocolType TCP { get; } = new ProtocolType(TCPValue);
-        /// <summary> TCPS value. </summary>
+        /// <summary> TCPS protocol. </summary>
         public static ProtocolType Tcps { get; } = new ProtocolType(TcpsValue);
         /// <summary> Determines if two <see cref="ProtocolType"/> values are the same. </summary>
         public static bool operator ==(ProtocolType left, ProtocolType right) => left.Equals(right);
