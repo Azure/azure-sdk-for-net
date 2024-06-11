@@ -16,6 +16,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
@@ -538,7 +539,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
 
@@ -551,6 +552,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     content: stream,
                     offset: 0);
             }
+
+            sourceClient = InstrumentClient(new PageBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
+
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
 
@@ -971,7 +977,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_Error()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             long length = Constants.KB;
@@ -984,7 +990,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Status == (int)HttpStatusCode.NotFound);
+                    Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);
                 });
         }
 
@@ -992,7 +998,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
 
@@ -1006,6 +1012,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     content: stream,
                     offset: 0);
             }
+
+            sourceClient = InstrumentClient(new PageBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
@@ -1495,7 +1505,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_Error()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
 
