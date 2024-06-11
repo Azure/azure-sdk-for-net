@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure;
 using Azure.Core.Extensions;
+using Azure.Messaging.EventGrid.Namespaces;
 
-namespace Azure.Messaging.EventGrid.Namespaces
+namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="EventGridSenderClient"/>, <see cref="EventGridReceiverClient"/> to client builder. </summary>
     public static partial class EventGridNamespacesClientBuilderExtensions
@@ -17,7 +19,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static IAzureClientBuilder<EventGridSenderClient, EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential, string topicName)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventGridSenderClient, EventGridSenderClientOptions>((options) => new EventGridSenderClient(endpoint, credential, topicName, options));
+            return builder.RegisterClientFactory<EventGridSenderClient, EventGridSenderClientOptions>((options) => new EventGridSenderClient(endpoint, topicName, credential, options));
         }
 
         /// <summary> Registers a <see cref="EventGridSenderClient"/> instance. </summary>
@@ -27,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static IAzureClientBuilder<EventGridSenderClient, EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, Uri endpoint, string topicName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EventGridSenderClient, EventGridSenderClientOptions>((options, cred) => new EventGridSenderClient(endpoint, cred, topicName, options));
+            return builder.RegisterClientFactory<EventGridSenderClient, EventGridSenderClientOptions>((options, cred) => new EventGridSenderClient(endpoint, topicName, cred, options));
         }
 
         /// <summary> Registers a <see cref="EventGridReceiverClient"/> instance. </summary>
@@ -39,7 +41,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static IAzureClientBuilder<EventGridReceiverClient, EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential, string topicName, string subscriptionName)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridReceiverClientOptions>((options) => new EventGridReceiverClient(endpoint, credential, topicName, subscriptionName, options));
+            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridReceiverClientOptions>((options) => new EventGridReceiverClient(endpoint, topicName, subscriptionName, credential, options));
         }
 
         /// <summary> Registers a <see cref="EventGridReceiverClient"/> instance. </summary>
@@ -50,7 +52,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static IAzureClientBuilder<EventGridReceiverClient, EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, Uri endpoint, string topicName, string subscriptionName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridReceiverClientOptions>((options, cred) => new EventGridReceiverClient(endpoint, cred, topicName, subscriptionName, options));
+            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridReceiverClientOptions>((options, cred) => new EventGridReceiverClient(endpoint, topicName, subscriptionName, cred, options));
         }
 
         /// <summary> Registers a <see cref="EventGridSenderClient"/> instance. </summary>

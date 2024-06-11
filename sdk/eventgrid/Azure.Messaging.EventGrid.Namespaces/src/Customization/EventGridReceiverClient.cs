@@ -23,32 +23,42 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName"> The topic to receive from.</param>
         /// <param name="subscriptionName"> The subscription to receive from within the topic. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, AzureKeyCredential credential, string topicName, string subscriptionName) : this(endpoint, credential, topicName, subscriptionName, new EventGridReceiverClientOptions())
+        public EventGridReceiverClient(Uri endpoint,
+            string topicName,
+            string subscriptionName,
+            AzureKeyCredential credential) : this(endpoint, topicName, subscriptionName, credential, new EventGridReceiverClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName"> The topic to receive from.</param>
         /// <param name="subscriptionName"> The subscription to receive from within the topic. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, TokenCredential credential, string topicName, string subscriptionName) : this(endpoint, credential, topicName, subscriptionName, new EventGridReceiverClientOptions())
+        public EventGridReceiverClient(Uri endpoint,
+            string topicName,
+            string subscriptionName,
+            TokenCredential credential) : this(endpoint, topicName, subscriptionName, credential, new EventGridReceiverClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName"> The topic to receive from.</param>
         /// <param name="subscriptionName"> The subscription to receive from within the topic. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, AzureKeyCredential credential, string topicName, string subscriptionName, EventGridReceiverClientOptions options)
+        public EventGridReceiverClient(Uri endpoint,
+            string topicName,
+            string subscriptionName,
+            AzureKeyCredential credential,
+            EventGridReceiverClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -67,12 +77,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName"> The topic to receive from.</param>
         /// <param name="subscriptionName"> The subscription to receive from within the topic. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, TokenCredential credential, string topicName, string subscriptionName, EventGridReceiverClientOptions options)
+        public EventGridReceiverClient(Uri endpoint,
+            string topicName,
+            string subscriptionName,
+            TokenCredential credential,
+            EventGridReceiverClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.Tests
             // Construct the client using an Endpoint for a namespace as well as the shared access key
             var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName);
 #else
-            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
             #endregion
 
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventGrid.Tests
             // Construct the client using an Endpoint for a namespace as well as the shared access key
             var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
 #else
-            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
             ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventGrid.Tests
             // Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
             var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName);
 #else
-            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, TestEnvironment.Credential, InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
             #endregion
 
@@ -205,7 +205,7 @@ namespace Azure.Messaging.EventGrid.Tests
             // Construct the receiver client using an Endpoint for a namespace as well as the DefaultAzureCredential
             var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName, subscriptionName);
 #else
-            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, TestEnvironment.Credential, InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
 
             ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 1);
@@ -221,8 +221,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
 
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {
@@ -231,8 +230,7 @@ namespace Azure.Messaging.EventGrid.Tests
             };
             await client.SendAsync(evt);
 
-            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             ReleaseResult releaseResult = await receiver.ReleaseAsync(
                 new[] { result.Details.First().BrokerProperties.LockToken },
@@ -248,8 +246,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
 
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {
@@ -258,8 +255,7 @@ namespace Azure.Messaging.EventGrid.Tests
             };
             await client.SendAsync(evt);
 
-            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             RejectResult rejectResult = await receiver.RejectAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(rejectResult.FailedLockTokens);
@@ -273,8 +269,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
 
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {
@@ -283,8 +278,7 @@ namespace Azure.Messaging.EventGrid.Tests
             };
             await client.SendAsync(evt);
 
-            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
@@ -311,9 +305,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             var client = new EventGridReceiverClient(
                 new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey),
                 topicName,
-                subscriptionName);
+                subscriptionName, new AzureKeyCredential(namespaceKey));
 
             ReceiveResult results;
             do

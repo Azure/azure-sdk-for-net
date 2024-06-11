@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
             Response response = client.Send(@event);
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
             Response response = await client.SendAsync(@event);
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" })
             {
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" })
             {
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -201,7 +201,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -225,7 +225,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             Response response = client.Send(new CloudEvent[]
             {
@@ -239,7 +239,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             Response response = await client.SendAsync(new CloudEvent[]
             {
@@ -253,7 +253,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -283,7 +283,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -313,7 +313,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             Response response = client.Send(new CloudEvent[]
             {
@@ -335,7 +335,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridSenderClient client = new EventGridSenderClient(endpoint, credential, "<topicName>");
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             Response response = await client.SendAsync(new CloudEvent[]
             {
@@ -357,7 +357,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response response = client.Receive((int?)null, (TimeSpan?)null, (RequestContext)null);
 
@@ -376,7 +376,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response response = await client.ReceiveAsync((int?)null, (TimeSpan?)null, (RequestContext)null);
 
@@ -395,7 +395,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReceiveResult> response = client.Receive();
         }
@@ -406,7 +406,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReceiveResult> response = await client.ReceiveAsync();
         }
@@ -417,7 +417,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response response = client.Receive(1234, TimeSpan.FromSeconds(10), (RequestContext)null);
 
@@ -442,7 +442,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response response = await client.ReceiveAsync(1234, TimeSpan.FromSeconds(10), (RequestContext)null);
 
@@ -467,7 +467,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReceiveResult> response = client.Receive(maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
@@ -478,7 +478,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReceiveResult> response = await client.ReceiveAsync(maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
@@ -489,7 +489,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -513,7 +513,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -537,7 +537,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<AcknowledgeResult> response = client.Acknowledge(new string[] { "<lockTokens>" });
         }
@@ -548,7 +548,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<AcknowledgeResult> response = await client.AcknowledgeAsync(new string[] { "<lockTokens>" });
         }
@@ -559,7 +559,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -585,7 +585,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -611,7 +611,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<AcknowledgeResult> response = client.Acknowledge(new string[] { "<lockTokens>" });
         }
@@ -622,7 +622,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<AcknowledgeResult> response = await client.AcknowledgeAsync(new string[] { "<lockTokens>" });
         }
@@ -633,7 +633,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -657,7 +657,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -681,7 +681,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" });
         }
@@ -692,7 +692,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" });
         }
@@ -703,7 +703,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -729,7 +729,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -755,7 +755,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" }, releaseDelayInSeconds: ReleaseDelay.NoDelay);
         }
@@ -766,7 +766,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" }, releaseDelayInSeconds: ReleaseDelay.NoDelay);
         }
@@ -777,7 +777,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -801,7 +801,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -825,7 +825,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RejectResult> response = client.Reject(new string[] { "<lockTokens>" });
         }
@@ -836,7 +836,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RejectResult> response = await client.RejectAsync(new string[] { "<lockTokens>" });
         }
@@ -847,7 +847,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -873,7 +873,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -899,7 +899,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RejectResult> response = client.Reject(new string[] { "<lockTokens>" });
         }
@@ -910,7 +910,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RejectResult> response = await client.RejectAsync(new string[] { "<lockTokens>" });
         }
@@ -921,7 +921,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -945,7 +945,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -969,7 +969,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RenewLocksResult> response = client.RenewLocks(new string[] { "<lockTokens>" });
         }
@@ -980,7 +980,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RenewLocksResult> response = await client.RenewLocksAsync(new string[] { "<lockTokens>" });
         }
@@ -991,7 +991,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1017,7 +1017,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1043,7 +1043,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RenewLocksResult> response = client.RenewLocks(new string[] { "<lockTokens>" });
         }
@@ -1054,7 +1054,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             Response<RenewLocksResult> response = await client.RenewLocksAsync(new string[] { "<lockTokens>" });
         }
