@@ -22,8 +22,7 @@ await senderClient.SendAsync(evt);
 Publish a batch of CloudEvents:
 
 ```C# Snippet:PublishBatchOfEvents
-await client.PublishCloudEventsAsync(
-    topicName,
+await client.SendAsync(
     new[] {
         new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
         new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
@@ -39,7 +38,7 @@ There are three different actions you can take on a received event:
 
 ```C# Snippet:ReceiveAndProcessEvents
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
+var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
 ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
 // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result
