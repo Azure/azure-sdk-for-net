@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Common resource representation. </summary>
+    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public partial class NetworkTrackedResourceData
     {
         /// <summary>
@@ -49,35 +50,30 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
         public NetworkTrackedResourceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
-            Location = location;
-            Tags = tags;
+            SystemData = systemData;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> Resource name. </summary>
+        /// <summary> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary> Resource type. </summary>
-        public ResourceType? ResourceType { get; }
-        /// <summary> Resource location. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        public string ResourceType { get; }
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        public SystemData SystemData { get; }
     }
 }
