@@ -21,10 +21,4 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             v2_1 = 1,
         }
     }
-    public sealed partial class AzureMonitorLogExporter : OpenTelemetry.BaseExporter<OpenTelemetry.Logs.LogRecord>
-    {
-        public AzureMonitorLogExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
-        protected override void Dispose(bool disposing) { }
-        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<OpenTelemetry.Logs.LogRecord> batch) { throw null; }
-    }
 }
