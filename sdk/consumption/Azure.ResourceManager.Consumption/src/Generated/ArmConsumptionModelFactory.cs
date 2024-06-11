@@ -382,34 +382,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new UnknownReservationRecommendation(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind == null ? default : new ReservationRecommendationKind(kind),
-                location,
-                sku,
-                etag,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1270,66 +1242,6 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionSkuProperty ConsumptionSkuProperty(string name = null, string value = null)
         {
             return new ConsumptionSkuProperty(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="locationPropertiesLocation"> Resource Location. </param>
-        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
-        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
-        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
-        /// <param name="normalizedSize"> The normalized Size. </param>
-        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
-        /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="term"> RI recommendations in one or three year terms. </param>
-        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
-        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
-        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
-        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
-        /// <param name="firstUsageOn"> The usage date for looking back. </param>
-        /// <param name="scope"> Shared or single recommendation. </param>
-        /// <param name="skuProperties"> List of sku properties. </param>
-        /// <param name="skuName"> This is the ARM Sku name. </param>
-        /// <returns> A new <see cref="Models.ConsumptionModernReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            skuProperties ??= new List<ConsumptionSkuProperty>();
-
-            return new ConsumptionModernReservationRecommendation(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ReservationRecommendationKind.Modern,
-                location,
-                sku,
-                etag,
-                tags,
-                serializedAdditionalRawData: null,
-                locationPropertiesLocation,
-                lookBackPeriod,
-                instanceFlexibilityRatio,
-                instanceFlexibilityGroup,
-                normalizedSize,
-                recommendedQuantityNormalized,
-                meterId,
-                term,
-                costWithNoReservedInstances,
-                recommendedQuantity,
-                totalCostWithReservedInstances,
-                netSavings,
-                firstUsageOn,
-                scope,
-                skuProperties?.ToList(),
-                skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
