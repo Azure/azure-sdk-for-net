@@ -1,8 +1,10 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
+
+- Upgrade API version to `2023-12`
 
 ### Breaking Changes
 - Fix null Id deserialization problem for 'WebSiteResource.GetAllHybridConnectionDataAsync()' and 'WebSiteSlotResource.GetAllHybridConnectionSlotDataAsync()', to use 'WebSiteResource.GetHybridConnectionsAsync()' and 'WebSiteSlotResource.GetHybridConnectionsSlotAsync()' instead.
