@@ -86,10 +86,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridReceiverClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion.V2024_06_01) { }
         public enum ServiceVersion
         {
-            V2023_06_01_Preview = 1,
-            V2023_10_01_Preview = 2,
-            V2023_11_01 = 3,
-            V2024_06_01 = 4,
+            V2023_11_01 = 1,
+            V2024_06_01 = 2,
         }
     }
     public partial class EventGridSenderClient
@@ -118,10 +116,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridSenderClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion.V2024_06_01) { }
         public enum ServiceVersion
         {
-            V2023_06_01_Preview = 1,
-            V2023_10_01_Preview = 2,
-            V2023_11_01 = 3,
-            V2024_06_01 = 4,
+            V2023_11_01 = 1,
+            V2024_06_01 = 2,
         }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>
