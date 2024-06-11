@@ -12,6 +12,8 @@
 
 * Changed `AzureMonitorLogExporter` to be internal.
   This will allow users to write custom processors for filtering logs.
+  (This feature was originally introduced in 1.3.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
 ## 1.3.0 (2024-06-07)
 

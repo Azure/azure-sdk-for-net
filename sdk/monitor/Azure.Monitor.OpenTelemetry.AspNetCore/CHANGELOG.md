@@ -12,9 +12,13 @@
 
 * Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`.
   See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging) for the details.
+  (This feature was originally introduced in 1.2.0-beta.2)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
 * Added an experimental feature for logs emitted within an active tracing context to follow the Activity's sampling decision.
   The feature can be enabled by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING` environment variable to `true`.
+  (This feature was originally introduced in 1.2.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
 ## 1.2.0 (2024-06-11)
 
