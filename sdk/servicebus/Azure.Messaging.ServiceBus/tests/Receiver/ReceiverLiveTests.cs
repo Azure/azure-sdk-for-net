@@ -1387,25 +1387,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var message = new ServiceBusMessage("Eye of the tiger") { MessageId = "survivor" };
                 await client.CreateSender(scope.QueueName).SendMessageAsync(message);
 
-                // Set a long timeout to ensure that the purge operation has time to complete, but
-                // can act as a guard to avoid an infinite loop.
-                using var cancellationSource = new CancellationTokenSource(TimeSpan.FromMinutes(15));
-
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                while (numMessagesDeleted < messageCount)
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+
+                // We cannot know what is left in the queue, so scan forward until we peek
+                // the last message.
+                var peekedMessage = await receiver.PeekMessageAsync();
+                var lastMessage = peekedMessage;
+
+                while (peekedMessage != null && peekedMessage.MessageId != message.MessageId)
                 {
-                    numMessagesDeleted += await receiver.PurgeMessagesAsync(targetDate, cancellationSource.Token);
+                    peekedMessage = await receiver.PeekMessageAsync(lastMessage.SequenceNumber);
+
+                    if (peekedMessage != null)
+                    {
+                        lastMessage = peekedMessage;
+                    }
                 }
 
-                // Because of the secondary loop, we should always see these equal if there was no cancellation.
-                Assert.AreEqual(numMessagesDeleted, messageCount);
-
-                // All messages should have been deleted, except for our designated survivor.
-                var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNotNull(peekedMessage.Result);
-                Assert.AreEqual("survivor", peekedMessage.Result.MessageId);
+                Assert.IsNotNull(lastMessage);
+                Assert.AreEqual(message.MessageId, lastMessage.MessageId);
             }
         }
 
