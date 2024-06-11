@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+* Changed `AzureMonitorLogExporter` to be internal.
+  This will allow users to write custom processors for filtering logs.
+
 ## 1.3.0 (2024-06-07)
 
 ### Other Changes
@@ -35,8 +38,8 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#43688](https://github.com/Azure/azure-sdk-for-net/pull/43688))
-  - OpenTelemetry 1.8.1
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
+  - OpenTelemetry 1.8.0
 
 ## 1.3.0-beta.1 (2024-02-08)
 
