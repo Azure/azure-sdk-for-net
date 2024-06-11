@@ -3,71 +3,81 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
+
+#pragma warning disable CS1591
 
 /// <summary>
 /// Represents the subset (or page) of values contained in a single response
 /// from a cloud service returning a collection of values sequentially over
 /// one or more calls to the service (i.e. a paged collection).
 /// </summary>
-public class ClientPage<T> : ClientResult
+public abstract class ClientPage<T> : ClientResult
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public const string DefaultFirstPageToken = "";
-
-    private ClientPage(IReadOnlyList<T> values, string? nextPageToken, PipelineResponse response)
+    protected ClientPage(IReadOnlyList<T> values, bool hasNext, PipelineResponse response)
         : base(response)
     {
         Values = values;
-        NextPageToken = nextPageToken;
+        HasNext = hasNext;
     }
-
-    /// <summary>
-    /// Creates a new <see cref="ClientPage{T}"/>.
-    /// </summary>
-    /// <param name="values">The values contained in <paramref name="response"/>.
-    /// </param>
-    /// <param name="nextPageToken">A token that can be used to request
-    /// the next page of results from the service, or <c>null</c> if this page
-    /// holds the final subset of values.</param>
-    /// <param name="response">The <see cref="PipelineResponse"/> holding the
-    /// collection values returned by the service.</param>
-    /// <returns>An instance of <see cref="ClientPage{T}"/> holding the provided
-    /// values.</returns>
-
-    ///// <param name="previousPageToken">A token that can be used to request
-    ///// the previous page of results from the service, or <c>null</c> if this page
-    ///// holds the final subset of values. May also be left unspecified if the
-    ///// service does not provide such a token.</param>
-    public static ClientPage<T> Create(IReadOnlyList<T> values,
-        string? nextPageToken,
-        PipelineResponse response)
-        => new(values, nextPageToken, response);
 
     /// <summary>
     /// Gets the values in this <see cref="ClientPage{T}"/>.
     /// </summary>
     public IReadOnlyList<T> Values { get; }
 
-    /// <summary>
-    /// Gets a token that can be used to request the next page of results from
-    /// a <see cref="ClientPageable{T}"/>, <see cref="AsyncClientPageable{T}"/>,
-    /// or a client method that returns one of these types.
-    /// May be <c>null</c> or empty when no values remain to be returned from
-    /// the collection.
-    /// </summary>
-    public string? NextPageToken { get; }
+    public bool HasNext { get; }
 
-    ///// <summary>
-    ///// Gets a token that can be used to request the previous page of results
-    ///// from a <see cref="ClientPageable{T}"/>,
-    ///// <see cref="AsyncClientPageable{T}"/>, or a client method that returns
-    ///// one of these types.
-    ///// May be <c>null</c> when no page preceeds the current page, or when no
-    ///// token is available for the previous page.
-    ///// </summary>
-    //public string? PreviousPageToken { get; }
+    protected abstract ClientPage<T> GetNext(RequestOptions? options = default);
+
+    protected abstract Task<ClientPage<T>> GetNextAsync(RequestOptions? options = default);
+
+    public IEnumerable<T> ToItemCollection()
+    {
+        foreach (ClientPage<T> page in ToPageCollection())
+        {
+            foreach (T value in page.Values)
+            {
+                yield return value;
+            }
+        }
+    }
+
+    public async IAsyncEnumerable<T> ToItemCollectionAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        await foreach (ClientPage<T> page in ToPageCollectionAsync(cancellationToken).ConfigureAwait(false))
+        {
+            foreach (T value in page.Values)
+            {
+                yield return value;
+            }
+        }
+    }
+
+    public IEnumerable<ClientPage<T>> ToPageCollection()
+    {
+        ClientPage<T> page = this;
+        while (page.HasNext)
+        {
+            page = GetNext();
+            yield return page;
+        }
+    }
+
+    public async IAsyncEnumerable<ClientPage<T>> ToPageCollectionAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        ClientPage<T> page = this;
+        while (page.HasNext)
+        {
+            page = await GetNextAsync().ConfigureAwait(false);
+            yield return page;
+        }
+    }
 }
+#pragma warning restore CS1591

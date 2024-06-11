@@ -7,14 +7,6 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncClientPageable<T> : System.ClientModel.AsyncCollectionResult<T>
-    {
-        protected AsyncClientPageable() { }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>> AsPagesAsync(string fromPage = "") { throw null; }
-        public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsync(string pageToken) { throw null; }
-        protected abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsyncCore(string pageToken);
-    }
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncCollectionResult() { }
@@ -32,21 +24,17 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public abstract partial class ClientPageable<T> : System.ClientModel.CollectionResult<T>
+    public abstract partial class ClientPage<T> : System.ClientModel.ClientResult
     {
-        protected ClientPageable() { }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>> AsPages(string fromPage = "") { throw null; }
-        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-        public System.ClientModel.ClientPage<T> GetPage(string pageToken) { throw null; }
-        protected abstract System.ClientModel.ClientPage<T> GetPageCore(string pageToken);
-    }
-    public partial class ClientPage<T> : System.ClientModel.ClientResult
-    {
-        internal ClientPage() { }
-        public const string DefaultFirstPageToken = "";
-        public string? NextPageToken { get { throw null; } }
+        protected ClientPage(System.Collections.Generic.IReadOnlyList<T> values, bool hasNext, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasNext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        public static System.ClientModel.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, string? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        protected abstract System.ClientModel.ClientPage<T> GetNext(System.ClientModel.Primitives.RequestOptions? options = null);
+        protected abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetNextAsync(System.ClientModel.Primitives.RequestOptions? options = null);
+        public System.Collections.Generic.IEnumerable<T> ToItemCollection() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<T> ToItemCollectionAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>> ToPageCollection() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>> ToPageCollectionAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ClientResult
     {
