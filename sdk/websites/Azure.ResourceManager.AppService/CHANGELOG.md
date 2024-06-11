@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgrade API version to `2023-12`
+- Upgraded API version to `2023-12`
 
 ### Breaking Changes
 - Fix null Id deserialization problem for 'WebSiteResource.GetAllHybridConnectionDataAsync()' and 'WebSiteSlotResource.GetAllHybridConnectionSlotDataAsync()', to use 'WebSiteResource.GetHybridConnectionsAsync()' and 'WebSiteSlotResource.GetHybridConnectionsSlotAsync()' instead.
