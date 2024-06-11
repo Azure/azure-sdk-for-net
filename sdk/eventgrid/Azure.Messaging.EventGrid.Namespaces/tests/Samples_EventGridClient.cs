@@ -757,7 +757,7 @@ subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
 
-            Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" }, releaseDelayInSeconds: ReleaseDelay.NoDelay);
+            Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" }, delay: ReleaseDelay.NoDelay);
         }
 
         [Test]
@@ -768,7 +768,7 @@ subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridReceiverClient client = new EventGridReceiverClient(endpoint, credential, "<topicName>", "<eventSubscriptionName>");
 
-            Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" }, releaseDelayInSeconds: ReleaseDelay.NoDelay);
+            Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" }, delay: ReleaseDelay.NoDelay);
         }
 
         [Test]
