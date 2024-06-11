@@ -512,6 +512,12 @@
 # AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
+# PRLabel: %Extension - WCF
+/sdk/extension-wcf/                                                @mconnew @subhra231
+
+# ServiceLabel: %Extension - WCF
+# ServiceOwners:                                                   @mconnew @subhra231
+
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
@@ -871,11 +877,11 @@
 # ServiceOwners:                                                   @wonner @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes
+/sdk/tables/                                                       @christothes @JonathanCrd
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes
-# ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
+# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
@@ -919,6 +925,12 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# PRLabel: %ARM
+/sdk/resources/Azure.ResourceManager.*/                            @anamikapan
+
+# ServiceLabel: %ARM %Mgmt
+# ServiceOwners:                                                   @anamikapan
 
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
@@ -965,6 +977,9 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @v-rvilathurs
 
+# PRLabel: %Recovery Services Backup
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
+
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
@@ -985,6 +1000,7 @@
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
+/eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines

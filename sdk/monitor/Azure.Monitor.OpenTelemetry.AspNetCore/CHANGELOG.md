@@ -1,5 +1,17 @@
 # Release History
 
+## 1.2.0 (2024-06-11)
+
+### Other Changes
+
+* Disabled support for log collection from Azure SDKs.
+  This will be re-enabled in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
+
+* Disabled trace-based log sampling experimental feature.
+  This will be re-enabled in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
+
 ## 1.2.0-beta.4 (2024-05-20)
 
 ### Features Added

@@ -64,10 +64,6 @@ namespace Azure.ResourceManager.EnergyServices
         /// <description>EnergyServices_Create</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-04-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="EnergyServiceResource"/></description>
         /// </item>
@@ -111,10 +107,6 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-04-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

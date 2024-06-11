@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_GetLogFileUrl</description>
+        /// <description>Deployments_GetLogFileUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_GetLogFileUrl</description>
+        /// <description>Deployments_GetLogFileUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_StartJFR</description>
+        /// <description>Deployments_StartJfr</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_StartJFR</description>
+        /// <description>Deployments_StartJfr</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
