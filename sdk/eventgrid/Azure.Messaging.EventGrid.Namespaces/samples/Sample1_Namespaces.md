@@ -22,7 +22,7 @@ await senderClient.SendAsync(evt);
 Publish a batch of CloudEvents:
 
 ```C# Snippet:PublishBatchOfEvents
-await client.SendAsync(
+await senderClient.SendAsync(
     new[] {
         new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
         new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })

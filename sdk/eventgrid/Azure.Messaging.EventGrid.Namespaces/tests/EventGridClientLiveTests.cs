@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             #region Snippet:PublishBatchOfEvents
 #if SNIPPET
-            await client.SendAsync(
+            await senderClient.SendAsync(
                 new[] {
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
