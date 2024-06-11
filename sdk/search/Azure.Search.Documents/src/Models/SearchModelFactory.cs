@@ -375,23 +375,5 @@ namespace Azure.Search.Documents.Models
             bool succeeded,
             int status) =>
             new IndexingResult(key, errorMessage, succeeded, status);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IndexerChangeTrackingState"/> class.
-        /// </summary>
-        /// <param name="allDocumentsInitialState">Change tracking state used when indexing starts on all documents in the datasource.</param>
-        /// <param name="allDocumentsFinalState">Change tracking state value when indexing finishes on all documents in the datasource.</param>
-        /// <param name="resetDocumentsInitialState">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
-        /// <param name="resetDocumentsFinalState">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
-        public static IndexerChangeTrackingState IndexerChangeTrackingState(
-            string allDocumentsInitialState,
-            string allDocumentsFinalState,
-            string resetDocumentsInitialState,
-            string resetDocumentsFinalState) =>
-                new IndexerChangeTrackingState(
-                    allDocumentsInitialState,
-                    allDocumentsFinalState,
-                    resetDocumentsInitialState,
-                    resetDocumentsFinalState);
     }
 }
