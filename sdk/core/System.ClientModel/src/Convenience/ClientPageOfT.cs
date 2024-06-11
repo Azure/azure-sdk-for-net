@@ -18,15 +18,11 @@ public class ClientPage<T> : ClientResult
     /// </summary>
     public const string DefaultFirstPageToken = "";
 
-    private ClientPage(IReadOnlyList<T> values,
-        PipelineResponse response,
-        string? nextPageToken,
-        string? previousPageToken)
+    private ClientPage(IReadOnlyList<T> values, string? nextPageToken, PipelineResponse response)
         : base(response)
     {
         Values = values;
         NextPageToken = nextPageToken;
-        PreviousPageToken = previousPageToken;
     }
 
     /// <summary>
@@ -37,19 +33,19 @@ public class ClientPage<T> : ClientResult
     /// <param name="nextPageToken">A token that can be used to request
     /// the next page of results from the service, or <c>null</c> if this page
     /// holds the final subset of values.</param>
-    /// <param name="previousPageToken">A token that can be used to request
-    /// the previous page of results from the service, or <c>null</c> if this page
-    /// holds the final subset of values. May also be left unspecified if the
-    /// service does not provide such a token.</param>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// collection values returned by the service.</param>
     /// <returns>An instance of <see cref="ClientPage{T}"/> holding the provided
     /// values.</returns>
+
+    ///// <param name="previousPageToken">A token that can be used to request
+    ///// the previous page of results from the service, or <c>null</c> if this page
+    ///// holds the final subset of values. May also be left unspecified if the
+    ///// service does not provide such a token.</param>
     public static ClientPage<T> Create(IReadOnlyList<T> values,
-        PipelineResponse response,
         string? nextPageToken,
-        string? previousPageToken = default)
-        => new(values, response, nextPageToken, previousPageToken);
+        PipelineResponse response)
+        => new(values, nextPageToken, response);
 
     /// <summary>
     /// Gets the values in this <see cref="ClientPage{T}"/>.
@@ -65,13 +61,13 @@ public class ClientPage<T> : ClientResult
     /// </summary>
     public string? NextPageToken { get; }
 
-    /// <summary>
-    /// Gets a token that can be used to request the previous page of results
-    /// from a <see cref="ClientPageable{T}"/>,
-    /// <see cref="AsyncClientPageable{T}"/>, or a client method that returns
-    /// one of these types.
-    /// May be <c>null</c> when no page preceeds the current page, or when no
-    /// token is available for the previous page.
-    /// </summary>
-    public string? PreviousPageToken { get; }
+    ///// <summary>
+    ///// Gets a token that can be used to request the previous page of results
+    ///// from a <see cref="ClientPageable{T}"/>,
+    ///// <see cref="AsyncClientPageable{T}"/>, or a client method that returns
+    ///// one of these types.
+    ///// May be <c>null</c> when no page preceeds the current page, or when no
+    ///// token is available for the previous page.
+    ///// </summary>
+    //public string? PreviousPageToken { get; }
 }

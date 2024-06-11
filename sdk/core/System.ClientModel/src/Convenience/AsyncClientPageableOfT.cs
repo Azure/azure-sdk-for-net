@@ -33,7 +33,7 @@ public abstract class AsyncClientPageable<T> : AsyncCollectionResult<T>
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-        return await GetPageCoreAsync(pageToken).ConfigureAwait(false);
+        return await GetPageAsyncCore(pageToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public abstract class AsyncClientPageable<T> : AsyncCollectionResult<T>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException">If no page can be retrieved
     /// from <paramref name="pageToken"/>.</exception>
-    protected abstract Task<ClientPage<T>> GetPageCoreAsync(string pageToken);
+    protected abstract Task<ClientPage<T>> GetPageAsyncCore(string pageToken);
 
     /// <summary>
     /// Convert this <see cref="ClientPageable{T}"/> to a collection of pages
@@ -60,36 +60,17 @@ public abstract class AsyncClientPageable<T> : AsyncCollectionResult<T>
     /// collection's pages instead of the collection's individual values,
     /// starting at the page indicated by <paramref name="fromPage"/>.
     /// </returns>
-    public IAsyncEnumerable<ClientPage<T>> AsPages(string fromPage = ClientPage<T>.DefaultFirstPageToken)
+    public async IAsyncEnumerable<ClientPage<T>> AsPagesAsync(string fromPage = ClientPage<T>.DefaultFirstPageToken)
     {
         Argument.AssertNotNull(fromPage, nameof(fromPage));
 
-        return new AsyncPageCollection(this, fromPage);
-    }
-
-    // TODO: Qn - AsPagesAsync?  Why or why not?  What is the "correct" .NET pattern
-    // here?
-    private class AsyncPageCollection : IAsyncEnumerable<ClientPage<T>>
-    {
-        private readonly AsyncClientPageable<T> _pageable;
-        private readonly string _fromPage;
-
-        public AsyncPageCollection(AsyncClientPageable<T> pageable, string fromPage)
+        string? pageToken = fromPage;
+        while (pageToken != null)
         {
-            _pageable = pageable;
-            _fromPage = fromPage;
-        }
-
-        public async IAsyncEnumerator<ClientPage<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-        {
-            string? pageToken = _fromPage;
-            while (pageToken != null)
-            {
-                ClientPage<T> page = await _pageable.GetPageAsync(pageToken).ConfigureAwait(false);
-                _pageable.SetRawResponse(page.GetRawResponse());
-                yield return page;
-                pageToken = page.NextPageToken;
-            }
+            ClientPage<T> page = await GetPageAsync(pageToken).ConfigureAwait(false);
+            SetRawResponse(page.GetRawResponse());
+            yield return page;
+            pageToken = page.NextPageToken;
         }
     }
 
@@ -103,7 +84,7 @@ public abstract class AsyncClientPageable<T> : AsyncCollectionResult<T>
     /// asynchronously through the collection values.</returns>
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (ClientPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ClientPage<T> page in AsPagesAsync().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page.Values)
             {
