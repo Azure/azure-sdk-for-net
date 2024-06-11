@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Microsoft.CodeAnalysis;
@@ -441,7 +442,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
@@ -452,6 +453,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await sourceClient.UploadAsync(
                     content: stream);
             }
+
+            sourceClient = InstrumentClient(new BlockBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
@@ -556,7 +561,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_Error()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
@@ -569,7 +574,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));
+                    Assert.IsTrue(e.Message.StartsWith("Server failed to authenticate the request. "));
                 });
         }
 
@@ -982,7 +987,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
@@ -994,6 +999,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await sourceClient.UploadAsync(
                     content: stream);
             }
+
+            sourceClient = InstrumentClient(new BlockBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
@@ -1162,7 +1171,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_Error()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
