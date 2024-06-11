@@ -45,5 +45,11 @@ namespace Azure.Monitor.Query
             V2024_02_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets or sets the audience to use for authentication with Microsoft Entra ID.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="MetricsClientAudience.AzurePublicCloud" /> will be assumed.</value>
+        public MetricsClientAudience? Audience { get; set; }
     }
 }

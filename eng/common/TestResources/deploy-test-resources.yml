@@ -3,6 +3,7 @@ parameters:
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
+  EnvVars: {}
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
@@ -47,6 +48,7 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -106,3 +108,4 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        ${{ insert }}: ${{ parameters.EnvVars }}
