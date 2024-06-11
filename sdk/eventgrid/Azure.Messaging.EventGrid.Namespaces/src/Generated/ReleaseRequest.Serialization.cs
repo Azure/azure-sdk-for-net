@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class RenewLockOptions : IUtf8JsonSerializable, IJsonModel<RenewLockOptions>
+    internal partial class ReleaseRequest : IUtf8JsonSerializable, IJsonModel<ReleaseRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewLockOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReleaseRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RenewLockOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReleaseRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewLockOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReleaseRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewLockOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReleaseRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteEndObject();
         }
 
-        RenewLockOptions IJsonModel<RenewLockOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReleaseRequest IJsonModel<ReleaseRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewLockOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReleaseRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewLockOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReleaseRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRenewLockOptions(document.RootElement, options);
+            return DeserializeReleaseRequest(document.RootElement, options);
         }
 
-        internal static RenewLockOptions DeserializeRenewLockOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReleaseRequest DeserializeReleaseRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,46 +92,46 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RenewLockOptions(lockTokens, serializedAdditionalRawData);
+            return new ReleaseRequest(lockTokens, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RenewLockOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReleaseRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewLockOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReleaseRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RenewLockOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReleaseRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RenewLockOptions IPersistableModel<RenewLockOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReleaseRequest IPersistableModel<ReleaseRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewLockOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReleaseRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRenewLockOptions(document.RootElement, options);
+                        return DeserializeReleaseRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenewLockOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReleaseRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RenewLockOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReleaseRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RenewLockOptions FromResponse(Response response)
+        internal static ReleaseRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRenewLockOptions(document.RootElement);
+            return DeserializeReleaseRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
