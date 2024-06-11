@@ -42,7 +42,7 @@ az eventgrid topic key list --name <your-resource-name> --resource-group <your-r
 Once you have your access key and topic endpoint, you can create the publisher client as follows:
 ```C# Snippet:CreateNamespaceClient
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName);
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
 ```
 
 #### Authenticate using an Entra ID
@@ -53,7 +53,7 @@ To send events to a topic or domain using Azure Active Directory, the authentica
 
 ```C# Snippet:CreateNamespaceClientAAD
 // Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName);
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new DefaultAzureCredential());
 ```
 
 ## Key concepts
