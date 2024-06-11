@@ -230,22 +230,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="delay"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public virtual async Task<Response<ReleaseResult>> ReleaseAsync(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReleaseResult>> ReleaseAsync(IEnumerable<string> lockTokens, ReleaseDelay? delay = null, CancellationToken cancellationToken = default)
         {
-            return await ReleaseAsync(_topicName, _subscriptionName, lockTokens, releaseDelayInSeconds, cancellationToken).ConfigureAwait(false);
+            return await ReleaseAsync(_topicName, _subscriptionName, lockTokens, delay, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="delay"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public virtual Response<ReleaseResult> Release(IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReleaseResult> Release(IEnumerable<string> lockTokens, ReleaseDelay? delay = null, CancellationToken cancellationToken = default)
         {
-            return Release(_topicName, _subscriptionName, lockTokens, releaseDelayInSeconds, cancellationToken);
+            return Release(_topicName, _subscriptionName, lockTokens, delay, cancellationToken);
         }
 
         /// <summary>

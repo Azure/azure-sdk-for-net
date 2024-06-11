@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             ReleaseResult releaseResult = await receiver.ReleaseAsync(
                 new[] { result.Details.First().BrokerProperties.LockToken },
-                releaseDelayInSeconds: ReleaseDelay.TenSeconds);
+                delay: ReleaseDelay.TenSeconds);
             Assert.IsEmpty(releaseResult.FailedLockTokens);
         }
 
