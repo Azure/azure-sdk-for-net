@@ -51,6 +51,7 @@ namespace System.ClientModel.Tests.Internal
         [SetUp]
         public void Setup()
         {
+            // Each test needs its own listener
             _listener = new TestClientEventListener();
         }
 
@@ -65,7 +66,7 @@ namespace System.ClientModel.Tests.Internal
         {
             string requestContent = "Hello";
             string responseContent = "World";
-            Uri uri = new("http://example.com/Index.htm?q1=v1&q2=v2#FragmentName");
+            Uri uri = new("http://example.com/Index.htm?q1=v1&q2=v2");
 
             Dictionary<string, string> headers = new()
             {
@@ -90,6 +91,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = uri;
             message.Request.Headers.Add("Custom-Header", "Value");
             message.Request.Headers.Add("Date", "3/28/2024");
+            message.Request.Headers.Add("ETag", "version1");
             message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -101,7 +103,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("Request", args.EventName);
             Guid requestId = Guid.Parse(args.GetProperty<string>("requestId"));
-            Assert.AreEqual("http://example.com/Index.htm?q1=REDACTED&q2=REDACTED#FragmentName", args.GetProperty<string>("uri"));
+            Assert.AreEqual("http://example.com/Index.htm?q1=REDACTED&q2=REDACTED", args.GetProperty<string>("uri"));
             Assert.AreEqual("GET", args.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", args.GetProperty<string>("headers"));
             StringAssert.Contains($"ETag:version1{Environment.NewLine}", args.GetProperty<string>("headers"));
@@ -112,9 +114,10 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(EventLevel.Informational, args.Level);
             Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("Response", args.EventName);
-            // check same guid was set
+            Guid responseId = Guid.Parse(args.GetProperty<string>("requestId"));
+            Assert.AreEqual(responseId.ToString(), requestId.ToString());
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
-            StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
+            StringAssert.Contains($"Custom-Response-Header:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
         }
 
         [Test]
@@ -207,6 +210,7 @@ namespace System.ClientModel.Tests.Internal
                 }
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -315,6 +319,7 @@ namespace System.ClientModel.Tests.Internal
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
             options.LoggingOptions.AllowedHeaderNames.Add("Date");
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 

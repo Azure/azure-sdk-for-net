@@ -42,7 +42,7 @@ namespace System.ClientModel.Tests.Internal
         }
 
         [Test]
-        public void EverythingIsSanitizedByDefault()
+        public void EverythingIsSanitizedWithNoAllowedHeadersOrQueries()
         {
             var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>(), "*");
 

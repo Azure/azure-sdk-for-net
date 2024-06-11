@@ -122,7 +122,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                if (ClientLoggingPolicyIndex != null)
+                if (ClientLoggingPolicyIndex.HasValue)
                 {
                     var loggingPolicy = pipeline[ClientLoggingPolicyIndex.Value] as ClientLoggingPolicy;
                     loggingPolicy?.EventSourceSingleton.RequestRetrying(loggingPolicy.GetRequestIdFromHeaders(message.Request.Headers), message.RetryCount, elapsed);
