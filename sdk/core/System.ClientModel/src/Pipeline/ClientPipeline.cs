@@ -101,6 +101,8 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
+        LoggingOptions loggingOptions = options.LoggingOptions ?? new LoggingOptions();
+        bool isLoggingEnabled = loggingOptions.IsLoggingEnabled || options.LoggingPolicy != null;
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -112,6 +114,11 @@ public sealed partial class ClientPipeline
 
         pipelineLength++; // for retry policy
         pipelineLength++; // for transport
+
+        if (isLoggingEnabled)
+        {
+            pipelineLength++; // for logging policy
+        }
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
 
@@ -143,6 +150,12 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        if (isLoggingEnabled)
+        {
+            PipelinePolicy loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: loggingOptions);
+            policies[index++] = loggingPolicy;
+        }
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

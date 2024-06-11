@@ -53,6 +53,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -90,6 +91,9 @@ public class ClientRetryPolicy : PipelinePolicy
             {
                 OnRequestSent(message);
             }
+
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
