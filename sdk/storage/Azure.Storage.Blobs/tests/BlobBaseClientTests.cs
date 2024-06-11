@@ -2563,7 +2563,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
             var data = GetRandomBuffer(8 * Constants.MB);
 
             BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2577,7 +2576,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(
+                    srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)));
 
                 // Act
                 try
@@ -2605,7 +2605,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
             var data = GetRandomBuffer(8 * Constants.MB);
 
             BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2619,7 +2618,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                    srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)));
 
                 // Act
                 try
@@ -2687,7 +2687,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
             var data = GetRandomBuffer(8 * Constants.MB);
 
             BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2709,7 +2708,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> leaseResponse = await lease.AcquireAsync(duration);
 
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(
-                source: srcBlob.Uri,
+                source: srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                 destinationConditions: new BlobRequestConditions { LeaseId = leaseResponse.Value.LeaseId });
 
             // Act
@@ -2737,7 +2736,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
             var data = GetRandomBuffer(8 * Constants.MB);
 
             BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2754,7 +2752,8 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
-            Operation<long> operation = await destBlob.StartCopyFromUriAsync(source: srcBlob.Uri);
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                source: srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)));
 
             var leaseId = Recording.Random.NewGuid().ToString();
 
