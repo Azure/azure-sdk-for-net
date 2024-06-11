@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         private const string fqdn = "foo.contoso.com.";
         private static ETag? etag = new ETag("11111111-eeee-5555-9999-000000000000");
         private static long? ttl = 3600;
-        private SystemData systemData = default;
+        private ResourceManager.Models.SystemData systemData = default;
         private IDictionary<string, string> metadata = default;
         private WritableSubResource targetResource = null;
 

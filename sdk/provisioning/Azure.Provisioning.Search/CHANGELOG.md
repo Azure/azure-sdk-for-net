@@ -1,6 +1,6 @@
 # Release History
 
-## 0.2.0-beta.1 (Unreleased)
+## 0.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.2.0-beta.1 (2024-05-14)
+
+### Other Changes
+
+- Updated dependency on Azure.ResourceManager.Search to leverage serialization fix involving property assignments.
 
 ## 0.1.0 (2024-04-24)
 

@@ -151,7 +151,7 @@ acronym-mapping:
   UDP: Udp
 
 override-operation-name:
-  ResolvePrivateLinkServiceId_POST: ResolvePrivateLinkServiceId
+  ResolvePrivateLinkServiceId_Post: ResolvePrivateLinkServiceId
   AgentPools_GetAvailableAgentPoolVersions: GetAvailableAgentPoolVersions
 
 prepend-rp-prefix:

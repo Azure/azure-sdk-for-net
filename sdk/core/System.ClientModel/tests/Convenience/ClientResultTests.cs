@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
-public class PipelineResponseTests
+public class ClientResultTests
 {
     #region ClientResult
 

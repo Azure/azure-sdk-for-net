@@ -31,9 +31,9 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:CreateNamespaceClient
 #if SNIPPET
             // Construct the client using an Endpoint for a namespace as well as the shared access key
-            var client = new EventGridClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey));
+            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName);
 #else
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
             #endregion
 
@@ -48,20 +48,18 @@ namespace Azure.Messaging.EventGrid.Tests
                 Time = Recording.Now
             };
 #endif
-            await client.PublishCloudEventAsync(topicName, evt);
+            await senderClient.SendAsync(evt);
             #endregion
 
             #region Snippet:PublishBatchOfEvents
 #if SNIPPET
-            await client.PublishCloudEventsAsync(
-                topicName,
+            await senderClient.SendAsync(
                 new[] {
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
                 });
 #else
-            await client.PublishCloudEventsAsync(
-                topicName,
+            await senderClient.SendAsync(
                 new[] {
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 })
                     {
@@ -78,13 +76,19 @@ namespace Azure.Messaging.EventGrid.Tests
             #endregion
 
             #region Snippet:ReceiveAndProcessEvents
-            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 3);
+#if SNIPPET
+            // Construct the client using an Endpoint for a namespace as well as the shared access key
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
+#else
+            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+#endif
+            ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
             // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result
             var toRelease = new List<string>();
             var toAcknowledge = new List<string>();
             var toReject = new List<string>();
-            foreach (ReceiveDetails detail in result.Value)
+            foreach (ReceiveDetails detail in result.Details)
             {
                 CloudEvent @event = detail.Event;
                 BrokerProperties brokerProperties = detail.BrokerProperties;
@@ -114,7 +118,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toRelease.Count > 0)
             {
-                ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, new ReleaseOptions(toRelease));
+                ReleaseResult releaseResult = await receiverClient.ReleaseAsync(toRelease);
 
                 // Inspect the Release result
                 Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
@@ -134,7 +138,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toAcknowledge.Count > 0)
             {
-                AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(toAcknowledge));
+                AcknowledgeResult acknowledgeResult = await receiverClient.AcknowledgeAsync(toAcknowledge);
 
                 // Inspect the Acknowledge result
                 Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
@@ -154,7 +158,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toReject.Count > 0)
             {
-                RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, new RejectOptions(toReject));
+                RejectResult rejectResult = await receiverClient.RejectAsync(toReject);
 
                 // Inspect the Reject result
                 Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");
@@ -183,10 +187,10 @@ namespace Azure.Messaging.EventGrid.Tests
 
             #region Snippet:CreateNamespaceClientAAD
 #if SNIPPET
-            // Construct the client using an Endpoint for a namespace as well as the DefaultAzureCredential
-            var client = new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential());
+            // Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
+            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName);
 #else
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, InstrumentClientOptions(new EventGridClientOptions())));
+            var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
             #endregion
 
@@ -195,11 +199,17 @@ namespace Azure.Messaging.EventGrid.Tests
                 Id = Recording.Random.NewGuid().ToString(),
                 Time = Recording.Now
             };
-            await client.PublishCloudEventAsync(topicName, evt);
+            await senderClient.SendAsync(evt);
 
-            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 1);
-            RenewCloudEventLocksResult renewResult = await client.RenewCloudEventLocksAsync(topicName, subscriptionName,
-                new RenewLockOptions(new[] { result.Value.First().BrokerProperties.LockToken }));
+#if SNIPPET
+            // Construct the receiver client using an Endpoint for a namespace as well as the DefaultAzureCredential
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName, subscriptionName);
+#else
+            var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+#endif
+
+            ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 1);
+            RenewLocksResult renewResult = await receiverClient.RenewLocksAsync(new[] { result.Details.First().BrokerProperties.LockToken });
             Assert.IsEmpty(renewResult.FailedLockTokens);
         }
 
@@ -211,53 +221,73 @@ namespace Azure.Messaging.EventGrid.Tests
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
 
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {
                 Id = Recording.Random.NewGuid().ToString(),
                 Time = Recording.Now
             };
-            await client.PublishCloudEventAsync(topicName, evt);
+            await client.SendAsync(evt);
 
-            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 1);
-            ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName,
-                new ReleaseOptions(new[] { result.Value.First().BrokerProperties.LockToken }),
-                releaseDelayInSeconds: ReleaseDelay.By10Seconds);
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            ReleaseResult releaseResult = await receiver.ReleaseAsync(
+                new[] { result.Details.First().BrokerProperties.LockToken },
+                delay: ReleaseDelay.TenSeconds);
             Assert.IsEmpty(releaseResult.FailedLockTokens);
         }
 
         [RecordedTest]
-        public async Task PublishBinaryModeEvent()
+        public async Task Reject()
         {
             var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
             var namespaceKey = TestEnvironment.NamespaceKey;
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
-            var id = Recording.Random.NewGuid().ToString();
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {
-                Id = id,
-                Time = Recording.Now,
-                Subject = "subject",
-                DataContentType = "text/plain",
-                ExtensionAttributes =
-                {
-                    { "foo", "bar" }
-                }
+                Id = Recording.Random.NewGuid().ToString(),
+                Time = Recording.Now
             };
-            await client.PublishCloudEventAsync(topicName, evt, binaryMode: true);
+            await client.SendAsync(evt);
 
-            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
-            var receivedEvent = result.Value.Where(d => d.Event.Id == id).Single().Event;
-            Assert.IsNotNull(receivedEvent);
-            Assert.AreEqual("subject", receivedEvent.Subject);
-            Assert.AreEqual("text/plain", receivedEvent.DataContentType);
-            Assert.AreEqual("bar", receivedEvent.ExtensionAttributes["foo"]);
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            RejectResult rejectResult = await receiver.RejectAsync(new[] { result.Details.First().BrokerProperties.LockToken });
+            Assert.IsEmpty(rejectResult.FailedLockTokens);
+        }
+
+        [RecordedTest]
+        public async Task Acknowledge()
+        {
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            var client = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, InstrumentClientOptions(new EventGridSenderClientOptions())));
+
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Time = Recording.Now
+            };
+            await client.SendAsync(evt);
+
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), topicName, subscriptionName, InstrumentClientOptions(new EventGridReceiverClientOptions())));
+            ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
+            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { result.Details.First().BrokerProperties.LockToken });
+            Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
         }
 
         public class TestModel
@@ -279,16 +309,18 @@ namespace Azure.Messaging.EventGrid.Tests
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = new EventGridClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey));
+            var client = new EventGridReceiverClient(
+                new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey),
+                topicName,
+                subscriptionName);
 
             ReceiveResult results;
             do
             {
-                results = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
-                await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(
-                    results.Value.Select(r => r.BrokerProperties.LockToken).ToList()));
-            } while (results.Value.Count > 0);
+                results = await client.ReceiveAsync(maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
+                await client.AcknowledgeAsync(results.Details.Select(r => r.BrokerProperties.LockToken).ToList());
+            } while (results.Details.Count > 0);
         }
     }
 }

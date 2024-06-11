@@ -55,13 +55,21 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
+        /// <param name="sha1Thumbprint"></param>
+        /// <param name="keyVaultSecretVersion"></param>
+        /// <param name="keyVaultSecretCreated"></param>
+        /// <param name="certificateError"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateError certificateError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             KeyVirtualPath = keyVirtualPath;
             CertificateVirtualPath = certificateVirtualPath;
             KeyVaultSecretId = keyVaultSecretId;
+            Sha1Thumbprint = sha1Thumbprint;
+            KeyVaultSecretVersion = keyVaultSecretVersion;
+            KeyVaultSecretCreated = keyVaultSecretCreated;
+            CertificateError = certificateError;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +81,13 @@ namespace Azure.ResourceManager.Nginx.Models
         public string CertificateVirtualPath { get; set; }
         /// <summary> Gets or sets the key vault secret id. </summary>
         public string KeyVaultSecretId { get; set; }
+        /// <summary> Gets the sha 1 thumbprint. </summary>
+        public string Sha1Thumbprint { get; }
+        /// <summary> Gets the key vault secret version. </summary>
+        public string KeyVaultSecretVersion { get; }
+        /// <summary> Gets the key vault secret created. </summary>
+        public DateTimeOffset? KeyVaultSecretCreated { get; }
+        /// <summary> Gets or sets the certificate error. </summary>
+        public NginxCertificateError CertificateError { get; set; }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -59,7 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override int Length => CalculateLength();
 
         public BlobDestinationCheckpointData(
-            BlobType blobType,
+            DataTransferProperty<BlobType?> blobType,
             DataTransferProperty<string> contentType,
             DataTransferProperty<string> contentEncoding,
             DataTransferProperty<string> contentLanguage,
@@ -112,7 +111,15 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write(Version);
 
             // BlobType
-            writer.Write((byte)BlobType);
+            writer.Write(PreserveBlobType);
+            if (!PreserveBlobType)
+            {
+                writer.Write((byte)BlobTypeValue);
+            }
+            else
+            {
+                writer.Write((byte)0);
+            }
 
             // Preserve Content Type
             writer.Write(PreserveContentType);
@@ -253,6 +260,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Index Values
             // BlobType
+            bool preserveBlobType = reader.ReadBoolean();
             BlobType blobType = (BlobType)reader.ReadByte();
 
             // Preserve Content Type and offset/length
@@ -356,7 +364,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             return new BlobDestinationCheckpointData(
-                blobType: blobType,
+                blobType: preserveBlobType ? new(preserveBlobType) : new(blobType),
                 contentType: preserveContentType ? new(preserveContentType) : new(contentType),
                 contentEncoding: preserveContentEncoding ? new(preserveContentEncoding): new(contentEncoding),
                 contentLanguage: preserveContentLanguage ? new(preserveContentLanguage) : new(contentLanguage),

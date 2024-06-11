@@ -567,7 +567,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
-                BlobType = checkpointData.BlobType,
+                BlobType = default,
                 BlobDirectoryPrefix = directoryPrefix,
                 BlobOptions = baseOptions,
             };
@@ -576,7 +576,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlobStorageResourceContainerOptions DeepCopy(this BlobStorageResourceContainerOptions options)
             => new BlobStorageResourceContainerOptions()
             {
-                BlobType = options?.BlobType ?? BlobType.Block,
+                BlobType = options?.BlobType,
                 BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
                 BlobOptions = new BlobStorageResourceOptions()
                 {

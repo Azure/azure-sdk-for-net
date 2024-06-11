@@ -3,6 +3,7 @@
 ## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add sovereign cloud support to `MetricsClient` for US Gov and China clouds
 
 ### Breaking Changes
 

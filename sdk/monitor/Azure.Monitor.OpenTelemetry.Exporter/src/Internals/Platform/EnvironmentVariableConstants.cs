@@ -52,9 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string WEBSITE_HOSTNAME = "WEBSITE_HOSTNAME";
 
         /// <summary>
-        /// INTERNAL ONLY.
-        /// Used by Statsbeat to get the App Service Website Name.
-        /// Used by LiveMetrics to detect if an application is running in Azure App Service.
+        /// INTERNAL ONLY. Used by Statsbeat to get the App Service Website Name.
         /// </summary>
         public const string WEBSITE_SITE_NAME = "WEBSITE_SITE_NAME";
 
