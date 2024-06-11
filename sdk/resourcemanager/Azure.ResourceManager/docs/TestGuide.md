@@ -83,7 +83,7 @@ In order to run the tests, the following environment variables need to be set:
 
 3. You need to change its value depending on the Azure Cloud type you are using in your tests. `https://login.microsoftonline.com` only applies to Azure Public Cloud.
 
-4. These values depend on the subscription and token credential you are using for testing. Please refer to this [document][authenticate] to get the values.
+4. These values depend on the subscription you are using for testing. Please refer to this [document][authenticate] to get the values.
 
 The easiest way to run the tests is via Visual Studio's test runner. Please note that the Visual Studio 2022 is required as one of the test target frameworks is `.NET 6.0`.
 
