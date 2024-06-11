@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:CreateNamespaceClientAAD
 #if SNIPPET
             // Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
-            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName);
+            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new DefaultAzureCredential());
 #else
             var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, TestEnvironment.Credential, InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
 #if SNIPPET
             // Construct the receiver client using an Endpoint for a namespace as well as the DefaultAzureCredential
-            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName, subscriptionName);
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new DefaultAzureCredential());
 #else
             var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, TestEnvironment.Credential, InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif

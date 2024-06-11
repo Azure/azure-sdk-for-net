@@ -53,7 +53,7 @@ To send events to a topic or domain using Azure Active Directory, the authentica
 
 ```C# Snippet:CreateNamespaceClientAAD
 // Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), topicName);
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new DefaultAzureCredential());
 ```
 
 ## Key concepts
