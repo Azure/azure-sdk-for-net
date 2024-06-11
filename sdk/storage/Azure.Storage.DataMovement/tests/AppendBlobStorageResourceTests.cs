@@ -16,6 +16,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
@@ -532,7 +533,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             AppendBlobClient sourceClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
             AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
 
@@ -543,6 +544,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 await sourceClient.AppendBlockAsync(stream);
             }
+
+            sourceClient = InstrumentClient(new AppendBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
 
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
@@ -956,7 +961,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite:false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Status == (int)HttpStatusCode.NotFound);
+                    Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);
                 });
         }
 
@@ -977,6 +982,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await sourceClient.AppendBlockAsync(stream);
             }
 
+            sourceClient = InstrumentClient(new AppendBlobClient(
+                sourceClient.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                GetOptions()));
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
 
@@ -1447,7 +1455,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_Error()
         {
             // Arrange
-            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             AppendBlobClient sourceClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
             AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
 
