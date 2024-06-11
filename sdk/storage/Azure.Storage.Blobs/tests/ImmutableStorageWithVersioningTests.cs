@@ -52,7 +52,6 @@ namespace Azure.Storage.Blobs.Test
                     accountName: configuration.AccountName,
                     containerName: _containerName,
                     new Microsoft.Azure.Management.Storage.Models.BlobContainer(
-                        publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
                         immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
                 return;
             }
@@ -490,7 +489,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.SetImmutabilityPolicyAsync(
                     immutabilityPolicy: immutabilityPolicy,
                     conditions: conditions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.AreEqual("InvalidExpiryTime", e.ErrorCode));
         }
 
         [Test]
@@ -825,7 +824,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                options);
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
