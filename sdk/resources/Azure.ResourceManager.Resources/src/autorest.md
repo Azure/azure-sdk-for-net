@@ -25,6 +25,10 @@ enable-bicep-serialization: true
 #mgmt-debug:
 #  show-serialized-names: true
 
+rename-mapping:
+  DecompileOperationSuccessResponse: DecompileOperationSuccessResult
+  FileDefinition: DecompiledFileDefinition
+
 patch-initializer-customization:
   ArmDeploymentContent:
     Properties: 'new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental)'
@@ -346,10 +350,13 @@ directive:
 
 These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
 
+
 ```yaml $(tag) == 'package-resources-2022-04'
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6acab48bdaef738f88de60abc41826e9914ad8ad/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6acab48bdaef738f88de60abc41826e9914ad8ad/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6acab48bdaef738f88de60abc41826e9914ad8ad/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6acab48bdaef738f88de60abc41826e9914ad8ad/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6acab48bdaef738f88de60abc41826e9914ad8ad/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
 ```
+

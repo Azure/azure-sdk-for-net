@@ -1015,7 +1015,9 @@
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
-        "Puid"
+        "Puid",
+        "Decompile",
+        "Decompiled"
       ]
     },
     {
@@ -1394,6 +1396,13 @@
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "Byok"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "AOAI",
+        "Rerank"
       ]
     }
   ],

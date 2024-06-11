@@ -30,6 +30,7 @@ extends:
   parameters:
     ServiceDirectory: batch
     ArtifactName: packages
+    BuildSnippets: false
     Artifacts:
     - name: Azure.Compute.Batch
       safeName: AzureComputeBatch
