@@ -6,7 +6,7 @@ interacted with using the `EventGridClient`.
 
 ```C# Snippet:CreateNamespaceClient
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName);
+var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
 ```
 
 Publishing CloudEvents is very similar to the experience of publishing to custom topics using the `EventGridPublisherClient`.
@@ -38,7 +38,7 @@ There are three different actions you can take on a received event:
 
 ```C# Snippet:ReceiveAndProcessEvents
 // Construct the client using an Endpoint for a namespace as well as the shared access key
-var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
+var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey));
 ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 3);
 
 // Iterate through the results and collect the lock tokens for events we want to release/acknowledge/result

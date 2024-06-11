@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:CreateNamespaceClient
 #if SNIPPET
             // Construct the client using an Endpoint for a namespace as well as the shared access key
-            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName);
+            var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
 #else
             var senderClient = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
 #endif
@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:ReceiveAndProcessEvents
 #if SNIPPET
             // Construct the client using an Endpoint for a namespace as well as the shared access key
-            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), new AzureKeyCredential(namespaceKey), topicName, subscriptionName);
+            var receiverClient = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey));
 #else
             var receiverClient = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
