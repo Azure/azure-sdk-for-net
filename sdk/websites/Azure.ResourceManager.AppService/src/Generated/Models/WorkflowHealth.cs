@@ -71,8 +71,5 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets or sets the workflow health state. </summary>
         [WirePath("state")]
         public WorkflowHealthState State { get; }
-        /// <summary> Gets or sets the workflow error. </summary>
-        [WirePath("error")]
-        public ResponseError Error { get; }
     }
 }

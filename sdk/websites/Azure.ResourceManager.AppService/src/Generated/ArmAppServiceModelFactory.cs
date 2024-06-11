@@ -5291,12 +5291,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numberOfInstancesSuccessful"> Number of site instances provisioned successfully. </param>
         /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
-        /// <param name="errors"> Raw failure information if DNS verification fails. </param>
+        /// <param name="errors"> List of errors. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CsmDeploymentStatus"/> instance for mocking. </returns>
-        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, ResponseError errors = null, string kind = null)
+        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ResponseError> errors = null, string kind = null)
         {
             failedInstancesLogs ??= new List<string>();
+            errors ??= new List<ResponseError>();
 
             return new CsmDeploymentStatus(
                 id,
@@ -5309,7 +5310,7 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesSuccessful,
                 numberOfInstancesFailed,
                 failedInstancesLogs?.ToList(),
-                errors,
+                errors?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }

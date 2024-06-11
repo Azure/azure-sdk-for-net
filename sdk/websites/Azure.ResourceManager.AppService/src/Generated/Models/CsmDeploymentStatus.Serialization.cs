@@ -91,10 +91,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                JsonSerializer.Serialize(writer, Errors);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? numberOfInstancesSuccessful = default;
             int? numberOfInstancesFailed = default;
             IList<string> failedInstancesLogs = default;
-            ResponseError errors = default;
+            IList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +260,19 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            List<ResponseError> array = new List<ResponseError>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                                }
+                            }
+                            errors = array;
                             continue;
                         }
                     }
@@ -273,7 +295,7 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesSuccessful,
                 numberOfInstancesFailed,
                 failedInstancesLogs ?? new ChangeTrackingList<string>(),
-                errors,
+                errors ?? new ChangeTrackingList<ResponseError>(),
                 kind,
                 serializedAdditionalRawData);
         }
@@ -494,10 +516,23 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(Errors))
+                if (Optional.IsCollectionDefined(Errors))
                 {
-                    builder.Append("    errors: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Errors, options, 4, false, "    errors: ");
+                    if (Errors.Any())
+                    {
+                        builder.Append("    errors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Errors)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 

@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         public CsmDeploymentStatus()
         {
             FailedInstancesLogs = new ChangeTrackingList<string>();
+            Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatus"/>. </summary>
@@ -64,10 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numberOfInstancesSuccessful"> Number of site instances provisioned successfully. </param>
         /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
-        /// <param name="errors"> Raw failure information if DNS verification fails. </param>
+        /// <param name="errors"> List of errors. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, ResponseError errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ResponseError> errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeploymentId = deploymentId;
             Status = status;
@@ -98,9 +99,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of URLs pointing to logs for instances which failed to provision. </summary>
         [WirePath("properties.failedInstancesLogs")]
         public IList<string> FailedInstancesLogs { get; }
-        /// <summary> Raw failure information if DNS verification fails. </summary>
-        [WirePath("properties.errors")]
-        public ResponseError Errors { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
