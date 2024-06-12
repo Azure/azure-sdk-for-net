@@ -188,5 +188,13 @@ namespace Azure.AI.Inference
         {
             return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/>. </summary>
+        /// <param name="function"> The function that should be called. </param>
+        /// <returns> A new <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/> instance for mocking. </returns>
+        public static ChatCompletionsNamedFunctionToolSelection ChatCompletionsNamedFunctionToolSelection(ChatCompletionsFunctionToolSelection function = null)
+        {
+            return new ChatCompletionsNamedFunctionToolSelection("function", serializedAdditionalRawData: null, function);
+        }
     }
 }

@@ -71,11 +71,7 @@ namespace Azure.AI.Inference
         /// Passing null causes the model to use its default value.
         /// Returns a 422 error if the model doesn't support the value or parameter.
         /// </param>
-        /// <param name="encodingFormat">
-        /// Optional. The number of dimensions the resulting output embeddings should have.
-        /// Passing null causes the model to use its default value.
-        /// Returns a 422 error if the model doesn't support the value or parameter.
-        /// </param>
+        /// <param name="encodingFormat"> Optional. The desired format for the returned embeddings. </param>
         /// <param name="inputType">
         /// Optional. The type of the input.
         /// Returns a 422 error if the model doesn't support the value or parameter.
@@ -107,11 +103,7 @@ namespace Azure.AI.Inference
         /// Returns a 422 error if the model doesn't support the value or parameter.
         /// </summary>
         public int? Dimensions { get; set; }
-        /// <summary>
-        /// Optional. The number of dimensions the resulting output embeddings should have.
-        /// Passing null causes the model to use its default value.
-        /// Returns a 422 error if the model doesn't support the value or parameter.
-        /// </summary>
+        /// <summary> Optional. The desired format for the returned embeddings. </summary>
         public EmbeddingEncodingFormat? EncodingFormat { get; set; }
         /// <summary>
         /// Optional. The type of the input.

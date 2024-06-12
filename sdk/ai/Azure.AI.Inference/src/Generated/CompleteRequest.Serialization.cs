@@ -38,10 +38,10 @@ namespace Azure.AI.Inference
                 writer.WritePropertyName("frequency_penalty"u8);
                 writer.WriteNumberValue(FrequencyPenalty.Value);
             }
-            if (Optional.IsDefined(Stream))
+            if (Optional.IsDefined(InternalShouldStreamResponse))
             {
                 writer.WritePropertyName("stream"u8);
-                writer.WriteBooleanValue(Stream.Value);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
             if (Optional.IsDefined(PresencePenalty))
             {
@@ -53,10 +53,10 @@ namespace Azure.AI.Inference
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(TopP))
+            if (Optional.IsDefined(NucleusSamplingFactor))
             {
                 writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
             if (Optional.IsDefined(MaxTokens))
             {
@@ -68,11 +68,11 @@ namespace Azure.AI.Inference
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Stop))
+            if (Optional.IsCollectionDefined(StopSequences))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
-                foreach (var item in Stop)
+                foreach (var item in StopSequences)
                 {
                     writer.WriteStringValue(item);
                 }

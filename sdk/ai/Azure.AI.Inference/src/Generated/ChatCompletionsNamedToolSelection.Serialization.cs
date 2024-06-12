@@ -66,6 +66,13 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "function": return ChatCompletionsNamedFunctionToolSelection.DeserializeChatCompletionsNamedFunctionToolSelection(element, options);
+                }
+            }
             return UnknownChatCompletionsNamedToolSelection.DeserializeUnknownChatCompletionsNamedToolSelection(element, options);
         }
 

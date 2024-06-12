@@ -91,7 +91,10 @@ namespace Azure.AI.Inference
             _apiVersion = options.Version;
         }
 
-        /// <summary> Return the embeddings for given images. </summary>
+        /// <summary>
+        /// Return the embedding vectors for given images.
+        /// The method makes a REST API call to the `/images/embeddings` route on the given endpoint.
+        /// </summary>
         /// <param name="input">
         /// Input image to embed. To embed multiple inputs in a single request, pass an array.
         /// The input must not exceed the max input tokens for the model.
@@ -126,7 +129,10 @@ namespace Azure.AI.Inference
             return Response.FromValue(EmbeddingsResult.FromResponse(response), response);
         }
 
-        /// <summary> Return the embeddings for given images. </summary>
+        /// <summary>
+        /// Return the embedding vectors for given images.
+        /// The method makes a REST API call to the `/images/embeddings` route on the given endpoint.
+        /// </summary>
         /// <param name="input">
         /// Input image to embed. To embed multiple inputs in a single request, pass an array.
         /// The input must not exceed the max input tokens for the model.
@@ -162,7 +168,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Return the embeddings for given images.
+        /// [Protocol Method] Return the embedding vectors for given images.
+        /// The method makes a REST API call to the `/images/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -199,7 +206,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Return the embeddings for given images.
+        /// [Protocol Method] Return the embedding vectors for given images.
+        /// The method makes a REST API call to the `/images/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -235,7 +243,10 @@ namespace Azure.AI.Inference
             }
         }
 
-        /// <summary> Returns information about the AI model. </summary>
+        /// <summary>
+        /// Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
         {
@@ -244,7 +255,10 @@ namespace Azure.AI.Inference
             return Response.FromValue(ModelInfo.FromResponse(response), response);
         }
 
-        /// <summary> Returns information about the AI model. </summary>
+        /// <summary>
+        /// Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
         {
@@ -255,6 +269,7 @@ namespace Azure.AI.Inference
 
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -284,6 +299,7 @@ namespace Azure.AI.Inference
 
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
