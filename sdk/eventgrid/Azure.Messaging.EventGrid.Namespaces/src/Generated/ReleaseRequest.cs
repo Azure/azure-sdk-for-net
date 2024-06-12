@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Array of lock tokens for the corresponding received Cloud Events to be renewed. </summary>
-    public partial class RenewLockOptions
+    /// <summary> The ReleaseRequest. </summary>
+    internal partial class ReleaseRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RenewLockOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReleaseRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public RenewLockOptions(IEnumerable<string> lockTokens)
+        public ReleaseRequest(IEnumerable<string> lockTokens)
         {
             Argument.AssertNotNull(lockTokens, nameof(lockTokens));
 
             LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenewLockOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReleaseRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenewLockOptions(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReleaseRequest(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LockTokens = lockTokens;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenewLockOptions"/> for deserialization. </summary>
-        internal RenewLockOptions()
+        /// <summary> Initializes a new instance of <see cref="ReleaseRequest"/> for deserialization. </summary>
+        internal ReleaseRequest()
         {
         }
 

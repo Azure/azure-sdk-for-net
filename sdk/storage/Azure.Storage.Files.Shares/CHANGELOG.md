@@ -1,5 +1,15 @@
 # Release History
 
+## 12.19.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.19.0-beta.1 (2024-06-11)
 - Added support for service version 2024-08-04.
 - Added more detailed messaging for authorization failure cases.

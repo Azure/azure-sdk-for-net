@@ -11,16 +11,16 @@ using System.Linq;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MessagingEventGridNamespacesModelFactory
+    public static partial class EventGridNamespacesModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
-        /// <param name="value"> Array of receive responses, one per cloud event. </param>
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
-        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> value = null)
+        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> details = null)
         {
-            value ??= new List<ReceiveDetails>();
+            details ??= new List<ReceiveDetails>();
 
-            return new ReceiveResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new ReceiveResult(details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveDetails"/>. </summary>
@@ -86,16 +86,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.RenewCloudEventLocksResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.RenewLocksResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
-        /// <returns> A new <see cref="Namespaces.RenewCloudEventLocksResult"/> instance for mocking. </returns>
-        public static RenewCloudEventLocksResult RenewCloudEventLocksResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
+        /// <returns> A new <see cref="Namespaces.RenewLocksResult"/> instance for mocking. </returns>
+        public static RenewLocksResult RenewLocksResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
         {
             failedLockTokens ??= new List<FailedLockToken>();
             succeededLockTokens ??= new List<string>();
 
-            return new RenewCloudEventLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
+            return new RenewLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

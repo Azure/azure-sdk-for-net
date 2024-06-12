@@ -22,12 +22,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureSdkLoggingTests
     {
-        [Theory(Skip = "Temporary skip for stable release")]
-        //#if NET6_0
-        //        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-        //#else
-        //        [Theory]
-        //#endif
+#if NET6_0
+        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
+        [Theory]
+#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -55,12 +54,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        [Theory(Skip = "Temporary skip for stable release")]
-        //#if NET6_0
-        //        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-        //#else
-        //        [Theory]
-        //#endif
+#if NET6_0
+        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
+        [Theory]
+#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -97,12 +95,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        [Fact(Skip = "Temporary skip for stable release")]
-        //#if NET6_0
-        //        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-        //#else
-        //        [Fact]
-        //#endif
+#if NET6_0
+        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
+        [Fact]
+#endif
         public async Task SelfDiagnosticsIsDisabled()
         {
             var enableLevel = LogLevel.Debug;

@@ -1,14 +1,13 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.4.0-beta.1 (2024-06-11)
 
 ### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  (This feature was originally introduced in 1.3.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
 ## 1.3.0 (2024-06-07)
 
