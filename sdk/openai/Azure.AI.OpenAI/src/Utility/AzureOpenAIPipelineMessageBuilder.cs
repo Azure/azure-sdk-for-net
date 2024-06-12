@@ -142,22 +142,6 @@ internal class AzureOpenAIPipelineMessageBuilder
             uriBuilder.AppendQuery(queryStringPair.Key, queryStringPair.Value, escape: true);
         }
 
-        Uri generatedUri = uriBuilder.ToUri();
-        /* Notes:
-         * - In .Net Framework, setting a Query string with a leading '?' will cause the System.UriBuilder include
-         *   a double '?' in the generated URI. .Net Core 3.1, and .Net 5+ do not have this behavior.
-         * - We do this check here since the ClientUriBuilder (which uses UriBuilder) is automatically generated
-         *   and until the code generation is updated, we will lose the fix every time we regenerate the code.
-         * - We need a runtime check since we are targeting .Net Standard 2.0 so #if checks won't work
-         * - This check will incorrectly detect .Net Core 3.1 as needing the fix, but it will not cause any issues.
-         */
-        if (generatedUri != null && Environment.Version.Major < 5)
-        {
-            UriBuilder fixer = new UriBuilder(generatedUri);
-            fixer.Query = fixer.Query?.TrimStart('?');
-            generatedUri = fixer.Uri;
-        }
-
-        request.Uri = generatedUri;
+        request.Uri = uriBuilder.ToUri();
     }
 }
