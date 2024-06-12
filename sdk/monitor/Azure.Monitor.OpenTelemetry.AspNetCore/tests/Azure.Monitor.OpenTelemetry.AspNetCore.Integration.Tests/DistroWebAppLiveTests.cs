@@ -173,9 +173,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     Name = "http.client.request.duration",
                     AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
                     Properties = new List<KeyValuePair<string, string>>
                     {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("network.protocol.version", "1.1"),
                         new("server.address", "localhost"),
+                        new("server.port", "9998"),
+                        new("url.scheme", "http"),
                     },
                 });
 
@@ -186,7 +193,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     Name = "http.server.request.duration",
                     AppRoleName = roleName,
-                    Properties = new(),
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("http.route", "/"),
+                        new("network.protocol.version", "1.1"),
+                        new("url.scheme", "http")
+                    }
                 });
 
             await QueryAndVerifyTrace(
