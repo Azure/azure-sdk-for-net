@@ -91,7 +91,10 @@ namespace Azure.AI.Inference
             _apiVersion = options.Version;
         }
 
-        /// <summary> Return the embeddings for a given text prompt. </summary>
+        /// <summary>
+        /// Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
+        /// </summary>
         /// <param name="input">
         /// Input text to embed, encoded as a string or array of tokens.
         /// To embed multiple inputs in a single request, pass an array
@@ -102,11 +105,7 @@ namespace Azure.AI.Inference
         /// Passing null causes the model to use its default value.
         /// Returns a 422 error if the model doesn't support the value or parameter.
         /// </param>
-        /// <param name="encodingFormat">
-        /// Optional. The number of dimensions the resulting output embeddings should have.
-        /// Passing null causes the model to use its default value.
-        /// Returns a 422 error if the model doesn't support the value or parameter.
-        /// </param>
+        /// <param name="encodingFormat"> Optional. The desired format for the returned embeddings. </param>
         /// <param name="inputType">
         /// Optional. The type of the input.
         /// Returns a 422 error if the model doesn't support the value or parameter.
@@ -127,7 +126,10 @@ namespace Azure.AI.Inference
             return Response.FromValue(EmbeddingsResult.FromResponse(response), response);
         }
 
-        /// <summary> Return the embeddings for a given text prompt. </summary>
+        /// <summary>
+        /// Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
+        /// </summary>
         /// <param name="input">
         /// Input text to embed, encoded as a string or array of tokens.
         /// To embed multiple inputs in a single request, pass an array
@@ -138,11 +140,7 @@ namespace Azure.AI.Inference
         /// Passing null causes the model to use its default value.
         /// Returns a 422 error if the model doesn't support the value or parameter.
         /// </param>
-        /// <param name="encodingFormat">
-        /// Optional. The number of dimensions the resulting output embeddings should have.
-        /// Passing null causes the model to use its default value.
-        /// Returns a 422 error if the model doesn't support the value or parameter.
-        /// </param>
+        /// <param name="encodingFormat"> Optional. The desired format for the returned embeddings. </param>
         /// <param name="inputType">
         /// Optional. The type of the input.
         /// Returns a 422 error if the model doesn't support the value or parameter.
@@ -164,7 +162,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Return the embeddings for a given text prompt.
+        /// [Protocol Method] Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -201,7 +200,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Return the embeddings for a given text prompt.
+        /// [Protocol Method] Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -237,7 +237,10 @@ namespace Azure.AI.Inference
             }
         }
 
-        /// <summary> Returns information about the AI model. </summary>
+        /// <summary>
+        /// Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
         {
@@ -246,7 +249,10 @@ namespace Azure.AI.Inference
             return Response.FromValue(ModelInfo.FromResponse(response), response);
         }
 
-        /// <summary> Returns information about the AI model. </summary>
+        /// <summary>
+        /// Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
         {
@@ -257,6 +263,7 @@ namespace Azure.AI.Inference
 
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -286,6 +293,7 @@ namespace Azure.AI.Inference
 
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
+        /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>

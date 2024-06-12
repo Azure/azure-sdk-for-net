@@ -24,6 +24,7 @@ namespace Azure.AI.Inference
 
         private const string AutoValue = "auto";
         private const string NoneValue = "none";
+        private const string RequiredValue = "required";
 
         /// <summary>
         /// Specifies that the model may either use any of the tools provided in this chat completions request or
@@ -35,6 +36,8 @@ namespace Azure.AI.Inference
         /// completions response. Response content may still be influenced by the provided tool definitions.
         /// </summary>
         public static ChatCompletionsToolSelectionPreset None { get; } = new ChatCompletionsToolSelectionPreset(NoneValue);
+        /// <summary> Specifies that the model should respond with a call to one or more tools. </summary>
+        public static ChatCompletionsToolSelectionPreset Required { get; } = new ChatCompletionsToolSelectionPreset(RequiredValue);
         /// <summary> Determines if two <see cref="ChatCompletionsToolSelectionPreset"/> values are the same. </summary>
         public static bool operator ==(ChatCompletionsToolSelectionPreset left, ChatCompletionsToolSelectionPreset right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatCompletionsToolSelectionPreset"/> values are not the same. </summary>

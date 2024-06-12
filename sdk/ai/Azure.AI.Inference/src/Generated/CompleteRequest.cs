@@ -61,7 +61,7 @@ namespace Azure.AI.Inference
             Argument.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
-            Stop = new ChangeTrackingList<string>();
+            StopSequences = new ChangeTrackingList<string>();
             Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
         }
 
@@ -79,13 +79,15 @@ namespace Azure.AI.Inference
         /// frequency in generated text.
         /// Positive values will make tokens less likely to appear as their frequency increases and
         /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// Supported range is [-2, 2].
         /// </param>
-        /// <param name="stream"> A value indicating whether chat completions should be streamed for this request. </param>
+        /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
         /// <param name="presencePenalty">
         /// A value that influences the probability of generated tokens appearing based on their existing
         /// presence in generated text.
         /// Positive values will make tokens less likely to appear when they already exist and increase the
         /// model's likelihood to output new topics.
+        /// Supported range is [-2, 2].
         /// </param>
         /// <param name="temperature">
         /// The sampling temperature to use that controls the apparent creativity of generated completions.
@@ -93,18 +95,20 @@ namespace Azure.AI.Inference
         /// and deterministic.
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
+        /// Supported range is [0, 1].
         /// </param>
-        /// <param name="topP">
+        /// <param name="nucleusSamplingFactor">
         /// An alternative to sampling with temperature called nucleus sampling. This value causes the
         /// model to consider the results of tokens with the provided probability mass. As an example, a
         /// value of 0.15 will cause only the tokens comprising the top 15% of probability mass to be
         /// considered.
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
+        /// Supported range is [0, 1].
         /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
-        /// <param name="stop"> A collection of textual sequences that will end completions generation. </param>
+        /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools">
         /// The available tool definitions that the chat completions request can use, including caller-defined functions.
         /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -116,17 +120,17 @@ namespace Azure.AI.Inference
         /// same seed and parameters should return the same result. Determinism is not guaranteed."
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompleteRequest(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? stream, float? presencePenalty, float? temperature, float? topP, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stop, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice, long? seed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CompleteRequest(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice, long? seed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             FrequencyPenalty = frequencyPenalty;
-            Stream = stream;
+            InternalShouldStreamResponse = internalShouldStreamResponse;
             PresencePenalty = presencePenalty;
             Temperature = temperature;
-            TopP = topP;
+            NucleusSamplingFactor = nucleusSamplingFactor;
             MaxTokens = maxTokens;
             ResponseFormat = responseFormat;
-            Stop = stop;
+            StopSequences = stopSequences;
             Tools = tools;
             ToolChoice = toolChoice;
             Seed = seed;
@@ -152,15 +156,17 @@ namespace Azure.AI.Inference
         /// frequency in generated text.
         /// Positive values will make tokens less likely to appear as their frequency increases and
         /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// Supported range is [-2, 2].
         /// </summary>
         public float? FrequencyPenalty { get; set; }
         /// <summary> A value indicating whether chat completions should be streamed for this request. </summary>
-        public bool? Stream { get; set; }
+        public bool? InternalShouldStreamResponse { get; set; }
         /// <summary>
         /// A value that influences the probability of generated tokens appearing based on their existing
         /// presence in generated text.
         /// Positive values will make tokens less likely to appear when they already exist and increase the
         /// model's likelihood to output new topics.
+        /// Supported range is [-2, 2].
         /// </summary>
         public float? PresencePenalty { get; set; }
         /// <summary>
@@ -169,6 +175,7 @@ namespace Azure.AI.Inference
         /// and deterministic.
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
+        /// Supported range is [0, 1].
         /// </summary>
         public float? Temperature { get; set; }
         /// <summary>
@@ -178,14 +185,15 @@ namespace Azure.AI.Inference
         /// considered.
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
+        /// Supported range is [0, 1].
         /// </summary>
-        public float? TopP { get; set; }
+        public float? NucleusSamplingFactor { get; set; }
         /// <summary> The maximum number of tokens to generate. </summary>
         public int? MaxTokens { get; set; }
         /// <summary> An object specifying the format that the model must output. Used to enable JSON mode. </summary>
         public ChatCompletionsResponseFormat? ResponseFormat { get; set; }
         /// <summary> A collection of textual sequences that will end completions generation. </summary>
-        public IList<string> Stop { get; }
+        public IList<string> StopSequences { get; }
         /// <summary>
         /// The available tool definitions that the chat completions request can use, including caller-defined functions.
         /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
