@@ -38,7 +38,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
         protected ImageAnalysisClient GetClientWithDefaultCred(ImageAnalysisClientOptions options = null)
         {
-            var credential = new Azure.Identity.DefaultAzureCredential(true);
+            var credential = TestEnvironment.Credential;
 
             options = options ?? new ImageAnalysisClientOptions
             {
