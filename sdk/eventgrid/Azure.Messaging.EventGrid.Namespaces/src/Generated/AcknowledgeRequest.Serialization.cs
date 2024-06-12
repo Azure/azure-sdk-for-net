@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class ReleaseOptions : IUtf8JsonSerializable, IJsonModel<ReleaseOptions>
+    internal partial class AcknowledgeRequest : IUtf8JsonSerializable, IJsonModel<AcknowledgeRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReleaseOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcknowledgeRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReleaseOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AcknowledgeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReleaseOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReleaseOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteEndObject();
         }
 
-        ReleaseOptions IJsonModel<ReleaseOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcknowledgeRequest IJsonModel<AcknowledgeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReleaseOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReleaseOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReleaseOptions(document.RootElement, options);
+            return DeserializeAcknowledgeRequest(document.RootElement, options);
         }
 
-        internal static ReleaseOptions DeserializeReleaseOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AcknowledgeRequest DeserializeAcknowledgeRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,46 +92,46 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReleaseOptions(lockTokens, serializedAdditionalRawData);
+            return new AcknowledgeRequest(lockTokens, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReleaseOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcknowledgeRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReleaseOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReleaseOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReleaseOptions IPersistableModel<ReleaseOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AcknowledgeRequest IPersistableModel<AcknowledgeRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReleaseOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReleaseOptions(document.RootElement, options);
+                        return DeserializeAcknowledgeRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReleaseOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReleaseOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AcknowledgeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ReleaseOptions FromResponse(Response response)
+        internal static AcknowledgeRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeReleaseOptions(document.RootElement);
+            return DeserializeAcknowledgeRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

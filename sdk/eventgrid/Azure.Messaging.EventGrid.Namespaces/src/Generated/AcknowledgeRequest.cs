@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Details of the Receive operation response. </summary>
-    public partial class ReceiveResult
+    /// <summary> The AcknowledgeRequest. </summary>
+    internal partial class AcknowledgeRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
-        /// <param name="details"> Array of receive responses, one per cloud event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        internal ReceiveResult(IEnumerable<ReceiveDetails> details)
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/>. </summary>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
+        public AcknowledgeRequest(IEnumerable<string> lockTokens)
         {
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
 
-            Details = details.ToList();
+            LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
-        /// <param name="details"> Array of receive responses, one per cloud event. </param>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/>. </summary>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveResult(IReadOnlyList<ReceiveDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcknowledgeRequest(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Details = details;
+            LockTokens = lockTokens;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/> for deserialization. </summary>
-        internal ReceiveResult()
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/> for deserialization. </summary>
+        internal AcknowledgeRequest()
         {
         }
 
-        /// <summary> Array of receive responses, one per cloud event. </summary>
-        public IReadOnlyList<ReceiveDetails> Details { get; }
+        /// <summary> Array of lock tokens. </summary>
+        public IList<string> LockTokens { get; }
     }
 }

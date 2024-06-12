@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class RenewCloudEventLocksResult : IUtf8JsonSerializable, IJsonModel<RenewCloudEventLocksResult>
+    public partial class RenewLocksResult : IUtf8JsonSerializable, IJsonModel<RenewLocksResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewCloudEventLocksResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewLocksResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RenewCloudEventLocksResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RenewLocksResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewCloudEventLocksResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RenewLocksResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewCloudEventLocksResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewLocksResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteEndObject();
         }
 
-        RenewCloudEventLocksResult IJsonModel<RenewCloudEventLocksResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RenewLocksResult IJsonModel<RenewLocksResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewCloudEventLocksResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RenewLocksResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewCloudEventLocksResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewLocksResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRenewCloudEventLocksResult(document.RootElement, options);
+            return DeserializeRenewLocksResult(document.RootElement, options);
         }
 
-        internal static RenewCloudEventLocksResult DeserializeRenewCloudEventLocksResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RenewLocksResult DeserializeRenewLocksResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -110,46 +110,46 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RenewCloudEventLocksResult(failedLockTokens, succeededLockTokens, serializedAdditionalRawData);
+            return new RenewLocksResult(failedLockTokens, succeededLockTokens, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RenewCloudEventLocksResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RenewLocksResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewCloudEventLocksResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RenewLocksResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RenewCloudEventLocksResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewLocksResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RenewCloudEventLocksResult IPersistableModel<RenewCloudEventLocksResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RenewLocksResult IPersistableModel<RenewLocksResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RenewCloudEventLocksResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RenewLocksResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRenewCloudEventLocksResult(document.RootElement, options);
+                        return DeserializeRenewLocksResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenewCloudEventLocksResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewLocksResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RenewCloudEventLocksResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RenewLocksResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RenewCloudEventLocksResult FromResponse(Response response)
+        internal static RenewLocksResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRenewCloudEventLocksResult(document.RootElement);
+            return DeserializeRenewLocksResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

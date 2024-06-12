@@ -1,5 +1,15 @@
 # Release History
 
+## 1.12.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.12.0-beta.3 (2024-06-11)
 
 ### Features Added
@@ -13,16 +23,6 @@
 ### Bugs Fixed
 - Bug fixes for `AzurePipelinesCredential`
 - Managed identity bug fixes.
-
-## 1.11.4 (2024-06-10)
-
-### Bugs Fixed
-- Managed identity bug fixes.
-
-## 1.11.3 (2024-05-07)
-
-### Bugs Fixed
-- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
 
 ## 1.11.4 (2024-06-10)
 

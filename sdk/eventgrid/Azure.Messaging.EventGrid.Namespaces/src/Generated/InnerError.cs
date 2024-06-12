@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Array of lock tokens for the corresponding received Cloud Events to be rejected. </summary>
-    public partial class RejectOptions
+    /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
+    internal partial class InnerError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,25 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RejectOptions"/>. </summary>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public RejectOptions(IEnumerable<string> lockTokens)
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        internal InnerError()
         {
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RejectOptions"/>. </summary>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="innererror"> Inner error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RejectOptions(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InnerError(string code, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LockTokens = lockTokens;
+            Code = code;
+            Innererror = innererror;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RejectOptions"/> for deserialization. </summary>
-        internal RejectOptions()
-        {
-        }
-
-        /// <summary> Array of lock tokens. </summary>
-        public IList<string> LockTokens { get; }
+        /// <summary> One of a server-defined set of error codes. </summary>
+        public string Code { get; }
+        /// <summary> Inner error. </summary>
+        public InnerError Innererror { get; }
     }
 }
