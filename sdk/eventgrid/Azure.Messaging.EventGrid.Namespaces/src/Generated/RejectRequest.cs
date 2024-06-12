@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Array of lock tokens for the corresponding received Cloud Events to be released. </summary>
-    public partial class ReleaseOptions
+    /// <summary> The RejectRequest. </summary>
+    internal partial class RejectRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReleaseOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public ReleaseOptions(IEnumerable<string> lockTokens)
+        public RejectRequest(IEnumerable<string> lockTokens)
         {
             Argument.AssertNotNull(lockTokens, nameof(lockTokens));
 
             LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReleaseOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReleaseOptions(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RejectRequest(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LockTokens = lockTokens;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReleaseOptions"/> for deserialization. </summary>
-        internal ReleaseOptions()
+        /// <summary> Initializes a new instance of <see cref="RejectRequest"/> for deserialization. </summary>
+        internal RejectRequest()
         {
         }
 
