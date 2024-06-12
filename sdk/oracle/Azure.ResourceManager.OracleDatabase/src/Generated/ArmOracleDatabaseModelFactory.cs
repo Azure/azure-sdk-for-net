@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="subnetId"> Client subnet. </param>
         /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
         /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
-        /// <param name="dataCollectionConfig"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="iormConfigCache"> iormConfigCache details for cloud VM cluster. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="compartmentId"> Cluster compartmentId. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterProperties"/> instance for mocking. </returns>
-        public static CloudVmClusterProperties CloudVmClusterProperties(string ocid = null, long? listenerPort = null, int? nodeCount = null, int? storageSizeInGbs = null, double? dataStorageSizeInTbs = null, int? dbNodeStorageSizeInGbs = null, int? memorySizeInGbs = null, DateTimeOffset? timeCreated = null, string lifecycleDetails = null, string timeZone = null, string zoneId = null, string hostname = null, string domain = null, int cpuCoreCount = default, float? ocpuCount = null, string clusterName = null, int? dataStoragePercentage = null, bool? isLocalBackupEnabled = null, ResourceIdentifier cloudExadataInfrastructureId = null, bool? isSparseDiskgroupEnabled = null, string systemVersion = null, IEnumerable<string> sshPublicKeys = null, LicenseModel? licenseModel = null, DiskRedundancy? diskRedundancy = null, IEnumerable<string> scanIPIds = null, IEnumerable<string> vipIds = null, string scanDnsName = null, int? scanListenerPortTcp = null, int? scanListenerPortTcpSsl = null, string scanDnsRecordId = null, string shape = null, AzureResourceProvisioningState? provisioningState = null, CloudVmClusterLifecycleState? lifecycleState = null, ResourceIdentifier vnetId = null, string giVersion = null, Uri ociUri = null, Uri nsgUri = null, ResourceIdentifier subnetId = null, string backupSubnetCidr = null, IEnumerable<NsgCidr> nsgCidrs = null, DataCollectionConfig dataCollectionConfig = null, string displayName = null, IEnumerable<string> computeNodes = null, ExadataIormConfig iormConfigCache = null, string lastUpdateHistoryEntryId = null, IEnumerable<string> dbServers = null, string compartmentId = null, string subnetOcid = null)
+        public static CloudVmClusterProperties CloudVmClusterProperties(string ocid = null, long? listenerPort = null, int? nodeCount = null, int? storageSizeInGbs = null, double? dataStorageSizeInTbs = null, int? dbNodeStorageSizeInGbs = null, int? memorySizeInGbs = null, DateTimeOffset? timeCreated = null, string lifecycleDetails = null, string timeZone = null, string zoneId = null, string hostname = null, string domain = null, int cpuCoreCount = default, float? ocpuCount = null, string clusterName = null, int? dataStoragePercentage = null, bool? isLocalBackupEnabled = null, ResourceIdentifier cloudExadataInfrastructureId = null, bool? isSparseDiskgroupEnabled = null, string systemVersion = null, IEnumerable<string> sshPublicKeys = null, LicenseModel? licenseModel = null, DiskRedundancy? diskRedundancy = null, IEnumerable<string> scanIPIds = null, IEnumerable<string> vipIds = null, string scanDnsName = null, int? scanListenerPortTcp = null, int? scanListenerPortTcpSsl = null, string scanDnsRecordId = null, string shape = null, AzureResourceProvisioningState? provisioningState = null, CloudVmClusterLifecycleState? lifecycleState = null, ResourceIdentifier vnetId = null, string giVersion = null, Uri ociUri = null, Uri nsgUri = null, ResourceIdentifier subnetId = null, string backupSubnetCidr = null, IEnumerable<NsgCidr> nsgCidrs = null, DataCollectionConfig dataCollectionOptions = null, string displayName = null, IEnumerable<string> computeNodes = null, ExadataIormConfig iormConfigCache = null, string lastUpdateHistoryEntryId = null, IEnumerable<string> dbServers = null, string compartmentId = null, string subnetOcid = null)
         {
             sshPublicKeys ??= new List<string>();
             scanIPIds ??= new List<string>();
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 subnetId,
                 backupSubnetCidr,
                 nsgCidrs?.ToList(),
-                dataCollectionConfig,
+                dataCollectionOptions,
                 displayName,
                 computeNodes?.ToList(),
                 iormConfigCache,

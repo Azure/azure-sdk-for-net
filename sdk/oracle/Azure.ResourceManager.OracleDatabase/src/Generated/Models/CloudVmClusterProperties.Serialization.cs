@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataCollectionConfig))
+            if (Optional.IsDefined(DataCollectionOptions))
             {
-                writer.WritePropertyName("dataCollectionConfig"u8);
-                writer.WriteObjectValue(DataCollectionConfig, options);
+                writer.WritePropertyName("dataCollectionOptions"u8);
+                writer.WriteObjectValue(DataCollectionOptions, options);
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ResourceIdentifier subnetId = default;
             string backupSubnetCidr = default;
             IList<NsgCidr> nsgCidrs = default;
-            DataCollectionConfig dataCollectionConfig = default;
+            DataCollectionConfig dataCollectionOptions = default;
             string displayName = default;
             IList<string> computeNodes = default;
             ExadataIormConfig iormConfigCache = default;
@@ -670,13 +670,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     nsgCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("dataCollectionConfig"u8))
+                if (property.NameEquals("dataCollectionOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataCollectionConfig = DataCollectionConfig.DeserializeDataCollectionConfig(property.Value, options);
+                    dataCollectionOptions = DataCollectionConfig.DeserializeDataCollectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 subnetId,
                 backupSubnetCidr,
                 nsgCidrs ?? new ChangeTrackingList<NsgCidr>(),
-                dataCollectionConfig,
+                dataCollectionOptions,
                 displayName,
                 computeNodes ?? new ChangeTrackingList<string>(),
                 iormConfigCache,

@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
-        /// <param name="dataCollectionConfig"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, LicenseModel? licenseModel, DataCollectionConfig dataCollectionConfig, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, LicenseModel? licenseModel, DataCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGbs = storageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OcpuCount = ocpuCount;
             SshPublicKeys = sshPublicKeys;
             LicenseModel = licenseModel;
-            DataCollectionConfig = dataCollectionConfig;
+            DataCollectionOptions = dataCollectionOptions;
             DisplayName = displayName;
             ComputeNodes = computeNodes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
         public LicenseModel? LicenseModel { get; set; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DataCollectionConfig DataCollectionConfig { get; set; }
+        public DataCollectionConfig DataCollectionOptions { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>

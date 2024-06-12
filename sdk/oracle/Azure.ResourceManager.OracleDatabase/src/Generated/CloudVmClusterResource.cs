@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListPrivateIpAddresses</description>
+        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListPrivateIpAddresses</description>
+        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

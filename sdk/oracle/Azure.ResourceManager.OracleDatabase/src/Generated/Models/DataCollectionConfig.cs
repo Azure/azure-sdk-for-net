@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DataCollectionConfig resource properties. </summary>
+    /// <summary> DataCollectionOptions resource properties. </summary>
     public partial class DataCollectionConfig
     {
         /// <summary>

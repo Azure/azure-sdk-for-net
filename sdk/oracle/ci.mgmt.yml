@@ -11,13 +11,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/oracledatabase/ci.mgmt.yml
-    - sdk/oracledatabase/Azure.ResourceManager.OracleDatabase/
+    - sdk/oracle/ci.mgmt.yml
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: oracledatabase
+    ServiceDirectory: oracle
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.OracleDatabase

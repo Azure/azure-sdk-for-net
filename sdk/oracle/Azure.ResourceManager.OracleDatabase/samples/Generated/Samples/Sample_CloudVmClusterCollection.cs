@@ -211,7 +211,7 @@ new NsgCidr("10.0.0.0/16")
 DestinationPortRange = new PortRange(1520,1522),
 },new NsgCidr("10.10.0.0/24")
 },
-                    DataCollectionConfig = new DataCollectionConfig()
+                    DataCollectionOptions = new DataCollectionConfig()
                     {
                         IsDiagnosticsEventsEnabled = false,
                         IsHealthMonitoringEnabled = false,

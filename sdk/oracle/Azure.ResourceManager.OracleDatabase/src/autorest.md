@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: OracleDatabase
 namespace: Azure.ResourceManager.OracleDatabase
-require: https://github.com/Azure/azure-rest-api-specs/blob/99f53b4a8ca9b033437bf2d2fc790a61d1bc8a5b/specification/oracle/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c4f3c695f0250dcb261598a62004f0aef10b9db/specification/oracle/resource-manager/readme.md
+#tag: package-2023-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +22,8 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  DataCollectionOptions: DataCollectionConfig
 
 format-by-name-rules:
   'tenantId': 'uuid'
