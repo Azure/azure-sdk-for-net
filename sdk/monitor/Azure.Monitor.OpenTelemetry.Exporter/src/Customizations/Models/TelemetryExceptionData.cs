@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             var message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties);
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            // TODO: Change to LogRecordSeverity
+            // TODO: Remove warning disable with next Stable release.
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
 #pragma warning restore CS0618 // Type or member is obsolete
             ProblemId = LogsHelper.GetProblemId(logRecord.Exception).Truncate(SchemaConstants.ExceptionData_ProblemId_MaxLength);
