@@ -211,7 +211,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 expectedAppTrace: new ExpectedAppTrace
                 {
                     Message = LogMessage,
+                    SeverityLevel = "1",
                     AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppTraces",
                 });
         }
 

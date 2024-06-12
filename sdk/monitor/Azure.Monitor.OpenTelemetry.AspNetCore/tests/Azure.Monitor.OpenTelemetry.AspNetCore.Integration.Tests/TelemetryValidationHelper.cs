@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             {
                 if (property.Name == "Properties")
                 {
-                    var jsonString = row[property.Name].ToString();
+                    var jsonString = row[property.Name]?.ToString();
                     Assert.IsNotNull(jsonString, $"({description}) Expected a non-null value for {property.Name}");
                     var expectedProperties = property.GetValue(expectedTelemetry, null) as List<KeyValuePair<string, string>>;
                     Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {nameof(expectedTelemetry)}.Properties");
@@ -212,10 +212,40 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         public struct ExpectedAppTrace
         {
+            //public string TenantId { get; set; }
+            //public string TimeGenerated { get; set; }
             public string Message { get; set; }
+            public string SeverityLevel { get; set; }
+            //public List<KeyValuePair<string, string>> Properties { get; set; }
+            //public string Measurements { get; set; }
+            //public string OperationName { get; set; }
+            //public string OperationId { get; set; }
+            //public string ParentId { get; set; }
+            //public string SyntheticSource { get; set; }
+            //public string SessionId { get; set; }
+            //public string UserId { get; set; }
+            //public string UserAuthenticatedId { get; set; }
+            //public string UserAccountId { get; set; }
+            public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            //public string AppRoleInstance { get; set; }
+            //public string ClientType { get; set; }
+            //public string ClientModel { get; set; }
+            //public string ClientOS { get; set; }
+            public string ClientIP { get; set; }
+            //public string ClientCity { get; set; }
+            //public string ClientStateOrProvince { get; set; }
+            //public string ClientCountryOrRegion { get; set; }
+            //public string ClientBrowser { get; set; }
+            //public string ResourceGUID { get; set; }
+            //public string IKey { get; set; }
+            //public string SDKVersion { get; set; }
+            //public string ItemCount { get; set; }
+            //public string ReferencedItemId { get; set; }
+            //public string ReferencedType { get; set; }
+            //public string SourceSystem { get; set; }
+            public string Type { get; set; }
+            //public string _ResourceId { get; set; }
         }
     }
 }
