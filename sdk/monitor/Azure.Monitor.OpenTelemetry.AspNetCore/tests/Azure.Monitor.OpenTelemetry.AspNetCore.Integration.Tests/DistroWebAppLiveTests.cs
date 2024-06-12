@@ -42,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
         public async Task VerifyDistro()
         {
+            var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
             Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
 
             // DEVELOPER TIP: This test implicitly checks for telemetry within the last 30 minutes.
@@ -65,12 +66,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            string serviceName = "TestName", serviceNamespace = "TestNamespace", serviceVersion = "TestVersion";
+            string serviceName = "TestName", serviceNamespace = "TestNamespace", serviceInstance = "TestInstance", serviceVersion = "TestVersion";
             string roleName = $"[{serviceNamespace}]/{serviceName}";
             var resourceAttributes = new Dictionary<string, object>
             {
                 { "service.name", serviceName },
                 { "service.namespace", serviceNamespace },
+                { "service.instance.id", serviceInstance },
                 { "service.version", serviceVersion }
             };
 
@@ -123,7 +125,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // NOTE: The following queries are using the LogAnalytics schema.
             await QueryAndVerifyDependency(
                 description: "Dependency for invoking HttpClient, from testhost",
+#if DEBUG
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({ testStartTimeStamp}) | top 1 by TimeGenerated",
+#else
                 query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+#endif
                 expectedAppDependency: new ExpectedAppDependency
                 {
                     Target = TestServerTarget,
@@ -137,6 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppDependencies",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -146,7 +153,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyRequest(
                 description: "RequestTelemetry, from WebApp",
+#if DEBUG
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+#else
                 query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+#endif
                 expectedAppRequest: new ExpectedAppRequest
                 {
                     Url = TestServerUrl,
@@ -159,6 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppRequests",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -168,13 +180,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyMetric(
                 description: "Metric for outgoing request, from testhost",
+#if DEBUG
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+#else
                 query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+#endif
                 expectedAppMetric: new ExpectedAppMetric
                 {
                     Name = "http.client.request.duration",
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -188,13 +205,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyMetric(
                 description: "Metric for incoming request, from WebApp",
+#if DEBUG
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+#else
                 query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+#endif
                 expectedAppMetric: new ExpectedAppMetric
                 {
                     Name = "http.server.request.duration",
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -207,7 +229,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyTrace(
                 description: "ILogger LogInformation, from WebApp",
+#if DEBUG
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+#else
                 query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+#endif
                 expectedAppTrace: new ExpectedAppTrace
                 {
                     Message = LogMessage,
@@ -216,6 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppVersion = serviceVersion,
                     ClientIP = "0.0.0.0",
                     Type = "AppTraces",
+                    AppRoleInstance = serviceInstance,
                 });
         }
 
