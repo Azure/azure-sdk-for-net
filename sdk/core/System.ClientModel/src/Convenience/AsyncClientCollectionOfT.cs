@@ -11,10 +11,10 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a collection of values returned from a cloud service operation.
 /// </summary>
-public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<T>
+public abstract class AsyncClientCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="AsyncCollectionResult{T}"/>.
+    /// Create a new instance of <see cref="AsyncClientCollection{T}"/>.
     /// </summary>
     /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
     /// <see cref="ClientResult"/> instance is created, it is expected that
@@ -25,17 +25,17 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
     /// is called. Such implementations will typically be returned from client
     /// convenience methods so that callers of the methods don't need to
     /// dispose the return value. </remarks>
-    protected internal AsyncCollectionResult() : base()
+    protected internal AsyncClientCollection() : base()
     {
     }
 
     /// <summary>
-    /// Create a new instance of <see cref="AsyncCollectionResult{T}"/>.
+    /// Create a new instance of <see cref="AsyncClientCollection{T}"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// items in the collection, or the first set of the items in the collection.
     /// </param>
-    protected internal AsyncCollectionResult(PipelineResponse response) : base(response)
+    protected internal AsyncClientCollection(PipelineResponse response) : base(response)
     {
     }
 
@@ -47,12 +47,12 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>
-    public static AsyncCollectionResult<T> FromPageAsync(ClientPage<T> page)
+    public static AsyncClientCollection<T> FromPageAsync(ClientPage<T> page)
     {
         return new AsyncClientPageable(page);
     }
 
-    internal class AsyncClientPageable : AsyncCollectionResult<T>
+    internal class AsyncClientPageable : AsyncClientCollection<T>
     {
         private readonly ClientPage<T> _page;
 

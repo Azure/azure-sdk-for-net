@@ -10,10 +10,10 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a collection of values returned from a cloud service operation.
 /// </summary>
-public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
+public abstract class ClientCollection<T> : ClientResult, IEnumerable<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="CollectionResult{T}"/>.
+    /// Create a new instance of <see cref="ClientCollection{T}"/>.
     /// </summary>
     /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
     /// <see cref="ClientResult"/> instance is created, it is expected that
@@ -24,17 +24,17 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
     /// is called. Such implementations will typically be returned from client
     /// convenience methods so that callers of the methods don't need to
     /// dispose the return value. </remarks>
-    protected internal CollectionResult() : base()
+    protected internal ClientCollection() : base()
     {
     }
 
     /// <summary>
-    /// Create a new instance of <see cref="CollectionResult{T}"/>.
+    /// Create a new instance of <see cref="ClientCollection{T}"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// items in the collection, or the first set of the items in the collection.
     /// </param>
-    protected internal CollectionResult(PipelineResponse response) : base(response)
+    protected internal ClientCollection(PipelineResponse response) : base(response)
     {
     }
 
@@ -48,12 +48,12 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>
-    public static CollectionResult<T> FromPage(ClientPage<T> page)
+    public static ClientCollection<T> FromPage(ClientPage<T> page)
     {
         return new ClientPageable(page);
     }
 
-    internal class ClientPageable : CollectionResult<T>
+    internal class ClientPageable : ClientCollection<T>
     {
         private readonly ClientPage<T> _page;
 

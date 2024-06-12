@@ -21,7 +21,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task EnumeratesModelValues()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync();
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         int i = 0;
         await foreach (MockJsonModel model in models)
@@ -39,7 +39,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task ModelCollectionDelaysSendingRequest()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync();
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         Assert.IsFalse(client.ProtocolMethodCalled);
 
@@ -60,7 +60,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public void ModelCollectionThrowsIfCancelled()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync();
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
@@ -77,7 +77,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task ModelCollectionDisposesStream()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync();
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         await foreach (MockJsonModel model in models)
         {
@@ -91,7 +91,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public void ModelCollectionGetRawResponseThrowsBeforeEnumerated()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync();
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
         Assert.Throws<InvalidOperationException>(() => { PipelineResponse response = models.GetRawResponse(); });
     }
 
@@ -99,7 +99,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task StopsOnStringBasedTerminalEvent()
     {
         MockSseClient client = new();
-        AsyncCollectionResult<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
+        AsyncClientCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
 
         bool empty = true;
         await foreach (MockJsonModel model in models)

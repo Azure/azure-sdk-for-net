@@ -15,7 +15,7 @@ namespace ClientModel.Tests.Internal.Mocks;
 
 public static class MockSseClientExtensions
 {
-    public static AsyncCollectionResult<BinaryData> EnumerateDataEvents(this PipelineResponse response)
+    public static AsyncClientCollection<BinaryData> EnumerateDataEvents(this PipelineResponse response)
     {
         if (response.ContentStream is null)
         {
@@ -25,7 +25,7 @@ public static class MockSseClientExtensions
         return new AsyncSseDataEventCollection(response, "[DONE]");
     }
 
-    private class AsyncSseDataEventCollection : AsyncCollectionResult<BinaryData>
+    private class AsyncSseDataEventCollection : AsyncClientCollection<BinaryData>
     {
         private readonly string _terminalData;
 

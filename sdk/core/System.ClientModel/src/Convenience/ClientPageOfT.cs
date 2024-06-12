@@ -30,7 +30,7 @@ public abstract class ClientPage<T> : ClientResult
     /// </summary>
     public IReadOnlyList<T> Values { get; }
 
-    public bool HasNext { get; }
+    protected bool HasNext { get; }
 
     protected abstract ClientPage<T> GetNext(RequestOptions? options = default);
 
