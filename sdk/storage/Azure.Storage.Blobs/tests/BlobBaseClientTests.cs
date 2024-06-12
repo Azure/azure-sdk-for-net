@@ -3361,6 +3361,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task SyncCopyFromUriAsync_SourceErrorAndStatusCode()
         {

@@ -4407,6 +4407,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task UploadRangeFromUriAsync_SourceErrorAndStatusCode()
         {

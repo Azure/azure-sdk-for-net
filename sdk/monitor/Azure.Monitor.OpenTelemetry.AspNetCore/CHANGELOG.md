@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+* Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`.
+  See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging) for the details.
+  (This feature was originally introduced in 1.2.0-beta.2)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
+
+* Added an experimental feature for logs emitted within an active tracing context to follow the Activity's sampling decision.
+  The feature can be enabled by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING` environment variable to `true`.
+  (This feature was originally introduced in 1.2.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
+
+## 1.2.0 (2024-06-11)
+
+### Other Changes
+
+* Disabled support for log collection from Azure SDKs.
+  This will be re-enabled in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
+
+* Disabled trace-based log sampling experimental feature.
+  This will be re-enabled in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
 
 ## 1.2.0-beta.4 (2024-05-20)
 
