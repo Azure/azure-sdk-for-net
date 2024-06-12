@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
@@ -40,4 +41,36 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
 
     /// <inheritdoc/>
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public static AsyncCollectionResult<T> FromPageAsync(ClientPage<T> page)
+    {
+        return new AsyncClientPageable(page);
+    }
+
+    internal class AsyncClientPageable : AsyncCollectionResult<T>
+    {
+        private readonly ClientPage<T> _page;
+
+        public AsyncClientPageable(ClientPage<T> page) : base(page.GetRawResponse())
+        {
+            _page = page;
+        }
+
+        // TODO: plumb through request options
+        public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            await foreach (ClientPage<T> page in _page.ToPageCollectionAsync().ConfigureAwait(false).WithCancellation(cancellationToken))
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return value;
+                }
+            }
+        }
+    }
 }

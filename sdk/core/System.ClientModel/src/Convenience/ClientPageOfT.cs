@@ -36,30 +36,33 @@ public abstract class ClientPage<T> : ClientResult
 
     protected abstract Task<ClientPage<T>> GetNextAsync(RequestOptions? options = default);
 
-    public IEnumerable<T> ToItemCollection()
-    {
-        foreach (ClientPage<T> page in ToPageCollection())
-        {
-            foreach (T value in page.Values)
-            {
-                yield return value;
-            }
-        }
-    }
+    public abstract BinaryData WriteRehydrationToken();
 
-    public async IAsyncEnumerable<T> ToItemCollectionAsync(
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        await foreach (ClientPage<T> page in ToPageCollectionAsync(cancellationToken).ConfigureAwait(false))
-        {
-            foreach (T value in page.Values)
-            {
-                yield return value;
-            }
-        }
-    }
+    //// TODO: these should return CollectionResult<T>
+    //public IEnumerable<T> ToItemCollection()
+    //{
+    //    foreach (ClientPage<T> page in ToPageCollection())
+    //    {
+    //        foreach (T value in page.Values)
+    //        {
+    //            yield return value;
+    //        }
+    //    }
+    //}
 
-    public IEnumerable<ClientPage<T>> ToPageCollection()
+    //public async IAsyncEnumerable<T> ToItemCollectionAsync(
+    //    [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    //{
+    //    await foreach (ClientPage<T> page in ToPageCollectionAsync(cancellationToken).ConfigureAwait(false))
+    //    {
+    //        foreach (T value in page.Values)
+    //        {
+    //            yield return value;
+    //        }
+    //    }
+    //}
+
+    internal IEnumerable<ClientPage<T>> ToPageCollection()
     {
         ClientPage<T> page = this;
         while (page.HasNext)
@@ -69,7 +72,7 @@ public abstract class ClientPage<T> : ClientResult
         }
     }
 
-    public async IAsyncEnumerable<ClientPage<T>> ToPageCollectionAsync(
+    internal async IAsyncEnumerable<ClientPage<T>> ToPageCollectionAsync(
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         ClientPage<T> page = this;

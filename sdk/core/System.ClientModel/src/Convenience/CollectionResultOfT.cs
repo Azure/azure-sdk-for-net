@@ -42,4 +42,35 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
     public abstract IEnumerator<T> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public static CollectionResult<T> FromPage(ClientPage<T> page)
+    {
+        return new ClientPageable(page);
+    }
+
+    internal class ClientPageable : CollectionResult<T>
+    {
+        private readonly ClientPage<T> _page;
+
+        public ClientPageable(ClientPage<T> page) : base(page.GetRawResponse())
+        {
+            _page = page;
+        }
+
+        public override IEnumerator<T> GetEnumerator()
+        {
+            foreach (ClientPage<T> page in _page.ToPageCollection())
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return value;
+                }
+            }
+        }
+    }
 }
