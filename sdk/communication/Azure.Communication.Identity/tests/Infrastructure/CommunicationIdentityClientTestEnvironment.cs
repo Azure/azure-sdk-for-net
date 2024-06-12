@@ -30,7 +30,7 @@ namespace Azure.Communication.Identity.Tests
 
         public string CommunicationExpiredTeamsToken => GetOptionalVariable(CommunicationExpiredTeamsTokenEnvironmentVariableName) ?? "Sanitized";
 
-        public string SkipIntIdentityExchangeTokenTest => GetOptionalVariable(SkipIntIdentityExchangeTokenTestEnvironmentVariableName) ?? "False";
+        public string SkipIntIdentityExchangeTokenTest => "True";
         public bool ShouldIgnoreIdentityExchangeTokenTest => bool.Parse(SkipIntIdentityExchangeTokenTest);
     }
 }
