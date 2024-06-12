@@ -22,15 +22,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class EventGridNamespacesClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName, string subscriptionName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, string subscriptionName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-    }
     public static partial class EventGridNamespacesModelFactory
     {
         public static Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult AcknowledgeResult(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> failedLockTokens = null, System.Collections.Generic.IEnumerable<string> succeededLockTokens = null) { throw null; }
@@ -45,10 +36,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class EventGridReceiverClient
     {
         protected EventGridReceiverClient() { }
-        public EventGridReceiverClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName, string subscriptionName) { }
-        public EventGridReceiverClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName, string subscriptionName, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
-        public EventGridReceiverClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string topicName, string subscriptionName) { }
-        public EventGridReceiverClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string topicName, string subscriptionName, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
+        public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential) { }
+        public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
+        public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.Core.TokenCredential credential) { }
+        public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.Core.TokenCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Acknowledge(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -86,19 +77,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridReceiverClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion.V2024_06_01) { }
         public enum ServiceVersion
         {
-            V2023_06_01_Preview = 1,
-            V2023_10_01_Preview = 2,
-            V2023_11_01 = 3,
-            V2024_06_01 = 4,
+            V2023_11_01 = 1,
+            V2024_06_01 = 2,
         }
     }
     public partial class EventGridSenderClient
     {
         protected EventGridSenderClient() { }
-        public EventGridSenderClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName) { }
-        public EventGridSenderClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string topicName, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
-        public EventGridSenderClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string topicName) { }
-        public EventGridSenderClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string topicName, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
+        public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential) { }
+        public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
+        public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.Core.TokenCredential credential) { }
+        public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.Core.TokenCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Send(Azure.Messaging.CloudEvent cloudEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Send(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -118,10 +107,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridSenderClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion.V2024_06_01) { }
         public enum ServiceVersion
         {
-            V2023_06_01_Preview = 1,
-            V2023_10_01_Preview = 2,
-            V2023_11_01 = 3,
-            V2024_06_01 = 4,
+            V2023_11_01 = 1,
+            V2024_06_01 = 2,
         }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>
@@ -209,5 +196,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
         Azure.Messaging.EventGrid.Namespaces.RenewLocksResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class EventGridNamespacesClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, string subscriptionName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

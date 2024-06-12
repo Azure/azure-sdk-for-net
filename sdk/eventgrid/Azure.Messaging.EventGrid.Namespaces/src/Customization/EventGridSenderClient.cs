@@ -21,35 +21,39 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName">The topic to send events to.</param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EventGridSenderClient(Uri endpoint, AzureKeyCredential credential, string topicName) : this(endpoint, credential, topicName, new EventGridSenderClientOptions())
+        public EventGridSenderClient(Uri endpoint, string topicName, AzureKeyCredential credential) : this(endpoint, topicName, credential, new EventGridSenderClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="topicName">The topic to send events to.</param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EventGridSenderClient(Uri endpoint, TokenCredential credential, string topicName) : this(endpoint, credential, topicName, new EventGridSenderClientOptions())
+        public EventGridSenderClient(Uri endpoint, string topicName, TokenCredential credential) : this(endpoint, topicName, credential, new EventGridSenderClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="topicName">The topic to send events to.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// /// <param name="topicName">The topic to send events to.</param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// ///
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EventGridSenderClient(Uri endpoint, AzureKeyCredential credential, string topicName, EventGridSenderClientOptions options)
+        public EventGridSenderClient(Uri endpoint,
+            string topicName,
+            AzureKeyCredential credential,
+            EventGridSenderClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -66,13 +70,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="topicName">The topic to send events to.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// /// <param name="topicName">The topic to send events to.</param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// ///
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EventGridSenderClient(Uri endpoint, TokenCredential credential, string topicName, EventGridSenderClientOptions options)
+        public EventGridSenderClient(Uri endpoint,
+            string topicName,
+            TokenCredential credential,
+            EventGridSenderClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
