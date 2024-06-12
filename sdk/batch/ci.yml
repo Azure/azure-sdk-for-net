@@ -32,6 +32,8 @@ extends:
     ArtifactName: packages
     BuildSnippets: false
     Artifacts:
+    - name: Azure.Compute.Batch
+      safeName: AzureComputeBatch
     - name: Microsoft.Azure.Batch
       safeName: MicrosoftAzureBatch
     - name: Microsoft.Azure.Batch.FileStaging
