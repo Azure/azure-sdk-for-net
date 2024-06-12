@@ -55,7 +55,7 @@ namespace Azure.Data.Tables
         {
             internal const string OdataTypeString = "@odata.type";
             internal const string EdmBinary = "Edm.Binary";
-            internal const string EdmBoolean = "Emd.Boolean";
+            internal const string EdmBoolean = "Edm.Boolean";
             internal const string EdmDateTime = "Edm.DateTime";
             internal const string EdmDouble = "Edm.Double";
             internal const string EdmGuid = "Edm.Guid";
