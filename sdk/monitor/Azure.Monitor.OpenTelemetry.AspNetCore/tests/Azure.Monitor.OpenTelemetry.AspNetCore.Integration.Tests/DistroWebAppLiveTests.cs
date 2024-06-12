@@ -25,11 +25,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        private const string TestServerUrl = "http://localhost:9998/";
-
-        // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
-        // Can search for all records in the portal via Log Analytics using this query:   Union * | where AppRoleName == 'Test##'
-        private const string RoleName = nameof(DistroWebAppLiveTests);
+        private const string TestServerPort = "9998";
+        private const string TestServerTarget = $"localhost:{TestServerPort}";
+        private const string TestServerUrl = $"http://{TestServerTarget}/";
 
         private const string LogMessage = "Message via ILogger";
 
@@ -37,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
         // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live) { }
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
@@ -66,9 +64,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
+            string serviceName = "TestName", serviceNamespace = "TestNamespace", serviceVersion = "TestVersion";
+            string roleName = $"[{serviceNamespace}]/{serviceName}";
             var resourceAttributes = new Dictionary<string, object>
             {
-                { "service.name", RoleName },
+                { "service.name", serviceName },
+                { "service.namespace", serviceNamespace },
+                { "service.version", serviceVersion }
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault();
@@ -119,29 +121,37 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // NOTE: The following queries are using the LogAnalytics schema.
             await QueryAndVerifyDependency(
                 description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppDependency: new ExpectedAppDependency
                 {
+                    Target = TestServerTarget,
+                    DependencyType = "HTTP",
+                    Name = "GET /",
                     Data = TestServerUrl,
-                    AppRoleName = RoleName,
+                    Success = "True",
+                    ResultCode = "200",
+                    AppVersion = serviceVersion,
+                    AppRoleName = roleName,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppDependencies",
                 });
 
             await QueryAndVerifyRequest(
                 description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppRequest: new ExpectedAppRequest
                 {
                     Url = TestServerUrl,
-                    AppRoleName = RoleName,
+                    AppRoleName = roleName,
                 });
 
             await QueryAndVerifyMetric(
                 description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{RoleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
                 expectedAppMetric: new ExpectedAppMetric
                 {
                     Name = "http.client.request.duration",
-                    AppRoleName = RoleName,
+                    AppRoleName = roleName,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("server.address", "localhost"),
@@ -150,21 +160,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyMetric(
                 description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppMetric: new ExpectedAppMetric
                 {
                     Name = "http.server.request.duration",
-                    AppRoleName = RoleName,
+                    AppRoleName = roleName,
                     Properties = new(),
                 });
 
             await QueryAndVerifyTrace(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated",
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppTrace: new ExpectedAppTrace
                 {
                     Message = LogMessage,
-                    AppRoleName = RoleName,
+                    AppRoleName = roleName,
                 });
         }
 
