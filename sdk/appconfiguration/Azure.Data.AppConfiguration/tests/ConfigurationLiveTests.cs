@@ -579,7 +579,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         // Validates that the expected revisions are retrieved correctly when specifying a list of tags.
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task GetRevisionsByTags()
         {
@@ -1597,7 +1597,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task GetBatchSettingByTags()
         {
@@ -1644,7 +1644,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task GetBatchSettingByTagsNoMatchingSettings()
         {
@@ -2160,6 +2160,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 await service.AddConfigurationSettingAsync(testSetting);
+
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
                 var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
@@ -2208,7 +2209,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         // Validates that the snapshot is successfully created for the settings that match the key and tags filter. In
         // addition, the settings' filters are validated in the created snapshot.
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task CreateSnapshotWithTagsUsingWaitForCompletion()
         {
@@ -2327,7 +2328,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         // Validates that the snapshots are created for the settings that match the key and tags filter.
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task CreateSnapshotUsingTags()
         {
@@ -2396,7 +2397,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         // Validates that a snapshot is created for no settings when the tags filter does not match any setting.
-        [LiveOnly]
+        [Ignore("Requires service V2023_11_01")]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
         public async Task CreateSnapshotUsingTagsNoMatchingSetting()
         {

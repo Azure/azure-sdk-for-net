@@ -37,7 +37,7 @@ To gather all the information available for settings grouped by a specific tag, 
 var selector = new SettingSelector();
 selector.TagsFilter.Add("someKey=someValue");
 
-Debug.WriteLine("Settings for beta filtered by tag:");
+Console.WriteLine("Settings for beta filtered by tag:");
 await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
 {
     Console.WriteLine(setting);
