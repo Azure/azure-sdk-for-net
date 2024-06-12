@@ -39,6 +39,7 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 Console.WriteLine(setting);
             }
+
             #endregion
 
             // Delete the Configuration Settings from the Configuration Store.
