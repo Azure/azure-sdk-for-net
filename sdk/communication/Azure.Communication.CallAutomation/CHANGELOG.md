@@ -26,6 +26,18 @@
 
 ### Other Changes
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Support for PauseOnStart recording option
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0 (2023-11-23)
 
 ### Features Added
