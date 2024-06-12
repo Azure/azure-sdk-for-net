@@ -47,6 +47,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="StorageCacheImportJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageCacheImportJobResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheImportJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageCacheImportJobResource"/> object. </returns>
+        public virtual StorageCacheImportJobResource GetStorageCacheImportJobResource(ResourceIdentifier id)
+        {
+            StorageCacheImportJobResource.ValidateResourceId(id);
+            return new StorageCacheImportJobResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

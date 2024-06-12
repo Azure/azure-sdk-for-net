@@ -72,8 +72,6 @@ In order to run the tests, the following environment variables need to be set:
 | :--- | :---- | :---------- |
 | AZURE_TEST_MODE | Record<sup>1</sup> | Specify in which mode the test will run |
 | AZURE_AUTHORITY_HOST | https://login.microsoftonline.com<sup>2</sup> | The host of the Azure Active Directory authority |
-| AZURE_CLIENT_ID | TBD<sup>3</sup> | The Service Principal Application ID |
-| AZURE_CLIENT_SECRET | TBD<sup>3</sup> | A Service Principal Authentication Key |
 | AZURE_SUBSCRIPTION_ID | TBD<sup>3</sup> | The Azure Subscription ID |
 | AZURE_TENANT_ID | TBD<sup>3</sup> | The AAD Tenant ID |
 
@@ -81,9 +79,11 @@ In order to run the tests, the following environment variables need to be set:
 
 1. Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in the `SessionRecords folder corresponding to the ./assets directory`. Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][test_sanitizer]. After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. If the tests locally fail due to recording session file mismatches at this point, the attribute `RecordedTest` will help enable automatically re-record failed tests.
 
-2. You need to change its value depending on the Azure Cloud type you are using in your tests. `https://login.microsoftonline.com` only applies to Azure Public Cloud.
+2. Before initiating the Live and Record test, ensure that you are logged into your Azure account using either Azure CLI or Azure PowerShell.
 
-3. These values depend on the subscription and token credential you are using for testing. Please refer to this [document][authenticate] to get the values.
+3. You need to change its value depending on the Azure Cloud type you are using in your tests. `https://login.microsoftonline.com` only applies to Azure Public Cloud.
+
+4. These values depend on the subscription you are using for testing. Please refer to this [document][env_variables] to get the values.
 
 The easiest way to run the tests is via Visual Studio's test runner. Please note that the Visual Studio 2022 is required as one of the test target frameworks is `.NET 6.0`.
 
@@ -130,4 +130,4 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 [core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
 [mgmt_template]: https://github.com/Azure/azure-sdk-for-net/tree/main/eng/templates/Azure.ResourceManager.Template
 [test_sanitizer]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#sanitizing
-[authenticate]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md
+[env_variables]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md

@@ -25,21 +25,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="driverVersion"> The version of the MariaDB driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="username"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal MariaDBLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal MariaDBLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object driverVersion, object connectionString, object server, object port, object username, object database, AzureKeyVaultSecretReference password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            DriverVersion = driverVersion;
             ConnectionString = connectionString;
-            Pwd = pwd;
+            Server = server;
+            Port = port;
+            Username = username;
+            Database = database;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "MariaDB";
         }
 
+        /// <summary> The version of the MariaDB driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </summary>
+        public object DriverVersion { get; set; }
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public object Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public object Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public object Username { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public object Database { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Pwd { get; set; }
+        public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

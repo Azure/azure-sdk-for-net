@@ -71,5 +71,49 @@ namespace Azure.Monitor.Query.Tests
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
+
+        public string GetMetricsClientAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return MetricsClientAudience.AzurePublicCloud.ToString();
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return MetricsClientAudience.AzureChina.ToString();
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return MetricsClientAudience.AzureGovernment.ToString();
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        public string ConstructMetricsClientUri()
+        {
+            string uri = "https://" + Location + ".metrics.monitor.azure.";
+            var audience = GetMetricsClientAudience();
+
+            // Depending on which cloud, append the correct regional suffix
+            if (audience == MetricsClientAudience.AzureChina.ToString())
+            {
+                uri += "cn";
+            }
+            else if (audience == MetricsClientAudience.AzureGovernment.ToString())
+            {
+                uri += "us";
+            }
+            else
+            {
+                uri += "com";
+            }
+
+            return uri;
+        }
     }
 }

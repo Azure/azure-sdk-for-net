@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the Event Grid Domain resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the Event Grid Domain Resource. </summary>
         public EventGridDomainProvisioningState? ProvisioningState { get; }

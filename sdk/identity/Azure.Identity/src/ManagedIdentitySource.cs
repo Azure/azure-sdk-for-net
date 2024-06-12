@@ -154,9 +154,14 @@ namespace Azure.Identity
                 }
             }
 
-            return accessToken != null && expiresOn.HasValue
-                ? new AccessToken(accessToken, expiresOn.Value)
-                : throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+            if (accessToken != null && expiresOn.HasValue)
+            {
+                return new AccessToken(accessToken, expiresOn.Value, InferManagedIdentityRefreshInValue(expiresOn.Value));
+            }
+            else
+            {
+                throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+            }
         }
 
         private static DateTimeOffset? TryParseExpiresOn(JsonElement jsonExpiresOn)
@@ -173,6 +178,17 @@ namespace Azure.Identity
                 return expiresOn;
             }
 
+            return null;
+        }
+
+        // Compute refresh_in as 1/2 expiresOn, but only if expiresOn > 2h.
+        private static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
+        {
+            if (expiresOn > DateTimeOffset.UtcNow.AddHours(2) && expiresOn < DateTimeOffset.MaxValue)
+            {
+                // return the midpoint between now and expiresOn
+                return expiresOn.AddTicks(-(expiresOn.Ticks - DateTimeOffset.UtcNow.Ticks) / 2);
+            }
             return null;
         }
 

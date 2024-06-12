@@ -32,6 +32,12 @@
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
+  <!-- Remove all track1 SDKs from Regen -->
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' ">
+    <Track1ProjectsToRemove Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" />
+    <ProjectReference Remove="@(Track1ProjectsToRemove)" />
+  </ItemGroup>
+
   <!-- Remove all projects except the ones included by the SDKType filter -->
   <ItemGroup Condition="'$(SDKType)' != 'all'">
     <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToIncludeBySDKType)" />

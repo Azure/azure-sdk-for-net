@@ -57,7 +57,7 @@ namespace Azure.Core
             {
                 apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
             }
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out string nextRequestUri, out bool isNextRequestPolling);
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
                 return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
@@ -68,7 +68,7 @@ namespace Azure.Core
             {
                 lastKnownLocation = null;
             }
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling : isNextRequestPolling);
         }
 
         public static IOperation<T> Create<T>(
@@ -97,21 +97,26 @@ namespace Azure.Core
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
 
-            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
+            // We can access the internal members from RehydrationToken directly
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
 
-            var initialUri = GetContentFromRehydrationToken(lroDetails, "initialUri");
+            // We are sure that the following properties exists in the serialized rehydrationToken
+            var initialUri = lroDetails.GetProperty("initialUri").GetString();
             if (!Uri.TryCreate(initialUri, UriKind.Absolute, out var startRequestUri))
             {
                 throw new ArgumentException($"\"initialUri\" property on \"rehydrationToken\" is an invalid Uri", nameof(rehydrationToken));
             }
 
-            string nextRequestUri = GetContentFromRehydrationToken(lroDetails, "nextRequestUri");
-            string requestMethodStr = GetContentFromRehydrationToken(lroDetails, "requestMethod");
-            RequestMethod requestMethod = new RequestMethod(requestMethodStr);
-            string lastKnownLocation = GetContentFromRehydrationToken(lroDetails, "lastKnownLocation");
+            // We are sure that the following properties(apart from nullable lastKnownLocation) are not null as they are required in the rehydrationToken
+            string nextRequestUri = lroDetails.GetProperty("nextRequestUri").GetString()!;
+            string requestMethodStr = lroDetails.GetProperty("requestMethod").GetString()!;
+            RequestMethod requestMethod = new RequestMethod(requestMethodStr)!;
+            string? lastKnownLocation = lroDetails.GetProperty("lastKnownLocation").GetString();
 
-            string finalStateViaStr = GetContentFromRehydrationToken(lroDetails, "finalStateVia");
+            string finalStateViaStr = lroDetails.GetProperty("finalStateVia").GetString()!;
             OperationFinalStateVia finalStateVia;
             if (Enum.IsDefined(typeof(OperationFinalStateVia), finalStateViaStr))
             {
@@ -122,7 +127,7 @@ namespace Azure.Core
                 finalStateVia = OperationFinalStateVia.Location;
             }
 
-            string headerSourceStr = GetContentFromRehydrationToken(lroDetails, "headerSource");
+            string headerSourceStr = lroDetails.GetProperty("headerSource").GetString()!;
             HeaderSource headerSource;
             if (Enum.IsDefined(typeof(HeaderSource), headerSourceStr))
             {
@@ -136,16 +141,6 @@ namespace Azure.Core
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
         }
 
-        private static string GetContentFromRehydrationToken(Dictionary<string, string> lroDetails, string key)
-        {
-            if (!lroDetails.TryGetValue(key, out var nextRequestUri))
-            {
-                throw new ArgumentException($"\"{key}\" is missing from rehydrationToken");
-            }
-
-            return nextRequestUri;
-        }
-
         private NextLinkOperationImplementation(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -155,7 +150,8 @@ namespace Azure.Core
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia,
             string? apiVersion,
-            string? operationId = null)
+            string? operationId = null,
+            bool isNextRequestPolling = false)
         {
             AssertNotNull(pipeline, nameof(pipeline));
             AssertNotNull(requestMethod, nameof(requestMethod));
@@ -176,9 +172,13 @@ namespace Azure.Core
             {
                 OperationId = operationId;
             }
+            else if (isNextRequestPolling)
+            {
+                OperationId = ParseOperationId(startRequestUri, nextRequestUri);
+            }
         }
 
-        private string ParseOperationId(Uri startRequestUri, string nextRequestUri)
+        private static string ParseOperationId(Uri startRequestUri, string nextRequestUri)
         {
             if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var nextLink) && nextLink.Scheme != "file")
             {
@@ -204,13 +204,13 @@ namespace Azure.Core
             AssertNotNull(response, nameof(response));
             AssertNotNull(finalStateVia, nameof(finalStateVia));
 
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out var nextRequestUri);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out string nextRequestUri, out bool isNextRequestPolling);
             string? lastKnownLocation;
             if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
             {
                 lastKnownLocation = null;
             }
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), null);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), isNextRequestPolling ? ParseOperationId(startRequestUri, nextRequestUri) : null);
         }
 
         public static RehydrationToken GetRehydrationToken(
@@ -222,9 +222,16 @@ namespace Azure.Core
             string finalStateVia,
             string? operationId = null)
         {
-            var data = new BinaryData(new { version = RehydrationTokenVersion, id = operationId, requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
+            // We can access the internal members from RehydrationToken directly
+            var json = $$"""
+            {"version":"{{RehydrationTokenVersion}}","id":{{ConstructStringValue(operationId)}},"requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
+            """;
+            var data = new BinaryData(json);
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
+
+        private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
@@ -584,8 +591,10 @@ namespace Azure.Core
         private static bool ShouldIgnoreHeader(RequestMethod method, Response response)
             => method.Method == RequestMethod.Patch.Method && response.Status == 200;
 
-        private static HeaderSource GetHeaderSource(RequestMethod requestMethod, Uri requestUri, Response response, string? apiVersion, out string nextRequestUri)
+        // Since this method is static, we can't manipulate the instance property OperationId of the class. We need to return isRequestPolling to update the OperationId after creaing the instance.
+        private static HeaderSource GetHeaderSource(RequestMethod requestMethod, Uri requestUri, Response response, string? apiVersion, out string nextRequestUri, out bool isNextRequestPolling)
         {
+            isNextRequestPolling = false;
             if (ShouldIgnoreHeader(requestMethod, response))
             {
                 nextRequestUri = requestUri.AbsoluteUri;
@@ -596,18 +605,21 @@ namespace Azure.Core
             if (headers.TryGetValue("Operation-Location", out var operationLocationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(operationLocationUri, apiVersion);
+                isNextRequestPolling = true;
                 return HeaderSource.OperationLocation;
             }
 
             if (headers.TryGetValue("Azure-AsyncOperation", out var azureAsyncOperationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(azureAsyncOperationUri, apiVersion);
+                isNextRequestPolling = true;
                 return HeaderSource.AzureAsyncOperation;
             }
 
             if (headers.TryGetValue("Location", out var locationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(locationUri, apiVersion);
+                isNextRequestPolling = true;
                 return HeaderSource.Location;
             }
 

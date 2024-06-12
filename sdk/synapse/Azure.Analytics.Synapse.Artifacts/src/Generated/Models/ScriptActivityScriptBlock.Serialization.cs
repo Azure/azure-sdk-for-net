@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("text"u8);
             writer.WriteObjectValue<object>(Text);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteObjectValue<object>(Type);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object text = default;
-            ScriptType type = default;
+            object type = default;
             IList<ScriptActivityParameter> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ScriptType(property.Value.GetString());
+                    type = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

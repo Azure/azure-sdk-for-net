@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity, options);
             }
+            if (Optional.IsDefined(Destination))
+            {
+                writer.WritePropertyName("destination"u8);
+                writer.WriteObjectValue(Destination, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string eventTimeToLive = default;
             DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
             DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
+            EventSubscriptionDestination destination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,13 +130,28 @@ namespace Azure.ResourceManager.EventGrid.Models
                     deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("destination"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PushInfo(maxDeliveryCount, eventTimeToLive, deadLetterDestinationWithResourceIdentity, deliveryWithResourceIdentity, serializedAdditionalRawData);
+            return new PushInfo(
+                maxDeliveryCount,
+                eventTimeToLive,
+                deadLetterDestinationWithResourceIdentity,
+                deliveryWithResourceIdentity,
+                destination,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PushInfo>.Write(ModelReaderWriterOptions options)

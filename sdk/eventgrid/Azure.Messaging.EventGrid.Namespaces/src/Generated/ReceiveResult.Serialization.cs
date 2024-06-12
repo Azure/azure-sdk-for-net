@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (var item in Value)
+            foreach (var item in Details)
             {
                 writer.WriteObjectValue(item, options);
             }

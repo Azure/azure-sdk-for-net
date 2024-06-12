@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
 
@@ -88,7 +86,19 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
+
+            // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
+            // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
+            // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
+            // This was added to support operating systems with non-ascii characters in their release names.
+            string osDescription;
+#if NET8_0_OR_GREATER
+            osDescription = Ascii.IsValid(runtimeInformation.OSDescription) ? runtimeInformation.OSDescription : WebUtility.UrlEncode(runtimeInformation.OSDescription);
+#else
+            osDescription = ContainsNonAscii(runtimeInformation.OSDescription) ? WebUtility.UrlEncode(runtimeInformation.OSDescription) : runtimeInformation.OSDescription;
+#endif
+
+            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
 
             return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
@@ -160,6 +170,18 @@ namespace Azure.Core
             }
             sb.Append(')');
             return sb.ToString();
+        }
+
+        private static bool ContainsNonAscii(string value)
+        {
+            foreach (char c in value)
+            {
+                if ((int)c > 0x7f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

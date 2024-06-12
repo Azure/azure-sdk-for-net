@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The type of the query. Type: string. </summary>
-    public readonly partial struct ScriptType : IEquatable<ScriptType>
+    /// <summary> The type of the ScriptActivityScriptBlock. </summary>
+    internal readonly partial struct ScriptType : IEquatable<ScriptType>
     {
         private readonly string _value;
 

@@ -108,6 +108,21 @@ namespace Azure.ResourceManager.StorageCache.Tests
             return cache;
         }
 
+        protected async Task<AmlFileSystemResource> RetrieveExistingAmlFS(string resourceGroupName, string amlFSName)
+        {
+            ResourceIdentifier storageCacheResourceId = AmlFileSystemResource.CreateResourceIdentifier(
+                this.DefaultSubscription.Id.SubscriptionId,
+                resourceGroupName: resourceGroupName,
+                amlFileSystemName: amlFSName);
+            var amlFS = this.Client.GetAmlFileSystemResource(storageCacheResourceId);
+            var importJobs = amlFS.GetStorageCacheImportJobs().GetAllAsync();
+            await foreach (var job in importJobs)
+            {
+                await job.DeleteAsync(WaitUntil.Completed);
+            }
+            return amlFS;
+        }
+
         public void VerifyStorageTarget(StorageTargetResource actual, StorageTargetData expected)
         {
             Assert.AreEqual(actual.Data.TargetType, expected.TargetType);
@@ -157,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
             string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
-            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + TestEnvironment.vnetName +"/subnets/fsSubnet";
+            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" +"/subnets/fsSubnet";
             string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
             string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
             AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)
@@ -206,6 +221,36 @@ namespace Azure.ResourceManager.StorageCache.Tests
             Assert.AreEqual(actual.Data.Hsm.Settings.LoggingContainer, expected.Hsm.Settings.LoggingContainer);
             for (int i = 0; i < actual.Data.Zones.Count; i++)
                 Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
+        }
+
+        protected async Task<StorageCacheImportJobResource> CreateOrUpdateImportJob(AmlFileSystemResource amlFS, string name = null, bool verifyResult = false)
+        {
+            StorageCacheImportJobCollection importJobCollectionVar = amlFS.GetStorageCacheImportJobs();
+            string importJobName = name ?? Recording.GenerateAssetName("testjob");
+            StorageCacheImportJobData dataVar = new StorageCacheImportJobData(this.DefaultLocation)
+            {
+                ImportPrefixes = { "/path1", "/path2" },
+                MaximumErrors = 2,
+                ConflictResolutionMode = ConflictResolutionMode.Fail
+            };
+            ArmOperation<StorageCacheImportJobResource> lro = await importJobCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                importJobName: importJobName,
+                data: dataVar);
+            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            if (verifyResult)
+            {
+                this.VerifyImportJob(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyImportJob(StorageCacheImportJobResource actual, StorageCacheImportJobData expected)
+        {
+            for (int i = 0; i < actual.Data.ImportPrefixes.Count; i++)
+                Assert.AreEqual(actual.Data.ImportPrefixes[i], expected.ImportPrefixes[i]);
+            Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
+            Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

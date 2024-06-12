@@ -28,22 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StackMetaLearnerKWargs))
             {
-                if (StackMetaLearnerKWargs != null)
-                {
-                    writer.WritePropertyName("stackMetaLearnerKWargs"u8);
+                writer.WritePropertyName("stackMetaLearnerKWargs"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StackMetaLearnerKWargs);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
                 {
-                    writer.WriteNull("stackMetaLearnerKWargs");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
             {
@@ -104,7 +97,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stackMetaLearnerKWargs = null;
                         continue;
                     }
                     stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());

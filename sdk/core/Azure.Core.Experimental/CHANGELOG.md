@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.34 (Unreleased)
+## 0.1.0-preview.35 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,13 @@
 
 ### Bugs Fixed
 
-- Fixed a bug in the `PopTokenRequestContext` constructor that caused the `IsProofOfPossessionEnabled` property to be ignored.
-
 ### Other Changes
+
+## 0.1.0-preview.34 (2024-06-06)
+
+### Bugs Fixed
+
+- Fixed a bug in the `PopTokenRequestContext` constructor that caused the `IsProofOfPossessionEnabled` property to be ignored.
 
 ## 0.1.0-preview.33 (2024-04-04)
 

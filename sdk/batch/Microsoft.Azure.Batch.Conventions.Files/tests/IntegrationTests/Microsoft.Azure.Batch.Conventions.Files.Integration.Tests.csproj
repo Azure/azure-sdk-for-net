@@ -34,6 +34,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.Conventions.Files.csproj" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
   </ItemGroup>
   
   <ItemGroup>

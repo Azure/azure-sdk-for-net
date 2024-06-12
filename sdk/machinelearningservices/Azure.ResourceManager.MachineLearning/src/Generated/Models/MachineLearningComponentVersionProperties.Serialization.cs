@@ -28,22 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComponentSpec))
             {
-                if (ComponentSpec != null)
-                {
-                    writer.WritePropertyName("componentSpec"u8);
+                writer.WritePropertyName("componentSpec"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ComponentSpec);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
                 {
-                    writer.WriteNull("componentSpec");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -187,7 +180,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        componentSpec = null;
                         continue;
                     }
                     componentSpec = BinaryData.FromString(property.Value.GetRawText());

@@ -5,6 +5,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
@@ -65,6 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                 {
                     new BearerTokenAuthenticationPolicy(options.Credential, scope),
+                    new LiveMetricsRedirectPolicy(),
                 };
 
                 isAadEnabled = true;
@@ -74,7 +76,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             else
             {
                 isAadEnabled = false;
-                pipeline = HttpPipelineBuilder.Build(options);
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new LiveMetricsRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
             return new LiveMetricsRestAPIsForClientSDKsRestClient(new ClientDiagnostics(options), pipeline, connectionVars: connectionVars);

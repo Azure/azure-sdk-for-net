@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -94,7 +94,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -160,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebHookActivityMethod method = default;
             DataFactoryElement<string> url = default;
             string timeout = default;
-            IDictionary<string, DataFactoryElement<string>> headers = default;
+            IDictionary<string, BinaryData> headers = default;
             DataFactoryElement<string> body = default;
             WebActivityAuthentication authentication = default;
             DataFactoryElement<bool> reportStatusOnCallBack = default;
@@ -268,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -277,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 }
                                 else
                                 {
-                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                                 }
                             }
                             headers = dictionary;
@@ -329,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 method,
                 url,
                 timeout,
-                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 body,
                 authentication,
                 reportStatusOnCallBack);

@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -1283,13 +1281,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task PurgeMessages()
+        public async Task PurgeMessagesWithOneCall()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
-                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
@@ -1299,7 +1297,66 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+
+                // All messages should have been deleted.
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithTwoCalls()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount + 10;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                // Delay a moment to ensure that the messages are available to
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync();
+
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+
+                // All messages should have been deleted.
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithMultipleCalls()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = (ServiceBusReceiver.MaxDeleteMessageCount * 4) + 5;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                // Delay a moment to ensure that the messages are available to
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(15));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync();
+
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1314,12 +1371,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
-                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                var messageCount = (ServiceBusReceiver.MaxDeleteMessageCount * 3) + 2;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
-                // read/delete.
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(15));
 
                 // Mark the time for deleting.
                 var targetDate = DateTime.UtcNow;
@@ -1333,12 +1390,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
-                // All messages should have been deleted, except for our designated survivor.
-                var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNotNull(peekedMessage.Result);
-                Assert.AreEqual("survivor", peekedMessage.Result.MessageId);
+                // We cannot know what is left in the queue, so scan forward until we peek
+                // the last message.
+                var peekedMessage = await receiver.PeekMessageAsync();
+                var lastMessage = peekedMessage;
+
+                while (peekedMessage != null && peekedMessage.MessageId != message.MessageId)
+                {
+                    peekedMessage = await receiver.PeekMessageAsync(lastMessage.SequenceNumber);
+
+                    if (peekedMessage != null)
+                    {
+                        lastMessage = peekedMessage;
+                    }
+                }
+
+                Assert.IsNotNull(lastMessage);
+                Assert.AreEqual(message.MessageId, lastMessage.MessageId);
             }
         }
 

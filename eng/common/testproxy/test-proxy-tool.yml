@@ -60,6 +60,8 @@ steps:
         Write-Host "##vso[task.setvariable variable=PROXY_PID]$($Process.Id)"
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+      env:
+        DOTNET_ROLL_FORWARD: 'Major'
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
@@ -70,6 +72,8 @@ steps:
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
       workingDirectory: "${{ parameters.rootFolder }}"
+      env:
+        DOTNET_ROLL_FORWARD: 'Major'
 
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {

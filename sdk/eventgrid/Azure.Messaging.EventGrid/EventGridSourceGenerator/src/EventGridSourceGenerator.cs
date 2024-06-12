@@ -68,13 +68,13 @@ namespace Azure.Messaging.EventGrid
                     sourceBuilder.AppendLine();
                 }
                 SystemEventNode sysEvent = _visitor.SystemEvents[i];
-                
+
                 // Add the ref docs for each constant
                 sourceBuilder.AppendLine($"{Indent}{Indent}/// <summary>");
                 sourceBuilder.AppendLine($"{Indent}{Indent}/// The value of the Event Type stored in <see cref=\"EventGridEvent.EventType\"/> and <see cref=\"CloudEvent.Type\"/> ");
                 sourceBuilder.AppendLine($"{Indent}{Indent}/// for the <see cref=\"{sysEvent.EventName}\"/> system event.");
                 sourceBuilder.AppendLine($"{Indent}{Indent}/// </summary>");
-                
+
                 // Add the constant
                 sourceBuilder.AppendLine($"{Indent}{Indent}public const string {sysEvent.EventConstantName} = {sysEvent.EventType};");
             }

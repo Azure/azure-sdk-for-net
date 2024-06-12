@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the partner namespace. </param>
         /// <param name="partnerRegistrationFullyQualifiedId">
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the partner namespace. </summary>
         public PartnerNamespaceProvisioningState? ProvisioningState { get; }

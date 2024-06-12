@@ -16,34 +16,9 @@ namespace Azure.Identity
         internal MsalConfidentialClient MsalClient { get; set; }
 
         /// <summary>
-        /// The security token used by the running build.
+        /// The URI of the OIDC request endpoint.
         /// </summary>
-        internal string SystemAccessToken { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
-
-        /// <summary>
-        /// The URI of the TFS collection or Azure DevOps organization.
-        /// </summary>
-        internal string CollectionUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
-
-        /// <summary>
-        /// A unique identifier for a single attempt of a single job. The value is unique to the current pipeline.
-        /// </summary>
-        internal string JobId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_JOBID");
-
-        /// <summary>
-        /// A string-based identifier for a single pipeline run.
-        /// </summary>
-        internal string PlanId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_PLANID");
-
-        /// <summary>
-        /// The ID of the project that this build belongs to.
-        /// </summary>
-        internal string TeamProjectId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID");
-
-        /// <summary>
-        /// The hub under which this pipeline is running - typically "build" or "release".
-        /// </summary>
-        internal string HubName { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_HOSTTYPE");
+        internal string OidcRequestUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI");
 
         /// <inheritdoc/>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();

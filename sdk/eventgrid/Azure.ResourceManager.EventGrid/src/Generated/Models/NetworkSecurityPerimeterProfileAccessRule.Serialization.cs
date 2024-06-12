@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
-                    writer.WriteStringValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string type = default;
             NetworkSecurityPerimeterProfileAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
-            IList<string> subscriptions = default;
+            IList<WritableSubResource> subscriptions = default;
             IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
@@ -214,10 +215,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subscriptions = array;
                             continue;
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 type,
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterInfo>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),

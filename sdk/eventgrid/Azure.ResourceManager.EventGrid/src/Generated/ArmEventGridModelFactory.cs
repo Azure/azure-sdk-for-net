@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="location"> The location. </param>
         /// <param name="skuName"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
@@ -291,8 +291,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
+        /// <param name="expireOn"> Expiration time of the event subscription. </param>
         /// <returns> A new <see cref="EventGrid.NamespaceTopicEventSubscriptionData"/> instance for mocking. </returns>
-        public static NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null)
+        public static NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null, DateTimeOffset? expireOn = null)
         {
             return new NamespaceTopicEventSubscriptionData(
                 id,
@@ -303,6 +304,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 deliveryConfiguration,
                 eventDeliverySchema,
                 filtersConfiguration,
+                expireOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -371,9 +373,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace resource. </param>
-        /// <param name="topicsHostname"> Topics configuration information for the namespace resource. </param>
+        /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
         /// <param name="isZoneRedundant">
         /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
@@ -389,7 +391,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
         /// <returns> A new <see cref="EventGrid.EventGridNamespaceData"/> instance for mocking. </returns>
-        public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NamespaceSku sku = null, ManagedServiceIdentity identity = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, NamespaceProvisioningState? provisioningState = null, string topicsHostname = null, TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, TlsVersion? minimumTlsVersionAllowed = null)
+        public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NamespaceSku sku = null, ManagedServiceIdentity identity = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, NamespaceProvisioningState? provisioningState = null, TopicsConfiguration topicsConfiguration = null, TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, TlsVersion? minimumTlsVersionAllowed = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<EventGridPrivateEndpointConnectionData>();
@@ -406,13 +408,24 @@ namespace Azure.ResourceManager.EventGrid.Models
                 identity,
                 privateEndpointConnections?.ToList(),
                 provisioningState,
-                topicsHostname != null ? new TopicsConfiguration(topicsHostname, serializedAdditionalRawData: null) : null,
+                topicsConfiguration,
                 topicSpacesConfiguration,
                 isZoneRedundant,
                 publicNetworkAccess,
                 inboundIPRules?.ToList(),
                 minimumTlsVersionAllowed,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TopicsConfiguration"/>. </summary>
+        /// <param name="hostname"> The hostname for the topics configuration. This is a read-only property. </param>
+        /// <param name="customDomains"> List of custom domain configurations for the namespace. </param>
+        /// <returns> A new <see cref="Models.TopicsConfiguration"/> instance for mocking. </returns>
+        public static TopicsConfiguration TopicsConfiguration(string hostname = null, IEnumerable<CustomDomainConfiguration> customDomains = null)
+        {
+            customDomains ??= new List<CustomDomainConfiguration>();
+
+            return new TopicsConfiguration(hostname, customDomains?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TopicSpacesConfiguration"/>. </summary>
@@ -424,7 +437,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="hostname"> The endpoint for the topic spaces configuration. This is a read-only property. </param>
         /// <param name="routingEnrichments"> Routing enrichments for topic spaces configuration. </param>
-        /// <param name="alternativeAuthenticationNameSources"> Client authentication settings for topic spaces configuration. </param>
+        /// <param name="clientAuthentication"> Client authentication settings for topic spaces configuration. </param>
         /// <param name="maximumSessionExpiryInHours">
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.
@@ -434,20 +447,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Min allowed value is 1 and max allowed value is 100.
         /// </param>
         /// <param name="routingIdentityInfo"> Routing identity info for topic spaces configuration. </param>
+        /// <param name="customDomains"> List of custom domain configurations for the namespace. </param>
         /// <returns> A new <see cref="Models.TopicSpacesConfiguration"/> instance for mocking. </returns>
-        public static TopicSpacesConfiguration TopicSpacesConfiguration(TopicSpacesConfigurationState? state = null, string routeTopicResourceId = null, string hostname = null, RoutingEnrichments routingEnrichments = null, IEnumerable<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = null, int? maximumSessionExpiryInHours = null, int? maximumClientSessionsPerAuthenticationName = null, RoutingIdentityInfo routingIdentityInfo = null)
+        public static TopicSpacesConfiguration TopicSpacesConfiguration(TopicSpacesConfigurationState? state = null, string routeTopicResourceId = null, string hostname = null, RoutingEnrichments routingEnrichments = null, ClientAuthenticationSettings clientAuthentication = null, int? maximumSessionExpiryInHours = null, int? maximumClientSessionsPerAuthenticationName = null, RoutingIdentityInfo routingIdentityInfo = null, IEnumerable<CustomDomainConfiguration> customDomains = null)
         {
-            alternativeAuthenticationNameSources ??= new List<AlternativeAuthenticationNameSource>();
+            customDomains ??= new List<CustomDomainConfiguration>();
 
             return new TopicSpacesConfiguration(
                 state,
                 routeTopicResourceId,
                 hostname,
                 routingEnrichments,
-                alternativeAuthenticationNameSources != null ? new ClientAuthenticationSettings(alternativeAuthenticationNameSources?.ToList(), serializedAdditionalRawData: null) : null,
+                clientAuthentication,
                 maximumSessionExpiryInHours,
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
+                customDomains?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -568,7 +583,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the partner namespace. </param>
         /// <param name="partnerRegistrationFullyQualifiedId">
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
@@ -826,7 +841,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="extendedLocation"> Extended location of the resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
         /// <param name="endpoint"> Endpoint for the topic. </param>
         /// <param name="eventTypeInfo">
@@ -1021,6 +1036,26 @@ namespace Azure.ResourceManager.EventGrid.Models
                 partnerDestinationDetails,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomDomainOwnershipValidationResult"/>. </summary>
+        /// <param name="customDomainsForTopicsConfiguration"> List of custom domain configurations for the namespace under topics configuration. </param>
+        /// <param name="customDomainsForTopicSpacesConfiguration"> List of custom domain configurations for the namespace under topic spaces configuration. </param>
+        /// <returns> A new <see cref="Models.CustomDomainOwnershipValidationResult"/> instance for mocking. </returns>
+        public static CustomDomainOwnershipValidationResult CustomDomainOwnershipValidationResult(IEnumerable<CustomDomainConfiguration> customDomainsForTopicsConfiguration = null, IEnumerable<CustomDomainConfiguration> customDomainsForTopicSpacesConfiguration = null)
+        {
+            customDomainsForTopicsConfiguration ??= new List<CustomDomainConfiguration>();
+            customDomainsForTopicSpacesConfiguration ??= new List<CustomDomainConfiguration>();
+
+            return new CustomDomainOwnershipValidationResult(customDomainsForTopicsConfiguration?.ToList(), customDomainsForTopicSpacesConfiguration?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionFullUri"/>. </summary>
+        /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <returns> A new <see cref="Models.SubscriptionFullUri"/> instance for mocking. </returns>
+        public static SubscriptionFullUri SubscriptionFullUri(Uri endpointUri = null)
+        {
+            return new SubscriptionFullUri(endpointUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebHookEventSubscriptionDestination"/>. </summary>

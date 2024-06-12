@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A class representing the NotificationHubNamespace data model.
-    /// Description of a Namespace resource.
+    /// Notification Hubs Namespace Resource.
     /// </summary>
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public NotificationHubNamespaceData(AzureLocation location) : base(location)
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public NotificationHubNamespaceData(AzureLocation location, NotificationHubSku sku) : base(location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Sku = sku;
+            PrivateEndpointConnections = new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
@@ -64,39 +70,60 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="namespaceName"> The name of the namespace. </param>
-        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
-        /// <param name="region"> Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="status"> Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform NotificationHub operations. </param>
-        /// <param name="subscriptionId"> The Id of the Azure subscription associated with the namespace. </param>
-        /// <param name="scaleUnit"> ScaleUnit where the namespace gets created. </param>
-        /// <param name="isEnabled"> Whether or not the namespace is currently enabled. </param>
-        /// <param name="isCritical"> Whether or not the namespace is set as Critical. </param>
-        /// <param name="dataCenter"> Data center for the namespace. </param>
-        /// <param name="namespaceType"> The namespace type. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <param name="namespaceName">
+        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
+        /// by the service when the namespace is created.
+        /// </param>
+        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
+        /// <param name="namespaceStatus"> Namespace status. </param>
+        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
+        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
+        /// <param name="subscriptionId"> Namespace subscription id. </param>
+        /// <param name="region">
+        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
+        /// this property.
+        /// </param>
+        /// <param name="metricId"> Azure Insights Metrics id. </param>
+        /// <param name="createdOn"> Time when the namespace was created. </param>
+        /// <param name="updatedOn"> Time when the namespace was updated. </param>
+        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
+        /// <param name="replicationRegion"> Allowed replication region. </param>
+        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
+        /// <param name="networkAcls"> A collection of network authorization rules. </param>
+        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
+        /// <param name="serviceBusEndpoint">
+        /// Gets or sets endpoint you can use to perform NotificationHub
+        /// operations.
+        /// </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
+        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
+        /// <param name="dataCenter"> Deprecated. </param>
+        /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string namespaceName, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections, string scaleUnit, string dataCenter, NotificationHubPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Sku = sku;
             NamespaceName = namespaceName;
-            ProvisioningState = provisioningState;
-            Region = region;
-            MetricId = metricId;
-            Status = status;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            ServiceBusEndpoint = serviceBusEndpoint;
-            SubscriptionId = subscriptionId;
-            ScaleUnit = scaleUnit;
+            OperationProvisioningState = operationProvisioningState;
+            NamespaceStatus = namespaceStatus;
             IsEnabled = isEnabled;
             IsCritical = isCritical;
+            SubscriptionId = subscriptionId;
+            Region = region;
+            MetricId = metricId;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            HubNamespaceType = hubNamespaceType;
+            ReplicationRegion = replicationRegion;
+            ZoneRedundancy = zoneRedundancy;
+            NetworkAcls = networkAcls;
+            PnsCredentials = pnsCredentials;
+            ServiceBusEndpoint = serviceBusEndpoint;
+            PrivateEndpointConnections = privateEndpointConnections;
+            ScaleUnit = scaleUnit;
             DataCenter = dataCenter;
-            NamespaceType = namespaceType;
-            Sku = sku;
+            PublicNetworkAccess = publicNetworkAccess;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,35 +132,56 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        /// <summary> The name of the namespace. </summary>
-        public string NamespaceName { get; set; }
-        /// <summary> Provisioning state of the Namespace. </summary>
-        public string ProvisioningState { get; set; }
-        /// <summary> Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe. </summary>
-        public string Region { get; set; }
-        /// <summary> Identifier for Azure Insights metrics. </summary>
-        public string MetricId { get; }
-        /// <summary> Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting. </summary>
-        public string Status { get; set; }
-        /// <summary> The time the namespace was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The time the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary> Endpoint you can use to perform NotificationHub operations. </summary>
-        public Uri ServiceBusEndpoint { get; set; }
-        /// <summary> The Id of the Azure subscription associated with the namespace. </summary>
-        public string SubscriptionId { get; set; }
-        /// <summary> ScaleUnit where the namespace gets created. </summary>
-        public string ScaleUnit { get; set; }
-        /// <summary> Whether or not the namespace is currently enabled. </summary>
-        public bool? IsEnabled { get; set; }
-        /// <summary> Whether or not the namespace is set as Critical. </summary>
-        public bool? IsCritical { get; set; }
-        /// <summary> Data center for the namespace. </summary>
-        public string DataCenter { get; set; }
-        /// <summary> The namespace type. </summary>
-        public NotificationHubNamespaceType? NamespaceType { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
+        /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
+        /// <summary>
+        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
+        /// by the service when the namespace is created.
+        /// </summary>
+        public string NamespaceName { get; set; }
+        /// <summary> Defines values for OperationProvisioningState. </summary>
+        public OperationProvisioningState? OperationProvisioningState { get; set; }
+        /// <summary> Namespace status. </summary>
+        public NotificationHubNamespaceStatus? NamespaceStatus { get; set; }
+        /// <summary> Gets or sets whether or not the namespace is currently enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> Gets or sets whether or not the namespace is set as Critical. </summary>
+        public bool? IsCritical { get; set; }
+        /// <summary> Namespace subscription id. </summary>
+        public string SubscriptionId { get; set; }
+        /// <summary>
+        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
+        /// this property.
+        /// </summary>
+        public string Region { get; set; }
+        /// <summary> Azure Insights Metrics id. </summary>
+        public string MetricId { get; }
+        /// <summary> Time when the namespace was created. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
+        /// <summary> Time when the namespace was updated. </summary>
+        public DateTimeOffset? UpdatedOn { get; set; }
+        /// <summary> Defines values for NamespaceType. </summary>
+        public NotificationHubNamespaceTypeExt? HubNamespaceType { get; set; }
+        /// <summary> Allowed replication region. </summary>
+        public AllowedReplicationRegion? ReplicationRegion { get; set; }
+        /// <summary> Namespace SKU name. </summary>
+        public ZoneRedundancyPreference? ZoneRedundancy { get; set; }
+        /// <summary> A collection of network authorization rules. </summary>
+        public NotificationHubNetworkAcls NetworkAcls { get; set; }
+        /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
+        public PnsCredentials PnsCredentials { get; set; }
+        /// <summary>
+        /// Gets or sets endpoint you can use to perform NotificationHub
+        /// operations.
+        /// </summary>
+        public Uri ServiceBusEndpoint { get; set; }
+        /// <summary> Private Endpoint Connections for namespace. </summary>
+        public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Gets or sets scaleUnit where the namespace gets created. </summary>
+        public string ScaleUnit { get; set; }
+        /// <summary> Deprecated. </summary>
+        public string DataCenter { get; set; }
+        /// <summary> Type of public network access. </summary>
+        public NotificationHubPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

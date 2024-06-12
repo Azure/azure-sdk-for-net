@@ -59,15 +59,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DriverVersion))
+            {
+                writer.WritePropertyName("driverVersion"u8);
+                writer.WriteObjectValue<object>(DriverVersion);
+            }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue<object>(ConnectionString);
             }
-            if (Optional.IsDefined(Pwd))
+            if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("pwd"u8);
-                writer.WriteObjectValue(Pwd);
+                writer.WritePropertyName("server"u8);
+                writer.WriteObjectValue<object>(Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteObjectValue<object>(Port);
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteObjectValue<object>(Username);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteObjectValue<object>(Database);
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -94,8 +119,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
+            object driverVersion = default;
             object connectionString = default;
-            AzureKeyVaultSecretReference pwd = default;
+            object server = default;
+            object port = default;
+            object username = default;
+            object database = default;
+            AzureKeyVaultSecretReference password = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -164,6 +194,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("driverVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            driverVersion = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("connectionString"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -173,13 +212,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             connectionString = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("pwd"u8))
+                        if (property0.NameEquals("server"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            pwd = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            server = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("password"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -204,8 +279,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
+                driverVersion,
                 connectionString,
-                pwd,
+                server,
+                port,
+                username,
+                database,
+                password,
                 encryptedCredential);
         }
 

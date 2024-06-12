@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace resource. </param>
         /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
@@ -110,18 +110,12 @@ namespace Azure.ResourceManager.EventGrid
         public NamespaceSku Sku { get; set; }
         /// <summary> Identity information for the Namespace resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the namespace resource. </summary>
         public NamespaceProvisioningState? ProvisioningState { get; }
         /// <summary> Topics configuration information for the namespace resource. </summary>
-        internal TopicsConfiguration TopicsConfiguration { get; set; }
-        /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>
-        public string TopicsHostname
-        {
-            get => TopicsConfiguration is null ? default : TopicsConfiguration.Hostname;
-        }
-
+        public TopicsConfiguration TopicsConfiguration { get; set; }
         /// <summary> Topic spaces configuration information for the namespace resource. </summary>
         public TopicSpacesConfiguration TopicSpacesConfiguration { get; set; }
         /// <summary>

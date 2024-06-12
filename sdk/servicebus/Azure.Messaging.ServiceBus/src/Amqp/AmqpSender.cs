@@ -602,19 +602,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout: timeout,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                if (!MaxMessageSize.HasValue)
-                {
-                    // This delay is necessary to prevent the link from causing issues for subsequent
-                    // operations after creating a batch.  Without it, operations using the link consistently
-                    // timeout.  The length of the delay does not appear significant, just the act of introducing
-                    // an asynchronous delay.
-                    //
-                    // For consistency the value used by the legacy Service Bus client has been brought forward and
-                    // used here.
+                // Update the known maximum message size each time a link is opened, as the
+                // configuration can be changed on-the-fly and may not match the previously cached value.
+                //
+                // This delay is necessary to prevent the link from causing issues for subsequent
+                // operations after creating a batch.  Without it, operations using the link consistently
+                // timeout.  The length of the delay does not appear significant, just the act of introducing
+                // an asynchronous delay.
+                //
+                // For consistency the value used by the legacy Service Bus client has been brought forward and
+                // used here.
 
-                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                    MaxMessageSize = (long)link.Settings.MaxMessageSize;
-                }
+                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                MaxMessageSize = (long)link.Settings.MaxMessageSize;
+
                 ServiceBusEventSource.Log.CreateSendLinkComplete(Identifier);
                 link.Closed += OnSenderLinkClosed;
                 return link;

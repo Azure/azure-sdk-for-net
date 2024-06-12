@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("text"u8);
             JsonSerializer.Serialize(writer, Text);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ScriptType.ToString());
+            JsonSerializer.Serialize(writer, QueryType);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> text = default;
-            DataFactoryScriptType type = default;
+            DataFactoryElement<string> type = default;
             IList<ScriptActivityParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DataFactoryScriptType(property.Value.GetString());
+                    type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

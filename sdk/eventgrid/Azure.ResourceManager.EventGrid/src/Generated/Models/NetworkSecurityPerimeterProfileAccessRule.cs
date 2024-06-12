@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public NetworkSecurityPerimeterProfileAccessRule()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<string>();
+            Subscriptions = new ChangeTrackingList<WritableSubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterInfo>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="emailAddresses"> List of email addresses. </param>
         /// <param name="phoneNumbers"> List of phone numbers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> subscriptions, IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FullyQualifiedArmId = fullyQualifiedArmId;
             Name = name;
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Address prefixes. </summary>
         public IList<string> AddressPrefixes { get; }
         /// <summary> List of subscriptions. </summary>
-        public IList<string> Subscriptions { get; }
+        public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Network security perimeters. </summary>
         public IList<NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters { get; }
         /// <summary> Fully qualified domain names. </summary>

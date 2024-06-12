@@ -18,6 +18,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [LiveOnly(Reason = "path validation fails in playback mode")]
         public async Task ValidateSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))

@@ -46,14 +46,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
-        public NotificationHubAdmCredential()
+        /// <param name="clientId"> Gets or sets the client identifier. </param>
+        /// <param name="clientSecret"> Gets or sets the credential secret access key. </param>
+        /// <param name="authTokenUri"> Gets or sets the URL of the authorization token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="clientSecret"/> or <paramref name="authTokenUri"/> is null. </exception>
+        public NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
         {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(clientSecret, nameof(clientSecret));
+            Argument.AssertNotNull(authTokenUri, nameof(authTokenUri));
+
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            AuthTokenUri = authTokenUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
-        /// <param name="clientId"> The client identifier. </param>
-        /// <param name="clientSecret"> The credential secret access key. </param>
-        /// <param name="authTokenUri"> The URL of the authorization token. </param>
+        /// <param name="clientId"> Gets or sets the client identifier. </param>
+        /// <param name="clientSecret"> Gets or sets the credential secret access key. </param>
+        /// <param name="authTokenUri"> Gets or sets the URL of the authorization token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +74,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The client identifier. </summary>
+        /// <summary> Gets or sets the client identifier. </summary>
         public string ClientId { get; set; }
-        /// <summary> The credential secret access key. </summary>
+        /// <summary> Gets or sets the credential secret access key. </summary>
         public string ClientSecret { get; set; }
-        /// <summary> The URL of the authorization token. </summary>
+        /// <summary> Gets or sets the URL of the authorization token. </summary>
         public Uri AuthTokenUri { get; set; }
     }
 }

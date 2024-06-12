@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         private ApplicationsRestOperations _armApplicationApplicationsRestClient;
         private ClientDiagnostics _jitRequestClientDiagnostics;
         private JitRequestsRestOperations _jitRequestRestClient;
+        private ClientDiagnostics _decompileClientDiagnostics;
+        private DecompileRestOperations _decompileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableResourcesSubscriptionResource"/> class for mocking. </summary>
         protected MockableResourcesSubscriptionResource()
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmApplicationResource.ResourceType));
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, Diagnostics);
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
+        private ClientDiagnostics DecompileClientDiagnostics => _decompileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DecompileRestOperations DecompileRestClient => _decompileRestClient ??= new DecompileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -361,6 +365,82 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetJitRequestDefinitions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Decompiles an ARM json template into a Bicep template
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/decompileBicep</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Decompile_Bicep</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Decompile operation request supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DecompileOperationSuccessResult>> BicepDecompileAsync(DecompileOperationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DecompileClientDiagnostics.CreateScope("MockableResourcesSubscriptionResource.BicepDecompile");
+            scope.Start();
+            try
+            {
+                var response = await DecompileRestClient.BicepAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Decompiles an ARM json template into a Bicep template
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/decompileBicep</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Decompile_Bicep</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Decompile operation request supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DecompileOperationSuccessResult> BicepDecompile(DecompileOperationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DecompileClientDiagnostics.CreateScope("MockableResourcesSubscriptionResource.BicepDecompile");
+            scope.Start();
+            try
+            {
+                var response = DecompileRestClient.Bicep(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

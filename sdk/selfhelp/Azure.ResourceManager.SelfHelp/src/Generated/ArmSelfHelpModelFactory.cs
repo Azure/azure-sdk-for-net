@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
-        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
+        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </param>
         /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
         /// <param name="additionalContext"> Additional information in the form of a string. </param>
         /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>

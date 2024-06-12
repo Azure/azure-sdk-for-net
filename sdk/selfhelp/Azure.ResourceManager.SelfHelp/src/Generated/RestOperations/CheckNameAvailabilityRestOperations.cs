@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreatePostRequestUri(string scope, SelfHelpNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string scope, SelfHelpNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreatePostRequest(string scope, SelfHelpNameAvailabilityContent content)
+        internal HttpMessage CreateCheckAvailabilityRequest(string scope, SelfHelpNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<SelfHelpNameAvailabilityResult>> PostAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreatePostRequest(scope, content);
+            using var message = CreateCheckAvailabilityRequest(scope, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<SelfHelpNameAvailabilityResult> Post(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpNameAvailabilityResult> CheckAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreatePostRequest(scope, content);
+            using var message = CreateCheckAvailabilityRequest(scope, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

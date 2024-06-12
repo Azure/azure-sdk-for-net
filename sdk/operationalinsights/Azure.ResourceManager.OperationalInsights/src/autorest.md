@@ -164,6 +164,9 @@ override-operation-name:
   DeletedWorkspaces_List: GetDeletedWorkspaces
   DeletedWorkspaces_ListByResourceGroup: GetDeletedWorkspaces
 
+operations-to-skip-lro-api-version-override:
+- Clusters_CreateOrUpdate
+
 directive:
   - remove-operation: OperationStatuses_Get
   # Dup model `SystemData` in this RP, should use the common type

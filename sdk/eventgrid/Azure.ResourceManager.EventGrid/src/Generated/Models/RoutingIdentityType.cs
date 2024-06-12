@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The RoutingIdentityType. </summary>
+    /// <summary> Routing identity type for topic spaces configuration. </summary>
     public readonly partial struct RoutingIdentityType : IEquatable<RoutingIdentityType>
     {
         private readonly string _value;

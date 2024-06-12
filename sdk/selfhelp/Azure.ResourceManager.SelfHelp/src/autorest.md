@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/b38632bbd56247985cb0493b128ba048e5fee16b/specification/help/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/51031c3dc961c33be93afe1f15d35acfe5999861/specification/help/resource-manager/readme.md
 #tag: package-2024-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -51,6 +51,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  NLP: Nlp
 
 request-path-is-non-resource:
   - /providers/Microsoft.Help/selfHelp/{solutionId}
@@ -118,9 +119,11 @@ rename-mapping:
   WebResult: KBWebResult
 
 override-operation-name:
-  CheckNameAvailability_Post: CheckSelfHelpNameAvailability
-  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
+  CheckNameAvailability_CheckAvailability: CheckSelfHelpNameAvailability
+  DiscoverySolution_List: DiscoverSolutions
   SolutionSelfHelp_Get: GetSelfHelpSolutionById
+  DiscoverySolutionNLP_DiscoverSolutionsBySubscription: DiscoverSolutionsNlp
+  DiscoverySolutionNLP_DiscoverSolutions: DiscoverSolutionsNlp
 
 directive:
   - from: help.json

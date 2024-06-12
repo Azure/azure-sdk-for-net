@@ -6,6 +6,7 @@ parameters:
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
+  EnvVars: {}
   UseFederatedAuth: false
   SubscriptionConfigurationFilePath: ''
 
@@ -29,6 +30,7 @@ steps:
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
+      env: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -78,3 +80,4 @@ steps:
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
+      env: ${{ parameters.EnvVars }}

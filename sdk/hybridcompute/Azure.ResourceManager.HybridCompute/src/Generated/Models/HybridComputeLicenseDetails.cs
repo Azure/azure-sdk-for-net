@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseDetails"/>. </summary>
         public HybridComputeLicenseDetails()
         {
+            VolumeLicenseDetails = new ChangeTrackingList<VolumeLicenseDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseDetails"/>. </summary>
@@ -58,8 +59,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="processors"> Describes the number of processors. </param>
         /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
         /// <param name="immutableId"> Describes the immutable id. </param>
+        /// <param name="volumeLicenseDetails"> A list of volume license details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLicenseDetails(HybridComputeLicenseState? state, HybridComputeLicenseTarget? target, HybridComputeLicenseEdition? edition, LicenseCoreType? licenseCoreType, int? processors, int? assignedLicenses, string immutableId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeLicenseDetails(HybridComputeLicenseState? state, HybridComputeLicenseTarget? target, HybridComputeLicenseEdition? edition, LicenseCoreType? licenseCoreType, int? processors, int? assignedLicenses, string immutableId, IList<VolumeLicenseDetails> volumeLicenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Target = target;
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Processors = processors;
             AssignedLicenses = assignedLicenses;
             ImmutableId = immutableId;
+            VolumeLicenseDetails = volumeLicenseDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? AssignedLicenses { get; }
         /// <summary> Describes the immutable id. </summary>
         public string ImmutableId { get; }
+        /// <summary> A list of volume license details. </summary>
+        public IList<VolumeLicenseDetails> VolumeLicenseDetails { get; }
     }
 }

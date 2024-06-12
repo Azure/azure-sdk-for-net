@@ -589,6 +589,20 @@ namespace Azure.Messaging.EventHubs.Primitives
         public override string ToString() => $"Event Processor<{ typeof(TPartition).Name }>: { Identifier }";
 
         /// <summary>
+        ///   Creates a diagnostic scope associated with a checkpointing activity.
+        /// </summary>
+        ///
+        /// <returns>The diagnostic scope.  The caller is assumed to own the scope once returned and is responsible for disposing it.</returns>
+        ///
+        internal virtual DiagnosticScope StartUpdateCheckpointDiagnosticScope()
+        {
+            var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
+            scope.Start();
+
+            return scope;
+        }
+
+        /// <summary>
         ///   Creates an <see cref="TransportConsumer" /> to use for processing.
         /// </summary>
         ///
