@@ -478,10 +478,10 @@ namespace Azure.Compute.Batch
     public partial class BatchFileProperties
     {
         internal BatchFileProperties() { }
-        public bool BatchFileIsDirectory { get { throw null; } }
-        public string BatchFileMode { get { throw null; } }
-        public string BatchFileUrl { get { throw null; } }
         public System.DateTime CreationTime { get { throw null; } }
+        public string FileUrl { get { throw null; } }
+        public bool IsDirectory { get { throw null; } }
+        public string Mode { get { throw null; } }
     }
     public partial class BatchJob : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJob>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJob>
     {

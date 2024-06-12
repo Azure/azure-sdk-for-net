@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task AddTask()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "AddTask", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "AddTask", isPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task AddTaskCollection()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "AddTaskCollection", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "AddTaskCollection", isPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
@@ -122,7 +122,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task TaskUpdate()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "TaskUpdate", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "TaskUpdate", isPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
@@ -183,7 +183,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task TaskListSubTasks()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "TaskListSubTasks", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "TaskListSubTasks", isPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
@@ -239,7 +239,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task TaskReactive()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "TaskReactive", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "TaskReactive", isPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";

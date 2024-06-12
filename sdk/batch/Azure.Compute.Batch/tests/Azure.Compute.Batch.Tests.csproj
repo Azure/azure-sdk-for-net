@@ -22,8 +22,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 </Project>

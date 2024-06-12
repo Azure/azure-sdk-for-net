@@ -21,11 +21,6 @@ namespace Azure.Compute.Batch.Custom
     internal class BatchNamedKeyCredentialPolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
-        /// Whether to always add the x-ms-date header.
-        /// </summary>
-        private const bool IncludeXMsDate = true;
-
-        /// <summary>
         /// Batch Account name
         /// </summary>
         private string AccountName;
@@ -63,12 +58,8 @@ namespace Azure.Compute.Batch.Custom
         {
             base.OnSendingRequest(message);
 
-            // Add a x-ms-date header
-            if (IncludeXMsDate)
-            {
-                var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-                message.Request.Headers.SetValue(Constants.HeaderNames.Date, date);
-            }
+            var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
+            message.Request.Headers.SetValue(Constants.HeaderNames.OCPDate, date);
 
             var stringToSign = BuildStringToSign(message);
             var signature = ComputeSasSignature(stringToSign);
@@ -107,7 +98,7 @@ namespace Azure.Compute.Batch.Custom
             stringBuilder.Append(contentLengthString == "0" ? "" : contentLengthString ?? "").Append('\n');
             stringBuilder.Append(contentMD5 ?? "");// todo: fix base 64 VALUE
             stringBuilder.Append('\n');
-            stringBuilder.Append(contentType ?? "").Append('\n'); // Empty date because x-ms-date is expected (as per web page above))
+            stringBuilder.Append(contentType ?? "").Append('\n'); // Empty date because ocp-date is expected (as per web page above))
             stringBuilder.Append('\n');
             stringBuilder.Append(ifModifiedSince ?? "").Append('\n');
             stringBuilder.Append(ifMatch ?? "").Append('\n');
@@ -122,7 +113,7 @@ namespace Azure.Compute.Batch.Custom
         // If you change this method, make sure live tests are passing before merging PR.
         private void BuildCanonicalizedHeaders(StringBuilder stringBuilder, HttpMessage message)
         {
-            // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
+            // Grab all the "ocp-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).
             var headers = new List<HttpHeader>();
             foreach (var header in message.Request.Headers)
@@ -148,14 +139,14 @@ namespace Azure.Compute.Batch.Custom
         // If you change this method, make sure live tests are passing before merging PR.
         private void BuildCanonicalizedResource(StringBuilder stringBuilder, Uri resource)
         {
-            // https://docs.microsoft.com/en-us/rest/api/Batchservices/authentication-for-the-azure-Batch-services
+            // https://learn.microsoft.com/rest/api/batchservice/authenticate-requests-to-the-azure-batch-service
             stringBuilder.Append('/');
             stringBuilder.Append(AccountName);
             if (resource.AbsolutePath.Length > 0)
             {
                 // Any portion of the CanonicalizedResource string that is derived from
                 // the resource's URI should be encoded exactly as it is in the URI.
-                // -- https://msdn.microsoft.com/en-gb/library/azure/dd179428.aspx
+                // -- https://msdn.microsoft.com/library/azure/dd179428.aspx
                 stringBuilder.Append(resource.AbsolutePath);//EscapedPath()
             }
             else

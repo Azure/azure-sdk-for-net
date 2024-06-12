@@ -13,6 +13,10 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
+    /// <summary>
+    /// Customizing the Serialization of BatchPoolReplaceContent to handle the missing variable certificateReferences.  This
+    /// is a work around will be removed in the next release
+    /// </summary>
     public partial class BatchPoolReplaceContent : IUtf8JsonSerializable, IJsonModel<BatchPoolReplaceContent>
     {
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolReplaceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);

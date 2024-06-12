@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch.Custom
         internal static class HeaderNames
         {
             public const string OCPPrefix = "ocp-";
-            public const string Date = "ocp-date";
+            public const string OCPDate = "ocp-date";
             public const string SharedKey = "SharedKey";
             public const string Authorization = "Authorization";
             public const string ContentEncoding = "Content-Encoding";

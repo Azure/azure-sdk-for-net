@@ -34,18 +34,6 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             PlayBack = isPlayback;
         }
 
-        public async void Dispose()
-        {
-            //This should not throw so swallow exceptions?
-            try
-            {
-                await this.client.DeletePoolAsync(PoolId);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
         public async Task<BatchPool> FindPoolIfExistsAsync()
         {
             // reuse existing pool if it exists

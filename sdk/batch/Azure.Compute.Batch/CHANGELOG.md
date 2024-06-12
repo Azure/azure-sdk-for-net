@@ -2,15 +2,9 @@
 
 ## 1.0.0-beta.1 (2024-06-01)
 
-### Breaking Changes
+### Features Added
 
-New design of track 2 initial commit.
-
-### Package Name
-
-The package name has been changed from `Microsoft.Azure.Batch` to `Azure.Compute.Batch`.
-
-### General New Features
+New design of track 2 initial commit. This package, `Azure.Compute.Batch`, replaces `Microsoft.Azure.Batch`.
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities.
 

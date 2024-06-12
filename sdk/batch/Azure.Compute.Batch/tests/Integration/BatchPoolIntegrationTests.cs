@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetPoolNodeCounts()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "GetPoolNodeCounts", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetPoolNodeCounts", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PoolExists()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolExists", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PoolExists", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PoolGetPoolUsageMetrics()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolGetPoolUsageMetrics", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PoolGetPoolUsageMetrics", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -118,7 +118,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PoolRemoveNodes()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolRemoveNodes", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PoolRemoveNodes", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -157,7 +157,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task AutoScale()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "AutoScale", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "AutoScale", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
             string poolASFormulaOrig = "$TargetDedicated = 0;";
             string poolASFormulaNew = "$TargetDedicated = 1;";
@@ -210,7 +210,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task ResizePool()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "ResizePool", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ResizePool", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -244,7 +244,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task ReplacePool()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "ReplacePool", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ReplacePool", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -279,7 +279,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PatchPool()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PatchPool", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PatchPool", isPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try

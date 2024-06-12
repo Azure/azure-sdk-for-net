@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetTaskFile()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "GetTaskFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetTaskFile", isPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             try
@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                     BatchFileProperties batchFilePropertiesesponse = await client.GetTaskFilePropertiesAsync(jobId, t.Id, outputFileName);
                     Assert.IsNotNull(batchFilePropertiesesponse);
-                    Assert.IsNotEmpty(batchFilePropertiesesponse.BatchFileUrl);
+                    Assert.IsNotEmpty(batchFilePropertiesesponse.FileUrl);
 
                     BinaryData fileContents = await client.GetTaskFileAsync(jobId, t.Id, outputFileName);
                     using (var reader = new StreamReader(fileContents.ToStream()))
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task DeleteTaskFile()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "DeleteTaskFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeleteTaskFile", isPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             string taskId = "batchTask1";
@@ -137,7 +137,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetNodeFile()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "GetNodeFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetNodeFile", isPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             string file = "workitems\\batchJob1\\job-1\\task-0\\stdout.txt";
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     BatchFileProperties batchFileProperties = await client.GetNodeFilePropertiesAsync(poolId, item.Id, file);
                     Assert.IsNotNull(batchFileProperties);
-                    Assert.IsNotEmpty(batchFileProperties.BatchFileUrl);
+                    Assert.IsNotEmpty(batchFileProperties.FileUrl);
 
                     BinaryData fileContents = await client.GetNodeFileAsync(poolId, item.Id, file);
                     using (var reader = new StreamReader(fileContents.ToStream()))

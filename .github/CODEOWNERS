@@ -157,10 +157,7 @@
 # ServiceOwners:                                                   @rpsqrd @edyoung
 
 # PRLabel: %Batch
-/sdk/batch/                                                        @wiboris @dpwatrous
-
-# PRLabel: %Batch
-/sdk/batch/Azure.Compute.Batch                                     @wiboris @dpwatrous
+/sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12
 
 # ServiceLabel: %Batch
 # ServiceOwners:                                                   @wiboris @dpwatrous
