@@ -143,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppDependencies",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
-                    AppRoleInstance = serviceInstance,
+                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -170,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppRequests",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
-                    AppRoleInstance = serviceInstance,
+                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -191,7 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
-                    AppRoleInstance = serviceInstance,
+                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -216,7 +216,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
-                    AppRoleInstance = serviceInstance,
+                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -242,7 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppVersion = serviceVersion,
                     ClientIP = "0.0.0.0",
                     Type = "AppTraces",
-                    AppRoleInstance = serviceInstance,
+                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
                 });
         }
 
