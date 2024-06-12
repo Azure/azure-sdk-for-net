@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -83,6 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     options.SetResourceBuilder(resourceBuilder);
                 });
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
             builder.Services.AddOpenTelemetry()
                 .ConfigureResource(x => x.AddAttributes(resourceAttributes))
                 .UseAzureMonitor(options =>
@@ -134,6 +136,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppRoleName = roleName,
                     ClientIP = "0.0.0.0",
                     Type = "AppDependencies",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
                 });
 
             await QueryAndVerifyRequest(
@@ -143,6 +151,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     Url = TestServerUrl,
                     AppRoleName = roleName,
+                    Name = "GET /",
+                    Success = "True",
+                    ResultCode = "200",
+                    OperationName = "GET /",
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppRequests",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
                 });
 
             await QueryAndVerifyMetric(
@@ -200,6 +221,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         {
             LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppTrace);
+        }
+
+        public class ActivityEnrichingProcessor : BaseProcessor<Activity>
+        {
+            public override void OnEnd(Activity activity)
+            {
+                activity.SetTag("CustomProperty1", "Value1");
+                activity.SetTag("enduser.id", "TestAuthenticatedUserId");
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 }
                 else
                 {
-                    TestContext.Out.WriteLine($"Property: '{property.Name}' ExpectedValue: '{property.GetValue(expectedTelemetry, null)}' ActualValue: '{row[property.Name]}'");
+                    TestContext.Out.WriteLine($"PropertyName: '{property.Name}' ExpectedValue: '{property.GetValue(expectedTelemetry, null)}' ActualValue: '{row[property.Name]}'");
 
                     Assert.AreEqual(
                         expected: property.GetValue(expectedTelemetry, null)!.ToString(),
@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             public string ResultCode { get; set; }
             //public string DurationMS { get; set; }
             //public string PerformanceBucket { get; set; }
-            //public string Properties { get; set; }
+            public List<KeyValuePair<string, string>> Properties { get; set; }
             //public string Measurements { get; set; }
             //public string OperationName { get; set; }
             //public string OperationId { get; set; }
@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //public string SyntheticSource { get; set; }
             //public string SessionId { get; set; }
             //public string UserId { get; set; }
-            //public string UserAuthenticatedId { get; set; }
+            public string UserAuthenticatedId { get; set; }
             //public string UserAccountId { get; set; }
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
@@ -126,10 +126,47 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         public struct ExpectedAppRequest
         {
+            //public string TenantId { get; set; }
+            //public string TimeGenerated { get; set; }
+            //public string Id { get; set; }
+            //public string Source { get; set; }
+            public string Name { get; set; }
             public string Url { get; set; }
+            public string Success { get; set; }
+            public string ResultCode { get; set; }
+            //public string DurationMs { get; set; }
+            //public string PerformanceBucket { get; set; }
+            public List<KeyValuePair<string, string>> Properties { get; set; }
+            //public string Measurements { get; set; }
+            public string OperationName { get; set; }
+            //public string OperationId { get; set; }
+            //public string OperationLinks { get; set; }
+            //public string ParentId { get; set; }
+            //public string SyntheticSource { get; set; }
+            //public string SessionId { get; set; }
+            //public string UserId { get; set; }
+            public string UserAuthenticatedId { get; set; }
+            //public string UserAccountId { get; set; }
+            public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            //public string AppRoleInstance { get; set; }
+            //public string ClientType { get; set; }
+            //public string ClientModel { get; set; }
+            //public string ClientOS { get; set; }
+            public string ClientIP { get; set; }
+            //public string ClientCity { get; set; }
+            //public string ClientStateOrProvince { get; set; }
+            //public string ClientCountryOrRegion { get; set; }
+            //public string ClientBrowser { get; set; }
+            //public string ResourceGUID { get; set; }
+            //public string IKey { get; set; }
+            //public string SDKVersion { get; set; }
+            //public string ItemCount { get; set; }
+            //public string ReferencedItemId { get; set; }
+            //public string ReferencedType { get; set; }
+            //public string SourceSystem { get; set; }
+            public string Type { get; set; }
+            //public string ResourceId { get; set; }
         }
 
         public struct ExpectedAppMetric
