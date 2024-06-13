@@ -28,12 +28,53 @@ namespace Azure.Communication.JobRouter
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Creates or updates a distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<DistributionPolicy>> UpsertDistributionPolicyAsync(string distributionPolicyId, DistributionPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertDistributionPolicyAsync(distributionPolicyId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<DistributionPolicy> UpsertDistributionPolicy(string distributionPolicyId, DistributionPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertDistributionPolicy(distributionPolicyId, content, requestConditions, context);
+            return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a distribution policy.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertDistributionPolicyAsync(string,DistributionPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -80,6 +121,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertDistributionPolicy(string,DistributionPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -296,12 +342,53 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Creates or updates a classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<ClassificationPolicy>> UpsertClassificationPolicyAsync(string classificationPolicyId, ClassificationPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertClassificationPolicyAsync(classificationPolicyId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<ClassificationPolicy> UpsertClassificationPolicy(string classificationPolicyId, ClassificationPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertClassificationPolicy(classificationPolicyId, content, requestConditions, context);
+            return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a classification policy.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertClassificationPolicyAsync(string,ClassificationPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -348,6 +435,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertClassificationPolicy(string,ClassificationPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -564,12 +656,53 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Creates or updates a exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<ExceptionPolicy>> UpsertExceptionPolicyAsync(string exceptionPolicyId, ExceptionPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertExceptionPolicyAsync(exceptionPolicyId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<ExceptionPolicy> UpsertExceptionPolicy(string exceptionPolicyId, ExceptionPolicy resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertExceptionPolicy(exceptionPolicyId, content, requestConditions, context);
+            return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a exception policy.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertExceptionPolicyAsync(string,ExceptionPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -616,6 +749,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertExceptionPolicy(string,ExceptionPolicy,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -832,12 +970,53 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Creates or updates a queue. </summary>
+        /// <param name="queueId"> Id of a queue. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<RouterQueue>> UpsertQueueAsync(string queueId, RouterQueue resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertQueueAsync(queueId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(RouterQueue.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a queue. </summary>
+        /// <param name="queueId"> Id of a queue. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<RouterQueue> UpsertQueue(string queueId, RouterQueue resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertQueue(queueId, content, requestConditions, context);
+            return Response.FromValue(RouterQueue.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a queue.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertQueueAsync(string,RouterQueue,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -884,6 +1063,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertQueue(string,RouterQueue,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

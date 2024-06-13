@@ -67,7 +67,7 @@
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
    "IsNullable": false,
-   "Usage": "Output"
+   "Usage": "None"
   },
   {
    "$id": "11",
@@ -259,7 +259,7 @@
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
    "IsNullable": false,
-   "Usage": "None"
+   "Usage": "ApiVersionEnum"
   }
  ],
  "Models": [
@@ -392,7 +392,7 @@
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of MessageTemplateItem items",
    "IsNullable": false,
-   "Usage": "Output",
+   "Usage": "None",
    "Properties": [
     {
      "$id": "54",

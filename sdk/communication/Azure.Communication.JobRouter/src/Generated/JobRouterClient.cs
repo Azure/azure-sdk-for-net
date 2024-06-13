@@ -28,12 +28,53 @@ namespace Azure.Communication.JobRouter
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Creates or updates a router job. </summary>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<RouterJob>> UpsertJobAsync(string jobId, RouterJob resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertJobAsync(jobId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(RouterJob.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a router job. </summary>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<RouterJob> UpsertJob(string jobId, RouterJob resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertJob(jobId, content, requestConditions, context);
+            return Response.FromValue(RouterJob.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a router job.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertJobAsync(string,RouterJob,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -80,6 +121,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertJob(string,RouterJob,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -830,12 +876,53 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Creates or updates a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<RouterWorker>> UpsertWorkerAsync(string workerId, RouterWorker resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpsertWorkerAsync(workerId, content, requestConditions, context).ConfigureAwait(false);
+            return Response.FromValue(RouterWorker.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<RouterWorker> UpsertWorker(string workerId, RouterWorker resource, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpsertWorker(workerId, content, requestConditions, context);
+            return Response.FromValue(RouterWorker.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates or updates a worker.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertWorkerAsync(string,RouterWorker,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -882,6 +969,11 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpsertWorker(string,RouterWorker,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
