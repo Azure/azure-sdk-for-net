@@ -61,6 +61,16 @@ namespace Azure.Storage
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
+        public override void OnReceivedResponse(HttpMessage message)
+        {
+            base.OnReceivedResponse(message);
+
+            if (message.Response.Status == 403)
+            {
+                string sdkStringToSign = $"\nSDK generated string to sign:\n{BuildStringToSign(message)}";
+            }
+        }
+
         // If you change this method, make sure live tests are passing before merging PR.
         private string BuildStringToSign(HttpMessage message)
         {
