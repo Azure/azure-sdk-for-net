@@ -41,11 +41,6 @@ namespace Azure.Data.AppConfiguration.Samples
             }
 
             #endregion
-
-            // Delete the Configuration Settings from the Configuration Store.
-            #region Snippet:AzConfigSample12_DeleteConfigurationSettingAsync
-            await client.DeleteConfigurationSettingAsync(betaEndpoint.Key, betaEndpoint.Label);
-            #endregion
         }
     }
 }

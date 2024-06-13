@@ -17,10 +17,10 @@ var client = new ConfigurationClient(connectionString);
 First, create an instance of `ConfigurationSetting` with a key, value, label, and tags.
 
 ```C# Snippet:AzConfigSample12_CreateConfigurationSettingAsync
- var betaEndpoint = new ConfigurationSetting("endpoint", "https://beta.endpoint.com", "beta")
- {
-     Tags = { { "someKey", "someValue" } }
- };
+var betaEndpoint = new ConfigurationSetting("endpoint", "https://beta.endpoint.com", "beta")
+{
+    Tags = { { "someKey", "someValue" } }
+};
 ```
 
 Then add the Configuration Setting.
