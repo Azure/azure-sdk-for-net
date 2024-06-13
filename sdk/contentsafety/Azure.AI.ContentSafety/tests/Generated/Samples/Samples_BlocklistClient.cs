@@ -224,6 +224,30 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_TextBlocklist_CreateOrUpdateTextBlocklist_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+            TextBlocklist options = new TextBlocklist("<blocklistName>");
+            Response<TextBlocklist> response = client.CreateOrUpdateTextBlocklist("<Name>", options);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextBlocklist_CreateOrUpdateTextBlocklist_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+            TextBlocklist options = new TextBlocklist("<blocklistName>");
+            Response<TextBlocklist> response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", options);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_CreateOrUpdateTextBlocklist_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -260,6 +284,30 @@ Description = "<description>",
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blocklistName").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextBlocklist_CreateOrUpdateTextBlocklist_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+            TextBlocklist options = new TextBlocklist("<blocklistName>");
+            Response<TextBlocklist> response = client.CreateOrUpdateTextBlocklist("<Name>", options);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextBlocklist_CreateOrUpdateTextBlocklist_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+            TextBlocklist options = new TextBlocklist("<blocklistName>");
+            Response<TextBlocklist> response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", options);
         }
 
         [Test]

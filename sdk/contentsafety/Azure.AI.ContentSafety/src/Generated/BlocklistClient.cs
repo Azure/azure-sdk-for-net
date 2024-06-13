@@ -223,12 +223,55 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <summary> Create Or Update Text Blocklist. </summary>
+        /// <param name="name"> Text blocklist name. </param>
+        /// <param name="options"> The resource instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates a text blocklist. If the blocklistName does not exist, a new blocklist will be created. </remarks>
+        /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='CreateOrUpdateTextBlocklistAsync(string,TextBlocklist,CancellationToken)']/*" />
+        public virtual async Task<Response<TextBlocklist>> CreateOrUpdateTextBlocklistAsync(string name, TextBlocklist options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateOrUpdateTextBlocklistAsync(name, content, context).ConfigureAwait(false);
+            return Response.FromValue(TextBlocklist.FromResponse(response), response);
+        }
+
+        /// <summary> Create Or Update Text Blocklist. </summary>
+        /// <param name="name"> Text blocklist name. </param>
+        /// <param name="options"> The resource instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates a text blocklist. If the blocklistName does not exist, a new blocklist will be created. </remarks>
+        /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='CreateOrUpdateTextBlocklist(string,TextBlocklist,CancellationToken)']/*" />
+        public virtual Response<TextBlocklist> CreateOrUpdateTextBlocklist(string name, TextBlocklist options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateOrUpdateTextBlocklist(name, content, context);
+            return Response.FromValue(TextBlocklist.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Create Or Update Text Blocklist
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateTextBlocklistAsync(string,TextBlocklist,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -266,6 +309,11 @@ namespace Azure.AI.ContentSafety
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateTextBlocklist(string,TextBlocklist,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
