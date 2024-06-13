@@ -26,7 +26,7 @@ public abstract class PageCollection<TPage, TValue, TPageToken> : ClientResult, 
 
     public abstract TPage GetPage(TPageToken pageToken);
 
-    public IEnumerable<TValue> GetAllValues()
+    public IEnumerable<TValue> GetValues()
     {
         foreach (TPage page in this)
         {
@@ -37,9 +37,9 @@ public abstract class PageCollection<TPage, TValue, TPageToken> : ClientResult, 
         }
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TPage>)this).GetEnumerator();
 
-    public IEnumerator<TPage> GetEnumerator()
+    IEnumerator<TPage> IEnumerable<TPage>.GetEnumerator()
     {
         TPage page = GetPage(FirstPageToken);
         SetRawResponse(page.GetRawResponse());

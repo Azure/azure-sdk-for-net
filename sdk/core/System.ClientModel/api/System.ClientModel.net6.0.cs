@@ -71,9 +71,9 @@ namespace System.ClientModel.Primitives
     {
         protected AsyncPageCollection(TPageToken firstPageToken) { }
         public TPageToken FirstPageToken { get { throw null; } }
-        public System.Collections.Generic.IAsyncEnumerable<TValue> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Collections.Generic.IAsyncEnumerator<TPage> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.Task<TPage> GetPageAsync(TPageToken pageToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public System.Collections.Generic.IAsyncEnumerable<TValue> GetValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<TPage> System.Collections.Generic.IAsyncEnumerable<TPage>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
@@ -166,9 +166,9 @@ namespace System.ClientModel.Primitives
     {
         protected PageCollection(TPageToken firstPageToken) { }
         public TPageToken FirstPageToken { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<TValue> GetAllValues() { throw null; }
-        public System.Collections.Generic.IEnumerator<TPage> GetEnumerator() { throw null; }
         public abstract TPage GetPage(TPageToken pageToken);
+        public System.Collections.Generic.IEnumerable<TValue> GetValues() { throw null; }
+        System.Collections.Generic.IEnumerator<TPage> System.Collections.Generic.IEnumerable<TPage>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]

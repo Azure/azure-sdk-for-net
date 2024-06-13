@@ -24,7 +24,7 @@ public abstract class AsyncPageCollection<TPage, TValue, TPageToken> : ClientRes
     // TODO: take RequestOptions instead?
     public abstract Task<TPage> GetPageAsync(TPageToken pageToken, CancellationToken cancellationToken = default);
 
-    public async IAsyncEnumerable<TValue> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<TValue> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (TPage page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
         {
@@ -35,7 +35,7 @@ public abstract class AsyncPageCollection<TPage, TValue, TPageToken> : ClientRes
         }
     }
 
-    public async IAsyncEnumerator<TPage> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    async IAsyncEnumerator<TPage> IAsyncEnumerable<TPage>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
         TPage page = await GetPageAsync(FirstPageToken, cancellationToken).ConfigureAwait(false);
         SetRawResponse(page.GetRawResponse());
