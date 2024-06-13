@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class RejectOptions : IUtf8JsonSerializable, IJsonModel<RejectOptions>
+    internal partial class RejectRequest : IUtf8JsonSerializable, IJsonModel<RejectRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RejectOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RejectRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RejectOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RejectRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RejectOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RejectRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RejectOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RejectRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteEndObject();
         }
 
-        RejectOptions IJsonModel<RejectOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RejectRequest IJsonModel<RejectRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RejectOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RejectRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RejectOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RejectRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRejectOptions(document.RootElement, options);
+            return DeserializeRejectRequest(document.RootElement, options);
         }
 
-        internal static RejectOptions DeserializeRejectOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RejectRequest DeserializeRejectRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,46 +92,46 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RejectOptions(lockTokens, serializedAdditionalRawData);
+            return new RejectRequest(lockTokens, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RejectOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RejectRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RejectOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RejectRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RejectOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RejectRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RejectOptions IPersistableModel<RejectOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RejectRequest IPersistableModel<RejectRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RejectOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RejectRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRejectOptions(document.RootElement, options);
+                        return DeserializeRejectRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RejectOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RejectRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RejectOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RejectRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RejectOptions FromResponse(Response response)
+        internal static RejectRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRejectOptions(document.RootElement);
+            return DeserializeRejectRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
