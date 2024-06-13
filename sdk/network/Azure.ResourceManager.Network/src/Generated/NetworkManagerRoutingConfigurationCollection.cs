@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoutingConfigurationResource"/> and their operations.
-    /// Each <see cref="RoutingConfigurationResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
-    /// To get a <see cref="RoutingConfigurationCollection"/> instance call the GetRoutingConfigurations method from an instance of <see cref="NetworkManagerResource"/>.
+    /// A class representing a collection of <see cref="NetworkManagerRoutingConfigurationResource"/> and their operations.
+    /// Each <see cref="NetworkManagerRoutingConfigurationResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
+    /// To get a <see cref="NetworkManagerRoutingConfigurationCollection"/> instance call the GetNetworkManagerRoutingConfigurations method from an instance of <see cref="NetworkManagerResource"/>.
     /// </summary>
-    public partial class RoutingConfigurationCollection : ArmCollection, IEnumerable<RoutingConfigurationResource>, IAsyncEnumerable<RoutingConfigurationResource>
+    public partial class NetworkManagerRoutingConfigurationCollection : ArmCollection, IEnumerable<NetworkManagerRoutingConfigurationResource>, IAsyncEnumerable<NetworkManagerRoutingConfigurationResource>
     {
-        private readonly ClientDiagnostics _routingConfigurationClientDiagnostics;
-        private readonly RoutingConfigurationsRestOperations _routingConfigurationRestClient;
+        private readonly ClientDiagnostics _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics;
+        private readonly RoutingConfigurationsRestOperations _networkManagerRoutingConfigurationRoutingConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingConfigurationCollection"/> class for mocking. </summary>
-        protected RoutingConfigurationCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkManagerRoutingConfigurationCollection"/> class for mocking. </summary>
+        protected NetworkManagerRoutingConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkManagerRoutingConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RoutingConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkManagerRoutingConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RoutingConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RoutingConfigurationResource.ResourceType, out string routingConfigurationApiVersion);
-            _routingConfigurationRestClient = new RoutingConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routingConfigurationApiVersion);
+            _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerRoutingConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkManagerRoutingConfigurationResource.ResourceType, out string networkManagerRoutingConfigurationRoutingConfigurationsApiVersion);
+            _networkManagerRoutingConfigurationRoutingConfigurationsRestClient = new RoutingConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerRoutingConfigurationRoutingConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RoutingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, RoutingConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkManagerRoutingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, NetworkManagerRoutingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.CreateOrUpdate");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _routingConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _routingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var response = await _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<RoutingConfigurationResource>(Response.FromValue(new RoutingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkManagerRoutingConfigurationResource>(Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RoutingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, RoutingConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkManagerRoutingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, NetworkManagerRoutingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.CreateOrUpdate");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routingConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var uri = _routingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var response = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
+                var uri = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<RoutingConfigurationResource>(Response.FromValue(new RoutingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkManagerRoutingConfigurationResource>(Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        public virtual async Task<Response<RoutingConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.Get");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _routingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        public virtual Response<RoutingConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkManagerRoutingConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.Get");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _routingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
+                var response = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,19 +260,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoutingConfigurationResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkManagerRoutingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkManagerRoutingConfigurationResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _routingConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoutingConfigurationResource(Client, RoutingConfigurationData.DeserializeRoutingConfigurationData(e)), _routingConfigurationClientDiagnostics, Pipeline, "RoutingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerRoutingConfigurationResource(Client, NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(e)), _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics, Pipeline, "NetworkManagerRoutingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -292,19 +292,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoutingConfigurationResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkManagerRoutingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkManagerRoutingConfigurationResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _routingConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoutingConfigurationResource(Client, RoutingConfigurationData.DeserializeRoutingConfigurationData(e)), _routingConfigurationClientDiagnostics, Pipeline, "RoutingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerRoutingConfigurationResource(Client, NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(e)), _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics, Pipeline, "NetworkManagerRoutingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.Exists");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _routingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.Exists");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _routingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                var response = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,18 +418,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        public virtual async Task<NullableResponse<RoutingConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkManagerRoutingConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.GetIfExists");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _routingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<RoutingConfigurationResource>(response.GetRawResponse());
-                return Response.FromValue(new RoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkManagerRoutingConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,18 +463,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        public virtual NullableResponse<RoutingConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkManagerRoutingConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _routingConfigurationClientDiagnostics.CreateScope("RoutingConfigurationCollection.GetIfExists");
+            using var scope = _networkManagerRoutingConfigurationRoutingConfigurationsClientDiagnostics.CreateScope("NetworkManagerRoutingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _routingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                var response = _networkManagerRoutingConfigurationRoutingConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<RoutingConfigurationResource>(response.GetRawResponse());
-                return Response.FromValue(new RoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkManagerRoutingConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkManagerRoutingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<RoutingConfigurationResource> IEnumerable<RoutingConfigurationResource>.GetEnumerator()
+        IEnumerator<NetworkManagerRoutingConfigurationResource> IEnumerable<NetworkManagerRoutingConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RoutingConfigurationResource> IAsyncEnumerable<RoutingConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkManagerRoutingConfigurationResource> IAsyncEnumerable<NetworkManagerRoutingConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

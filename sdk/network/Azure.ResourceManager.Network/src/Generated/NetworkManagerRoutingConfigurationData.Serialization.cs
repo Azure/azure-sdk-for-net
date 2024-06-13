@@ -15,16 +15,16 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RoutingConfigurationData : IUtf8JsonSerializable, IJsonModel<RoutingConfigurationData>
+    public partial class NetworkManagerRoutingConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkManagerRoutingConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerRoutingConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RoutingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkManagerRoutingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerRoutingConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        RoutingConfigurationData IJsonModel<RoutingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkManagerRoutingConfigurationData IJsonModel<NetworkManagerRoutingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerRoutingConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoutingConfigurationData(document.RootElement, options);
+            return DeserializeNetworkManagerRoutingConfigurationData(document.RootElement, options);
         }
 
-        internal static RoutingConfigurationData DeserializeRoutingConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkManagerRoutingConfigurationData DeserializeNetworkManagerRoutingConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RoutingConfigurationData(
+            return new NetworkManagerRoutingConfigurationData(
                 id,
                 name,
                 type,
@@ -207,35 +207,35 @@ namespace Azure.ResourceManager.Network
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RoutingConfigurationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkManagerRoutingConfigurationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerRoutingConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RoutingConfigurationData IPersistableModel<RoutingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkManagerRoutingConfigurationData IPersistableModel<NetworkManagerRoutingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRoutingConfigurationData(document.RootElement, options);
+                        return DeserializeNetworkManagerRoutingConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerRoutingConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RoutingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkManagerRoutingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

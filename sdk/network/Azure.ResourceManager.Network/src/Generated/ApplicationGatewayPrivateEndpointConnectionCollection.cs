@@ -14,20 +14,18 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ApplicationGatewayResource"/>.
+    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ApplicationGatewayResource"/>.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>, IAsyncEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _applicationGatewayPrivateEndpointConnectionClientDiagnostics;
         private readonly ApplicationGatewayPrivateEndpointConnectionsRestOperations _applicationGatewayPrivateEndpointConnectionRestClient;
-        private readonly string _applicationGatewayName;
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected ApplicationGatewayPrivateEndpointConnectionCollection()
@@ -37,12 +35,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal ApplicationGatewayPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id, string applicationGatewayName) : base(client, id)
+        internal ApplicationGatewayPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationGatewayName = applicationGatewayName;
             _applicationGatewayPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApplicationGatewayPrivateEndpointConnectionResource.ResourceType, out string applicationGatewayPrivateEndpointConnectionApiVersion);
             _applicationGatewayPrivateEndpointConnectionRestClient = new ApplicationGatewayPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayPrivateEndpointConnectionApiVersion);
@@ -53,8 +47,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApplicationGatewayResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationGatewayResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -93,8 +87,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationGatewayPrivateEndpointConnectionResource>(new ApplicationGatewayPrivateEndpointConnectionOperationSource(Client), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, _applicationGatewayPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ApplicationGatewayPrivateEndpointConnectionResource>(new ApplicationGatewayPrivateEndpointConnectionOperationSource(Client), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, _applicationGatewayPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,8 +136,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationGatewayPrivateEndpointConnectionResource>(new ApplicationGatewayPrivateEndpointConnectionOperationSource(Client), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, _applicationGatewayPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
+                var operation = new NetworkArmOperation<ApplicationGatewayPrivateEndpointConnectionResource>(new ApplicationGatewayPrivateEndpointConnectionOperationSource(Client), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, _applicationGatewayPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,7 +182,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -233,7 +227,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken);
+                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -270,8 +264,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayPrivateEndpointConnectionResource(Client, ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(e)), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApplicationGatewayPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -300,8 +294,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayPrivateEndpointConnectionResource(Client, ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(e)), _applicationGatewayPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApplicationGatewayPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -338,7 +332,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -381,7 +375,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken: cancellationToken);
+                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -424,7 +418,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ApplicationGatewayPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -469,7 +463,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _applicationGatewayName, connectionName, cancellationToken: cancellationToken);
+                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ApplicationGatewayPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());

@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoutingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="RoutingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkManagerRoutingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoutingConfigurationResource"/> object. </returns>
-        public virtual RoutingConfigurationResource GetRoutingConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkManagerRoutingConfigurationResource"/> object. </returns>
+        public virtual NetworkManagerRoutingConfigurationResource GetNetworkManagerRoutingConfigurationResource(ResourceIdentifier id)
         {
-            RoutingConfigurationResource.ValidateResourceId(id);
-            return new RoutingConfigurationResource(Client, id);
+            NetworkManagerRoutingConfigurationResource.ValidateResourceId(id);
+            return new NetworkManagerRoutingConfigurationResource(Client, id);
         }
 
         /// <summary>
@@ -104,6 +104,18 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             RoutingRuleResource.ValidateResourceId(id);
             return new RoutingRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationGatewayResource"/> object. </returns>
+        public virtual ApplicationGatewayResource GetApplicationGatewayResource(ResourceIdentifier id)
+        {
+            ApplicationGatewayResource.ValidateResourceId(id);
+            return new ApplicationGatewayResource(Client, id);
         }
 
         /// <summary>

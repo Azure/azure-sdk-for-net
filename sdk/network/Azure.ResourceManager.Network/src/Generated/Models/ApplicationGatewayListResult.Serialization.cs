@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class RoutingConfigurationListResult : IUtf8JsonSerializable, IJsonModel<RoutingConfigurationListResult>
+    internal partial class ApplicationGatewayListResult : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfigurationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RoutingConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationGatewayListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        RoutingConfigurationListResult IJsonModel<RoutingConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApplicationGatewayListResult IJsonModel<ApplicationGatewayListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoutingConfigurationListResult(document.RootElement, options);
+            return DeserializeApplicationGatewayListResult(document.RootElement, options);
         }
 
-        internal static RoutingConfigurationListResult DeserializeRoutingConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApplicationGatewayListResult DeserializeApplicationGatewayListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkManagerRoutingConfigurationData> value = default;
+            IReadOnlyList<ApplicationGatewayData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkManagerRoutingConfigurationData> array = new List<NetworkManagerRoutingConfigurationData>();
+                    List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(item, options));
+                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,38 +110,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RoutingConfigurationListResult(value ?? new ChangeTrackingList<NetworkManagerRoutingConfigurationData>(), nextLink, serializedAdditionalRawData);
+            return new ApplicationGatewayListResult(value ?? new ChangeTrackingList<ApplicationGatewayData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RoutingConfigurationListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApplicationGatewayListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RoutingConfigurationListResult IPersistableModel<RoutingConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApplicationGatewayListResult IPersistableModel<ApplicationGatewayListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRoutingConfigurationListResult(document.RootElement, options);
+                        return DeserializeApplicationGatewayListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RoutingConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationGatewayListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

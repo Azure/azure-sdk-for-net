@@ -14,10 +14,10 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing the RoutingConfiguration data model.
+    /// A class representing the NetworkManagerRoutingConfiguration data model.
     /// Defines the routing configuration
     /// </summary>
-    public partial class RoutingConfigurationData : ResourceData
+    public partial class NetworkManagerRoutingConfigurationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationData"/>. </summary>
-        public RoutingConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingConfigurationData"/>. </summary>
+        public NetworkManagerRoutingConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkManagerRoutingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;

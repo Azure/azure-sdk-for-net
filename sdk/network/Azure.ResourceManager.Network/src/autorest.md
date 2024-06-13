@@ -34,7 +34,7 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -325,15 +325,15 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
-  - remove-operation: 'ApplicationGateways_Delete'
-  - remove-operation: 'ApplicationGateways_Get'
-  - remove-operation: 'ApplicationGateways_CreateOrUpdate'
-  - remove-operation: 'ApplicationGateways_UpdateTags'
-  - remove-operation: 'ApplicationGateways_List'
-  - remove-operation: 'ApplicationGateways_ListAll'
-  - remove-operation: 'ApplicationGateways_Start'
-  - remove-operation: 'ApplicationGateways_Stop'
-  - remove-operation: 'ApplicationGateways_BackendHealth'
+  #- remove-operation: 'ApplicationGateways_Delete'
+  #- remove-operation: 'ApplicationGateways_Get'
+  #- remove-operation: 'ApplicationGateways_CreateOrUpdate'
+  #- remove-operation: 'ApplicationGateways_UpdateTags'
+  #- remove-operation: 'ApplicationGateways_List'
+  #- remove-operation: 'ApplicationGateways_ListAll'
+  #- remove-operation: 'ApplicationGateways_Start'
+  #- remove-operation: 'ApplicationGateways_Stop'
+  #- remove-operation: 'ApplicationGateways_BackendHealth'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:
@@ -402,6 +402,7 @@ directive:
         { value: 'VirtualNetworkGateway', name: 'VirtualNetworkGateway' },
         { value: 'VnetLocal',             name: 'VnetLocal' }
       ];
+      $.RoutingConfiguration['x-ms-client-name'] = 'NetworkManagerRoutingConfiguration';
   - from: networkManagerGroup.json
     where: $.definitions
     transform: >

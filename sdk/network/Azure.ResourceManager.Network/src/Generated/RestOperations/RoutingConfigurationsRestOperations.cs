@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoutingConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkManagerRoutingConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        RoutingConfigurationData value = default;
+                        NetworkManagerRoutingConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoutingConfigurationData.DeserializeRoutingConfigurationData(document.RootElement);
+                        value = NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoutingConfigurationData)null, message.Response);
+                    return Response.FromValue((NetworkManagerRoutingConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoutingConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default)
+        public Response<NetworkManagerRoutingConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -242,19 +242,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        RoutingConfigurationData value = default;
+                        NetworkManagerRoutingConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoutingConfigurationData.DeserializeRoutingConfigurationData(document.RootElement);
+                        value = NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoutingConfigurationData)null, message.Response);
+                    return Response.FromValue((NetworkManagerRoutingConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, RoutingConfigurationData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, NetworkManagerRoutingConfigurationData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, RoutingConfigurationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, NetworkManagerRoutingConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoutingConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, RoutingConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkManagerRoutingConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, NetworkManagerRoutingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        RoutingConfigurationData value = default;
+                        NetworkManagerRoutingConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoutingConfigurationData.DeserializeRoutingConfigurationData(document.RootElement);
+                        value = NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoutingConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, RoutingConfigurationData data, CancellationToken cancellationToken = default)
+        public Response<NetworkManagerRoutingConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, NetworkManagerRoutingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -354,9 +354,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        RoutingConfigurationData value = default;
+                        NetworkManagerRoutingConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoutingConfigurationData.DeserializeRoutingConfigurationData(document.RootElement);
+                        value = NetworkManagerRoutingConfigurationData.DeserializeNetworkManagerRoutingConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of network manager routing configurations. </summary>
-    internal partial class RoutingConfigurationListResult
+    /// <summary> Response for ListApplicationGateways API service call. </summary>
+    internal partial class ApplicationGatewayListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
-        internal RoutingConfigurationListResult()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
+        internal ApplicationGatewayListResult()
         {
-            Value = new ChangeTrackingList<NetworkManagerRoutingConfigurationData>();
+            Value = new ChangeTrackingList<ApplicationGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
-        /// <param name="value"> Gets a page of routing configurations. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
+        /// <param name="value"> List of an application gateways in a resource group. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingConfigurationListResult(IReadOnlyList<NetworkManagerRoutingConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayListResult(IReadOnlyList<ApplicationGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of routing configurations. </summary>
-        public IReadOnlyList<NetworkManagerRoutingConfigurationData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
+        /// <summary> List of an application gateways in a resource group. </summary>
+        public IReadOnlyList<ApplicationGatewayData> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.RoutingConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerRoutingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.RoutingConfigurationData"/> instance for mocking. </returns>
-        public static RoutingConfigurationData RoutingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
+        /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
+        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
-            return new RoutingConfigurationData(
+            return new NetworkManagerRoutingConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -173,13 +173,308 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthOnDemand"/>. </summary>
-        /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
-        /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealthOnDemand"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendHealthOnDemand ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool = null, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = null)
+        /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="availabilityZones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="identity"> The identity of the application gateway, if configured. </param>
+        /// <param name="sku"> SKU of the application gateway resource. </param>
+        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
+        /// <param name="operationalState"> Operational state of the application gateway resource. </param>
+        /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="authenticationCertificates"> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedRootCertificates"> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedClientCertificates"> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslCertificates"> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendIPConfigurations"> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendPorts"> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="probes"> Probes of the application gateway resource. </param>
+        /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
+        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
+        /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
+        /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
+        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
+        /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
+        /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
+        /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
+        /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
+        /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
+        /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
+        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
+        /// <param name="globalConfiguration"> Global Configuration. </param>
+        /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
+        /// <returns> A new <see cref="Network.ApplicationGatewayData"/> instance for mocking. </returns>
+        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, IEnumerable<string> availabilityZones = null, ManagedServiceIdentity identity = null, ApplicationGatewaySku sku = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayOperationalState? operationalState = null, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = null, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = null, IEnumerable<ApplicationGatewayProbe> probes = null, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = null, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = null, IEnumerable<ApplicationGatewayHttpListener> httpListeners = null, IEnumerable<ApplicationGatewayListener> listeners = null, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = null, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = null, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, IEnumerable<ApplicationGatewayRoutingRule> routingRules = null, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = null, bool? enableFips = null, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = null, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, ApplicationGatewayGlobalConfiguration globalConfiguration = null, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = null)
         {
-            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings, serializedAdditionalRawData: null);
+            tags ??= new Dictionary<string, string>();
+            availabilityZones ??= new List<string>();
+            gatewayIPConfigurations ??= new List<ApplicationGatewayIPConfiguration>();
+            authenticationCertificates ??= new List<ApplicationGatewayAuthenticationCertificate>();
+            trustedRootCertificates ??= new List<ApplicationGatewayTrustedRootCertificate>();
+            trustedClientCertificates ??= new List<ApplicationGatewayTrustedClientCertificate>();
+            sslCertificates ??= new List<ApplicationGatewaySslCertificate>();
+            frontendIPConfigurations ??= new List<ApplicationGatewayFrontendIPConfiguration>();
+            frontendPorts ??= new List<ApplicationGatewayFrontendPort>();
+            probes ??= new List<ApplicationGatewayProbe>();
+            backendAddressPools ??= new List<ApplicationGatewayBackendAddressPool>();
+            backendHttpSettingsCollection ??= new List<ApplicationGatewayBackendHttpSettings>();
+            backendSettingsCollection ??= new List<ApplicationGatewayBackendSettings>();
+            httpListeners ??= new List<ApplicationGatewayHttpListener>();
+            listeners ??= new List<ApplicationGatewayListener>();
+            sslProfiles ??= new List<ApplicationGatewaySslProfile>();
+            urlPathMaps ??= new List<ApplicationGatewayUrlPathMap>();
+            requestRoutingRules ??= new List<ApplicationGatewayRequestRoutingRule>();
+            routingRules ??= new List<ApplicationGatewayRoutingRule>();
+            rewriteRuleSets ??= new List<ApplicationGatewayRewriteRuleSet>();
+            redirectConfigurations ??= new List<ApplicationGatewayRedirectConfiguration>();
+            privateLinkConfigurations ??= new List<ApplicationGatewayPrivateLinkConfiguration>();
+            privateEndpointConnections ??= new List<ApplicationGatewayPrivateEndpointConnectionData>();
+            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
+            loadDistributionPolicies ??= new List<ApplicationGatewayLoadDistributionPolicy>();
+
+            return new ApplicationGatewayData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null,
+                etag,
+                availabilityZones?.ToList(),
+                identity,
+                sku,
+                sslPolicy,
+                operationalState,
+                gatewayIPConfigurations?.ToList(),
+                authenticationCertificates?.ToList(),
+                trustedRootCertificates?.ToList(),
+                trustedClientCertificates?.ToList(),
+                sslCertificates?.ToList(),
+                frontendIPConfigurations?.ToList(),
+                frontendPorts?.ToList(),
+                probes?.ToList(),
+                backendAddressPools?.ToList(),
+                backendHttpSettingsCollection?.ToList(),
+                backendSettingsCollection?.ToList(),
+                httpListeners?.ToList(),
+                listeners?.ToList(),
+                sslProfiles?.ToList(),
+                urlPathMaps?.ToList(),
+                requestRoutingRules?.ToList(),
+                routingRules?.ToList(),
+                rewriteRuleSets?.ToList(),
+                redirectConfigurations?.ToList(),
+                webApplicationFirewallConfiguration,
+                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null,
+                enableHttp2,
+                enableFips,
+                autoscaleConfiguration,
+                privateLinkConfigurations?.ToList(),
+                privateEndpointConnections?.ToList(),
+                resourceGuid,
+                provisioningState,
+                customErrorConfigurations?.ToList(),
+                forceFirewallPolicyAssociation,
+                loadDistributionPolicies?.ToList(),
+                globalConfiguration,
+                defaultPredefinedSslPolicy);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayIPConfiguration"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="subnetId"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayIPConfiguration"/> instance for mocking. </returns>
+        public static ApplicationGatewayIPConfiguration ApplicationGatewayIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier subnetId = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayIPConfiguration(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkResourceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <returns> A new <see cref="Models.NetworkResourceData"/> instance for mocking. </returns>
+        public static NetworkResourceData NetworkResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
+        {
+            return new NetworkResourceData(id, name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayAuthenticationCertificate"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="data"> Certificate public data. </param>
+        /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAuthenticationCertificate"/> instance for mocking. </returns>
+        public static ApplicationGatewayAuthenticationCertificate ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayAuthenticationCertificate(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                data,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayTrustedRootCertificate"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="data"> Certificate public data. </param>
+        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
+        /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedRootCertificate"/> instance for mocking. </returns>
+        public static ApplicationGatewayTrustedRootCertificate ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, string keyVaultSecretId = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayTrustedRootCertificate(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                data,
+                keyVaultSecretId,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayTrustedClientCertificate"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="data"> Certificate public data. </param>
+        /// <param name="validatedCertData"> Validated certificate data. </param>
+        /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
+        /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedClientCertificate"/> instance for mocking. </returns>
+        public static ApplicationGatewayTrustedClientCertificate ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, BinaryData validatedCertData = null, string clientCertIssuerDN = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayTrustedClientCertificate(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                data,
+                validatedCertData,
+                clientCertIssuerDN,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewaySslCertificate"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
+        /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
+        /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
+        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
+        /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewaySslCertificate"/> instance for mocking. </returns>
+        public static ApplicationGatewaySslCertificate ApplicationGatewaySslCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, string password = null, BinaryData publicCertData = null, string keyVaultSecretId = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewaySslCertificate(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                data,
+                password,
+                publicCertData,
+                keyVaultSecretId,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayFrontendPort"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="port"> Frontend port. </param>
+        /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayFrontendPort"/> instance for mocking. </returns>
+        public static ApplicationGatewayFrontendPort ApplicationGatewayFrontendPort(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayFrontendPort(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                port,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayProbe"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="protocol"> The protocol used for the probe. </param>
+        /// <param name="host"> Host name to send the probe to. </param>
+        /// <param name="path"> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
+        /// <param name="intervalInSeconds"> The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="timeoutInSeconds"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="unhealthyThreshold"> The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second to 20. </param>
+        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
+        /// <param name="pickHostNameFromBackendSettings"> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </param>
+        /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
+        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
+        /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
+        /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayProbe"/> instance for mocking. </returns>
+        public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayProtocol? protocol = null, string host = null, string path = null, int? intervalInSeconds = null, int? timeoutInSeconds = null, int? unhealthyThreshold = null, bool? pickHostNameFromBackendHttpSettings = null, bool? pickHostNameFromBackendSettings = null, int? minServers = null, ApplicationGatewayProbeHealthResponseMatch match = null, NetworkProvisioningState? provisioningState = null, int? port = null)
+        {
+            return new ApplicationGatewayProbe(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                protocol,
+                host,
+                path,
+                intervalInSeconds,
+                timeoutInSeconds,
+                unhealthyThreshold,
+                pickHostNameFromBackendHttpSettings,
+                pickHostNameFromBackendSettings,
+                minServers,
+                match,
+                provisioningState,
+                port);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendAddressPool"/>. </summary>
@@ -312,16 +607,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 virtualNetworkTap,
                 provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.NetworkResourceData"/> instance for mocking. </returns>
-        public static NetworkResourceData NetworkResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
-        {
-            return new NetworkResourceData(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.FrontendIPConfigurationData"/>. </summary>
@@ -1278,26 +1563,6 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="subnetId"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayIPConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayIPConfiguration ApplicationGatewayIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier subnetId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayIPConfiguration(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
-                provisioningState);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.BackendAddressPoolData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1433,17 +1698,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId, requiredMemberName, fqdns?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
-        /// <param name="backendHttpSettings"> Reference to an ApplicationGatewayBackendHttpSettings resource. </param>
-        /// <param name="servers"> List of ApplicationGatewayBackendHealthServer resources. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealthHttpSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendHealthHttpSettings ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings = null, IEnumerable<ApplicationGatewayBackendHealthServer> servers = null)
-        {
-            servers ??= new List<ApplicationGatewayBackendHealthServer>();
-
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHttpSettings"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1491,6 +1745,475 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendSettings"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="port"> The destination port on the backend. </param>
+        /// <param name="protocol"> The protocol used to communicate with the backend. </param>
+        /// <param name="timeoutInSeconds"> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="probeId"> Probe resource of an application gateway. </param>
+        /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
+        /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
+        /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
+        /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendSettings"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, int? timeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, NetworkProvisioningState? provisioningState = null)
+        {
+            trustedRootCertificates ??= new List<WritableSubResource>();
+
+            return new ApplicationGatewayBackendSettings(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                port,
+                protocol,
+                timeoutInSeconds,
+                probeId != null ? ResourceManagerModelFactory.WritableSubResource(probeId) : null,
+                trustedRootCertificates?.ToList(),
+                hostName,
+                pickHostNameFromBackendAddress,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayHttpListener"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
+        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
+        /// <param name="protocol"> Protocol of the HTTP listener. </param>
+        /// <param name="hostName"> Host name of HTTP listener. </param>
+        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
+        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
+        /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
+        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
+        /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
+        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
+        /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayHttpListener"/> instance for mocking. </returns>
+        public static ApplicationGatewayHttpListener ApplicationGatewayHttpListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, string hostName = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, bool? requireServerNameIndication = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, ResourceIdentifier firewallPolicyId = null, IEnumerable<string> hostNames = null)
+        {
+            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
+            hostNames ??= new List<string>();
+
+            return new ApplicationGatewayHttpListener(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null,
+                frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null,
+                protocol,
+                hostName,
+                sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null,
+                sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null,
+                requireServerNameIndication,
+                provisioningState,
+                customErrorConfigurations?.ToList(),
+                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null,
+                hostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayListener"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
+        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
+        /// <param name="protocol"> Protocol of the listener. </param>
+        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
+        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the listener resource. </param>
+        /// <param name="hostNames"> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayListener"/> instance for mocking. </returns>
+        public static ApplicationGatewayListener ApplicationGatewayListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, NetworkProvisioningState? provisioningState = null, IEnumerable<string> hostNames = null)
+        {
+            hostNames ??= new List<string>();
+
+            return new ApplicationGatewayListener(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null,
+                frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null,
+                protocol,
+                sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null,
+                sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null,
+                provisioningState,
+                hostNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewaySslProfile"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="trustedClientCertificates"> Array of references to application gateway trusted client certificates. </param>
+        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
+        /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewaySslProfile"/> instance for mocking. </returns>
+        public static ApplicationGatewaySslProfile ApplicationGatewaySslProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<WritableSubResource> trustedClientCertificates = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        {
+            trustedClientCertificates ??= new List<WritableSubResource>();
+
+            return new ApplicationGatewaySslProfile(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                trustedClientCertificates?.ToList(),
+                sslPolicy,
+                clientAuthConfiguration,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayUrlPathMap"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="defaultBackendAddressPoolId"> Default backend address pool resource of URL path map. </param>
+        /// <param name="defaultBackendHttpSettingsId"> Default backend http settings resource of URL path map. </param>
+        /// <param name="defaultRewriteRuleSetId"> Default Rewrite rule set resource of URL path map. </param>
+        /// <param name="defaultRedirectConfigurationId"> Default redirect configuration resource of URL path map. </param>
+        /// <param name="defaultLoadDistributionPolicyId"> Default Load Distribution Policy resource of URL path map. </param>
+        /// <param name="pathRules"> Path rule of URL path map resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayUrlPathMap"/> instance for mocking. </returns>
+        public static ApplicationGatewayUrlPathMap ApplicationGatewayUrlPathMap(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier defaultBackendAddressPoolId = null, ResourceIdentifier defaultBackendHttpSettingsId = null, ResourceIdentifier defaultRewriteRuleSetId = null, ResourceIdentifier defaultRedirectConfigurationId = null, ResourceIdentifier defaultLoadDistributionPolicyId = null, IEnumerable<ApplicationGatewayPathRule> pathRules = null, NetworkProvisioningState? provisioningState = null)
+        {
+            pathRules ??= new List<ApplicationGatewayPathRule>();
+
+            return new ApplicationGatewayUrlPathMap(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                defaultBackendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendAddressPoolId) : null,
+                defaultBackendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendHttpSettingsId) : null,
+                defaultRewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRewriteRuleSetId) : null,
+                defaultRedirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRedirectConfigurationId) : null,
+                defaultLoadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(defaultLoadDistributionPolicyId) : null,
+                pathRules?.ToList(),
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPathRule"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="paths"> Path rules of URL path map. </param>
+        /// <param name="backendAddressPoolId"> Backend address pool resource of URL path map path rule. </param>
+        /// <param name="backendHttpSettingsId"> Backend http settings resource of URL path map path rule. </param>
+        /// <param name="redirectConfigurationId"> Redirect configuration resource of URL path map path rule. </param>
+        /// <param name="rewriteRuleSetId"> Rewrite rule set resource of URL path map path rule. </param>
+        /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of URL path map path rule. </param>
+        /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
+        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayPathRule"/> instance for mocking. </returns>
+        public static ApplicationGatewayPathRule ApplicationGatewayPathRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> paths = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier loadDistributionPolicyId = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier firewallPolicyId = null)
+        {
+            paths ??= new List<string>();
+
+            return new ApplicationGatewayPathRule(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                paths?.ToList(),
+                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
+                backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null,
+                redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null,
+                rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null,
+                loadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(loadDistributionPolicyId) : null,
+                provisioningState,
+                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRequestRoutingRule"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="ruleType"> Rule type. </param>
+        /// <param name="priority"> Priority of the request routing rule. </param>
+        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
+        /// <param name="backendHttpSettingsId"> Backend http settings resource of the application gateway. </param>
+        /// <param name="httpListenerId"> Http listener resource of the application gateway. </param>
+        /// <param name="urlPathMapId"> URL path map resource of the application gateway. </param>
+        /// <param name="rewriteRuleSetId"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
+        /// <param name="redirectConfigurationId"> Redirect configuration resource of the application gateway. </param>
+        /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier httpListenerId = null, ResourceIdentifier urlPathMapId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier loadDistributionPolicyId = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayRequestRoutingRule(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                ruleType,
+                priority,
+                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
+                backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null,
+                httpListenerId != null ? ResourceManagerModelFactory.WritableSubResource(httpListenerId) : null,
+                urlPathMapId != null ? ResourceManagerModelFactory.WritableSubResource(urlPathMapId) : null,
+                rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null,
+                redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null,
+                loadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(loadDistributionPolicyId) : null,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRoutingRule"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="ruleType"> Rule type. </param>
+        /// <param name="priority"> Priority of the routing rule. </param>
+        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
+        /// <param name="backendSettingsId"> Backend settings resource of the application gateway. </param>
+        /// <param name="listenerId"> Listener resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRoutingRule"/> instance for mocking. </returns>
+        public static ApplicationGatewayRoutingRule ApplicationGatewayRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendSettingsId = null, ResourceIdentifier listenerId = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayRoutingRule(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                ruleType,
+                priority,
+                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
+                backendSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendSettingsId) : null,
+                listenerId != null ? ResourceManagerModelFactory.WritableSubResource(listenerId) : null,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRewriteRuleSet"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
+        /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRewriteRuleSet"/> instance for mocking. </returns>
+        public static ApplicationGatewayRewriteRuleSet ApplicationGatewayRewriteRuleSet(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayRewriteRule> rewriteRules = null, NetworkProvisioningState? provisioningState = null)
+        {
+            rewriteRules ??= new List<ApplicationGatewayRewriteRule>();
+
+            return new ApplicationGatewayRewriteRuleSet(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                rewriteRules?.ToList(),
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRedirectConfiguration"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="redirectType"> HTTP redirection type. </param>
+        /// <param name="targetListenerId"> Reference to a listener to redirect the request to. </param>
+        /// <param name="targetUri"> Url to redirect the request to. </param>
+        /// <param name="includePath"> Include path in the redirected url. </param>
+        /// <param name="includeQueryString"> Include query string in the redirected url. </param>
+        /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
+        /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
+        /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRedirectConfiguration"/> instance for mocking. </returns>
+        public static ApplicationGatewayRedirectConfiguration ApplicationGatewayRedirectConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRedirectType? redirectType = null, ResourceIdentifier targetListenerId = null, Uri targetUri = null, bool? includePath = null, bool? includeQueryString = null, IEnumerable<WritableSubResource> requestRoutingRules = null, IEnumerable<WritableSubResource> urlPathMaps = null, IEnumerable<WritableSubResource> pathRules = null)
+        {
+            requestRoutingRules ??= new List<WritableSubResource>();
+            urlPathMaps ??= new List<WritableSubResource>();
+            pathRules ??= new List<WritableSubResource>();
+
+            return new ApplicationGatewayRedirectConfiguration(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                redirectType,
+                targetListenerId != null ? ResourceManagerModelFactory.WritableSubResource(targetListenerId) : null,
+                targetUri,
+                includePath,
+                includeQueryString,
+                requestRoutingRules?.ToList(),
+                urlPathMaps?.ToList(),
+                pathRules?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkConfiguration"/> instance for mocking. </returns>
+        public static ApplicationGatewayPrivateLinkConfiguration ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations = null, NetworkProvisioningState? provisioningState = null)
+        {
+            ipConfigurations ??= new List<ApplicationGatewayPrivateLinkIPConfiguration>();
+
+            return new ApplicationGatewayPrivateLinkConfiguration(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                ipConfigurations?.ToList(),
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
+        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
+        /// <param name="subnetId"> Reference to the subnet resource. </param>
+        /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkIPConfiguration"/> instance for mocking. </returns>
+        public static ApplicationGatewayPrivateLinkIPConfiguration ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, bool? isPrimary = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ApplicationGatewayPrivateLinkIPConfiguration(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                isPrimary,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
+        /// <param name="linkIdentifier"> The consumer link id. </param>
+        /// <returns> A new <see cref="Network.ApplicationGatewayPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ApplicationGatewayPrivateEndpointConnectionData ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, PrivateEndpointData privateEndpoint = null, NetworkPrivateLinkServiceConnectionState connectionState = null, NetworkProvisioningState? provisioningState = null, string linkIdentifier = null)
+        {
+            return new ApplicationGatewayPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                privateEndpoint,
+                connectionState,
+                provisioningState,
+                linkIdentifier);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayLoadDistributionPolicy"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="loadDistributionTargets"> Load Distribution Targets resource of an application gateway. </param>
+        /// <param name="loadDistributionAlgorithm"> Load Distribution Targets resource of an application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the Load Distribution Policy resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayLoadDistributionPolicy"/> instance for mocking. </returns>
+        public static ApplicationGatewayLoadDistributionPolicy ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = null, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm = null, NetworkProvisioningState? provisioningState = null)
+        {
+            loadDistributionTargets ??= new List<ApplicationGatewayLoadDistributionTarget>();
+
+            return new ApplicationGatewayLoadDistributionPolicy(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                loadDistributionTargets?.ToList(),
+                loadDistributionAlgorithm,
+                provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayLoadDistributionTarget"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="weightPerServer"> Weight per server. Range between 1 and 100. </param>
+        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayLoadDistributionTarget"/> instance for mocking. </returns>
+        public static ApplicationGatewayLoadDistributionTarget ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? weightPerServer = null, ResourceIdentifier backendAddressPoolId = null)
+        {
+            return new ApplicationGatewayLoadDistributionTarget(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                weightPerServer,
+                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealth"/>. </summary>
+        /// <param name="backendAddressPools"> A list of ApplicationGatewayBackendHealthPool resources. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealth"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendHealth ApplicationGatewayBackendHealth(IEnumerable<ApplicationGatewayBackendHealthPool> backendAddressPools = null)
+        {
+            backendAddressPools ??= new List<ApplicationGatewayBackendHealthPool>();
+
+            return new ApplicationGatewayBackendHealth(backendAddressPools?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthPool"/>. </summary>
+        /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
+        /// <param name="backendHttpSettingsCollection"> List of ApplicationGatewayBackendHealthHttpSettings resources. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealthPool"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendHealthPool ApplicationGatewayBackendHealthPool(ApplicationGatewayBackendAddressPool backendAddressPool = null, IEnumerable<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection = null)
+        {
+            backendHttpSettingsCollection ??= new List<ApplicationGatewayBackendHealthHttpSettings>();
+
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool, backendHttpSettingsCollection?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
+        /// <param name="backendHttpSettings"> Reference to an ApplicationGatewayBackendHttpSettings resource. </param>
+        /// <param name="servers"> List of ApplicationGatewayBackendHealthServer resources. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealthHttpSettings"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendHealthHttpSettings ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings = null, IEnumerable<ApplicationGatewayBackendHealthServer> servers = null)
+        {
+            servers ??= new List<ApplicationGatewayBackendHealthServer>();
+
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthServer"/>. </summary>
         /// <param name="address"> IP address or FQDN of backend server. </param>
         /// <param name="ipConfiguration"> Reference to IP configuration of backend server. </param>
@@ -1500,6 +2223,15 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayBackendHealthServer ApplicationGatewayBackendHealthServer(string address = null, NetworkInterfaceIPConfigurationData ipConfiguration = null, ApplicationGatewayBackendHealthServerHealth? health = null, string healthProbeLog = null)
         {
             return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealthOnDemand"/>. </summary>
+        /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
+        /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendHealthOnDemand"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendHealthOnDemand ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool = null, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = null)
+        {
+            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPrivateLinkResource"/>. </summary>
@@ -1525,30 +2257,6 @@ namespace Azure.ResourceManager.Network.Models
                 groupId,
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
-        /// <param name="linkIdentifier"> The consumer link id. </param>
-        /// <returns> A new <see cref="Network.ApplicationGatewayPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ApplicationGatewayPrivateEndpointConnectionData ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, PrivateEndpointData privateEndpoint = null, NetworkPrivateLinkServiceConnectionState connectionState = null, NetworkProvisioningState? provisioningState = null, string linkIdentifier = null)
-        {
-            return new ApplicationGatewayPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                privateEndpoint,
-                connectionState,
-                provisioningState,
-                linkIdentifier);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayFirewallRuleSet"/>. </summary>
@@ -6353,7 +7061,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> vpnClientAddressPrefixes = null, RoutingConfigurationAutoGenerated routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> vpnClientAddressPrefixes = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
         {
             vpnClientAddressPrefixes ??= new List<string>();
             configurationPolicyGroupAssociations ??= new List<WritableSubResource>();
@@ -6578,7 +7286,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVirtualNetworkId = null, bool? allowHubToRemoteVnetTransit = null, bool? allowRemoteVnetToUseHubVnetGateways = null, bool? enableInternetSecurity = null, RoutingConfigurationAutoGenerated routingConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVirtualNetworkId = null, bool? allowHubToRemoteVnetTransit = null, bool? allowRemoteVnetToUseHubVnetGateways = null, bool? enableInternetSecurity = null, RoutingConfiguration routingConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
@@ -6662,7 +7370,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.VpnConnectionData"/> instance for mocking. </returns>
-        public static VpnConnectionData VpnConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVpnSiteId = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, bool? enableRateLimiting = null, bool? enableInternetSecurity = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<VpnSiteLinkConnectionData> vpnLinkConnections = null, RoutingConfigurationAutoGenerated routingConfiguration = null)
+        public static VpnConnectionData VpnConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVpnSiteId = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, bool? enableRateLimiting = null, bool? enableInternetSecurity = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<VpnSiteLinkConnectionData> vpnLinkConnections = null, RoutingConfiguration routingConfiguration = null)
         {
             ipsecPolicies ??= new List<IPsecPolicy>();
             trafficSelectorPolicies ??= new List<TrafficSelectorPolicy>();
@@ -6873,7 +7581,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.ExpressRouteConnectionData"/> instance for mocking. </returns>
-        public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier expressRouteCircuitPeeringId = null, string authorizationKey = null, int? routingWeight = null, bool? enableInternetSecurity = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null, RoutingConfigurationAutoGenerated routingConfiguration = null)
+        public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier expressRouteCircuitPeeringId = null, string authorizationKey = null, int? routingWeight = null, bool? enableInternetSecurity = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null, RoutingConfiguration routingConfiguration = null)
         {
             return new ExpressRouteConnectionData(
                 id,
@@ -6902,7 +7610,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceConnectionData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfigurationAutoGenerated connectionRoutingConfiguration = null)
+        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfiguration connectionRoutingConfiguration = null)
         {
             bgpPeerAddress ??= new List<string>();
 
@@ -7114,11 +7822,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
         /// <returns> A new <see cref="Network.WebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, PolicySettings policySettings = null, IEnumerable<WebApplicationFirewallCustomRule> customRules = null, IEnumerable<ApplicationGateway> applicationGateways = null, NetworkProvisioningState? provisioningState = null, WebApplicationFirewallPolicyResourceState? resourceState = null, ManagedRulesDefinition managedRules = null, IEnumerable<WritableSubResource> httpListeners = null, IEnumerable<WritableSubResource> pathBasedRules = null)
+        public static WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, PolicySettings policySettings = null, IEnumerable<WebApplicationFirewallCustomRule> customRules = null, IEnumerable<ApplicationGatewayData> applicationGateways = null, NetworkProvisioningState? provisioningState = null, WebApplicationFirewallPolicyResourceState? resourceState = null, ManagedRulesDefinition managedRules = null, IEnumerable<WritableSubResource> httpListeners = null, IEnumerable<WritableSubResource> pathBasedRules = null)
         {
             tags ??= new Dictionary<string, string>();
             customRules ??= new List<WebApplicationFirewallCustomRule>();
-            applicationGateways ??= new List<ApplicationGateway>();
+            applicationGateways ??= new List<ApplicationGatewayData>();
             httpListeners ??= new List<WritableSubResource>();
             pathBasedRules ??= new List<WritableSubResource>();
 
@@ -7169,693 +7877,6 @@ namespace Azure.ResourceManager.Network.Models
                 groupByUserSession?.ToList(),
                 action,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGateway"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="availabilityZones"> A list of availability zones denoting where the resource needs to come from. </param>
-        /// <param name="identity"> The identity of the application gateway, if configured. </param>
-        /// <param name="sku"> SKU of the application gateway resource. </param>
-        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
-        /// <param name="operationalState"> Operational state of the application gateway resource. </param>
-        /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="authenticationCertificates"> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="trustedRootCertificates"> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="trustedClientCertificates"> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="sslCertificates"> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="frontendIPConfigurations"> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="frontendPorts"> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="probes"> Probes of the application gateway resource. </param>
-        /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
-        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
-        /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
-        /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
-        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
-        /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
-        /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
-        /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
-        /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
-        /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
-        /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
-        /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
-        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
-        /// <param name="globalConfiguration"> Global Configuration. </param>
-        /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGateway"/> instance for mocking. </returns>
-        public static ApplicationGateway ApplicationGateway(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, IEnumerable<string> availabilityZones = null, ManagedServiceIdentity identity = null, ApplicationGatewaySku sku = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayOperationalState? operationalState = null, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = null, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = null, IEnumerable<ApplicationGatewayProbe> probes = null, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = null, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = null, IEnumerable<ApplicationGatewayHttpListener> httpListeners = null, IEnumerable<ApplicationGatewayListener> listeners = null, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = null, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = null, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, IEnumerable<ApplicationGatewayRoutingRule> routingRules = null, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = null, bool? enableFips = null, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = null, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, ApplicationGatewayGlobalConfiguration globalConfiguration = null, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            availabilityZones ??= new List<string>();
-            gatewayIPConfigurations ??= new List<ApplicationGatewayIPConfiguration>();
-            authenticationCertificates ??= new List<ApplicationGatewayAuthenticationCertificate>();
-            trustedRootCertificates ??= new List<ApplicationGatewayTrustedRootCertificate>();
-            trustedClientCertificates ??= new List<ApplicationGatewayTrustedClientCertificate>();
-            sslCertificates ??= new List<ApplicationGatewaySslCertificate>();
-            frontendIPConfigurations ??= new List<ApplicationGatewayFrontendIPConfiguration>();
-            frontendPorts ??= new List<ApplicationGatewayFrontendPort>();
-            probes ??= new List<ApplicationGatewayProbe>();
-            backendAddressPools ??= new List<ApplicationGatewayBackendAddressPool>();
-            backendHttpSettingsCollection ??= new List<ApplicationGatewayBackendHttpSettings>();
-            backendSettingsCollection ??= new List<ApplicationGatewayBackendSettings>();
-            httpListeners ??= new List<ApplicationGatewayHttpListener>();
-            listeners ??= new List<ApplicationGatewayListener>();
-            sslProfiles ??= new List<ApplicationGatewaySslProfile>();
-            urlPathMaps ??= new List<ApplicationGatewayUrlPathMap>();
-            requestRoutingRules ??= new List<ApplicationGatewayRequestRoutingRule>();
-            routingRules ??= new List<ApplicationGatewayRoutingRule>();
-            rewriteRuleSets ??= new List<ApplicationGatewayRewriteRuleSet>();
-            redirectConfigurations ??= new List<ApplicationGatewayRedirectConfiguration>();
-            privateLinkConfigurations ??= new List<ApplicationGatewayPrivateLinkConfiguration>();
-            privateEndpointConnections ??= new List<ApplicationGatewayPrivateEndpointConnectionData>();
-            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
-            loadDistributionPolicies ??= new List<ApplicationGatewayLoadDistributionPolicy>();
-
-            return new ApplicationGateway(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null,
-                etag,
-                availabilityZones?.ToList(),
-                identity,
-                sku,
-                sslPolicy,
-                operationalState,
-                gatewayIPConfigurations?.ToList(),
-                authenticationCertificates?.ToList(),
-                trustedRootCertificates?.ToList(),
-                trustedClientCertificates?.ToList(),
-                sslCertificates?.ToList(),
-                frontendIPConfigurations?.ToList(),
-                frontendPorts?.ToList(),
-                probes?.ToList(),
-                backendAddressPools?.ToList(),
-                backendHttpSettingsCollection?.ToList(),
-                backendSettingsCollection?.ToList(),
-                httpListeners?.ToList(),
-                listeners?.ToList(),
-                sslProfiles?.ToList(),
-                urlPathMaps?.ToList(),
-                requestRoutingRules?.ToList(),
-                routingRules?.ToList(),
-                rewriteRuleSets?.ToList(),
-                redirectConfigurations?.ToList(),
-                webApplicationFirewallConfiguration,
-                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null,
-                enableHttp2,
-                enableFips,
-                autoscaleConfiguration,
-                privateLinkConfigurations?.ToList(),
-                privateEndpointConnections?.ToList(),
-                resourceGuid,
-                provisioningState,
-                customErrorConfigurations?.ToList(),
-                forceFirewallPolicyAssociation,
-                loadDistributionPolicies?.ToList(),
-                globalConfiguration,
-                defaultPredefinedSslPolicy);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayAuthenticationCertificate"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayAuthenticationCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayAuthenticationCertificate ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayAuthenticationCertificate(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                data,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayTrustedRootCertificate"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
-        /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedRootCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayTrustedRootCertificate ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, string keyVaultSecretId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayTrustedRootCertificate(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                data,
-                keyVaultSecretId,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayTrustedClientCertificate"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="validatedCertData"> Validated certificate data. </param>
-        /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
-        /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedClientCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayTrustedClientCertificate ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, BinaryData validatedCertData = null, string clientCertIssuerDN = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayTrustedClientCertificate(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                data,
-                validatedCertData,
-                clientCertIssuerDN,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewaySslCertificate"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
-        /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
-        /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
-        /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewaySslCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewaySslCertificate ApplicationGatewaySslCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, BinaryData data = null, string password = null, BinaryData publicCertData = null, string keyVaultSecretId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewaySslCertificate(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                data,
-                password,
-                publicCertData,
-                keyVaultSecretId,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayFrontendPort"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="port"> Frontend port. </param>
-        /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayFrontendPort"/> instance for mocking. </returns>
-        public static ApplicationGatewayFrontendPort ApplicationGatewayFrontendPort(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayFrontendPort(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                port,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayProbe"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="protocol"> The protocol used for the probe. </param>
-        /// <param name="host"> Host name to send the probe to. </param>
-        /// <param name="path"> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
-        /// <param name="intervalInSeconds"> The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="timeoutInSeconds"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="unhealthyThreshold"> The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second to 20. </param>
-        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
-        /// <param name="pickHostNameFromBackendSettings"> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </param>
-        /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
-        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayProbe"/> instance for mocking. </returns>
-        public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayProtocol? protocol = null, string host = null, string path = null, int? intervalInSeconds = null, int? timeoutInSeconds = null, int? unhealthyThreshold = null, bool? pickHostNameFromBackendHttpSettings = null, bool? pickHostNameFromBackendSettings = null, int? minServers = null, ApplicationGatewayProbeHealthResponseMatch match = null, NetworkProvisioningState? provisioningState = null, int? port = null)
-        {
-            return new ApplicationGatewayProbe(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                protocol,
-                host,
-                path,
-                intervalInSeconds,
-                timeoutInSeconds,
-                unhealthyThreshold,
-                pickHostNameFromBackendHttpSettings,
-                pickHostNameFromBackendSettings,
-                minServers,
-                match,
-                provisioningState,
-                port);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendSettings"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="port"> The destination port on the backend. </param>
-        /// <param name="protocol"> The protocol used to communicate with the backend. </param>
-        /// <param name="timeoutInSeconds"> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="probeId"> Probe resource of an application gateway. </param>
-        /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
-        /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
-        /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
-        /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayBackendSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, int? timeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, NetworkProvisioningState? provisioningState = null)
-        {
-            trustedRootCertificates ??= new List<WritableSubResource>();
-
-            return new ApplicationGatewayBackendSettings(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                port,
-                protocol,
-                timeoutInSeconds,
-                probeId != null ? ResourceManagerModelFactory.WritableSubResource(probeId) : null,
-                trustedRootCertificates?.ToList(),
-                hostName,
-                pickHostNameFromBackendAddress,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayHttpListener"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
-        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
-        /// <param name="protocol"> Protocol of the HTTP listener. </param>
-        /// <param name="hostName"> Host name of HTTP listener. </param>
-        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
-        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
-        /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
-        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
-        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
-        /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayHttpListener"/> instance for mocking. </returns>
-        public static ApplicationGatewayHttpListener ApplicationGatewayHttpListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, string hostName = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, bool? requireServerNameIndication = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, ResourceIdentifier firewallPolicyId = null, IEnumerable<string> hostNames = null)
-        {
-            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
-            hostNames ??= new List<string>();
-
-            return new ApplicationGatewayHttpListener(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null,
-                frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null,
-                protocol,
-                hostName,
-                sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null,
-                sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null,
-                requireServerNameIndication,
-                provisioningState,
-                customErrorConfigurations?.ToList(),
-                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null,
-                hostNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayListener"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
-        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
-        /// <param name="protocol"> Protocol of the listener. </param>
-        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
-        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the listener resource. </param>
-        /// <param name="hostNames"> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayListener"/> instance for mocking. </returns>
-        public static ApplicationGatewayListener ApplicationGatewayListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, NetworkProvisioningState? provisioningState = null, IEnumerable<string> hostNames = null)
-        {
-            hostNames ??= new List<string>();
-
-            return new ApplicationGatewayListener(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null,
-                frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null,
-                protocol,
-                sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null,
-                sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null,
-                provisioningState,
-                hostNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewaySslProfile"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="trustedClientCertificates"> Array of references to application gateway trusted client certificates. </param>
-        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
-        /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewaySslProfile"/> instance for mocking. </returns>
-        public static ApplicationGatewaySslProfile ApplicationGatewaySslProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<WritableSubResource> trustedClientCertificates = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration = null, NetworkProvisioningState? provisioningState = null)
-        {
-            trustedClientCertificates ??= new List<WritableSubResource>();
-
-            return new ApplicationGatewaySslProfile(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                trustedClientCertificates?.ToList(),
-                sslPolicy,
-                clientAuthConfiguration,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayUrlPathMap"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="defaultBackendAddressPoolId"> Default backend address pool resource of URL path map. </param>
-        /// <param name="defaultBackendHttpSettingsId"> Default backend http settings resource of URL path map. </param>
-        /// <param name="defaultRewriteRuleSetId"> Default Rewrite rule set resource of URL path map. </param>
-        /// <param name="defaultRedirectConfigurationId"> Default redirect configuration resource of URL path map. </param>
-        /// <param name="defaultLoadDistributionPolicyId"> Default Load Distribution Policy resource of URL path map. </param>
-        /// <param name="pathRules"> Path rule of URL path map resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayUrlPathMap"/> instance for mocking. </returns>
-        public static ApplicationGatewayUrlPathMap ApplicationGatewayUrlPathMap(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier defaultBackendAddressPoolId = null, ResourceIdentifier defaultBackendHttpSettingsId = null, ResourceIdentifier defaultRewriteRuleSetId = null, ResourceIdentifier defaultRedirectConfigurationId = null, ResourceIdentifier defaultLoadDistributionPolicyId = null, IEnumerable<ApplicationGatewayPathRule> pathRules = null, NetworkProvisioningState? provisioningState = null)
-        {
-            pathRules ??= new List<ApplicationGatewayPathRule>();
-
-            return new ApplicationGatewayUrlPathMap(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                defaultBackendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendAddressPoolId) : null,
-                defaultBackendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendHttpSettingsId) : null,
-                defaultRewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRewriteRuleSetId) : null,
-                defaultRedirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRedirectConfigurationId) : null,
-                defaultLoadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(defaultLoadDistributionPolicyId) : null,
-                pathRules?.ToList(),
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPathRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="paths"> Path rules of URL path map. </param>
-        /// <param name="backendAddressPoolId"> Backend address pool resource of URL path map path rule. </param>
-        /// <param name="backendHttpSettingsId"> Backend http settings resource of URL path map path rule. </param>
-        /// <param name="redirectConfigurationId"> Redirect configuration resource of URL path map path rule. </param>
-        /// <param name="rewriteRuleSetId"> Rewrite rule set resource of URL path map path rule. </param>
-        /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of URL path map path rule. </param>
-        /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
-        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayPathRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayPathRule ApplicationGatewayPathRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> paths = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier loadDistributionPolicyId = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier firewallPolicyId = null)
-        {
-            paths ??= new List<string>();
-
-            return new ApplicationGatewayPathRule(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                paths?.ToList(),
-                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
-                backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null,
-                redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null,
-                rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null,
-                loadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(loadDistributionPolicyId) : null,
-                provisioningState,
-                firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRequestRoutingRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule type. </param>
-        /// <param name="priority"> Priority of the request routing rule. </param>
-        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
-        /// <param name="backendHttpSettingsId"> Backend http settings resource of the application gateway. </param>
-        /// <param name="httpListenerId"> Http listener resource of the application gateway. </param>
-        /// <param name="urlPathMapId"> URL path map resource of the application gateway. </param>
-        /// <param name="rewriteRuleSetId"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
-        /// <param name="redirectConfigurationId"> Redirect configuration resource of the application gateway. </param>
-        /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of the application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier httpListenerId = null, ResourceIdentifier urlPathMapId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier loadDistributionPolicyId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayRequestRoutingRule(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                ruleType,
-                priority,
-                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
-                backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null,
-                httpListenerId != null ? ResourceManagerModelFactory.WritableSubResource(httpListenerId) : null,
-                urlPathMapId != null ? ResourceManagerModelFactory.WritableSubResource(urlPathMapId) : null,
-                rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null,
-                redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null,
-                loadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(loadDistributionPolicyId) : null,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRoutingRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule type. </param>
-        /// <param name="priority"> Priority of the routing rule. </param>
-        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
-        /// <param name="backendSettingsId"> Backend settings resource of the application gateway. </param>
-        /// <param name="listenerId"> Listener resource of the application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRoutingRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayRoutingRule ApplicationGatewayRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendSettingsId = null, ResourceIdentifier listenerId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayRoutingRule(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                ruleType,
-                priority,
-                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
-                backendSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendSettingsId) : null,
-                listenerId != null ? ResourceManagerModelFactory.WritableSubResource(listenerId) : null,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRewriteRuleSet"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
-        /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRewriteRuleSet"/> instance for mocking. </returns>
-        public static ApplicationGatewayRewriteRuleSet ApplicationGatewayRewriteRuleSet(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayRewriteRule> rewriteRules = null, NetworkProvisioningState? provisioningState = null)
-        {
-            rewriteRules ??= new List<ApplicationGatewayRewriteRule>();
-
-            return new ApplicationGatewayRewriteRuleSet(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                rewriteRules?.ToList(),
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayRedirectConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="redirectType"> HTTP redirection type. </param>
-        /// <param name="targetListenerId"> Reference to a listener to redirect the request to. </param>
-        /// <param name="targetUri"> Url to redirect the request to. </param>
-        /// <param name="includePath"> Include path in the redirected url. </param>
-        /// <param name="includeQueryString"> Include query string in the redirected url. </param>
-        /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
-        /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
-        /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRedirectConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayRedirectConfiguration ApplicationGatewayRedirectConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRedirectType? redirectType = null, ResourceIdentifier targetListenerId = null, Uri targetUri = null, bool? includePath = null, bool? includeQueryString = null, IEnumerable<WritableSubResource> requestRoutingRules = null, IEnumerable<WritableSubResource> urlPathMaps = null, IEnumerable<WritableSubResource> pathRules = null)
-        {
-            requestRoutingRules ??= new List<WritableSubResource>();
-            urlPathMaps ??= new List<WritableSubResource>();
-            pathRules ??= new List<WritableSubResource>();
-
-            return new ApplicationGatewayRedirectConfiguration(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                redirectType,
-                targetListenerId != null ? ResourceManagerModelFactory.WritableSubResource(targetListenerId) : null,
-                targetUri,
-                includePath,
-                includeQueryString,
-                requestRoutingRules?.ToList(),
-                urlPathMaps?.ToList(),
-                pathRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayPrivateLinkConfiguration ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations = null, NetworkProvisioningState? provisioningState = null)
-        {
-            ipConfigurations ??= new List<ApplicationGatewayPrivateLinkIPConfiguration>();
-
-            return new ApplicationGatewayPrivateLinkConfiguration(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                ipConfigurations?.ToList(),
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnetId"> Reference to the subnet resource. </param>
-        /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkIPConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayPrivateLinkIPConfiguration ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, bool? isPrimary = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayPrivateLinkIPConfiguration(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                privateIPAddress,
-                privateIPAllocationMethod,
-                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
-                isPrimary,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayLoadDistributionPolicy"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="loadDistributionTargets"> Load Distribution Targets resource of an application gateway. </param>
-        /// <param name="loadDistributionAlgorithm"> Load Distribution Targets resource of an application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the Load Distribution Policy resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayLoadDistributionPolicy"/> instance for mocking. </returns>
-        public static ApplicationGatewayLoadDistributionPolicy ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = null, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm = null, NetworkProvisioningState? provisioningState = null)
-        {
-            loadDistributionTargets ??= new List<ApplicationGatewayLoadDistributionTarget>();
-
-            return new ApplicationGatewayLoadDistributionPolicy(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                loadDistributionTargets?.ToList(),
-                loadDistributionAlgorithm,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayLoadDistributionTarget"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="weightPerServer"> Weight per server. Range between 1 and 100. </param>
-        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayLoadDistributionTarget"/> instance for mocking. </returns>
-        public static ApplicationGatewayLoadDistributionTarget ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? weightPerServer = null, ResourceIdentifier backendAddressPoolId = null)
-        {
-            return new ApplicationGatewayLoadDistributionTarget(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                weightPerServer,
-                backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserRule"/>. </summary>

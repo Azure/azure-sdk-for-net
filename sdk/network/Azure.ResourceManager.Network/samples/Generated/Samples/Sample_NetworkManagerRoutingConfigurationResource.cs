@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_RoutingConfigurationResource
+    public partial class Sample_NetworkManagerRoutingConfigurationResource
     {
         // Get routing configurations
         [NUnit.Framework.Test]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // invoke the operation
-            RoutingConfigurationResource result = await routingConfiguration.GetAsync();
+            NetworkManagerRoutingConfigurationResource result = await networkManagerRoutingConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutingConfigurationData resourceData = result.Data;
+            NetworkManagerRoutingConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,26 +59,26 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // invoke the operation
-            RoutingConfigurationData data = new RoutingConfigurationData()
+            NetworkManagerRoutingConfigurationData data = new NetworkManagerRoutingConfigurationData()
             {
                 Description = "A sample policy",
             };
-            ArmOperation<RoutingConfigurationResource> lro = await routingConfiguration.UpdateAsync(WaitUntil.Completed, data);
-            RoutingConfigurationResource result = lro.Value;
+            ArmOperation<NetworkManagerRoutingConfigurationResource> lro = await networkManagerRoutingConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            NetworkManagerRoutingConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutingConfigurationData resourceData = result.Data;
+            NetworkManagerRoutingConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // invoke the operation
-            await routingConfiguration.DeleteAsync(WaitUntil.Completed);
+            await networkManagerRoutingConfiguration.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

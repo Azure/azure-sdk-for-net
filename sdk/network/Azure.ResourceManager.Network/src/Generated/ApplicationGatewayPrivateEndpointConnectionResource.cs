@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing an ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetApplicationGatewayPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationGatewayPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="ApplicationGatewayResource"/> using the GetApplicationGatewayPrivateEndpointConnection method.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionResource : ArmResource
     {

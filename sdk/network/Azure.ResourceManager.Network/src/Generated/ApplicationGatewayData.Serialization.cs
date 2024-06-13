@@ -11,20 +11,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
-    public partial class ApplicationGateway : IUtf8JsonSerializable, IJsonModel<ApplicationGateway>
+    public partial class ApplicationGatewayData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGateway>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApplicationGateway>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGateway>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGateway)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -395,19 +396,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        ApplicationGateway IJsonModel<ApplicationGateway>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApplicationGatewayData IJsonModel<ApplicationGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGateway>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGateway)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationGateway(document.RootElement, options);
+            return DeserializeApplicationGatewayData(document.RootElement, options);
         }
 
-        internal static ApplicationGateway DeserializeApplicationGateway(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -998,7 +999,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGateway(
+            return new ApplicationGatewayData(
                 id,
                 name,
                 type,
@@ -1046,35 +1047,35 @@ namespace Azure.ResourceManager.Network.Models
                 defaultPredefinedSslPolicy);
         }
 
-        BinaryData IPersistableModel<ApplicationGateway>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGateway>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGateway)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApplicationGateway IPersistableModel<ApplicationGateway>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApplicationGatewayData IPersistableModel<ApplicationGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGateway>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApplicationGateway(document.RootElement, options);
+                        return DeserializeApplicationGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGateway)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApplicationGateway>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -18,10 +18,6 @@ namespace Azure.ResourceManager.Network.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableNetworkResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _applicationGatewaysClientDiagnostics;
-        private ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
-        private ClientDiagnostics _applicationGatewayPrivateLinkResourcesClientDiagnostics;
-        private ApplicationGatewayPrivateLinkResourcesRestOperations _applicationGatewayPrivateLinkResourcesRestClient;
         private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
         private AvailableResourceGroupDelegationsRestOperations _availableResourceGroupDelegationsRestClient;
         private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
@@ -43,10 +39,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
-        private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ApplicationGatewaysRestOperations ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ApplicationGatewayPrivateLinkResourcesClientDiagnostics => _applicationGatewayPrivateLinkResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ApplicationGatewayPrivateLinkResourcesRestOperations ApplicationGatewayPrivateLinkResourcesRestClient => _applicationGatewayPrivateLinkResourcesRestClient ??= new ApplicationGatewayPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AvailableResourceGroupDelegationsRestOperations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -62,26 +54,54 @@ namespace Azure.ResourceManager.Network.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
+        public virtual ApplicationGatewayCollection GetApplicationGateways()
+        {
+            return GetCachedClient(client => new ApplicationGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified application gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnectionResources and their operations over a ApplicationGatewayPrivateEndpointConnectionResource. </returns>
-        public virtual ApplicationGatewayPrivateEndpointConnectionCollection GetApplicationGatewayPrivateEndpointConnections(string applicationGatewayName)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return new ApplicationGatewayPrivateEndpointConnectionCollection(Client, Id, applicationGatewayName);
+            return await GetApplicationGateways().GetAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection on application gateway.
+        /// Gets the specified application gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
+        /// <description>ApplicationGateways_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -89,51 +109,18 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationGatewayPrivateEndpointConnectionResource>> GetApplicationGatewayPrivateEndpointConnectionAsync(string applicationGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewayResource> GetApplicationGateway(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName).GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection on application gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewayPrivateEndpointConnectionResource> GetApplicationGatewayPrivateEndpointConnection(string applicationGatewayName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            return GetApplicationGatewayPrivateEndpointConnections(applicationGatewayName).Get(connectionName, cancellationToken);
+            return GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ResourceGroupResource. </summary>
@@ -3211,160 +3198,6 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {
             return GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_BackendHealthOnDemand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
-        /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="probeRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandApplicationGatewayAsync(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-            Argument.AssertNotNull(probeRequest, nameof(probeRequest));
-
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.BackendHealthOnDemandApplicationGateway");
-            scope.Start();
-            try
-            {
-                var response = await ApplicationGatewaysRestClient.BackendHealthOnDemandAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, probeRequest, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), ApplicationGatewaysClientDiagnostics, Pipeline, ApplicationGatewaysRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_BackendHealthOnDemand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
-        /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="probeRequest"/> is null. </exception>
-        public virtual ArmOperation<ApplicationGatewayBackendHealthOnDemand> BackendHealthOnDemandApplicationGateway(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-            Argument.AssertNotNull(probeRequest, nameof(probeRequest));
-
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.BackendHealthOnDemandApplicationGateway");
-            scope.Start();
-            try
-            {
-                var response = ApplicationGatewaysRestClient.BackendHealthOnDemand(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, probeRequest, expand, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), ApplicationGatewaysClientDiagnostics, Pipeline, ApplicationGatewaysRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all private link resources on an application gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayPrivateLinkResources_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(e), ApplicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all private link resources on an application gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayPrivateLinkResources_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(string applicationGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(e), ApplicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

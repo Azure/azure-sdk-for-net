@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing a RoutingRuleCollection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoutingRuleCollectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetRoutingRuleCollectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RoutingConfigurationResource"/> using the GetRoutingRuleCollection method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerRoutingConfigurationResource"/> using the GetRoutingRuleCollection method.
     /// </summary>
     public partial class RoutingRuleCollectionResource : ArmResource
     {

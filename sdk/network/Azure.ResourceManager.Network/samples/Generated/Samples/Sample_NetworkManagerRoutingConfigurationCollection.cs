@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_RoutingConfigurationCollection
+    public partial class Sample_NetworkManagerRoutingConfigurationCollection
     {
         // List routing configurations in a network manager
         [NUnit.Framework.Test]
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this RoutingConfigurationResource
-            RoutingConfigurationCollection collection = networkManager.GetRoutingConfigurations();
+            // get the collection of this NetworkManagerRoutingConfigurationResource
+            NetworkManagerRoutingConfigurationCollection collection = networkManager.GetNetworkManagerRoutingConfigurations();
 
             // invoke the operation and iterate over the result
-            await foreach (RoutingConfigurationResource item in collection.GetAllAsync())
+            await foreach (NetworkManagerRoutingConfigurationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RoutingConfigurationData resourceData = item.Data;
+                NetworkManagerRoutingConfigurationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this RoutingConfigurationResource
-            RoutingConfigurationCollection collection = networkManager.GetRoutingConfigurations();
+            // get the collection of this NetworkManagerRoutingConfigurationResource
+            NetworkManagerRoutingConfigurationCollection collection = networkManager.GetNetworkManagerRoutingConfigurations();
 
             // invoke the operation
             string configurationName = "myTestRoutingConfig";
-            RoutingConfigurationResource result = await collection.GetAsync(configurationName);
+            NetworkManagerRoutingConfigurationResource result = await collection.GetAsync(configurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutingConfigurationData resourceData = result.Data;
+            NetworkManagerRoutingConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this RoutingConfigurationResource
-            RoutingConfigurationCollection collection = networkManager.GetRoutingConfigurations();
+            // get the collection of this NetworkManagerRoutingConfigurationResource
+            NetworkManagerRoutingConfigurationCollection collection = networkManager.GetNetworkManagerRoutingConfigurations();
 
             // invoke the operation
             string configurationName = "myTestRoutingConfig";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this RoutingConfigurationResource
-            RoutingConfigurationCollection collection = networkManager.GetRoutingConfigurations();
+            // get the collection of this NetworkManagerRoutingConfigurationResource
+            NetworkManagerRoutingConfigurationCollection collection = networkManager.GetNetworkManagerRoutingConfigurations();
 
             // invoke the operation
             string configurationName = "myTestRoutingConfig";
-            NullableResponse<RoutingConfigurationResource> response = await collection.GetIfExistsAsync(configurationName);
-            RoutingConfigurationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetworkManagerRoutingConfigurationResource> response = await collection.GetIfExistsAsync(configurationName);
+            NetworkManagerRoutingConfigurationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RoutingConfigurationData resourceData = result.Data;
+                NetworkManagerRoutingConfigurationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -181,21 +181,21 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this RoutingConfigurationResource
-            RoutingConfigurationCollection collection = networkManager.GetRoutingConfigurations();
+            // get the collection of this NetworkManagerRoutingConfigurationResource
+            NetworkManagerRoutingConfigurationCollection collection = networkManager.GetNetworkManagerRoutingConfigurations();
 
             // invoke the operation
             string configurationName = "myTestRoutingConfig";
-            RoutingConfigurationData data = new RoutingConfigurationData()
+            NetworkManagerRoutingConfigurationData data = new NetworkManagerRoutingConfigurationData()
             {
                 Description = "A sample policy",
             };
-            ArmOperation<RoutingConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            RoutingConfigurationResource result = lro.Value;
+            ArmOperation<NetworkManagerRoutingConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            NetworkManagerRoutingConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutingConfigurationData resourceData = result.Data;
+            NetworkManagerRoutingConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

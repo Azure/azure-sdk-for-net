@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="RoutingRuleCollectionResource"/> and their operations.
-    /// Each <see cref="RoutingRuleCollectionResource"/> in the collection will belong to the same instance of <see cref="RoutingConfigurationResource"/>.
-    /// To get a <see cref="RoutingRuleCollectionCollection"/> instance call the GetRoutingRuleCollections method from an instance of <see cref="RoutingConfigurationResource"/>.
+    /// Each <see cref="RoutingRuleCollectionResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
+    /// To get a <see cref="RoutingRuleCollectionCollection"/> instance call the GetRoutingRuleCollections method from an instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
     /// </summary>
     public partial class RoutingRuleCollectionCollection : ArmCollection, IEnumerable<RoutingRuleCollectionResource>, IAsyncEnumerable<RoutingRuleCollectionResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RoutingConfigurationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RoutingConfigurationResource.ResourceType), nameof(id));
+            if (id.ResourceType != NetworkManagerRoutingConfigurationResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkManagerRoutingConfigurationResource.ResourceType), nameof(id));
         }
 
         /// <summary>

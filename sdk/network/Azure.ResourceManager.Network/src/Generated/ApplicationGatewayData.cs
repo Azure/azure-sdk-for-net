@@ -9,15 +9,19 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
-    /// <summary> Application gateway resource. </summary>
-    public partial class ApplicationGateway : NetworkTrackedResourceData
+    /// <summary>
+    /// A class representing the ApplicationGateway data model.
+    /// Application gateway resource.
+    /// </summary>
+    public partial class ApplicationGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGateway"/>. </summary>
-        public ApplicationGateway()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
+        public ApplicationGatewayData()
         {
             AvailabilityZones = new ChangeTrackingList<string>();
             GatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             LoadDistributionPolicies = new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGateway"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
         /// <param name="globalConfiguration"> Global Configuration. </param>
         /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
-        internal ApplicationGateway(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             AvailabilityZones = availabilityZones;

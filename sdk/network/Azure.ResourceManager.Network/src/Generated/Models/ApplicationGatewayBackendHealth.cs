@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of network manager routing configurations. </summary>
-    internal partial class RoutingConfigurationListResult
+    /// <summary> Response for ApplicationGatewayBackendHealth API service call. </summary>
+    public partial class ApplicationGatewayBackendHealth
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,22 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
-        internal RoutingConfigurationListResult()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealth"/>. </summary>
+        internal ApplicationGatewayBackendHealth()
         {
-            Value = new ChangeTrackingList<NetworkManagerRoutingConfigurationData>();
+            BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendHealthPool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
-        /// <param name="value"> Gets a page of routing configurations. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealth"/>. </summary>
+        /// <param name="backendAddressPools"> A list of ApplicationGatewayBackendHealthPool resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingConfigurationListResult(IReadOnlyList<NetworkManagerRoutingConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayBackendHealth(IReadOnlyList<ApplicationGatewayBackendHealthPool> backendAddressPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            BackendAddressPools = backendAddressPools;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of routing configurations. </summary>
-        public IReadOnlyList<NetworkManagerRoutingConfigurationData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> A list of ApplicationGatewayBackendHealthPool resources. </summary>
+        public IReadOnlyList<ApplicationGatewayBackendHealthPool> BackendAddressPools { get; }
     }
 }

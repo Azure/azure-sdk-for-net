@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.Network
             return GetSecurityUserConfigurations().Get(configurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoutingConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of RoutingConfigurationResources and their operations over a RoutingConfigurationResource. </returns>
-        public virtual RoutingConfigurationCollection GetRoutingConfigurations()
+        /// <summary> Gets a collection of NetworkManagerRoutingConfigurationResources in the NetworkManager. </summary>
+        /// <returns> An object representing collection of NetworkManagerRoutingConfigurationResources and their operations over a NetworkManagerRoutingConfigurationResource. </returns>
+        public virtual NetworkManagerRoutingConfigurationCollection GetNetworkManagerRoutingConfigurations()
         {
-            return GetCachedClient(client => new RoutingConfigurationCollection(client, Id));
+            return GetCachedClient(client => new NetworkManagerRoutingConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RoutingConfigurationResource>> GetRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetNetworkManagerRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            return await GetRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkManagerRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RoutingConfigurationResource> GetRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkManagerRoutingConfigurationResource> GetNetworkManagerRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
-            return GetRoutingConfigurations().Get(configurationName, cancellationToken);
+            return GetNetworkManagerRoutingConfigurations().Get(configurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ConnectivityConfigurationResources in the NetworkManager. </summary>

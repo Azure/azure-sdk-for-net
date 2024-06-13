@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _applicationGatewaysClientDiagnostics;
-        private ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
+        private ClientDiagnostics _applicationGatewayClientDiagnostics;
+        private ApplicationGatewaysRestOperations _applicationGatewayRestClient;
         private ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
         private ApplicationSecurityGroupsRestOperations _applicationSecurityGroupRestClient;
         private ClientDiagnostics _availableDelegationsClientDiagnostics;
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
-        private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ApplicationGatewaysRestOperations ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
+        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationGatewayResource.ResourceType));
         private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
         private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationSecurityGroupResource.ResourceType));
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -660,6 +660,66 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets all the application gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the application gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewayResource> GetApplicationGateways(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all available server variables.
         /// <list type="bullet">
         /// <item>
@@ -673,6 +733,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -680,8 +744,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -699,14 +763,18 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -723,6 +791,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -730,8 +802,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -749,14 +821,18 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -773,6 +849,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,8 +860,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -799,14 +879,18 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -823,6 +907,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -830,8 +918,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -849,14 +937,18 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -874,16 +966,20 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
             scope.Start();
             try
             {
-                var response = await ApplicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await ApplicationGatewayRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -908,16 +1004,20 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
             scope.Start();
             try
             {
-                var response = ApplicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                var response = ApplicationGatewayRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -941,6 +1041,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -948,9 +1052,9 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewaysRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -968,15 +1072,19 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewaysRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewaysRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -993,6 +1101,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1004,11 +1116,11 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
             try
             {
-                var response = await ApplicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await ApplicationGatewayRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1033,6 +1145,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Default Api Version</term>
         /// <description>2023-11-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
@@ -1043,11 +1159,11 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
             try
             {
-                var response = ApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
+                var response = ApplicationGatewayRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
                 return response;
             }
             catch (Exception e)
