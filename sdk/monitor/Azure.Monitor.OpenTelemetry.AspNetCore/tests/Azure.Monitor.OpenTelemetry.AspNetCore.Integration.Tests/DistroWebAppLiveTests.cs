@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
         // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback) { }
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
