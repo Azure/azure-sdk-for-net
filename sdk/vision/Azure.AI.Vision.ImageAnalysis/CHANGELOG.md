@@ -3,8 +3,7 @@
 ## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
+Add TokenCredential support and associated test case.
 
 ### Bugs Fixed
 
