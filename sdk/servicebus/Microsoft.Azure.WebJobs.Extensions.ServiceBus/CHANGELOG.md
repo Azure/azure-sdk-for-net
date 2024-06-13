@@ -1,14 +1,10 @@
 # Release History
 
-## 5.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 5.16.1 (2024-06-13)
 
 ### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`. 
 
 ## 5.16.0 (2024-05-30)
 
