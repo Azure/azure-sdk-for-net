@@ -29,7 +29,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new AzureMonitorExporterOptions(), new MockTransmitter(telemetryItems))));
+        }
+
+        /// <summary>
+        /// Extension methods to simplify registering of <see cref="AzureMonitorLogExporter"/> with <see cref="MockTransmitter"/> for unit tests.
+        /// </summary>
+        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterForTest(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure, out List<TelemetryItem> telemetryItems)
+        {
+            if (loggerOptions == null)
+            {
+                throw new ArgumentNullException(nameof(loggerOptions));
+            }
+
+            telemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions();
+
+            if (configure != null)
+            {
+                configure(options);
+            }
+
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(options, new MockTransmitter(telemetryItems))));
         }
 
         /// <summary>

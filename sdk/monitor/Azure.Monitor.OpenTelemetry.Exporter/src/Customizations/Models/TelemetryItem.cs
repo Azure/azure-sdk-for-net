@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
+        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
@@ -102,6 +102,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (logRecord.SpanId != default)
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+
+                // Sampling is only applied for logs that are emitted within an activity context
+                if (sampleRate != 100f && SdkVersionUtils.IsDistro)
+                {
+                    SampleRate = sampleRate;
+                }
             }
 
             InstrumentationKey = instrumentationKey;
