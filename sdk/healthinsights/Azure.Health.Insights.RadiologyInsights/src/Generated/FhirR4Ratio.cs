@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="numerator"> Numerator value. </param>
         /// <param name="denominator"> Denominator value. </param>
-        internal FhirR4Ratio(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity numerator, FhirR4Quantity denominator) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Ratio(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity numerator, FhirR4Quantity denominator) : base(id, extension, serializedAdditionalRawData)
         {
             Numerator = numerator;
             Denominator = denominator;

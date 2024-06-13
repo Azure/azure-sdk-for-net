@@ -915,8 +915,8 @@ namespace Azure.Analytics.Purview.DataMap
     }
     public partial class BusinessMetadataOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>
     {
-        public BusinessMetadataOptions(System.BinaryData file) { }
-        public System.BinaryData File { get { throw null; } }
+        public BusinessMetadataOptions(System.IO.Stream file) { }
+        public System.IO.Stream File { get { throw null; } }
         Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1103,10 +1103,10 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> GetHeaderAsync(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions businessMetadataOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(System.BinaryData file, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult>> ImportBusinessMetadataAsync(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions businessMetadataOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> MoveEntitiesToCollection(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig moveEntitiesConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response MoveEntitiesToCollection(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig moveEntitiesConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

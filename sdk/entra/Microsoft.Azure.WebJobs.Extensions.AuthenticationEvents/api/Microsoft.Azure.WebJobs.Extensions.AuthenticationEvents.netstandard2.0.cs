@@ -215,9 +215,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userType")]
         public string UserType { get { throw null; } set { } }
     }
-    public partial class WebjobsAuthenticationEventsTokenClaim
+    public partial class WebJobsAuthenticationEventsTokenClaim
     {
-        public WebjobsAuthenticationEventsTokenClaim(string id, params string[] values) { }
+        public WebJobsAuthenticationEventsTokenClaim(string id, params string[] values) { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=false)]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
         public string Id { get { throw null; } set { } }
@@ -227,10 +227,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
     public partial class WebJobsProvideClaimsForToken : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.WebJobsTokenIssuanceAction
     {
         public WebJobsProvideClaimsForToken() { }
-        public WebJobsProvideClaimsForToken(params Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.WebjobsAuthenticationEventsTokenClaim[] claim) { }
+        public WebJobsProvideClaimsForToken(params Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.WebJobsAuthenticationEventsTokenClaim[] claim) { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("claims")]
-        public System.Collections.Generic.List<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.WebjobsAuthenticationEventsTokenClaim> Claims { get { throw null; } }
+        public System.Collections.Generic.List<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.WebJobsAuthenticationEventsTokenClaim> Claims { get { throw null; } }
         public void AddClaim(string Id, params string[] Values) { }
     }
     public abstract partial class WebJobsTokenIssuanceAction : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.WebJobsAuthenticationEventsAction

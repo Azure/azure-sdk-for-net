@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
             }
             else
             {
-                _manager._documentBuffer.AddExceptionDocument(data.Exception);
+                _manager._documentBuffer.AddExceptionDocument(data);
             }
         }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
+## 7.18.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,29 @@
 
 ### Bugs Fixed
 
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
+
+## 7.18.0-beta.1 (2024-05-08)
+
+### Features Added
+
+- `ServiceBusReceiver` now supports the ability to delete all messages from an entity using the `PurgeMessagesAsync` method.  Callers may optionally request to limit the target messages to those earlier than a given date.
+
+- `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The messages selected for deletion will be the oldest in the entity, based on the enqueued date and callers may optionally request to limit them to only those earlier than a given date.
+
+### Bugs Fixed
+
 - Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
 
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 7.17.5 (2024-04-09)
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.0-beta.3 (Unreleased)
+## 12.19.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.19.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- Added more detailed messaging for authorization failure cases.
+- Added support for snapshot management on NFS shares.
+
+## 12.18.0 (2024-05-13)
+- Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
+- Fixed bug where `ShareClient` and `ShareFileClient` did not throw an exception on empty/null share container names and file names, respectively, when constructing a client.
 
 ## 12.18.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.

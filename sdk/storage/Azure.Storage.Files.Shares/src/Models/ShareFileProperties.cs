@@ -181,7 +181,68 @@ namespace Azure.Storage.Files.Shares.Models
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
+            };
+
+        /// <summary>
+        /// Creates a new StorageFileProperties instance for mocking.
+        /// </summary>
+        public static ShareFileProperties StorageFileProperties(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            IEnumerable<string> contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            IEnumerable<string> contentLanguage,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            string copySource,
+            CopyStatus copyStatus,
+            bool isServerEncrypted,
+#pragma warning disable CA1801 // Review unused parameters
+            NtfsFileAttributes fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string filePermissionKey,
+            string fileId,
+            string fileParentId
+#pragma warning restore CA1801 // Review unused parameters
+            ) => new ShareFileProperties
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = fileAttributes,
                     FilePermissionKey = filePermissionKey,
                     FileCreatedOn = fileCreationTime,
                     FileLastWrittenOn = fileLastWriteTime,

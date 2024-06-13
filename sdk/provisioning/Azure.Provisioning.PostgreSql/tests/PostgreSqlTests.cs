@@ -22,8 +22,8 @@ namespace Azure.Provisioning.PostgreSql.Tests
         public async Task PostgreSql()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            var adminLogin = new Parameter("adminLogin", "Administrator login");
-            var adminPassword = new Parameter("adminPassword", "Administrator password", isSecure: true);
+            var adminLogin = new Parameter("adminLogin", description: "Administrator login");
+            var adminPassword = new Parameter("adminPassword", description: "Administrator password", isSecure: true);
             var server = new PostgreSqlFlexibleServer(
                 infrastructure,
                 administratorLogin: adminLogin,

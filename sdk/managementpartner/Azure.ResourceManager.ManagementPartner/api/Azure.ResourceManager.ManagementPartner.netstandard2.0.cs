@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagementPartner
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerResponseResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerResponseResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerResponseResource() { }
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.ManagementPartner
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ManagementPartner.PartnerResponseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagementPartner.PartnerResponseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource> Update(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

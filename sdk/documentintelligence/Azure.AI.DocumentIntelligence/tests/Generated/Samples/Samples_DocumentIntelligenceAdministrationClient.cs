@@ -1750,7 +1750,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1775,7 +1775,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1799,7 +1799,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1818,7 +1818,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1838,7 +1838,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1884,7 +1884,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1929,7 +1929,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1948,7 +1948,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }

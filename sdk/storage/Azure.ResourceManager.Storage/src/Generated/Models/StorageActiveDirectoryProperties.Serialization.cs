@@ -185,15 +185,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
-            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  domainName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  domainName: ");
                     if (DomainName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -207,15 +208,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetBiosDomainName), out propertyOverride);
-            if (Optional.IsDefined(NetBiosDomainName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  netBiosDomainName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetBiosDomainName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  netBiosDomainName: ");
                     if (NetBiosDomainName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -229,15 +231,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForestName), out propertyOverride);
-            if (Optional.IsDefined(ForestName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  forestName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForestName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  forestName: ");
                     if (ForestName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -251,26 +254,28 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainGuid), out propertyOverride);
-            builder.Append("  domainGuid: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  domainGuid: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  domainGuid: ");
                 builder.AppendLine($"'{DomainGuid.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainSid), out propertyOverride);
-            if (Optional.IsDefined(DomainSid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  domainSid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainSid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  domainSid: ");
                     if (DomainSid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -284,15 +289,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageSid), out propertyOverride);
-            if (Optional.IsDefined(AzureStorageSid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureStorageSid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureStorageSid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureStorageSid: ");
                     if (AzureStorageSid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -306,15 +312,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamAccountName), out propertyOverride);
-            if (Optional.IsDefined(SamAccountName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  samAccountName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SamAccountName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  samAccountName: ");
                     if (SamAccountName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -328,15 +335,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountType), out propertyOverride);
-            if (Optional.IsDefined(AccountType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  accountType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  accountType: ");
                     builder.AppendLine($"'{AccountType.Value.ToString()}'");
                 }
             }

@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsClientCertEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientCertEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsClientCertEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientCertEnabled: ");
                     var boolValue = IsClientCertEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

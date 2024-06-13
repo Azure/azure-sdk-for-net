@@ -42,6 +42,7 @@ module rg2_TEST_module './resources/rg2_TEST_module/rg2_TEST_module.bicep' = {
   params: {
     enableSoftDelete: enableSoftDelete
     STORAGE_KIND: rg1_TEST_module.outputs.STORAGE_KIND
+    PRIMARY_ENDPOINTS: rg1_TEST_module.outputs.PRIMARY_ENDPOINTS
   }
 }
 
@@ -51,7 +52,9 @@ module rg3_TEST_module './resources/rg3_TEST_module/rg3_TEST_module.bicep' = {
   params: {
     enableSoftDelete: enableSoftDelete
     STORAGE_KIND: rg1_TEST_module.outputs.STORAGE_KIND
+    PRIMARY_ENDPOINTS: rg1_TEST_module.outputs.PRIMARY_ENDPOINTS
   }
 }
 
 output STORAGE_KIND string = rg1_TEST_module.outputs.STORAGE_KIND
+output PRIMARY_ENDPOINTS object = rg1_TEST_module.outputs.PRIMARY_ENDPOINTS

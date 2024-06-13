@@ -159,29 +159,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
-            if (Optional.IsDefined(ConnectionState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  connectionState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  connectionState: ");
                     builder.AppendLine($"'{ConnectionState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPFrom), out propertyOverride);
-            if (Optional.IsDefined(IPFrom) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  iPFrom: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPFrom))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  iPFrom: ");
                     if (IPFrom.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +197,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPTo), out propertyOverride);
-            if (Optional.IsDefined(IPTo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  iPTo: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPTo))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  iPTo: ");
                     if (IPTo.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -217,29 +220,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (Optional.IsDefined(Port) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  port: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  port: ");
                     builder.AppendLine($"{Port.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exception), out propertyOverride);
-            if (Optional.IsDefined(Exception) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  exception: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Exception))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  exception: ");
                     if (Exception.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

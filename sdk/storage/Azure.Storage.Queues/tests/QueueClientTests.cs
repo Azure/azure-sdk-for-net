@@ -22,8 +22,8 @@ namespace Azure.Storage.Queues.Test
 {
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueClientTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -327,6 +327,34 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+        // Not possible to record
+        [LiveOnly]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_WithOauthBearerChallenge()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueClientOptions options = new QueueClientOptions
+            {
+                Audience = QueueAudience.CreateQueueServiceAccountAudience("account"),
+            };
+            QueueServiceClient service = QueuesClientBuilder.GetServiceClient_OAuth(options);
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            try
+            {
+                // Act
+                Response result = await queue.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            }
+            finally
+            {
+                await queue.DeleteIfExistsAsync();
+            }
+        }
+
         [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
@@ -463,7 +491,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -512,7 +540,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -558,7 +586,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]

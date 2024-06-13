@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
+            }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -326,6 +332,15 @@ namespace Azure.ResourceManager.Compute.Models
                                 continue;
                             }
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -549,6 +564,7 @@ namespace Azure.ResourceManager.Compute.Models
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
                 hardwareProfile,
+                scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

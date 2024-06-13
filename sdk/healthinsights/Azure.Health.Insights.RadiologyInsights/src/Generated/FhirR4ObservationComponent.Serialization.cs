@@ -180,10 +180,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Period valuePeriod = default;
             FhirR4Reference valueReference = default;
             FhirR4CodeableConcept dataAbsentReason = default;
-            IList<FhirR4CodeableConcept> interpretation = default;
-            IList<FhirR4ObservationReferenceRange> referenceRange = default;
+            IReadOnlyList<FhirR4CodeableConcept> interpretation = default;
+            IReadOnlyList<FhirR4ObservationReferenceRange> referenceRange = default;
             string id = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -20,8 +20,8 @@ try
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentencesLengths)}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -46,8 +46,8 @@ try
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentencesLengths)}'.");
 }
 catch (RequestFailedException exception)
 {

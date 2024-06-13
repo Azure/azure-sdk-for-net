@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Columns.Any() || hasPropertyOverride)
+                builder.Append("  columns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Columns))
                 {
-                    builder.Append("  columns: ");
-                    if (hasPropertyOverride)
+                    if (Columns.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  columns: ");
                         builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
-            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quotedName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotedName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quotedName: ");
                     if (QuotedName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

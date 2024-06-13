@@ -154,64 +154,69 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
-            if (Optional.IsDefined(Filters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  filters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Filters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  filters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Filters, options, 2, false, "  filters: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
-            builder.Append("  format: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  format: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  format: ");
                 builder.AppendLine($"'{Format.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schedule), out propertyOverride);
-            builder.Append("  schedule: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  schedule: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  schedule: ");
                 builder.AppendLine($"'{Schedule.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectType), out propertyOverride);
-            builder.Append("  objectType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  objectType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  objectType: ");
                 builder.AppendLine($"'{ObjectType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaFields), out propertyOverride);
-            if (Optional.IsCollectionDefined(SchemaFields) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SchemaFields.Any() || hasPropertyOverride)
+                builder.Append("  schemaFields: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SchemaFields))
                 {
-                    builder.Append("  schemaFields: ");
-                    if (hasPropertyOverride)
+                    if (SchemaFields.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  schemaFields: ");
                         builder.AppendLine("[");
                         foreach (var item in SchemaFields)
                         {

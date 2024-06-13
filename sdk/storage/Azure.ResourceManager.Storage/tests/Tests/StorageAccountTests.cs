@@ -1690,6 +1690,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        [LiveOnly(Reason = "TenantId cannot be stored in recording as it is considered PII.")]
         public async Task StorageAccountVnetACL()
         {
             //create an account with network rule set

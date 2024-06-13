@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Instructions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Instructions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Instructions.Any() || hasPropertyOverride)
+                builder.Append("  instructions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Instructions))
                 {
-                    builder.Append("  instructions: ");
-                    if (hasPropertyOverride)
+                    if (Instructions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  instructions: ");
                         builder.AppendLine("[");
                         foreach (var item in Instructions)
                         {
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataSourceUri), out propertyOverride);
-            if (Optional.IsCollectionDefined(DataSourceUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DataSourceUri.Any() || hasPropertyOverride)
+                builder.Append("  dataSourceUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataSourceUri))
                 {
-                    builder.Append("  dataSourceUri: ");
-                    if (hasPropertyOverride)
+                    if (DataSourceUri.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataSourceUri: ");
                         builder.AppendLine("[");
                         foreach (var item in DataSourceUri)
                         {

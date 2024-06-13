@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_GenerateLOA</description>
+        /// <description>ExpressRoutePorts_GenerateLoa</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_GenerateLOA</description>
+        /// <description>ExpressRoutePorts_GenerateLoa</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

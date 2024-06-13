@@ -389,24 +389,44 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.AlexaInfo"/>. </summary>
-        /// <param name="alexaRank"></param>
-        /// <param name="category"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.AlexaInfo"/> instance for mocking. </returns>
-        public static AlexaInfo AlexaInfo(long? alexaRank = null, string category = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.AsAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.AsAssetResource"/> instance for mocking. </returns>
+        public static AsAssetResource AsAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, AsAsset asset = null)
         {
-            return new AlexaInfo(
-                alexaRank,
-                category,
-                firstSeen,
-                lastSeen,
-                count,
-                recent,
-                serializedAdditionalRawData: null);
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
+
+            return new AsAssetResource(
+                "as",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AsAsset"/>. </summary>
@@ -488,17 +508,6 @@ namespace Azure.Analytics.Defender.Easm
                 detailedFromWhoisAt);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
-        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
-        {
-            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedString"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -519,6 +528,17 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null,
                 value,
                 sources?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
+        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        {
+            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SourceDetails"/>. </summary>
@@ -561,126 +581,44 @@ namespace Azure.Analytics.Defender.Easm
                 sources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.AssetSecurityPolicy"/>. </summary>
-        /// <param name="policyName"></param>
-        /// <param name="isAffected"></param>
-        /// <param name="description"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.AssetSecurityPolicy"/> instance for mocking. </returns>
-        public static AssetSecurityPolicy AssetSecurityPolicy(string policyName = null, bool? isAffected = null, string description = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, IEnumerable<SourceDetails> sources = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.ContactAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.ContactAssetResource"/> instance for mocking. </returns>
+        public static ContactAssetResource ContactAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, ContactAsset asset = null)
         {
-            sources ??= new List<SourceDetails>();
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
 
-            return new AssetSecurityPolicy(
-                policyName,
-                isAffected,
-                description,
-                firstSeen,
-                lastSeen,
-                count,
-                recent,
-                sources?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.AttributeDetails"/>. </summary>
-        /// <param name="attributeType"></param>
-        /// <param name="attributeValue"></param>
-        /// <param name="sources"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.AttributeDetails"/> instance for mocking. </returns>
-        public static AttributeDetails AttributeDetails(string attributeType = null, string attributeValue = null, IEnumerable<SourceDetails> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
-        {
-            sources ??= new List<SourceDetails>();
-
-            return new AttributeDetails(
-                attributeType,
-                attributeValue,
-                sources?.ToList(),
-                firstSeen,
-                lastSeen,
-                count,
-                recent,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.BannerDetails"/>. </summary>
-        /// <param name="port"></param>
-        /// <param name="bannerName"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="scanType"></param>
-        /// <param name="bannerMetadata"></param>
-        /// <param name="recent"></param>
-        /// <param name="sha256"></param>
-        /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.BannerDetails"/> instance for mocking. </returns>
-        public static BannerDetails BannerDetails(int? port = null, string bannerName = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string scanType = null, string bannerMetadata = null, bool? recent = null, string sha256 = null, IEnumerable<SourceDetails> sources = null)
-        {
-            sources ??= new List<SourceDetails>();
-
-            return new BannerDetails(
-                port,
-                bannerName,
-                firstSeen,
-                lastSeen,
-                count,
-                scanType,
-                bannerMetadata,
-                recent,
-                sha256,
-                sources?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.Cvss3Summary"/>. </summary>
-        /// <param name="version"></param>
-        /// <param name="vectorString"></param>
-        /// <param name="attackVector"></param>
-        /// <param name="attackComplexity"></param>
-        /// <param name="privilegesRequired"></param>
-        /// <param name="userInteraction"></param>
-        /// <param name="scope"></param>
-        /// <param name="confidentialityImpact"></param>
-        /// <param name="integrityImpact"></param>
-        /// <param name="availabilityImpact"></param>
-        /// <param name="baseScore"></param>
-        /// <param name="baseSeverity"></param>
-        /// <param name="exploitCodeMaturity"></param>
-        /// <param name="remediationLevel"></param>
-        /// <param name="reportConfidence"></param>
-        /// <param name="exploitabilityScore"></param>
-        /// <param name="impactScore"></param>
-        /// <returns> A new <see cref="Easm.Cvss3Summary"/> instance for mocking. </returns>
-        public static Cvss3Summary Cvss3Summary(string version = null, string vectorString = null, string attackVector = null, string attackComplexity = null, string privilegesRequired = null, string userInteraction = null, string scope = null, string confidentialityImpact = null, string integrityImpact = null, string availabilityImpact = null, float? baseScore = null, string baseSeverity = null, string exploitCodeMaturity = null, string remediationLevel = null, string reportConfidence = null, float? exploitabilityScore = null, float? impactScore = null)
-        {
-            return new Cvss3Summary(
-                version,
-                vectorString,
-                attackVector,
-                attackComplexity,
-                privilegesRequired,
-                userInteraction,
-                scope,
-                confidentialityImpact,
-                integrityImpact,
-                availabilityImpact,
-                baseScore,
-                baseSeverity,
-                exploitCodeMaturity,
-                remediationLevel,
-                reportConfidence,
-                exploitabilityScore,
-                impactScore,
-                serializedAdditionalRawData: null);
+            return new ContactAssetResource(
+                "contact",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ContactAsset"/>. </summary>
@@ -709,122 +647,44 @@ namespace Azure.Analytics.Defender.Easm
                 count);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.CookieDetails"/>. </summary>
-        /// <param name="cookieName"></param>
-        /// <param name="cookieDomain"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <param name="cookieExpiryDate"></param>
-        /// <returns> A new <see cref="Easm.CookieDetails"/> instance for mocking. </returns>
-        public static CookieDetails CookieDetails(string cookieName = null, string cookieDomain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, DateTimeOffset? cookieExpiryDate = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.DomainAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.DomainAssetResource"/> instance for mocking. </returns>
+        public static DomainAssetResource DomainAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, DomainAsset asset = null)
         {
-            return new CookieDetails(
-                cookieName,
-                cookieDomain,
-                firstSeen,
-                lastSeen,
-                count,
-                recent,
-                cookieExpiryDate,
-                serializedAdditionalRawData: null);
-        }
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
 
-        /// <summary> Initializes a new instance of <see cref="Easm.CveDetails"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="cweId"></param>
-        /// <param name="cvssScore"></param>
-        /// <param name="cvss3Summary"></param>
-        /// <returns> A new <see cref="Easm.CveDetails"/> instance for mocking. </returns>
-        public static CveDetails CveDetails(string name = null, string cweId = null, float? cvssScore = null, Cvss3Summary cvss3Summary = null)
-        {
-            return new CveDetails(name, cweId, cvssScore, cvss3Summary, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.DependentResource"/>. </summary>
-        /// <param name="md5"></param>
-        /// <param name="responseBodySize"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="firstSeenCrawlGuid"></param>
-        /// <param name="firstSeenPageGuid"></param>
-        /// <param name="firstSeenResourceGuid"></param>
-        /// <param name="lastSeenCrawlGuid"></param>
-        /// <param name="lastSeenPageGuid"></param>
-        /// <param name="lastSeenResourceGuid"></param>
-        /// <param name="responseBodyMinhash"></param>
-        /// <param name="contentType"></param>
-        /// <param name="sha256"></param>
-        /// <param name="sha384"></param>
-        /// <param name="sha512"></param>
-        /// <param name="url"></param>
-        /// <param name="cached"></param>
-        /// <param name="sriChecks"></param>
-        /// <param name="host"></param>
-        /// <param name="lastObservedViolation"></param>
-        /// <param name="lastObservedValidation"></param>
-        /// <param name="lastObservedActualSriHash"></param>
-        /// <param name="lastObservedExpectedSriHash"></param>
-        /// <returns> A new <see cref="Easm.DependentResource"/> instance for mocking. </returns>
-        public static DependentResource DependentResource(string md5 = null, long? responseBodySize = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string firstSeenCrawlGuid = null, string firstSeenPageGuid = null, string firstSeenResourceGuid = null, string lastSeenCrawlGuid = null, string lastSeenPageGuid = null, string lastSeenResourceGuid = null, IEnumerable<int> responseBodyMinhash = null, string contentType = null, string sha256 = null, string sha384 = null, string sha512 = null, Uri url = null, bool? cached = null, IEnumerable<SubResourceIntegrityCheck> sriChecks = null, string host = null, DateTimeOffset? lastObservedViolation = null, DateTimeOffset? lastObservedValidation = null, string lastObservedActualSriHash = null, string lastObservedExpectedSriHash = null)
-        {
-            responseBodyMinhash ??= new List<int>();
-            sriChecks ??= new List<SubResourceIntegrityCheck>();
-
-            return new DependentResource(
-                md5,
-                responseBodySize,
-                firstSeen,
-                lastSeen,
-                count,
-                firstSeenCrawlGuid,
-                firstSeenPageGuid,
-                firstSeenResourceGuid,
-                lastSeenCrawlGuid,
-                lastSeenPageGuid,
-                lastSeenResourceGuid,
-                responseBodyMinhash?.ToList(),
-                contentType,
-                sha256,
-                sha384,
-                sha512,
-                url,
-                cached,
-                sriChecks?.ToList(),
-                host,
-                lastObservedViolation,
-                lastObservedValidation,
-                lastObservedActualSriHash,
-                lastObservedExpectedSriHash,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.SubResourceIntegrityCheck"/>. </summary>
-        /// <param name="violation"></param>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="causePageUrl"></param>
-        /// <param name="crawlGuid"></param>
-        /// <param name="pageGuid"></param>
-        /// <param name="resourceGuid"></param>
-        /// <param name="expectedHash"></param>
-        /// <returns> A new <see cref="Easm.SubResourceIntegrityCheck"/> instance for mocking. </returns>
-        public static SubResourceIntegrityCheck SubResourceIntegrityCheck(bool? violation = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string causePageUrl = null, string crawlGuid = null, string pageGuid = null, string resourceGuid = null, string expectedHash = null)
-        {
-            return new SubResourceIntegrityCheck(
-                violation,
-                firstSeen,
-                lastSeen,
-                count,
-                causePageUrl,
-                crawlGuid,
-                pageGuid,
-                resourceGuid,
-                expectedHash,
-                serializedAdditionalRawData: null);
+            return new DomainAssetResource(
+                "domain",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DomainAsset"/>. </summary>
@@ -945,6 +805,26 @@ namespace Azure.Analytics.Defender.Easm
                 sources?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.AlexaInfo"/>. </summary>
+        /// <param name="alexaRank"></param>
+        /// <param name="category"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.AlexaInfo"/> instance for mocking. </returns>
+        public static AlexaInfo AlexaInfo(long? alexaRank = null, string category = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        {
+            return new AlexaInfo(
+                alexaRank,
+                category,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.SoaRecord"/>. </summary>
         /// <param name="nameServer"></param>
         /// <param name="email"></param>
@@ -989,15 +869,44 @@ namespace Azure.Analytics.Defender.Easm
                 sources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.GuidPair"/>. </summary>
-        /// <param name="pageGuid"></param>
-        /// <param name="crawlStateGuid"></param>
-        /// <param name="loadDate"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.GuidPair"/> instance for mocking. </returns>
-        public static GuidPair GuidPair(string pageGuid = null, string crawlStateGuid = null, DateTimeOffset? loadDate = null, bool? recent = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.HostAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.HostAssetResource"/> instance for mocking. </returns>
+        public static HostAssetResource HostAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, HostAsset asset = null)
         {
-            return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, serializedAdditionalRawData: null);
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
+
+            return new HostAssetResource(
+                "host",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.HostAsset"/>. </summary>
@@ -1140,6 +1049,59 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.CveDetails"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="cweId"></param>
+        /// <param name="cvssScore"></param>
+        /// <param name="cvss3Summary"></param>
+        /// <returns> A new <see cref="Easm.CveDetails"/> instance for mocking. </returns>
+        public static CveDetails CveDetails(string name = null, string cweId = null, float? cvssScore = null, Cvss3Summary cvss3Summary = null)
+        {
+            return new CveDetails(name, cweId, cvssScore, cvss3Summary, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.Cvss3Summary"/>. </summary>
+        /// <param name="version"></param>
+        /// <param name="vectorString"></param>
+        /// <param name="attackVector"></param>
+        /// <param name="attackComplexity"></param>
+        /// <param name="privilegesRequired"></param>
+        /// <param name="userInteraction"></param>
+        /// <param name="scope"></param>
+        /// <param name="confidentialityImpact"></param>
+        /// <param name="integrityImpact"></param>
+        /// <param name="availabilityImpact"></param>
+        /// <param name="baseScore"></param>
+        /// <param name="baseSeverity"></param>
+        /// <param name="exploitCodeMaturity"></param>
+        /// <param name="remediationLevel"></param>
+        /// <param name="reportConfidence"></param>
+        /// <param name="exploitabilityScore"></param>
+        /// <param name="impactScore"></param>
+        /// <returns> A new <see cref="Easm.Cvss3Summary"/> instance for mocking. </returns>
+        public static Cvss3Summary Cvss3Summary(string version = null, string vectorString = null, string attackVector = null, string attackComplexity = null, string privilegesRequired = null, string userInteraction = null, string scope = null, string confidentialityImpact = null, string integrityImpact = null, string availabilityImpact = null, float? baseScore = null, string baseSeverity = null, string exploitCodeMaturity = null, string remediationLevel = null, string reportConfidence = null, float? exploitabilityScore = null, float? impactScore = null)
+        {
+            return new Cvss3Summary(
+                version,
+                vectorString,
+                attackVector,
+                attackComplexity,
+                privilegesRequired,
+                userInteraction,
+                scope,
+                confidentialityImpact,
+                integrityImpact,
+                availabilityImpact,
+                baseScore,
+                baseSeverity,
+                exploitCodeMaturity,
+                remediationLevel,
+                reportConfidence,
+                exploitabilityScore,
+                impactScore,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.PortDetails"/>. </summary>
         /// <param name="portName"></param>
         /// <param name="firstSeen"></param>
@@ -1169,6 +1131,52 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null,
                 headerName,
                 headerValue);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.AttributeDetails"/>. </summary>
+        /// <param name="attributeType"></param>
+        /// <param name="attributeValue"></param>
+        /// <param name="sources"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.AttributeDetails"/> instance for mocking. </returns>
+        public static AttributeDetails AttributeDetails(string attributeType = null, string attributeValue = null, IEnumerable<SourceDetails> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        {
+            sources ??= new List<SourceDetails>();
+
+            return new AttributeDetails(
+                attributeType,
+                attributeValue,
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.CookieDetails"/>. </summary>
+        /// <param name="cookieName"></param>
+        /// <param name="cookieDomain"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <param name="cookieExpiryDate"></param>
+        /// <returns> A new <see cref="Easm.CookieDetails"/> instance for mocking. </returns>
+        public static CookieDetails CookieDetails(string cookieName = null, string cookieDomain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, DateTimeOffset? cookieExpiryDate = null)
+        {
+            return new CookieDetails(
+                cookieName,
+                cookieDomain,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                cookieExpiryDate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SslCertAsset"/>. </summary>
@@ -1425,6 +1433,91 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.DependentResource"/>. </summary>
+        /// <param name="md5"></param>
+        /// <param name="responseBodySize"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="firstSeenCrawlGuid"></param>
+        /// <param name="firstSeenPageGuid"></param>
+        /// <param name="firstSeenResourceGuid"></param>
+        /// <param name="lastSeenCrawlGuid"></param>
+        /// <param name="lastSeenPageGuid"></param>
+        /// <param name="lastSeenResourceGuid"></param>
+        /// <param name="responseBodyMinhash"></param>
+        /// <param name="contentType"></param>
+        /// <param name="sha256"></param>
+        /// <param name="sha384"></param>
+        /// <param name="sha512"></param>
+        /// <param name="url"></param>
+        /// <param name="cached"></param>
+        /// <param name="sriChecks"></param>
+        /// <param name="host"></param>
+        /// <param name="lastObservedViolation"></param>
+        /// <param name="lastObservedValidation"></param>
+        /// <param name="lastObservedActualSriHash"></param>
+        /// <param name="lastObservedExpectedSriHash"></param>
+        /// <returns> A new <see cref="Easm.DependentResource"/> instance for mocking. </returns>
+        public static DependentResource DependentResource(string md5 = null, long? responseBodySize = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string firstSeenCrawlGuid = null, string firstSeenPageGuid = null, string firstSeenResourceGuid = null, string lastSeenCrawlGuid = null, string lastSeenPageGuid = null, string lastSeenResourceGuid = null, IEnumerable<int> responseBodyMinhash = null, string contentType = null, string sha256 = null, string sha384 = null, string sha512 = null, Uri url = null, bool? cached = null, IEnumerable<SubResourceIntegrityCheck> sriChecks = null, string host = null, DateTimeOffset? lastObservedViolation = null, DateTimeOffset? lastObservedValidation = null, string lastObservedActualSriHash = null, string lastObservedExpectedSriHash = null)
+        {
+            responseBodyMinhash ??= new List<int>();
+            sriChecks ??= new List<SubResourceIntegrityCheck>();
+
+            return new DependentResource(
+                md5,
+                responseBodySize,
+                firstSeen,
+                lastSeen,
+                count,
+                firstSeenCrawlGuid,
+                firstSeenPageGuid,
+                firstSeenResourceGuid,
+                lastSeenCrawlGuid,
+                lastSeenPageGuid,
+                lastSeenResourceGuid,
+                responseBodyMinhash?.ToList(),
+                contentType,
+                sha256,
+                sha384,
+                sha512,
+                url,
+                cached,
+                sriChecks?.ToList(),
+                host,
+                lastObservedViolation,
+                lastObservedValidation,
+                lastObservedActualSriHash,
+                lastObservedExpectedSriHash,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.SubResourceIntegrityCheck"/>. </summary>
+        /// <param name="violation"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="causePageUrl"></param>
+        /// <param name="crawlGuid"></param>
+        /// <param name="pageGuid"></param>
+        /// <param name="resourceGuid"></param>
+        /// <param name="expectedHash"></param>
+        /// <returns> A new <see cref="Easm.SubResourceIntegrityCheck"/> instance for mocking. </returns>
+        public static SubResourceIntegrityCheck SubResourceIntegrityCheck(bool? violation = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string causePageUrl = null, string crawlGuid = null, string pageGuid = null, string resourceGuid = null, string expectedHash = null)
+        {
+            return new SubResourceIntegrityCheck(
+                violation,
+                firstSeen,
+                lastSeen,
+                count,
+                causePageUrl,
+                crawlGuid,
+                pageGuid,
+                resourceGuid,
+                expectedHash,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.ScanMetadata"/>. </summary>
         /// <param name="port"></param>
         /// <param name="bannerMetadata"></param>
@@ -1534,6 +1627,76 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.BannerDetails"/>. </summary>
+        /// <param name="port"></param>
+        /// <param name="bannerName"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="scanType"></param>
+        /// <param name="bannerMetadata"></param>
+        /// <param name="recent"></param>
+        /// <param name="sha256"></param>
+        /// <param name="sources"></param>
+        /// <returns> A new <see cref="Easm.BannerDetails"/> instance for mocking. </returns>
+        public static BannerDetails BannerDetails(int? port = null, string bannerName = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string scanType = null, string bannerMetadata = null, bool? recent = null, string sha256 = null, IEnumerable<SourceDetails> sources = null)
+        {
+            sources ??= new List<SourceDetails>();
+
+            return new BannerDetails(
+                port,
+                bannerName,
+                firstSeen,
+                lastSeen,
+                count,
+                scanType,
+                bannerMetadata,
+                recent,
+                sha256,
+                sources?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.IpAddressAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.IpAddressAssetResource"/> instance for mocking. </returns>
+        public static IpAddressAssetResource IpAddressAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, IpAddressAsset asset = null)
+        {
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
+
+            return new IpAddressAssetResource(
+                "ipAddress",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.IpAddressAsset"/>. </summary>
         /// <param name="ipAddress"></param>
         /// <param name="asns"></param>
@@ -1636,6 +1799,46 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.IpBlockAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.IpBlockAssetResource"/> instance for mocking. </returns>
+        public static IpBlockAssetResource IpBlockAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, IpBlockAsset asset = null)
+        {
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
+
+            return new IpBlockAssetResource(
+                "ipBlock",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.IpBlockAsset"/>. </summary>
         /// <param name="ipBlock"></param>
         /// <param name="asns"></param>
@@ -1729,27 +1932,44 @@ namespace Azure.Analytics.Defender.Easm
                 ipv6);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.ObservedIntegers"/>. </summary>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <param name="values"></param>
-        /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedIntegers"/> instance for mocking. </returns>
-        public static ObservedIntegers ObservedIntegers(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, IEnumerable<int> values = null, IEnumerable<SourceDetails> sources = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.PageAssetResource"/>. </summary>
+        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="name"> The caller provided unique name for the resource. </param>
+        /// <param name="displayName"> The name that can be used for display purposes. </param>
+        /// <param name="uuid"> Global UUID for the asset. </param>
+        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="state"></param>
+        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
+        /// <param name="labels"> Customer labels assigned to this asset. </param>
+        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
+        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
+        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
+        /// <param name="reason"></param>
+        /// <param name="asset"> asset. </param>
+        /// <returns> A new <see cref="Easm.PageAssetResource"/> instance for mocking. </returns>
+        public static PageAssetResource PageAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, PageAsset asset = null)
         {
-            values ??= new List<int>();
-            sources ??= new List<SourceDetails>();
+            labels ??= new List<string>();
+            auditTrail ??= new List<AuditTrailItem>();
 
-            return new ObservedIntegers(
-                firstSeen,
-                lastSeen,
-                count,
-                recent,
+            return new PageAssetResource(
+                "page",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
                 serializedAdditionalRawData: null,
-                values?.ToList(),
-                sources?.ToList());
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.PageAsset"/>. </summary>
@@ -1929,6 +2149,55 @@ namespace Azure.Analytics.Defender.Easm
                 ipv6?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.AssetSecurityPolicy"/>. </summary>
+        /// <param name="policyName"></param>
+        /// <param name="isAffected"></param>
+        /// <param name="description"></param>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <param name="sources"></param>
+        /// <returns> A new <see cref="Easm.AssetSecurityPolicy"/> instance for mocking. </returns>
+        public static AssetSecurityPolicy AssetSecurityPolicy(string policyName = null, bool? isAffected = null, string description = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, IEnumerable<SourceDetails> sources = null)
+        {
+            sources ??= new List<SourceDetails>();
+
+            return new AssetSecurityPolicy(
+                policyName,
+                isAffected,
+                description,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                sources?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.ObservedIntegers"/>. </summary>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <param name="values"></param>
+        /// <param name="sources"></param>
+        /// <returns> A new <see cref="Easm.ObservedIntegers"/> instance for mocking. </returns>
+        public static ObservedIntegers ObservedIntegers(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, IEnumerable<int> values = null, IEnumerable<SourceDetails> sources = null)
+        {
+            values ??= new List<int>();
+            sources ??= new List<SourceDetails>();
+
+            return new ObservedIntegers(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                values?.ToList(),
+                sources?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.PageCause"/>. </summary>
         /// <param name="cause"></param>
         /// <param name="causeElementXPath"></param>
@@ -1951,322 +2220,15 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionPayload"/>. </summary>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
-        public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, LogAnalyticsDataConnectionProperties properties = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.GuidPair"/>. </summary>
+        /// <param name="pageGuid"></param>
+        /// <param name="crawlStateGuid"></param>
+        /// <param name="loadDate"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.GuidPair"/> instance for mocking. </returns>
+        public static GuidPair GuidPair(string pageGuid = null, string crawlStateGuid = null, DateTimeOffset? loadDate = null, bool? recent = null)
         {
-            return new LogAnalyticsDataConnectionPayload(
-                "logAnalytics",
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
-        public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, AzureDataExplorerDataConnectionProperties properties = null)
-        {
-            return new AzureDataExplorerDataConnectionPayload(
-                "azureDataExplorer",
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.AsAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.AsAssetResource"/> instance for mocking. </returns>
-        public static AsAssetResource AsAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, AsAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new AsAssetResource(
-                "as",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.ContactAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.ContactAssetResource"/> instance for mocking. </returns>
-        public static ContactAssetResource ContactAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, ContactAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new ContactAssetResource(
-                "contact",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.DomainAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.DomainAssetResource"/> instance for mocking. </returns>
-        public static DomainAssetResource DomainAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, DomainAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new DomainAssetResource(
-                "domain",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.HostAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.HostAssetResource"/> instance for mocking. </returns>
-        public static HostAssetResource HostAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, HostAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new HostAssetResource(
-                "host",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.IpAddressAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.IpAddressAssetResource"/> instance for mocking. </returns>
-        public static IpAddressAssetResource IpAddressAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, IpAddressAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new IpAddressAssetResource(
-                "ipAddress",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.IpBlockAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.IpBlockAssetResource"/> instance for mocking. </returns>
-        public static IpBlockAssetResource IpBlockAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, IpBlockAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new IpBlockAssetResource(
-                "ipBlock",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Easm.PageAssetResource"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
-        /// <param name="name"> The caller provided unique name for the resource. </param>
-        /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
-        /// <param name="state"></param>
-        /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
-        /// <param name="labels"> Customer labels assigned to this asset. </param>
-        /// <param name="wildcard"> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </param>
-        /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
-        /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
-        /// <param name="reason"></param>
-        /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.PageAssetResource"/> instance for mocking. </returns>
-        public static PageAssetResource PageAssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, PageAsset asset = null)
-        {
-            labels ??= new List<string>();
-            auditTrail ??= new List<AuditTrailItem>();
-
-            return new PageAssetResource(
-                "page",
-                id,
-                name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels?.ToList(),
-                wildcard,
-                discoGroupName,
-                auditTrail?.ToList(),
-                reason,
-                serializedAdditionalRawData: null,
-                asset);
+            return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SslCertAssetResource"/>. </summary>
@@ -2371,6 +2333,44 @@ namespace Azure.Analytics.Defender.Easm
                 userUpdatedAt,
                 active,
                 inactiveMessage,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionPayload"/>. </summary>
+        /// <param name="name"> The name of data connection. </param>
+        /// <param name="content"> The type of data the data connection will transfer. </param>
+        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="properties"> properties. </param>
+        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
+        public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, LogAnalyticsDataConnectionProperties properties = null)
+        {
+            return new LogAnalyticsDataConnectionPayload(
+                "logAnalytics",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
+        /// <param name="name"> The name of data connection. </param>
+        /// <param name="content"> The type of data the data connection will transfer. </param>
+        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="properties"> properties. </param>
+        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
+        public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, AzureDataExplorerDataConnectionProperties properties = null)
+        {
+            return new AzureDataExplorerDataConnectionPayload(
+                "azureDataExplorer",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
                 serializedAdditionalRawData: null,
                 properties);
         }

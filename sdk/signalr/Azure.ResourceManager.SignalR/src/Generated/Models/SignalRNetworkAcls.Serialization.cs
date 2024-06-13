@@ -146,45 +146,48 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
-            if (Optional.IsDefined(DefaultAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultAction: ");
                     builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetwork), out propertyOverride);
-            if (Optional.IsDefined(PublicNetwork) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publicNetwork: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetwork))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publicNetwork: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PublicNetwork, options, 2, false, "  publicNetwork: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrivateEndpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrivateEndpoints.Any() || hasPropertyOverride)
+                builder.Append("  privateEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpoints))
                 {
-                    builder.Append("  privateEndpoints: ");
-                    if (hasPropertyOverride)
+                    if (PrivateEndpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  privateEndpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpoints)
                         {

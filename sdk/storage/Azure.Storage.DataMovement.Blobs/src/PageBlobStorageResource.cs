@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "PageBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.PageBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
@@ -42,6 +42,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        public PageBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
@@ -316,13 +320,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Page);
+            return new BlobSourceCheckpointData(new(BlobType.Page));
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                blobType: BlobType.Page,
+                blobType: new(BlobType.Page),
                 contentType: _options?.ContentType,
                 contentEncoding: _options?.ContentEncoding,
                 contentLanguage: _options?.ContentLanguage,

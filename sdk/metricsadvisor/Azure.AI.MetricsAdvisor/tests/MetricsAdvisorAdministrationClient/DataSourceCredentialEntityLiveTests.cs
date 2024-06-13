@@ -12,8 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DataSourceCredentialEntityLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string ClientId = "clientId";
-        private const string TenantId = "tenantId";
+        private string TenantId => Mode == RecordedTestMode.Live ? "tenantId" : EmptyGuid;
+        private string ClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string Endpoint = "https://fakeuri.com/";
         private const string ClientIdSecretName = "clientIdSecretName";
         private const string ClientSecretSecretName = "clientSecretSecretName";
@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedCredential = (await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalCredentialEntity;
 
-            Assert.That(updatedCredential.ClientId, Is.EqualTo(SanitizeValue));
+            Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
             Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
         }
 
@@ -255,7 +255,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
                 Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
-                Assert.That(spCredential.ClientId, Is.EqualTo(SanitizeValue));
+                Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
                 Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)
@@ -281,7 +281,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        private static DataSourceCredentialEntity GetDataSourceCredentialEntityTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
+        private DataSourceCredentialEntity GetDataSourceCredentialEntityTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
         {
             nameof(DataLakeSharedKeyCredentialEntity) => new DataLakeSharedKeyCredentialEntity(credentialName, "accountKey"),
             nameof(ServicePrincipalCredentialEntity) => new ServicePrincipalCredentialEntity(credentialName, ClientId, "clientSecret", TenantId),

@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.Search simplifies declarative resource provisioning in .NET for Azure AI Search.</Description>
-    <Version>0.1.0-beta.2</Version>
+    <Version>0.2.0-beta.2</Version>
+    <ApiCompatVersion>0.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

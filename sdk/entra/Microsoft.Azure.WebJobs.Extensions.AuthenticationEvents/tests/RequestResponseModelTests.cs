@@ -50,8 +50,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     request.Response.Actions.Add(
                         new WebJobsProvideClaimsForToken(
-                            new WebjobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
-                            new WebjobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
+                            new WebJobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
+                            new WebJobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
                             ));
 
                     await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     request.Response.Actions.Add(
                         new WebJobsProvideClaimsForToken(
-                            new WebjobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
-                            new WebjobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
+                            new WebJobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
+                            new WebJobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
                             ));
 
                     // set the request status type

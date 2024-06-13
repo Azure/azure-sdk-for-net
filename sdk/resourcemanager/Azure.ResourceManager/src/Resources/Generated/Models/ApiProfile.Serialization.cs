@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileVersion), out propertyOverride);
-            if (Optional.IsDefined(ProfileVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  profileVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProfileVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  profileVersion: ");
                     if (ProfileVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
-            if (Optional.IsDefined(ApiVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apiVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apiVersion: ");
                     if (ApiVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

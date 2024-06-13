@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -38,7 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -54,7 +54,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -84,7 +84,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -114,7 +114,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -140,7 +140,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -166,7 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -212,7 +212,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient();
 
             using RequestContent content = RequestContent.Create(new
             {

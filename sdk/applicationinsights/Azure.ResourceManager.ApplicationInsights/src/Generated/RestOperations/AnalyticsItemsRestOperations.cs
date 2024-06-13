@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope, ItemTypeParameter? type, bool? includeContent)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ComponentItemScope? scope, AnalyticsItemTypeContent? type, bool? includeContent)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope, ItemTypeParameter? type, bool? includeContent)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ComponentItemScope? scope, AnalyticsItemTypeContent? type, bool? includeContent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentAnalyticsItem>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentAnalyticsItem>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ComponentItemScope? scope = null, AnalyticsItemTypeContent? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ApplicationInsightsComponentAnalyticsItem>> List(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsComponentAnalyticsItem>> List(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ComponentItemScope? scope = null, AnalyticsItemTypeContent? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAnalyticsItem>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentAnalyticsItem>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAnalyticsItem> Get(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentAnalyticsItem> Get(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="itemProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentAnalyticsItem>> PutAsync(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentAnalyticsItem>> PutAsync(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="itemProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentAnalyticsItem> Put(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentAnalyticsItem> Put(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

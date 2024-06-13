@@ -17,7 +17,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="wasAcknowledged"> Communication was acknowledged. </param>
         internal FollowupCommunicationInference(bool wasAcknowledged)
         {
-            Kind = "followupCommunication";
+            Kind = RadiologyInsightsInferenceType.FollowupCommunication;
             DateTime = new ChangeTrackingList<DateTimeOffset>();
             Recipient = new ChangeTrackingList<MedicalProfessionalType>();
             WasAcknowledged = wasAcknowledged;
@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="dateTime"> Communication date and time. </param>
         /// <param name="recipient"> Recipient of the communication. </param>
         /// <param name="wasAcknowledged"> Communication was acknowledged. </param>
-        internal FollowupCommunicationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DateTimeOffset> dateTime, IReadOnlyList<MedicalProfessionalType> recipient, bool wasAcknowledged) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupCommunicationInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DateTimeOffset> dateTime, IReadOnlyList<MedicalProfessionalType> recipient, bool wasAcknowledged) : base(kind, extension, serializedAdditionalRawData)
         {
             DateTime = dateTime;
             Recipient = recipient;

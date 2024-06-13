@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         public async Task TriggerRollover_RegisteredServersTriggerRollover()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_TriggerRollover.json
-            // this example is just showing the usage of "RegisteredServers_triggerRollover" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RegisteredServers_TriggerRollover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

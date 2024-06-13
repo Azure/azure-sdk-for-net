@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentity), out propertyOverride);
-            if (Optional.IsDefined(UserAssignedIdentity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userAssignedIdentity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAssignedIdentity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userAssignedIdentity: ");
                     if (UserAssignedIdentity.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

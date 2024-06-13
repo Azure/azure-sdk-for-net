@@ -191,17 +191,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (Optional.IsCollectionDefined(Keys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Keys.Any() || hasPropertyOverride)
+                builder.Append("  keys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Keys))
                 {
-                    builder.Append("  keys: ");
-                    if (hasPropertyOverride)
+                    if (Keys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  keys: ");
                         builder.AppendLine("[");
                         foreach (var item in Keys)
                         {
@@ -213,17 +214,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (Optional.IsCollectionDefined(Secrets) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Secrets.Any() || hasPropertyOverride)
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Secrets))
                 {
-                    builder.Append("  secrets: ");
-                    if (hasPropertyOverride)
+                    if (Secrets.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  secrets: ");
                         builder.AppendLine("[");
                         foreach (var item in Secrets)
                         {
@@ -235,17 +237,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Certificates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Certificates.Any() || hasPropertyOverride)
+                builder.Append("  certificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Certificates))
                 {
-                    builder.Append("  certificates: ");
-                    if (hasPropertyOverride)
+                    if (Certificates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  certificates: ");
                         builder.AppendLine("[");
                         foreach (var item in Certificates)
                         {
@@ -257,17 +260,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
-            if (Optional.IsCollectionDefined(Storage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Storage.Any() || hasPropertyOverride)
+                builder.Append("  storage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Storage))
                 {
-                    builder.Append("  storage: ");
-                    if (hasPropertyOverride)
+                    if (Storage.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  storage: ");
                         builder.AppendLine("[");
                         foreach (var item in Storage)
                         {

@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -49,12 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
@@ -81,12 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (builder.Services == null)
             {
@@ -220,6 +211,25 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
                 return new Manager(options, new DefaultPlatform());
             });
+
+            builder.Services.AddOptions<AzureMonitorOptions>()
+                .Configure<IConfiguration>((options, config) =>
+                {
+                    // This is a temporary workaround for hotfix GHSA-vh2m-22xx-q94f.
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f
+                    // We are disabling the workaround set by OpenTelemetry.Instrumentation.AspNetCore v1.8.1 and OpenTelemetry.Instrumentation.Http v1.8.1.
+                    // The OpenTelemetry Community is deciding on an official stance on this issue and we will align with that final decision.
+                    // TODO: FOLLOW UP ON: https://github.com/open-telemetry/semantic-conventions/pull/961 (2024-04-26)
+                    if (config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    if (config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+                });
 
             return builder;
         }

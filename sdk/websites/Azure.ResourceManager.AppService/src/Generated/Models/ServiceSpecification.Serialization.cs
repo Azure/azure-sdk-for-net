@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricSpecifications), out propertyOverride);
-            if (Optional.IsCollectionDefined(MetricSpecifications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MetricSpecifications.Any() || hasPropertyOverride)
+                builder.Append("  metricSpecifications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MetricSpecifications))
                 {
-                    builder.Append("  metricSpecifications: ");
-                    if (hasPropertyOverride)
+                    if (MetricSpecifications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  metricSpecifications: ");
                         builder.AppendLine("[");
                         foreach (var item in MetricSpecifications)
                         {
@@ -163,17 +164,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSpecifications), out propertyOverride);
-            if (Optional.IsCollectionDefined(LogSpecifications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LogSpecifications.Any() || hasPropertyOverride)
+                builder.Append("  logSpecifications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LogSpecifications))
                 {
-                    builder.Append("  logSpecifications: ");
-                    if (hasPropertyOverride)
+                    if (LogSpecifications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  logSpecifications: ");
                         builder.AppendLine("[");
                         foreach (var item in LogSpecifications)
                         {

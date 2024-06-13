@@ -15,5 +15,8 @@ resource storageAccount_7EH24TZOS 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: 'BlockBlobStorage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }

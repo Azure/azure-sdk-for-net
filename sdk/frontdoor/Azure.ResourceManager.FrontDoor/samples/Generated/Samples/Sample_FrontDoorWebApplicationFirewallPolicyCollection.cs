@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetAllPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafListPolicies.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafListPolicies.json
             // this example is just showing the usage of "Policies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesSpecificPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyCreateOrUpdate.json
             // this example is just showing the usage of "Policies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,17 +183,27 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // invoke the operation
             string policyName = "Policy1";
-            FrontDoorWebApplicationFirewallPolicyData data = new FrontDoorWebApplicationFirewallPolicyData(new AzureLocation("placeholder"))
+            FrontDoorWebApplicationFirewallPolicyData data = new FrontDoorWebApplicationFirewallPolicyData(new AzureLocation("WestUs"))
             {
-                SkuName = FrontDoorSkuName.ClassicAzureFrontDoor,
+                SkuName = FrontDoorSkuName.PremiumAzureFrontDoor,
                 PolicySettings = new FrontDoorWebApplicationFirewallPolicySettings()
                 {
                     EnabledState = PolicyEnabledState.Enabled,
                     Mode = FrontDoorWebApplicationFirewallPolicyMode.Prevention,
                     RedirectUri = new Uri("http://www.bing.com"),
-                    CustomBlockResponseStatusCode = 499,
+                    CustomBlockResponseStatusCode = 429,
                     CustomBlockResponseBody = "PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg==",
                     RequestBodyCheck = PolicyRequestBodyCheck.Disabled,
+                    JavascriptChallengeExpirationInMinutes = 30,
+                    State = WebApplicationFirewallScrubbingState.Enabled,
+                    ScrubbingRules =
+{
+new WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable.RequestIPAddress,ScrubbingRuleEntryMatchOperator.EqualsAny)
+{
+Selector = null,
+State = ScrubbingRuleEntryState.Enabled,
+}
+},
                 },
                 Rules =
 {

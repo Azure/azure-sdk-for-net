@@ -563,7 +563,7 @@ namespace Azure.Analytics.Defender.Easm
     }
     public partial class DataConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>
     {
-        internal DataConnectionProperties() { }
+        public DataConnectionProperties() { }
         Azure.Analytics.Defender.Easm.DataConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

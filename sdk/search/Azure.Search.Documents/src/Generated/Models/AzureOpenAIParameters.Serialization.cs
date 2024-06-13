@@ -43,6 +43,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("authIdentity");
                 }
             }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -56,6 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string deploymentId = default;
             string apiKey = default;
             SearchIndexerDataIdentity authIdentity = default;
+            AzureOpenAIModelName? modelName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -87,8 +93,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
+                if (property.NameEquals("modelName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modelName = new AzureOpenAIModelName(property.Value.GetString());
+                    continue;
+                }
             }
-            return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity);
+            return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity, modelName);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

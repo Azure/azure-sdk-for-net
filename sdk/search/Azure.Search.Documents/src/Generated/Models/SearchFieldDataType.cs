@@ -34,6 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string HalfValue = "Edm.Half";
         private const string Int16Value = "Edm.Int16";
         private const string SByteValue = "Edm.SByte";
+        private const string ByteValue = "Edm.Byte";
         /// <summary> Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half). </summary>
         public static SearchFieldDataType Half { get; } = new SearchFieldDataType(HalfValue);
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>

@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeneratedOn), out propertyOverride);
-            if (Optional.IsDefined(GeneratedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  generationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeneratedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  generationTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(GeneratedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

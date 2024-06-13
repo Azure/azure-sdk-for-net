@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<LiveTokenResponse>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<LiveTokenResult>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        LiveTokenResponse value = default;
+                        LiveTokenResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LiveTokenResponse.DeserializeLiveTokenResponse(document.RootElement);
+                        value = LiveTokenResult.DeserializeLiveTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<LiveTokenResponse> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<LiveTokenResult> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        LiveTokenResponse value = default;
+                        LiveTokenResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LiveTokenResponse.DeserializeLiveTokenResponse(document.RootElement);
+                        value = LiveTokenResult.DeserializeLiveTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

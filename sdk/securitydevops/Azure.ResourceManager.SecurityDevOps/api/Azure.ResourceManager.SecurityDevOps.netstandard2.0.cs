@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureDevOpsConnectorResource : Azure.ResourceManager.ArmResource
+    public partial class AzureDevOpsConnectorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AzureDevOpsConnectorResource() { }
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureDevOpsOrgResource : Azure.ResourceManager.ArmResource
+    public partial class AzureDevOpsOrgResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AzureDevOpsOrgResource() { }
@@ -93,6 +98,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> GetAzureDevOpsProject(string azureDevOpsProjectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>> GetAzureDevOpsProjectAsync(string azureDevOpsProjectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectCollection GetAzureDevOpsProjects() { throw null; }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -123,7 +133,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureDevOpsProjectResource : Azure.ResourceManager.ArmResource
+    public partial class AzureDevOpsProjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AzureDevOpsProjectResource() { }
@@ -135,6 +145,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> GetAzureDevOpsRepo(string azureDevOpsRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> GetAzureDevOpsRepoAsync(string azureDevOpsRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoCollection GetAzureDevOpsRepos() { throw null; }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -165,7 +180,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureDevOpsRepoResource : Azure.ResourceManager.ArmResource
+    public partial class AzureDevOpsRepoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AzureDevOpsRepoResource() { }
@@ -174,6 +189,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -204,7 +224,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GitHubConnectorResource : Azure.ResourceManager.ArmResource
+    public partial class GitHubConnectorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GitHubConnectorResource() { }
@@ -228,6 +248,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityDevOps.GitHubConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.GitHubConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -258,7 +283,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GitHubOwnerResource : Azure.ResourceManager.ArmResource
+    public partial class GitHubOwnerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GitHubOwnerResource() { }
@@ -270,6 +295,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> GetGitHubRepo(string gitHubRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>> GetGitHubRepoAsync(string gitHubRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityDevOps.GitHubRepoCollection GetGitHubRepos() { throw null; }
+        Azure.ResourceManager.SecurityDevOps.GitHubOwnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.GitHubOwnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubOwnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubOwnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -300,7 +330,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GitHubRepoResource : Azure.ResourceManager.ArmResource
+    public partial class GitHubRepoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GitHubRepoResource() { }
@@ -309,6 +339,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityDevOps.GitHubRepoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityDevOps.GitHubRepoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.GitHubRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

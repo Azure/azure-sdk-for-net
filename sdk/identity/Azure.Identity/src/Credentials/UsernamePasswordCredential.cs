@@ -93,6 +93,10 @@ namespace Azure.Identity
             _username = username;
             _password = password;
             _clientId = clientId;
+            if (options is UsernamePasswordCredentialOptions usernamePasswordOptions && usernamePasswordOptions.AuthenticationRecord != null)
+            {
+                _record = usernamePasswordOptions.AuthenticationRecord;
+            }
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
@@ -228,7 +232,7 @@ namespace Azure.Identity
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(result.ToAccessToken());
                     }
                     catch (MsalUiRequiredException msalEx)
                     {
@@ -237,7 +241,7 @@ namespace Azure.Identity
                     }
                 }
                 result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

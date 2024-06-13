@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 
 // this namespace will be shared between isolated worker and WebJobs extension so make it somewhat generic
 option csharp_namespace = "Microsoft.Azure.ServiceBus.Grpc";
@@ -19,6 +20,21 @@ service Settlement {
 
   // Defers a message
   rpc Defer (DeferRequest) returns (google.protobuf.Empty) {}
+
+  // Renew message lock
+  rpc RenewMessageLock (RenewMessageLockRequest) returns (google.protobuf.Empty) {}
+
+  // Get session state
+  rpc GetSessionState (GetSessionStateRequest) returns (GetSessionStateResponse) {}
+
+  // Set session state
+  rpc SetSessionState (SetSessionStateRequest) returns (google.protobuf.Empty) {}
+
+  // Release session
+  rpc ReleaseSession (ReleaseSessionRequest) returns (google.protobuf.Empty) {}
+
+  // Renew session lock
+  rpc RenewSessionLock (RenewSessionLockRequest) returns (RenewSessionLockResponse) {}
 }
 
 // The complete message request containing the locktoken.
@@ -44,4 +60,40 @@ message DeadletterRequest {
 message DeferRequest {
   string locktoken = 1;
   bytes propertiesToModify = 2;
+}
+
+// The renew message lock request containing the locktoken.
+message RenewMessageLockRequest {
+  string locktoken = 1;
+}
+
+// The get message request.
+message GetSessionStateRequest {
+  string sessionId = 1;
+}
+
+// The set message request.
+message SetSessionStateRequest {
+  string sessionId = 1;
+  bytes sessionState = 2;
+}
+
+// Get response containing the session state.
+message GetSessionStateResponse {
+  bytes sessionState = 1;
+}
+
+// Release session.
+message ReleaseSessionRequest {
+  string sessionId = 1;
+}
+
+// Renew session lock.
+message RenewSessionLockRequest {
+  string sessionId = 1;
+}
+
+// Renew session lock.
+message RenewSessionLockResponse {
+  google.protobuf.Timestamp lockedUntil = 1;
 }

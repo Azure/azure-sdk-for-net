@@ -10,6 +10,9 @@ resource storageAccount_HrOuDaeNb 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: 'Storage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }
 
@@ -28,3 +31,4 @@ resource keyVault_67efR8a7Y 'Microsoft.KeyVault/vaults@2022-07-01' = {
 }
 
 output STORAGE_KIND string = storageAccount_HrOuDaeNb.kind
+output PRIMARY_ENDPOINTS object = storageAccount_HrOuDaeNb.properties.primaryEndpoints

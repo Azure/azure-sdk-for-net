@@ -22,8 +22,8 @@ namespace Azure.Provisioning.Sql.Tests
 
             keyVault = UseExistingResource(keyVault, () => scope.AddKeyVault(ResourceGroup));
 
-            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true);
-            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true);
+            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", description: "SQL Server administrator password", isSecure: true);
+            Parameter appUserPasswordParam = new Parameter("appUserPassword", description: "Application user password", isSecure: true);
             AddParameter(sqlAdminPasswordParam);
             AddParameter(appUserPasswordParam);
 
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.Sql.Tests
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(this, "connectionString", SqlDatabase.GetConnectionString(appUserPasswordParam));
 
             SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(this, name: "firewallRule");
-            Parameter databaseName = new Parameter("appUserPassword", "Application user password", isSecure: true);
+            Parameter databaseName = new Parameter("appUserPassword", description: "Application user password", isSecure: true);
             DeploymentScript deploymentScript = new DeploymentScript(
                 this,
                 "cliScript",

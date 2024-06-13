@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.1 (Unreleased)
+## 5.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.12.0-beta.1 (2024-05-17)
+
+### Features Added
+
+- Preview support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+### Breaking Changes
+
+  ### Major
+
+  The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
+
+  Impacted properties:
+  - EventData.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
+  - CheckpointPosition.Offset
+    
+  Impacted methods:
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - CheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+  - EventProcessor&lt;T&gt;.UpdateCheckpointAsync _(deprecated overload)_
+
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 5.11.2 (2024-04-10)
 

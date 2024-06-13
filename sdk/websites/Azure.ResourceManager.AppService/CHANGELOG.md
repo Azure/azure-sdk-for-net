@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Fix null Id deserialization problem for 'WebSiteResource.GetAllHybridConnectionDataAsync()' and 'WebSiteSlotResource.GetAllHybridConnectionSlotDataAsync()', to use 'WebSiteResource.GetHybridConnectionsAsync()' and 'WebSiteSlotResource.GetHybridConnectionsSlotAsync()' instead.
 
 ### Bugs Fixed
 
@@ -27,8 +28,7 @@
 ### Features Added
 
 - Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
-
-### Other Changes
+### Other ChangesGetHybridConnectionsAsync
 
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 

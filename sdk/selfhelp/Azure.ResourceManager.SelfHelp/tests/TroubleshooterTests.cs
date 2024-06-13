@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     public class TroubleshooterTests : SelfHelpManagementTestBase
     {
         private bool isAsync = true;
-        public TroubleshooterTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public TroubleshooterTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
             this.isAsync = isAsync;
         }
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             //3.Push the recordings to the assets-sdk
             if (isAsync)
             {
-                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c239";
+                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c226";
             }
             else
             {
-                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3898";
+                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3826";
             }
 
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
-            TroubleshooterResourceData resourceData = CreateTroubleshooterResourceData(scope);
+            SelfHelpTroubleshooterData resourceData = CreateSelfHelpTroubleshooterData(scope);
 
-            var createTroubleshooterData = await Client.GetTroubleshooterResources(scope).CreateOrUpdateAsync(WaitUntil.Started, troubleshooterResourceName, resourceData);
+            var createTroubleshooterData = await Client.GetSelfHelpTroubleshooters(scope).CreateOrUpdateAsync(WaitUntil.Started, troubleshooterResourceName, resourceData);
             Assert.NotNull(createTroubleshooterData);
 
-            var readTroubleshooterData = await Client.GetTroubleshooterResourceAsync(scope, troubleshooterResourceName);
+            var readTroubleshooterData = await Client.GetSelfHelpTroubleshooterAsync(scope, troubleshooterResourceName);
             Assert.NotNull(readTroubleshooterData);
         }
 
-        private TroubleshooterResourceData CreateTroubleshooterResourceData(ResourceIdentifier scope)
+        private SelfHelpTroubleshooterData CreateSelfHelpTroubleshooterData(ResourceIdentifier scope)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             List<SelfHelpSection> sections = new List< SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new TroubleshooterResourceData(scope, null, resourceType, null, "e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
+            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, "e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
 
             return data;
         }

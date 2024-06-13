@@ -128,40 +128,43 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentValue), out propertyOverride);
-            builder.Append("  currentValue: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  currentValue: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  currentValue: ");
                 builder.AppendLine($"'{CurrentValue.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionInitiatedBy), out propertyOverride);
-            if (Optional.IsDefined(ActionInitiatedBy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actionInitiatedBy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionInitiatedBy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actionInitiatedBy: ");
                     builder.AppendLine($"'{ActionInitiatedBy.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModified), out propertyOverride);
-            if (Optional.IsDefined(LastModified) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastModified: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModified))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastModified: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

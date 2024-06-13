@@ -186,6 +186,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(blobContainerName, nameof(blobContainerName));
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.TrimBlobNameSlashes ?? Constants.DefaultTrimBlobNameSlashes)
             {
@@ -469,6 +470,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected internal virtual BlobBaseClient GetBlobBaseClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
@@ -490,6 +492,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
@@ -513,6 +516,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
@@ -540,6 +544,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
         protected internal virtual AppendBlobClient GetAppendBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
@@ -567,6 +572,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         protected internal virtual PageBlobClient GetPageBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
@@ -3543,6 +3549,127 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion FilterBlobs
+
+        #region GetAccountInfo
+        /// <summary>
+        /// The <see cref="GetAccountInfo"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<AccountInfo> GetAccountInfo(
+            CancellationToken cancellationToken = default) =>
+            GetAccountInfoInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetAccountInfoInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccountInfo>> GetAccountInfoInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetAccountInfo)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<ContainerGetAccountInfoHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.GetAccountInfoAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.GetAccountInfo(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToAccountInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetAccountInfo
 
         #region GenerateSas
         /// <summary>

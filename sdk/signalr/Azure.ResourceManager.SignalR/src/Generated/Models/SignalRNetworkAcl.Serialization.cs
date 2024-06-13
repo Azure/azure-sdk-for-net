@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Allow), out propertyOverride);
-            if (Optional.IsCollectionDefined(Allow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Allow.Any() || hasPropertyOverride)
+                builder.Append("  allow: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Allow))
                 {
-                    builder.Append("  allow: ");
-                    if (hasPropertyOverride)
+                    if (Allow.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allow: ");
                         builder.AppendLine("[");
                         foreach (var item in Allow)
                         {
@@ -163,17 +164,18 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deny), out propertyOverride);
-            if (Optional.IsCollectionDefined(Deny) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Deny.Any() || hasPropertyOverride)
+                builder.Append("  deny: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Deny))
                 {
-                    builder.Append("  deny: ");
-                    if (hasPropertyOverride)
+                    if (Deny.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  deny: ");
                         builder.AppendLine("[");
                         foreach (var item in Deny)
                         {

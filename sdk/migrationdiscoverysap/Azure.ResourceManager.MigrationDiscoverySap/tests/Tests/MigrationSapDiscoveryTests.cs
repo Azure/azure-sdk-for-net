@@ -25,7 +25,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 {
     public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync)
     {
-        BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.discoveryExcelSasUri" });
+        BodyKeySanitizers.Add(new BodyKeySanitizer("properties.discoveryExcelSasUri"));
     }
 
     [TestCase]

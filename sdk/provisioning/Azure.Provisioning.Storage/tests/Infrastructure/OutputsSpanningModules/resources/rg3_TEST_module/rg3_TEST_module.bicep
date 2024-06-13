@@ -4,6 +4,9 @@ param enableSoftDelete string = 'True'
 @description('')
 param STORAGE_KIND string
 
+@description('')
+param PRIMARY_ENDPOINTS object
+
 
 resource storageAccount_TtwZtKQQ1 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: toLower(take('sa${uniqueString(resourceGroup().id)}', 24))
@@ -13,5 +16,8 @@ resource storageAccount_TtwZtKQQ1 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: 'Storage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }

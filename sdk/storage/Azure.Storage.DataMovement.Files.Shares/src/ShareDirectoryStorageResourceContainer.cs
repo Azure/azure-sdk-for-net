@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ResourceOptions = options;
         }
 
-        protected override StorageResourceItem GetStorageResourceReference(string path)
+        protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             List<string> pathSegments = path.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
             ShareDirectoryClient dir = ShareDirectoryClient;
@@ -64,7 +64,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null, null, null);
+            return new ShareFileDestinationCheckpointData(
+                contentType: ResourceOptions?.ContentType,
+                contentEncoding: ResourceOptions?.ContentEncoding,
+                contentLanguage: ResourceOptions?.ContentLanguage,
+                contentDisposition: ResourceOptions?.ContentDisposition,
+                cacheControl: ResourceOptions?.CacheControl,
+                fileAttributes: ResourceOptions?.FileAttributes,
+                filePermissionKey: ResourceOptions?.FilePermissionKey,
+                fileCreatedOn: ResourceOptions?.FileCreatedOn,
+                fileLastWrittenOn: ResourceOptions?.FileLastWrittenOn,
+                fileChangedOn: ResourceOptions?.FileChangedOn,
+                fileMetadata: ResourceOptions?.FileMetadata,
+                directoryMetadata: ResourceOptions?.DirectoryMetadata);
         }
 
         protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
