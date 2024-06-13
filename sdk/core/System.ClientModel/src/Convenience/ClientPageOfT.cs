@@ -11,7 +11,7 @@ namespace System.ClientModel;
 #pragma warning disable CS1591
 public class ClientPage<T> : ClientResult
 {
-    protected ClientPage(IReadOnlyList<T> values,
+    private ClientPage(IReadOnlyList<T> values,
         PageToken pageToken,
         PageToken? nextPageToken,
         PipelineResponse response) : base(response)
@@ -35,5 +35,8 @@ public class ClientPage<T> : ClientResult
 
     // If this is null, the current page is the last page in a collection.
     public PageToken? NextPageToken { get; }
+
+    public static  ClientPage<T> Create(IReadOnlyList<T> values, PageToken pageToken, PageToken? nextPageToken, PipelineResponse response)
+        => new(values, pageToken, nextPageToken, response);
 }
 #pragma warning restore CS1591

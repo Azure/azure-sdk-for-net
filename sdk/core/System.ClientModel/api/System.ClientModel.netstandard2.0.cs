@@ -35,10 +35,11 @@ namespace System.ClientModel
     }
     public partial class ClientPage<T> : System.ClientModel.ClientResult
     {
-        protected ClientPage(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.PageToken pageToken, System.ClientModel.PageToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        internal ClientPage() { }
         public System.ClientModel.PageToken? NextPageToken { get { throw null; } }
         public System.ClientModel.PageToken PageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
+        public static System.ClientModel.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.PageToken pageToken, System.ClientModel.PageToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
     public partial class ClientResult
     {
@@ -76,8 +77,8 @@ namespace System.ClientModel
     }
     public abstract partial class PageToken : System.ClientModel.Primitives.IPersistableModel<System.ClientModel.PageToken>
     {
-        protected PageToken(System.ClientModel.PageToken firstPageToken) { }
-        public System.ClientModel.PageToken FirstCollectionPage { get { throw null; } }
+        protected PageToken() { }
+        public abstract System.ClientModel.PageToken FirstCollectionPage { get; }
         public abstract System.ClientModel.PageToken Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
