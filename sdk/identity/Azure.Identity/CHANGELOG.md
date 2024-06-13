@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0 (2024-06-13)
+## 1.12.0 (2024-06-17)
 
 ### Features Added
 - Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
