@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Container App Revisions collection ARM resource. </summary>
-    internal partial class RevisionCollection
+    internal partial class ContainerAppRevisionListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RevisionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RevisionCollection(IEnumerable<RevisionData> value)
+        internal ContainerAppRevisionListResult(IEnumerable<ContainerAppRevisionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RevisionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RevisionCollection(IReadOnlyList<RevisionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppRevisionListResult(IReadOnlyList<ContainerAppRevisionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RevisionCollection"/> for deserialization. </summary>
-        internal RevisionCollection()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionListResult"/> for deserialization. </summary>
+        internal ContainerAppRevisionListResult()
         {
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<RevisionData> Value { get; }
+        public IReadOnlyList<ContainerAppRevisionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

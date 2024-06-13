@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.RevisionCollection>> ListRevisionsAsync(string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppRevisionListResult>> ListRevisionsAsync(string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.RevisionCollection value = default;
+                        ContainerAppRevisionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.RevisionCollection.DeserializeRevisionCollection(document.RootElement);
+                        value = ContainerAppRevisionListResult.DeserializeContainerAppRevisionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.RevisionCollection> ListRevisions(string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppRevisionListResult> ListRevisions(string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.RevisionCollection value = default;
+                        ContainerAppRevisionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.RevisionCollection.DeserializeRevisionCollection(document.RootElement);
+                        value = ContainerAppRevisionListResult.DeserializeContainerAppRevisionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RevisionData>> GetRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppRevisionData>> GetRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RevisionData value = default;
+                        ContainerAppRevisionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RevisionData.DeserializeRevisionData(document.RootElement);
+                        value = ContainerAppRevisionData.DeserializeContainerAppRevisionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RevisionData)null, message.Response);
+                    return Response.FromValue((ContainerAppRevisionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RevisionData> GetRevision(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        public Response<ContainerAppRevisionData> GetRevision(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RevisionData value = default;
+                        ContainerAppRevisionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RevisionData.DeserializeRevisionData(document.RootElement);
+                        value = ContainerAppRevisionData.DeserializeContainerAppRevisionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RevisionData)null, message.Response);
+                    return Response.FromValue((ContainerAppRevisionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.RevisionCollection>> ListRevisionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppRevisionListResult>> ListRevisionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -553,9 +553,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.RevisionCollection value = default;
+                        ContainerAppRevisionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.RevisionCollection.DeserializeRevisionCollection(document.RootElement);
+                        value = ContainerAppRevisionListResult.DeserializeContainerAppRevisionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.RevisionCollection> ListRevisionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppRevisionListResult> ListRevisionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -584,9 +584,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.RevisionCollection value = default;
+                        ContainerAppRevisionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.RevisionCollection.DeserializeRevisionCollection(document.RootElement);
+                        value = ContainerAppRevisionListResult.DeserializeContainerAppRevisionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

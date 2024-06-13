@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RevisionResource"/> and their operations.
-    /// Each <see cref="RevisionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppResource"/>.
-    /// To get a <see cref="RevisionCollection"/> instance call the GetRevisions method from an instance of <see cref="ContainerAppResource"/>.
+    /// A class representing a collection of <see cref="ContainerAppRevisionResource"/> and their operations.
+    /// Each <see cref="ContainerAppRevisionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppResource"/>.
+    /// To get a <see cref="ContainerAppRevisionCollection"/> instance call the GetContainerAppRevisions method from an instance of <see cref="ContainerAppResource"/>.
     /// </summary>
-    public partial class RevisionCollection : ArmCollection, IEnumerable<RevisionResource>, IAsyncEnumerable<RevisionResource>
+    public partial class ContainerAppRevisionCollection : ArmCollection, IEnumerable<ContainerAppRevisionResource>, IAsyncEnumerable<ContainerAppRevisionResource>
     {
-        private readonly ClientDiagnostics _revisionContainerAppsRevisionsClientDiagnostics;
-        private readonly ContainerAppsRevisionsRestOperations _revisionContainerAppsRevisionsRestClient;
+        private readonly ClientDiagnostics _containerAppRevisionContainerAppsRevisionsClientDiagnostics;
+        private readonly ContainerAppsRevisionsRestOperations _containerAppRevisionContainerAppsRevisionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RevisionCollection"/> class for mocking. </summary>
-        protected RevisionCollection()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppRevisionCollection"/> class for mocking. </summary>
+        protected ContainerAppRevisionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RevisionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppRevisionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RevisionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppRevisionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _revisionContainerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", RevisionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RevisionResource.ResourceType, out string revisionContainerAppsRevisionsApiVersion);
-            _revisionContainerAppsRevisionsRestClient = new ContainerAppsRevisionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, revisionContainerAppsRevisionsApiVersion);
+            _containerAppRevisionContainerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ContainerAppRevisionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerAppRevisionResource.ResourceType, out string containerAppRevisionContainerAppsRevisionsApiVersion);
+            _containerAppRevisionContainerAppsRevisionsRestClient = new ContainerAppsRevisionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionContainerAppsRevisionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<RevisionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppRevisionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.Get");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<RevisionResource> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppRevisionResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.Get");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RevisionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppRevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _revisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _revisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RevisionResource(Client, RevisionData.DeserializeRevisionData(e)), _revisionContainerAppsRevisionsClientDiagnostics, Pipeline, "RevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RevisionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RevisionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppRevisionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _revisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _revisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RevisionResource(Client, RevisionData.DeserializeRevisionData(e)), _revisionContainerAppsRevisionsClientDiagnostics, Pipeline, "RevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.Exists");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.Exists");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,18 +312,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<RevisionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerAppRevisionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.GetIfExists");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<RevisionResource>(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,18 +357,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<RevisionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerAppRevisionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionCollection.GetIfExists");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<RevisionResource>(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<RevisionResource> IEnumerable<RevisionResource>.GetEnumerator()
+        IEnumerator<ContainerAppRevisionResource> IEnumerable<ContainerAppRevisionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RevisionResource> IAsyncEnumerable<RevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerAppRevisionResource> IAsyncEnumerable<ContainerAppRevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

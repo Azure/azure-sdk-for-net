@@ -952,12 +952,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="externalInboundIPAddresses"></param>
         /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="ftpEnabled"> Property to enable and disable FTP on ASEV3. </param>
-        /// <param name="remoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
+        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
+        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? ftpEnabled = null, bool? remoteDebugEnabled = null, string inboundIPAddressOverride = null, string kind = null)
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? isFtpEnabled = null, bool? isRemoteDebugEnabled = null, string inboundIPAddressOverride = null, string kind = null)
         {
             windowsOutboundIPAddresses ??= new List<System.Net.IPAddress>();
             linuxOutboundIPAddresses ??= new List<System.Net.IPAddress>();
@@ -974,8 +974,8 @@ namespace Azure.ResourceManager.AppService.Models
                 externalInboundIPAddresses?.ToList(),
                 internalInboundIPAddresses?.ToList(),
                 allowNewPrivateEndpointConnections,
-                ftpEnabled,
-                remoteDebugEnabled,
+                isFtpEnabled,
+                isRemoteDebugEnabled,
                 inboundIPAddressOverride,
                 kind,
                 serializedAdditionalRawData: null);
@@ -2390,7 +2390,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerAppSecret(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.RevisionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ContainerAppRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2407,19 +2407,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </param>
-        /// <param name="active"> Boolean describing if the Revision is Active. </param>
+        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
         /// <param name="replicas"> Number of pods currently running for this revision. </param>
         /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.RevisionData"/> instance for mocking. </returns>
-        public static RevisionData RevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, string fqdn = null, Template template = null, bool? active = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, RevisionHealthState? healthState = null, RevisionProvisioningState? provisioningState = null, string kind = null)
+        /// <returns> A new <see cref="AppService.ContainerAppRevisionData"/> instance for mocking. </returns>
+        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, string fqdn = null, Template template = null, bool? isActive = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, RevisionHealthState? healthState = null, RevisionProvisioningState? provisioningState = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RevisionData(
+            return new ContainerAppRevisionData(
                 id,
                 name,
                 resourceType,
@@ -2429,7 +2429,7 @@ namespace Azure.ResourceManager.AppService.Models
                 createdOn,
                 fqdn,
                 template,
-                active,
+                isActive,
                 replicas,
                 trafficWeight,
                 provisioningError,
@@ -4296,7 +4296,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendARMResourceData"/> instance for mocking. </returns>
-        public static StaticSiteLinkedBackendARMResourceData StaticSiteLinkedBackendARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null, string kind = null)
+        public static StaticSiteLinkedBackendARMResourceData StaticSiteLinkedBackendARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null, string kind = null)
         {
             return new StaticSiteLinkedBackendARMResourceData(
                 id,
@@ -6405,11 +6405,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Error information. </param>
         /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
-        /// <param name="storageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
-        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, string publicNetworkAccess = null, bool? storageAccountRequired = null, IDictionary<string, BinaryData> settings = null, string kind = null)
+        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, IDictionary<string, BinaryData> settings = null, string kind = null)
         {
             settings ??= new Dictionary<string, BinaryData>();
 
@@ -6428,7 +6428,7 @@ namespace Azure.ResourceManager.AppService.Models
                 error,
                 isUsingSdk,
                 publicNetworkAccess,
-                storageAccountRequired,
+                isStorageAccountRequired,
                 settings,
                 kind,
                 serializedAdditionalRawData: null);

@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             AseV3NetworkingConfigurationData data = new AseV3NetworkingConfigurationData()
             {
-                FtpEnabled = true,
-                RemoteDebugEnabled = true,
+                IsFtpEnabled = true,
+                IsRemoteDebugEnabled = true,
             };
             ArmOperation<AseV3NetworkingConfigurationResource> lro = await aseV3NetworkingConfiguration.CreateOrUpdateAsync(WaitUntil.Completed, data);
             AseV3NetworkingConfigurationResource result = lro.Value;

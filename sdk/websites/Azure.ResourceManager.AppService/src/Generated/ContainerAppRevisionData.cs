@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing the Revision data model.
+    /// A class representing the ContainerAppRevision data model.
     /// Container App Revision.
     /// </summary>
-    public partial class RevisionData : TrackedResourceData
+    public partial class ContainerAppRevisionData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RevisionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public RevisionData(AzureLocation location) : base(location)
+        public ContainerAppRevisionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RevisionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </param>
-        /// <param name="active"> Boolean describing if the Revision is Active. </param>
+        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
         /// <param name="replicas"> Number of pods currently running for this revision. </param>
         /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, string fqdn, Template template, bool? active, int? replicas, int? trafficWeight, string provisioningError, RevisionHealthState? healthState, RevisionProvisioningState? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, string fqdn, Template template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, RevisionHealthState? healthState, RevisionProvisioningState? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             Fqdn = fqdn;
             Template = template;
-            Active = active;
+            IsActive = isActive;
             Replicas = replicas;
             TrafficWeight = trafficWeight;
             ProvisioningError = provisioningError;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RevisionData"/> for deserialization. </summary>
-        internal RevisionData()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/> for deserialization. </summary>
+        internal ContainerAppRevisionData()
         {
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         public Template Template { get; }
         /// <summary> Boolean describing if the Revision is Active. </summary>
         [WirePath("properties.active")]
-        public bool? Active { get; }
+        public bool? IsActive { get; }
         /// <summary> Number of pods currently running for this revision. </summary>
         [WirePath("properties.replicas")]
         public int? Replicas { get; }

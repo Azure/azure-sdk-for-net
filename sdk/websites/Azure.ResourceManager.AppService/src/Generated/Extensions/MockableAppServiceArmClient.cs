@@ -407,15 +407,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RevisionResource.CreateResourceIdentifier" /> to create a <see cref="RevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RevisionResource"/> object. </returns>
-        public virtual RevisionResource GetRevisionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
+        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
         {
-            RevisionResource.ValidateResourceId(id);
-            return new RevisionResource(Client, id);
+            ContainerAppRevisionResource.ValidateResourceId(id);
+            return new ContainerAppRevisionResource(Client, id);
         }
 
         /// <summary>

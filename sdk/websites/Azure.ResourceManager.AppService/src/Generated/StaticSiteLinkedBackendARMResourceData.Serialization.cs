@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string backendResourceId = default;
+            ResourceIdentifier backendResourceId = default;
             string region = default;
             DateTimeOffset? createdOn = default;
             string provisioningState = default;
@@ -167,7 +167,11 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("backendResourceId"u8))
                         {
-                            backendResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backendResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("region"u8))
@@ -311,15 +315,7 @@ namespace Azure.ResourceManager.AppService
                 if (Optional.IsDefined(BackendResourceId))
                 {
                     builder.Append("    backendResourceId: ");
-                    if (BackendResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BackendResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BackendResourceId}'");
-                    }
+                    builder.AppendLine($"'{BackendResourceId.ToString()}'");
                 }
             }
 

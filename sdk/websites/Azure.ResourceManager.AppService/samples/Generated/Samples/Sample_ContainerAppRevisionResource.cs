@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
-    public partial class Sample_RevisionResource
+    public partial class Sample_ContainerAppRevisionResource
     {
         // Get Container App's revision
         [NUnit.Framework.Test]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.AppService.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RevisionResource created on azure
-            // for more information of creating RevisionResource, please refer to the document of RevisionResource
+            // this example assumes you already have this ContainerAppRevisionResource created on azure
+            // for more information of creating ContainerAppRevisionResource, please refer to the document of ContainerAppRevisionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerApp0";
             string name = "testcontainerApp0-pjxhsye";
-            ResourceIdentifier revisionResourceId = RevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
-            RevisionResource revision = client.GetRevisionResource(revisionResourceId);
+            ResourceIdentifier containerAppRevisionResourceId = ContainerAppRevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
+            ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            RevisionResource result = await revision.GetAsync();
+            ContainerAppRevisionResource result = await containerAppRevision.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RevisionData resourceData = result.Data;
+            ContainerAppRevisionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.AppService.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RevisionResource created on azure
-            // for more information of creating RevisionResource, please refer to the document of RevisionResource
+            // this example assumes you already have this ContainerAppRevisionResource created on azure
+            // for more information of creating ContainerAppRevisionResource, please refer to the document of ContainerAppRevisionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerApp0";
             string name = "testcontainerApp0-pjxhsye";
-            ResourceIdentifier revisionResourceId = RevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
-            RevisionResource revision = client.GetRevisionResource(revisionResourceId);
+            ResourceIdentifier containerAppRevisionResourceId = ContainerAppRevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
+            ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await revision.ActivateRevisionAsync();
+            await containerAppRevision.ActivateRevisionAsync();
 
             Console.WriteLine($"Succeeded");
         }
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.AppService.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RevisionResource created on azure
-            // for more information of creating RevisionResource, please refer to the document of RevisionResource
+            // this example assumes you already have this ContainerAppRevisionResource created on azure
+            // for more information of creating ContainerAppRevisionResource, please refer to the document of ContainerAppRevisionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerApp0";
             string name = "testcontainerApp0-pjxhsye";
-            ResourceIdentifier revisionResourceId = RevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
-            RevisionResource revision = client.GetRevisionResource(revisionResourceId);
+            ResourceIdentifier containerAppRevisionResourceId = ContainerAppRevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
+            ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await revision.DeactivateRevisionAsync();
+            await containerAppRevision.DeactivateRevisionAsync();
 
             Console.WriteLine($"Succeeded");
         }
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.AppService.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RevisionResource created on azure
-            // for more information of creating RevisionResource, please refer to the document of RevisionResource
+            // this example assumes you already have this ContainerAppRevisionResource created on azure
+            // for more information of creating ContainerAppRevisionResource, please refer to the document of ContainerAppRevisionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string containerAppName = "testStaticSite0";
             string name = "testcontainerApp0-pjxhsye";
-            ResourceIdentifier revisionResourceId = RevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
-            RevisionResource revision = client.GetRevisionResource(revisionResourceId);
+            ResourceIdentifier containerAppRevisionResourceId = ContainerAppRevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, name);
+            ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await revision.RestartRevisionAsync();
+            await containerAppRevision.RestartRevisionAsync();
 
             Console.WriteLine($"Succeeded");
         }

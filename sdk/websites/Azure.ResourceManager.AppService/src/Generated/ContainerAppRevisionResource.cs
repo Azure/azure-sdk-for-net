@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a Revision along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RevisionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRevisionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetRevision method.
+    /// A Class representing a ContainerAppRevision along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppRevisionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppRevisionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppRevision method.
     /// </summary>
-    public partial class RevisionResource : ArmResource
+    public partial class ContainerAppRevisionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RevisionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppRevisionResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="containerAppName"> The containerAppName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.AppService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _revisionContainerAppsRevisionsClientDiagnostics;
-        private readonly ContainerAppsRevisionsRestOperations _revisionContainerAppsRevisionsRestClient;
-        private readonly RevisionData _data;
+        private readonly ClientDiagnostics _containerAppRevisionContainerAppsRevisionsClientDiagnostics;
+        private readonly ContainerAppsRevisionsRestOperations _containerAppRevisionContainerAppsRevisionsRestClient;
+        private readonly ContainerAppRevisionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/containerApps/revisions";
 
-        /// <summary> Initializes a new instance of the <see cref="RevisionResource"/> class for mocking. </summary>
-        protected RevisionResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppRevisionResource"/> class for mocking. </summary>
+        protected ContainerAppRevisionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RevisionResource(ArmClient client, RevisionData data) : this(client, data.Id)
+        internal ContainerAppRevisionResource(ArmClient client, ContainerAppRevisionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RevisionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppRevisionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _revisionContainerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string revisionContainerAppsRevisionsApiVersion);
-            _revisionContainerAppsRevisionsRestClient = new ContainerAppsRevisionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, revisionContainerAppsRevisionsApiVersion);
+            _containerAppRevisionContainerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppRevisionContainerAppsRevisionsApiVersion);
+            _containerAppRevisionContainerAppsRevisionsRestClient = new ContainerAppsRevisionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionContainerAppsRevisionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RevisionData Data
+        public virtual ContainerAppRevisionData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RevisionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppRevisionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.Get");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.Get");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RevisionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppRevisionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.Get");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.Get");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,18 +185,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ActivateRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.ActivateRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.ActivateRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.ActivateRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ActivateRevision(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.ActivateRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.ActivateRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.ActivateRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -261,18 +261,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeactivateRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.DeactivateRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.DeactivateRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.DeactivateRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -299,18 +299,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeactivateRevision(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.DeactivateRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.DeactivateRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.DeactivateRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -337,18 +337,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RestartRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.RestartRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
             scope.Start();
             try
             {
-                var response = await _revisionContainerAppsRevisionsRestClient.RestartRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.RestartRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -375,18 +375,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RestartRevision(CancellationToken cancellationToken = default)
         {
-            using var scope = _revisionContainerAppsRevisionsClientDiagnostics.CreateScope("RevisionResource.RestartRevision");
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
             scope.Start();
             try
             {
-                var response = _revisionContainerAppsRevisionsRestClient.RestartRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.RestartRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

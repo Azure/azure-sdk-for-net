@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteLinkedBackendARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackendResourceId = backendResourceId;
             Region = region;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("properties.backendResourceId")]
-        public string BackendResourceId { get; set; }
+        public ResourceIdentifier BackendResourceId { get; set; }
         /// <summary> The region of the backend linked to the static site. </summary>
         [WirePath("properties.region")]
         public string Region { get; set; }

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RevisionResources in the ContainerApp. </summary>
-        /// <returns> An object representing collection of RevisionResources and their operations over a RevisionResource. </returns>
-        public virtual RevisionCollection GetRevisions()
+        /// <summary> Gets a collection of ContainerAppRevisionResources in the ContainerApp. </summary>
+        /// <returns> An object representing collection of ContainerAppRevisionResources and their operations over a ContainerAppRevisionResource. </returns>
+        public virtual ContainerAppRevisionCollection GetContainerAppRevisions()
         {
-            return GetCachedClient(client => new RevisionCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppRevisionCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RevisionResource>> GetRevisionAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetRevisions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppRevisions().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RevisionResource"/></description>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RevisionResource> GetRevision(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string name, CancellationToken cancellationToken = default)
         {
-            return GetRevisions().Get(name, cancellationToken);
+            return GetContainerAppRevisions().Get(name, cancellationToken);
         }
 
         /// <summary>

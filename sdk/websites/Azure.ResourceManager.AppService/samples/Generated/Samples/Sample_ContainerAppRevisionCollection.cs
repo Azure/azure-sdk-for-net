@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
-    public partial class Sample_RevisionCollection
+    public partial class Sample_ContainerAppRevisionCollection
     {
         // List Container App's revisions
         [NUnit.Framework.Test]
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
-            // get the collection of this RevisionResource
-            RevisionCollection collection = containerApp.GetRevisions();
+            // get the collection of this ContainerAppRevisionResource
+            ContainerAppRevisionCollection collection = containerApp.GetContainerAppRevisions();
 
             // invoke the operation and iterate over the result
-            await foreach (RevisionResource item in collection.GetAllAsync())
+            await foreach (ContainerAppRevisionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RevisionData resourceData = item.Data;
+                ContainerAppRevisionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
-            // get the collection of this RevisionResource
-            RevisionCollection collection = containerApp.GetRevisions();
+            // get the collection of this ContainerAppRevisionResource
+            ContainerAppRevisionCollection collection = containerApp.GetContainerAppRevisions();
 
             // invoke the operation
             string name = "testcontainerApp0-pjxhsye";
-            RevisionResource result = await collection.GetAsync(name);
+            ContainerAppRevisionResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RevisionData resourceData = result.Data;
+            ContainerAppRevisionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
-            // get the collection of this RevisionResource
-            RevisionCollection collection = containerApp.GetRevisions();
+            // get the collection of this ContainerAppRevisionResource
+            ContainerAppRevisionCollection collection = containerApp.GetContainerAppRevisions();
 
             // invoke the operation
             string name = "testcontainerApp0-pjxhsye";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
-            // get the collection of this RevisionResource
-            RevisionCollection collection = containerApp.GetRevisions();
+            // get the collection of this ContainerAppRevisionResource
+            ContainerAppRevisionCollection collection = containerApp.GetContainerAppRevisions();
 
             // invoke the operation
             string name = "testcontainerApp0-pjxhsye";
-            NullableResponse<RevisionResource> response = await collection.GetIfExistsAsync(name);
-            RevisionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ContainerAppRevisionResource> response = await collection.GetIfExistsAsync(name);
+            ContainerAppRevisionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RevisionData resourceData = result.Data;
+                ContainerAppRevisionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

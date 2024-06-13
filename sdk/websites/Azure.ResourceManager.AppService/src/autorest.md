@@ -383,6 +383,15 @@ rename-mapping:
   # Ambiguity property name due to the faltten
   OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
   ErrorResponse.error: ErrorInfo
+  AseV3NetworkingConfiguration.properties.ftpEnabled: IsFtpEnabled
+  AseV3NetworkingConfiguration.properties.remoteDebugEnabled: IsRemoteDebugEnabled
+  DatabaseConnection.ResourceId: -|arm-id
+  Revision.properties.active: IsActive
+  Revision: ContainerAppRevision
+  RevisionCollection: ContainerAppRevisionListResult
+  StaticSiteLinkedBackendARMResource.properties.backendResourceId: -|arm-id
+  TriggeredWebJob.properties.storageAccountRequired: IsStorageAccountRequired
+
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties

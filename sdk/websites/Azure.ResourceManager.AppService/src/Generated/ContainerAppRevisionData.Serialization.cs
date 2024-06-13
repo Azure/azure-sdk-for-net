@@ -17,16 +17,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class RevisionData : IUtf8JsonSerializable, IJsonModel<RevisionData>
+    public partial class ContainerAppRevisionData : IUtf8JsonSerializable, IJsonModel<ContainerAppRevisionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RevisionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRevisionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RevisionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppRevisionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevisionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RevisionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Active))
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
-                writer.WriteBooleanValue(Active.Value);
+                writer.WriteBooleanValue(IsActive.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Replicas))
             {
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        RevisionData IJsonModel<RevisionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppRevisionData IJsonModel<ContainerAppRevisionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevisionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RevisionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRevisionData(document.RootElement, options);
+            return DeserializeContainerAppRevisionData(document.RootElement, options);
         }
 
-        internal static RevisionData DeserializeRevisionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppRevisionData DeserializeContainerAppRevisionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RevisionData(
+            return new ContainerAppRevisionData(
                 id,
                 name,
                 type,
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Active), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsActive), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    active: ");
@@ -533,10 +533,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(Active))
+                if (Optional.IsDefined(IsActive))
                 {
                     builder.Append("    active: ");
-                    var boolValue = Active.Value == true ? "true" : "false";
+                    var boolValue = IsActive.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -629,9 +629,9 @@ namespace Azure.ResourceManager.AppService
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<RevisionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppRevisionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevisionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -640,26 +640,26 @@ namespace Azure.ResourceManager.AppService
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RevisionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RevisionData IPersistableModel<RevisionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppRevisionData IPersistableModel<ContainerAppRevisionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevisionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRevisionData(document.RootElement, options);
+                        return DeserializeContainerAppRevisionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RevisionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RevisionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppRevisionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

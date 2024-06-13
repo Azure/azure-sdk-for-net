@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
-            if (Optional.IsDefined(FtpEnabled))
+            if (Optional.IsDefined(IsFtpEnabled))
             {
                 writer.WritePropertyName("ftpEnabled"u8);
-                writer.WriteBooleanValue(FtpEnabled.Value);
+                writer.WriteBooleanValue(IsFtpEnabled.Value);
             }
-            if (Optional.IsDefined(RemoteDebugEnabled))
+            if (Optional.IsDefined(IsRemoteDebugEnabled))
             {
                 writer.WritePropertyName("remoteDebugEnabled"u8);
-                writer.WriteBooleanValue(RemoteDebugEnabled.Value);
+                writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
             }
             if (Optional.IsDefined(InboundIPAddressOverride))
             {
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FtpEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsFtpEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    ftpEnabled: ");
@@ -598,15 +598,15 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(FtpEnabled))
+                if (Optional.IsDefined(IsFtpEnabled))
                 {
                     builder.Append("    ftpEnabled: ");
-                    var boolValue = FtpEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsFtpEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteDebugEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebugEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    remoteDebugEnabled: ");
@@ -614,10 +614,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(RemoteDebugEnabled))
+                if (Optional.IsDefined(IsRemoteDebugEnabled))
                 {
                     builder.Append("    remoteDebugEnabled: ");
-                    var boolValue = RemoteDebugEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsRemoteDebugEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

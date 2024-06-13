@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Samples
             string linkedBackendName = "testBackend";
             StaticSiteLinkedBackendARMResourceData data = new StaticSiteLinkedBackendARMResourceData()
             {
-                BackendResourceId = "/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend",
+                BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
                 Region = "West US 2",
             };
             ArmOperation<StaticSiteLinkedBackendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, linkedBackendName, data);
