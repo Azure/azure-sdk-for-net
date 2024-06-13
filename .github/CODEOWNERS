@@ -926,6 +926,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %ARM
+/sdk/resources/Azure.ResourceManager.*/                            @anamikapan
+
+# ServiceLabel: %ARM %Mgmt
+# ServiceOwners:                                                   @anamikapan
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -965,6 +971,8 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# PRLabel: %Recovery Services Backup
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
