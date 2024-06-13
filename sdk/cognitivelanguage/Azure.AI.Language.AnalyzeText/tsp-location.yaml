@@ -1,0 +1,5 @@
+cleanup: false
+directory: specification/cognitiveservices/Language.AnalyzeText
+commit: c8c22cc348a1c4cbb1eba16520ad367073979011
+repo: quentinRobinson/azure-rest-api-specs
+
