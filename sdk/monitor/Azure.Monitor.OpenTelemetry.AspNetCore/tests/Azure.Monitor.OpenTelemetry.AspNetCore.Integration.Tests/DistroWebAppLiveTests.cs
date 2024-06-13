@@ -88,12 +88,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
             builder.Services.AddOpenTelemetry()
-                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
                 .UseAzureMonitor(options =>
                 {
                     options.EnableLiveMetrics = false;
                     options.ConnectionString = TestEnvironment.ConnectionString;
-                });
+                })
+                // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
+                .ConfigureResource(x => x.AddAttributes(resourceAttributes));
 
             var app = builder.Build();
             app.MapGet("/", () =>
@@ -140,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppDependencies",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
-                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -164,7 +165,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppRequests",
                     UserAuthenticatedId = "TestAuthenticatedUserId",
-                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
@@ -182,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
-                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -204,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
                     Type = "AppMetrics",
-                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
+                    AppRoleInstance = serviceInstance,
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("http.request.method", "GET"),
@@ -227,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     AppVersion = serviceVersion,
                     ClientIP = "0.0.0.0",
                     Type = "AppTraces",
-                    //AppRoleInstance = serviceInstance, // TODO: Investigate failure
+                    AppRoleInstance = serviceInstance,
                 });
         }
 

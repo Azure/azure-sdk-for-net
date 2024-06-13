@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //public string UserAccountId { get; set; }
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-            //public string AppRoleInstance { get; set; }
+            public string AppRoleInstance { get; set; }
             //public string ClientType { get; set; }
             //public string ClientModel { get; set; }
             //public string ClientOS { get; set; }
@@ -153,7 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //public string UserAccountId { get; set; }
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-            //public string AppRoleInstance { get; set; }
+            public string AppRoleInstance { get; set; }
             //public string ClientType { get; set; }
             //public string ClientModel { get; set; }
             //public string ClientOS { get; set; }
@@ -193,7 +193,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //public string UserAccountId { get; set; } // ""
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-            //public string AppRoleInstance { get; set; }
+            public string AppRoleInstance { get; set; }
             //public string ClientType { get; set; }
             //public string ClientModel { get; set; }
             //public string ClientOS { get; set; }
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //public string UserAccountId { get; set; }
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-            //public string AppRoleInstance { get; set; }
+            public string AppRoleInstance { get; set; }
             //public string ClientType { get; set; }
             //public string ClientModel { get; set; }
             //public string ClientOS { get; set; }
