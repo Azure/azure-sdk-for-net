@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> Represents an image with optional text. </summary>
-    public partial class EmbeddingInput
+    /// <summary> An internet location from which the model may retrieve an image. </summary>
+    public partial class ChatMessageImageUrl
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,41 +45,41 @@ namespace Azure.AI.Inference
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/>. </summary>
-        /// <param name="image"> The input image, in PNG format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
-        public EmbeddingInput(string image)
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL of the image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public ChatMessageImageUrl(Uri url)
         {
-            Argument.AssertNotNull(image, nameof(image));
+            Argument.AssertNotNull(url, nameof(url));
 
-            Image = image;
+            Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/>. </summary>
-        /// <param name="image"> The input image, in PNG format. </param>
-        /// <param name="text">
-        /// Optional. The text input to feed into the model (like DINO, CLIP).
-        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL of the image. </param>
+        /// <param name="detail">
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingInput(string image, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatMessageImageUrl(Uri url, ChatMessageImageDetailLevel? detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Image = image;
-            Text = text;
+            Url = url;
+            Detail = detail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/> for deserialization. </summary>
-        internal EmbeddingInput()
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/> for deserialization. </summary>
+        internal ChatMessageImageUrl()
         {
         }
 
-        /// <summary> The input image, in PNG format. </summary>
-        public string Image { get; }
+        /// <summary> The URL of the image. </summary>
+        public Uri Url { get; }
         /// <summary>
-        /// Optional. The text input to feed into the model (like DINO, CLIP).
-        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
         /// </summary>
-        public string Text { get; set; }
+        public ChatMessageImageDetailLevel? Detail { get; set; }
     }
 }
