@@ -1,6 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-06-28)
+
+### Features Added
+
+- Upgrade to API version 2024-07-01
+- Added support for upload limit schedule
 
 ### Features Added
 
