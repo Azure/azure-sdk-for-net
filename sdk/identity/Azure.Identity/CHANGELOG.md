@@ -3,6 +3,9 @@
 ## 1.12.0-beta.3 (Unreleased)
 
 ### Features Added
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
 
 ### Breaking Changes
 
