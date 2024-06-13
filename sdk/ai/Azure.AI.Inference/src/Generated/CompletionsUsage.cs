@@ -50,27 +50,23 @@ namespace Azure.AI.Inference
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
-        /// <param name="capacityType"> Indicates whether your capacity has been affected by the usage amount (token count) reported here. </param>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
-        internal CompletionsUsage(CapacityType capacityType, int completionTokens, int promptTokens, int totalTokens)
+        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens)
         {
-            CapacityType = capacityType;
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
         }
 
         /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
-        /// <param name="capacityType"> Indicates whether your capacity has been affected by the usage amount (token count) reported here. </param>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompletionsUsage(CapacityType capacityType, int completionTokens, int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CapacityType = capacityType;
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
@@ -82,8 +78,6 @@ namespace Azure.AI.Inference
         {
         }
 
-        /// <summary> Indicates whether your capacity has been affected by the usage amount (token count) reported here. </summary>
-        public CapacityType CapacityType { get; }
         /// <summary> The number of tokens generated across all completions emissions. </summary>
         public int CompletionTokens { get; }
         /// <summary> The number of tokens in the provided prompts for the completions request. </summary>

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Azure.Identity;
 
 namespace Azure.AI.Inference.Tests.Samples
 {
@@ -20,6 +22,21 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_Scenario
             Console.WriteLine("Hello, world!");
+            #endregion
+
+            #region Snippet:Azure_AI_Inference_Scenario2
+            var endpoint = new Uri(Environment.GetEnvironmentVariable("AOAI_CHAT_COMPLETIONS_ENDPOINT"));
+            var credential = new DefaultAzureCredential();
+
+            var client = new ChatCompletionsClient(endpoint, credential);
+
+            var response = client.Complete(messages: new List<ChatRequestMessage>
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("How many feet are in a mile?")
+            });
+
+            Console.WriteLine(response.Value.Choices.First().Message);
             #endregion
         }
     }

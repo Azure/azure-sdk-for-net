@@ -26,8 +26,6 @@ namespace Azure.AI.Inference
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("capacity_type"u8);
-            writer.WriteStringValue(CapacityType.ToString());
             writer.WritePropertyName("completion_tokens"u8);
             writer.WriteNumberValue(CompletionTokens);
             writer.WritePropertyName("prompt_tokens"u8);
@@ -72,7 +70,6 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            CapacityType capacityType = default;
             int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;
@@ -80,11 +77,6 @@ namespace Azure.AI.Inference
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity_type"u8))
-                {
-                    capacityType = new CapacityType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("completion_tokens"u8))
                 {
                     completionTokens = property.Value.GetInt32();
@@ -106,7 +98,7 @@ namespace Azure.AI.Inference
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CompletionsUsage(capacityType, completionTokens, promptTokens, totalTokens, serializedAdditionalRawData);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompletionsUsage>.Write(ModelReaderWriterOptions options)

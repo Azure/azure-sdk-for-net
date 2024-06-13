@@ -42,14 +42,13 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsage"/>. </summary>
-        /// <param name="capacityType"> Indicates whether your capacity has been affected by the usage amount (token count) reported here. </param>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
         /// <returns> A new <see cref="Inference.CompletionsUsage"/> instance for mocking. </returns>
-        public static CompletionsUsage CompletionsUsage(CapacityType capacityType = default, int completionTokens = default, int promptTokens = default, int totalTokens = default)
+        public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
-            return new CompletionsUsage(capacityType, completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ChatChoice"/>. </summary>
@@ -89,60 +88,6 @@ namespace Azure.AI.Inference
             return new ModelInfo(modelName, modelType, modelProviderName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingsResult"/>. </summary>
-        /// <param name="id"> Unique identifier for the embeddings result. </param>
-        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
-        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        /// <param name="model"> The model ID used to generate this result. </param>
-        /// <returns> A new <see cref="Inference.EmbeddingsResult"/> instance for mocking. </returns>
-        public static EmbeddingsResult EmbeddingsResult(string id = null, IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null, string model = null)
-        {
-            data ??= new List<EmbeddingItem>();
-
-            return new EmbeddingsResult(id, data?.ToList(), usage, model, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingItem"/>. </summary>
-        /// <param name="embedding">
-        /// List of embeddings value for the input prompt. These represent a measurement of the
-        /// vector-based relatedness of the provided input.
-        /// </param>
-        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        /// <returns> A new <see cref="Inference.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
-        {
-            embedding ??= new List<float>();
-
-            return new EmbeddingItem(embedding?.ToList(), index, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingsUsage"/>. </summary>
-        /// <param name="capacityType"> Indicates whether your capacity has been affected by the usage amount (token count) reported here. </param>
-        /// <param name="inputTokens"> Number of tokens in the request prompt. </param>
-        /// <param name="promptTokens">
-        /// Number of tokens used for the prompt sent to the AI model. Typically identical to `input_tokens`.
-        /// However, certain AI models may add extra tokens to the input hence the number can be higher.
-        /// (for example when input_type="query").
-        /// </param>
-        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
-        /// <returns> A new <see cref="Inference.EmbeddingsUsage"/> instance for mocking. </returns>
-        public static EmbeddingsUsage EmbeddingsUsage(CapacityType capacityType = default, int inputTokens = default, int promptTokens = default, int totalTokens = default)
-        {
-            return new EmbeddingsUsage(capacityType, inputTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingInput"/>. </summary>
-        /// <param name="image"> The input image, in PNG format. </param>
-        /// <param name="text">
-        /// Optional. The text input to feed into the model (like DINO, CLIP).
-        /// Returns a 422 error if the model doesn't support the value or parameter.
-        /// </param>
-        /// <returns> A new <see cref="Inference.EmbeddingInput"/> instance for mocking. </returns>
-        public static EmbeddingInput EmbeddingInput(string image = null, string text = null)
-        {
-            return new EmbeddingInput(image, text, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestSystemMessage"/>. </summary>
         /// <param name="content"> The contents of the system message. </param>
         /// <returns> A new <see cref="Inference.ChatRequestSystemMessage"/> instance for mocking. </returns>
@@ -154,9 +99,37 @@ namespace Azure.AI.Inference
         /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestUserMessage"/>. </summary>
         /// <param name="content"> The contents of the user message, with available input types varying by selected model. </param>
         /// <returns> A new <see cref="Inference.ChatRequestUserMessage"/> instance for mocking. </returns>
-        public static ChatRequestUserMessage ChatRequestUserMessage(string content = null)
+        public static ChatRequestUserMessage ChatRequestUserMessage(BinaryData content = null)
         {
             return new ChatRequestUserMessage(ChatRole.User, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
+        /// <param name="text"> The content of the message. </param>
+        /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>
+        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
+        {
+            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageImageContentItem"/>. </summary>
+        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+        /// <returns> A new <see cref="Inference.ChatMessageImageContentItem"/> instance for mocking. </returns>
+        public static ChatMessageImageContentItem ChatMessageImageContentItem(ChatMessageImageUrl imageUrl = null)
+        {
+            return new ChatMessageImageContentItem("image_url", serializedAdditionalRawData: null, imageUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL of the image. </param>
+        /// <param name="detail">
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
+        /// </param>
+        /// <returns> A new <see cref="Inference.ChatMessageImageUrl"/> instance for mocking. </returns>
+        public static ChatMessageImageUrl ChatMessageImageUrl(Uri url = null, ChatMessageImageDetailLevel? detail = null)
+        {
+            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestToolMessage"/>. </summary>
