@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string revisionSuffix = default;
-            IList<Container> containers = default;
+            IList<ContainerAppContainer> containers = default;
             Scale scale = default;
             Dapr dapr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Container> array = new List<Container>();
+                    List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Container.DeserializeContainer(item, options));
+                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Template(revisionSuffix, containers ?? new ChangeTrackingList<Container>(), scale, dapr, serializedAdditionalRawData);
+            return new Template(revisionSuffix, containers ?? new ChangeTrackingList<ContainerAppContainer>(), scale, dapr, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

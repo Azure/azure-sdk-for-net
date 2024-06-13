@@ -166,25 +166,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("dnsConfiguration"u8);
                 writer.WriteObjectValue(DnsConfiguration, options);
             }
-            if (Optional.IsDefined(VnetRouteAllEnabled))
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
             {
                 writer.WritePropertyName("vnetRouteAllEnabled"u8);
-                writer.WriteBooleanValue(VnetRouteAllEnabled.Value);
+                writer.WriteBooleanValue(IsVnetRouteAllEnabled.Value);
             }
-            if (Optional.IsDefined(VnetImagePullEnabled))
+            if (Optional.IsDefined(IsVnetImagePullEnabled))
             {
                 writer.WritePropertyName("vnetImagePullEnabled"u8);
-                writer.WriteBooleanValue(VnetImagePullEnabled.Value);
+                writer.WriteBooleanValue(IsVnetImagePullEnabled.Value);
             }
-            if (Optional.IsDefined(VnetContentShareEnabled))
+            if (Optional.IsDefined(IsVnetContentShareEnabled))
             {
                 writer.WritePropertyName("vnetContentShareEnabled"u8);
-                writer.WriteBooleanValue(VnetContentShareEnabled.Value);
+                writer.WriteBooleanValue(IsVnetContentShareEnabled.Value);
             }
-            if (Optional.IsDefined(VnetBackupRestoreEnabled))
+            if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
             {
                 writer.WritePropertyName("vnetBackupRestoreEnabled"u8);
-                writer.WriteBooleanValue(VnetBackupRestoreEnabled.Value);
+                writer.WriteBooleanValue(IsVnetBackupRestoreEnabled.Value);
             }
             if (Optional.IsDefined(SiteConfig))
             {
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetRouteAllEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetRouteAllEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    vnetRouteAllEnabled: ");
@@ -1563,15 +1563,15 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(VnetRouteAllEnabled))
+                if (Optional.IsDefined(IsVnetRouteAllEnabled))
                 {
                     builder.Append("    vnetRouteAllEnabled: ");
-                    var boolValue = VnetRouteAllEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsVnetRouteAllEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetImagePullEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetImagePullEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    vnetImagePullEnabled: ");
@@ -1579,15 +1579,15 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(VnetImagePullEnabled))
+                if (Optional.IsDefined(IsVnetImagePullEnabled))
                 {
                     builder.Append("    vnetImagePullEnabled: ");
-                    var boolValue = VnetImagePullEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsVnetImagePullEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetContentShareEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetContentShareEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    vnetContentShareEnabled: ");
@@ -1595,15 +1595,15 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(VnetContentShareEnabled))
+                if (Optional.IsDefined(IsVnetContentShareEnabled))
                 {
                     builder.Append("    vnetContentShareEnabled: ");
-                    var boolValue = VnetContentShareEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsVnetContentShareEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetBackupRestoreEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetBackupRestoreEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    vnetBackupRestoreEnabled: ");
@@ -1611,10 +1611,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(VnetBackupRestoreEnabled))
+                if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
                 {
                     builder.Append("    vnetBackupRestoreEnabled: ");
-                    var boolValue = VnetBackupRestoreEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsVnetBackupRestoreEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

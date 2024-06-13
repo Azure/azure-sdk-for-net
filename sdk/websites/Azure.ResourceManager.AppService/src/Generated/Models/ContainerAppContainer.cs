@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Container App container definition. </summary>
-    public partial class Container
+    public partial class ContainerAppContainer
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Container"/>. </summary>
-        public Container()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppContainer"/>. </summary>
+        public ContainerAppContainer()
         {
             Command = new ChangeTrackingList<string>();
             Args = new ChangeTrackingList<string>();
             Env = new ChangeTrackingList<EnvironmentVar>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Container"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Container(string image, string name, IList<string> command, IList<string> args, IList<EnvironmentVar> env, ContainerResources resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppContainer(string image, string name, IList<string> command, IList<string> args, IList<EnvironmentVar> env, ContainerResources resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Image = image;
             Name = name;

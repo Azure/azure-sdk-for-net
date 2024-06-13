@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="correlation"> The run correlation. </param>
         /// <param name="inputsLink"> Gets the link to input parameters. </param>
         /// <param name="outputsLink"> Gets the link to output parameters. </param>
-        /// <param name="fired"> The value indicating whether trigger was fired. </param>
+        /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? fired, ResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? isFired, ResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
             Correlation = correlation;
             InputsLink = inputsLink;
             OutputsLink = outputsLink;
-            Fired = fired;
+            IsFired = isFired;
             Run = run;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         public ContentLink OutputsLink { get; }
         /// <summary> The value indicating whether trigger was fired. </summary>
         [WirePath("properties.fired")]
-        public bool? Fired { get; }
+        public bool? IsFired { get; }
         /// <summary> Gets the reference to workflow run. </summary>
         [WirePath("properties.run")]
         public ResourceReference Run { get; }

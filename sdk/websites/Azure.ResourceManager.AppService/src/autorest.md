@@ -391,7 +391,17 @@ rename-mapping:
   RevisionCollection: ContainerAppRevisionListResult
   StaticSiteLinkedBackendARMResource.properties.backendResourceId: -|arm-id
   TriggeredWebJob.properties.storageAccountRequired: IsStorageAccountRequired
-
+  Site.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  Site.properties.vnetImagePullEnabled: IsVnetImagePullEnabled
+  Site.properties.vnetContentShareEnabled: IsVnetContentShareEnabled
+  Site.properties.vnetBackupRestoreEnabled: IsVnetBackupRestoreEnabled
+  WorkflowTriggerHistory.properties.fired: IsFired
+  AseRegion.properties.dedicatedHost: IsDedicatedHostEnabled
+  AseRegion.properties.standard: IsStandard
+  AseRegion.properties.zoneRedundant: IsZoneRedundantEnabled
+  Configuration: ContainerAppConfiguration
+  Container: ContainerAppContainer
+  Dapr.enabled: IsEnabled
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties

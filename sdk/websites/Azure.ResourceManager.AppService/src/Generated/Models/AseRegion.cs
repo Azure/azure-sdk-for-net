@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name for region. </param>
-        /// <param name="standard"> Is region standard. </param>
-        /// <param name="dedicatedHost"> Dedicated host enabled. </param>
-        /// <param name="zoneRedundant"> Zone redundant deployment enabled. </param>
+        /// <param name="isStandard"> Is region standard. </param>
+        /// <param name="isDedicatedHostEnabled"> Dedicated host enabled. </param>
+        /// <param name="isZoneRedundantEnabled"> Zone redundant deployment enabled. </param>
         /// <param name="availableSku"> Available Skus in region. </param>
         /// <param name="availableOS"> Available OSs in region. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AseRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? standard, bool? dedicatedHost, bool? zoneRedundant, IList<string> availableSku, IList<string> availableOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AseRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? isStandard, bool? isDedicatedHostEnabled, bool? isZoneRedundantEnabled, IList<string> availableSku, IList<string> availableOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
-            Standard = standard;
-            DedicatedHost = dedicatedHost;
-            ZoneRedundant = zoneRedundant;
+            IsStandard = isStandard;
+            IsDedicatedHostEnabled = isDedicatedHostEnabled;
+            IsZoneRedundantEnabled = isZoneRedundantEnabled;
             AvailableSku = availableSku;
             AvailableOS = availableOS;
             Kind = kind;
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayName { get; }
         /// <summary> Is region standard. </summary>
         [WirePath("properties.standard")]
-        public bool? Standard { get; }
+        public bool? IsStandard { get; }
         /// <summary> Dedicated host enabled. </summary>
         [WirePath("properties.dedicatedHost")]
-        public bool? DedicatedHost { get; }
+        public bool? IsDedicatedHostEnabled { get; }
         /// <summary> Zone redundant deployment enabled. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundantEnabled { get; }
         /// <summary> Available Skus in region. </summary>
         [WirePath("properties.availableSku")]
         public IList<string> AvailableSku { get; }

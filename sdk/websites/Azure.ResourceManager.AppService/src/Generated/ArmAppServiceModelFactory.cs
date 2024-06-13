@@ -1494,10 +1494,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
-        /// <param name="vnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
-        /// <param name="vnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
-        /// <param name="vnetContentShareEnabled"> To enable accessing content over virtual network. </param>
-        /// <param name="vnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
+        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
+        /// <param name="isVnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
+        /// <param name="isVnetContentShareEnabled"> To enable accessing content over virtual network. </param>
+        /// <param name="isVnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
         /// <param name="daprConfig"> Dapr configuration of the app. </param>
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, bool? vnetRouteAllEnabled = null, bool? vnetImagePullEnabled = null, bool? vnetContentShareEnabled = null, bool? vnetBackupRestoreEnabled = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, DaprConfig daprConfig = null, string workloadProfileName = null, ResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string kind = null)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, bool? isVnetRouteAllEnabled = null, bool? isVnetImagePullEnabled = null, bool? isVnetContentShareEnabled = null, bool? isVnetBackupRestoreEnabled = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, DaprConfig daprConfig = null, string workloadProfileName = null, ResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
@@ -1582,10 +1582,10 @@ namespace Azure.ResourceManager.AppService.Models
                 isHyperV,
                 lastModifiedTimeUtc,
                 dnsConfiguration,
-                vnetRouteAllEnabled,
-                vnetImagePullEnabled,
-                vnetContentShareEnabled,
-                vnetBackupRestoreEnabled,
+                isVnetRouteAllEnabled,
+                isVnetImagePullEnabled,
+                isVnetContentShareEnabled,
+                isVnetBackupRestoreEnabled,
                 siteConfig,
                 functionAppConfig,
                 daprConfig,
@@ -2338,7 +2338,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ContainerAppData"/> instance for mocking. </returns>
-        public static ContainerAppData ContainerAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppProvisioningState? provisioningState = null, string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, Configuration configuration = null, Template template = null, string kind = null)
+        public static ContainerAppData ContainerAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppProvisioningState? provisioningState = null, string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, ContainerAppConfiguration configuration = null, Template template = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3382,14 +3382,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name for region. </param>
-        /// <param name="standard"> Is region standard. </param>
-        /// <param name="dedicatedHost"> Dedicated host enabled. </param>
-        /// <param name="zoneRedundant"> Zone redundant deployment enabled. </param>
+        /// <param name="isStandard"> Is region standard. </param>
+        /// <param name="isDedicatedHostEnabled"> Dedicated host enabled. </param>
+        /// <param name="isZoneRedundantEnabled"> Zone redundant deployment enabled. </param>
         /// <param name="availableSku"> Available Skus in region. </param>
         /// <param name="availableOS"> Available OSs in region. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AseRegion"/> instance for mocking. </returns>
-        public static AseRegion AseRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, bool? standard = null, bool? dedicatedHost = null, bool? zoneRedundant = null, IEnumerable<string> availableSku = null, IEnumerable<string> availableOS = null, string kind = null)
+        public static AseRegion AseRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, bool? isStandard = null, bool? isDedicatedHostEnabled = null, bool? isZoneRedundantEnabled = null, IEnumerable<string> availableSku = null, IEnumerable<string> availableOS = null, string kind = null)
         {
             availableSku ??= new List<string>();
             availableOS ??= new List<string>();
@@ -3400,9 +3400,9 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 displayName,
-                standard,
-                dedicatedHost,
-                zoneRedundant,
+                isStandard,
+                isDedicatedHostEnabled,
+                isZoneRedundantEnabled,
                 availableSku?.ToList(),
                 availableOS?.ToList(),
                 kind,
@@ -6939,10 +6939,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="correlationClientTrackingId"> The run correlation. </param>
         /// <param name="inputsLink"> Gets the link to input parameters. </param>
         /// <param name="outputsLink"> Gets the link to output parameters. </param>
-        /// <param name="fired"> The value indicating whether trigger was fired. </param>
+        /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
-        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, ContentLink inputsLink = null, ContentLink outputsLink = null, bool? fired = null, ResourceReference run = null)
+        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, ContentLink inputsLink = null, ContentLink outputsLink = null, bool? isFired = null, ResourceReference run = null)
         {
             return new WorkflowTriggerHistoryData(
                 id,
@@ -6959,7 +6959,7 @@ namespace Azure.ResourceManager.AppService.Models
                 correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
                 inputsLink,
                 outputsLink,
-                fired,
+                isFired,
                 run,
                 serializedAdditionalRawData: null);
         }

@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Standard))
+            if (options.Format != "W" && Optional.IsDefined(IsStandard))
             {
                 writer.WritePropertyName("standard"u8);
-                writer.WriteBooleanValue(Standard.Value);
+                writer.WriteBooleanValue(IsStandard.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DedicatedHost))
+            if (options.Format != "W" && Optional.IsDefined(IsDedicatedHostEnabled))
             {
                 writer.WritePropertyName("dedicatedHost"u8);
-                writer.WriteBooleanValue(DedicatedHost.Value);
+                writer.WriteBooleanValue(IsDedicatedHostEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundantEnabled))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundantEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AvailableSku))
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Standard), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStandard), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    standard: ");
@@ -392,15 +392,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(Standard))
+                if (Optional.IsDefined(IsStandard))
                 {
                     builder.Append("    standard: ");
-                    var boolValue = Standard.Value == true ? "true" : "false";
+                    var boolValue = IsStandard.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DedicatedHost), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDedicatedHostEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    dedicatedHost: ");
@@ -408,15 +408,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(DedicatedHost))
+                if (Optional.IsDefined(IsDedicatedHostEnabled))
                 {
                     builder.Append("    dedicatedHost: ");
-                    var boolValue = DedicatedHost.Value == true ? "true" : "false";
+                    var boolValue = IsDedicatedHostEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneRedundant), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundantEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    zoneRedundant: ");
@@ -424,10 +424,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ZoneRedundant))
+                if (Optional.IsDefined(IsZoneRedundantEnabled))
                 {
                     builder.Append("    zoneRedundant: ");
-                    var boolValue = ZoneRedundant.Value == true ? "true" : "false";
+                    var boolValue = IsZoneRedundantEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

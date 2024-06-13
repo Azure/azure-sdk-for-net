@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
             string kubeEnvironmentId = default;
             string latestRevisionName = default;
             string latestRevisionFqdn = default;
-            Configuration configuration = default;
+            ContainerAppConfiguration configuration = default;
             Template template = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            configuration = Configuration.DeserializeConfiguration(property0.Value, options);
+                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))

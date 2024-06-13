@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Dapr"/>. </summary>
-        /// <param name="enabled"> Boolean indicating if the Dapr side car is enabled. </param>
+        /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appPort"> Port on which the Dapr side car. </param>
         /// <param name="components"> Collection of Dapr components. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Dapr(bool? enabled, string appId, int? appPort, IList<DaprComponent> components, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Dapr(bool? isEnabled, string appId, int? appPort, IList<DaprComponent> components, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             AppId = appId;
             AppPort = appPort;
             Components = components;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Dapr application identifier. </summary>
         [WirePath("appId")]
         public string AppId { get; set; }

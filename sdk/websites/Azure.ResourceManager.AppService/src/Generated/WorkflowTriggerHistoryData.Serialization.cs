@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fired))
+            if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
                 writer.WritePropertyName("fired"u8);
-                writer.WriteBooleanValue(Fired.Value);
+                writer.WriteBooleanValue(IsFired.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsFired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    fired: ");
@@ -587,10 +587,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(Fired))
+                if (Optional.IsDefined(IsFired))
                 {
                     builder.Append("    fired: ");
-                    var boolValue = Fired.Value == true ? "true" : "false";
+                    var boolValue = IsFired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

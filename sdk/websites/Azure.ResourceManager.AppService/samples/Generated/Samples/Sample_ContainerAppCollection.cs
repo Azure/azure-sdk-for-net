@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Samples
             ContainerAppData data = new ContainerAppData(new AzureLocation("East US"))
             {
                 KubeEnvironmentId = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.Web/kubeEnvironments/demokube",
-                Configuration = new Configuration()
+                Configuration = new ContainerAppConfiguration()
                 {
                     Ingress = new Ingress()
                     {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Samples
                 {
                     Containers =
 {
-new Container()
+new ContainerAppContainer()
 {
 Image = "repo/testcontainerApp0:v1",
 Name = "testcontainerApp0",
@@ -226,7 +226,7 @@ Metadata =
                     },
                     Dapr = new Dapr()
                     {
-                        Enabled = true,
+                        IsEnabled = true,
                         AppPort = 3000,
                     },
                 },

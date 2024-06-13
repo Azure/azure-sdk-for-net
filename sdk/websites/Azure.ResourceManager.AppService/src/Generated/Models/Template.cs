@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="Template"/>. </summary>
         public Template()
         {
-            Containers = new ChangeTrackingList<Container>();
+            Containers = new ChangeTrackingList<ContainerAppContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Template"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="scale"> Scaling properties for the Container App. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Template(string revisionSuffix, IList<Container> containers, Scale scale, Dapr dapr, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Template(string revisionSuffix, IList<ContainerAppContainer> containers, Scale scale, Dapr dapr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RevisionSuffix = revisionSuffix;
             Containers = containers;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string RevisionSuffix { get; set; }
         /// <summary> List of container definitions for the Container App. </summary>
         [WirePath("containers")]
-        public IList<Container> Containers { get; }
+        public IList<ContainerAppContainer> Containers { get; }
         /// <summary> Scaling properties for the Container App. </summary>
         [WirePath("scale")]
         public Scale Scale { get; set; }

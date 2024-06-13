@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
-    public partial class Configuration
+    public partial class ContainerAppConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Configuration"/>. </summary>
-        public Configuration()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
+        public ContainerAppConfiguration()
         {
             Secrets = new ChangeTrackingList<Secret>();
             Registries = new ChangeTrackingList<RegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Configuration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
         /// <param name="activeRevisionsMode">
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Configuration(IList<Secret> secrets, ActiveRevisionsMode? activeRevisionsMode, Ingress ingress, IList<RegistryCredentials> registries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<Secret> secrets, ActiveRevisionsMode? activeRevisionsMode, Ingress ingress, IList<RegistryCredentials> registries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
