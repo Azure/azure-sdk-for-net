@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0 (2023-06-28)
+## 1.2.0 (2024-06-28)
 
 ### Features Added
 
@@ -10,12 +10,6 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.1 (2023-11-30)
 
