@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,12 +68,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var nmResource = putNMResponse.Value;
             var ngCollection = nmResource.GetNetworkGroups();
             /*
-            networkManagerGroupCollection = resourceGroup.GetNetworkMan 
+            networkManagerGroupCollection = resourceGroup.GetNetworkMan
             // Put NetworkManagerGroup
             var networkGrCollection = resourceGroup.GetNetworkG();
             var putNMResponse = networkManagerCollection.CreateOrUpdate(WaitUntil.Completed, networkManagerName, networkManager);
             Assert.Equal(groupName, putNmGroupResponse.Name);
             Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
-            /*
+            */
         }
     }
+}
