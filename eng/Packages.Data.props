@@ -168,9 +168,8 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.8.1" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.8.1" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.9.0-rc.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.9.0-rc.1" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.8.1" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
@@ -334,7 +333,8 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
-    <PackageReference Update="OpenTelemetry" Version="1.8.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.9.0-rc.1" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0-rc.1" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.6.0-beta.3" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
