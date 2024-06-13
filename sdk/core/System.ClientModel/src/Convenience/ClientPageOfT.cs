@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 // Lives in .Primitives because it's intended to be inherited from to create
 // a service-specific instance.
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 #pragma warning disable CS1591
-public class ClientPage<TValue, TPageToken> : ClientResult
-    where TPageToken : IPersistableModel<TPageToken>
+public class ClientPage<T> : ClientResult
 {
-    protected ClientPage(IReadOnlyList<TValue> values,
-        TPageToken pageToken,
-        TPageToken? nextPageToken,
+    protected ClientPage(IReadOnlyList<T> values,
+        PageToken pageToken,
+        PageToken? nextPageToken,
         PipelineResponse response) : base(response)
     {
         Values = values;
@@ -22,7 +22,7 @@ public class ClientPage<TValue, TPageToken> : ClientResult
     }
 
     // The values in the page
-    public IReadOnlyList<TValue> Values { get; }
+    public IReadOnlyList<T> Values { get; }
 
     // The token used to retrieve this page -- can uniquely request
     // the page AND uniquely rehydrate a page collection that this is
@@ -31,9 +31,9 @@ public class ClientPage<TValue, TPageToken> : ClientResult
     // in it.
     // This is useful because I can cache this and retrive both the
     // full collection this page is in and/or the current page.
-    public TPageToken PageToken { get; }
+    public PageToken PageToken { get; }
 
     // If this is null, the current page is the last page in a collection.
-    public TPageToken? NextPageToken { get; }
+    public PageToken? NextPageToken { get; }
 }
 #pragma warning restore CS1591

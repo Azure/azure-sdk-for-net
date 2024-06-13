@@ -4,44 +4,44 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// Lives in .Primitives because it's intended to be inherited from to create
-// a service-specific instance.
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
 // This type is a client that defines a collection of elements and can
 // make service requests to retrieve specific pages
-public abstract class PageCollection<TPage, TValue, TPageToken> : ClientResult, IEnumerable<TPage>
-    where TPage : ClientPage<TValue, TPageToken>
-    where TPageToken : IPersistableModel<TPageToken>
+public abstract class PageCollection<T> : ClientResult,
+    IEnumerable<ClientPage<T>>,
+    IEnumerable<ClientResult>
 {
-    // Note - assumes we don't make a request initially
-    protected PageCollection(TPageToken firstPageToken) : base()
+    // Note - assumes we don't make a request initially, so don't call
+    // response constructor
+    protected PageCollection(PageToken firstPageToken) : base()
     {
         FirstPageToken = firstPageToken;
     }
 
-    public TPageToken FirstPageToken { get; }
+    public PageToken FirstPageToken { get; }
 
-    public abstract TPage GetPage(TPageToken pageToken);
+    // TODO: Take RequestOptions/CancellationToken?
+    public abstract ClientPage<T> GetPage(PageToken pageToken);
 
-    public IEnumerable<TValue> GetValues()
+    public IEnumerable<T> GetValues()
     {
-        foreach (TPage page in this)
+        foreach (ClientPage<T> page in (IEnumerable<ClientPage<T>>)this)
         {
-            foreach (TValue value in page.Values)
+            foreach (T value in page.Values)
             {
                 yield return value;
             }
         }
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TPage>)this).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<ClientPage<T>>)this).GetEnumerator();
 
-    IEnumerator<TPage> IEnumerable<TPage>.GetEnumerator()
+    IEnumerator<ClientPage<T>> IEnumerable<ClientPage<T>>.GetEnumerator()
     {
-        TPage page = GetPage(FirstPageToken);
+        ClientPage<T> page = GetPage(FirstPageToken);
         SetRawResponse(page.GetRawResponse());
         yield return page;
 
@@ -49,6 +49,15 @@ public abstract class PageCollection<TPage, TValue, TPageToken> : ClientResult, 
         {
             page = GetPage(page.NextPageToken);
             SetRawResponse(page.GetRawResponse());
+            yield return page;
+        }
+    }
+
+    // TODO: is this the best way to implement?
+    IEnumerator<ClientResult> IEnumerable<ClientResult>.GetEnumerator()
+    {
+        foreach (ClientPage<T> page in (IEnumerable<ClientPage<T>>)this)
+        {
             yield return page;
         }
     }

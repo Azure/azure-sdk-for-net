@@ -7,6 +7,15 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
+    public abstract partial class AsyncPageCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult>
+    {
+        protected AsyncPageCollection(System.ClientModel.PageToken firstPageToken) { }
+        public System.ClientModel.PageToken FirstPageToken { get { throw null; } }
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsync(System.ClientModel.PageToken pageToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientResult> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncResultCollection() { }
@@ -23,6 +32,13 @@ namespace System.ClientModel
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public partial class ClientPage<T> : System.ClientModel.ClientResult
+    {
+        protected ClientPage(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.PageToken pageToken, System.ClientModel.PageToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        public System.ClientModel.PageToken? NextPageToken { get { throw null; } }
+        public System.ClientModel.PageToken PageToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
     }
     public partial class ClientResult
     {
@@ -48,6 +64,24 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
+    public abstract partial class PageCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>, System.Collections.IEnumerable
+    {
+        protected PageCollection(System.ClientModel.PageToken firstPageToken) { }
+        public System.ClientModel.PageToken FirstPageToken { get { throw null; } }
+        public abstract System.ClientModel.ClientPage<T> GetPage(System.ClientModel.PageToken pageToken);
+        public System.Collections.Generic.IEnumerable<T> GetValues() { throw null; }
+        System.Collections.Generic.IEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>.GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<System.ClientModel.ClientResult> System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public abstract partial class PageToken : System.ClientModel.Primitives.IPersistableModel<System.ClientModel.PageToken>
+    {
+        protected PageToken(System.ClientModel.PageToken firstPageToken) { }
+        public System.ClientModel.PageToken FirstCollectionPage { get { throw null; } }
+        public abstract System.ClientModel.PageToken Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal ResultCollection() { }
@@ -67,26 +101,11 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class AsyncPageCollection<TPage, TValue, TPageToken> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<TPage> where TPage : System.ClientModel.Primitives.ClientPage<TValue, TPageToken> where TPageToken : System.ClientModel.Primitives.IPersistableModel<TPageToken>
-    {
-        protected AsyncPageCollection(TPageToken firstPageToken) { }
-        public TPageToken FirstPageToken { get { throw null; } }
-        public abstract System.Threading.Tasks.Task<TPage> GetPageAsync(TPageToken pageToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public System.Collections.Generic.IAsyncEnumerable<TValue> GetValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<TPage> System.Collections.Generic.IAsyncEnumerable<TPage>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
     {
         Default = 0,
         NoThrow = 1,
-    }
-    public partial class ClientPage<TValue, TPageToken> : System.ClientModel.ClientResult where TPageToken : System.ClientModel.Primitives.IPersistableModel<TPageToken>
-    {
-        protected ClientPage(System.Collections.Generic.IReadOnlyList<TValue> values, TPageToken pageToken, TPageToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { }
-        public TPageToken? NextPageToken { get { throw null; } }
-        public TPageToken PageToken { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<TValue> Values { get { throw null; } }
     }
     public sealed partial class ClientPipeline
     {
@@ -161,15 +180,6 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-    }
-    public abstract partial class PageCollection<TPage, TValue, TPageToken> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<TPage>, System.Collections.IEnumerable where TPage : System.ClientModel.Primitives.ClientPage<TValue, TPageToken> where TPageToken : System.ClientModel.Primitives.IPersistableModel<TPageToken>
-    {
-        protected PageCollection(TPageToken firstPageToken) { }
-        public TPageToken FirstPageToken { get { throw null; } }
-        public abstract TPage GetPage(TPageToken pageToken);
-        public System.Collections.Generic.IEnumerable<TValue> GetValues() { throw null; }
-        System.Collections.Generic.IEnumerator<TPage> System.Collections.Generic.IEnumerable<TPage>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

@@ -6,38 +6,38 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class AsyncPageCollection<TPage, TValue, TPageToken> : ClientResult, IAsyncEnumerable<TPage>
-    where TPage : ClientPage<TValue, TPageToken>
-    where TPageToken : IPersistableModel<TPageToken>
+public abstract class AsyncPageCollection<T> : ClientResult,
+    IAsyncEnumerable<ClientPage<T>>,
+    IAsyncEnumerable<ClientResult>
 {
-    protected AsyncPageCollection(TPageToken firstPageToken) : base()
+    protected AsyncPageCollection(PageToken firstPageToken) : base()
     {
         FirstPageToken = firstPageToken;
     }
 
-    public TPageToken FirstPageToken { get; }
+    public PageToken FirstPageToken { get; }
 
     // TODO: take RequestOptions instead?
-    public abstract Task<TPage> GetPageAsync(TPageToken pageToken, CancellationToken cancellationToken = default);
+    public abstract Task<ClientPage<T>> GetPageAsync(PageToken pageToken, CancellationToken cancellationToken = default);
 
-    public async IAsyncEnumerable<TValue> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<T> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await foreach (TPage page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ClientPage<T> page in ((IAsyncEnumerable<ClientPage<T>>)this).ConfigureAwait(false).WithCancellation(cancellationToken))
         {
-            foreach (TValue value in page.Values)
+            foreach (T value in page.Values)
             {
                 yield return value;
             }
         }
     }
 
-    async IAsyncEnumerator<TPage> IAsyncEnumerable<TPage>.GetAsyncEnumerator(CancellationToken cancellationToken)
+    async IAsyncEnumerator<ClientPage<T>> IAsyncEnumerable<ClientPage<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
-        TPage page = await GetPageAsync(FirstPageToken, cancellationToken).ConfigureAwait(false);
+        ClientPage<T> page = await GetPageAsync(FirstPageToken, cancellationToken).ConfigureAwait(false);
         SetRawResponse(page.GetRawResponse());
         yield return page;
 
@@ -45,6 +45,15 @@ public abstract class AsyncPageCollection<TPage, TValue, TPageToken> : ClientRes
         {
             page = await GetPageAsync(page.NextPageToken, cancellationToken).ConfigureAwait(false);
             SetRawResponse(page.GetRawResponse());
+            yield return page;
+        }
+    }
+
+    // TODO: is this the best way to implement?
+    async IAsyncEnumerator<ClientResult> IAsyncEnumerable<ClientResult>.GetAsyncEnumerator(CancellationToken cancellationToken)
+    {
+        await foreach (ClientPage<T> page in ((IAsyncEnumerable<ClientPage<T>>)this).ConfigureAwait(false).WithCancellation(cancellationToken))
+        {
             yield return page;
         }
     }
