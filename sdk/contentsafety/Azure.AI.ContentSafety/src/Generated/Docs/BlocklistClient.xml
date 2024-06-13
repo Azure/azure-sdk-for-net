@@ -159,6 +159,48 @@ Console.WriteLine(result.GetProperty("blocklistItems")[0].GetProperty("descripti
 Console.WriteLine(result.GetProperty("blocklistItems")[0].GetProperty("text").ToString());
 ]]></code></example>
     </member>
+    <member name="CreateOrUpdateTextBlocklistAsync(string,TextBlocklist,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrUpdateTextBlocklistAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+TextBlocklist options = new TextBlocklist("<blocklistName>");
+Response<TextBlocklist> response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", options);
+]]></code>
+This sample shows how to call CreateOrUpdateTextBlocklistAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+TextBlocklist options = new TextBlocklist("<blocklistName>");
+Response<TextBlocklist> response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", options);
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateTextBlocklist(string,TextBlocklist,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrUpdateTextBlocklist.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+TextBlocklist options = new TextBlocklist("<blocklistName>");
+Response<TextBlocklist> response = client.CreateOrUpdateTextBlocklist("<Name>", options);
+]]></code>
+This sample shows how to call CreateOrUpdateTextBlocklist with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+BlocklistClient client = new BlocklistClient(endpoint, credential);
+
+TextBlocklist options = new TextBlocklist("<blocklistName>");
+Response<TextBlocklist> response = client.CreateOrUpdateTextBlocklist("<Name>", options);
+]]></code></example>
+    </member>
     <member name="CreateOrUpdateTextBlocklistAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call CreateOrUpdateTextBlocklistAsync and parse the result.
