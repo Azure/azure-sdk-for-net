@@ -307,6 +307,8 @@ namespace Azure.Storage.Sas
                 ContentLanguage,
                 ContentType);
 
+            StorageEventSource.Singleton.GenerateServiceSasStringToSign(stringToSign);
+
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
             var p = SasQueryParametersInternals.Create(

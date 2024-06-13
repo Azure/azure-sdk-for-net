@@ -384,6 +384,8 @@ namespace Azure.Storage.Sas
                     ContentLanguage,
                     ContentType);
 
+            StorageEventSource.Singleton.GenerateServiceSasStringToSign(stringToSign);
+
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
             DataLakeSasQueryParameters p = new DataLakeSasQueryParameters(
@@ -459,6 +461,8 @@ namespace Azure.Storage.Sas
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
+
+            StorageEventSource.Singleton.GenerateUserDelegationSasStringToSign(stringToSign);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
