@@ -121,9 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // When working locally, this has the benefit of "priming" telemetry so that additional runs can complete faster without waiting for ingestion.
             // This can negatively impact the test results if you are debugging locally and making changes to the telemetry.
             // To mitigate this, you can include a timestamp in the query to only check for telemetry created since this test started.
-            // IMPORTANT: we cannot include timestamps in the Recorded test because it breaks queries during playback.
+            // IMPORTANT: we cannot include timestamps in the Recorded test because queries won't match during playback.
             // C#:      var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
-            // QUERY:   | where TimeGenerated >= datetime({ testStartTimeStamp})
+            // QUERY:   | where TimeGenerated >= datetime({testStartTimeStamp})
 
             await QueryAndVerifyDependency(
                 description: "Dependency for invoking HttpClient, from testhost",
