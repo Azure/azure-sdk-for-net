@@ -27,7 +27,6 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -427,6 +426,22 @@ directive:
         ],
         'description':'Properties of network group'
       };
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions.RoutingConfiguration
+    transform: >
+      $["x-ms-client-name"] = "NetworkManagerRoutingConfiguration";
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions.RoutingRuleCollection
+    transform: >
+      $["x-ms-client-name"] = "NetworkManagerRoutingRuleCollection";
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions.RoutingRule
+    transform: >
+      $["x-ms-client-name"] = "NetworkManagerRoutingRule";
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions.RoutingConfigurationListResult.properties.value.items
+    transform: >
+      $["$ref"] = $["$ref"].replace("'RoutingConfiguration'", "'NetworkManagerRoutingConfiguration'");
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
