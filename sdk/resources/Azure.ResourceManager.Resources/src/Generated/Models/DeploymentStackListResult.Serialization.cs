@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            IReadOnlyList<ArmDeploymentStackData> value = default;
+            IReadOnlyList<DeploymentStackData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ArmDeploymentStackData> array = new List<ArmDeploymentStackData>();
+                    List<DeploymentStackData> array = new List<DeploymentStackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDeploymentStackData.DeserializeArmDeploymentStackData(item, options));
+                        array.Add(DeploymentStackData.DeserializeDeploymentStackData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentStackListResult(value ?? new ChangeTrackingList<ArmDeploymentStackData>(), nextLink, serializedAdditionalRawData);
+            return new DeploymentStackListResult(value ?? new ChangeTrackingList<DeploymentStackData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

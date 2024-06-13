@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Resources.Tests
             Location = location
         };
 
-        protected static ArmDeploymentStackData CreateRGDeploymentStackDataWithTemplate()
+        protected static DeploymentStackData CreateRGDeploymentStackDataWithTemplate()
         {
-            var data = new ArmDeploymentStackData();
+            var data = new DeploymentStackData();
 
             data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Resources.Tests
             return data;
         }
 
-        protected static ArmDeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
-            var data = new ArmDeploymentStackData();
+        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
+            var data = new DeploymentStackData();
 
             data.Location = location;
 
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.Resources.Tests
             return data;
         }
 
-        protected static ArmDeploymentStackData CreateMGDeploymentStackDataWithTemplate(AzureLocation location)
+        protected static DeploymentStackData CreateMGDeploymentStackDataWithTemplate(AzureLocation location)
         {
-            var data = new ArmDeploymentStackData();
+            var data = new DeploymentStackData();
 
             data.Location = location;
 

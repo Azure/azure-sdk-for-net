@@ -14,10 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing the ArmDeploymentStack data model.
+    /// A class representing the DeploymentStack data model.
     /// Deployment stack object.
     /// </summary>
-    public partial class ArmDeploymentStackData : ResourceData
+    public partial class DeploymentStackData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackData"/>. </summary>
-        public ArmDeploymentStackData()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
+        public DeploymentStackData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Parameters = new ChangeTrackingDictionary<string, DeploymentParameter>();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
             Resources = new ChangeTrackingList<ManagedResourceReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;

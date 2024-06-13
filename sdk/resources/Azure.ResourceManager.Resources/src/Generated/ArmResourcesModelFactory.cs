@@ -849,8 +849,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             return new DecompiledFileDefinition(path, contents, serializedAdditionalRawData: null);
         }
-        
-        /// <summary> Initializes a new instance of <see cref="Resources.DeploymentStackData"/>. </summary>
+
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentStackTemplateDefinition"/>. </summary>
         /// <param name="template"> The template content. Use this element to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
@@ -860,7 +859,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new DeploymentStackTemplateDefinition(template, templateLink, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentStackData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.DeploymentStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -887,8 +886,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="deploymentId"> The resourceId of the deployment resource created by the deployment stack. </param>
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
-        /// <returns> A new <see cref="Resources.ArmDeploymentStackData"/> instance for mocking. </returns>
-        public static ArmDeploymentStackData ArmDeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResponseError error = null, BinaryData template = null, DeploymentStacksTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, DeploymentStacksParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
+        /// <returns> A new <see cref="Resources.DeploymentStackData"/> instance for mocking. </returns>
+        public static DeploymentStackData DeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResponseError error = null, BinaryData template = null, DeploymentStacksTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, DeploymentStacksParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DeploymentParameter>();
@@ -897,7 +896,7 @@ namespace Azure.ResourceManager.Resources.Models
             failedResources ??= new List<ResourceReferenceExtended>();
             resources ??= new List<ManagedResourceReference>();
 
-            return new ArmDeploymentStackData(
+            return new DeploymentStackData(
                 id,
                 name,
                 resourceType,

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateValidateStackAtScopeRequestUri(string scope, string deploymentStackName, ArmDeploymentStackData data)
+        internal RequestUriBuilder CreateValidateStackAtScopeRequestUri(string scope, string deploymentStackName, DeploymentStackData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateValidateStackAtScopeRequest(string scope, string deploymentStackName, ArmDeploymentStackData data)
+        internal Core.HttpMessage CreateValidateStackAtScopeRequest(string scope, string deploymentStackName, DeploymentStackData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateStackAtScopeAsync(string scope, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateStackAtScopeAsync(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateStackAtScope(string scope, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public Response ValidateStackAtScope(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, string deploymentStackName, ArmDeploymentStackData data)
+        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, string deploymentStackName, DeploymentStackData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentStackName, ArmDeploymentStackData data)
+        internal Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentStackName, DeploymentStackData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentStackName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateAtScope(string scope, string deploymentStackName, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateAtScope(string scope, string deploymentStackName, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArmDeploymentStackData>> GetAtScopeAsync(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentStackData>> GetAtScopeAsync(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -417,13 +417,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ArmDeploymentStackData value = default;
+                        DeploymentStackData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmDeploymentStackData.DeserializeArmDeploymentStackData(document.RootElement);
+                        value = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmDeploymentStackData)null, message.Response);
+                    return Response.FromValue((DeploymentStackData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArmDeploymentStackData> GetAtScope(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        public Response<DeploymentStackData> GetAtScope(string scope, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentStackName, nameof(deploymentStackName));
@@ -446,13 +446,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ArmDeploymentStackData value = default;
+                        DeploymentStackData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmDeploymentStackData.DeserializeArmDeploymentStackData(document.RootElement);
+                        value = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmDeploymentStackData)null, message.Response);
+                    return Response.FromValue((DeploymentStackData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
