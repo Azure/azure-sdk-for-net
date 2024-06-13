@@ -8,14 +8,13 @@ namespace System.ClientModel;
 #pragma warning disable CS1591
 public abstract class PageToken : IPersistableModel<PageToken>
 {
-    protected PageToken(PageToken firstPageToken)
+    protected PageToken()
     {
-        FirstCollectionPage = firstPageToken;
     }
 
     // The first page of the collection the page that this page token represents
     // is in.  Essentially, the rehydration token for the collection.
-    public PageToken FirstCollectionPage { get; }
+    public abstract PageToken FirstCollectionPage { get; }
 
     public abstract BinaryData Write(ModelReaderWriterOptions options);
     public abstract PageToken Create(BinaryData data, ModelReaderWriterOptions options);
