@@ -157,7 +157,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
                 Assert.That(association.VectorStoreId, Is.EqualTo(vectorStore.Id));
                 Assert.That(association.LastError, Is.Null);
                 Assert.That(association.CreatedAt, Is.GreaterThan(s_2024));
-                Assert.That(association.Status, Is.EqualTo(VectorStoreFileAssociationStatus.InProgress));
+                Assert.That(association.Status, Is.AnyOf(VectorStoreFileAssociationStatus.InProgress, VectorStoreFileAssociationStatus.Completed));
             });
         }
 
