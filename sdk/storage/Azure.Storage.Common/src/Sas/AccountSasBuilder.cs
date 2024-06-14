@@ -202,24 +202,7 @@ namespace Azure.Storage.Sas
                 throw Errors.AccountSasMissingData();
             }
 
-            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
-
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
-                sharedKeyCredential.AccountName,
-                Permissions,
-                Services.ToPermissionsString(),
-                ResourceTypes.ToPermissionsString(),
-                startTime,
-                expiryTime,
-                IPRange.ToString(),
-                Protocol.ToProtocolString(),
-                Version,
-                EncryptionScope,
-                string.Empty);  // That's right, the account SAS requires a terminating extra newline
+            string stringToSign = GetStringToSign(sharedKeyCredential);
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(
@@ -236,6 +219,38 @@ namespace Azure.Storage.Sas
                 signature,
                 encryptionScope: EncryptionScope);
             return p;
+        }
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        public string GetStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
+
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                sharedKeyCredential.AccountName,
+                Permissions,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
+                startTime,
+                expiryTime,
+                IPRange.ToString(),
+                Protocol.ToProtocolString(),
+                Version,
+                EncryptionScope,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
         }
 
         /// <summary>
