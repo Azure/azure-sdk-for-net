@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch.Custom
             stringBuilder.Append(contentLengthString == "0" ? "" : contentLengthString ?? "").Append('\n');
             stringBuilder.Append(contentMD5 ?? "");// todo: fix base 64 VALUE
             stringBuilder.Append('\n');
-            stringBuilder.Append(contentType ?? "").Append('\n'); // Empty date because ocp-date is expected (as per web page above))
+            stringBuilder.Append(contentType ?? "").Append('\n');
             stringBuilder.Append('\n');
             stringBuilder.Append(ifModifiedSince ?? "").Append('\n');
             stringBuilder.Append(ifMatch ?? "").Append('\n');
