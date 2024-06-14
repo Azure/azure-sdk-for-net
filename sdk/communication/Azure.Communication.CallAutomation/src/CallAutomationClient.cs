@@ -582,7 +582,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual async Task<Response<ConnectCallResult>> ConnectCallAsync(ConnectCallOptions connectCallOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(ConnectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(ConnectCall)}");
             scope.Start();
             try
             {

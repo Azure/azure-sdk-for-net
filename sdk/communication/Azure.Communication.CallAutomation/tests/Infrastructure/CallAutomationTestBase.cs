@@ -34,6 +34,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"mediaSubscriptionId\": {0}," +
                                         "\"dataSubscriptionId\": {1}" +
                                         "}}";
+        protected const string DummyConnectPayload = "{" +
+                                        "\"callConnectionId\": \"someCallConnectionId\"," +
+                                        "\"serverCallId\": \"someServerCallId\"," +
+                                        "\"targets\": []," +
+                                        "\"callConnectionState\": \"connecting\"," +
+                                        "\"callbackUri\": \"https://bot.contoso.com/callback\"" +
+                                        "}";
         protected const string SourceId = "sourceId";
         protected const string TargetId = "targetId";
         protected const string ServerCallId = "someServerCallId";
@@ -41,6 +48,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string Subject = "dummySubject";
         protected const string CallBackUri = "https://bot.contoso.com/callback";
         protected const string DisplayName = "displayName";
+        protected static readonly CallLocator _serverCallLocator = new ServerCallLocator(ServerCallId);
 
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
@@ -92,18 +100,22 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return new CallAutomationClient(ConnectionString, callAutomationClientOptions);
         }
 
-        protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties)
+        protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties, bool isConnectApi = false)
         {
             Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
             Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
-            var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.Source;
-            Assert.AreEqual(SourceId, sourceUser.Id);
-            Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
-            var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-            Assert.AreEqual(TargetId, targetUser.Id);
+            if (!isConnectApi)
+            {
+                var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.Source;
+                Assert.AreEqual(SourceId, sourceUser.Id);
+                Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+                var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
+                Assert.AreEqual(TargetId, targetUser.Id);
+                Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+            }
+
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
             Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
-            Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
         }
     }
 }
