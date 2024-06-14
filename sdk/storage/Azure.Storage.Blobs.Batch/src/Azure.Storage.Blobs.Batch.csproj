@@ -33,6 +33,7 @@
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Smuggler.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageRequestFailedDetailsParser.cs" LinkBase="Shared" />

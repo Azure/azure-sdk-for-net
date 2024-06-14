@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Storage;
+using Azure.Storage.Shared;
 
 #nullable enable
 
@@ -41,6 +42,15 @@ namespace Azure.Core.Pipeline
                                 default:
                                     data[element.Name.LocalName] = element.Value;
                                     break;
+                            }
+                        }
+
+                        if (response is Smuggler s)
+                        {
+                            data ??= new Dictionary<string, string>();
+                            foreach (KeyValuePair<string, string> pair in s.Cargo)
+                            {
+                                data.Add(pair);
                             }
                         }
 
