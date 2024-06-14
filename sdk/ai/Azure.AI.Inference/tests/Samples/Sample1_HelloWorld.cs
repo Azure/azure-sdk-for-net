@@ -23,21 +23,6 @@ namespace Azure.AI.Inference.Tests.Samples
             #region Snippet:Azure_AI_Inference_Scenario
             Console.WriteLine("Hello, world!");
             #endregion
-
-            #region Snippet:Azure_AI_Inference_Scenario2
-            var endpoint = new Uri(Environment.GetEnvironmentVariable("AOAI_CHAT_COMPLETIONS_ENDPOINT"));
-            var credential = new DefaultAzureCredential();
-
-            var client = new ChatCompletionsClient(endpoint, credential);
-
-            var response = client.Complete(messages: new List<ChatRequestMessage>
-            {
-                new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage(BinaryData.FromString("How many feet are in a mile?"))
-            });
-
-            Console.WriteLine(response.Value.Choices.First().Message);
-            #endregion
         }
     }
 }
