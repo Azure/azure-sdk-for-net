@@ -18,10 +18,10 @@ namespace Azure.Storage.Blobs.Tests
         [RecordedTest]
         public async Task SharedKeyStringToSignError()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Models.PublicAccessType.None);
             // This is not a real shared key.  This is fake key, deliberately put here to test this case.
             // This is not a security issue.
-            StorageSharedKeyCredential invalidSharedKey = new StorageSharedKeyCredential(TestConfigDefault.AccountName, "d8o0LmmcPmkw==");
+            StorageSharedKeyCredential invalidSharedKey = new StorageSharedKeyCredential(TestConfigDefault.AccountName, "dGVzdCB0ZXN0IHRlc3Q=");
 
             BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, invalidSharedKey, GetOptions()));
 

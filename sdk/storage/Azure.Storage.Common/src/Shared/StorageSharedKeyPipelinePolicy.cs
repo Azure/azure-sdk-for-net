@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
@@ -50,14 +51,17 @@ namespace Azure.Storage
             // Add a x-ms-date header
             if (IncludeXMsDate)
             {
-                var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
+                string date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
                 message.Request.Headers.SetValue(Constants.HeaderNames.Date, date);
             }
 
-            var stringToSign = BuildStringToSign(message);
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
+            string stringToSign = BuildStringToSign(message);
 
-            var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
+            message.SetProperty(typeof(StorageSharedKeyPipelinePolicy), stringToSign);
+
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
+
+            string key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
@@ -65,9 +69,17 @@ namespace Azure.Storage
         {
             base.OnReceivedResponse(message);
 
-            if (message.Response.Status == 403)
+            if (message.HasResponse
+                && message.Response.Status == 403
+                && message.Response.Headers.TryGetValue("x-ms-error-code", out string errorCode)
+                && errorCode == "AuthenticationFailed"
+                && message.TryGetProperty(typeof(StorageSharedKeyPipelinePolicy), out object cached)
+                && cached is string stringToSign)
             {
-                string sdkStringToSign = $"\nSDK generated string to sign:\n{BuildStringToSign(message)}";
+                message.Response =
+                    new Smuggler(
+                        message.Response,
+                        new Dictionary<string, string> { { "Attempted StringToSign", stringToSign } });
             }
         }
 
