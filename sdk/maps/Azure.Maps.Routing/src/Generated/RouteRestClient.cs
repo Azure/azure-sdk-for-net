@@ -149,9 +149,27 @@ namespace Azure.Maps.Routing
         /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
         /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -166,8 +184,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -272,9 +290,27 @@ namespace Azure.Maps.Routing
         /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
         /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -289,8 +325,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -705,9 +741,27 @@ namespace Azure.Maps.Routing
         /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
         /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -722,8 +776,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -831,9 +885,27 @@ namespace Azure.Maps.Routing
         /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
         /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -848,8 +920,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1148,8 +1220,26 @@ namespace Azure.Maps.Routing
         /// <param name="maxAlternatives"> Number of desired alternative routes to be calculated. Default: 0, minimum: 0 and maximum: 5. </param>
         /// <param name="alternativeType"> Controls the optimality, with respect to the given planning criteria, of the calculated alternatives compared to the reference route. </param>
         /// <param name="minDeviationDistance"> All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of meters. Can only be used when reconstructing a route. The minDeviationDistance parameter cannot be used in conjunction with arriveAt. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="minDeviationTime">
         /// All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of seconds. Can only be used when reconstructing a route. The minDeviationTime parameter cannot be used in conjunction with arriveAt. Default value is 0. Setting )minDeviationTime_ to a value greater than zero has the following consequences:
         ///   - The origin point of the _calculateRoute_ Request must be on
@@ -1179,7 +1269,7 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1207,8 +1297,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1380,8 +1470,26 @@ namespace Azure.Maps.Routing
         /// <param name="maxAlternatives"> Number of desired alternative routes to be calculated. Default: 0, minimum: 0 and maximum: 5. </param>
         /// <param name="alternativeType"> Controls the optimality, with respect to the given planning criteria, of the calculated alternatives compared to the reference route. </param>
         /// <param name="minDeviationDistance"> All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of meters. Can only be used when reconstructing a route. The minDeviationDistance parameter cannot be used in conjunction with arriveAt. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="minDeviationTime">
         /// All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of seconds. Can only be used when reconstructing a route. The minDeviationTime parameter cannot be used in conjunction with arriveAt. Default value is 0. Setting )minDeviationTime_ to a value greater than zero has the following consequences:
         ///   - The origin point of the _calculateRoute_ Request must be on
@@ -1411,7 +1519,7 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1439,8 +1547,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1842,9 +1950,27 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1872,8 +1998,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -2085,9 +2211,27 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -2115,8 +2259,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -2447,7 +2591,17 @@ namespace Azure.Maps.Routing
         /// <param name="energyBudgetInKwH"> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When energyBudgetInkWh is used, it is mandatory to specify a detailed Electric Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="timeBudgetInSec"> Time budget in seconds that determines maximal range which can be travelled using driving time. The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="distanceBudgetInMeters"> Distance budget in meters that determines maximal range which can be travelled using driving distance.  The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="routeType"> The type of route requested. </param>
         /// <param name="useTrafficData">
         /// Possible values:
@@ -2455,8 +2609,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
@@ -2647,7 +2801,17 @@ namespace Azure.Maps.Routing
         /// <param name="energyBudgetInKwH"> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When energyBudgetInkWh is used, it is mandatory to specify a detailed Electric Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="timeBudgetInSec"> Time budget in seconds that determines maximal range which can be travelled using driving time. The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="distanceBudgetInMeters"> Distance budget in meters that determines maximal range which can be travelled using driving distance.  The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="routeType"> The type of route requested. </param>
         /// <param name="useTrafficData">
         /// Possible values:
@@ -2655,8 +2819,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
