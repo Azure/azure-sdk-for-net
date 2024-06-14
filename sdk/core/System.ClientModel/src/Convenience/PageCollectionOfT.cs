@@ -11,9 +11,7 @@ namespace System.ClientModel;
 
 // This type is a client that defines a collection of elements and can
 // make service requests to retrieve specific pages
-public abstract class PageCollection<T> : ClientResult,
-    IEnumerable<ClientPage<T>>,
-    IEnumerable<ClientResult>
+public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>, IEnumerable<ClientResult>
 {
     // Note - assumes we don't make a request initially, so don't call
     // response constructor
@@ -21,9 +19,9 @@ public abstract class PageCollection<T> : ClientResult,
     {
     }
 
-    public abstract PageToken FirstPageToken { get; }
+    public abstract BinaryData FirstPageToken { get; }
 
-    public abstract ClientPage<T> GetPage(PageToken pageToken, RequestOptions? options = default);
+    public abstract ClientPage<T> GetPage(BinaryData pageToken, RequestOptions? options = default);
 
     public IEnumerable<T> GetValues()
     {
@@ -41,13 +39,11 @@ public abstract class PageCollection<T> : ClientResult,
     IEnumerator<ClientPage<T>> IEnumerable<ClientPage<T>>.GetEnumerator()
     {
         ClientPage<T> page = GetPage(FirstPageToken);
-        SetRawResponse(page.GetRawResponse());
         yield return page;
 
         while (page.NextPageToken != null)
         {
             page = GetPage(page.NextPageToken);
-            SetRawResponse(page.GetRawResponse());
             yield return page;
         }
     }

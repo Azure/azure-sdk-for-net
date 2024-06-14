@@ -11,9 +11,7 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class AsyncPageCollection<T> : ClientResult,
-    IAsyncEnumerable<ClientPage<T>>,
-    IAsyncEnumerable<ClientResult>
+public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>, IAsyncEnumerable<ClientResult>
 {
     protected AsyncPageCollection() : base()
     {
@@ -22,9 +20,9 @@ public abstract class AsyncPageCollection<T> : ClientResult,
     // I like this being abstract rather than providing the field in the base
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
-    public abstract PageToken FirstPageToken { get; }
+    public abstract BinaryData FirstPageToken { get; }
 
-    public abstract Task<ClientPage<T>> GetPageAsync(PageToken pageToken, RequestOptions? options = default);
+    public abstract Task<ClientPage<T>> GetPageAsync(BinaryData pageToken, RequestOptions? options = default);
 
     public async IAsyncEnumerable<T> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -41,16 +39,14 @@ public abstract class AsyncPageCollection<T> : ClientResult,
     {
         RequestOptions? options = cancellationToken == default ?
             default :
-            new RequestOptions() {  CancellationToken = cancellationToken };
+            new RequestOptions() { CancellationToken = cancellationToken };
 
         ClientPage<T> page = await GetPageAsync(FirstPageToken, options).ConfigureAwait(false);
-        SetRawResponse(page.GetRawResponse());
         yield return page;
 
         while (page.NextPageToken != null)
         {
             page = await GetPageAsync(page.NextPageToken, options).ConfigureAwait(false);
-            SetRawResponse(page.GetRawResponse());
             yield return page;
         }
     }
