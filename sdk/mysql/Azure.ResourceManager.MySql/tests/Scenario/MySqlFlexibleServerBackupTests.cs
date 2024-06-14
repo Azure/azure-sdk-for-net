@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.MySql.Tests
                 if (statusResult.Value.PercentComplete is not null)
                     Assert.IsTrue(statusResult.Value.PercentComplete >= 0);
                 //TODO: Sevice does not returen the objectType which causes the below line to fail
-                //BackupAndExportResponseType data = (BackupAndExportResponseType)statusResult.Value.Properties;
-                //Assert.IsTrue(data.DatasourceSizeInBytes >= 0);
-                //Assert.IsTrue(data.DataTransferredInBytes >= 0);
-                //Assert.IsTrue(data.DataTransferredInBytes <= data.DatasourceSizeInBytes);
+                BackupAndExportResponseType data = OperationProgressResponseType.ToBackupAndExportResponseType(statusResult.Value.Properties);
+                Assert.IsTrue(data.DatasourceSizeInBytes >= 0);
+                Assert.IsTrue(data.DataTransferredInBytes >= 0);
+                Assert.IsTrue(data.DataTransferredInBytes <= data.DatasourceSizeInBytes);
                 await Delay(5000);
             }
             MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
