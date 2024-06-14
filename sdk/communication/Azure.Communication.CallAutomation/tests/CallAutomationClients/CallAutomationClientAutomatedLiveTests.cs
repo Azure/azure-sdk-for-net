@@ -210,7 +210,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     CallLocator callLocator = new ServerCallLocator(connectedEvent.ServerCallId);
 
                     // connect call.
-                    ConnectCallResult connectCallResult = await client.ConnectCallAsync(callLocator, new Uri(TestEnvironment.DispatcherCallback));
+                    ConnectCallResult connectCallResult = await client.ConnectCallAsync(callLocator, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     var connectCallConnectionId = connectCallResult.CallConnectionProperties.CallConnectionId.ToString();
 
                     // wait for connect call connected.
@@ -230,7 +230,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(connectCallConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    Assert.AreEqual(connectCallConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    connectCallConnectionId = null;
+
+                    // try hangup
+                    try
+                    {
+                        await answerResponse.CallConnection.HangUpAsync(true).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        Assert.AreEqual(ex.Status, 404);
+                    }
+
                     callConnectionId = null;
                 }
                 catch (Exception)
