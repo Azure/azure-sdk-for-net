@@ -4,6 +4,16 @@
 
 ### Features Added
 
+- Upgraded API version to 2023-05-01.
+- Supported Create/Update/Get/Delete/List StorageTaskAssignment.
+- Supported List StorageTaskAssignmentsInstancesReport from Storage account and from StorageTaskAssignment.
+- Supported localuser new properties: "userId", "groupId", "allowAclAuthorization", "extendedGroups", "isNFSv3Enabled".
+- Supported list localusers paging and filtering.
+- Supported new Storage Account properties: "enableExtendedGroups".
+- Supported Storage Account minimumTlsVersion new value "TLS1_3".
+- Supported Storage Account accessTier new value "Cold".
+- Supported Storage Account sasPolicy expirationAction new value "Block".
+
 ### Breaking Changes
 
 ### Bugs Fixed
