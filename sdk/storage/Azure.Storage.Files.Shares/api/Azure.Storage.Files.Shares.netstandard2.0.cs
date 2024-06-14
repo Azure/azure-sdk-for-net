@@ -1259,6 +1259,7 @@ namespace Azure.Storage.Sas
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public string GetStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public void SetPermissions(Azure.Storage.Sas.ShareAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.ShareFileSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.ShareSasPermissions permissions) { }
