@@ -16,8 +16,133 @@ var streamName = 'Custom-MyTableRawData'
 var tableName = 'MyTable_CL'
 
 // PRIMARY RESOURCES
-resource LogAnalyticsWorkspace1 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
-  name: '${baseName}-logs-1'
+// resource LogAnalyticsWorkspace1 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+//   name: '${baseName}-logs-1'
+//   location: location
+//   properties: {
+//     sku: {
+//       name: 'PerGB2018'
+//     }
+//     retentionInDays: 30
+//     features: {
+//       searchVersion: 1
+//       legacy: 0
+//       enableLogAccessUsingOnlyResourcePermissions: 'true'
+//     }
+//     publicNetworkAccessForIngestion: 'Enabled'
+//     publicNetworkAccessForQuery: 'Enabled'
+//   }
+// }
+
+// resource ApplicationInsightsResource1 'Microsoft.Insights/components@2020-02-02-preview' = {
+//   name: '${baseName}-ai-1'
+//   kind: 'other'
+//   location: location
+//   properties: {
+//     Application_Type: 'other'
+//     WorkspaceResourceId: LogAnalyticsWorkspace1.id
+//   }
+// }
+
+// resource dataCollectionRule1 'Microsoft.Insights/dataCollectionRules@2021-09-01-preview' = {
+//   name: guid(resourceGroup().id, testApplicationOid, dataCollectionEndpoint1.id)
+//   location: location
+//   properties:{
+//     dataCollectionEndpointId: dataCollectionEndpoint1.id
+//     streamDeclarations:{
+//       'Custom-MyTableRawData': {
+//         columns: [
+//           {
+//             name: 'Time'
+//             type: 'datetime'
+//           }
+//           {
+//             name: 'Computer'
+//             type: 'string'
+//           }
+//           {
+//             name: 'AdditionalContext'
+//             type: 'string'
+//           }
+//         ]
+//       }
+//     }
+//     destinations:{
+//       logAnalytics: [
+//         {
+//           name: LogAnalyticsWorkspace1.name
+//           workspaceResourceId: LogAnalyticsWorkspace1.id
+//         }
+//       ]
+//     }
+//     dataFlows: [
+//       {
+//         destinations: [
+//           LogAnalyticsWorkspace1.name
+//         ]
+//         outputStream: 'Custom-${tableName}'
+//         streams: [
+//           streamName
+//         ]
+//         transformKql: 'source | extend jsonContext = parse_json(AdditionalContext) | project TimeGenerated = Time, Computer, AdditionalContext = jsonContext, ExtendedColumn=tostring(jsonContext.CounterName)'
+//       }
+//     ]
+//   }
+// }
+
+// resource dataCollectionRuleRoleAssignment1 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+//   name: guid(resourceGroup().id, dataCollectionRule1.name, dataCollectionRule1.id)
+//   scope: LogAnalyticsWorkspace1
+//   properties:{
+//     principalId: testApplicationOid
+//     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', metricPublisherRoleId)
+//   }
+// }
+
+// resource table1 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
+//   name: tableName
+//   parent: LogAnalyticsWorkspace1
+//   properties:{
+//     totalRetentionInDays: 30
+//     plan: 'Analytics'
+//     schema: {
+//       name: tableName
+//       displayName: tableName
+//       description: 'Table for Ingestion testing'
+//       columns:[
+//         {
+//           name: 'TimeGenerated'
+//           type: 'dateTime'
+//           description: 'The time at which the data was generated'
+//         }
+//         {
+//           name: 'AdditionalContext'
+//           type: 'dynamic'
+//           description: 'Additional message properties'
+//         }
+//         {
+//           name: 'ExtendedColumn'
+//           type: 'string'
+//           description: 'An additional column extended at ingestion time'
+//         }
+//       ]
+//     }
+//   }
+// }
+
+// resource dataCollectionEndpoint1 'Microsoft.Insights/dataCollectionEndpoints@2021-09-01-preview' = {
+//   name: guid(resourceGroup().id, testApplicationOid, LogAnalyticsWorkspace1.id)
+//   location: location
+//   properties:{
+//     networkAcls:{
+//       publicNetworkAccess: 'Enabled'
+//     }
+//   }
+// }
+
+// SECONDARY RESOURCES
+resource LogAnalyticsWorkspace2 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+  name: '${baseName}-logs-2'
   location: location
   properties: {
     sku: {
@@ -34,21 +159,21 @@ resource LogAnalyticsWorkspace1 'Microsoft.OperationalInsights/workspaces@2020-0
   }
 }
 
-resource ApplicationInsightsResource1 'Microsoft.Insights/components@2020-02-02-preview' = {
-  name: '${baseName}-ai-1'
+resource ApplicationInsightsResource2 'Microsoft.Insights/components@2020-02-02-preview' = {
+  name: '${baseName}-ai-2'
   kind: 'other'
   location: location
   properties: {
     Application_Type: 'other'
-    WorkspaceResourceId: LogAnalyticsWorkspace1.id
+    WorkspaceResourceId: LogAnalyticsWorkspace2.id
   }
 }
 
-resource dataCollectionRule1 'Microsoft.Insights/dataCollectionRules@2021-09-01-preview' = {
-  name: guid(resourceGroup().id, testApplicationOid, dataCollectionEndpoint1.id)
+resource dataCollectionRule2 'Microsoft.Insights/dataCollectionRules@2021-09-01-preview' = {
+  name: guid(resourceGroup().id, testApplicationOid, dataCollectionEndpoint2.id)
   location: location
   properties:{
-    dataCollectionEndpointId: dataCollectionEndpoint1.id
+    dataCollectionEndpointId: dataCollectionEndpoint2.id
     streamDeclarations:{
       'Custom-MyTableRawData': {
         columns: [
@@ -70,15 +195,15 @@ resource dataCollectionRule1 'Microsoft.Insights/dataCollectionRules@2021-09-01-
     destinations:{
       logAnalytics: [
         {
-          name: LogAnalyticsWorkspace1.name
-          workspaceResourceId: LogAnalyticsWorkspace1.id
+          name: LogAnalyticsWorkspace2.name
+          workspaceResourceId: LogAnalyticsWorkspace2.id
         }
       ]
     }
     dataFlows: [
       {
         destinations: [
-          LogAnalyticsWorkspace1.name
+          LogAnalyticsWorkspace2.name
         ]
         outputStream: 'Custom-${tableName}'
         streams: [
@@ -90,18 +215,18 @@ resource dataCollectionRule1 'Microsoft.Insights/dataCollectionRules@2021-09-01-
   }
 }
 
-resource dataCollectionRuleRoleAssignment1 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(resourceGroup().id, dataCollectionRule1.name, dataCollectionRule1.id)
-  scope: LogAnalyticsWorkspace1
+resource dataCollectionRuleRoleAssignment2 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, dataCollectionRule2.name, dataCollectionRule2.id)
+  scope: LogAnalyticsWorkspace2
   properties:{
     principalId: testApplicationOid
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', metricPublisherRoleId)
   }
 }
 
-resource table1 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
+resource table2 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
   name: tableName
-  parent: LogAnalyticsWorkspace1
+  parent: LogAnalyticsWorkspace2
   properties:{
     totalRetentionInDays: 30
     plan: 'Analytics'
@@ -130,8 +255,8 @@ resource table1 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
   }
 }
 
-resource dataCollectionEndpoint1 'Microsoft.Insights/dataCollectionEndpoints@2021-09-01-preview' = {
-  name: guid(resourceGroup().id, testApplicationOid, LogAnalyticsWorkspace1.id)
+resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@2021-09-01-preview' = {
+  name: guid(resourceGroup().id, testApplicationOid, LogAnalyticsWorkspace2.id)
   location: location
   properties:{
     networkAcls:{
@@ -140,23 +265,8 @@ resource dataCollectionEndpoint1 'Microsoft.Insights/dataCollectionEndpoints@202
   }
 }
 
-// SECONDARY RESOURCES
-resource secondaryWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
-  name: '${baseName}-logs2'
-  location: location
-  properties: {
-    sku: {
-      name: 'PerGB2018'
-    }
-    retentionInDays: 30
-    features: {
-      searchVersion: 1
-      legacy: 0
-      enableLogAccessUsingOnlyResourcePermissions: 'true'
-    }
-  }
-}
 
+// TODO: ARE THESE NEEDED?
 var logReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'
 
 resource logsReaderRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = {
@@ -200,6 +310,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 }
 
 // OUTPUT VALUES USED BY TEST ENVIRONMENT
-output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
+// output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
+// output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
+// output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
+
+output CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
-output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
+output WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
