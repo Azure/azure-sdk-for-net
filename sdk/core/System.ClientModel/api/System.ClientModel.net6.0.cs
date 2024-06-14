@@ -9,8 +9,8 @@ namespace System.ClientModel
     }
     public abstract partial class AsyncPageCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult>
     {
-        protected AsyncPageCollection(System.ClientModel.PageToken firstPageToken) { }
-        public System.ClientModel.PageToken FirstPageToken { get { throw null; } }
+        protected AsyncPageCollection() { }
+        public abstract System.ClientModel.PageToken FirstPageToken { get; }
         public abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsync(System.ClientModel.PageToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
         public System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -67,8 +67,8 @@ namespace System.ClientModel
     }
     public abstract partial class PageCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>, System.Collections.IEnumerable
     {
-        protected PageCollection(System.ClientModel.PageToken firstPageToken) { }
-        public System.ClientModel.PageToken FirstPageToken { get { throw null; } }
+        protected PageCollection() { }
+        public abstract System.ClientModel.PageToken FirstPageToken { get; }
         public abstract System.ClientModel.ClientPage<T> GetPage(System.ClientModel.PageToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
         public System.Collections.Generic.IEnumerable<T> GetValues() { throw null; }
         System.Collections.Generic.IEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>.GetEnumerator() { throw null; }

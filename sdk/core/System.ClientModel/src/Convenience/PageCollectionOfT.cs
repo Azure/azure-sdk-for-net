@@ -17,12 +17,11 @@ public abstract class PageCollection<T> : ClientResult,
 {
     // Note - assumes we don't make a request initially, so don't call
     // response constructor
-    protected PageCollection(PageToken firstPageToken) : base()
+    protected PageCollection() : base()
     {
-        FirstPageToken = firstPageToken;
     }
 
-    public PageToken FirstPageToken { get; }
+    public abstract PageToken FirstPageToken { get; }
 
     public abstract ClientPage<T> GetPage(PageToken pageToken, RequestOptions? options = default);
 
