@@ -17,6 +17,7 @@ public abstract class PageToken : IPersistableModel<PageToken>
     public bool HasResponseValues { get; protected set; }
 
     // TODO: should this enforce that we can rehydrate the token?
+    protected abstract PageToken FirstPageToken { get; }
 
     protected abstract BinaryData WriteCore(ModelReaderWriterOptions options);
     protected abstract PageToken CreateCore(BinaryData data, ModelReaderWriterOptions options);

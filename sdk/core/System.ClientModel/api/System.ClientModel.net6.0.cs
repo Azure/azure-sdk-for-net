@@ -177,6 +177,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PageToken : System.ClientModel.Primitives.IPersistableModel<System.ClientModel.Primitives.PageToken>
     {
         protected PageToken(bool hasResponseValues) { }
+        protected abstract System.ClientModel.Primitives.PageToken FirstPageToken { get; }
         public bool HasResponseValues { get { throw null; } protected set { } }
         protected abstract System.ClientModel.Primitives.PageToken CreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         protected abstract string GetFormatFromOptionsCore(System.ClientModel.Primitives.ModelReaderWriterOptions options);
