@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Inference
 {
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "AZC0031:Improper model name suffix")]
     public partial class FunctionDefinition
     {
         /// <summary>

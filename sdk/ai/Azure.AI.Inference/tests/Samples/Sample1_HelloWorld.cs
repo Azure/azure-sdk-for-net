@@ -33,7 +33,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var response = client.Complete(messages: new List<ChatRequestMessage>
             {
                 new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage("How many feet are in a mile?")
+                new ChatRequestUserMessage(BinaryData.FromString("How many feet are in a mile?"))
             });
 
             Console.WriteLine(response.Value.Choices.First().Message);
