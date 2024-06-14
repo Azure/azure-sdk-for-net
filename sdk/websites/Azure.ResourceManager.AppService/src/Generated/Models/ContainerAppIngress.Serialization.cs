@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Ingress : IUtf8JsonSerializable, IJsonModel<Ingress>
+    public partial class ContainerAppIngress : IUtf8JsonSerializable, IJsonModel<ContainerAppIngress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Ingress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIngress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Ingress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppIngress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ingress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ingress)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        Ingress IJsonModel<Ingress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppIngress IJsonModel<ContainerAppIngress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ingress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ingress)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngress(document.RootElement, options);
+            return DeserializeContainerAppIngress(document.RootElement, options);
         }
 
-        internal static Ingress DeserializeIngress(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppIngress DeserializeContainerAppIngress(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Ingress(
+            return new ContainerAppIngress(
                 fqdn,
                 external,
                 targetPort,
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Ingress>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppIngress>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ingress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -316,26 +316,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Ingress)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngress)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Ingress IPersistableModel<Ingress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppIngress IPersistableModel<ContainerAppIngress>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ingress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIngress(document.RootElement, options);
+                        return DeserializeContainerAppIngress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Ingress)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngress)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Ingress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppIngress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

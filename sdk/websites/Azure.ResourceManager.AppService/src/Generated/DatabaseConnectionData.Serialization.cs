@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -180,7 +180,11 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("connectionIdentity"u8))
@@ -335,15 +339,7 @@ namespace Azure.ResourceManager.AppService
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("    resourceId: ");
-                    if (ResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceId}'");
-                    }
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("properties.connectionIdentity")]
         public string ConnectionIdentity { get; set; }

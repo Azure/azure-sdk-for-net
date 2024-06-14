@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// Defines the desired state of an immutable revision.
     /// Any changes to this section Will result in a new revision being created
     /// </summary>
-    public partial class Template
+    public partial class ContainerAppTemplate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Template"/>. </summary>
-        public Template()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTemplate"/>. </summary>
+        public ContainerAppTemplate()
         {
             Containers = new ChangeTrackingList<ContainerAppContainer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Template"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTemplate"/>. </summary>
         /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="scale"> Scaling properties for the Container App. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Template(string revisionSuffix, IList<ContainerAppContainer> containers, Scale scale, Dapr dapr, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppTemplate(string revisionSuffix, IList<ContainerAppContainer> containers, ContainerAppScale scale, Dapr dapr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RevisionSuffix = revisionSuffix;
             Containers = containers;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<ContainerAppContainer> Containers { get; }
         /// <summary> Scaling properties for the Container App. </summary>
         [WirePath("scale")]
-        public Scale Scale { get; set; }
+        public ContainerAppScale Scale { get; set; }
         /// <summary> Dapr configuration for the Container App. </summary>
         [WirePath("dapr")]
         public Dapr Dapr { get; set; }

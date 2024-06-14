@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="TrafficWeight"/>. </summary>
         /// <param name="revisionName"> Name of a revision. </param>
         /// <param name="weight"> Traffic weight assigned to a revision. </param>
-        /// <param name="latestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
+        /// <param name="isLatestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficWeight(string revisionName, int? weight, bool? latestRevision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrafficWeight(string revisionName, int? weight, bool? isLatestRevision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RevisionName = revisionName;
             Weight = weight;
-            LatestRevision = latestRevision;
+            IsLatestRevision = isLatestRevision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.AppService.Models
         public int? Weight { get; set; }
         /// <summary> Indicates that the traffic weight belongs to a latest stable revision. </summary>
         [WirePath("latestRevision")]
-        public bool? LatestRevision { get; set; }
+        public bool? IsLatestRevision { get; set; }
     }
 }

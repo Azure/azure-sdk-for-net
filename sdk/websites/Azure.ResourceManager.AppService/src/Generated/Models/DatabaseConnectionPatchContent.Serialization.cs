@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DatabaseConnectionPatchRequest : IUtf8JsonSerializable, IJsonModel<DatabaseConnectionPatchRequest>
+    public partial class DatabaseConnectionPatchContent : IUtf8JsonSerializable, IJsonModel<DatabaseConnectionPatchContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseConnectionPatchRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseConnectionPatchContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatabaseConnectionPatchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseConnectionPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseConnectionPatchContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        DatabaseConnectionPatchRequest IJsonModel<DatabaseConnectionPatchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatabaseConnectionPatchContent IJsonModel<DatabaseConnectionPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseConnectionPatchContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatabaseConnectionPatchRequest(document.RootElement, options);
+            return DeserializeDatabaseConnectionPatchContent(document.RootElement, options);
         }
 
-        internal static DatabaseConnectionPatchRequest DeserializeDatabaseConnectionPatchRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatabaseConnectionPatchContent DeserializeDatabaseConnectionPatchContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -106,7 +106,11 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("connectionIdentity"u8))
@@ -133,38 +137,38 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatabaseConnectionPatchRequest(resourceId, connectionIdentity, connectionString, region, serializedAdditionalRawData);
+            return new DatabaseConnectionPatchContent(resourceId, connectionIdentity, connectionString, region, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DatabaseConnectionPatchRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatabaseConnectionPatchContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseConnectionPatchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatabaseConnectionPatchRequest IPersistableModel<DatabaseConnectionPatchRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatabaseConnectionPatchContent IPersistableModel<DatabaseConnectionPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseConnectionPatchContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDatabaseConnectionPatchRequest(document.RootElement, options);
+                        return DeserializeDatabaseConnectionPatchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseConnectionPatchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatabaseConnectionPatchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseConnectionPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

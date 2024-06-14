@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
-    public partial class DatabaseConnectionPatchRequest
+    public partial class DatabaseConnectionPatchContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +46,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseConnectionPatchRequest"/>. </summary>
-        public DatabaseConnectionPatchRequest()
+        /// <summary> Initializes a new instance of <see cref="DatabaseConnectionPatchContent"/>. </summary>
+        public DatabaseConnectionPatchContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseConnectionPatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseConnectionPatchContent"/>. </summary>
         /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionPatchRequest(string resourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseConnectionPatchContent(ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("properties.connectionIdentity")]
         public string ConnectionIdentity { get; set; }

@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Scale : IUtf8JsonSerializable, IJsonModel<Scale>
+    public partial class ContainerAppScale : IUtf8JsonSerializable, IJsonModel<ContainerAppScale>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Scale>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppScale>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Scale>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppScale>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Scale>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scale)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        Scale IJsonModel<Scale>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppScale IJsonModel<ContainerAppScale>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Scale>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scale)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScale(document.RootElement, options);
+            return DeserializeContainerAppScale(document.RootElement, options);
         }
 
-        internal static Scale DeserializeScale(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppScale DeserializeContainerAppScale(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             int? minReplicas = default;
             int? maxReplicas = default;
-            IList<ScaleRule> rules = default;
+            IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<ScaleRule> array = new List<ScaleRule>();
+                    List<ContainerAppScaleRule> array = new List<ContainerAppScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRule.DeserializeScaleRule(item, options));
+                        array.Add(ContainerAppScaleRule.DeserializeContainerAppScaleRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Scale(minReplicas, maxReplicas, rules ?? new ChangeTrackingList<ScaleRule>(), serializedAdditionalRawData);
+            return new ContainerAppScale(minReplicas, maxReplicas, rules ?? new ChangeTrackingList<ContainerAppScaleRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Scale>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppScale>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Scale>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -213,26 +213,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Scale)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Scale IPersistableModel<Scale>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppScale IPersistableModel<ContainerAppScale>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Scale>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeScale(document.RootElement, options);
+                        return DeserializeContainerAppScale(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Scale)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Scale>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppScale>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

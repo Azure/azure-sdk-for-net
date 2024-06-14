@@ -385,7 +385,7 @@ rename-mapping:
   ErrorResponse.error: ErrorInfo
   AseV3NetworkingConfiguration.properties.ftpEnabled: IsFtpEnabled
   AseV3NetworkingConfiguration.properties.remoteDebugEnabled: IsRemoteDebugEnabled
-  DatabaseConnection.ResourceId: -|arm-id
+  DatabaseConnection.properties.resourceId: -|arm-id
   Revision.properties.active: IsActive
   Revision: ContainerAppRevision
   RevisionCollection: ContainerAppRevisionListResult
@@ -402,6 +402,27 @@ rename-mapping:
   Configuration: ContainerAppConfiguration
   Container: ContainerAppContainer
   Dapr.enabled: IsEnabled
+  DaprConfig.enableApiLogging: IsApiLoggingEnabled
+  DaprConfig.enabled: IsEnabled
+  DatabaseConnectionOverview.resourceId: -|arm-id
+  DatabaseConnectionPatchRequest.properties.resourceId: -|arm-id
+  DatabaseConnectionPatchRequest: DatabaseConnectionPatchContent
+  Ingress: ContainerAppIngress
+  IpAddress: AppIpAddress
+  IPAddressRange: FooIPAddressRange
+  JsonSchema: AppJsonSchema
+  Request: AppRequest
+  Response: AppResponse
+  Scale: ContainerAppScale
+  ScaleRule: ContainerAppScaleRule
+  ScaleRuleAuth: ContainerAppScaleRuleAuth
+  # Secret: ContainerAppSecret
+  Template: ContainerAppTemplate
+  TrafficWeight.latestRevision: IsLatestRevision
+  VolumeMount.readOnly: IsReadOnly
+  WorkflowOutputParameter: WorkflowOutputContent
+  WorkflowParameter: WorkflowContent
+
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties

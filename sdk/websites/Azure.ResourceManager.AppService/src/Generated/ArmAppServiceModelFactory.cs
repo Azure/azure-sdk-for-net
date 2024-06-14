@@ -957,12 +957,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? isFtpEnabled = null, bool? isRemoteDebugEnabled = null, string inboundIPAddressOverride = null, string kind = null)
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IPAddress> windowsOutboundIPAddresses = null, IEnumerable<IPAddress> linuxOutboundIPAddresses = null, IEnumerable<IPAddress> externalInboundIPAddresses = null, IEnumerable<IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? isFtpEnabled = null, bool? isRemoteDebugEnabled = null, string inboundIPAddressOverride = null, string kind = null)
         {
-            windowsOutboundIPAddresses ??= new List<System.Net.IPAddress>();
-            linuxOutboundIPAddresses ??= new List<System.Net.IPAddress>();
-            externalInboundIPAddresses ??= new List<System.Net.IPAddress>();
-            internalInboundIPAddresses ??= new List<System.Net.IPAddress>();
+            windowsOutboundIPAddresses ??= new List<IPAddress>();
+            linuxOutboundIPAddresses ??= new List<IPAddress>();
+            externalInboundIPAddresses ??= new List<IPAddress>();
+            internalInboundIPAddresses ??= new List<IPAddress>();
 
             return new AseV3NetworkingConfigurationData(
                 id,
@@ -1094,9 +1094,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentAddressResult"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, System.Net.IPAddress serviceIPAddress = null, System.Net.IPAddress internalIPAddress = null, IEnumerable<System.Net.IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null, string kind = null)
+        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress serviceIPAddress = null, IPAddress internalIPAddress = null, IEnumerable<IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null, string kind = null)
         {
-            outboundIPAddresses ??= new List<System.Net.IPAddress>();
+            outboundIPAddresses ??= new List<IPAddress>();
             virtualIPMappings ??= new List<VirtualIPMapping>();
 
             return new AppServiceEnvironmentAddressResult(
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
         /// <param name="isAccessible"> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </param>
         /// <returns> A new <see cref="Models.AppServiceEndpointDetail"/> instance for mocking. </returns>
-        public static AppServiceEndpointDetail AppServiceEndpointDetail(System.Net.IPAddress ipAddress = null, int? port = null, double? latency = null, bool? isAccessible = null)
+        public static AppServiceEndpointDetail AppServiceEndpointDetail(IPAddress ipAddress = null, int? port = null, double? latency = null, bool? isAccessible = null)
         {
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData: null);
         }
@@ -1320,9 +1320,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null)
+        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
         {
-            ipAddresses ??= new List<System.Net.IPAddress>();
+            ipAddresses ??= new List<IPAddress>();
 
             return new RemotePrivateEndpointConnectionARMResourceData(
                 id,
@@ -2338,7 +2338,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ContainerAppData"/> instance for mocking. </returns>
-        public static ContainerAppData ContainerAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppProvisioningState? provisioningState = null, string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, ContainerAppConfiguration configuration = null, Template template = null, string kind = null)
+        public static ContainerAppData ContainerAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppProvisioningState? provisioningState = null, string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, ContainerAppConfiguration configuration = null, ContainerAppTemplate template = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -2359,19 +2359,19 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Ingress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngress"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
         /// <param name="transport"> Ingress transport protocol. </param>
         /// <param name="traffic"></param>
         /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
-        /// <returns> A new <see cref="Models.Ingress"/> instance for mocking. </returns>
-        public static Ingress Ingress(string fqdn = null, bool? external = null, int? targetPort = null, IngressTransportMethod? transport = null, IEnumerable<TrafficWeight> traffic = null, bool? allowInsecure = null)
+        /// <returns> A new <see cref="Models.ContainerAppIngress"/> instance for mocking. </returns>
+        public static ContainerAppIngress ContainerAppIngress(string fqdn = null, bool? external = null, int? targetPort = null, IngressTransportMethod? transport = null, IEnumerable<TrafficWeight> traffic = null, bool? allowInsecure = null)
         {
             traffic ??= new List<TrafficWeight>();
 
-            return new Ingress(
+            return new ContainerAppIngress(
                 fqdn,
                 external,
                 targetPort,
@@ -2415,7 +2415,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ContainerAppRevisionData"/> instance for mocking. </returns>
-        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, string fqdn = null, Template template = null, bool? isActive = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, RevisionHealthState? healthState = null, RevisionProvisioningState? provisioningState = null, string kind = null)
+        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, string fqdn = null, ContainerAppTemplate template = null, bool? isActive = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, RevisionHealthState? healthState = null, RevisionProvisioningState? provisioningState = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3801,9 +3801,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null)
+        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
         {
-            ipAddresses ??= new List<System.Net.IPAddress>();
+            ipAddresses ??= new List<IPAddress>();
 
             return new RemotePrivateEndpointConnection(
                 id,
@@ -3860,7 +3860,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="name"> If present, the name of this database connection resource. </param>
         /// <returns> A new <see cref="Models.DatabaseConnectionOverview"/> instance for mocking. </returns>
-        public static DatabaseConnectionOverview DatabaseConnectionOverview(string resourceId = null, string connectionIdentity = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string name = null)
+        public static DatabaseConnectionOverview DatabaseConnectionOverview(ResourceIdentifier resourceId = null, string connectionIdentity = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string name = null)
         {
             configurationFiles ??= new List<StaticSiteDatabaseConnectionConfigurationFileOverview>();
 
@@ -4045,7 +4045,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.DatabaseConnectionData"/> instance for mocking. </returns>
-        public static DatabaseConnectionData DatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string kind = null)
+        public static DatabaseConnectionData DatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string kind = null)
         {
             configurationFiles ??= new List<StaticSiteDatabaseConnectionConfigurationFileOverview>();
 
@@ -6551,9 +6551,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
-        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, ResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputParameter> outputs = null, WorkflowRunTrigger response = null)
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, ResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = null, WorkflowRunTrigger response = null)
         {
-            outputs ??= new Dictionary<string, WorkflowOutputParameter>();
+            outputs ??= new Dictionary<string, WorkflowOutputContent>();
 
             return new WorkflowRunData(
                 id,
@@ -6648,16 +6648,16 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContentHash(algorithm, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowOutputParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowOutputContent"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
         /// <param name="error"> Gets the error. </param>
-        /// <returns> A new <see cref="Models.WorkflowOutputParameter"/> instance for mocking. </returns>
-        public static WorkflowOutputParameter WorkflowOutputParameter(ParameterType? parameterType = null, BinaryData value = null, BinaryData metadata = null, string description = null, BinaryData error = null)
+        /// <returns> A new <see cref="Models.WorkflowOutputContent"/> instance for mocking. </returns>
+        public static WorkflowOutputContent WorkflowOutputContent(ParameterType? parameterType = null, BinaryData value = null, BinaryData metadata = null, string description = null, BinaryData error = null)
         {
-            return new WorkflowOutputParameter(
+            return new WorkflowOutputContent(
                 parameterType,
                 value,
                 metadata,
@@ -7004,13 +7004,13 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JsonSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppJsonSchema"/>. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
-        /// <returns> A new <see cref="Models.JsonSchema"/> instance for mocking. </returns>
-        public static JsonSchema JsonSchema(string title = null, string content = null)
+        /// <returns> A new <see cref="Models.AppJsonSchema"/> instance for mocking. </returns>
+        public static AppJsonSchema AppJsonSchema(string title = null, string content = null)
         {
-            return new JsonSchema(title, content, serializedAdditionalRawData: null);
+            return new AppJsonSchema(title, content, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Workflow"/>. </summary>
@@ -7036,10 +7036,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <returns> A new <see cref="Models.Workflow"/> instance for mocking. </returns>
-        public static Workflow Workflow(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, ResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowParameter> parameters = null, AppServiceKind? kind = null)
+        public static Workflow Workflow(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, ResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, AppServiceKind? kind = null)
         {
             tags ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, WorkflowParameter>();
+            parameters ??= new Dictionary<string, WorkflowContent>();
 
             return new Workflow(
                 id,
@@ -7095,10 +7095,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <returns> A new <see cref="AppService.WorkflowVersionData"/> instance for mocking. </returns>
-        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowParameter> parameters = null)
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null)
         {
             tags ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, WorkflowParameter>();
+            parameters ??= new Dictionary<string, WorkflowContent>();
 
             return new WorkflowVersionData(
                 id,

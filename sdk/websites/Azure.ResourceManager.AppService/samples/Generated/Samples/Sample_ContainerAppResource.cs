@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.AppService.Samples
                 KubeEnvironmentId = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.Web/kubeEnvironments/demokube",
                 Configuration = new ContainerAppConfiguration()
                 {
-                    Ingress = new Ingress()
+                    Ingress = new ContainerAppIngress()
                     {
                         External = true,
                         TargetPort = 3000,
                     },
                 },
-                Template = new Template()
+                Template = new ContainerAppTemplate()
                 {
                     Containers =
 {
@@ -122,13 +122,13 @@ Image = "repo/testcontainerApp0:v1",
 Name = "testcontainerApp0",
 }
 },
-                    Scale = new Scale()
+                    Scale = new ContainerAppScale()
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
                         Rules =
 {
-new ScaleRule()
+new ContainerAppScaleRule()
 {
 Name = "httpscalingrule",
 Custom = new CustomScaleRule()

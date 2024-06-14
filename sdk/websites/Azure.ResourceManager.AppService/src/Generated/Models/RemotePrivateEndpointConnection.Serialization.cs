@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
             string provisioningState = default;
             SubResource privateEndpoint = default;
             PrivateLinkConnectionState privateLinkServiceConnectionState = default;
-            IList<System.Net.IPAddress> ipAddresses = default;
+            IList<IPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            List<System.Net.IPAddress> array = new List<System.Net.IPAddress>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 }
                                 else
                                 {
-                                    array.Add(System.Net.IPAddress.Parse(item.GetString()));
+                                    array.Add(IPAddress.Parse(item.GetString()));
                                 }
                             }
                             ipAddresses = array;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService.Models
                 provisioningState,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
-                ipAddresses ?? new ChangeTrackingList<System.Net.IPAddress>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
                 kind,
                 serializedAdditionalRawData);
         }

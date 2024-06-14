@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The JSON schema. </summary>
-    public partial class JsonSchema
+    /// <summary> Auth Secrets for Container App Scale Rule. </summary>
+    public partial class ContainerAppScaleRuleAuth
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="JsonSchema"/>. </summary>
-        internal JsonSchema()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
+        public ContainerAppScaleRuleAuth()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JsonSchema"/>. </summary>
-        /// <param name="title"> The JSON title. </param>
-        /// <param name="content"> The JSON content. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
+        /// <param name="secretRef"> Name of the Container App secret from which to pull the auth params. </param>
+        /// <param name="triggerParameter"> Trigger Parameter that uses the secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JsonSchema(string title, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppScaleRuleAuth(string secretRef, string triggerParameter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Title = title;
-            Content = content;
+            SecretRef = secretRef;
+            TriggerParameter = triggerParameter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The JSON title. </summary>
-        [WirePath("title")]
-        public string Title { get; }
-        /// <summary> The JSON content. </summary>
-        [WirePath("content")]
-        public string Content { get; }
+        /// <summary> Name of the Container App secret from which to pull the auth params. </summary>
+        [WirePath("secretRef")]
+        public string SecretRef { get; set; }
+        /// <summary> Trigger Parameter that uses the secret. </summary>
+        [WirePath("triggerParameter")]
+        public string TriggerParameter { get; set; }
     }
 }

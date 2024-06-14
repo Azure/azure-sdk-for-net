@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         public FlowEndpoints()
         {
-            OutgoingIPAddresses = new ChangeTrackingList<IPAddress>();
-            AccessEndpointIPAddresses = new ChangeTrackingList<IPAddress>();
+            OutgoingIPAddresses = new ChangeTrackingList<AppIPAddress>();
+            AccessEndpointIPAddresses = new ChangeTrackingList<AppIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
         /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowEndpoints(IList<IPAddress> outgoingIPAddresses, IList<IPAddress> accessEndpointIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlowEndpoints(IList<AppIPAddress> outgoingIPAddresses, IList<AppIPAddress> accessEndpointIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutgoingIPAddresses = outgoingIPAddresses;
             AccessEndpointIPAddresses = accessEndpointIPAddresses;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The outgoing ip address. </summary>
         [WirePath("outgoingIpAddresses")]
-        public IList<IPAddress> OutgoingIPAddresses { get; }
+        public IList<AppIPAddress> OutgoingIPAddresses { get; }
         /// <summary> The access endpoint ip address. </summary>
         [WirePath("accessEndpointIpAddresses")]
-        public IList<IPAddress> AccessEndpointIPAddresses { get; }
+        public IList<AppIPAddress> AccessEndpointIPAddresses { get; }
     }
 }

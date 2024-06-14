@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A request. </summary>
-    public partial class Request
+    public partial class AppRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Request"/>. </summary>
-        public Request()
+        /// <summary> Initializes a new instance of <see cref="AppRequest"/>. </summary>
+        public AppRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Request"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppRequest"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the request. </param>
         /// <param name="uri"> The destination for the request. </param>
         /// <param name="method"> The HTTP method used for the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Request(BinaryData headers, Uri uri, string method, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppRequest(BinaryData headers, Uri uri, string method, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Headers = headers;
             Uri = uri;

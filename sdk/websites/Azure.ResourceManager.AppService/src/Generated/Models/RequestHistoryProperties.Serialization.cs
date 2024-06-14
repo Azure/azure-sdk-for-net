@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            Request request = default;
-            Response response = default;
+            AppRequest request = default;
+            AppResponse response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    request = Request.DeserializeRequest(property.Value, options);
+                    request = AppRequest.DeserializeAppRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    response = Response.DeserializeResponse(property.Value, options);
+                    response = AppResponse.DeserializeAppResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

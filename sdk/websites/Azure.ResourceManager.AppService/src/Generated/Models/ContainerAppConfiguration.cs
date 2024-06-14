@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<Secret> secrets, ActiveRevisionsMode? activeRevisionsMode, Ingress ingress, IList<RegistryCredentials> registries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<Secret> secrets, ActiveRevisionsMode? activeRevisionsMode, ContainerAppIngress ingress, IList<RegistryCredentials> registries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
         public ActiveRevisionsMode? ActiveRevisionsMode { get; set; }
         /// <summary> Ingress configurations. </summary>
         [WirePath("ingress")]
-        public Ingress Ingress { get; set; }
+        public ContainerAppIngress Ingress { get; set; }
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
         [WirePath("registries")]
         public IList<RegistryCredentials> Registries { get; }

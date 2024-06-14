@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<IPAddress> outgoingIPAddresses = default;
-            IList<IPAddress> accessEndpointIPAddresses = default;
+            IList<AppIPAddress> outgoingIPAddresses = default;
+            IList<AppIPAddress> accessEndpointIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<AppIPAddress> array = new List<AppIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item, options));
+                        array.Add(AppIPAddress.DeserializeAppIPAddress(item, options));
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<AppIPAddress> array = new List<AppIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item, options));
+                        array.Add(AppIPAddress.DeserializeAppIPAddress(item, options));
                     }
                     accessEndpointIPAddresses = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FlowEndpoints(outgoingIPAddresses ?? new ChangeTrackingList<IPAddress>(), accessEndpointIPAddresses ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
+            return new FlowEndpoints(outgoingIPAddresses ?? new ChangeTrackingList<AppIPAddress>(), accessEndpointIPAddresses ?? new ChangeTrackingList<AppIPAddress>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

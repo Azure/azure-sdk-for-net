@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
             SystemData systemData = default;
             DateTimeOffset? createdTime = default;
             string fqdn = default;
-            Template template = default;
+            ContainerAppTemplate template = default;
             bool? active = default;
             int? replicas = default;
             int? trafficWeight = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            template = Template.DeserializeTemplate(property0.Value, options);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("active"u8))

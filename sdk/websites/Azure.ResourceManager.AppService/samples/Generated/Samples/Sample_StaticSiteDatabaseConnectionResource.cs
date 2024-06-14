@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteDatabaseConnectionResource staticSiteDatabaseConnection = client.GetStaticSiteDatabaseConnectionResource(staticSiteDatabaseConnectionResourceId);
 
             // invoke the operation
-            DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope = new DatabaseConnectionPatchRequest();
-            StaticSiteDatabaseConnectionResource result = await staticSiteDatabaseConnection.UpdateAsync(databaseConnectionRequestEnvelope);
+            DatabaseConnectionPatchContent content = new DatabaseConnectionPatchContent();
+            StaticSiteDatabaseConnectionResource result = await staticSiteDatabaseConnection.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

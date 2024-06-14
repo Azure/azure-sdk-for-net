@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Auth Secrets for Container App Scale Rule. </summary>
-    public partial class ScaleRuleAuth
+    /// <summary> The ip address. </summary>
+    public partial class AppIPAddress
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScaleRuleAuth"/>. </summary>
-        public ScaleRuleAuth()
+        /// <summary> Initializes a new instance of <see cref="AppIPAddress"/>. </summary>
+        public AppIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleRuleAuth"/>. </summary>
-        /// <param name="secretRef"> Name of the Container App secret from which to pull the auth params. </param>
-        /// <param name="triggerParameter"> Trigger Parameter that uses the secret. </param>
+        /// <summary> Initializes a new instance of <see cref="AppIPAddress"/>. </summary>
+        /// <param name="address"> The address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleRuleAuth(string secretRef, string triggerParameter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppIPAddress(string address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SecretRef = secretRef;
-            TriggerParameter = triggerParameter;
+            Address = address;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the Container App secret from which to pull the auth params. </summary>
-        [WirePath("secretRef")]
-        public string SecretRef { get; set; }
-        /// <summary> Trigger Parameter that uses the secret. </summary>
-        [WirePath("triggerParameter")]
-        public string TriggerParameter { get; set; }
+        /// <summary> The address. </summary>
+        [WirePath("address")]
+        public string Address { get; set; }
     }
 }

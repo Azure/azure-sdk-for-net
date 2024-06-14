@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         public CustomScaleRule()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Auth = new ChangeTrackingList<ScaleRuleAuth>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomScaleRule"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="metadata"> Metadata properties to describe custom scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomScaleRuleType = customScaleRuleType;
             Metadata = metadata;
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.AppService.Models
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Authentication secrets for the custom scale rule. </summary>
         [WirePath("auth")]
-        public IList<ScaleRuleAuth> Auth { get; }
+        public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

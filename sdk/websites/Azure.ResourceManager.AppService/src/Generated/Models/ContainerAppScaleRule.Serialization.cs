@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ScaleRule : IUtf8JsonSerializable, IJsonModel<ScaleRule>
+    public partial class ContainerAppScaleRule : IUtf8JsonSerializable, IJsonModel<ContainerAppScaleRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScaleRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppScaleRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScaleRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppScaleRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        ScaleRule IJsonModel<ScaleRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppScaleRule IJsonModel<ContainerAppScaleRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScaleRule(document.RootElement, options);
+            return DeserializeContainerAppScaleRule(document.RootElement, options);
         }
 
-        internal static ScaleRule DeserializeScaleRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppScaleRule DeserializeContainerAppScaleRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScaleRule(name, azureQueue, custom, http, serializedAdditionalRawData);
+            return new ContainerAppScaleRule(name, azureQueue, custom, http, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ScaleRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppScaleRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -228,26 +228,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ScaleRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScaleRule IPersistableModel<ScaleRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppScaleRule IPersistableModel<ContainerAppScaleRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeScaleRule(document.RootElement, options);
+                        return DeserializeContainerAppScaleRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScaleRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScaleRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppScaleRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

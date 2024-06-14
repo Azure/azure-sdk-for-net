@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="QueueScaleRule"/>. </summary>
         public QueueScaleRule()
         {
-            Auth = new ChangeTrackingList<ScaleRuleAuth>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueueScaleRule"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueueScaleRule(string queueName, int? queueLength, IList<ScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueueName = queueName;
             QueueLength = queueLength;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.AppService.Models
         public int? QueueLength { get; set; }
         /// <summary> Authentication secrets for the queue scale rule. </summary>
         [WirePath("auth")]
-        public IList<ScaleRuleAuth> Auth { get; }
+        public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

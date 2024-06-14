@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WorkflowTriggerResource workflowTrigger = client.GetWorkflowTriggerResource(workflowTriggerResourceId);
 
             // invoke the operation
-            JsonSchema result = await workflowTrigger.GetSchemaJsonAsync();
+            AppJsonSchema result = await workflowTrigger.GetSchemaJsonAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

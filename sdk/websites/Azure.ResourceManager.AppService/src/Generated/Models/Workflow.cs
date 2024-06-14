@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="location"> The location. </param>
         public Workflow(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, WorkflowParameter>();
+            Parameters = new ChangeTrackingDictionary<string, WorkflowContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Workflow"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Workflow(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal Workflow(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowContent> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData Definition { get; set; }
         /// <summary> The parameters. </summary>
         [WirePath("properties.parameters")]
-        public IDictionary<string, WorkflowParameter> Parameters { get; }
+        public IDictionary<string, WorkflowContent> Parameters { get; }
         /// <summary> The workflow kind. </summary>
         [WirePath("properties.kind")]
         public AppServiceKind? Kind { get; set; }

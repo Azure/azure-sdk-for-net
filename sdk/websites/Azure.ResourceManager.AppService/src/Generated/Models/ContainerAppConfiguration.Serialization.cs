@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             IList<Secret> secrets = default;
             ActiveRevisionsMode? activeRevisionsMode = default;
-            Ingress ingress = default;
+            ContainerAppIngress ingress = default;
             IList<RegistryCredentials> registries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ingress = Ingress.DeserializeIngress(property.Value, options);
+                    ingress = ContainerAppIngress.DeserializeContainerAppIngress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))

@@ -14,28 +14,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ScaleRuleAuth : IUtf8JsonSerializable, IJsonModel<ScaleRuleAuth>
+    public partial class AppJsonSchema : IUtf8JsonSerializable, IJsonModel<AppJsonSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScaleRuleAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppJsonSchema>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScaleRuleAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppJsonSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleRuleAuth)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppJsonSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretRef))
+            if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("secretRef"u8);
-                writer.WriteStringValue(SecretRef);
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(TriggerParameter))
+            if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("triggerParameter"u8);
-                writer.WriteStringValue(TriggerParameter);
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        ScaleRuleAuth IJsonModel<ScaleRuleAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppJsonSchema IJsonModel<AppJsonSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleRuleAuth)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppJsonSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScaleRuleAuth(document.RootElement, options);
+            return DeserializeAppJsonSchema(document.RootElement, options);
         }
 
-        internal static ScaleRuleAuth DeserializeScaleRuleAuth(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppJsonSchema DeserializeAppJsonSchema(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string secretRef = default;
-            string triggerParameter = default;
+            string title = default;
+            string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretRef"u8))
+                if (property.NameEquals("title"u8))
                 {
-                    secretRef = property.Value.GetString();
+                    title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerParameter"u8))
+                if (property.NameEquals("content"u8))
                 {
-                    triggerParameter = property.Value.GetString();
+                    content = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScaleRuleAuth(secretRef, triggerParameter, serializedAdditionalRawData);
+            return new AppJsonSchema(title, content, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -111,48 +111,48 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretRef), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  secretRef: ");
+                builder.Append("  title: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SecretRef))
+                if (Optional.IsDefined(Title))
                 {
-                    builder.Append("  secretRef: ");
-                    if (SecretRef.Contains(Environment.NewLine))
+                    builder.Append("  title: ");
+                    if (Title.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretRef}'''");
+                        builder.AppendLine($"{Title}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SecretRef}'");
+                        builder.AppendLine($"'{Title}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerParameter), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Content), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  triggerParameter: ");
+                builder.Append("  content: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(TriggerParameter))
+                if (Optional.IsDefined(Content))
                 {
-                    builder.Append("  triggerParameter: ");
-                    if (TriggerParameter.Contains(Environment.NewLine))
+                    builder.Append("  content: ");
+                    if (Content.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{TriggerParameter}'''");
+                        builder.AppendLine($"{Content}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{TriggerParameter}'");
+                        builder.AppendLine($"'{Content}'");
                     }
                 }
             }
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ScaleRuleAuth>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppJsonSchema>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -172,26 +172,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ScaleRuleAuth)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppJsonSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScaleRuleAuth IPersistableModel<ScaleRuleAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppJsonSchema IPersistableModel<AppJsonSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeScaleRuleAuth(document.RootElement, options);
+                        return DeserializeAppJsonSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScaleRuleAuth)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppJsonSchema)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScaleRuleAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppJsonSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

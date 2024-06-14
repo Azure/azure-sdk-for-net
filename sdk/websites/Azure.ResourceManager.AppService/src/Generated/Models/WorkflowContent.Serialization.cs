@@ -14,31 +14,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WorkflowOutputParameter : IUtf8JsonSerializable, IJsonModel<WorkflowOutputParameter>
+    public partial class WorkflowContent : IUtf8JsonSerializable, IJsonModel<WorkflowContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowOutputParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<WorkflowOutputParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkflowContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowOutputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkflowContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowOutputParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Error);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Error))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
             if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
@@ -91,19 +79,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        WorkflowOutputParameter IJsonModel<WorkflowOutputParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkflowContent IJsonModel<WorkflowContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowOutputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkflowContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowOutputParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkflowOutputParameter(document.RootElement, options);
+            return DeserializeWorkflowContent(document.RootElement, options);
         }
 
-        internal static WorkflowOutputParameter DeserializeWorkflowOutputParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkflowContent DeserializeWorkflowContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,7 +99,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            BinaryData error = default;
             ParameterType? type = default;
             BinaryData value = default;
             BinaryData metadata = default;
@@ -120,15 +107,6 @@ namespace Azure.ResourceManager.AppService.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -167,13 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkflowOutputParameter(
-                type,
-                value,
-                metadata,
-                description,
-                serializedAdditionalRawData,
-                error);
+            return new WorkflowContent(type, value, metadata, description, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -186,21 +158,6 @@ namespace Azure.ResourceManager.AppService.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  error: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Error))
-                {
-                    builder.Append("  error: ");
-                    builder.AppendLine($"'{Error.ToString()}'");
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterType), out propertyOverride);
             if (hasPropertyOverride)
@@ -274,9 +231,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<WorkflowOutputParameter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkflowContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowOutputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkflowContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -285,26 +242,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowOutputParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        WorkflowOutputParameter IPersistableModel<WorkflowOutputParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkflowContent IPersistableModel<WorkflowContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowOutputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkflowContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWorkflowOutputParameter(document.RootElement, options);
+                        return DeserializeWorkflowContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowOutputParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<WorkflowOutputParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkflowContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

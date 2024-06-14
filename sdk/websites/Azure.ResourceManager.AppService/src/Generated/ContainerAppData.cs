@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppProvisioningState? provisioningState, string kubeEnvironmentId, string latestRevisionName, string latestRevisionFqdn, ContainerAppConfiguration configuration, Template template, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppProvisioningState? provisioningState, string kubeEnvironmentId, string latestRevisionName, string latestRevisionFqdn, ContainerAppConfiguration configuration, ContainerAppTemplate template, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             KubeEnvironmentId = kubeEnvironmentId;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         public ContainerAppConfiguration Configuration { get; set; }
         /// <summary> Container App versioned application definition. </summary>
         [WirePath("properties.template")]
-        public Template Template { get; set; }
+        public ContainerAppTemplate Template { get; set; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             Correlation correlation = default;
             ResourceReference workflow = default;
             WorkflowRunTrigger trigger = default;
-            IReadOnlyDictionary<string, WorkflowOutputParameter> outputs = default;
+            IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default;
             WorkflowRunTrigger response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            Dictionary<string, WorkflowOutputParameter> dictionary = new Dictionary<string, WorkflowOutputParameter>();
+                            Dictionary<string, WorkflowOutputContent> dictionary = new Dictionary<string, WorkflowOutputContent>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, WorkflowOutputParameter.DeserializeWorkflowOutputParameter(property1.Value, options));
+                                dictionary.Add(property1.Name, WorkflowOutputContent.DeserializeWorkflowOutputContent(property1.Value, options));
                             }
                             outputs = dictionary;
                             continue;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService
                 correlation,
                 workflow,
                 trigger,
-                outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputParameter>(),
+                outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputContent>(),
                 response,
                 serializedAdditionalRawData);
         }

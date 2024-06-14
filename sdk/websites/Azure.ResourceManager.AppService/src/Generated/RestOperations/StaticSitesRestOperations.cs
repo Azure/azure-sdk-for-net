@@ -1924,7 +1924,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope)
+        internal RequestUriBuilder CreateUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1942,7 +1942,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope)
+        internal HttpMessage CreateUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1963,9 +1963,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(databaseConnectionRequestEnvelope, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1976,20 +1976,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the static site. </param>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> UpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseConnectionData>> UpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateBuildDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, environmentName, databaseConnectionName, databaseConnectionRequestEnvelope);
+            using var message = CreateUpdateBuildDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, environmentName, databaseConnectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2011,20 +2011,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the static site. </param>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> UpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        public Response<DatabaseConnectionData> UpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateBuildDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, environmentName, databaseConnectionName, databaseConnectionRequestEnvelope);
+            using var message = CreateUpdateBuildDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, environmentName, databaseConnectionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4590,7 +4590,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope)
+        internal RequestUriBuilder CreateUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4606,7 +4606,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope)
+        internal HttpMessage CreateUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4625,9 +4625,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(databaseConnectionRequestEnvelope, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -4637,19 +4637,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> UpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseConnectionData>> UpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, databaseConnectionName, databaseConnectionRequestEnvelope);
+            using var message = CreateUpdateDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, databaseConnectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4670,19 +4670,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> UpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        public Response<DatabaseConnectionData> UpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, databaseConnectionName, databaseConnectionRequestEnvelope);
+            using var message = CreateUpdateDatabaseConnectionRequest(subscriptionId, resourceGroupName, name, databaseConnectionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

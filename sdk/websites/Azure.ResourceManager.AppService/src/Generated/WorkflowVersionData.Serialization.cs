@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
             WorkflowSku sku = default;
             ResourceReference integrationAccount = default;
             BinaryData definition = default;
-            IDictionary<string, WorkflowParameter> parameters = default;
+            IDictionary<string, WorkflowContent> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,10 +348,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            Dictionary<string, WorkflowParameter> dictionary = new Dictionary<string, WorkflowParameter>();
+                            Dictionary<string, WorkflowContent> dictionary = new Dictionary<string, WorkflowContent>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, WorkflowParameter.DeserializeWorkflowParameter(property1.Value, options));
+                                dictionary.Add(property1.Name, WorkflowContent.DeserializeWorkflowContent(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.AppService
                 sku,
                 integrationAccount,
                 definition,
-                parameters ?? new ChangeTrackingDictionary<string, WorkflowParameter>(),
+                parameters ?? new ChangeTrackingDictionary<string, WorkflowContent>(),
                 serializedAdditionalRawData);
         }
 

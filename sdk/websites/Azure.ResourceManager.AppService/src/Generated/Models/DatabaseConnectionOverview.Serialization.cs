@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string connectionIdentity = default;
             string region = default;
             IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = default;
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionIdentity"u8))
@@ -176,15 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("  resourceId: ");
-                    if (ResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceId}'");
-                    }
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 

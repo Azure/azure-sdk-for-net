@@ -51,29 +51,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DaprConfig"/>. </summary>
-        /// <param name="enabled"> Boolean indicating if the Dapr side car is enabled. </param>
+        /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
         /// <param name="httpReadBufferSize"> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </param>
         /// <param name="httpMaxRequestSize"> Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
         /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
-        /// <param name="enableApiLogging"> Enables API logging for the Dapr sidecar. </param>
+        /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DaprConfig(bool? enabled, string appId, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, DaprLogLevel? logLevel, bool? enableApiLogging, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DaprConfig(bool? isEnabled, string appId, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, DaprLogLevel? logLevel, bool? isApiLoggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             AppId = appId;
             AppPort = appPort;
             HttpReadBufferSize = httpReadBufferSize;
             HttpMaxRequestSize = httpMaxRequestSize;
             LogLevel = logLevel;
-            EnableApiLogging = enableApiLogging;
+            IsApiLoggingEnabled = isApiLoggingEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Dapr application identifier. </summary>
         [WirePath("appId")]
         public string AppId { get; set; }
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.AppService.Models
         public DaprLogLevel? LogLevel { get; set; }
         /// <summary> Enables API logging for the Dapr sidecar. </summary>
         [WirePath("enableApiLogging")]
-        public bool? EnableApiLogging { get; set; }
+        public bool? IsApiLoggingEnabled { get; set; }
     }
 }

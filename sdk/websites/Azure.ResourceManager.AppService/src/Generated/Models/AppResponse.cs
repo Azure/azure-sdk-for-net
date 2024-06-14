@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow parameters. </summary>
-    public partial class WorkflowParameter
+    /// <summary> A response. </summary>
+    public partial class AppResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,33 +43,28 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowParameter"/>. </summary>
-        public WorkflowParameter()
+        /// <summary> Initializes a new instance of <see cref="AppResponse"/>. </summary>
+        public AppResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowParameter"/>. </summary>
-        /// <param name="parameterType"> The type. </param>
-        /// <param name="value"> The value. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <param name="description"> The description. </param>
+        /// <summary> Initializes a new instance of <see cref="AppResponse"/>. </summary>
+        /// <param name="headers"> A list of all the headers attached to the response. </param>
+        /// <param name="statusCode"> The status code of the response. </param>
+        /// <param name="bodyLink"> Details on the location of the body content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowParameter(ParameterType? parameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppResponse(BinaryData headers, int? statusCode, ContentLink bodyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ParameterType = parameterType;
-            Value = value;
-            Metadata = metadata;
-            Description = description;
+            Headers = headers;
+            StatusCode = statusCode;
+            BodyLink = bodyLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type. </summary>
-        [WirePath("type")]
-        public ParameterType? ParameterType { get; set; }
         /// <summary>
-        /// The value.
+        /// A list of all the headers attached to the response.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -98,42 +93,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("value")]
-        public BinaryData Value { get; set; }
-        /// <summary>
-        /// The metadata.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("metadata")]
-        public BinaryData Metadata { get; set; }
-        /// <summary> The description. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
+        [WirePath("headers")]
+        public BinaryData Headers { get; set; }
+        /// <summary> The status code of the response. </summary>
+        [WirePath("statusCode")]
+        public int? StatusCode { get; set; }
+        /// <summary> Details on the location of the body content. </summary>
+        [WirePath("bodyLink")]
+        public ContentLink BodyLink { get; set; }
     }
 }

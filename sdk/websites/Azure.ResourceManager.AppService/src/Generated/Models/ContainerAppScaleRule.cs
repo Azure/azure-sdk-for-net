@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Container App scaling configurations. </summary>
-    public partial class Scale
+    /// <summary> Container App container scaling rule. </summary>
+    public partial class ContainerAppScaleRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,37 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Scale"/>. </summary>
-        public Scale()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRule"/>. </summary>
+        public ContainerAppScaleRule()
         {
-            Rules = new ChangeTrackingList<ScaleRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Scale"/>. </summary>
-        /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
-        /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
-        /// <param name="rules"> Scaling rules. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRule"/>. </summary>
+        /// <param name="name"> Scale Rule Name. </param>
+        /// <param name="azureQueue"> Azure Queue based scaling. </param>
+        /// <param name="custom"> Custom scale rule. </param>
+        /// <param name="http"> HTTP requests based scaling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Scale(int? minReplicas, int? maxReplicas, IList<ScaleRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppScaleRule(string name, QueueScaleRule azureQueue, CustomScaleRule custom, HttpScaleRule http, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MinReplicas = minReplicas;
-            MaxReplicas = maxReplicas;
-            Rules = rules;
+            Name = name;
+            AzureQueue = azureQueue;
+            Custom = custom;
+            Http = http;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Optional. Minimum number of container replicas. </summary>
-        [WirePath("minReplicas")]
-        public int? MinReplicas { get; set; }
-        /// <summary> Optional. Maximum number of container replicas. Defaults to 10 if not set. </summary>
-        [WirePath("maxReplicas")]
-        public int? MaxReplicas { get; set; }
-        /// <summary> Scaling rules. </summary>
-        [WirePath("rules")]
-        public IList<ScaleRule> Rules { get; }
+        /// <summary> Scale Rule Name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Azure Queue based scaling. </summary>
+        [WirePath("azureQueue")]
+        public QueueScaleRule AzureQueue { get; set; }
+        /// <summary> Custom scale rule. </summary>
+        [WirePath("custom")]
+        public CustomScaleRule Custom { get; set; }
+        /// <summary> HTTP requests based scaling. </summary>
+        [WirePath("http")]
+        public HttpScaleRule Http { get; set; }
     }
 }

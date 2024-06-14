@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class IPAddress : IUtf8JsonSerializable, IJsonModel<IPAddress>
+    public partial class AppIPAddress : IUtf8JsonSerializable, IJsonModel<AppIPAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppIPAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddress)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppIPAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        IPAddress IJsonModel<IPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppIPAddress IJsonModel<AppIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddress)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppIPAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPAddress(document.RootElement, options);
+            return DeserializeAppIPAddress(document.RootElement, options);
         }
 
-        internal static IPAddress DeserializeIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppIPAddress DeserializeAppIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPAddress(address, serializedAdditionalRawData);
+            return new AppIPAddress(address, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<IPAddress>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppIPAddress>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppIPAddress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -138,26 +138,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAddress)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppIPAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPAddress IPersistableModel<IPAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppIPAddress IPersistableModel<AppIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppIPAddress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPAddress(document.RootElement, options);
+                        return DeserializeAppIPAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAddress)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppIPAddress)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

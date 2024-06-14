@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Template : IUtf8JsonSerializable, IJsonModel<Template>
+    public partial class ContainerAppTemplate : IUtf8JsonSerializable, IJsonModel<ContainerAppTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Template>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Template>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Template>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Template)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        Template IJsonModel<Template>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppTemplate IJsonModel<ContainerAppTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Template>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Template)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTemplate(document.RootElement, options);
+            return DeserializeContainerAppTemplate(document.RootElement, options);
         }
 
-        internal static Template DeserializeTemplate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppTemplate DeserializeContainerAppTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string revisionSuffix = default;
             IList<ContainerAppContainer> containers = default;
-            Scale scale = default;
+            ContainerAppScale scale = default;
             Dapr dapr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scale = Scale.DeserializeScale(property.Value, options);
+                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dapr"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Template(revisionSuffix, containers ?? new ChangeTrackingList<ContainerAppContainer>(), scale, dapr, serializedAdditionalRawData);
+            return new ContainerAppTemplate(revisionSuffix, containers ?? new ChangeTrackingList<ContainerAppContainer>(), scale, dapr, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Template>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Template>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -247,26 +247,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Template)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Template IPersistableModel<Template>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppTemplate IPersistableModel<ContainerAppTemplate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Template>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTemplate(document.RootElement, options);
+                        return DeserializeContainerAppTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Template)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Template>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

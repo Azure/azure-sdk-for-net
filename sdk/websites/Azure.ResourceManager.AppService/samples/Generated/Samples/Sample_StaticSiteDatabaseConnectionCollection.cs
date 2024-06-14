@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Samples
             string databaseConnectionName = "default";
             DatabaseConnectionData data = new DatabaseConnectionData()
             {
-                ResourceId = "/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/databaseRG/providers/Microsoft.DocumentDB/databaseAccounts/exampleDatabaseName",
+                ResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/databaseRG/providers/Microsoft.DocumentDB/databaseAccounts/exampleDatabaseName"),
                 ConnectionIdentity = "SystemAssigned",
                 ConnectionString = "AccountEndpoint=https://exampleDatabaseName.documents.azure.com:443/;Database=mydb;",
                 Region = "West US 2",

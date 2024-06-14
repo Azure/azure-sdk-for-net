@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, string fqdn, Template template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, RevisionHealthState? healthState, RevisionProvisioningState? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, RevisionHealthState? healthState, RevisionProvisioningState? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             Fqdn = fqdn;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// as they were at the creation time
         /// </summary>
         [WirePath("properties.template")]
-        public Template Template { get; }
+        public ContainerAppTemplate Template { get; }
         /// <summary> Boolean describing if the Revision is Active. </summary>
         [WirePath("properties.active")]
         public bool? IsActive { get; }

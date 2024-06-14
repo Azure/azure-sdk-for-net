@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class Request : IUtf8JsonSerializable, IJsonModel<Request>
+    public partial class AppResponse : IUtf8JsonSerializable, IJsonModel<AppResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Request>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Request>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Request>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Request)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(StatusCode))
             {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WritePropertyName("statusCode"u8);
+                writer.WriteNumberValue(StatusCode.Value);
             }
-            if (Optional.IsDefined(Method))
+            if (Optional.IsDefined(BodyLink))
             {
-                writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(Method);
+                writer.WritePropertyName("bodyLink"u8);
+                writer.WriteObjectValue(BodyLink, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        Request IJsonModel<Request>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppResponse IJsonModel<AppResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Request>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Request)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequest(document.RootElement, options);
+            return DeserializeAppResponse(document.RootElement, options);
         }
 
-        internal static Request DeserializeRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppResponse DeserializeAppResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             BinaryData headers = default;
-            Uri uri = default;
-            string method = default;
+            int? statusCode = default;
+            ContentLink bodyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,18 +103,22 @@ namespace Azure.ResourceManager.AppService.Models
                     headers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("uri"u8))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uri = new Uri(property.Value.GetString());
+                    statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("method"u8))
+                if (property.NameEquals("bodyLink"u8))
                 {
-                    method = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bodyLink = ContentLink.DeserializeContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Request(headers, uri, method, serializedAdditionalRawData);
+            return new AppResponse(headers, statusCode, bodyLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -152,41 +156,33 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCode), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  uri: ");
+                builder.Append("  statusCode: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Uri))
+                if (Optional.IsDefined(StatusCode))
                 {
-                    builder.Append("  uri: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                    builder.Append("  statusCode: ");
+                    builder.AppendLine($"{StatusCode.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyLink), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  method: ");
+                builder.Append("  bodyLink: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Method))
+                if (Optional.IsDefined(BodyLink))
                 {
-                    builder.Append("  method: ");
-                    if (Method.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Method}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Method}'");
-                    }
+                    builder.Append("  bodyLink: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BodyLink, options, 2, false, "  bodyLink: ");
                 }
             }
 
@@ -194,9 +190,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Request>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Request>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -205,26 +201,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Request)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Request IPersistableModel<Request>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppResponse IPersistableModel<AppResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Request>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRequest(document.RootElement, options);
+                        return DeserializeAppResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Request)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Request>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

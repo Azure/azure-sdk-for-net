@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentAddressResult"/>. </summary>
         public AppServiceEnvironmentAddressResult()
         {
-            OutboundIPAddresses = new ChangeTrackingList<System.Net.IPAddress>();
+            OutboundIPAddresses = new ChangeTrackingList<IPAddress>();
             VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, System.Net.IPAddress serviceIPAddress, System.Net.IPAddress internalIPAddress, IList<System.Net.IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServiceIPAddress = serviceIPAddress;
             InternalIPAddress = internalIPAddress;
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Main public virtual IP. </summary>
         [WirePath("properties.serviceIpAddress")]
-        public System.Net.IPAddress ServiceIPAddress { get; set; }
+        public IPAddress ServiceIPAddress { get; set; }
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         [WirePath("properties.internalIpAddress")]
-        public System.Net.IPAddress InternalIPAddress { get; set; }
+        public IPAddress InternalIPAddress { get; set; }
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("properties.outboundIpAddresses")]
-        public IList<System.Net.IPAddress> OutboundIPAddresses { get; }
+        public IList<IPAddress> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
         [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VirtualIPMappings { get; }

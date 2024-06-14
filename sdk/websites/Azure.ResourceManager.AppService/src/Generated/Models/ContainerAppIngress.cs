@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Container App Ingress configuration. </summary>
-    public partial class Ingress
+    public partial class ContainerAppIngress
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Ingress"/>. </summary>
-        public Ingress()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngress"/>. </summary>
+        public ContainerAppIngress()
         {
             Traffic = new ChangeTrackingList<TrafficWeight>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Ingress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngress"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="traffic"></param>
         /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Ingress(string fqdn, bool? external, int? targetPort, IngressTransportMethod? transport, IList<TrafficWeight> traffic, bool? allowInsecure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppIngress(string fqdn, bool? external, int? targetPort, IngressTransportMethod? transport, IList<TrafficWeight> traffic, bool? allowInsecure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             External = external;

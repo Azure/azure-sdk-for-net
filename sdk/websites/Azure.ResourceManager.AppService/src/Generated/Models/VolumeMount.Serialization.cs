@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadOnly), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadOnly), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  readOnly: ");
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ReadOnly))
+                if (Optional.IsDefined(IsReadOnly))
                 {
                     builder.Append("  readOnly: ");
-                    var boolValue = ReadOnly.Value == true ? "true" : "false";
+                    var boolValue = IsReadOnly.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

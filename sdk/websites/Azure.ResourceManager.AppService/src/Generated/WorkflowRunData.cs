@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
         internal WorkflowRunData()
         {
-            Outputs = new ChangeTrackingDictionary<string, WorkflowOutputParameter>();
+            Outputs = new ChangeTrackingDictionary<string, WorkflowOutputContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, ResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputParameter> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, ResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
         public WorkflowRunTrigger Trigger { get; }
         /// <summary> Gets the outputs. </summary>
         [WirePath("properties.outputs")]
-        public IReadOnlyDictionary<string, WorkflowOutputParameter> Outputs { get; }
+        public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs { get; }
         /// <summary> Gets the response of the flow run. </summary>
         [WirePath("properties.response")]
         public WorkflowRunTrigger Response { get; }

@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(AppId))
             {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (Optional.IsDefined(EnableApiLogging))
+            if (Optional.IsDefined(IsApiLoggingEnabled))
             {
                 writer.WritePropertyName("enableApiLogging"u8);
-                writer.WriteBooleanValue(EnableApiLogging.Value);
+                writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(Enabled))
+                if (Optional.IsDefined(IsEnabled))
                 {
                     builder.Append("  enabled: ");
-                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableApiLogging), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApiLoggingEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enableApiLogging: ");
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(EnableApiLogging))
+                if (Optional.IsDefined(IsApiLoggingEnabled))
                 {
                     builder.Append("  enableApiLogging: ");
-                    var boolValue = EnableApiLogging.Value == true ? "true" : "false";
+                    var boolValue = IsApiLoggingEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

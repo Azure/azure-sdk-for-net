@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, Request request, Response response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, AppRequest request, AppResponse response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.AppService.Models
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The request. </summary>
         [WirePath("request")]
-        public Request Request { get; set; }
+        public AppRequest Request { get; set; }
         /// <summary> The response. </summary>
         [WirePath("response")]
-        public Response Response { get; set; }
+        public AppResponse Response { get; set; }
     }
 }

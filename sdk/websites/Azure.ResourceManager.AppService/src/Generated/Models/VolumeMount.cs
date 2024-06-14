@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="volumeSubPath"> Sub path in the volume where volume is mounted from. </param>
         /// <param name="containerMountPath"> Target path on the container where volume is mounted on. </param>
         /// <param name="data"> Config Data to be mounted on the volume. </param>
-        /// <param name="readOnly"> Boolean to specify if the mount is read only on the container. </param>
+        /// <param name="isReadOnly"> Boolean to specify if the mount is read only on the container. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeMount(string volumeSubPath, string containerMountPath, string data, bool? readOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeMount(string volumeSubPath, string containerMountPath, string data, bool? isReadOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeSubPath = volumeSubPath;
             ContainerMountPath = containerMountPath;
             Data = data;
-            ReadOnly = readOnly;
+            IsReadOnly = isReadOnly;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Data { get; set; }
         /// <summary> Boolean to specify if the mount is read only on the container. </summary>
         [WirePath("readOnly")]
-        public bool? ReadOnly { get; set; }
+        public bool? IsReadOnly { get; set; }
     }
 }

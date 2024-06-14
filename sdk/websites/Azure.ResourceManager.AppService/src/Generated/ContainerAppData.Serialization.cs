@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
             string latestRevisionName = default;
             string latestRevisionFqdn = default;
             ContainerAppConfiguration configuration = default;
-            Template template = default;
+            ContainerAppTemplate template = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            template = Template.DeserializeTemplate(property0.Value, options);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                     }

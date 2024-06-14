@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ip address. </summary>
-    public partial class IPAddress
+    /// <summary> The JSON schema. </summary>
+    public partial class AppJsonSchema
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
-        public IPAddress()
+        /// <summary> Initializes a new instance of <see cref="AppJsonSchema"/>. </summary>
+        internal AppJsonSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
-        /// <param name="address"> The address. </param>
+        /// <summary> Initializes a new instance of <see cref="AppJsonSchema"/>. </summary>
+        /// <param name="title"> The JSON title. </param>
+        /// <param name="content"> The JSON content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPAddress(string address, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppJsonSchema(string title, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Address = address;
+            Title = title;
+            Content = content;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The address. </summary>
-        [WirePath("address")]
-        public string Address { get; set; }
+        /// <summary> The JSON title. </summary>
+        [WirePath("title")]
+        public string Title { get; }
+        /// <summary> The JSON content. </summary>
+        [WirePath("content")]
+        public string Content { get; }
     }
 }

@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(LatestRevision))
+            if (Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision"u8);
-                writer.WriteBooleanValue(LatestRevision.Value);
+                writer.WriteBooleanValue(IsLatestRevision.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestRevision), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestRevision), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  latestRevision: ");
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(LatestRevision))
+                if (Optional.IsDefined(IsLatestRevision))
                 {
                     builder.Append("  latestRevision: ");
-                    var boolValue = LatestRevision.Value == true ? "true" : "false";
+                    var boolValue = IsLatestRevision.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

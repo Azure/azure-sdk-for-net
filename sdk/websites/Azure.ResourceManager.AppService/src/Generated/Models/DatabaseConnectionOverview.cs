@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="name"> If present, the name of this database connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionOverview(string resourceId, string connectionIdentity, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseConnectionOverview(ResourceIdentifier resourceId, string connectionIdentity, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("connectionIdentity")]
         public string ConnectionIdentity { get; }

@@ -278,18 +278,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteDatabaseConnectionResource>> UpdateAsync(DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<StaticSiteDatabaseConnectionResource>> UpdateAsync(DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _staticSiteDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteDatabaseConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _staticSiteDatabaseConnectionStaticSitesRestClient.UpdateDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionRequestEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteDatabaseConnectionStaticSitesRestClient.UpdateDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,18 +320,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseConnectionRequestEnvelope"> A JSON representation of the database connection request properties. </param>
+        /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionRequestEnvelope"/> is null. </exception>
-        public virtual Response<StaticSiteDatabaseConnectionResource> Update(DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<StaticSiteDatabaseConnectionResource> Update(DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databaseConnectionRequestEnvelope, nameof(databaseConnectionRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _staticSiteDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteDatabaseConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _staticSiteDatabaseConnectionStaticSitesRestClient.UpdateDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionRequestEnvelope, cancellationToken);
+                var response = _staticSiteDatabaseConnectionStaticSitesRestClient.UpdateDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
