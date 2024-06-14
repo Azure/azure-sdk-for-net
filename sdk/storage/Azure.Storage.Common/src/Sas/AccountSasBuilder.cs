@@ -224,6 +224,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// For debugging purposes only.
         /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(StorageSharedKeyCredential)"/>.
         /// </summary>
         /// <param name="sharedKeyCredential">
         /// The storage account's <see cref="StorageSharedKeyCredential"/>.
