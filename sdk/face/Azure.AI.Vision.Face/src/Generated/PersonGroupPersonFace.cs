@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> The DetectFromUrlRequest. </summary>
-    internal partial class DetectFromUrlRequest
+    /// <summary> Face resource for person group person. </summary>
+    public partial class PersonGroupPersonFace
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,25 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DetectFromUrlRequest"/>. </summary>
-        /// <param name="uri"> URL of input image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public DetectFromUrlRequest(Uri uri)
+        /// <summary> Initializes a new instance of <see cref="PersonGroupPersonFace"/>. </summary>
+        internal PersonGroupPersonFace()
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
-            Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectFromUrlRequest"/>. </summary>
-        /// <param name="uri"> URL of input image. </param>
+        /// <summary> Initializes a new instance of <see cref="PersonGroupPersonFace"/>. </summary>
+        /// <param name="persistedFaceId"> Face ID of the face. </param>
+        /// <param name="userData"> User-provided data attached to the face. The length limit is 1K. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectFromUrlRequest(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PersonGroupPersonFace(Guid persistedFaceId, string userData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            PersistedFaceId = persistedFaceId;
+            UserData = userData;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectFromUrlRequest"/> for deserialization. </summary>
-        internal DetectFromUrlRequest()
-        {
-        }
-
-        /// <summary> URL of input image. </summary>
-        public Uri Uri { get; }
+        /// <summary> Face ID of the face. </summary>
+        public Guid PersistedFaceId { get; }
+        /// <summary> User-provided data attached to the face. The length limit is 1K. </summary>
+        public string UserData { get; }
     }
 }

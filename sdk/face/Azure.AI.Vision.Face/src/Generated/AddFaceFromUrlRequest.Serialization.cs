@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    internal partial class DetectFromUrlRequest : IUtf8JsonSerializable, IJsonModel<DetectFromUrlRequest>
+    internal partial class AddFaceFromUrlRequest : IUtf8JsonSerializable, IJsonModel<AddFaceFromUrlRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectFromUrlRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddFaceFromUrlRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DetectFromUrlRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AddFaceFromUrlRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DetectFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectFromUrlRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.AI.Vision.Face
             writer.WriteEndObject();
         }
 
-        DetectFromUrlRequest IJsonModel<DetectFromUrlRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AddFaceFromUrlRequest IJsonModel<AddFaceFromUrlRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DetectFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectFromUrlRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDetectFromUrlRequest(document.RootElement, options);
+            return DeserializeAddFaceFromUrlRequest(document.RootElement, options);
         }
 
-        internal static DetectFromUrlRequest DeserializeDetectFromUrlRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AddFaceFromUrlRequest DeserializeAddFaceFromUrlRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,46 +82,46 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DetectFromUrlRequest(url, serializedAdditionalRawData);
+            return new AddFaceFromUrlRequest(url, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DetectFromUrlRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AddFaceFromUrlRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DetectFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DetectFromUrlRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DetectFromUrlRequest IPersistableModel<DetectFromUrlRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AddFaceFromUrlRequest IPersistableModel<AddFaceFromUrlRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DetectFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDetectFromUrlRequest(document.RootElement, options);
+                        return DeserializeAddFaceFromUrlRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectFromUrlRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DetectFromUrlRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AddFaceFromUrlRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DetectFromUrlRequest FromResponse(Response response)
+        internal static AddFaceFromUrlRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDetectFromUrlRequest(document.RootElement);
+            return DeserializeAddFaceFromUrlRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
