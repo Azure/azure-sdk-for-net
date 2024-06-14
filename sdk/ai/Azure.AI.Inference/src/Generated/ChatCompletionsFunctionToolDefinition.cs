@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Inference
 {
     /// <summary> The definition information for a chat completions function tool that can call a function in response to a tool call. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "AZC0031:Improper model name suffix")]
     public partial class ChatCompletionsFunctionToolDefinition : ChatCompletionsToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>

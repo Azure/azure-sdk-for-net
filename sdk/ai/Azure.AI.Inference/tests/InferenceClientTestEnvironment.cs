@@ -7,7 +7,8 @@ namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("Inference_ENDPOINT");
+        public string MistralSmallEndpoint => GetRecordedVariable("AZUREAI_MISTRAL_SMALL_URL");
+        public string MistralSmallApiKey => GetRecordedVariable("AZUREAI_MISTRAL_SMALL_KEY", options => options.IsSecret());
 
         // Add other client paramters here as above.
     }
