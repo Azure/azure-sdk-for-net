@@ -6,16 +6,17 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591
 public abstract class PageToken : IPersistableModel<PageToken>
 {
-    protected PageToken()
+    protected PageToken(bool hasResponseValues)
     {
+        HasResponseValues = hasResponseValues;
     }
 
-    // The first page of the collection the page that this page token represents
-    // is in.  Essentially, the rehydration token for the collection.
-    // Having this property lets any token for a page in the collection rehydrate
-    // the collection with full context about how to retrieve the first page of
-    // the collection and then also the current page within it.
-    protected abstract PageToken FirstPageToken { get; }
+    // Indicates whether or not the page token contains values from a service
+    // response that would cause the next page request to be created
+    // differently.
+    public bool HasResponseValues { get; protected set; }
+
+    // TODO: should this 
 
     protected abstract BinaryData WriteCore(ModelReaderWriterOptions options);
     protected abstract PageToken CreateCore(BinaryData data, ModelReaderWriterOptions options);
