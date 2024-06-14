@@ -29,5 +29,6 @@ namespace Azure.Storage.Shared
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _original.Headers;
         protected override bool TryGetHeader(string name, out string value) => _original.Headers.TryGetValue(name, out value);
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _original.Headers.TryGetValues(name, out values);
+        public override bool IsError => _original.IsError;
     }
 }
