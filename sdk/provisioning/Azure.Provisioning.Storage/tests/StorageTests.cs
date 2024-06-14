@@ -40,11 +40,42 @@ namespace Azure.Provisioning.Storage.Tests
         }
 
         [RecordedTest]
+        public async Task StorageFileDefaults()
+        {
+            var infra = new TestInfrastructure();
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.FileStorage);
+            infra.AddFileService();
+            storageAccount.AssignProperty(a => a.PrimaryEndpoints,
+                new Parameter(
+                    "primaryEndpoints",
+                    BicepType.Object,
+                    defaultValue: "{ " +
+                                  "'blob': 'https://photoacct.blob.core.windows.net/' " + Environment.NewLine +
+                                  "'file': 'https://photoacct.file.core.windows.net/' " + Environment.NewLine +
+                                    "'queue': 'https://photoacct.queue.core.windows.net/' " + Environment.NewLine +
+                                  "}"));
+
+            infra.Build(GetOutputPath());
+            await ValidateBicepAsync();
+        }
+
+        [RecordedTest]
         public async Task StorageBlobDefaultsInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task StorageFileDefaultsInPromptMode()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.FileStorage);
+            infra.AddFileService();
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
@@ -104,6 +135,21 @@ namespace Azure.Provisioning.Storage.Tests
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
+            {
+                IsEnabled = true
+            };
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [RecordedTest]
+        public async Task StorageFileDropDown()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var file = infra.AddFileService();
+            file.Properties.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
             {
                 IsEnabled = true
             };
