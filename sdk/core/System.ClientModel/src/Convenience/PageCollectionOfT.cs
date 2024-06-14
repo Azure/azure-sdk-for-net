@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,8 +24,7 @@ public abstract class PageCollection<T> : ClientResult,
 
     public PageToken FirstPageToken { get; }
 
-    // TODO: Take RequestOptions/CancellationToken?
-    public abstract ClientPage<T> GetPage(PageToken pageToken);
+    public abstract ClientPage<T> GetPage(PageToken pageToken, RequestOptions? options = default);
 
     public IEnumerable<T> GetValues()
     {

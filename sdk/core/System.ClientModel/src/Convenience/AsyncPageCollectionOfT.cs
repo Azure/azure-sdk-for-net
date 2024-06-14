@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -21,8 +22,7 @@ public abstract class AsyncPageCollection<T> : ClientResult,
 
     public PageToken FirstPageToken { get; }
 
-    // TODO: take RequestOptions instead?
-    public abstract Task<ClientPage<T>> GetPageAsync(PageToken pageToken, CancellationToken cancellationToken = default);
+    public abstract Task<ClientPage<T>> GetPageAsync(PageToken pageToken, RequestOptions? options = default);
 
     public async IAsyncEnumerable<T> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -37,13 +37,17 @@ public abstract class AsyncPageCollection<T> : ClientResult,
 
     async IAsyncEnumerator<ClientPage<T>> IAsyncEnumerable<ClientPage<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
-        ClientPage<T> page = await GetPageAsync(FirstPageToken, cancellationToken).ConfigureAwait(false);
+        RequestOptions? options = cancellationToken == default ?
+            default :
+            new RequestOptions() {  CancellationToken = cancellationToken };
+
+        ClientPage<T> page = await GetPageAsync(FirstPageToken, options).ConfigureAwait(false);
         SetRawResponse(page.GetRawResponse());
         yield return page;
 
         while (page.NextPageToken != null)
         {
-            page = await GetPageAsync(page.NextPageToken, cancellationToken).ConfigureAwait(false);
+            page = await GetPageAsync(page.NextPageToken, options).ConfigureAwait(false);
             SetRawResponse(page.GetRawResponse());
             yield return page;
         }

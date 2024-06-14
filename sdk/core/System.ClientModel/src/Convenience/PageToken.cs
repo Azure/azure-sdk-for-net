@@ -14,10 +14,19 @@ public abstract class PageToken : IPersistableModel<PageToken>
 
     // The first page of the collection the page that this page token represents
     // is in.  Essentially, the rehydration token for the collection.
-    public abstract PageToken FirstCollectionPage { get; }
+    protected abstract PageToken FirstPageToken { get; }
 
-    public abstract BinaryData Write(ModelReaderWriterOptions options);
-    public abstract PageToken Create(BinaryData data, ModelReaderWriterOptions options);
-    public abstract string GetFormatFromOptions(ModelReaderWriterOptions options);
+    protected abstract BinaryData WriteCore(ModelReaderWriterOptions options);
+    protected abstract PageToken CreateCore(BinaryData data, ModelReaderWriterOptions options);
+    protected abstract string GetFormatFromOptionsCore(ModelReaderWriterOptions options);
+
+    BinaryData IPersistableModel<PageToken>.Write(ModelReaderWriterOptions options)
+        => WriteCore(options);
+
+    PageToken IPersistableModel<PageToken>.Create(BinaryData data, ModelReaderWriterOptions options)
+        => CreateCore(data, options);
+
+    string IPersistableModel<PageToken>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        => GetFormatFromOptionsCore(options);
 }
 #pragma warning restore CS1591
