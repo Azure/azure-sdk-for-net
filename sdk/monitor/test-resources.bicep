@@ -267,15 +267,15 @@ resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@202
 
 
 // TODO: ARE THESE NEEDED?
-var logReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'
+// var logReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'
 
-resource logsReaderRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = {
-  name: guid(resourceGroup().id, testApplicationOid, logReaderRoleId)
-  properties: {
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', logReaderRoleId)
-    principalId: testApplicationOid
-  }
-}
+// resource logsReaderRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = {
+//   name: guid(resourceGroup().id, testApplicationOid, logReaderRoleId)
+//   properties: {
+//     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', logReaderRoleId)
+//     principalId: testApplicationOid
+//   }
+// }
 
 var metricPublisherRoleId = '3913510d-42f4-4e42-8a64-420c390055eb'
 
@@ -290,24 +290,24 @@ resource metricReaderRole 'Microsoft.Authorization/roleAssignments@2018-01-01-pr
 
 
 
-// TODO: IS THIS STORAGE ACCOUNT BEING USED?
-@description('The base resource name.')
-param storageAccountName string = uniqueString(baseName, 'storage')
-@description('The base resource name.')
-param storageAccountsku string = 'Standard_LRS'
+// // TODO: IS THIS STORAGE ACCOUNT BEING USED?
+// @description('The base resource name.')
+// param storageAccountName string = uniqueString(baseName, 'storage')
+// @description('The base resource name.')
+// param storageAccountsku string = 'Standard_LRS'
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: storageAccountName
-  location: location
-  sku: {
-    name: storageAccountsku
-  }
-  kind: 'StorageV2'
-  tags: {
-    ObjectName: storageAccountName
-  }
-  properties: {}
-}
+// resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+//   name: storageAccountName
+//   location: location
+//   sku: {
+//     name: storageAccountsku
+//   }
+//   kind: 'StorageV2'
+//   tags: {
+//     ObjectName: storageAccountName
+//   }
+//   properties: {}
+// }
 
 // OUTPUT VALUES USED BY TEST ENVIRONMENT
 // output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
