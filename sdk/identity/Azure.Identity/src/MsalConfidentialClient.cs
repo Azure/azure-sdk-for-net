@@ -74,7 +74,6 @@ namespace Azure.Identity
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
-                // .WithLogging(LogMsal, logLevel: LogLevel.Verbose, enablePiiLogging: IsSupportLoggingEnabled);
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
             // The authority matches the one configured in the CredentialOptions.
