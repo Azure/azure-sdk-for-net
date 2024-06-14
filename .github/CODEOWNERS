@@ -972,10 +972,10 @@
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
 # PRLabel: %Oracle
-/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @eelhomsi1
+/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs
 
 # ServiceLabel: %Oracle %Mgmt
-# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @eelhomsi1
+# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs
 
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
