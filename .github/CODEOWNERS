@@ -724,10 +724,10 @@
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %OpenAI
-/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
 # ServiceLabel: %OpenAI
-# ServiceOwners:                                                   @jpalvarezl @trrwilson
+# ServiceOwners:                                                   @jpalvarezl @trrwilson @ralph-msft
 
 # PRLabel: %Image Analysis
 /sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
