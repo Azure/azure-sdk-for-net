@@ -23,7 +23,7 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>, IEnumerabl
 
     public abstract ClientPage<T> GetPage(BinaryData pageToken, RequestOptions? options = default);
 
-    public IEnumerable<T> GetValues()
+    public IEnumerable<T> ToValueCollection()
     {
         foreach (ClientPage<T> page in (IEnumerable<ClientPage<T>>)this)
         {

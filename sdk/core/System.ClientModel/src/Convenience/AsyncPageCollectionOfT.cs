@@ -24,7 +24,8 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>, 
 
     public abstract Task<ClientPage<T>> GetPageAsync(BinaryData pageToken, RequestOptions? options = default);
 
-    public async IAsyncEnumerable<T> GetValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    // TODO: Add "from page"?
+    public async IAsyncEnumerable<T> ToValueCollectionAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (ClientPage<T> page in ((IAsyncEnumerable<ClientPage<T>>)this).ConfigureAwait(false).WithCancellation(cancellationToken))
         {

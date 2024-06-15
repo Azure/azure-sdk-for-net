@@ -12,9 +12,9 @@ namespace System.ClientModel
         protected AsyncPageCollection() { }
         public abstract System.BinaryData FirstPageToken { get; }
         public abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsync(System.BinaryData pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
-        public System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientResult> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<T> ToValueCollectionAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
@@ -70,10 +70,10 @@ namespace System.ClientModel
         protected PageCollection() { }
         public abstract System.BinaryData FirstPageToken { get; }
         public abstract System.ClientModel.ClientPage<T> GetPage(System.BinaryData pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
-        public System.Collections.Generic.IEnumerable<T> GetValues() { throw null; }
         System.Collections.Generic.IEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>.GetEnumerator() { throw null; }
         System.Collections.Generic.IEnumerator<System.ClientModel.ClientResult> System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public System.Collections.Generic.IEnumerable<T> ToValueCollection() { throw null; }
     }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
