@@ -99,7 +99,7 @@ public partial class PineconeChatDataSource : AzureChatDataSource
 
     public PineconeChatDataSource()
     {
-        Type = "azure_search";
+        Type = "pinecone";
         InternalParameters = new();
         _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
     }
