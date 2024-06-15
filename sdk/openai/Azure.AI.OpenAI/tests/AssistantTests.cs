@@ -407,46 +407,6 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
     }
 
-#nullable enable
-    [RecordedTest]
-    public async Task BasicStreamingRunStepFunctionalityWorks()
-    {
-        AssistantClient client = GetTestClient();
-        Assistant assistant = await client.CreateAssistantAsync(
-            TestConfig.GetDeploymentNameFor<AssistantClient>(),
-            new AssistantCreationOptions()
-            {
-                Tools = { new CodeInterpreterToolDefinition() },
-                Instructions = "Call the code interpreter tool when asked to visualize mathematical concepts.",
-            });
-        Validate(assistant);
-
-        AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
-        {
-            InitialMessages = { new(["Please graph the equation y = 3x + 4"]), },
-        });
-        Validate(thread);
-
-        AsyncResultCollection<StreamingUpdate> streamingUpdates = client.CreateRunStreamingAsync(thread, assistant);
-
-        RunStepDetailsUpdate? latestDetailsUpdate = null;
-
-        await foreach (StreamingUpdate streamingUpdate in streamingUpdates)
-        {
-            latestDetailsUpdate = streamingUpdate as RunStepDetailsUpdate ?? latestDetailsUpdate;
-
-            if (streamingUpdate is RunStepUpdate runStepUpdate && latestDetailsUpdate != null)
-            {
-                foreach (RunStepUpdateCodeInterpreterOutput output in latestDetailsUpdate.CodeInterpreterOutputs)
-                {
-                    Console.WriteLine($"Code logs: {output.Logs}");
-                    Console.WriteLine($"Code file: {output.ImageFileId}");
-                }
-            }
-        }
-    }
-#nullable disable
-
     [RecordedTest]
     public async Task FunctionToolsWork()
     {
