@@ -207,6 +207,7 @@ namespace Azure.Provisioning.Storage.Tests
             var sa = StorageAccount.FromExisting(infra, "'existingStorage'", rg);
             infra.AddResource(sa);
             infra.AddResource(BlobService.FromExisting(infra, "'existingBlobService'", sa));
+            infra.AddResource(FileService.FromExisting(infra, "'existingFileService'", sa));
 
             infra.Build(GetOutputPath());
 
