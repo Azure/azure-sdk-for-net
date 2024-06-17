@@ -395,30 +395,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppResource"/> object. </returns>
-        public virtual ContainerAppResource GetContainerAppResource(ResourceIdentifier id)
-        {
-            ContainerAppResource.ValidateResourceId(id);
-            return new ContainerAppResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
-        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
-        {
-            ContainerAppRevisionResource.ValidateResourceId(id);
-            return new ContainerAppRevisionResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -500,18 +476,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             DeletedSiteResource.ValidateResourceId(id);
             return new DeletedSiteResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KubeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
-        public virtual KubeEnvironmentResource GetKubeEnvironmentResource(ResourceIdentifier id)
-        {
-            KubeEnvironmentResource.ValidateResourceId(id);
-            return new KubeEnvironmentResource(Client, id);
         }
 
         /// <summary>
