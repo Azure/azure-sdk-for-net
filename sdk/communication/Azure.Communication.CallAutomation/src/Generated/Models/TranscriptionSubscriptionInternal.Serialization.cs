@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string id = default;
-            TranscriptionSubscriptionState? state = default;
-            IReadOnlyList<TranscriptionResultType> subscribedResultTypes = default;
+            TranscriptionSubscriptionStateInternal? state = default;
+            IReadOnlyList<TranscriptionResultInternal> subscribedResultTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    state = new TranscriptionSubscriptionState(property.Value.GetString());
+                    state = new TranscriptionSubscriptionStateInternal(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscribedResultTypes"u8))
@@ -43,16 +43,16 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    List<TranscriptionResultType> array = new List<TranscriptionResultType>();
+                    List<TranscriptionResultInternal> array = new List<TranscriptionResultInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new TranscriptionResultType(item.GetString()));
+                        array.Add(new TranscriptionResultInternal(item.GetString()));
                     }
                     subscribedResultTypes = array;
                     continue;
                 }
             }
-            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultType>());
+            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultInternal>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

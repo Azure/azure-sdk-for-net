@@ -31,7 +31,5 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             FailedPlaySourceIndex = failedPlaySourceIndex;
         }
-        /// <summary> Contains the index of the failed play source. </summary>
-        public int? FailedPlaySourceIndex { get; }
     }
 }

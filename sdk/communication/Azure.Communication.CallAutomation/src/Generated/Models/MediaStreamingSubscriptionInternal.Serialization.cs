@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string id = default;
-            MediaStreamingSubscriptionState? state = default;
-            IReadOnlyList<MediaStreamingContentType> subscribedContentTypes = default;
+            MediaStreamingSubscriptionStateInternal? state = default;
+            IReadOnlyList<MediaStreamingContentInternal> subscribedContentTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    state = new MediaStreamingSubscriptionState(property.Value.GetString());
+                    state = new MediaStreamingSubscriptionStateInternal(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscribedContentTypes"u8))
@@ -43,16 +43,16 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    List<MediaStreamingContentType> array = new List<MediaStreamingContentType>();
+                    List<MediaStreamingContentInternal> array = new List<MediaStreamingContentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new MediaStreamingContentType(item.GetString()));
+                        array.Add(new MediaStreamingContentInternal(item.GetString()));
                     }
                     subscribedContentTypes = array;
                     continue;
                 }
             }
-            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContentType>());
+            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContentInternal>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

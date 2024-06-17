@@ -17,6 +17,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
+        /// <summary> Contains the index of the failed play source. </summary>
+        internal int? FailedPlaySourceIndex { get; }
+
         /// <summary> Initializes a new instance of PlayFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>

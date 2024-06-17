@@ -8,5 +8,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("CallParticipant")]
     internal partial class CallParticipantInternal
     {
+        /// <summary> Is participant on hold. </summary>
+        internal bool IsOnHold { get; }
     }
 }
