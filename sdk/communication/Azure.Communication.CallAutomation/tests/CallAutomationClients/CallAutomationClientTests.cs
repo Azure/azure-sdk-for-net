@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
             new Uri("https://websocket"),
-            MediaStreamingTransport.Websocket,
             MediaStreamingContent.Audio,
-            MediaStreamingAudioChannel.Mixed);
+            MediaStreamingAudioChannel.Mixed,
+            MediaStreamingTransport.Websocket);
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
             new Uri("https://websocket"),

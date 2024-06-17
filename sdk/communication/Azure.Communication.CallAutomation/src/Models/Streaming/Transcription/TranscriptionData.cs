@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -11,14 +12,14 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordData> words, string participantRawID, TranscriptionResultState resultState)
+        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
             Offset = TimeSpan.FromTicks(offset);
             Duration = TimeSpan.FromTicks(duration);
-            Words = words;
+            Words = ConvertToWordData(words);
             if (participantRawID != null)
             {
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);
@@ -73,6 +74,11 @@ namespace Azure.Communication.CallAutomation
                 return TextFormat.Display;
             else
                 throw new NotSupportedException(format);
+        }
+
+        private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
+        {
+            return wordData.Select(w => new WordData(w.Text, w.Offset, w.Duration));
         }
     }
 }
