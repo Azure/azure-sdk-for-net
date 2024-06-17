@@ -103,7 +103,7 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
 
 function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
 {
-    foreach($pair in $subscriptionConfiguration.GetEnumerator()) {
+    foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
         if ($pair.Value -is [Hashtable]) {
             foreach($nestedPair in $pair.Value.GetEnumerator()) {
                 # Mark values as secret so we don't print json blobs containing secrets in the logs.
@@ -126,12 +126,10 @@ function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
         }
     }
 
-    Write-Host ($subscriptionConfiguration | ConvertTo-Json)
-    $serialized = $subscriptionConfiguration | ConvertTo-Json -Compress
-    Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    return $subscriptionConfiguration
 }
 
-function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration, $devOpsOutput = $true)
+function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration)
 {
     foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
         if ($pair.Value -is [Hashtable]) {
@@ -153,12 +151,6 @@ function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase,
             }
             $subscriptionConfigurationBase[$pair.Name] = $pair.Value
         }
-    }
-
-    if ($devOpsOutput) {
-        $serialized = $subscriptionConfigurationBase | ConvertTo-Json -Compress
-        Write-Host ($subscriptionConfigurationBase | ConvertTo-Json)
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
     }
 
     return $subscriptionConfigurationBase
