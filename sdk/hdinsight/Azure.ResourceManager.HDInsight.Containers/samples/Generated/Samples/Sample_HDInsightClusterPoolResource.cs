@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ClusterPoolGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetClusterPool.json
             // this example is just showing the usage of "ClusterPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ClusterPoolsPatchTags()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/PatchClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/PatchClusterPool.json
             // this example is just showing the usage of "ClusterPools_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ClusterPoolDelete()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/DeleteClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/DeleteClusterPool.json
             // this example is just showing the usage of "ClusterPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHDInsightClusterPools_ClusterPoolsListBySubscription()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterPoolsSubscription.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterPoolsSubscription.json
             // this example is just showing the usage of "ClusterPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Upgrade_ClusterPoolsUpgradeAKSPatchVersion()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/UpgradeAKSPatchVersionForClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeAKSPatchVersionForClusterPool.json
             // this example is just showing the usage of "ClusterPools_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Upgrade_ClusterPoolsUpgradeNodeOs()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/UpgradeNodeOsForClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeNodeOsForClusterPool.json
             // this example is just showing the usage of "ClusterPools_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterPoolAvailableUpgrades_GetClusterPoolAvailableUpgrade()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterPoolAvailableUpgrades.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterPoolAvailableUpgrades.json
             // this example is just showing the usage of "ClusterPoolAvailableUpgrades_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterPoolUpgradeHistories_ClusterPoolUpgradeHistoriesListResult()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterPoolUpgradeHistory.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterPoolUpgradeHistory.json
             // this example is just showing the usage of "ClusterPoolUpgradeHistories_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Upgrade_ClustersUpgradeAKSPatchVersion()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/UpgradeAKSPatchVersionForCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeAKSPatchVersionForCluster.json
             // this example is just showing the usage of "Clusters_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Upgrade_ClustersUpgradeHotfix()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/UpgradeHotfixForCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UpgradeHotfixForCluster.json
             // this example is just showing the usage of "Clusters_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpgradeManualRollback_ClusterUpgradeRollback()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ClusterUpgradeRollback.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ClusterUpgradeRollback.json
             // this example is just showing the usage of "Clusters_UpgradeManualRollback" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Resize_HDInsightClusterResize()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ResizeCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ResizeCluster.json
             // this example is just showing the usage of "Clusters_Resize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_HDInsightClusterGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_HDInsightClustersPatchTags()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/PatchCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/PatchCluster.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -318,7 +318,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_HDInsightRangerClusterPatchTags()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/PatchRangerCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/PatchRangerCluster.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -380,7 +380,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_HDInsightClustersDelete()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/DeleteCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/DeleteCluster.json
             // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -408,7 +408,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetServiceConfigs_HDInsightClusterGetServiceConfigs()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterServiceConfigs.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterServiceConfigs.json
             // this example is just showing the usage of "Clusters_ListServiceConfigs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -439,7 +439,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInstanceViews_HDInsightClusterGetInstanceViews()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterInstanceViews.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterInstanceViews.json
             // this example is just showing the usage of "Clusters_ListInstanceViews" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -470,7 +470,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInstanceView_HDInsightClusterGetInstanceView()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetClusterInstanceView.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/GetClusterInstanceView.json
             // this example is just showing the usage of "Clusters_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -498,7 +498,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterAvailableUpgrades_GetClusterAvailableUpgrade()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterAvailableUpgrades.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterAvailableUpgrades.json
             // this example is just showing the usage of "ClusterAvailableUpgrades_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -529,7 +529,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterUpgradeHistories_ClusterUpgradeHistoriesListResult()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterUpgradeHistory.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterUpgradeHistory.json
             // this example is just showing the usage of "ClusterUpgradeHistories_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -560,7 +560,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RunJobClusterJob_RunClusterJob()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/RunClusterJob.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/RunClusterJob.json
             // this example is just showing the usage of "ClusterJobs_RunJob" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -602,7 +602,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterJobs_ListClusterJobs()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterJobs.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListClusterJobs.json
             // this example is just showing the usage of "ClusterJobs_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -633,7 +633,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterLibraries_ListPredefinedClusterLibraries()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListPredefinedClusterLibraries.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListPredefinedClusterLibraries.json
             // this example is just showing the usage of "ClusterLibraries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -665,7 +665,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterLibraries_ListUserCustomClusterLibraries()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListUserCustomClusterLibraries.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/ListUserCustomClusterLibraries.json
             // this example is just showing the usage of "ClusterLibraries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -697,7 +697,7 @@ AutoscaleScheduleDay.Sunday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ManageLibrariesClusterLibrary_InstallNewClusterLibraries()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/InstallNewClusterLibraries.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/InstallNewClusterLibraries.json
             // this example is just showing the usage of "ClusterLibraries_ManageLibraries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -737,7 +737,7 @@ Remarks = "Maven packages.",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ManageLibrariesClusterLibrary_UninstallExistingClusterLibraries()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/UninstallExistingClusterLibraries.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2024-05-01-preview/examples/UninstallExistingClusterLibraries.json
             // this example is just showing the usage of "ClusterLibraries_ManageLibraries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
