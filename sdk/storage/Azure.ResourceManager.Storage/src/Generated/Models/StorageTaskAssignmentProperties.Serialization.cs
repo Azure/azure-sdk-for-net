@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("taskId"u8);
             writer.WriteStringValue(TaskId);
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("executionContext"u8);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Storage.Models
             else
             {
                 builder.Append("  enabled: ");
-                var boolValue = Enabled == true ? "true" : "false";
+                var boolValue = IsEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 

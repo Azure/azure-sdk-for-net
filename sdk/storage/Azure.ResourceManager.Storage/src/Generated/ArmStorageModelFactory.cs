@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. The default value is true since API version 2019-04-01. </param>
         /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
         /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="enableExtendedGroups"> Enables extended group support with local users feature, if set to true. </param>
+        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
         /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
         /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <returns> A new <see cref="Models.StorageAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = null, StorageKind kind = default, AzureLocation location = default, ExtendedLocation extendedLocation = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, AllowedCopyScope? allowedCopyScope = null, StoragePublicNetworkAccess? publicNetworkAccess = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageCustomDomain customDomain = null, StorageAccountEncryption encryption = null, StorageAccountNetworkRuleSet networkRuleSet = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? enableExtendedGroups = null, bool? isHnsEnabled = null, LargeFileSharesState? largeFileSharesState = null, StorageRoutingPreference routingPreference = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, ImmutableStorageAccount immutableStorageWithVersioning = null, StorageDnsEndpointType? dnsEndpointType = null)
+        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = null, StorageKind kind = default, AzureLocation location = default, ExtendedLocation extendedLocation = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, AllowedCopyScope? allowedCopyScope = null, StoragePublicNetworkAccess? publicNetworkAccess = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageCustomDomain customDomain = null, StorageAccountEncryption encryption = null, StorageAccountNetworkRuleSet networkRuleSet = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? isExtendedGroupEnabled = null, bool? isHnsEnabled = null, LargeFileSharesState? largeFileSharesState = null, StorageRoutingPreference routingPreference = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, ImmutableStorageAccount immutableStorageWithVersioning = null, StorageDnsEndpointType? dnsEndpointType = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Storage.Models
                 enableHttpsTrafficOnly,
                 isSftpEnabled,
                 isLocalUserEnabled,
-                enableExtendedGroups,
+                isExtendedGroupEnabled,
                 isHnsEnabled,
                 largeFileSharesState,
                 routingPreference,
@@ -1406,18 +1406,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="reportPrefix"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <returns> A new <see cref="Models.StorageTaskAssignmentProperties"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentProperties StorageTaskAssignmentProperties(ResourceIdentifier taskId = null, bool enabled = default, string description = null, StorageTaskAssignmentExecutionContext executionContext = null, string reportPrefix = null, StorageProvisioningState? provisioningState = null, StorageTaskReportProperties runStatus = null)
+        public static StorageTaskAssignmentProperties StorageTaskAssignmentProperties(ResourceIdentifier taskId = null, bool isEnabled = default, string description = null, StorageTaskAssignmentExecutionContext executionContext = null, string reportPrefix = null, StorageProvisioningState? provisioningState = null, StorageTaskReportProperties runStatus = null)
         {
             return new StorageTaskAssignmentProperties(
                 taskId,
-                enabled,
+                isEnabled,
                 description,
                 executionContext,
                 reportPrefix != null ? new StorageTaskAssignmentReport(reportPrefix, serializedAdditionalRawData: null) : null,
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType)
         {
-            return StorageAccountCreateOrUpdateContent(sku: sku, kind: kind, location: location, extendedLocation: extendedLocation, tags: tags, identity: identity, allowedCopyScope: allowedCopyScope, publicNetworkAccess: publicNetworkAccess, sasPolicy: sasPolicy, keyExpirationPeriodInDays: keyExpirationPeriodInDays, customDomain: customDomain, encryption: encryption, networkRuleSet: networkRuleSet, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, enableExtendedGroups: default, isHnsEnabled: isHnsEnabled, largeFileSharesState: largeFileSharesState, routingPreference: routingPreference, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, immutableStorageWithVersioning: immutableStorageWithVersioning, dnsEndpointType: dnsEndpointType);
+            return StorageAccountCreateOrUpdateContent(sku: sku, kind: kind, location: location, extendedLocation: extendedLocation, tags: tags, identity: identity, allowedCopyScope: allowedCopyScope, publicNetworkAccess: publicNetworkAccess, sasPolicy: sasPolicy, keyExpirationPeriodInDays: keyExpirationPeriodInDays, customDomain: customDomain, encryption: encryption, networkRuleSet: networkRuleSet, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, isExtendedGroupEnabled: default, isHnsEnabled: isHnsEnabled, largeFileSharesState: largeFileSharesState, routingPreference: routingPreference, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, immutableStorageWithVersioning: immutableStorageWithVersioning, dnsEndpointType: dnsEndpointType);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.StorageAccountData" />. </summary>

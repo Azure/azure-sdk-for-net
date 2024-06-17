@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(EnableExtendedGroups))
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
             {
                 writer.WritePropertyName("enableExtendedGroups"u8);
-                writer.WriteBooleanValue(EnableExtendedGroups.Value);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
             }
             if (Optional.IsDefined(IsHnsEnabled))
             {

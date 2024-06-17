@@ -240,6 +240,8 @@ rename-mapping:
   ListEncryptionScopesInclude: EncryptionScopesIncludeType
   StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
   StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
   LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
   LocalUser.properties.isNFSv3Enabled: IsNfsV3Enabled
   StorageAccountMigration.type: ResourceType|resource-type
@@ -254,6 +256,7 @@ rename-mapping:
   Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
   StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
   StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
+  StorageTaskAssignmentProperties.enabled: IsEnabled
   StorageTaskReportProperties.startTime: StartedOn|date-time
   StorageTaskReportProperties.finishTime: FinishedOn|date-time
   TriggerParameters: ExecutionTriggerParameters

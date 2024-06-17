@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Storage.Samples
                 KeyExpirationPeriodInDays = 20,
                 IsSftpEnabled = true,
                 IsLocalUserEnabled = true,
-                EnableExtendedGroups = true,
+                IsExtendedGroupEnabled = true,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
                     ResourceAccessRules =

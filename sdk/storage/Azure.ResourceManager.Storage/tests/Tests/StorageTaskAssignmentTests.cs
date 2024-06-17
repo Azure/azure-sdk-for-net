@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.Enabled, taskAssignment1.Data.Properties.Enabled);
+            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
             Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
             Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.Enabled, taskAssignment1.Data.Properties.Enabled);
+            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
             Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
             Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.Enabled);
+            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
             Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
             Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
             Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.Enabled);
+            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
             Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
             Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
             Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);

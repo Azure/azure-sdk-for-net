@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/>, <paramref name="description"/>, <paramref name="executionContext"/> or <paramref name="report"/> is null. </exception>
-        public StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool enabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report)
+        public StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report)
         {
             Argument.AssertNotNull(taskId, nameof(taskId));
             Argument.AssertNotNull(description, nameof(description));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(report, nameof(report));
 
             TaskId = taskId;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool enabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
         public ResourceIdentifier TaskId { get; set; }
         /// <summary> Whether the storage task assignment is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
         [WirePath("description")]
         public string Description { get; set; }

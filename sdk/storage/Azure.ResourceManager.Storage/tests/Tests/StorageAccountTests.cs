@@ -2264,7 +2264,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 IsSftpEnabled = true,
                 IsLocalUserEnabled = true,
                 IsHnsEnabled = true,
-                //EnableExtendedGroups = true,
+                // IsExtendedGroupEnabled = true,
             };
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
             Assert.AreEqual(accountName1, account1.Id.Name);
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 IsSftpEnabled = false,
                 IsLocalUserEnabled = false,
-                //EnableExtendedGroups = false,
+                // IsExtendedGroupEnabled = false,
             };
             account1 = (await account1.UpdateAsync(parameter)).Value;
             VerifyAccountProperties(account1, false);
@@ -2289,7 +2289,7 @@ namespace Azure.ResourceManager.Storage.Tests
             parameter = new StorageAccountPatch()
             {
                 IsLocalUserEnabled = true,
-                //EnableExtendedGroups = true,
+                //IsExtendedGroupEnabled = true,
             };
             account1 = (await account1.UpdateAsync(parameter)).Value;
             VerifyAccountProperties(account1, false);

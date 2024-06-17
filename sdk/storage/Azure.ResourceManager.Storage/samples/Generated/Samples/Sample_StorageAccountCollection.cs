@@ -57,7 +57,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 },
                 },
                 EnableHttpsTrafficOnly = false,
-                EnableExtendedGroups = true,
+                IsExtendedGroupEnabled = true,
                 IsHnsEnabled = true,
                 IsNfsV3Enabled = true,
             };
