@@ -16,9 +16,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./tools/js-sdk-release-tools/
 
       - name: Build TypeScript
         run: npm run build
+        working-directory: ./tools/js-sdk-release-tools/
 
       - name: Run Unit Tests
         run: npm run test
+        working-directory: ./tools/js-sdk-release-tools/
