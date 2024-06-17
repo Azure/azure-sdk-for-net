@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task GetVmSecurityRules_GetSecurityGroupView()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkWatcherSecurityGroupViewGet.json
-            // this example is just showing the usage of "NetworkWatchers_GetVMSecurityRules" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkWatchers_GetVmSecurityRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -347,16 +346,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            FlowLogInformation flowLogInformation = new FlowLogInformation(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), true)
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-},
-                },
-            };
+            FlowLogInformation flowLogInformation = new FlowLogInformation(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), true);
             ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation);
             FlowLogInformation result = lro.Value;
 

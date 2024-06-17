@@ -715,20 +715,24 @@ namespace Azure.Storage.DataMovement.Blobs
         }
         #endregion
 
-        private static ResourceType GetType(BlobType blobType, bool isContainer)
+        private static ResourceType GetType(DataTransferProperty<BlobType?> blobType, bool isContainer)
         {
             if (isContainer)
             {
                 return ResourceType.BlobContainer;
             }
 
-            return blobType switch
+            if (blobType?.Value != default)
             {
-                BlobType.Block => ResourceType.BlockBlob,
-                BlobType.Page => ResourceType.PageBlob,
-                BlobType.Append => ResourceType.AppendBlob,
-                _ => ResourceType.Unknown
-            };
+                return blobType.Value switch
+                {
+                    BlobType.Block => ResourceType.BlockBlob,
+                    BlobType.Page => ResourceType.PageBlob,
+                    BlobType.Append => ResourceType.AppendBlob,
+                    _ => ResourceType.Unknown
+                };
+            }
+            return ResourceType.Unknown;
         }
 
         private static ArgumentException BadResourceTypeException(ResourceType resourceType)

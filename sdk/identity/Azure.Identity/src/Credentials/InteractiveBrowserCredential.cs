@@ -314,7 +314,7 @@ namespace Azure.Identity
                                 .ConfigureAwait(false);
                         }
 
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(result.ToAccessToken());
                     }
                     catch (MsalUiRequiredException e)
                     {

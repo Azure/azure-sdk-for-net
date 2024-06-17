@@ -26,18 +26,6 @@ namespace Azure.AI.Vision.Face.Samples
             return client;
         }
 
-        public FaceAdministrationClient CreateAdministrationClient()
-        {
-#if SNIPPET
-            Uri endpoint = new Uri("<your endpoint>");
-#else
-            var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
-#endif
-            DefaultAzureCredential credential = new DefaultAzureCredential();
-            var client = new FaceAdministrationClient(endpoint, credential);
-            return client;
-        }
-
         public FaceSessionClient CreateSessionClient()
         {
             #region Snippet:CreateFaceSessionClient

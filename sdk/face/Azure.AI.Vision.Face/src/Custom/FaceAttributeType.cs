@@ -34,6 +34,8 @@ namespace Azure.AI.Vision.Face
             public static FaceAttributeType HeadPose { get; } = FaceAttributeType.HeadPose;
             /// <summary> Whether each face is wearing a mask. Mask type returns 'noMask', 'faceMask', 'otherMaskOrOcclusion', or 'uncertain'. Value returns a boolean 'noseAndMouthCovered' indicating whether nose and mouth are covered. </summary>
             public static FaceAttributeType Mask { get; } = FaceAttributeType.Mask;
+            /// <summary> Face is blurry or not. Level returns 'Low', 'Medium' or 'High'. Value returns a number between [0,1], the larger the blurrier. </summary>
+            public static FaceAttributeType Blur { get; } = FaceAttributeType.Blur;
         }
 
         /// <summary> Available attributes for recognition03 model. </summary>
