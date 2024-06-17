@@ -927,10 +927,10 @@
 # AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %ARM
-/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
+/sdk/resources/Azure.ResourceManager.*/                            @arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
-# ServiceOwners:                                                   @Azure/arm-sdk-owners
+# ServiceOwners:                                                   @arm-sdk-owners
 
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
