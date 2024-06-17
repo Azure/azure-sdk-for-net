@@ -184,11 +184,11 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             IList<WordData> words = transcription.Words.ToList();
             Assert.AreEqual(2, words.Count);
             Assert.AreEqual("Hello", words[0].Text);
-            Assert.AreEqual(1, words[0].Offset);
-            Assert.AreEqual(1, words[0].Duration);
+            Assert.AreEqual(1, words[0].Offset.Ticks);
+            Assert.AreEqual(1, words[0].Duration.Ticks);
             Assert.AreEqual("World", words[1].Text);
-            Assert.AreEqual(6, words[1].Offset);
-            Assert.AreEqual(1, words[1].Duration);
+            Assert.AreEqual(6, words[1].Offset.Ticks);
+            Assert.AreEqual(1, words[1].Duration.Ticks);
 
             Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
             Assert.AreEqual("abc12345", transcription.Participant.RawId);

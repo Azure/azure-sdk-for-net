@@ -9,21 +9,8 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The result for each word of the phrase
     /// </summary>
-    public class WordData
+    internal class WordDataInternal
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WordData"/> class.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="offset"></param>
-        /// <param name="duration"></param>
-        internal WordData(string text, long offset, long duration)
-        {
-            Text = text;
-            Offset = TimeSpan.FromTicks(offset);
-            Duration = TimeSpan.FromTicks(duration);
-        }
-
         /// <summary>
         /// Text in the phrase.
         /// </summary>
@@ -33,12 +20,12 @@ namespace Azure.Communication.CallAutomation
         /// The word's position within the phrase.
         /// </summary>
         [JsonPropertyName("offset")]
-        public TimeSpan Offset { get; set; }
+        public long Offset { get; set; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
         [JsonPropertyName("duration")]
-        public TimeSpan Duration { get; set; }
+        public long Duration { get; set; }
     }
 }

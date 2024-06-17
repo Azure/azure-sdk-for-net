@@ -1583,11 +1583,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class WordData
     {
-        public WordData() { }
+        internal WordData() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("duration")]
-        public ulong Duration { get { throw null; } set { } }
+        public System.TimeSpan Duration { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
-        public ulong Offset { get { throw null; } set { } }
+        public System.TimeSpan Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
     }
