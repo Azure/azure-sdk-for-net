@@ -14,67 +14,47 @@ parameters:
     default: null
 
 steps:
-  - ${{ if parameters.SubscriptionConfiguration }}:
-    - pwsh: |
-        $config = @'
-          ${{ parameters.SubscriptionConfiguration }}
-        '@ | ConvertFrom-Json -AsHashtable
+  - pwsh: |
+      . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-        . ./eng/common/TestResources/SubConfig-Helpers.ps1
-        SetSubscriptionConfiguration $config
+      $finalConfig = @{}
+      $baseSubConfigRaw = @'
+        ${{ parameters.SubscriptionConfiguration }}
+      '@.Trim()
+      if ($baseSubConfigRaw) {
+        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-        Write-Host ($finalConfig | ConvertTo-Json)
-        $serialized = $finalConfig | ConvertTo-Json -Compress
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
-      displayName: Initialize SubscriptionConfiguration variable
-      ${{ if parameters.EnvVars }}:
-        env: ${{ parameters.EnvVars }}
+        Write-Host "Setting base sub config"
+        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
+      }
 
-  - ${{ if parameters.SubscriptionConfigurations }}:
-    - pwsh: |
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
-      displayName: Initialize SubscriptionConfiguration variable for merging
-      condition: eq(variables['SubscriptionConfiguration'], '')
+      $subConfigJsonsRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurations) }}
+      '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-    - ${{ each config in parameters.SubscriptionConfigurations }}:
-      - pwsh: |
-          $configBase = @'
-            $(SubscriptionConfiguration)
-          '@ | ConvertFrom-Json -AsHashtable
-          $config = @'
-            ${{ config }}
-          '@ | ConvertFrom-Json -AsHashtable
+      if ($subConfigJsonsRaw) {
+        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
 
-          . ./eng/common/TestResources/SubConfig-Helpers.ps1
-          UpdateSubscriptionConfiguration $configBase $config
-
-        displayName: Merge Test Resource Configurations
-        ${{ if parameters.EnvVars }}:
-          env: ${{ parameters.EnvVars }}
-
-  - ${{ if parameters.SubscriptionConfigurationFilePaths }}:
-    - pwsh: |
-        . ./eng/common/TestResources/SubConfig-Helpers.ps1
-        $configBase = @{}
-        if ('$(SubscriptionConfiguration)'.Trim() -ne '') {
-          # Tabbing of this sort is required for the here-string to work
-          $configBase = @'
-            $(SubscriptionConfiguration)
-        '@ | ConvertFrom-Json -AsHashtable
+        foreach ($subConfig in $subConfigs) {
+          Write-Host "Merging sub config from list"
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
         }
+      }
 
-        $configFiles = @'
-          ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
-        '@ | ConvertFrom-Json -AsHashtable
+      $subConfigFilesRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
+      '@.Trim()
 
-        foreach ($file in $configFiles) {
-          $config = Get-Content $file | ConvertFrom-Json -AsHashtable
-          $configBase = UpdateSubscriptionConfiguration $configBase $config -devOpsOutput $false
+      if ($subConfigFilesRaw) {
+        $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
+        foreach ($file in $subConfigFiles) {
+          Write-Host "Merging sub config from file: $file"
+          $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
         }
+      }
 
-        $serialized = $configBase | ConvertTo-Json -Compress
-        Write-Host ($configBase | ConvertTo-Json)
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
-      displayName: Merge in Subscription Configuration File Paths
-      ${{ if parameters.EnvVars }}:
-        env: ${{ parameters.EnvVars }}
+      Write-Host ($finalConfig | ConvertTo-Json)
+      $serialized = $finalConfig | ConvertTo-Json -Compress
+      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    displayName: Merge subscription configurations
