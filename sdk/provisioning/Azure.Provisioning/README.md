@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning is a cloud development kit that allows you to declaritively specify your Azure infrastructure natively in dotnet.
+Azure.Provisioning is a cloud development kit that allows you to declaratively specify your Azure infrastructure natively in dotnet.
 
 ## Getting started
 
@@ -20,7 +20,7 @@ dotnet add package Azure.Provisioning
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure diretly without needing to write or maintain bicep or arm templates.
+This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
 ## Examples
 

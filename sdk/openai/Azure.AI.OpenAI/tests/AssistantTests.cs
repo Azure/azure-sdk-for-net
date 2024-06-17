@@ -363,7 +363,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(assistant);
 
-        AssistantThread thread = await client.CreateThreadAsync(new()
+        AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
             InitialMessages = { new(["Please graph the equation y = 3x + 4"]), },
         });
@@ -598,7 +598,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 hasCake |= content.Text?.ToLowerInvariant().Contains("cake") == true;
                 foreach (TextAnnotation annotation in content.TextAnnotations)
                 {
-                    Console.WriteLine($"  --> From file: {annotation.InputFileId}, quote: {annotation.InputQuote}, replacement: {annotation.TextToReplace}");
+                    Console.WriteLine($"  --> From file: {annotation.InputFileId}, replacement: {annotation.TextToReplace}");
                 }
             }
         }
@@ -614,7 +614,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
 
-        AssistantThread thread = await client.CreateThreadAsync(new()
+        AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
             InitialMessages = { new(["Hello there, assistant! How are you today?"]), },
         });

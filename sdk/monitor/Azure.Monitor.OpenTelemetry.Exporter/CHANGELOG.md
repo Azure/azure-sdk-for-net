@@ -9,6 +9,10 @@
   (This feature was originally introduced in 1.3.0-beta.1)
   ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
+* Update OpenTelemetry dependencies
+  ([#44522](https://github.com/Azure/azure-sdk-for-net/pull/44522))
+  - OpenTelemetry 1.9.0-rc.1
+
 ## 1.3.0 (2024-06-07)
 
 ### Other Changes

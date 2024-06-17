@@ -484,7 +484,7 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft
+/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Event Grid %Functions
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
@@ -724,10 +724,10 @@
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %OpenAI
-/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
 # ServiceLabel: %OpenAI
-# ServiceOwners:                                                   @jpalvarezl @trrwilson
+# ServiceOwners:                                                   @jpalvarezl @trrwilson @ralph-msft
 
 # PRLabel: %Image Analysis
 /sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco

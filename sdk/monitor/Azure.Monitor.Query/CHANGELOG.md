@@ -1,6 +1,16 @@
 # Release History
 
-## 1.4.0 (2024-06-11)
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0 (2024-06-12)
 
 ### Features Added
 - Add sovereign cloud support to `MetricsClient` for US Gov and China clouds
