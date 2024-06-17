@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Request body of unlock delete API. </summary>
-    public partial class DataProtectionUnlockDeleteContent
+    /// <summary> The details of the managed identity used for CMK. </summary>
+    public partial class CmkKekIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        public DataProtectionUnlockDeleteContent()
+        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
+        public CmkKekIdentity()
         {
-            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="resourceToBeDeleted"></param>
+        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
+        /// <param name="identityType"> The identity type. 'SystemAssigned' and 'UserAssigned' are mutually exclusive. 'SystemAssigned' will use implicitly created managed identity. </param>
+        /// <param name="identityId"> The managed identity to be used which has access permissions to the Key Vault. Provide a value here in case identity types: 'UserAssigned' only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionUnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CmkKekIdentity(IdentityType? identityType, string identityId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceGuardOperationRequests = resourceGuardOperationRequests;
-            ResourceToBeDeleted = resourceToBeDeleted;
+            IdentityType = identityType;
+            IdentityId = identityId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
-        public IList<string> ResourceGuardOperationRequests { get; }
-        /// <summary> Gets or sets the resource to be deleted. </summary>
-        public string ResourceToBeDeleted { get; set; }
+        /// <summary> The identity type. 'SystemAssigned' and 'UserAssigned' are mutually exclusive. 'SystemAssigned' will use implicitly created managed identity. </summary>
+        public IdentityType? IdentityType { get; set; }
+        /// <summary> The managed identity to be used which has access permissions to the Key Vault. Provide a value here in case identity types: 'UserAssigned' only. </summary>
+        public string IdentityId { get; set; }
     }
 }

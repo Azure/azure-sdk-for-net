@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Request body of unlock delete API. </summary>
-    public partial class DataProtectionUnlockDeleteContent
+    /// <summary> Request body of Suspend backup when MUA is Enabled. </summary>
+    public partial class SuspendBackupContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        public DataProtectionUnlockDeleteContent()
+        /// <summary> Initializes a new instance of <see cref="SuspendBackupContent"/>. </summary>
+        public SuspendBackupContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuspendBackupContent"/>. </summary>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="resourceToBeDeleted"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionUnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SuspendBackupContent(IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
-            ResourceToBeDeleted = resourceToBeDeleted;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
-        /// <summary> Gets or sets the resource to be deleted. </summary>
-        public string ResourceToBeDeleted { get; set; }
     }
 }

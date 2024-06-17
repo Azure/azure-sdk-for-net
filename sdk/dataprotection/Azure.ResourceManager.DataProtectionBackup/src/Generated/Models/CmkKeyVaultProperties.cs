@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Request body of unlock delete API. </summary>
-    public partial class DataProtectionUnlockDeleteContent
+    /// <summary> The properties of the Key Vault which hosts CMK. </summary>
+    internal partial class CmkKeyVaultProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        public DataProtectionUnlockDeleteContent()
+        /// <summary> Initializes a new instance of <see cref="CmkKeyVaultProperties"/>. </summary>
+        public CmkKeyVaultProperties()
         {
-            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="resourceToBeDeleted"></param>
+        /// <summary> Initializes a new instance of <see cref="CmkKeyVaultProperties"/>. </summary>
+        /// <param name="keyUri"> The key uri of the Customer Managed Key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionUnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CmkKeyVaultProperties(Uri keyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceGuardOperationRequests = resourceGuardOperationRequests;
-            ResourceToBeDeleted = resourceToBeDeleted;
+            KeyUri = keyUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
-        public IList<string> ResourceGuardOperationRequests { get; }
-        /// <summary> Gets or sets the resource to be deleted. </summary>
-        public string ResourceToBeDeleted { get; set; }
+        /// <summary> The key uri of the Customer Managed Key. </summary>
+        public Uri KeyUri { get; set; }
     }
 }
