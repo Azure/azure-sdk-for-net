@@ -185,13 +185,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds Azure Monitor Log Exporter to the LoggerProvider.
         /// </summary>
         /// <param name="builder"><see cref="LoggerProviderBuilder"/> builder to use.</param>
-        /// <param name="name">Optional name which is used when retrieving options.</param>
         /// <param name="configure">Optional callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
         /// <param name="credential">
         /// An Azure <see cref="TokenCredential" /> capable of providing an OAuth token.
         /// Note: if a credential is provided to both <see cref="AzureMonitorExporterOptions"/> and this parameter,
         /// the Options will take precedence.
         /// </param>
+        /// <param name="name">Optional name which is used when retrieving options.</param>
         /// <returns>The instance of <see cref="LoggerProviderBuilder"/> to chain the calls.</returns>
         public static LoggerProviderBuilder AddAzureMonitorLogExporter(
             this LoggerProviderBuilder builder,
