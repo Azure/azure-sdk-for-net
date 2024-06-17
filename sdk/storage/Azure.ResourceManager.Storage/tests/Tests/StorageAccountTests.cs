@@ -961,35 +961,52 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account, false);
             Assert.AreEqual(StorageAccountAccessTier.Cool, account.Data.AccessTier);
             Assert.AreEqual(StorageKind.BlobStorage, account.Data.Kind);
+        }
 
-            // TODO: the code tier looks not ready on server. So will add test later.
-            //updateParameters = new StorageAccountPatch()
-            //{
-            //    AccessTier = StorageAccountAccessTier.Cold
-            //};
-            //account = (await account.UpdateAsync(updateParameters)).Value;
-            //Assert.AreEqual(StorageAccountAccessTier.Cold, account.Data.AccessTier);
+        [Test]
+        [RecordedTest]
+        [Ignore("Looks like server still not work with Cold tier.")]
+        public async Task CreateUpdateStorageAccountWithAccessTierCold()
+        {
+            //create storage account with accesstier cool, update to cold
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage);
+            parameters.AccessTier = StorageAccountAccessTier.Cool;
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters)).Value;
 
-            ////create storage account with accesstier cold, update to hot
-            //string accountName3 = await CreateValidAccountNameAsync(namePrefix);
-            //parameters = new StorageAccountCreateOrUpdateContent(
-            //    new StorageSku(StorageSkuName.StandardLrs),
-            //    StorageKind.StorageV2,
-            //    "eastus2euap"
-            //    );
-            //parameters.AccessTier = StorageAccountAccessTier.Cold;
-            //account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName3, parameters)).Value;
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(StorageAccountAccessTier.Cool, account.Data.AccessTier);
+            Assert.AreEqual(StorageKind.BlobStorage, account.Data.Kind);
 
-            //VerifyAccountProperties(account, false);
-            //Assert.AreEqual(StorageAccountAccessTier.Cold, account.Data.AccessTier);
-            //Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
+            {
+                AccessTier = StorageAccountAccessTier.Cold
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(StorageAccountAccessTier.Cold, account.Data.AccessTier);
 
-            //updateParameters = new StorageAccountPatch()
-            //{
-            //    AccessTier = StorageAccountAccessTier.Hot
-            //};
-            //account = (await account.UpdateAsync(updateParameters)).Value;
-            //Assert.AreEqual(StorageAccountAccessTier.Hot, account.Data.AccessTier);
+            //create storage account with accesstier cold, update to hot
+            string accountName3 = await CreateValidAccountNameAsync(namePrefix);
+            parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                "eastus2euap"
+                );
+            parameters.AccessTier = StorageAccountAccessTier.Cold;
+            account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName3, parameters)).Value;
+
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(StorageAccountAccessTier.Cold, account.Data.AccessTier);
+            Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
+
+            updateParameters = new StorageAccountPatch()
+            {
+                AccessTier = StorageAccountAccessTier.Hot
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(StorageAccountAccessTier.Hot, account.Data.AccessTier);
         }
 
         [Test]
@@ -2344,7 +2361,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(data.IsAclAuthorizationAllowed, user3.Data.IsAclAuthorizationAllowed);
             Assert.NotNull(user3.Data.UserId);
 
-            // Create Local user 3
+            // Create Local user 4
             string userName4 = Recording.GenerateAssetName("user4");
             data = new StorageAccountLocalUserData()
             {
