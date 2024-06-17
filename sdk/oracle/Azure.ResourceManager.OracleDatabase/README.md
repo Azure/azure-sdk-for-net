@@ -1,6 +1,8 @@
 # Microsoft Azure OracleDatabase management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Azure OracleDatabase enables customers to procure, deploy, and use Oracle Database services in Azure.
+
+This library supports managing Microsoft Azure OracleDatabase resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
