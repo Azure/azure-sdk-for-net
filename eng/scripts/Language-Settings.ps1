@@ -47,9 +47,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       if ($defaultDll -and (Test-Path $defaultDll)) {
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
         $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
+      } else {
+        Write-Host "$defaultDll didn't exist, unable to get namespaces for $pkgName, version=$pkgVersion"
       }
     } else {
-      Write-Host "$releaseFolderPath did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
+      Write-Host "$releaseFolderPath path did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
