@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> AutonomousDatabaseCharacterSet resource model. </summary>
+    /// <summary>
+    /// AutonomousDatabaseCharacterSet resource model
+    /// Serialized Name: AutonomousDatabaseCharacterSetProperties
+    /// </summary>
     internal partial class AutonomousDatabaseCharacterSetProperties
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseCharacterSetProperties"/>. </summary>
-        /// <param name="characterSet"> The Oracle Autonomous Database supported character sets. </param>
+        /// <param name="characterSet">
+        /// The Oracle Autonomous Database supported character sets.
+        /// Serialized Name: AutonomousDatabaseCharacterSetProperties.characterSet
+        /// </param>
         public AutonomousDatabaseCharacterSetProperties(string characterSet)
         {
             CharacterSet = characterSet;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseCharacterSetProperties"/>. </summary>
-        /// <param name="characterSet"> The Oracle Autonomous Database supported character sets. </param>
+        /// <param name="characterSet">
+        /// The Oracle Autonomous Database supported character sets.
+        /// Serialized Name: AutonomousDatabaseCharacterSetProperties.characterSet
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseCharacterSetProperties(string characterSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The Oracle Autonomous Database supported character sets. </summary>
+        /// <summary>
+        /// The Oracle Autonomous Database supported character sets.
+        /// Serialized Name: AutonomousDatabaseCharacterSetProperties.characterSet
+        /// </summary>
         public string CharacterSet { get; }
     }
 }

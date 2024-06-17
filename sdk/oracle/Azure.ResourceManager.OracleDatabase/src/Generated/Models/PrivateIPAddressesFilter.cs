@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Private Ip Addresses filter. </summary>
+    /// <summary>
+    /// Private Ip Addresses filter
+    /// Serialized Name: PrivateIpAddressesFilter
+    /// </summary>
     public partial class PrivateIPAddressesFilter
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesFilter"/>. </summary>
-        /// <param name="subnetId"> Subnet OCID. </param>
-        /// <param name="vnicId"> VCN OCID. </param>
+        /// <param name="subnetId">
+        /// Subnet OCID
+        /// Serialized Name: PrivateIpAddressesFilter.subnetId
+        /// </param>
+        /// <param name="vnicId">
+        /// VCN OCID
+        /// Serialized Name: PrivateIpAddressesFilter.vnicId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="vnicId"/> is null. </exception>
         public PrivateIPAddressesFilter(string subnetId, string vnicId)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesFilter"/>. </summary>
-        /// <param name="subnetId"> Subnet OCID. </param>
-        /// <param name="vnicId"> VCN OCID. </param>
+        /// <param name="subnetId">
+        /// Subnet OCID
+        /// Serialized Name: PrivateIpAddressesFilter.subnetId
+        /// </param>
+        /// <param name="vnicId">
+        /// VCN OCID
+        /// Serialized Name: PrivateIpAddressesFilter.vnicId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateIPAddressesFilter(string subnetId, string vnicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +89,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Subnet OCID. </summary>
+        /// <summary>
+        /// Subnet OCID
+        /// Serialized Name: PrivateIpAddressesFilter.subnetId
+        /// </summary>
         public string SubnetId { get; }
-        /// <summary> VCN OCID. </summary>
+        /// <summary>
+        /// VCN OCID
+        /// Serialized Name: PrivateIpAddressesFilter.vnicId
+        /// </summary>
         public string VnicId { get; }
     }
 }

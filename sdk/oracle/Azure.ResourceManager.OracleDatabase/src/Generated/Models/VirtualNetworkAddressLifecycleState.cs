@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> VirtualNetworkAddressLifecycleState enum. </summary>
+    /// <summary>
+    /// VirtualNetworkAddressLifecycleState enum
+    /// Serialized Name: VirtualNetworkAddressLifecycleState
+    /// </summary>
     public readonly partial struct VirtualNetworkAddressLifecycleState : IEquatable<VirtualNetworkAddressLifecycleState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TerminatedValue = "Terminated";
         private const string FailedValue = "Failed";
 
-        /// <summary> Indicates that resource in Provisioning state. </summary>
+        /// <summary>
+        /// Indicates that resource in Provisioning state
+        /// Serialized Name: VirtualNetworkAddressLifecycleState.Provisioning
+        /// </summary>
         public static VirtualNetworkAddressLifecycleState Provisioning { get; } = new VirtualNetworkAddressLifecycleState(ProvisioningValue);
-        /// <summary> Indicates that resource in Available state. </summary>
+        /// <summary>
+        /// Indicates that resource in Available state
+        /// Serialized Name: VirtualNetworkAddressLifecycleState.Available
+        /// </summary>
         public static VirtualNetworkAddressLifecycleState Available { get; } = new VirtualNetworkAddressLifecycleState(AvailableValue);
-        /// <summary> Indicates that resource in Terminating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminating state
+        /// Serialized Name: VirtualNetworkAddressLifecycleState.Terminating
+        /// </summary>
         public static VirtualNetworkAddressLifecycleState Terminating { get; } = new VirtualNetworkAddressLifecycleState(TerminatingValue);
-        /// <summary> Indicates that resource in Terminated state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminated state
+        /// Serialized Name: VirtualNetworkAddressLifecycleState.Terminated
+        /// </summary>
         public static VirtualNetworkAddressLifecycleState Terminated { get; } = new VirtualNetworkAddressLifecycleState(TerminatedValue);
-        /// <summary> Indicates that resource in Failed state. </summary>
+        /// <summary>
+        /// Indicates that resource in Failed state
+        /// Serialized Name: VirtualNetworkAddressLifecycleState.Failed
+        /// </summary>
         public static VirtualNetworkAddressLifecycleState Failed { get; } = new VirtualNetworkAddressLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="VirtualNetworkAddressLifecycleState"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DbServer resource properties. </summary>
+    /// <summary>
+    /// DbServer resource properties
+    /// Serialized Name: DbServerProperties
+    /// </summary>
     public partial class DbServerProperties
     {
         /// <summary>
@@ -55,26 +58,86 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbServerProperties"/>. </summary>
-        /// <param name="ocid"> Db server name. </param>
-        /// <param name="displayName"> The name for the Db Server. </param>
-        /// <param name="compartmentId"> The OCID of the compartment. </param>
-        /// <param name="exadataInfrastructureId"> The OCID of the Exadata infrastructure. </param>
-        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the Db server. </param>
-        /// <param name="dbServerPatchingDetails"> dbServerPatching details of the Db server. </param>
-        /// <param name="maxMemoryInGbs"> The total memory available in GBs. </param>
-        /// <param name="dbNodeStorageSizeInGbs"> The allocated local node storage in GBs on the Db server. </param>
-        /// <param name="vmClusterIds"> The OCID of the VM Clusters associated with the Db server. </param>
-        /// <param name="dbNodeIds"> The OCID of the Db nodes associated with the Db server. </param>
-        /// <param name="lifecycleDetails"> Lifecycle details of dbServer. </param>
-        /// <param name="lifecycleState"> DbServer provisioning state. </param>
-        /// <param name="maxCpuCount"> The total number of CPU cores available. </param>
-        /// <param name="autonomousVmClusterIds"> The list of OCIDs of the Autonomous VM Clusters associated with the Db server. </param>
-        /// <param name="autonomousVirtualMachineIds"> The list of OCIDs of the Autonomous Virtual Machines associated with the Db server. </param>
-        /// <param name="maxDbNodeStorageInGbs"> The total max dbNode storage in GBs. </param>
-        /// <param name="memorySizeInGbs"> The total memory size in GBs. </param>
-        /// <param name="shape"> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </param>
-        /// <param name="timeCreated"> The date and time that the Db Server was created. </param>
-        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="ocid">
+        /// Db server name.
+        /// Serialized Name: DbServerProperties.ocid
+        /// </param>
+        /// <param name="displayName">
+        /// The name for the Db Server.
+        /// Serialized Name: DbServerProperties.displayName
+        /// </param>
+        /// <param name="compartmentId">
+        /// The OCID of the compartment.
+        /// Serialized Name: DbServerProperties.compartmentId
+        /// </param>
+        /// <param name="exadataInfrastructureId">
+        /// The OCID of the Exadata infrastructure.
+        /// Serialized Name: DbServerProperties.exadataInfrastructureId
+        /// </param>
+        /// <param name="cpuCoreCount">
+        /// The number of CPU cores enabled on the Db server.
+        /// Serialized Name: DbServerProperties.cpuCoreCount
+        /// </param>
+        /// <param name="dbServerPatchingDetails">
+        /// dbServerPatching details of the Db server.
+        /// Serialized Name: DbServerProperties.dbServerPatchingDetails
+        /// </param>
+        /// <param name="maxMemoryInGbs">
+        /// The total memory available in GBs.
+        /// Serialized Name: DbServerProperties.maxMemoryInGbs
+        /// </param>
+        /// <param name="dbNodeStorageSizeInGbs">
+        /// The allocated local node storage in GBs on the Db server.
+        /// Serialized Name: DbServerProperties.dbNodeStorageSizeInGbs
+        /// </param>
+        /// <param name="vmClusterIds">
+        /// The OCID of the VM Clusters associated with the Db server.
+        /// Serialized Name: DbServerProperties.vmClusterIds
+        /// </param>
+        /// <param name="dbNodeIds">
+        /// The OCID of the Db nodes associated with the Db server.
+        /// Serialized Name: DbServerProperties.dbNodeIds
+        /// </param>
+        /// <param name="lifecycleDetails">
+        /// Lifecycle details of dbServer.
+        /// Serialized Name: DbServerProperties.lifecycleDetails
+        /// </param>
+        /// <param name="lifecycleState">
+        /// DbServer provisioning state.
+        /// Serialized Name: DbServerProperties.lifecycleState
+        /// </param>
+        /// <param name="maxCpuCount">
+        /// The total number of CPU cores available.
+        /// Serialized Name: DbServerProperties.maxCpuCount
+        /// </param>
+        /// <param name="autonomousVmClusterIds">
+        /// The list of OCIDs of the Autonomous VM Clusters associated with the Db server.
+        /// Serialized Name: DbServerProperties.autonomousVmClusterIds
+        /// </param>
+        /// <param name="autonomousVirtualMachineIds">
+        /// The list of OCIDs of the Autonomous Virtual Machines associated with the Db server.
+        /// Serialized Name: DbServerProperties.autonomousVirtualMachineIds
+        /// </param>
+        /// <param name="maxDbNodeStorageInGbs">
+        /// The total max dbNode storage in GBs.
+        /// Serialized Name: DbServerProperties.maxDbNodeStorageInGbs
+        /// </param>
+        /// <param name="memorySizeInGbs">
+        /// The total memory size in GBs.
+        /// Serialized Name: DbServerProperties.memorySizeInGbs
+        /// </param>
+        /// <param name="shape">
+        /// The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available.
+        /// Serialized Name: DbServerProperties.shape
+        /// </param>
+        /// <param name="timeCreated">
+        /// The date and time that the Db Server was created.
+        /// Serialized Name: DbServerProperties.timeCreated
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure resource provisioning state.
+        /// Serialized Name: DbServerProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbServerProperties(string ocid, string displayName, string compartmentId, string exadataInfrastructureId, int? cpuCoreCount, DbServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<string> vmClusterIds, IReadOnlyList<string> dbNodeIds, string lifecycleDetails, DbServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<string> autonomousVmClusterIds, IReadOnlyList<string> autonomousVirtualMachineIds, int? maxDbNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? timeCreated, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -101,45 +164,105 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Db server name. </summary>
+        /// <summary>
+        /// Db server name.
+        /// Serialized Name: DbServerProperties.ocid
+        /// </summary>
         public string Ocid { get; }
-        /// <summary> The name for the Db Server. </summary>
+        /// <summary>
+        /// The name for the Db Server.
+        /// Serialized Name: DbServerProperties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The OCID of the compartment. </summary>
+        /// <summary>
+        /// The OCID of the compartment.
+        /// Serialized Name: DbServerProperties.compartmentId
+        /// </summary>
         public string CompartmentId { get; }
-        /// <summary> The OCID of the Exadata infrastructure. </summary>
+        /// <summary>
+        /// The OCID of the Exadata infrastructure.
+        /// Serialized Name: DbServerProperties.exadataInfrastructureId
+        /// </summary>
         public string ExadataInfrastructureId { get; }
-        /// <summary> The number of CPU cores enabled on the Db server. </summary>
+        /// <summary>
+        /// The number of CPU cores enabled on the Db server.
+        /// Serialized Name: DbServerProperties.cpuCoreCount
+        /// </summary>
         public int? CpuCoreCount { get; }
-        /// <summary> dbServerPatching details of the Db server. </summary>
+        /// <summary>
+        /// dbServerPatching details of the Db server.
+        /// Serialized Name: DbServerProperties.dbServerPatchingDetails
+        /// </summary>
         public DbServerPatchingDetails DbServerPatchingDetails { get; }
-        /// <summary> The total memory available in GBs. </summary>
+        /// <summary>
+        /// The total memory available in GBs.
+        /// Serialized Name: DbServerProperties.maxMemoryInGbs
+        /// </summary>
         public int? MaxMemoryInGbs { get; }
-        /// <summary> The allocated local node storage in GBs on the Db server. </summary>
+        /// <summary>
+        /// The allocated local node storage in GBs on the Db server.
+        /// Serialized Name: DbServerProperties.dbNodeStorageSizeInGbs
+        /// </summary>
         public int? DbNodeStorageSizeInGbs { get; }
-        /// <summary> The OCID of the VM Clusters associated with the Db server. </summary>
+        /// <summary>
+        /// The OCID of the VM Clusters associated with the Db server.
+        /// Serialized Name: DbServerProperties.vmClusterIds
+        /// </summary>
         public IReadOnlyList<string> VmClusterIds { get; }
-        /// <summary> The OCID of the Db nodes associated with the Db server. </summary>
+        /// <summary>
+        /// The OCID of the Db nodes associated with the Db server.
+        /// Serialized Name: DbServerProperties.dbNodeIds
+        /// </summary>
         public IReadOnlyList<string> DbNodeIds { get; }
-        /// <summary> Lifecycle details of dbServer. </summary>
+        /// <summary>
+        /// Lifecycle details of dbServer.
+        /// Serialized Name: DbServerProperties.lifecycleDetails
+        /// </summary>
         public string LifecycleDetails { get; }
-        /// <summary> DbServer provisioning state. </summary>
+        /// <summary>
+        /// DbServer provisioning state.
+        /// Serialized Name: DbServerProperties.lifecycleState
+        /// </summary>
         public DbServerProvisioningState? LifecycleState { get; }
-        /// <summary> The total number of CPU cores available. </summary>
+        /// <summary>
+        /// The total number of CPU cores available.
+        /// Serialized Name: DbServerProperties.maxCpuCount
+        /// </summary>
         public int? MaxCpuCount { get; }
-        /// <summary> The list of OCIDs of the Autonomous VM Clusters associated with the Db server. </summary>
+        /// <summary>
+        /// The list of OCIDs of the Autonomous VM Clusters associated with the Db server.
+        /// Serialized Name: DbServerProperties.autonomousVmClusterIds
+        /// </summary>
         public IReadOnlyList<string> AutonomousVmClusterIds { get; }
-        /// <summary> The list of OCIDs of the Autonomous Virtual Machines associated with the Db server. </summary>
+        /// <summary>
+        /// The list of OCIDs of the Autonomous Virtual Machines associated with the Db server.
+        /// Serialized Name: DbServerProperties.autonomousVirtualMachineIds
+        /// </summary>
         public IReadOnlyList<string> AutonomousVirtualMachineIds { get; }
-        /// <summary> The total max dbNode storage in GBs. </summary>
+        /// <summary>
+        /// The total max dbNode storage in GBs.
+        /// Serialized Name: DbServerProperties.maxDbNodeStorageInGbs
+        /// </summary>
         public int? MaxDbNodeStorageInGbs { get; }
-        /// <summary> The total memory size in GBs. </summary>
+        /// <summary>
+        /// The total memory size in GBs.
+        /// Serialized Name: DbServerProperties.memorySizeInGbs
+        /// </summary>
         public int? MemorySizeInGbs { get; }
-        /// <summary> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </summary>
+        /// <summary>
+        /// The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available.
+        /// Serialized Name: DbServerProperties.shape
+        /// </summary>
         public string Shape { get; }
-        /// <summary> The date and time that the Db Server was created. </summary>
+        /// <summary>
+        /// The date and time that the Db Server was created.
+        /// Serialized Name: DbServerProperties.timeCreated
+        /// </summary>
         public DateTimeOffset? TimeCreated { get; }
-        /// <summary> Azure resource provisioning state. </summary>
+        /// <summary>
+        /// Azure resource provisioning state.
+        /// Serialized Name: DbServerProperties.provisioningState
+        /// </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

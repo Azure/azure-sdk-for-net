@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DbNode action object. </summary>
+    /// <summary>
+    /// DbNode action object
+    /// Serialized Name: DbNodeAction
+    /// </summary>
     public partial class DbNodeAction
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DbNodeAction"/>. </summary>
-        /// <param name="action"> Db action. </param>
+        /// <param name="action">
+        /// Db action
+        /// Serialized Name: DbNodeAction.action
+        /// </param>
         public DbNodeAction(DbNodeActionEnum action)
         {
             Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="DbNodeAction"/>. </summary>
-        /// <param name="action"> Db action. </param>
+        /// <param name="action">
+        /// Db action
+        /// Serialized Name: DbNodeAction.action
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbNodeAction(DbNodeActionEnum action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Db action. </summary>
+        /// <summary>
+        /// Db action
+        /// Serialized Name: DbNodeAction.action
+        /// </summary>
         public DbNodeActionEnum Action { get; }
     }
 }

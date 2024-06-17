@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Details to restore an Oracle Autonomous Database. </summary>
+    /// <summary>
+    /// Details to restore an Oracle Autonomous Database.
+    /// Serialized Name: RestoreAutonomousDatabaseDetails
+    /// </summary>
     public partial class RestoreAutonomousDatabaseDetails
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RestoreAutonomousDatabaseDetails"/>. </summary>
-        /// <param name="timestamp"> The time to restore the database to. </param>
+        /// <param name="timestamp">
+        /// The time to restore the database to.
+        /// Serialized Name: RestoreAutonomousDatabaseDetails.timestamp
+        /// </param>
         public RestoreAutonomousDatabaseDetails(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
         }
 
         /// <summary> Initializes a new instance of <see cref="RestoreAutonomousDatabaseDetails"/>. </summary>
-        /// <param name="timestamp"> The time to restore the database to. </param>
+        /// <param name="timestamp">
+        /// The time to restore the database to.
+        /// Serialized Name: RestoreAutonomousDatabaseDetails.timestamp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RestoreAutonomousDatabaseDetails(DateTimeOffset timestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The time to restore the database to. </summary>
+        /// <summary>
+        /// The time to restore the database to.
+        /// Serialized Name: RestoreAutonomousDatabaseDetails.timestamp
+        /// </summary>
         public DateTimeOffset Timestamp { get; }
     }
 }

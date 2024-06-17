@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the DbNode data model.
     /// The DbNode resource belonging to vmCluster
+    /// Serialized Name: DbNode
     /// </summary>
     public partial class DbNodeData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: DbNode.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DbNodeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +73,10 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: DbNode.properties
+        /// </summary>
         public DbNodeProperties Properties { get; set; }
     }
 }

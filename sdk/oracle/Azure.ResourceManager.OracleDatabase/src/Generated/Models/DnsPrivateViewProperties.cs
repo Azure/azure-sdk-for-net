@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Views resource model. </summary>
+    /// <summary>
+    /// Views resource model
+    /// Serialized Name: DnsPrivateViewProperties
+    /// </summary>
     public partial class DnsPrivateViewProperties
     {
         /// <summary>
@@ -46,11 +49,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DnsPrivateViewProperties"/>. </summary>
-        /// <param name="ocid"> The OCID of the view. </param>
-        /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="self"> The canonical absolute URL of the resource. </param>
-        /// <param name="timeCreated"> views timeCreated. </param>
-        /// <param name="timeUpdated"> views timeCreated. </param>
+        /// <param name="ocid">
+        /// The OCID of the view
+        /// Serialized Name: DnsPrivateViewProperties.ocid
+        /// </param>
+        /// <param name="isProtected">
+        /// A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed.
+        /// Serialized Name: DnsPrivateViewProperties.isProtected
+        /// </param>
+        /// <param name="self">
+        /// The canonical absolute URL of the resource.
+        /// Serialized Name: DnsPrivateViewProperties.self
+        /// </param>
+        /// <param name="timeCreated">
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeCreated
+        /// </param>
+        /// <param name="timeUpdated">
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeUpdated
+        /// </param>
         public DnsPrivateViewProperties(string ocid, bool isProtected, string self, DateTimeOffset timeCreated, DateTimeOffset timeUpdated)
         {
             Ocid = ocid;
@@ -61,14 +79,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsPrivateViewProperties"/>. </summary>
-        /// <param name="ocid"> The OCID of the view. </param>
-        /// <param name="displayName"> The display name of the view resource. </param>
-        /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="self"> The canonical absolute URL of the resource. </param>
-        /// <param name="timeCreated"> views timeCreated. </param>
-        /// <param name="timeUpdated"> views timeCreated. </param>
-        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="ocid">
+        /// The OCID of the view
+        /// Serialized Name: DnsPrivateViewProperties.ocid
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the view resource
+        /// Serialized Name: DnsPrivateViewProperties.displayName
+        /// </param>
+        /// <param name="isProtected">
+        /// A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed.
+        /// Serialized Name: DnsPrivateViewProperties.isProtected
+        /// </param>
+        /// <param name="lifecycleState">
+        /// Views lifecycleState
+        /// Serialized Name: DnsPrivateViewProperties.lifecycleState
+        /// </param>
+        /// <param name="self">
+        /// The canonical absolute URL of the resource.
+        /// Serialized Name: DnsPrivateViewProperties.self
+        /// </param>
+        /// <param name="timeCreated">
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeCreated
+        /// </param>
+        /// <param name="timeUpdated">
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeUpdated
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure resource provisioning state.
+        /// Serialized Name: DnsPrivateViewProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsPrivateViewProperties(string ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState? lifecycleState, string self, DateTimeOffset timeCreated, DateTimeOffset timeUpdated, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,21 +130,45 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The OCID of the view. </summary>
+        /// <summary>
+        /// The OCID of the view
+        /// Serialized Name: DnsPrivateViewProperties.ocid
+        /// </summary>
         public string Ocid { get; }
-        /// <summary> The display name of the view resource. </summary>
+        /// <summary>
+        /// The display name of the view resource
+        /// Serialized Name: DnsPrivateViewProperties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </summary>
+        /// <summary>
+        /// A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed.
+        /// Serialized Name: DnsPrivateViewProperties.isProtected
+        /// </summary>
         public bool IsProtected { get; }
-        /// <summary> Views lifecycleState. </summary>
+        /// <summary>
+        /// Views lifecycleState
+        /// Serialized Name: DnsPrivateViewProperties.lifecycleState
+        /// </summary>
         public DnsPrivateViewsLifecycleState? LifecycleState { get; }
-        /// <summary> The canonical absolute URL of the resource. </summary>
+        /// <summary>
+        /// The canonical absolute URL of the resource.
+        /// Serialized Name: DnsPrivateViewProperties.self
+        /// </summary>
         public string Self { get; }
-        /// <summary> views timeCreated. </summary>
+        /// <summary>
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeCreated
+        /// </summary>
         public DateTimeOffset TimeCreated { get; }
-        /// <summary> views timeCreated. </summary>
+        /// <summary>
+        /// views timeCreated
+        /// Serialized Name: DnsPrivateViewProperties.timeUpdated
+        /// </summary>
         public DateTimeOffset TimeUpdated { get; }
-        /// <summary> Azure resource provisioning state. </summary>
+        /// <summary>
+        /// Azure resource provisioning state.
+        /// Serialized Name: DnsPrivateViewProperties.provisioningState
+        /// </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

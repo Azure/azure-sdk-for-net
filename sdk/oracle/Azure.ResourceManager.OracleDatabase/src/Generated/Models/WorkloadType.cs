@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> WorkloadType enum. </summary>
+    /// <summary>
+    /// WorkloadType enum
+    /// Serialized Name: WorkloadType
+    /// </summary>
     public readonly partial struct WorkloadType : IEquatable<WorkloadType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AJDValue = "AJD";
         private const string ApexValue = "APEX";
 
-        /// <summary> OLTP - indicates an Autonomous Transaction Processing database. </summary>
+        /// <summary>
+        /// OLTP - indicates an Autonomous Transaction Processing database
+        /// Serialized Name: WorkloadType.OLTP
+        /// </summary>
         public static WorkloadType Oltp { get; } = new WorkloadType(OltpValue);
-        /// <summary> DW - indicates an Autonomous Data Warehouse database. </summary>
+        /// <summary>
+        /// DW - indicates an Autonomous Data Warehouse database
+        /// Serialized Name: WorkloadType.DW
+        /// </summary>
         public static WorkloadType DW { get; } = new WorkloadType(DWValue);
-        /// <summary> AJD - indicates an Autonomous JSON Database. </summary>
+        /// <summary>
+        /// AJD - indicates an Autonomous JSON Database
+        /// Serialized Name: WorkloadType.AJD
+        /// </summary>
         public static WorkloadType AJD { get; } = new WorkloadType(AJDValue);
-        /// <summary> APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type. </summary>
+        /// <summary>
+        /// APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.
+        /// Serialized Name: WorkloadType.APEX
+        /// </summary>
         public static WorkloadType Apex { get; } = new WorkloadType(ApexValue);
         /// <summary> Determines if two <see cref="WorkloadType"/> values are the same. </summary>
         public static bool operator ==(WorkloadType left, WorkloadType right) => left.Equals(right);

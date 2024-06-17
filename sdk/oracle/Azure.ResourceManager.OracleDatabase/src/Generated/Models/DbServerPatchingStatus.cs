@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DB Server patching status enum. </summary>
+    /// <summary>
+    /// DB Server patching status enum
+    /// Serialized Name: DbServerPatchingStatus
+    /// </summary>
     public readonly partial struct DbServerPatchingStatus : IEquatable<DbServerPatchingStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedValue = "Failed";
         private const string CompleteValue = "Complete";
 
-        /// <summary> Patching scheduled. </summary>
+        /// <summary>
+        /// Patching scheduled
+        /// Serialized Name: DbServerPatchingStatus.Scheduled
+        /// </summary>
         public static DbServerPatchingStatus Scheduled { get; } = new DbServerPatchingStatus(ScheduledValue);
-        /// <summary> Patching in progress. </summary>
+        /// <summary>
+        /// Patching in progress
+        /// Serialized Name: DbServerPatchingStatus.MaintenanceInProgress
+        /// </summary>
         public static DbServerPatchingStatus MaintenanceInProgress { get; } = new DbServerPatchingStatus(MaintenanceInProgressValue);
-        /// <summary> Patching failed. </summary>
+        /// <summary>
+        /// Patching failed
+        /// Serialized Name: DbServerPatchingStatus.Failed
+        /// </summary>
         public static DbServerPatchingStatus Failed { get; } = new DbServerPatchingStatus(FailedValue);
-        /// <summary> Patching completed. </summary>
+        /// <summary>
+        /// Patching completed
+        /// Serialized Name: DbServerPatchingStatus.Complete
+        /// </summary>
         public static DbServerPatchingStatus Complete { get; } = new DbServerPatchingStatus(CompleteValue);
         /// <summary> Determines if two <see cref="DbServerPatchingStatus"/> values are the same. </summary>
         public static bool operator ==(DbServerPatchingStatus left, DbServerPatchingStatus right) => left.Equals(right);

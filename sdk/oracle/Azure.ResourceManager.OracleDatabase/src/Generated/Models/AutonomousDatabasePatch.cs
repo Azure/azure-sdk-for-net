@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The type used for update operations of the AutonomousDatabase. </summary>
+    /// <summary>
+    /// The type used for update operations of the AutonomousDatabase.
+    /// Serialized Name: AutonomousDatabaseUpdate
+    /// </summary>
     public partial class AutonomousDatabasePatch
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabasePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the AutonomousDatabase. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: AutonomousDatabaseUpdate.tags
+        /// </param>
+        /// <param name="properties">
+        /// The updatable properties of the AutonomousDatabase.
+        /// Serialized Name: AutonomousDatabaseUpdate.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabasePatch(IDictionary<string, string> tags, AutonomousDatabaseUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: AutonomousDatabaseUpdate.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the AutonomousDatabase. </summary>
+        /// <summary>
+        /// The updatable properties of the AutonomousDatabase.
+        /// Serialized Name: AutonomousDatabaseUpdate.properties
+        /// </summary>
         public AutonomousDatabaseUpdateProperties Properties { get; set; }
     }
 }

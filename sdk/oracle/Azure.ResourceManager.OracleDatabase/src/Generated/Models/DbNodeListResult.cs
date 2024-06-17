@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a DbNode list operation. </summary>
+    /// <summary>
+    /// The response of a DbNode list operation.
+    /// Serialized Name: DbNodeListResult
+    /// </summary>
     internal partial class DbNodeListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DbNodeListResult"/>. </summary>
-        /// <param name="value"> The DbNode items on this page. </param>
+        /// <param name="value">
+        /// The DbNode items on this page
+        /// Serialized Name: DbNodeListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DbNodeListResult(IEnumerable<DbNodeData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbNodeListResult"/>. </summary>
-        /// <param name="value"> The DbNode items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The DbNode items on this page
+        /// Serialized Name: DbNodeListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: DbNodeListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbNodeListResult(IReadOnlyList<DbNodeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The DbNode items on this page. </summary>
+        /// <summary>
+        /// The DbNode items on this page
+        /// Serialized Name: DbNodeListResult.value
+        /// </summary>
         public IReadOnlyList<DbNodeData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: DbNodeListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

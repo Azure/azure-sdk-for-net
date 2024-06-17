@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Open mode type enum. </summary>
+    /// <summary>
+    /// Open mode type enum.
+    /// Serialized Name: OpenModeType
+    /// </summary>
     public readonly partial struct OpenModeType : IEquatable<OpenModeType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> ReadOnly mode. </summary>
+        /// <summary>
+        /// ReadOnly mode
+        /// Serialized Name: OpenModeType.ReadOnly
+        /// </summary>
         public static OpenModeType ReadOnly { get; } = new OpenModeType(ReadOnlyValue);
-        /// <summary> ReadWrite mode. </summary>
+        /// <summary>
+        /// ReadWrite mode
+        /// Serialized Name: OpenModeType.ReadWrite
+        /// </summary>
         public static OpenModeType ReadWrite { get; } = new OpenModeType(ReadWriteValue);
         /// <summary> Determines if two <see cref="OpenModeType"/> values are the same. </summary>
         public static bool operator ==(OpenModeType left, OpenModeType right) => left.Equals(right);

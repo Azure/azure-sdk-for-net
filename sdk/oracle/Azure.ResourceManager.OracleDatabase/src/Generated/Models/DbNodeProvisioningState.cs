@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DnNode provisioning state enum. </summary>
+    /// <summary>
+    /// DnNode provisioning state enum
+    /// Serialized Name: DbNodeProvisioningState
+    /// </summary>
     public readonly partial struct DbNodeProvisioningState : IEquatable<DbNodeProvisioningState>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TerminatedValue = "Terminated";
         private const string FailedValue = "Failed";
 
-        /// <summary> Indicates that resource in Provisioning state. </summary>
+        /// <summary>
+        /// Indicates that resource in Provisioning state
+        /// Serialized Name: DbNodeProvisioningState.Provisioning
+        /// </summary>
         public static DbNodeProvisioningState Provisioning { get; } = new DbNodeProvisioningState(ProvisioningValue);
-        /// <summary> Indicates that resource in Available state. </summary>
+        /// <summary>
+        /// Indicates that resource in Available state
+        /// Serialized Name: DbNodeProvisioningState.Available
+        /// </summary>
         public static DbNodeProvisioningState Available { get; } = new DbNodeProvisioningState(AvailableValue);
-        /// <summary> Indicates that resource in Updating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Updating state
+        /// Serialized Name: DbNodeProvisioningState.Updating
+        /// </summary>
         public static DbNodeProvisioningState Updating { get; } = new DbNodeProvisioningState(UpdatingValue);
-        /// <summary> Indicates that resource in Stopping state. </summary>
+        /// <summary>
+        /// Indicates that resource in Stopping state
+        /// Serialized Name: DbNodeProvisioningState.Stopping
+        /// </summary>
         public static DbNodeProvisioningState Stopping { get; } = new DbNodeProvisioningState(StoppingValue);
-        /// <summary> Indicates that resource in Stopped state. </summary>
+        /// <summary>
+        /// Indicates that resource in Stopped state
+        /// Serialized Name: DbNodeProvisioningState.Stopped
+        /// </summary>
         public static DbNodeProvisioningState Stopped { get; } = new DbNodeProvisioningState(StoppedValue);
-        /// <summary> Indicates that resource in Starting state. </summary>
+        /// <summary>
+        /// Indicates that resource in Starting state
+        /// Serialized Name: DbNodeProvisioningState.Starting
+        /// </summary>
         public static DbNodeProvisioningState Starting { get; } = new DbNodeProvisioningState(StartingValue);
-        /// <summary> Indicates that resource in Terminating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminating state
+        /// Serialized Name: DbNodeProvisioningState.Terminating
+        /// </summary>
         public static DbNodeProvisioningState Terminating { get; } = new DbNodeProvisioningState(TerminatingValue);
-        /// <summary> Indicates that resource in Terminated state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminated state
+        /// Serialized Name: DbNodeProvisioningState.Terminated
+        /// </summary>
         public static DbNodeProvisioningState Terminated { get; } = new DbNodeProvisioningState(TerminatedValue);
-        /// <summary> Indicates that resource in Failed state. </summary>
+        /// <summary>
+        /// Indicates that resource in Failed state
+        /// Serialized Name: DbNodeProvisioningState.Failed
+        /// </summary>
         public static DbNodeProvisioningState Failed { get; } = new DbNodeProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DbNodeProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DbNodeProvisioningState left, DbNodeProvisioningState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Autonomous Disaster Recovery standby database details. </summary>
+    /// <summary>
+    /// Autonomous Disaster Recovery standby database details.
+    /// Serialized Name: AutonomousDatabaseStandbySummary
+    /// </summary>
     public partial class AutonomousDatabaseStandbySummary
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseStandbySummary"/>. </summary>
-        /// <param name="lagTimeInSeconds"> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </param>
-        /// <param name="lifecycleState"> The current state of the Autonomous Database. </param>
-        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
-        /// <param name="timeDataGuardRoleChanged"> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </param>
-        /// <param name="timeDisasterRecoveryRoleChanged"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
+        /// <param name="lagTimeInSeconds">
+        /// The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lagTimeInSeconds
+        /// </param>
+        /// <param name="lifecycleState">
+        /// The current state of the Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleState
+        /// </param>
+        /// <param name="lifecycleDetails">
+        /// Additional information about the current lifecycle state.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleDetails
+        /// </param>
+        /// <param name="timeDataGuardRoleChanged">
+        /// The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDataGuardRoleChanged
+        /// </param>
+        /// <param name="timeDisasterRecoveryRoleChanged">
+        /// The date and time the Disaster Recovery role was switched for the standby Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDisasterRecoveryRoleChanged
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseStandbySummary(int? lagTimeInSeconds, AutonomousDatabaseLifecycleState? lifecycleState, string lifecycleDetails, string timeDataGuardRoleChanged, string timeDisasterRecoveryRoleChanged, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </summary>
+        /// <summary>
+        /// The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lagTimeInSeconds
+        /// </summary>
         public int? LagTimeInSeconds { get; }
-        /// <summary> The current state of the Autonomous Database. </summary>
+        /// <summary>
+        /// The current state of the Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleState
+        /// </summary>
         public AutonomousDatabaseLifecycleState? LifecycleState { get; }
-        /// <summary> Additional information about the current lifecycle state. </summary>
+        /// <summary>
+        /// Additional information about the current lifecycle state.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleDetails
+        /// </summary>
         public string LifecycleDetails { get; }
-        /// <summary> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </summary>
+        /// <summary>
+        /// The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDataGuardRoleChanged
+        /// </summary>
         public string TimeDataGuardRoleChanged { get; }
-        /// <summary> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </summary>
+        /// <summary>
+        /// The date and time the Disaster Recovery role was switched for the standby Autonomous Database.
+        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDisasterRecoveryRoleChanged
+        /// </summary>
         public string TimeDisasterRecoveryRoleChanged { get; }
     }
 }

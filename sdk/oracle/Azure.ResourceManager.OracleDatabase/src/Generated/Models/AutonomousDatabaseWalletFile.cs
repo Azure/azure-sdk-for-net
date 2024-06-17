@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Autonomous Database Wallet File resource model. </summary>
+    /// <summary>
+    /// Autonomous Database Wallet File resource model.
+    /// Serialized Name: AutonomousDatabaseWalletFile
+    /// </summary>
     public partial class AutonomousDatabaseWalletFile
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseWalletFile"/>. </summary>
-        /// <param name="walletFiles"> The base64 encoded wallet files. </param>
+        /// <param name="walletFiles">
+        /// The base64 encoded wallet files
+        /// Serialized Name: AutonomousDatabaseWalletFile.walletFiles
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="walletFiles"/> is null. </exception>
         internal AutonomousDatabaseWalletFile(string walletFiles)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseWalletFile"/>. </summary>
-        /// <param name="walletFiles"> The base64 encoded wallet files. </param>
+        /// <param name="walletFiles">
+        /// The base64 encoded wallet files
+        /// Serialized Name: AutonomousDatabaseWalletFile.walletFiles
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseWalletFile(string walletFiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The base64 encoded wallet files. </summary>
+        /// <summary>
+        /// The base64 encoded wallet files
+        /// Serialized Name: AutonomousDatabaseWalletFile.walletFiles
+        /// </summary>
         public string WalletFiles { get; }
     }
 }

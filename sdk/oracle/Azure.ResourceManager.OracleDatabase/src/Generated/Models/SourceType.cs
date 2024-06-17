@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Source type enum. </summary>
+    /// <summary>
+    /// Source type enum.
+    /// Serialized Name: SourceType
+    /// </summary>
     public readonly partial struct SourceType : IEquatable<SourceType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string CrossRegionDataguardValue = "CrossRegionDataguard";
         private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
 
-        /// <summary> None source. </summary>
+        /// <summary>
+        /// None source
+        /// Serialized Name: SourceType.None
+        /// </summary>
         public static SourceType None { get; } = new SourceType(NoneValue);
-        /// <summary> Database source. </summary>
+        /// <summary>
+        /// Database source
+        /// Serialized Name: SourceType.Database
+        /// </summary>
         public static SourceType Database { get; } = new SourceType(DatabaseValue);
-        /// <summary> Backup from ID source. </summary>
+        /// <summary>
+        /// Backup from ID source
+        /// Serialized Name: SourceType.BackupFromId
+        /// </summary>
         public static SourceType BackupFromId { get; } = new SourceType(BackupFromIdValue);
-        /// <summary> Backup from timestamp source. </summary>
+        /// <summary>
+        /// Backup from timestamp source
+        /// Serialized Name: SourceType.BackupFromTimestamp
+        /// </summary>
         public static SourceType BackupFromTimestamp { get; } = new SourceType(BackupFromTimestampValue);
-        /// <summary> Clone to refreshable source. </summary>
+        /// <summary>
+        /// Clone to refreshable source
+        /// Serialized Name: SourceType.CloneToRefreshable
+        /// </summary>
         public static SourceType CloneToRefreshable { get; } = new SourceType(CloneToRefreshableValue);
-        /// <summary> Cross region dataguard source. </summary>
+        /// <summary>
+        /// Cross region dataguard source
+        /// Serialized Name: SourceType.CrossRegionDataguard
+        /// </summary>
         public static SourceType CrossRegionDataguard { get; } = new SourceType(CrossRegionDataguardValue);
-        /// <summary> cross region disaster recovery source. </summary>
+        /// <summary>
+        /// cross region disaster recovery source
+        /// Serialized Name: SourceType.CrossRegionDisasterRecovery
+        /// </summary>
         public static SourceType CrossRegionDisasterRecovery { get; } = new SourceType(CrossRegionDisasterRecoveryValue);
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);

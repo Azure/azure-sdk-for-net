@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> A rule for allowing inbound (INGRESS) IP packets. </summary>
+    /// <summary>
+    /// A rule for allowing inbound (INGRESS) IP packets
+    /// Serialized Name: NsgCidr
+    /// </summary>
     public partial class NsgCidr
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NsgCidr"/>. </summary>
-        /// <param name="source"> Conceptually, this is the range of IP addresses that a packet coming into the instance can come from. </param>
+        /// <param name="source">
+        /// Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+        /// Serialized Name: NsgCidr.source
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public NsgCidr(string source)
         {
@@ -56,8 +62,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NsgCidr"/>. </summary>
-        /// <param name="source"> Conceptually, this is the range of IP addresses that a packet coming into the instance can come from. </param>
-        /// <param name="destinationPortRange"> Destination port range to specify particular destination ports for TCP rules. </param>
+        /// <param name="source">
+        /// Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+        /// Serialized Name: NsgCidr.source
+        /// </param>
+        /// <param name="destinationPortRange">
+        /// Destination port range to specify particular destination ports for TCP rules.
+        /// Serialized Name: NsgCidr.destinationPortRange
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NsgCidr(string source, PortRange destinationPortRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,9 +83,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Conceptually, this is the range of IP addresses that a packet coming into the instance can come from. </summary>
+        /// <summary>
+        /// Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+        /// Serialized Name: NsgCidr.source
+        /// </summary>
         public string Source { get; set; }
-        /// <summary> Destination port range to specify particular destination ports for TCP rules. </summary>
+        /// <summary>
+        /// Destination port range to specify particular destination ports for TCP rules.
+        /// Serialized Name: NsgCidr.destinationPortRange
+        /// </summary>
         public PortRange DestinationPortRange { get; set; }
     }
 }

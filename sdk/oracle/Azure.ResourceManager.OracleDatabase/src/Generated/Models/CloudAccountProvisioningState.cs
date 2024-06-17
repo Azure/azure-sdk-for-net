@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> CloudAccountProvisioningState enum. </summary>
+    /// <summary>
+    /// CloudAccountProvisioningState enum
+    /// Serialized Name: CloudAccountProvisioningState
+    /// </summary>
     public readonly partial struct CloudAccountProvisioningState : IEquatable<CloudAccountProvisioningState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string ProvisioningValue = "Provisioning";
         private const string AvailableValue = "Available";
 
-        /// <summary> Pending - Initial state when Oracle cloud account is not configured. </summary>
+        /// <summary>
+        /// Pending - Initial state when Oracle cloud account is not configured
+        /// Serialized Name: CloudAccountProvisioningState.Pending
+        /// </summary>
         public static CloudAccountProvisioningState Pending { get; } = new CloudAccountProvisioningState(PendingValue);
-        /// <summary> Provisioning - State when Oracle cloud account is being provisioned. </summary>
+        /// <summary>
+        /// Provisioning - State when Oracle cloud account is being provisioned
+        /// Serialized Name: CloudAccountProvisioningState.Provisioning
+        /// </summary>
         public static CloudAccountProvisioningState Provisioning { get; } = new CloudAccountProvisioningState(ProvisioningValue);
-        /// <summary> Available - State when Oracle cloud account cloud linking is complete and it is available. </summary>
+        /// <summary>
+        /// Available - State when Oracle cloud account cloud linking is complete and it is available
+        /// Serialized Name: CloudAccountProvisioningState.Available
+        /// </summary>
         public static CloudAccountProvisioningState Available { get; } = new CloudAccountProvisioningState(AvailableValue);
         /// <summary> Determines if two <see cref="CloudAccountProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => left.Equals(right);

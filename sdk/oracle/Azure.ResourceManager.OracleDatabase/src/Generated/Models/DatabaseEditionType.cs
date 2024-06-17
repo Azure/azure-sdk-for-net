@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Database edition type enum. </summary>
+    /// <summary>
+    /// Database edition type enum.
+    /// Serialized Name: DatabaseEditionType
+    /// </summary>
     public readonly partial struct DatabaseEditionType : IEquatable<DatabaseEditionType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string StandardEditionValue = "StandardEdition";
         private const string EnterpriseEditionValue = "EnterpriseEdition";
 
-        /// <summary> Standard edition. </summary>
+        /// <summary>
+        /// Standard edition
+        /// Serialized Name: DatabaseEditionType.StandardEdition
+        /// </summary>
         public static DatabaseEditionType StandardEdition { get; } = new DatabaseEditionType(StandardEditionValue);
-        /// <summary> Enterprise edition. </summary>
+        /// <summary>
+        /// Enterprise edition
+        /// Serialized Name: DatabaseEditionType.EnterpriseEdition
+        /// </summary>
         public static DatabaseEditionType EnterpriseEdition { get; } = new DatabaseEditionType(EnterpriseEditionValue);
         /// <summary> Determines if two <see cref="DatabaseEditionType"/> values are the same. </summary>
         public static bool operator ==(DatabaseEditionType left, DatabaseEditionType right) => left.Equals(right);

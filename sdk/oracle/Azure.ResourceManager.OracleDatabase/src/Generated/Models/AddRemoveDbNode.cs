@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Add/Remove (Virtual Machine) DbNode model. </summary>
+    /// <summary>
+    /// Add/Remove (Virtual Machine) DbNode model
+    /// Serialized Name: AddRemoveDbNode
+    /// </summary>
     public partial class AddRemoveDbNode
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AddRemoveDbNode"/>. </summary>
-        /// <param name="dbServers"> Db servers ocids. </param>
+        /// <param name="dbServers">
+        /// Db servers ocids
+        /// Serialized Name: AddRemoveDbNode.dbServers
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbServers"/> is null. </exception>
         public AddRemoveDbNode(IEnumerable<string> dbServers)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AddRemoveDbNode"/>. </summary>
-        /// <param name="dbServers"> Db servers ocids. </param>
+        /// <param name="dbServers">
+        /// Db servers ocids
+        /// Serialized Name: AddRemoveDbNode.dbServers
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AddRemoveDbNode(IList<string> dbServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Db servers ocids. </summary>
+        /// <summary>
+        /// Db servers ocids
+        /// Serialized Name: AddRemoveDbNode.dbServers
+        /// </summary>
         public IList<string> DbServers { get; }
     }
 }

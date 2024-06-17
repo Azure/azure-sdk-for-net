@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DataCollectionOptions resource properties. </summary>
+    /// <summary>
+    /// DataCollectionOptions resource properties
+    /// Serialized Name: DataCollectionOptions
+    /// </summary>
     public partial class DataCollectionConfig
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionConfig"/>. </summary>
-        /// <param name="isDiagnosticsEventsEnabled"> Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
-        /// <param name="isHealthMonitoringEnabled"> Indicates whether health monitoring is enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </param>
-        /// <param name="isIncidentLogsEnabled"> Indicates whether incident logs and trace collection are enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </param>
+        /// <param name="isDiagnosticsEventsEnabled">
+        /// Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isDiagnosticsEventsEnabled
+        /// </param>
+        /// <param name="isHealthMonitoringEnabled">
+        /// Indicates whether health monitoring is enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isHealthMonitoringEnabled
+        /// </param>
+        /// <param name="isIncidentLogsEnabled">
+        /// Indicates whether incident logs and trace collection are enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isIncidentLogsEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataCollectionConfig(bool? isDiagnosticsEventsEnabled, bool? isHealthMonitoringEnabled, bool? isIncidentLogsEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
+        /// <summary>
+        /// Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isDiagnosticsEventsEnabled
+        /// </summary>
         public bool? IsDiagnosticsEventsEnabled { get; set; }
-        /// <summary> Indicates whether health monitoring is enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </summary>
+        /// <summary>
+        /// Indicates whether health monitoring is enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isHealthMonitoringEnabled
+        /// </summary>
         public bool? IsHealthMonitoringEnabled { get; set; }
-        /// <summary> Indicates whether incident logs and trace collection are enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </summary>
+        /// <summary>
+        /// Indicates whether incident logs and trace collection are enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+        /// Serialized Name: DataCollectionOptions.isIncidentLogsEnabled
+        /// </summary>
         public bool? IsIncidentLogsEnabled { get; set; }
     }
 }

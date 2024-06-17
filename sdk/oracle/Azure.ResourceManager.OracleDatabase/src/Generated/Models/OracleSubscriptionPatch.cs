@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The type used for update operations of the OracleSubscription. </summary>
+    /// <summary>
+    /// The type used for update operations of the OracleSubscription.
+    /// Serialized Name: OracleSubscriptionUpdate
+    /// </summary>
     public partial class OracleSubscriptionPatch
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionPatch"/>. </summary>
-        /// <param name="plan"> Details of the resource plan. </param>
-        /// <param name="properties"> The updatable properties of the OracleSubscription. </param>
+        /// <param name="plan">
+        /// Details of the resource plan.
+        /// Serialized Name: OracleSubscriptionUpdate.plan
+        /// </param>
+        /// <param name="properties">
+        /// The updatable properties of the OracleSubscription.
+        /// Serialized Name: OracleSubscriptionUpdate.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OracleSubscriptionPatch(ArmPlan plan, OracleSubscriptionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Details of the resource plan. </summary>
+        /// <summary>
+        /// Details of the resource plan.
+        /// Serialized Name: OracleSubscriptionUpdate.plan
+        /// </summary>
         public ArmPlan Plan { get; set; }
-        /// <summary> The updatable properties of the OracleSubscription. </summary>
+        /// <summary>
+        /// The updatable properties of the OracleSubscription.
+        /// Serialized Name: OracleSubscriptionUpdate.properties
+        /// </summary>
         public OracleSubscriptionUpdateProperties Properties { get; set; }
     }
 }

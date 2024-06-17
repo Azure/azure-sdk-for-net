@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The updatable properties of the OracleSubscription. </summary>
+    /// <summary>
+    /// The updatable properties of the OracleSubscription.
+    /// Serialized Name: OracleSubscriptionUpdateProperties
+    /// </summary>
     public partial class OracleSubscriptionUpdateProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionUpdateProperties"/>. </summary>
-        /// <param name="productCode"> Product code for the term unit. </param>
-        /// <param name="intent"> Intent for the update operation. </param>
+        /// <param name="productCode">
+        /// Product code for the term unit
+        /// Serialized Name: OracleSubscriptionUpdateProperties.productCode
+        /// </param>
+        /// <param name="intent">
+        /// Intent for the update operation
+        /// Serialized Name: OracleSubscriptionUpdateProperties.intent
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OracleSubscriptionUpdateProperties(string productCode, Intent? intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Product code for the term unit. </summary>
+        /// <summary>
+        /// Product code for the term unit
+        /// Serialized Name: OracleSubscriptionUpdateProperties.productCode
+        /// </summary>
         public string ProductCode { get; set; }
-        /// <summary> Intent for the update operation. </summary>
+        /// <summary>
+        /// Intent for the update operation
+        /// Serialized Name: OracleSubscriptionUpdateProperties.intent
+        /// </summary>
         public Intent? Intent { get; set; }
     }
 }

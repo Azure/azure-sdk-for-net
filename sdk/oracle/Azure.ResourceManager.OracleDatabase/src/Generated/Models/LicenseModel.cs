@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> LicenseModel enum. </summary>
+    /// <summary>
+    /// LicenseModel enum
+    /// Serialized Name: LicenseModel
+    /// </summary>
     public readonly partial struct LicenseModel : IEquatable<LicenseModel>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string LicenseIncludedValue = "LicenseIncluded";
         private const string BringYourOwnLicenseValue = "BringYourOwnLicense";
 
-        /// <summary> License included. </summary>
+        /// <summary>
+        /// License included
+        /// Serialized Name: LicenseModel.LicenseIncluded
+        /// </summary>
         public static LicenseModel LicenseIncluded { get; } = new LicenseModel(LicenseIncludedValue);
-        /// <summary> Bring Your Own License. </summary>
+        /// <summary>
+        /// Bring Your Own License
+        /// Serialized Name: LicenseModel.BringYourOwnLicense
+        /// </summary>
         public static LicenseModel BringYourOwnLicense { get; } = new LicenseModel(BringYourOwnLicenseValue);
         /// <summary> Determines if two <see cref="LicenseModel"/> values are the same. </summary>
         public static bool operator ==(LicenseModel left, LicenseModel right) => left.Equals(right);

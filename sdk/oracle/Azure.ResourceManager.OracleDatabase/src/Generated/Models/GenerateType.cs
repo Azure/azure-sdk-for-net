@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Generate type enum. </summary>
+    /// <summary>
+    /// Generate type enum
+    /// Serialized Name: GenerateType
+    /// </summary>
     public readonly partial struct GenerateType : IEquatable<GenerateType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string SingleValue = "Single";
         private const string AllValue = "All";
 
-        /// <summary> Generate single. </summary>
+        /// <summary>
+        /// Generate single
+        /// Serialized Name: GenerateType.Single
+        /// </summary>
         public static GenerateType Single { get; } = new GenerateType(SingleValue);
-        /// <summary> Generate all. </summary>
+        /// <summary>
+        /// Generate all
+        /// Serialized Name: GenerateType.All
+        /// </summary>
         public static GenerateType All { get; } = new GenerateType(AllValue);
         /// <summary> Determines if two <see cref="GenerateType"/> values are the same. </summary>
         public static bool operator ==(GenerateType left, GenerateType right) => left.Equals(right);

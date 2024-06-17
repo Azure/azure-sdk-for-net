@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The updatable properties of the CloudVmCluster. </summary>
+    /// <summary>
+    /// The updatable properties of the CloudVmCluster.
+    /// Serialized Name: CloudVmClusterUpdateProperties
+    /// </summary>
     public partial class CloudVmClusterUpdateProperties
     {
         /// <summary>
@@ -53,17 +56,50 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterUpdateProperties"/>. </summary>
-        /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
-        /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
-        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
-        /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
-        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
-        /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
-        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
-        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
-        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
-        /// <param name="displayName"> Display Name. </param>
-        /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="storageSizeInGbs">
+        /// The data disk group size to be allocated in GBs per VM.
+        /// Serialized Name: CloudVmClusterUpdateProperties.storageSizeInGbs
+        /// </param>
+        /// <param name="dataStorageSizeInTbs">
+        /// The data disk group size to be allocated in TBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dataStorageSizeInTbs
+        /// </param>
+        /// <param name="dbNodeStorageSizeInGbs">
+        /// The local node storage to be allocated in GBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dbNodeStorageSizeInGbs
+        /// </param>
+        /// <param name="memorySizeInGbs">
+        /// The memory to be allocated in GBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.memorySizeInGbs
+        /// </param>
+        /// <param name="cpuCoreCount">
+        /// The number of CPU cores enabled on the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.cpuCoreCount
+        /// </param>
+        /// <param name="ocpuCount">
+        /// The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part.
+        /// Serialized Name: CloudVmClusterUpdateProperties.ocpuCount
+        /// </param>
+        /// <param name="sshPublicKeys">
+        /// The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.sshPublicKeys
+        /// </param>
+        /// <param name="licenseModel">
+        /// The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED.
+        /// Serialized Name: CloudVmClusterUpdateProperties.licenseModel
+        /// </param>
+        /// <param name="dataCollectionOptions">
+        /// Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dataCollectionOptions
+        /// </param>
+        /// <param name="displayName">
+        /// Display Name
+        /// Serialized Name: CloudVmClusterUpdateProperties.displayName
+        /// </param>
+        /// <param name="computeNodes">
+        /// The list of compute servers to be added to the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.computeNodes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, LicenseModel? licenseModel, DataCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,27 +117,60 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The data disk group size to be allocated in GBs per VM. </summary>
+        /// <summary>
+        /// The data disk group size to be allocated in GBs per VM.
+        /// Serialized Name: CloudVmClusterUpdateProperties.storageSizeInGbs
+        /// </summary>
         public int? StorageSizeInGbs { get; set; }
-        /// <summary> The data disk group size to be allocated in TBs. </summary>
+        /// <summary>
+        /// The data disk group size to be allocated in TBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dataStorageSizeInTbs
+        /// </summary>
         public double? DataStorageSizeInTbs { get; set; }
-        /// <summary> The local node storage to be allocated in GBs. </summary>
+        /// <summary>
+        /// The local node storage to be allocated in GBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dbNodeStorageSizeInGbs
+        /// </summary>
         public int? DbNodeStorageSizeInGbs { get; set; }
-        /// <summary> The memory to be allocated in GBs. </summary>
+        /// <summary>
+        /// The memory to be allocated in GBs.
+        /// Serialized Name: CloudVmClusterUpdateProperties.memorySizeInGbs
+        /// </summary>
         public int? MemorySizeInGbs { get; set; }
-        /// <summary> The number of CPU cores enabled on the cloud VM cluster. </summary>
+        /// <summary>
+        /// The number of CPU cores enabled on the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.cpuCoreCount
+        /// </summary>
         public int? CpuCoreCount { get; set; }
-        /// <summary> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </summary>
+        /// <summary>
+        /// The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part.
+        /// Serialized Name: CloudVmClusterUpdateProperties.ocpuCount
+        /// </summary>
         public float? OcpuCount { get; set; }
-        /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
+        /// <summary>
+        /// The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.sshPublicKeys
+        /// </summary>
         public IList<string> SshPublicKeys { get; }
-        /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
+        /// <summary>
+        /// The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED.
+        /// Serialized Name: CloudVmClusterUpdateProperties.licenseModel
+        /// </summary>
         public LicenseModel? LicenseModel { get; set; }
-        /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
+        /// <summary>
+        /// Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
+        /// Serialized Name: CloudVmClusterUpdateProperties.dataCollectionOptions
+        /// </summary>
         public DataCollectionConfig DataCollectionOptions { get; set; }
-        /// <summary> Display Name. </summary>
+        /// <summary>
+        /// Display Name
+        /// Serialized Name: CloudVmClusterUpdateProperties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
+        /// <summary>
+        /// The list of compute servers to be added to the cloud VM cluster.
+        /// Serialized Name: CloudVmClusterUpdateProperties.computeNodes
+        /// </summary>
         public IList<string> ComputeNodes { get; }
     }
 }

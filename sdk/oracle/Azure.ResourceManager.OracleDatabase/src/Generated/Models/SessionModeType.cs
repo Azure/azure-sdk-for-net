@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Session mode type enum. </summary>
+    /// <summary>
+    /// Session mode type enum.
+    /// Serialized Name: SessionModeType
+    /// </summary>
     public readonly partial struct SessionModeType : IEquatable<SessionModeType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DirectValue = "Direct";
         private const string RedirectValue = "Redirect";
 
-        /// <summary> Direct session mode. </summary>
+        /// <summary>
+        /// Direct session mode
+        /// Serialized Name: SessionModeType.Direct
+        /// </summary>
         public static SessionModeType Direct { get; } = new SessionModeType(DirectValue);
-        /// <summary> Redirect session mode. </summary>
+        /// <summary>
+        /// Redirect session mode
+        /// Serialized Name: SessionModeType.Redirect
+        /// </summary>
         public static SessionModeType Redirect { get; } = new SessionModeType(RedirectValue);
         /// <summary> Determines if two <see cref="SessionModeType"/> values are the same. </summary>
         public static bool operator ==(SessionModeType left, SessionModeType right) => left.Equals(right);

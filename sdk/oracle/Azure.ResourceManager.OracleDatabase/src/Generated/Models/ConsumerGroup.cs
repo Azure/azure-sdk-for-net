@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Consumer group enum. </summary>
+    /// <summary>
+    /// Consumer group enum.
+    /// Serialized Name: ConsumerGroup
+    /// </summary>
     public readonly partial struct ConsumerGroup : IEquatable<ConsumerGroup>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string TpValue = "Tp";
         private const string TpurgentValue = "Tpurgent";
 
-        /// <summary> High group. </summary>
+        /// <summary>
+        /// High group
+        /// Serialized Name: ConsumerGroup.High
+        /// </summary>
         public static ConsumerGroup High { get; } = new ConsumerGroup(HighValue);
-        /// <summary> Medium group. </summary>
+        /// <summary>
+        /// Medium group
+        /// Serialized Name: ConsumerGroup.Medium
+        /// </summary>
         public static ConsumerGroup Medium { get; } = new ConsumerGroup(MediumValue);
-        /// <summary> Low group. </summary>
+        /// <summary>
+        /// Low group
+        /// Serialized Name: ConsumerGroup.Low
+        /// </summary>
         public static ConsumerGroup Low { get; } = new ConsumerGroup(LowValue);
-        /// <summary> TP group. </summary>
+        /// <summary>
+        /// TP group
+        /// Serialized Name: ConsumerGroup.Tp
+        /// </summary>
         public static ConsumerGroup Tp { get; } = new ConsumerGroup(TpValue);
-        /// <summary> TPurgent group. </summary>
+        /// <summary>
+        /// TPurgent group
+        /// Serialized Name: ConsumerGroup.Tpurgent
+        /// </summary>
         public static ConsumerGroup Tpurgent { get; } = new ConsumerGroup(TpurgentValue);
         /// <summary> Determines if two <see cref="ConsumerGroup"/> values are the same. </summary>
         public static bool operator ==(ConsumerGroup left, ConsumerGroup right) => left.Equals(right);

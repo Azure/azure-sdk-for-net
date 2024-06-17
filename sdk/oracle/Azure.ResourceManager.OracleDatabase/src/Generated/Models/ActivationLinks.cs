@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Activation Links model. </summary>
+    /// <summary>
+    /// Activation Links model
+    /// Serialized Name: ActivationLinks
+    /// </summary>
     public partial class ActivationLinks
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivationLinks"/>. </summary>
-        /// <param name="newCloudAccountActivationLink"> New Cloud Account Activation Link. </param>
-        /// <param name="existingCloudAccountActivationLink"> Existing Cloud Account Activation Link. </param>
+        /// <param name="newCloudAccountActivationLink">
+        /// New Cloud Account Activation Link
+        /// Serialized Name: ActivationLinks.newCloudAccountActivationLink
+        /// </param>
+        /// <param name="existingCloudAccountActivationLink">
+        /// Existing Cloud Account Activation Link
+        /// Serialized Name: ActivationLinks.existingCloudAccountActivationLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActivationLinks(string newCloudAccountActivationLink, string existingCloudAccountActivationLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> New Cloud Account Activation Link. </summary>
+        /// <summary>
+        /// New Cloud Account Activation Link
+        /// Serialized Name: ActivationLinks.newCloudAccountActivationLink
+        /// </summary>
         public string NewCloudAccountActivationLink { get; }
-        /// <summary> Existing Cloud Account Activation Link. </summary>
+        /// <summary>
+        /// Existing Cloud Account Activation Link
+        /// Serialized Name: ActivationLinks.existingCloudAccountActivationLink
+        /// </summary>
         public string ExistingCloudAccountActivationLink { get; }
     }
 }

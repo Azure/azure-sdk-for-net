@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Role type enum. </summary>
+    /// <summary>
+    /// Role type enum.
+    /// Serialized Name: RoleType
+    /// </summary>
     public readonly partial struct RoleType : IEquatable<RoleType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string BackupCopyValue = "BackupCopy";
         private const string SnapshotStandbyValue = "SnapshotStandby";
 
-        /// <summary> Primary role. </summary>
+        /// <summary>
+        /// Primary role
+        /// Serialized Name: RoleType.Primary
+        /// </summary>
         public static RoleType Primary { get; } = new RoleType(PrimaryValue);
-        /// <summary> Standby role. </summary>
+        /// <summary>
+        /// Standby role
+        /// Serialized Name: RoleType.Standby
+        /// </summary>
         public static RoleType Standby { get; } = new RoleType(StandbyValue);
-        /// <summary> DisabledStandby role. </summary>
+        /// <summary>
+        /// DisabledStandby role
+        /// Serialized Name: RoleType.DisabledStandby
+        /// </summary>
         public static RoleType DisabledStandby { get; } = new RoleType(DisabledStandbyValue);
-        /// <summary> BackupCopy role. </summary>
+        /// <summary>
+        /// BackupCopy role
+        /// Serialized Name: RoleType.BackupCopy
+        /// </summary>
         public static RoleType BackupCopy { get; } = new RoleType(BackupCopyValue);
-        /// <summary> SnapshotStandby role. </summary>
+        /// <summary>
+        /// SnapshotStandby role
+        /// Serialized Name: RoleType.SnapshotStandby
+        /// </summary>
         public static RoleType SnapshotStandby { get; } = new RoleType(SnapshotStandbyValue);
         /// <summary> Determines if two <see cref="RoleType"/> values are the same. </summary>
         public static bool operator ==(RoleType left, RoleType right) => left.Equals(right);

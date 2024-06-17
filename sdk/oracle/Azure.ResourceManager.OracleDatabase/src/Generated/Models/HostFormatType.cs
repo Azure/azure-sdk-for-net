@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Host format type enum. </summary>
+    /// <summary>
+    /// Host format type enum.
+    /// Serialized Name: HostFormatType
+    /// </summary>
     public readonly partial struct HostFormatType : IEquatable<HostFormatType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FqdnValue = "Fqdn";
         private const string IPValue = "Ip";
 
-        /// <summary> FQDN format. </summary>
+        /// <summary>
+        /// FQDN format
+        /// Serialized Name: HostFormatType.Fqdn
+        /// </summary>
         public static HostFormatType Fqdn { get; } = new HostFormatType(FqdnValue);
-        /// <summary> IP format. </summary>
+        /// <summary>
+        /// IP format
+        /// Serialized Name: HostFormatType.Ip
+        /// </summary>
         public static HostFormatType IP { get; } = new HostFormatType(IPValue);
         /// <summary> Determines if two <see cref="HostFormatType"/> values are the same. </summary>
         public static bool operator ==(HostFormatType left, HostFormatType right) => left.Equals(right);

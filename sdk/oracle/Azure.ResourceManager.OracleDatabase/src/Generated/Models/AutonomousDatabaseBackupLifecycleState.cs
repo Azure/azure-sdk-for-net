@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Autonomous database backup lifecycle state enum. </summary>
+    /// <summary>
+    /// Autonomous database backup lifecycle state enum
+    /// Serialized Name: AutonomousDatabaseBackupLifecycleState
+    /// </summary>
     public readonly partial struct AutonomousDatabaseBackupLifecycleState : IEquatable<AutonomousDatabaseBackupLifecycleState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> AutonomousDatabase backup is creating. </summary>
+        /// <summary>
+        /// AutonomousDatabase backup is creating
+        /// Serialized Name: AutonomousDatabaseBackupLifecycleState.Creating
+        /// </summary>
         public static AutonomousDatabaseBackupLifecycleState Creating { get; } = new AutonomousDatabaseBackupLifecycleState(CreatingValue);
-        /// <summary> AutonomousDatabase backup is active. </summary>
+        /// <summary>
+        /// AutonomousDatabase backup is active
+        /// Serialized Name: AutonomousDatabaseBackupLifecycleState.Active
+        /// </summary>
         public static AutonomousDatabaseBackupLifecycleState Active { get; } = new AutonomousDatabaseBackupLifecycleState(ActiveValue);
-        /// <summary> AutonomousDatabase backup is deleting. </summary>
+        /// <summary>
+        /// AutonomousDatabase backup is deleting
+        /// Serialized Name: AutonomousDatabaseBackupLifecycleState.Deleting
+        /// </summary>
         public static AutonomousDatabaseBackupLifecycleState Deleting { get; } = new AutonomousDatabaseBackupLifecycleState(DeletingValue);
-        /// <summary> AutonomousDatabase backup is failed. </summary>
+        /// <summary>
+        /// AutonomousDatabase backup is failed
+        /// Serialized Name: AutonomousDatabaseBackupLifecycleState.Failed
+        /// </summary>
         public static AutonomousDatabaseBackupLifecycleState Failed { get; } = new AutonomousDatabaseBackupLifecycleState(FailedValue);
-        /// <summary> AutonomousDatabase backup is updating. </summary>
+        /// <summary>
+        /// AutonomousDatabase backup is updating
+        /// Serialized Name: AutonomousDatabaseBackupLifecycleState.Updating
+        /// </summary>
         public static AutonomousDatabaseBackupLifecycleState Updating { get; } = new AutonomousDatabaseBackupLifecycleState(UpdatingValue);
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupLifecycleState"/> values are the same. </summary>
         public static bool operator ==(AutonomousDatabaseBackupLifecycleState left, AutonomousDatabaseBackupLifecycleState right) => left.Equals(right);

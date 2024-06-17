@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> MonthName enum. </summary>
+    /// <summary>
+    /// MonthName enum
+    /// Serialized Name: MonthName
+    /// </summary>
     public readonly partial struct MonthName : IEquatable<MonthName>
     {
         private readonly string _value;
@@ -35,29 +38,65 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string NovemberValue = "November";
         private const string DecemberValue = "December";
 
-        /// <summary> January value. </summary>
+        /// <summary>
+        /// January value
+        /// Serialized Name: MonthName.January
+        /// </summary>
         public static MonthName January { get; } = new MonthName(JanuaryValue);
-        /// <summary> February value. </summary>
+        /// <summary>
+        /// February value
+        /// Serialized Name: MonthName.February
+        /// </summary>
         public static MonthName February { get; } = new MonthName(FebruaryValue);
-        /// <summary> March value. </summary>
+        /// <summary>
+        /// March value
+        /// Serialized Name: MonthName.March
+        /// </summary>
         public static MonthName March { get; } = new MonthName(MarchValue);
-        /// <summary> April value. </summary>
+        /// <summary>
+        /// April value
+        /// Serialized Name: MonthName.April
+        /// </summary>
         public static MonthName April { get; } = new MonthName(AprilValue);
-        /// <summary> May value. </summary>
+        /// <summary>
+        /// May value
+        /// Serialized Name: MonthName.May
+        /// </summary>
         public static MonthName May { get; } = new MonthName(MayValue);
-        /// <summary> June value. </summary>
+        /// <summary>
+        /// June value
+        /// Serialized Name: MonthName.June
+        /// </summary>
         public static MonthName June { get; } = new MonthName(JuneValue);
-        /// <summary> July value. </summary>
+        /// <summary>
+        /// July value
+        /// Serialized Name: MonthName.July
+        /// </summary>
         public static MonthName July { get; } = new MonthName(JulyValue);
-        /// <summary> August value. </summary>
+        /// <summary>
+        /// August value
+        /// Serialized Name: MonthName.August
+        /// </summary>
         public static MonthName August { get; } = new MonthName(AugustValue);
-        /// <summary> September value. </summary>
+        /// <summary>
+        /// September value
+        /// Serialized Name: MonthName.September
+        /// </summary>
         public static MonthName September { get; } = new MonthName(SeptemberValue);
-        /// <summary> October value. </summary>
+        /// <summary>
+        /// October value
+        /// Serialized Name: MonthName.October
+        /// </summary>
         public static MonthName October { get; } = new MonthName(OctoberValue);
-        /// <summary> November value. </summary>
+        /// <summary>
+        /// November value
+        /// Serialized Name: MonthName.November
+        /// </summary>
         public static MonthName November { get; } = new MonthName(NovemberValue);
-        /// <summary> December value. </summary>
+        /// <summary>
+        /// December value
+        /// Serialized Name: MonthName.December
+        /// </summary>
         public static MonthName December { get; } = new MonthName(DecemberValue);
         /// <summary> Determines if two <see cref="MonthName"/> values are the same. </summary>
         public static bool operator ==(MonthName left, MonthName right) => left.Equals(right);

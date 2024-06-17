@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> CustomerContact resource properties. </summary>
+    /// <summary>
+    /// CustomerContact resource properties
+    /// Serialized Name: CustomerContact
+    /// </summary>
     public partial class CustomerContact
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomerContact"/>. </summary>
-        /// <param name="email"> The email address used by Oracle to send notifications regarding databases and infrastructure. </param>
+        /// <param name="email">
+        /// The email address used by Oracle to send notifications regarding databases and infrastructure.
+        /// Serialized Name: CustomerContact.email
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public CustomerContact(string email)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerContact"/>. </summary>
-        /// <param name="email"> The email address used by Oracle to send notifications regarding databases and infrastructure. </param>
+        /// <param name="email">
+        /// The email address used by Oracle to send notifications regarding databases and infrastructure.
+        /// Serialized Name: CustomerContact.email
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomerContact(string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The email address used by Oracle to send notifications regarding databases and infrastructure. </summary>
+        /// <summary>
+        /// The email address used by Oracle to send notifications regarding databases and infrastructure.
+        /// Serialized Name: CustomerContact.email
+        /// </summary>
         public string Email { get; set; }
     }
 }

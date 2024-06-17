@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the AutonomousDatabaseNationalCharacterSet data model.
     /// AutonomousDatabaseNationalCharacterSets resource definition
+    /// Serialized Name: AutonomousDatabaseNationalCharacterSet
     /// </summary>
     public partial class AutonomousDatabaseNationalCharacterSetData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSet.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseNationalCharacterSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDatabaseNationalCharacterSetProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,9 +73,15 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSet.properties
+        /// </summary>
         internal AutonomousDatabaseNationalCharacterSetProperties Properties { get; set; }
-        /// <summary> The Oracle Autonomous Database supported national character sets. </summary>
+        /// <summary>
+        /// The Oracle Autonomous Database supported national character sets.
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetProperties.characterSet
+        /// </summary>
         public string AutonomousDatabaseNationalCharacterSet
         {
             get => Properties is null ? default : Properties.CharacterSet;

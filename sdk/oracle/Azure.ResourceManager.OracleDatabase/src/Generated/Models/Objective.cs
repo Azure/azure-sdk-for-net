@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Objective enum. </summary>
+    /// <summary>
+    /// Objective enum
+    /// Serialized Name: Objective
+    /// </summary>
     public readonly partial struct Objective : IEquatable<Objective>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AutoValue = "Auto";
         private const string BasicValue = "Basic";
 
-        /// <summary> Low latency objective. </summary>
+        /// <summary>
+        /// Low latency objective
+        /// Serialized Name: Objective.LowLatency
+        /// </summary>
         public static Objective LowLatency { get; } = new Objective(LowLatencyValue);
-        /// <summary> High throughput objective. </summary>
+        /// <summary>
+        /// High throughput objective
+        /// Serialized Name: Objective.HighThroughput
+        /// </summary>
         public static Objective HighThroughput { get; } = new Objective(HighThroughputValue);
-        /// <summary> Balanced objective. </summary>
+        /// <summary>
+        /// Balanced objective
+        /// Serialized Name: Objective.Balanced
+        /// </summary>
         public static Objective Balanced { get; } = new Objective(BalancedValue);
-        /// <summary> Auto objective. </summary>
+        /// <summary>
+        /// Auto objective
+        /// Serialized Name: Objective.Auto
+        /// </summary>
         public static Objective Auto { get; } = new Objective(AutoValue);
-        /// <summary> Basic objective. </summary>
+        /// <summary>
+        /// Basic objective
+        /// Serialized Name: Objective.Basic
+        /// </summary>
         public static Objective Basic { get; } = new Objective(BasicValue);
         /// <summary> Determines if two <see cref="Objective"/> values are the same. </summary>
         public static bool operator ==(Objective left, Objective right) => left.Equals(right);

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the DbSystemShape data model.
     /// DbSystemShape resource definition
+    /// Serialized Name: DbSystemShape
     /// </summary>
     public partial class DbSystemShapeData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: DbSystemShape.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbSystemShapeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DbSystemShapeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +73,10 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: DbSystemShape.properties
+        /// </summary>
         public DbSystemShapeProperties Properties { get; set; }
     }
 }

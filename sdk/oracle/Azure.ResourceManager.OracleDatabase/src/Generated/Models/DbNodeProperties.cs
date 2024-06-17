@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The properties of DbNodeResource. </summary>
+    /// <summary>
+    /// The properties of DbNodeResource
+    /// Serialized Name: DbNodeProperties
+    /// </summary>
     public partial class DbNodeProperties
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DbNodeProperties"/>. </summary>
-        /// <param name="ocid"> DbNode OCID. </param>
-        /// <param name="dbSystemId"> The OCID of the DB system. </param>
+        /// <param name="ocid">
+        /// DbNode OCID
+        /// Serialized Name: DbNodeProperties.ocid
+        /// </param>
+        /// <param name="dbSystemId">
+        /// The OCID of the DB system.
+        /// Serialized Name: DbNodeProperties.dbSystemId
+        /// </param>
         public DbNodeProperties(string ocid, string dbSystemId)
         {
             Ocid = ocid;
@@ -55,29 +64,98 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbNodeProperties"/>. </summary>
-        /// <param name="ocid"> DbNode OCID. </param>
-        /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
-        /// <param name="backupIPId"> The OCID of the backup IP address associated with the database node. </param>
-        /// <param name="backupVnic2Id"> The OCID of the second backup VNIC. </param>
-        /// <param name="backupVnicId"> The OCID of the backup VNIC. </param>
-        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the Db node. </param>
-        /// <param name="dbNodeStorageSizeInGbs"> The allocated local node storage in GBs on the Db node. </param>
-        /// <param name="dbServerId"> The OCID of the Exacc Db server associated with the database node. </param>
-        /// <param name="dbSystemId"> The OCID of the DB system. </param>
-        /// <param name="faultDomain"> The name of the Fault Domain the instance is contained in. </param>
-        /// <param name="hostIPId"> The OCID of the host IP address associated with the database node. </param>
-        /// <param name="hostname"> The host name for the database node. </param>
-        /// <param name="lifecycleState"> The current state of the database node. </param>
-        /// <param name="lifecycleDetails"> Lifecycle details of Db Node. </param>
-        /// <param name="maintenanceType"> The type of database node maintenance. </param>
-        /// <param name="memorySizeInGbs"> The allocated memory in GBs on the Db node. </param>
-        /// <param name="softwareStorageSizeInGb"> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </param>
-        /// <param name="timeCreated"> The date and time that the database node was created. </param>
-        /// <param name="timeMaintenanceWindowEnd"> End date and time of maintenance window. </param>
-        /// <param name="timeMaintenanceWindowStart"> Start date and time of maintenance window. </param>
-        /// <param name="vnic2Id"> The OCID of the second VNIC. </param>
-        /// <param name="vnicId"> The OCID of the VNIC. </param>
-        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="ocid">
+        /// DbNode OCID
+        /// Serialized Name: DbNodeProperties.ocid
+        /// </param>
+        /// <param name="additionalDetails">
+        /// Additional information about the planned maintenance.
+        /// Serialized Name: DbNodeProperties.additionalDetails
+        /// </param>
+        /// <param name="backupIPId">
+        /// The OCID of the backup IP address associated with the database node.
+        /// Serialized Name: DbNodeProperties.backupIpId
+        /// </param>
+        /// <param name="backupVnic2Id">
+        /// The OCID of the second backup VNIC.
+        /// Serialized Name: DbNodeProperties.backupVnic2Id
+        /// </param>
+        /// <param name="backupVnicId">
+        /// The OCID of the backup VNIC.
+        /// Serialized Name: DbNodeProperties.backupVnicId
+        /// </param>
+        /// <param name="cpuCoreCount">
+        /// The number of CPU cores enabled on the Db node.
+        /// Serialized Name: DbNodeProperties.cpuCoreCount
+        /// </param>
+        /// <param name="dbNodeStorageSizeInGbs">
+        /// The allocated local node storage in GBs on the Db node.
+        /// Serialized Name: DbNodeProperties.dbNodeStorageSizeInGbs
+        /// </param>
+        /// <param name="dbServerId">
+        /// The OCID of the Exacc Db server associated with the database node.
+        /// Serialized Name: DbNodeProperties.dbServerId
+        /// </param>
+        /// <param name="dbSystemId">
+        /// The OCID of the DB system.
+        /// Serialized Name: DbNodeProperties.dbSystemId
+        /// </param>
+        /// <param name="faultDomain">
+        /// The name of the Fault Domain the instance is contained in.
+        /// Serialized Name: DbNodeProperties.faultDomain
+        /// </param>
+        /// <param name="hostIPId">
+        /// The OCID of the host IP address associated with the database node.
+        /// Serialized Name: DbNodeProperties.hostIpId
+        /// </param>
+        /// <param name="hostname">
+        /// The host name for the database node.
+        /// Serialized Name: DbNodeProperties.hostname
+        /// </param>
+        /// <param name="lifecycleState">
+        /// The current state of the database node.
+        /// Serialized Name: DbNodeProperties.lifecycleState
+        /// </param>
+        /// <param name="lifecycleDetails">
+        /// Lifecycle details of Db Node.
+        /// Serialized Name: DbNodeProperties.lifecycleDetails
+        /// </param>
+        /// <param name="maintenanceType">
+        /// The type of database node maintenance.
+        /// Serialized Name: DbNodeProperties.maintenanceType
+        /// </param>
+        /// <param name="memorySizeInGbs">
+        /// The allocated memory in GBs on the Db node.
+        /// Serialized Name: DbNodeProperties.memorySizeInGbs
+        /// </param>
+        /// <param name="softwareStorageSizeInGb">
+        /// The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems.
+        /// Serialized Name: DbNodeProperties.softwareStorageSizeInGb
+        /// </param>
+        /// <param name="timeCreated">
+        /// The date and time that the database node was created.
+        /// Serialized Name: DbNodeProperties.timeCreated
+        /// </param>
+        /// <param name="timeMaintenanceWindowEnd">
+        /// End date and time of maintenance window.
+        /// Serialized Name: DbNodeProperties.timeMaintenanceWindowEnd
+        /// </param>
+        /// <param name="timeMaintenanceWindowStart">
+        /// Start date and time of maintenance window.
+        /// Serialized Name: DbNodeProperties.timeMaintenanceWindowStart
+        /// </param>
+        /// <param name="vnic2Id">
+        /// The OCID of the second VNIC.
+        /// Serialized Name: DbNodeProperties.vnic2Id
+        /// </param>
+        /// <param name="vnicId">
+        /// The OCID of the VNIC.
+        /// Serialized Name: DbNodeProperties.vnicId
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure resource provisioning state.
+        /// Serialized Name: DbNodeProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbNodeProperties(string ocid, string additionalDetails, string backupIPId, string backupVnic2Id, string backupVnicId, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string dbServerId, string dbSystemId, string faultDomain, string hostIPId, string hostname, DbNodeProvisioningState? lifecycleState, string lifecycleDetails, DbNodeMaintenanceType? maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? timeCreated, DateTimeOffset? timeMaintenanceWindowEnd, DateTimeOffset? timeMaintenanceWindowStart, string vnic2Id, string vnicId, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -112,51 +190,120 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> DbNode OCID. </summary>
+        /// <summary>
+        /// DbNode OCID
+        /// Serialized Name: DbNodeProperties.ocid
+        /// </summary>
         public string Ocid { get; }
-        /// <summary> Additional information about the planned maintenance. </summary>
+        /// <summary>
+        /// Additional information about the planned maintenance.
+        /// Serialized Name: DbNodeProperties.additionalDetails
+        /// </summary>
         public string AdditionalDetails { get; }
-        /// <summary> The OCID of the backup IP address associated with the database node. </summary>
+        /// <summary>
+        /// The OCID of the backup IP address associated with the database node.
+        /// Serialized Name: DbNodeProperties.backupIpId
+        /// </summary>
         public string BackupIPId { get; }
-        /// <summary> The OCID of the second backup VNIC. </summary>
+        /// <summary>
+        /// The OCID of the second backup VNIC.
+        /// Serialized Name: DbNodeProperties.backupVnic2Id
+        /// </summary>
         public string BackupVnic2Id { get; }
-        /// <summary> The OCID of the backup VNIC. </summary>
+        /// <summary>
+        /// The OCID of the backup VNIC.
+        /// Serialized Name: DbNodeProperties.backupVnicId
+        /// </summary>
         public string BackupVnicId { get; }
-        /// <summary> The number of CPU cores enabled on the Db node. </summary>
+        /// <summary>
+        /// The number of CPU cores enabled on the Db node.
+        /// Serialized Name: DbNodeProperties.cpuCoreCount
+        /// </summary>
         public int? CpuCoreCount { get; }
-        /// <summary> The allocated local node storage in GBs on the Db node. </summary>
+        /// <summary>
+        /// The allocated local node storage in GBs on the Db node.
+        /// Serialized Name: DbNodeProperties.dbNodeStorageSizeInGbs
+        /// </summary>
         public int? DbNodeStorageSizeInGbs { get; }
-        /// <summary> The OCID of the Exacc Db server associated with the database node. </summary>
+        /// <summary>
+        /// The OCID of the Exacc Db server associated with the database node.
+        /// Serialized Name: DbNodeProperties.dbServerId
+        /// </summary>
         public string DbServerId { get; }
-        /// <summary> The OCID of the DB system. </summary>
+        /// <summary>
+        /// The OCID of the DB system.
+        /// Serialized Name: DbNodeProperties.dbSystemId
+        /// </summary>
         public string DbSystemId { get; }
-        /// <summary> The name of the Fault Domain the instance is contained in. </summary>
+        /// <summary>
+        /// The name of the Fault Domain the instance is contained in.
+        /// Serialized Name: DbNodeProperties.faultDomain
+        /// </summary>
         public string FaultDomain { get; }
-        /// <summary> The OCID of the host IP address associated with the database node. </summary>
+        /// <summary>
+        /// The OCID of the host IP address associated with the database node.
+        /// Serialized Name: DbNodeProperties.hostIpId
+        /// </summary>
         public string HostIPId { get; }
-        /// <summary> The host name for the database node. </summary>
+        /// <summary>
+        /// The host name for the database node.
+        /// Serialized Name: DbNodeProperties.hostname
+        /// </summary>
         public string Hostname { get; }
-        /// <summary> The current state of the database node. </summary>
+        /// <summary>
+        /// The current state of the database node.
+        /// Serialized Name: DbNodeProperties.lifecycleState
+        /// </summary>
         public DbNodeProvisioningState? LifecycleState { get; }
-        /// <summary> Lifecycle details of Db Node. </summary>
+        /// <summary>
+        /// Lifecycle details of Db Node.
+        /// Serialized Name: DbNodeProperties.lifecycleDetails
+        /// </summary>
         public string LifecycleDetails { get; }
-        /// <summary> The type of database node maintenance. </summary>
+        /// <summary>
+        /// The type of database node maintenance.
+        /// Serialized Name: DbNodeProperties.maintenanceType
+        /// </summary>
         public DbNodeMaintenanceType? MaintenanceType { get; }
-        /// <summary> The allocated memory in GBs on the Db node. </summary>
+        /// <summary>
+        /// The allocated memory in GBs on the Db node.
+        /// Serialized Name: DbNodeProperties.memorySizeInGbs
+        /// </summary>
         public int? MemorySizeInGbs { get; }
-        /// <summary> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </summary>
+        /// <summary>
+        /// The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems.
+        /// Serialized Name: DbNodeProperties.softwareStorageSizeInGb
+        /// </summary>
         public int? SoftwareStorageSizeInGb { get; }
-        /// <summary> The date and time that the database node was created. </summary>
+        /// <summary>
+        /// The date and time that the database node was created.
+        /// Serialized Name: DbNodeProperties.timeCreated
+        /// </summary>
         public DateTimeOffset? TimeCreated { get; }
-        /// <summary> End date and time of maintenance window. </summary>
+        /// <summary>
+        /// End date and time of maintenance window.
+        /// Serialized Name: DbNodeProperties.timeMaintenanceWindowEnd
+        /// </summary>
         public DateTimeOffset? TimeMaintenanceWindowEnd { get; }
-        /// <summary> Start date and time of maintenance window. </summary>
+        /// <summary>
+        /// Start date and time of maintenance window.
+        /// Serialized Name: DbNodeProperties.timeMaintenanceWindowStart
+        /// </summary>
         public DateTimeOffset? TimeMaintenanceWindowStart { get; }
-        /// <summary> The OCID of the second VNIC. </summary>
+        /// <summary>
+        /// The OCID of the second VNIC.
+        /// Serialized Name: DbNodeProperties.vnic2Id
+        /// </summary>
         public string Vnic2Id { get; }
-        /// <summary> The OCID of the VNIC. </summary>
+        /// <summary>
+        /// The OCID of the VNIC.
+        /// Serialized Name: DbNodeProperties.vnicId
+        /// </summary>
         public string VnicId { get; }
-        /// <summary> Azure resource provisioning state. </summary>
+        /// <summary>
+        /// Azure resource provisioning state.
+        /// Serialized Name: DbNodeProperties.provisioningState
+        /// </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

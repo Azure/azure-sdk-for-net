@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> AutonomousDbVersion resource model. </summary>
+    /// <summary>
+    /// AutonomousDbVersion resource model
+    /// Serialized Name: AutonomousDbVersionProperties
+    /// </summary>
     public partial class AutonomousDbVersionProperties
     {
         /// <summary>
@@ -46,19 +49,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDbVersionProperties"/>. </summary>
-        /// <param name="version"> Supported Autonomous Db versions. </param>
+        /// <param name="version">
+        /// Supported Autonomous Db versions.
+        /// Serialized Name: AutonomousDbVersionProperties.version
+        /// </param>
         public AutonomousDbVersionProperties(string version)
         {
             Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDbVersionProperties"/>. </summary>
-        /// <param name="version"> Supported Autonomous Db versions. </param>
-        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
-        /// <param name="isDefaultForFree"> True if this version of the Oracle Database software's default is free. </param>
-        /// <param name="isDefaultForPaid"> True if this version of the Oracle Database software's default is paid. </param>
-        /// <param name="isFreeTierEnabled"> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </param>
-        /// <param name="isPaidEnabled"> True if this version of the Oracle Database software has payments enabled. </param>
+        /// <param name="version">
+        /// Supported Autonomous Db versions.
+        /// Serialized Name: AutonomousDbVersionProperties.version
+        /// </param>
+        /// <param name="dbWorkload">
+        /// The Autonomous Database workload type
+        /// Serialized Name: AutonomousDbVersionProperties.dbWorkload
+        /// </param>
+        /// <param name="isDefaultForFree">
+        /// True if this version of the Oracle Database software's default is free.
+        /// Serialized Name: AutonomousDbVersionProperties.isDefaultForFree
+        /// </param>
+        /// <param name="isDefaultForPaid">
+        /// True if this version of the Oracle Database software's default is paid.
+        /// Serialized Name: AutonomousDbVersionProperties.isDefaultForPaid
+        /// </param>
+        /// <param name="isFreeTierEnabled">
+        /// True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases.
+        /// Serialized Name: AutonomousDbVersionProperties.isFreeTierEnabled
+        /// </param>
+        /// <param name="isPaidEnabled">
+        /// True if this version of the Oracle Database software has payments enabled.
+        /// Serialized Name: AutonomousDbVersionProperties.isPaidEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDbVersionProperties(string version, WorkloadType? dbWorkload, bool? isDefaultForFree, bool? isDefaultForPaid, bool? isFreeTierEnabled, bool? isPaidEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,17 +100,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Supported Autonomous Db versions. </summary>
+        /// <summary>
+        /// Supported Autonomous Db versions.
+        /// Serialized Name: AutonomousDbVersionProperties.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The Autonomous Database workload type. </summary>
+        /// <summary>
+        /// The Autonomous Database workload type
+        /// Serialized Name: AutonomousDbVersionProperties.dbWorkload
+        /// </summary>
         public WorkloadType? DbWorkload { get; }
-        /// <summary> True if this version of the Oracle Database software's default is free. </summary>
+        /// <summary>
+        /// True if this version of the Oracle Database software's default is free.
+        /// Serialized Name: AutonomousDbVersionProperties.isDefaultForFree
+        /// </summary>
         public bool? IsDefaultForFree { get; }
-        /// <summary> True if this version of the Oracle Database software's default is paid. </summary>
+        /// <summary>
+        /// True if this version of the Oracle Database software's default is paid.
+        /// Serialized Name: AutonomousDbVersionProperties.isDefaultForPaid
+        /// </summary>
         public bool? IsDefaultForPaid { get; }
-        /// <summary> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </summary>
+        /// <summary>
+        /// True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases.
+        /// Serialized Name: AutonomousDbVersionProperties.isFreeTierEnabled
+        /// </summary>
         public bool? IsFreeTierEnabled { get; }
-        /// <summary> True if this version of the Oracle Database software has payments enabled. </summary>
+        /// <summary>
+        /// True if this version of the Oracle Database software has payments enabled.
+        /// Serialized Name: AutonomousDbVersionProperties.isPaidEnabled
+        /// </summary>
         public bool? IsPaidEnabled { get; }
     }
 }

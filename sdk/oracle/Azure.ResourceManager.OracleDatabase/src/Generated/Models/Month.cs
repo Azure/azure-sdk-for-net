@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Month resource properties. </summary>
+    /// <summary>
+    /// Month resource properties
+    /// Serialized Name: Month
+    /// </summary>
     public partial class Month
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Month"/>. </summary>
-        /// <param name="name"> Name of the month of the year. </param>
+        /// <param name="name">
+        /// Name of the month of the year.
+        /// Serialized Name: Month.name
+        /// </param>
         public Month(MonthName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="Month"/>. </summary>
-        /// <param name="name"> Name of the month of the year. </param>
+        /// <param name="name">
+        /// Name of the month of the year.
+        /// Serialized Name: Month.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Month(MonthName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Name of the month of the year. </summary>
+        /// <summary>
+        /// Name of the month of the year.
+        /// Serialized Name: Month.name
+        /// </summary>
         public MonthName Name { get; set; }
     }
 }

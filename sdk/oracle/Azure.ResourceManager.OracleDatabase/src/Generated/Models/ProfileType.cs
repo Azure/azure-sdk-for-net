@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
+    /// <summary>
+    /// The connection string profile to allow clients to group, filter and select connection string values based on structured metadata.
+    /// Serialized Name: ProfileType
+    /// </summary>
     public partial class ProfileType
     {
         /// <summary>
@@ -46,12 +49,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProfileType"/>. </summary>
-        /// <param name="displayName"> A user-friendly name for the connection. </param>
-        /// <param name="hostFormat"> Host format used in connection string. </param>
-        /// <param name="protocol"> Protocol used by the connection. </param>
-        /// <param name="sessionMode"> Specifies whether the listener performs a direct hand-off of the session, or redirects the session. </param>
-        /// <param name="syntaxFormat"> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </param>
-        /// <param name="value"> Connection string value. </param>
+        /// <param name="displayName">
+        /// A user-friendly name for the connection.
+        /// Serialized Name: ProfileType.displayName
+        /// </param>
+        /// <param name="hostFormat">
+        /// Host format used in connection string.
+        /// Serialized Name: ProfileType.hostFormat
+        /// </param>
+        /// <param name="protocol">
+        /// Protocol used by the connection.
+        /// Serialized Name: ProfileType.protocol
+        /// </param>
+        /// <param name="sessionMode">
+        /// Specifies whether the listener performs a direct hand-off of the session, or redirects the session.
+        /// Serialized Name: ProfileType.sessionMode
+        /// </param>
+        /// <param name="syntaxFormat">
+        /// Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format.
+        /// Serialized Name: ProfileType.syntaxFormat
+        /// </param>
+        /// <param name="value">
+        /// Connection string value.
+        /// Serialized Name: ProfileType.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="value"/> is null. </exception>
         internal ProfileType(string displayName, HostFormatType hostFormat, ProtocolType protocol, SessionModeType sessionMode, SyntaxFormatType syntaxFormat, string value)
         {
@@ -67,15 +88,42 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileType"/>. </summary>
-        /// <param name="consumerGroup"> Consumer group used by the connection. </param>
-        /// <param name="displayName"> A user-friendly name for the connection. </param>
-        /// <param name="hostFormat"> Host format used in connection string. </param>
-        /// <param name="isRegional"> True for a regional connection string, applicable to cross-region DG only. </param>
-        /// <param name="protocol"> Protocol used by the connection. </param>
-        /// <param name="sessionMode"> Specifies whether the listener performs a direct hand-off of the session, or redirects the session. </param>
-        /// <param name="syntaxFormat"> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </param>
-        /// <param name="tlsAuthentication"> Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication. </param>
-        /// <param name="value"> Connection string value. </param>
+        /// <param name="consumerGroup">
+        /// Consumer group used by the connection.
+        /// Serialized Name: ProfileType.consumerGroup
+        /// </param>
+        /// <param name="displayName">
+        /// A user-friendly name for the connection.
+        /// Serialized Name: ProfileType.displayName
+        /// </param>
+        /// <param name="hostFormat">
+        /// Host format used in connection string.
+        /// Serialized Name: ProfileType.hostFormat
+        /// </param>
+        /// <param name="isRegional">
+        /// True for a regional connection string, applicable to cross-region DG only.
+        /// Serialized Name: ProfileType.isRegional
+        /// </param>
+        /// <param name="protocol">
+        /// Protocol used by the connection.
+        /// Serialized Name: ProfileType.protocol
+        /// </param>
+        /// <param name="sessionMode">
+        /// Specifies whether the listener performs a direct hand-off of the session, or redirects the session.
+        /// Serialized Name: ProfileType.sessionMode
+        /// </param>
+        /// <param name="syntaxFormat">
+        /// Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format.
+        /// Serialized Name: ProfileType.syntaxFormat
+        /// </param>
+        /// <param name="tlsAuthentication">
+        /// Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication.
+        /// Serialized Name: ProfileType.tlsAuthentication
+        /// </param>
+        /// <param name="value">
+        /// Connection string value.
+        /// Serialized Name: ProfileType.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileType(ConsumerGroup? consumerGroup, string displayName, HostFormatType hostFormat, bool? isRegional, ProtocolType protocol, SessionModeType sessionMode, SyntaxFormatType syntaxFormat, TlsAuthenticationType? tlsAuthentication, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,23 +144,50 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Consumer group used by the connection. </summary>
+        /// <summary>
+        /// Consumer group used by the connection.
+        /// Serialized Name: ProfileType.consumerGroup
+        /// </summary>
         public ConsumerGroup? ConsumerGroup { get; }
-        /// <summary> A user-friendly name for the connection. </summary>
+        /// <summary>
+        /// A user-friendly name for the connection.
+        /// Serialized Name: ProfileType.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Host format used in connection string. </summary>
+        /// <summary>
+        /// Host format used in connection string.
+        /// Serialized Name: ProfileType.hostFormat
+        /// </summary>
         public HostFormatType HostFormat { get; }
-        /// <summary> True for a regional connection string, applicable to cross-region DG only. </summary>
+        /// <summary>
+        /// True for a regional connection string, applicable to cross-region DG only.
+        /// Serialized Name: ProfileType.isRegional
+        /// </summary>
         public bool? IsRegional { get; }
-        /// <summary> Protocol used by the connection. </summary>
+        /// <summary>
+        /// Protocol used by the connection.
+        /// Serialized Name: ProfileType.protocol
+        /// </summary>
         public ProtocolType Protocol { get; }
-        /// <summary> Specifies whether the listener performs a direct hand-off of the session, or redirects the session. </summary>
+        /// <summary>
+        /// Specifies whether the listener performs a direct hand-off of the session, or redirects the session.
+        /// Serialized Name: ProfileType.sessionMode
+        /// </summary>
         public SessionModeType SessionMode { get; }
-        /// <summary> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </summary>
+        /// <summary>
+        /// Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format.
+        /// Serialized Name: ProfileType.syntaxFormat
+        /// </summary>
         public SyntaxFormatType SyntaxFormat { get; }
-        /// <summary> Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication. </summary>
+        /// <summary>
+        /// Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication.
+        /// Serialized Name: ProfileType.tlsAuthentication
+        /// </summary>
         public TlsAuthenticationType? TlsAuthentication { get; }
-        /// <summary> Connection string value. </summary>
+        /// <summary>
+        /// Connection string value.
+        /// Serialized Name: ProfileType.value
+        /// </summary>
         public string Value { get; }
     }
 }

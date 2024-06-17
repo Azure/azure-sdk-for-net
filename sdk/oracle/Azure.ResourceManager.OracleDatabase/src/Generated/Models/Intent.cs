@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Intent enum. </summary>
+    /// <summary>
+    /// Intent enum
+    /// Serialized Name: Intent
+    /// </summary>
     public readonly partial struct Intent : IEquatable<Intent>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RetainValue = "Retain";
         private const string ResetValue = "Reset";
 
-        /// <summary> Retain intent. </summary>
+        /// <summary>
+        /// Retain intent
+        /// Serialized Name: Intent.Retain
+        /// </summary>
         public static Intent Retain { get; } = new Intent(RetainValue);
-        /// <summary> Reset intent. </summary>
+        /// <summary>
+        /// Reset intent
+        /// Serialized Name: Intent.Reset
+        /// </summary>
         public static Intent Reset { get; } = new Intent(ResetValue);
         /// <summary> Determines if two <see cref="Intent"/> values are the same. </summary>
         public static bool operator ==(Intent left, Intent right) => left.Equals(right);

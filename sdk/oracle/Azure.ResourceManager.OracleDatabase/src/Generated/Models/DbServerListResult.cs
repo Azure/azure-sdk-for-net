@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a DbServer list operation. </summary>
+    /// <summary>
+    /// The response of a DbServer list operation.
+    /// Serialized Name: DbServerListResult
+    /// </summary>
     internal partial class DbServerListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DbServerListResult"/>. </summary>
-        /// <param name="value"> The DbServer items on this page. </param>
+        /// <param name="value">
+        /// The DbServer items on this page
+        /// Serialized Name: DbServerListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DbServerListResult(IEnumerable<DbServerData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbServerListResult"/>. </summary>
-        /// <param name="value"> The DbServer items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The DbServer items on this page
+        /// Serialized Name: DbServerListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: DbServerListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbServerListResult(IReadOnlyList<DbServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The DbServer items on this page. </summary>
+        /// <summary>
+        /// The DbServer items on this page
+        /// Serialized Name: DbServerListResult.value
+        /// </summary>
         public IReadOnlyList<DbServerData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: DbServerListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The provisioning state of a resource type. </summary>
+    /// <summary>
+    /// The provisioning state of a resource type.
+    /// Serialized Name: ResourceProvisioningState
+    /// </summary>
     public readonly partial struct ResourceProvisioningState : IEquatable<ResourceProvisioningState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Resource has been created. </summary>
+        /// <summary>
+        /// Resource has been created.
+        /// Serialized Name: ResourceProvisioningState.Succeeded
+        /// </summary>
         public static ResourceProvisioningState Succeeded { get; } = new ResourceProvisioningState(SucceededValue);
-        /// <summary> Resource creation failed. </summary>
+        /// <summary>
+        /// Resource creation failed.
+        /// Serialized Name: ResourceProvisioningState.Failed
+        /// </summary>
         public static ResourceProvisioningState Failed { get; } = new ResourceProvisioningState(FailedValue);
-        /// <summary> Resource creation was canceled. </summary>
+        /// <summary>
+        /// Resource creation was canceled.
+        /// Serialized Name: ResourceProvisioningState.Canceled
+        /// </summary>
         public static ResourceProvisioningState Canceled { get; } = new ResourceProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ResourceProvisioningState left, ResourceProvisioningState right) => left.Equals(right);

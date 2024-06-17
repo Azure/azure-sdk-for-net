@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DbNode action enum. </summary>
+    /// <summary>
+    /// DbNode action enum
+    /// Serialized Name: DbNodeActionEnum
+    /// </summary>
     public readonly partial struct DbNodeActionEnum : IEquatable<DbNodeActionEnum>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string SoftResetValue = "SoftReset";
         private const string ResetValue = "Reset";
 
-        /// <summary> Start DbNode. </summary>
+        /// <summary>
+        /// Start DbNode
+        /// Serialized Name: DbNodeActionEnum.Start
+        /// </summary>
         public static DbNodeActionEnum Start { get; } = new DbNodeActionEnum(StartValue);
-        /// <summary> Stop DbNode. </summary>
+        /// <summary>
+        /// Stop DbNode
+        /// Serialized Name: DbNodeActionEnum.Stop
+        /// </summary>
         public static DbNodeActionEnum Stop { get; } = new DbNodeActionEnum(StopValue);
-        /// <summary> Soft reset DbNode. </summary>
+        /// <summary>
+        /// Soft reset DbNode
+        /// Serialized Name: DbNodeActionEnum.SoftReset
+        /// </summary>
         public static DbNodeActionEnum SoftReset { get; } = new DbNodeActionEnum(SoftResetValue);
-        /// <summary> Reset DbNode. </summary>
+        /// <summary>
+        /// Reset DbNode
+        /// Serialized Name: DbNodeActionEnum.Reset
+        /// </summary>
         public static DbNodeActionEnum Reset { get; } = new DbNodeActionEnum(ResetValue);
         /// <summary> Determines if two <see cref="DbNodeActionEnum"/> values are the same. </summary>
         public static bool operator ==(DbNodeActionEnum left, DbNodeActionEnum right) => left.Equals(right);

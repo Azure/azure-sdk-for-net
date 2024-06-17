@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> GiVersion resource model. </summary>
+    /// <summary>
+    /// GiVersion resource model
+    /// Serialized Name: GiVersionProperties
+    /// </summary>
     internal partial class GiVersionProperties
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GiVersionProperties"/>. </summary>
-        /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="version">
+        /// A valid Oracle Grid Infrastructure (GI) software version.
+        /// Serialized Name: GiVersionProperties.version
+        /// </param>
         public GiVersionProperties(string version)
         {
             Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="GiVersionProperties"/>. </summary>
-        /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="version">
+        /// A valid Oracle Grid Infrastructure (GI) software version.
+        /// Serialized Name: GiVersionProperties.version
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GiVersionProperties(string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
+        /// <summary>
+        /// A valid Oracle Grid Infrastructure (GI) software version.
+        /// Serialized Name: GiVersionProperties.version
+        /// </summary>
         public string Version { get; }
     }
 }

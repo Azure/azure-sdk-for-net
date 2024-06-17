@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> SaaS Subscription Details model. </summary>
+    /// <summary>
+    /// SaaS Subscription Details model
+    /// Serialized Name: SaasSubscriptionDetails
+    /// </summary>
     public partial class SaasSubscriptionDetails
     {
         /// <summary>
@@ -51,18 +54,54 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SaasSubscriptionDetails"/>. </summary>
-        /// <param name="id"> Purchased SaaS subscription ID. </param>
-        /// <param name="subscriptionName"> SaaS subscription name. </param>
-        /// <param name="timeCreated"> Creation Date and Time. </param>
-        /// <param name="offerId"> Purchased offer ID. </param>
-        /// <param name="planId"> Purchased offer's plan ID. </param>
-        /// <param name="saasSubscriptionStatus"> Indicates the status of the Subscription. </param>
-        /// <param name="publisherId"> Publisher ID. </param>
-        /// <param name="purchaserEmailId"> Purchaser Email ID. </param>
-        /// <param name="purchaserTenantId"> Purchaser Tenant ID. </param>
-        /// <param name="termUnit"> Purchase Term Unit. </param>
-        /// <param name="isAutoRenew"> AutoRenew flag. </param>
-        /// <param name="isFreeTrial"> FreeTrial flag. </param>
+        /// <param name="id">
+        /// Purchased SaaS subscription ID
+        /// Serialized Name: SaasSubscriptionDetails.id
+        /// </param>
+        /// <param name="subscriptionName">
+        /// SaaS subscription name
+        /// Serialized Name: SaasSubscriptionDetails.subscriptionName
+        /// </param>
+        /// <param name="timeCreated">
+        /// Creation Date and Time
+        /// Serialized Name: SaasSubscriptionDetails.timeCreated
+        /// </param>
+        /// <param name="offerId">
+        /// Purchased offer ID
+        /// Serialized Name: SaasSubscriptionDetails.offerId
+        /// </param>
+        /// <param name="planId">
+        /// Purchased offer's plan ID
+        /// Serialized Name: SaasSubscriptionDetails.planId
+        /// </param>
+        /// <param name="saasSubscriptionStatus">
+        /// Indicates the status of the Subscription.
+        /// Serialized Name: SaasSubscriptionDetails.saasSubscriptionStatus
+        /// </param>
+        /// <param name="publisherId">
+        /// Publisher ID
+        /// Serialized Name: SaasSubscriptionDetails.publisherId
+        /// </param>
+        /// <param name="purchaserEmailId">
+        /// Purchaser Email ID
+        /// Serialized Name: SaasSubscriptionDetails.purchaserEmailId
+        /// </param>
+        /// <param name="purchaserTenantId">
+        /// Purchaser Tenant ID
+        /// Serialized Name: SaasSubscriptionDetails.purchaserTenantId
+        /// </param>
+        /// <param name="termUnit">
+        /// Purchase Term Unit
+        /// Serialized Name: SaasSubscriptionDetails.termUnit
+        /// </param>
+        /// <param name="isAutoRenew">
+        /// AutoRenew flag
+        /// Serialized Name: SaasSubscriptionDetails.isAutoRenew
+        /// </param>
+        /// <param name="isFreeTrial">
+        /// FreeTrial flag
+        /// Serialized Name: SaasSubscriptionDetails.isFreeTrial
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SaasSubscriptionDetails(string id, string subscriptionName, DateTimeOffset? timeCreated, string offerId, string planId, string saasSubscriptionStatus, string publisherId, string purchaserEmailId, string purchaserTenantId, string termUnit, bool? isAutoRenew, bool? isFreeTrial, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,29 +120,65 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Purchased SaaS subscription ID. </summary>
+        /// <summary>
+        /// Purchased SaaS subscription ID
+        /// Serialized Name: SaasSubscriptionDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> SaaS subscription name. </summary>
+        /// <summary>
+        /// SaaS subscription name
+        /// Serialized Name: SaasSubscriptionDetails.subscriptionName
+        /// </summary>
         public string SubscriptionName { get; }
-        /// <summary> Creation Date and Time. </summary>
+        /// <summary>
+        /// Creation Date and Time
+        /// Serialized Name: SaasSubscriptionDetails.timeCreated
+        /// </summary>
         public DateTimeOffset? TimeCreated { get; }
-        /// <summary> Purchased offer ID. </summary>
+        /// <summary>
+        /// Purchased offer ID
+        /// Serialized Name: SaasSubscriptionDetails.offerId
+        /// </summary>
         public string OfferId { get; }
-        /// <summary> Purchased offer's plan ID. </summary>
+        /// <summary>
+        /// Purchased offer's plan ID
+        /// Serialized Name: SaasSubscriptionDetails.planId
+        /// </summary>
         public string PlanId { get; }
-        /// <summary> Indicates the status of the Subscription. </summary>
+        /// <summary>
+        /// Indicates the status of the Subscription.
+        /// Serialized Name: SaasSubscriptionDetails.saasSubscriptionStatus
+        /// </summary>
         public string SaasSubscriptionStatus { get; }
-        /// <summary> Publisher ID. </summary>
+        /// <summary>
+        /// Publisher ID
+        /// Serialized Name: SaasSubscriptionDetails.publisherId
+        /// </summary>
         public string PublisherId { get; }
-        /// <summary> Purchaser Email ID. </summary>
+        /// <summary>
+        /// Purchaser Email ID
+        /// Serialized Name: SaasSubscriptionDetails.purchaserEmailId
+        /// </summary>
         public string PurchaserEmailId { get; }
-        /// <summary> Purchaser Tenant ID. </summary>
+        /// <summary>
+        /// Purchaser Tenant ID
+        /// Serialized Name: SaasSubscriptionDetails.purchaserTenantId
+        /// </summary>
         public string PurchaserTenantId { get; }
-        /// <summary> Purchase Term Unit. </summary>
+        /// <summary>
+        /// Purchase Term Unit
+        /// Serialized Name: SaasSubscriptionDetails.termUnit
+        /// </summary>
         public string TermUnit { get; }
-        /// <summary> AutoRenew flag. </summary>
+        /// <summary>
+        /// AutoRenew flag
+        /// Serialized Name: SaasSubscriptionDetails.isAutoRenew
+        /// </summary>
         public bool? IsAutoRenew { get; }
-        /// <summary> FreeTrial flag. </summary>
+        /// <summary>
+        /// FreeTrial flag
+        /// Serialized Name: SaasSubscriptionDetails.isFreeTrial
+        /// </summary>
         public bool? IsFreeTrial { get; }
     }
 }

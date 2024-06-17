@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DbIormConfig for cloud vm cluster. </summary>
+    /// <summary>
+    /// DbIormConfig for cloud vm cluster
+    /// Serialized Name: DbIormConfig
+    /// </summary>
     public partial class DbIormConfig
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbIormConfig"/>. </summary>
-        /// <param name="dbName"> The database name. For the default DbPlan, the dbName is default. </param>
-        /// <param name="flashCacheLimit"> The flash cache limit for this database. This value is internally configured based on the share value assigned to the database. </param>
-        /// <param name="share"> The relative priority of this database. </param>
+        /// <param name="dbName">
+        /// The database name. For the default DbPlan, the dbName is default.
+        /// Serialized Name: DbIormConfig.dbName
+        /// </param>
+        /// <param name="flashCacheLimit">
+        /// The flash cache limit for this database. This value is internally configured based on the share value assigned to the database.
+        /// Serialized Name: DbIormConfig.flashCacheLimit
+        /// </param>
+        /// <param name="share">
+        /// The relative priority of this database.
+        /// Serialized Name: DbIormConfig.share
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbIormConfig(string dbName, string flashCacheLimit, int? share, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The database name. For the default DbPlan, the dbName is default. </summary>
+        /// <summary>
+        /// The database name. For the default DbPlan, the dbName is default.
+        /// Serialized Name: DbIormConfig.dbName
+        /// </summary>
         public string DbName { get; }
-        /// <summary> The flash cache limit for this database. This value is internally configured based on the share value assigned to the database. </summary>
+        /// <summary>
+        /// The flash cache limit for this database. This value is internally configured based on the share value assigned to the database.
+        /// Serialized Name: DbIormConfig.flashCacheLimit
+        /// </summary>
         public string FlashCacheLimit { get; }
-        /// <summary> The relative priority of this database. </summary>
+        /// <summary>
+        /// The relative priority of this database.
+        /// Serialized Name: DbIormConfig.share
+        /// </summary>
         public int? Share { get; }
     }
 }

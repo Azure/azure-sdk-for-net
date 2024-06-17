@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a AutonomousDatabaseNationalCharacterSet list operation. </summary>
+    /// <summary>
+    /// The response of a AutonomousDatabaseNationalCharacterSet list operation.
+    /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult
+    /// </summary>
     internal partial class AutonomousDatabaseNationalCharacterSetListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetListResult"/>. </summary>
-        /// <param name="value"> The AutonomousDatabaseNationalCharacterSet items on this page. </param>
+        /// <param name="value">
+        /// The AutonomousDatabaseNationalCharacterSet items on this page
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutonomousDatabaseNationalCharacterSetListResult(IEnumerable<AutonomousDatabaseNationalCharacterSetData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetListResult"/>. </summary>
-        /// <param name="value"> The AutonomousDatabaseNationalCharacterSet items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The AutonomousDatabaseNationalCharacterSet items on this page
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseNationalCharacterSetListResult(IReadOnlyList<AutonomousDatabaseNationalCharacterSetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The AutonomousDatabaseNationalCharacterSet items on this page. </summary>
+        /// <summary>
+        /// The AutonomousDatabaseNationalCharacterSet items on this page
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult.value
+        /// </summary>
         public IReadOnlyList<AutonomousDatabaseNationalCharacterSetData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: AutonomousDatabaseNationalCharacterSetListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

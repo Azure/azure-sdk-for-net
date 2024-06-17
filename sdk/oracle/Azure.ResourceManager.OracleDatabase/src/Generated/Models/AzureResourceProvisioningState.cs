@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Azure Resource Provisioning State enum. </summary>
+    /// <summary>
+    /// Azure Resource Provisioning State enum
+    /// Serialized Name: AzureResourceProvisioningState
+    /// </summary>
     public readonly partial struct AzureResourceProvisioningState : IEquatable<AzureResourceProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string CanceledValue = "Canceled";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> Resource has been created. </summary>
+        /// <summary>
+        /// Resource has been created.
+        /// Serialized Name: AzureResourceProvisioningState.Succeeded
+        /// </summary>
         public static AzureResourceProvisioningState Succeeded { get; } = new AzureResourceProvisioningState(SucceededValue);
-        /// <summary> Resource creation failed. </summary>
+        /// <summary>
+        /// Resource creation failed.
+        /// Serialized Name: AzureResourceProvisioningState.Failed
+        /// </summary>
         public static AzureResourceProvisioningState Failed { get; } = new AzureResourceProvisioningState(FailedValue);
-        /// <summary> Resource creation was canceled. </summary>
+        /// <summary>
+        /// Resource creation was canceled.
+        /// Serialized Name: AzureResourceProvisioningState.Canceled
+        /// </summary>
         public static AzureResourceProvisioningState Canceled { get; } = new AzureResourceProvisioningState(CanceledValue);
-        /// <summary> Indicates that resource in Provisioning state. </summary>
+        /// <summary>
+        /// Indicates that resource in Provisioning state
+        /// Serialized Name: AzureResourceProvisioningState.Provisioning
+        /// </summary>
         public static AzureResourceProvisioningState Provisioning { get; } = new AzureResourceProvisioningState(ProvisioningValue);
         /// <summary> Determines if two <see cref="AzureResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AzureResourceProvisioningState left, AzureResourceProvisioningState right) => left.Equals(right);

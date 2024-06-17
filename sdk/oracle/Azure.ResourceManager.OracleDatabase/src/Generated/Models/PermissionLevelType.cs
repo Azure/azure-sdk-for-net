@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Permission level type enum. </summary>
+    /// <summary>
+    /// Permission level type enum.
+    /// Serialized Name: PermissionLevelType
+    /// </summary>
     public readonly partial struct PermissionLevelType : IEquatable<PermissionLevelType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string RestrictedValue = "Restricted";
         private const string UnrestrictedValue = "Unrestricted";
 
-        /// <summary> Restricted permission level. </summary>
+        /// <summary>
+        /// Restricted permission level
+        /// Serialized Name: PermissionLevelType.Restricted
+        /// </summary>
         public static PermissionLevelType Restricted { get; } = new PermissionLevelType(RestrictedValue);
-        /// <summary> Unrestricted permission level. </summary>
+        /// <summary>
+        /// Unrestricted permission level
+        /// Serialized Name: PermissionLevelType.Unrestricted
+        /// </summary>
         public static PermissionLevelType Unrestricted { get; } = new PermissionLevelType(UnrestrictedValue);
         /// <summary> Determines if two <see cref="PermissionLevelType"/> values are the same. </summary>
         public static bool operator ==(PermissionLevelType left, PermissionLevelType right) => left.Equals(right);

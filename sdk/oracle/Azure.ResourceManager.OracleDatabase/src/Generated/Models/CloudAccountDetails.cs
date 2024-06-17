@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Cloud Account Details model. </summary>
+    /// <summary>
+    /// Cloud Account Details model
+    /// Serialized Name: CloudAccountDetails
+    /// </summary>
     public partial class CloudAccountDetails
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudAccountDetails"/>. </summary>
-        /// <param name="cloudAccountName"> Cloud Account name. </param>
-        /// <param name="cloudAccountHomeRegion"> Cloud Account Home region. </param>
+        /// <param name="cloudAccountName">
+        /// Cloud Account name
+        /// Serialized Name: CloudAccountDetails.cloudAccountName
+        /// </param>
+        /// <param name="cloudAccountHomeRegion">
+        /// Cloud Account Home region
+        /// Serialized Name: CloudAccountDetails.cloudAccountHomeRegion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudAccountDetails(string cloudAccountName, string cloudAccountHomeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Cloud Account name. </summary>
+        /// <summary>
+        /// Cloud Account name
+        /// Serialized Name: CloudAccountDetails.cloudAccountName
+        /// </summary>
         public string CloudAccountName { get; }
-        /// <summary> Cloud Account Home region. </summary>
+        /// <summary>
+        /// Cloud Account Home region
+        /// Serialized Name: CloudAccountDetails.cloudAccountHomeRegion
+        /// </summary>
         public string CloudAccountHomeRegion { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> ORM lifecycle state enum. </summary>
+    /// <summary>
+    /// ORM lifecycle state enum
+    /// Serialized Name: IormLifecycleState
+    /// </summary>
     public readonly partial struct IormLifecycleState : IEquatable<IormLifecycleState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string UpdatingValue = "Updating";
         private const string FailedValue = "Failed";
 
-        /// <summary> Indicates that resource in Provisioning state. </summary>
+        /// <summary>
+        /// Indicates that resource in Provisioning state
+        /// Serialized Name: IormLifecycleState.BootStrapping
+        /// </summary>
         public static IormLifecycleState BootStrapping { get; } = new IormLifecycleState(BootStrappingValue);
-        /// <summary> Indicates that resource in Enabled state. </summary>
+        /// <summary>
+        /// Indicates that resource in Enabled state
+        /// Serialized Name: IormLifecycleState.Enabled
+        /// </summary>
         public static IormLifecycleState Enabled { get; } = new IormLifecycleState(EnabledValue);
-        /// <summary> Indicates that resource in Disabled state. </summary>
+        /// <summary>
+        /// Indicates that resource in Disabled state
+        /// Serialized Name: IormLifecycleState.Disabled
+        /// </summary>
         public static IormLifecycleState Disabled { get; } = new IormLifecycleState(DisabledValue);
-        /// <summary> Indicates that resource in Updating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Updating state
+        /// Serialized Name: IormLifecycleState.Updating
+        /// </summary>
         public static IormLifecycleState Updating { get; } = new IormLifecycleState(UpdatingValue);
-        /// <summary> Indicates that resource in Failed state. </summary>
+        /// <summary>
+        /// Indicates that resource in Failed state
+        /// Serialized Name: IormLifecycleState.Failed
+        /// </summary>
         public static IormLifecycleState Failed { get; } = new IormLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="IormLifecycleState"/> values are the same. </summary>
         public static bool operator ==(IormLifecycleState left, IormLifecycleState right) => left.Equals(right);

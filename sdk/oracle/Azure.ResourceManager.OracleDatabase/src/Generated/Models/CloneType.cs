@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Clone type enum. </summary>
+    /// <summary>
+    /// Clone type enum
+    /// Serialized Name: CloneType
+    /// </summary>
     public readonly partial struct CloneType : IEquatable<CloneType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FullValue = "Full";
         private const string MetadataValue = "Metadata";
 
-        /// <summary> Full clone. </summary>
+        /// <summary>
+        /// Full clone
+        /// Serialized Name: CloneType.Full
+        /// </summary>
         public static CloneType Full { get; } = new CloneType(FullValue);
-        /// <summary> Metadata only. </summary>
+        /// <summary>
+        /// Metadata only
+        /// Serialized Name: CloneType.Metadata
+        /// </summary>
         public static CloneType Metadata { get; } = new CloneType(MetadataValue);
         /// <summary> Determines if two <see cref="CloneType"/> values are the same. </summary>
         public static bool operator ==(CloneType left, CloneType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DNS Private Views lifecycle state enum. </summary>
+    /// <summary>
+    /// DNS Private Views lifecycle state enum
+    /// Serialized Name: DnsPrivateViewsLifecycleState
+    /// </summary>
     public readonly partial struct DnsPrivateViewsLifecycleState : IEquatable<DnsPrivateViewsLifecycleState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> DNS Private View is active. </summary>
+        /// <summary>
+        /// DNS Private View is active
+        /// Serialized Name: DnsPrivateViewsLifecycleState.Active
+        /// </summary>
         public static DnsPrivateViewsLifecycleState Active { get; } = new DnsPrivateViewsLifecycleState(ActiveValue);
-        /// <summary> DNS Private View is deleted. </summary>
+        /// <summary>
+        /// DNS Private View is deleted
+        /// Serialized Name: DnsPrivateViewsLifecycleState.Deleted
+        /// </summary>
         public static DnsPrivateViewsLifecycleState Deleted { get; } = new DnsPrivateViewsLifecycleState(DeletedValue);
-        /// <summary> DNS Private View is deleting. </summary>
+        /// <summary>
+        /// DNS Private View is deleting
+        /// Serialized Name: DnsPrivateViewsLifecycleState.Deleting
+        /// </summary>
         public static DnsPrivateViewsLifecycleState Deleting { get; } = new DnsPrivateViewsLifecycleState(DeletingValue);
-        /// <summary> DNS Private View is updating. </summary>
+        /// <summary>
+        /// DNS Private View is updating
+        /// Serialized Name: DnsPrivateViewsLifecycleState.Updating
+        /// </summary>
         public static DnsPrivateViewsLifecycleState Updating { get; } = new DnsPrivateViewsLifecycleState(UpdatingValue);
         /// <summary> Determines if two <see cref="DnsPrivateViewsLifecycleState"/> values are the same. </summary>
         public static bool operator ==(DnsPrivateViewsLifecycleState left, DnsPrivateViewsLifecycleState right) => left.Equals(right);

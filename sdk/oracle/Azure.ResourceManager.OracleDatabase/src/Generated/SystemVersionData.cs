@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the SystemVersion data model.
     /// SystemVersion resource Definition
+    /// Serialized Name: SystemVersion
     /// </summary>
     public partial class SystemVersionData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: SystemVersion.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SystemVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SystemVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,9 +73,15 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: SystemVersion.properties
+        /// </summary>
         internal SystemVersionProperties Properties { get; set; }
-        /// <summary> A valid Oracle System Version. </summary>
+        /// <summary>
+        /// A valid Oracle System Version
+        /// Serialized Name: SystemVersionProperties.systemVersion
+        /// </summary>
         public string SystemVersion
         {
             get => Properties is null ? default : Properties.SystemVersion;

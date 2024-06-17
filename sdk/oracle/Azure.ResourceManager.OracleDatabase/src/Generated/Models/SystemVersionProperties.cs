@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> System Version Resource model. </summary>
+    /// <summary>
+    /// System Version Resource model
+    /// Serialized Name: SystemVersionProperties
+    /// </summary>
     internal partial class SystemVersionProperties
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SystemVersionProperties"/>. </summary>
-        /// <param name="systemVersion"> A valid Oracle System Version. </param>
+        /// <param name="systemVersion">
+        /// A valid Oracle System Version
+        /// Serialized Name: SystemVersionProperties.systemVersion
+        /// </param>
         public SystemVersionProperties(string systemVersion)
         {
             SystemVersion = systemVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemVersionProperties"/>. </summary>
-        /// <param name="systemVersion"> A valid Oracle System Version. </param>
+        /// <param name="systemVersion">
+        /// A valid Oracle System Version
+        /// Serialized Name: SystemVersionProperties.systemVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SystemVersionProperties(string systemVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> A valid Oracle System Version. </summary>
+        /// <summary>
+        /// A valid Oracle System Version
+        /// Serialized Name: SystemVersionProperties.systemVersion
+        /// </summary>
         public string SystemVersion { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </summary>
+    /// <summary>
+    /// The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN.
+    /// Serialized Name: ConnectionUrlType
+    /// </summary>
     public partial class ConnectionUrlType
     {
         /// <summary>
@@ -51,13 +54,34 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionUrlType"/>. </summary>
-        /// <param name="apexUri"> Oracle Application Express (APEX) URL. </param>
-        /// <param name="databaseTransformsUri"> The URL of the Database Transforms for the Autonomous Database. </param>
-        /// <param name="graphStudioUri"> The URL of the Graph Studio for the Autonomous Database. </param>
-        /// <param name="machineLearningNotebookUri"> The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database. </param>
-        /// <param name="mongoDbUri"> The URL of the MongoDB API for the Autonomous Database. </param>
-        /// <param name="ordsUri"> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </param>
-        /// <param name="sqlDevWebUri"> Oracle SQL Developer Web URL. </param>
+        /// <param name="apexUri">
+        /// Oracle Application Express (APEX) URL.
+        /// Serialized Name: ConnectionUrlType.apexUrl
+        /// </param>
+        /// <param name="databaseTransformsUri">
+        /// The URL of the Database Transforms for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.databaseTransformsUrl
+        /// </param>
+        /// <param name="graphStudioUri">
+        /// The URL of the Graph Studio for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.graphStudioUrl
+        /// </param>
+        /// <param name="machineLearningNotebookUri">
+        /// The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.machineLearningNotebookUrl
+        /// </param>
+        /// <param name="mongoDbUri">
+        /// The URL of the MongoDB API for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.mongoDbUrl
+        /// </param>
+        /// <param name="ordsUri">
+        /// The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.ordsUrl
+        /// </param>
+        /// <param name="sqlDevWebUri">
+        /// Oracle SQL Developer Web URL.
+        /// Serialized Name: ConnectionUrlType.sqlDevWebUrl
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectionUrlType(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDbUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,19 +95,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Oracle Application Express (APEX) URL. </summary>
+        /// <summary>
+        /// Oracle Application Express (APEX) URL.
+        /// Serialized Name: ConnectionUrlType.apexUrl
+        /// </summary>
         public Uri ApexUri { get; }
-        /// <summary> The URL of the Database Transforms for the Autonomous Database. </summary>
+        /// <summary>
+        /// The URL of the Database Transforms for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.databaseTransformsUrl
+        /// </summary>
         public Uri DatabaseTransformsUri { get; }
-        /// <summary> The URL of the Graph Studio for the Autonomous Database. </summary>
+        /// <summary>
+        /// The URL of the Graph Studio for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.graphStudioUrl
+        /// </summary>
         public Uri GraphStudioUri { get; }
-        /// <summary> The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database. </summary>
+        /// <summary>
+        /// The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.machineLearningNotebookUrl
+        /// </summary>
         public Uri MachineLearningNotebookUri { get; }
-        /// <summary> The URL of the MongoDB API for the Autonomous Database. </summary>
+        /// <summary>
+        /// The URL of the MongoDB API for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.mongoDbUrl
+        /// </summary>
         public Uri MongoDbUri { get; }
-        /// <summary> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </summary>
+        /// <summary>
+        /// The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database.
+        /// Serialized Name: ConnectionUrlType.ordsUrl
+        /// </summary>
         public Uri OrdsUri { get; }
-        /// <summary> Oracle SQL Developer Web URL. </summary>
+        /// <summary>
+        /// Oracle SQL Developer Web URL.
+        /// Serialized Name: ConnectionUrlType.sqlDevWebUrl
+        /// </summary>
         public Uri SqlDevWebUri { get; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the GiVersion data model.
     /// GiVersion resource definition
+    /// Serialized Name: GiVersion
     /// </summary>
     public partial class GiVersionData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: GiVersion.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GiVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GiVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,9 +73,15 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: GiVersion.properties
+        /// </summary>
         internal GiVersionProperties Properties { get; set; }
-        /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
+        /// <summary>
+        /// A valid Oracle Grid Infrastructure (GI) software version.
+        /// Serialized Name: GiVersionProperties.version
+        /// </summary>
         public string GiVersion
         {
             get => Properties is null ? default : Properties.Version;

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Refreshable model type enum. </summary>
+    /// <summary>
+    /// Refreshable model type enum
+    /// Serialized Name: RefreshableModelType
+    /// </summary>
     public readonly partial struct RefreshableModelType : IEquatable<RefreshableModelType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AutomaticValue = "Automatic";
         private const string ManualValue = "Manual";
 
-        /// <summary> Automatic refreshable model type. </summary>
+        /// <summary>
+        /// Automatic refreshable model type
+        /// Serialized Name: RefreshableModelType.Automatic
+        /// </summary>
         public static RefreshableModelType Automatic { get; } = new RefreshableModelType(AutomaticValue);
-        /// <summary> Manual refreshable model type. </summary>
+        /// <summary>
+        /// Manual refreshable model type
+        /// Serialized Name: RefreshableModelType.Manual
+        /// </summary>
         public static RefreshableModelType Manual { get; } = new RefreshableModelType(ManualValue);
         /// <summary> Determines if two <see cref="RefreshableModelType"/> values are the same. </summary>
         public static bool operator ==(RefreshableModelType left, RefreshableModelType right) => left.Equals(right);

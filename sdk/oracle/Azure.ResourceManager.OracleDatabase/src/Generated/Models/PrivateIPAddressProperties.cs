@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> PrivateIpAddress resource properties. </summary>
+    /// <summary>
+    /// PrivateIpAddress resource properties
+    /// Serialized Name: PrivateIpAddressProperties
+    /// </summary>
     public partial class PrivateIPAddressProperties
     {
         /// <summary>
@@ -46,11 +49,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressProperties"/>. </summary>
-        /// <param name="displayName"> PrivateIpAddresses displayName. </param>
-        /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="ocid"> PrivateIpAddresses Id. </param>
-        /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
-        /// <param name="subnetId"> PrivateIpAddresses subnetId. </param>
+        /// <param name="displayName">
+        /// PrivateIpAddresses displayName
+        /// Serialized Name: PrivateIpAddressProperties.displayName
+        /// </param>
+        /// <param name="hostnameLabel">
+        /// PrivateIpAddresses hostnameLabel
+        /// Serialized Name: PrivateIpAddressProperties.hostnameLabel
+        /// </param>
+        /// <param name="ocid">
+        /// PrivateIpAddresses Id
+        /// Serialized Name: PrivateIpAddressProperties.ocid
+        /// </param>
+        /// <param name="ipAddress">
+        /// PrivateIpAddresses ipAddress
+        /// Serialized Name: PrivateIpAddressProperties.ipAddress
+        /// </param>
+        /// <param name="subnetId">
+        /// PrivateIpAddresses subnetId
+        /// Serialized Name: PrivateIpAddressProperties.subnetId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="ocid"/>, <paramref name="ipAddress"/> or <paramref name="subnetId"/> is null. </exception>
         internal PrivateIPAddressProperties(string displayName, string hostnameLabel, string ocid, string ipAddress, string subnetId)
         {
@@ -68,11 +86,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressProperties"/>. </summary>
-        /// <param name="displayName"> PrivateIpAddresses displayName. </param>
-        /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="ocid"> PrivateIpAddresses Id. </param>
-        /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
-        /// <param name="subnetId"> PrivateIpAddresses subnetId. </param>
+        /// <param name="displayName">
+        /// PrivateIpAddresses displayName
+        /// Serialized Name: PrivateIpAddressProperties.displayName
+        /// </param>
+        /// <param name="hostnameLabel">
+        /// PrivateIpAddresses hostnameLabel
+        /// Serialized Name: PrivateIpAddressProperties.hostnameLabel
+        /// </param>
+        /// <param name="ocid">
+        /// PrivateIpAddresses Id
+        /// Serialized Name: PrivateIpAddressProperties.ocid
+        /// </param>
+        /// <param name="ipAddress">
+        /// PrivateIpAddresses ipAddress
+        /// Serialized Name: PrivateIpAddressProperties.ipAddress
+        /// </param>
+        /// <param name="subnetId">
+        /// PrivateIpAddresses subnetId
+        /// Serialized Name: PrivateIpAddressProperties.subnetId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateIPAddressProperties(string displayName, string hostnameLabel, string ocid, string ipAddress, string subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,15 +122,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> PrivateIpAddresses displayName. </summary>
+        /// <summary>
+        /// PrivateIpAddresses displayName
+        /// Serialized Name: PrivateIpAddressProperties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> PrivateIpAddresses hostnameLabel. </summary>
+        /// <summary>
+        /// PrivateIpAddresses hostnameLabel
+        /// Serialized Name: PrivateIpAddressProperties.hostnameLabel
+        /// </summary>
         public string HostnameLabel { get; }
-        /// <summary> PrivateIpAddresses Id. </summary>
+        /// <summary>
+        /// PrivateIpAddresses Id
+        /// Serialized Name: PrivateIpAddressProperties.ocid
+        /// </summary>
         public string Ocid { get; }
-        /// <summary> PrivateIpAddresses ipAddress. </summary>
+        /// <summary>
+        /// PrivateIpAddresses ipAddress
+        /// Serialized Name: PrivateIpAddressProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> PrivateIpAddresses subnetId. </summary>
+        /// <summary>
+        /// PrivateIpAddresses subnetId
+        /// Serialized Name: PrivateIpAddressProperties.subnetId
+        /// </summary>
         public string SubnetId { get; }
     }
 }

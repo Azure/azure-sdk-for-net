@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a CloudExadataInfrastructure list operation. </summary>
+    /// <summary>
+    /// The response of a CloudExadataInfrastructure list operation.
+    /// Serialized Name: CloudExadataInfrastructureListResult
+    /// </summary>
     internal partial class CloudExadataInfrastructureListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureListResult"/>. </summary>
-        /// <param name="value"> The CloudExadataInfrastructure items on this page. </param>
+        /// <param name="value">
+        /// The CloudExadataInfrastructure items on this page
+        /// Serialized Name: CloudExadataInfrastructureListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CloudExadataInfrastructureListResult(IEnumerable<CloudExadataInfrastructureData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureListResult"/>. </summary>
-        /// <param name="value"> The CloudExadataInfrastructure items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The CloudExadataInfrastructure items on this page
+        /// Serialized Name: CloudExadataInfrastructureListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: CloudExadataInfrastructureListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudExadataInfrastructureListResult(IReadOnlyList<CloudExadataInfrastructureData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> The CloudExadataInfrastructure items on this page. </summary>
+        /// <summary>
+        /// The CloudExadataInfrastructure items on this page
+        /// Serialized Name: CloudExadataInfrastructureListResult.value
+        /// </summary>
         public IReadOnlyList<CloudExadataInfrastructureData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: CloudExadataInfrastructureListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DayOfWeek resource properties. </summary>
+    /// <summary>
+    /// DayOfWeek resource properties
+    /// Serialized Name: DayOfWeek
+    /// </summary>
     public partial class DayOfWeek
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
-        /// <param name="name"> Name of the day of the week. </param>
+        /// <param name="name">
+        /// Name of the day of the week.
+        /// Serialized Name: DayOfWeek.name
+        /// </param>
         public DayOfWeek(DayOfWeekName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
-        /// <param name="name"> Name of the day of the week. </param>
+        /// <param name="name">
+        /// Name of the day of the week.
+        /// Serialized Name: DayOfWeek.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DayOfWeek(DayOfWeekName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary> Name of the day of the week. </summary>
+        /// <summary>
+        /// Name of the day of the week.
+        /// Serialized Name: DayOfWeek.name
+        /// </summary>
         public DayOfWeekName Name { get; set; }
     }
 }

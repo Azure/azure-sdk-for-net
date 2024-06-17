@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Information about Oracle APEX Application Development. </summary>
+    /// <summary>
+    /// Information about Oracle APEX Application Development.
+    /// Serialized Name: ApexDetailsType
+    /// </summary>
     public partial class ApexDetailsType
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApexDetailsType"/>. </summary>
-        /// <param name="apexVersion"> The Oracle APEX Application Development version. </param>
-        /// <param name="ordsVersion"> The Oracle REST Data Services (ORDS) version. </param>
+        /// <param name="apexVersion">
+        /// The Oracle APEX Application Development version.
+        /// Serialized Name: ApexDetailsType.apexVersion
+        /// </param>
+        /// <param name="ordsVersion">
+        /// The Oracle REST Data Services (ORDS) version.
+        /// Serialized Name: ApexDetailsType.ordsVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApexDetailsType(string apexVersion, string ordsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Oracle APEX Application Development version. </summary>
+        /// <summary>
+        /// The Oracle APEX Application Development version.
+        /// Serialized Name: ApexDetailsType.apexVersion
+        /// </summary>
         public string ApexVersion { get; }
-        /// <summary> The Oracle REST Data Services (ORDS) version. </summary>
+        /// <summary>
+        /// The Oracle REST Data Services (ORDS) version.
+        /// Serialized Name: ApexDetailsType.ordsVersion
+        /// </summary>
         public string OrdsVersion { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> TLS authentication type enum. </summary>
+    /// <summary>
+    /// TLS authentication type enum.
+    /// Serialized Name: TlsAuthenticationType
+    /// </summary>
     public readonly partial struct TlsAuthenticationType : IEquatable<TlsAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string ServerValue = "Server";
         private const string MutualValue = "Mutual";
 
-        /// <summary> Server authentication. </summary>
+        /// <summary>
+        /// Server authentication
+        /// Serialized Name: TlsAuthenticationType.Server
+        /// </summary>
         public static TlsAuthenticationType Server { get; } = new TlsAuthenticationType(ServerValue);
-        /// <summary> Mutual TLS. </summary>
+        /// <summary>
+        /// Mutual TLS
+        /// Serialized Name: TlsAuthenticationType.Mutual
+        /// </summary>
         public static TlsAuthenticationType Mutual { get; } = new TlsAuthenticationType(MutualValue);
         /// <summary> Determines if two <see cref="TlsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TlsAuthenticationType left, TlsAuthenticationType right) => left.Equals(right);

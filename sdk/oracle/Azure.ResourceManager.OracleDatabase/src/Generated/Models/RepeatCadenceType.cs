@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Repeat cadence type enum. </summary>
+    /// <summary>
+    /// Repeat cadence type enum
+    /// Serialized Name: RepeatCadenceType
+    /// </summary>
     public readonly partial struct RepeatCadenceType : IEquatable<RepeatCadenceType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MonthlyValue = "Monthly";
         private const string YearlyValue = "Yearly";
 
-        /// <summary> Repeat one time. </summary>
+        /// <summary>
+        /// Repeat one time
+        /// Serialized Name: RepeatCadenceType.OneTime
+        /// </summary>
         public static RepeatCadenceType OneTime { get; } = new RepeatCadenceType(OneTimeValue);
-        /// <summary> Repeat weekly. </summary>
+        /// <summary>
+        /// Repeat weekly
+        /// Serialized Name: RepeatCadenceType.Weekly
+        /// </summary>
         public static RepeatCadenceType Weekly { get; } = new RepeatCadenceType(WeeklyValue);
-        /// <summary> Repeat monthly. </summary>
+        /// <summary>
+        /// Repeat monthly
+        /// Serialized Name: RepeatCadenceType.Monthly
+        /// </summary>
         public static RepeatCadenceType Monthly { get; } = new RepeatCadenceType(MonthlyValue);
-        /// <summary> Repeat yearly. </summary>
+        /// <summary>
+        /// Repeat yearly
+        /// Serialized Name: RepeatCadenceType.Yearly
+        /// </summary>
         public static RepeatCadenceType Yearly { get; } = new RepeatCadenceType(YearlyValue);
         /// <summary> Determines if two <see cref="RepeatCadenceType"/> values are the same. </summary>
         public static bool operator ==(RepeatCadenceType left, RepeatCadenceType right) => left.Equals(right);

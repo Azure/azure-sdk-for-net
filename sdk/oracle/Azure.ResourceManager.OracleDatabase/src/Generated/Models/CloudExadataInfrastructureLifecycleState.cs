@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> CloudExadataInfrastructureLifecycleState enum. </summary>
+    /// <summary>
+    /// CloudExadataInfrastructureLifecycleState enum
+    /// Serialized Name: CloudExadataInfrastructureLifecycleState
+    /// </summary>
     public readonly partial struct CloudExadataInfrastructureLifecycleState : IEquatable<CloudExadataInfrastructureLifecycleState>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary> Indicates that resource in Provisioning state. </summary>
+        /// <summary>
+        /// Indicates that resource in Provisioning state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Provisioning
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Provisioning { get; } = new CloudExadataInfrastructureLifecycleState(ProvisioningValue);
-        /// <summary> Indicates that resource in Available state. </summary>
+        /// <summary>
+        /// Indicates that resource in Available state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Available
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Available { get; } = new CloudExadataInfrastructureLifecycleState(AvailableValue);
-        /// <summary> Indicates that resource in Updating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Updating state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Updating
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Updating { get; } = new CloudExadataInfrastructureLifecycleState(UpdatingValue);
-        /// <summary> Indicates that resource in Terminating state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminating state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Terminating
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Terminating { get; } = new CloudExadataInfrastructureLifecycleState(TerminatingValue);
-        /// <summary> Indicates that resource in Terminated state. </summary>
+        /// <summary>
+        /// Indicates that resource in Terminated state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Terminated
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Terminated { get; } = new CloudExadataInfrastructureLifecycleState(TerminatedValue);
-        /// <summary> Indicates that resource maintenance in progress state. </summary>
+        /// <summary>
+        /// Indicates that resource maintenance in progress state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.MaintenanceInProgress
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState MaintenanceInProgress { get; } = new CloudExadataInfrastructureLifecycleState(MaintenanceInProgressValue);
-        /// <summary> Indicates that resource in Failed state. </summary>
+        /// <summary>
+        /// Indicates that resource in Failed state
+        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Failed
+        /// </summary>
         public static CloudExadataInfrastructureLifecycleState Failed { get; } = new CloudExadataInfrastructureLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="CloudExadataInfrastructureLifecycleState"/> values are the same. </summary>
         public static bool operator ==(CloudExadataInfrastructureLifecycleState left, CloudExadataInfrastructureLifecycleState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> virtualNetworkAddress resource properties. </summary>
+    /// <summary>
+    /// virtualNetworkAddress resource properties
+    /// Serialized Name: VirtualNetworkAddressProperties
+    /// </summary>
     public partial class VirtualNetworkAddressProperties
     {
         /// <summary>
@@ -51,14 +54,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAddressProperties"/>. </summary>
-        /// <param name="ipAddress"> Virtual network Address address. </param>
-        /// <param name="vmOcid"> Virtual Machine OCID. </param>
-        /// <param name="ocid"> Application VIP OCID. </param>
-        /// <param name="domain"> Virtual network address fully qualified domain name. </param>
-        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </param>
-        /// <param name="provisioningState"> Azure resource provisioning state. </param>
-        /// <param name="lifecycleState"> virtual network address lifecycle state. </param>
-        /// <param name="timeAssigned"> The date and time when the create operation for the application virtual IP (VIP) address completed. </param>
+        /// <param name="ipAddress">
+        /// Virtual network Address address.
+        /// Serialized Name: VirtualNetworkAddressProperties.ipAddress
+        /// </param>
+        /// <param name="vmOcid">
+        /// Virtual Machine OCID.
+        /// Serialized Name: VirtualNetworkAddressProperties.vmOcid
+        /// </param>
+        /// <param name="ocid">
+        /// Application VIP OCID.
+        /// Serialized Name: VirtualNetworkAddressProperties.ocid
+        /// </param>
+        /// <param name="domain">
+        /// Virtual network address fully qualified domain name.
+        /// Serialized Name: VirtualNetworkAddressProperties.domain
+        /// </param>
+        /// <param name="lifecycleDetails">
+        /// Additional information about the current lifecycle state of the application virtual IP (VIP) address.
+        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleDetails
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure resource provisioning state.
+        /// Serialized Name: VirtualNetworkAddressProperties.provisioningState
+        /// </param>
+        /// <param name="lifecycleState">
+        /// virtual network address lifecycle state.
+        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleState
+        /// </param>
+        /// <param name="timeAssigned">
+        /// The date and time when the create operation for the application virtual IP (VIP) address completed.
+        /// Serialized Name: VirtualNetworkAddressProperties.timeAssigned
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkAddressProperties(string ipAddress, string vmOcid, string ocid, string domain, string lifecycleDetails, AzureResourceProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? timeAssigned, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,21 +100,45 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Virtual network Address address. </summary>
+        /// <summary>
+        /// Virtual network Address address.
+        /// Serialized Name: VirtualNetworkAddressProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; set; }
-        /// <summary> Virtual Machine OCID. </summary>
+        /// <summary>
+        /// Virtual Machine OCID.
+        /// Serialized Name: VirtualNetworkAddressProperties.vmOcid
+        /// </summary>
         public string VmOcid { get; set; }
-        /// <summary> Application VIP OCID. </summary>
+        /// <summary>
+        /// Application VIP OCID.
+        /// Serialized Name: VirtualNetworkAddressProperties.ocid
+        /// </summary>
         public string Ocid { get; }
-        /// <summary> Virtual network address fully qualified domain name. </summary>
+        /// <summary>
+        /// Virtual network address fully qualified domain name.
+        /// Serialized Name: VirtualNetworkAddressProperties.domain
+        /// </summary>
         public string Domain { get; }
-        /// <summary> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </summary>
+        /// <summary>
+        /// Additional information about the current lifecycle state of the application virtual IP (VIP) address.
+        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleDetails
+        /// </summary>
         public string LifecycleDetails { get; }
-        /// <summary> Azure resource provisioning state. </summary>
+        /// <summary>
+        /// Azure resource provisioning state.
+        /// Serialized Name: VirtualNetworkAddressProperties.provisioningState
+        /// </summary>
         public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> virtual network address lifecycle state. </summary>
+        /// <summary>
+        /// virtual network address lifecycle state.
+        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleState
+        /// </summary>
         public VirtualNetworkAddressLifecycleState? LifecycleState { get; }
-        /// <summary> The date and time when the create operation for the application virtual IP (VIP) address completed. </summary>
+        /// <summary>
+        /// The date and time when the create operation for the application virtual IP (VIP) address completed.
+        /// Serialized Name: VirtualNetworkAddressProperties.timeAssigned
+        /// </summary>
         public DateTimeOffset? TimeAssigned { get; }
     }
 }

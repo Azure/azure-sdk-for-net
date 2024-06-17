@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Connection strings to connect to an Oracle Autonomous Database. </summary>
+    /// <summary>
+    /// Connection strings to connect to an Oracle Autonomous Database.
+    /// Serialized Name: ConnectionStringType
+    /// </summary>
     public partial class ConnectionStringType
     {
         /// <summary>
@@ -52,12 +55,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionStringType"/>. </summary>
-        /// <param name="allConnectionStrings"> Returns all connection strings that can be used to connect to the Autonomous Database. </param>
-        /// <param name="dedicated"> The database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
-        /// <param name="high"> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </param>
-        /// <param name="low"> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
-        /// <param name="medium"> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </param>
-        /// <param name="profiles"> A list of connection string profiles to allow clients to group, filter and select connection string values based on structured metadata. </param>
+        /// <param name="allConnectionStrings">
+        /// Returns all connection strings that can be used to connect to the Autonomous Database.
+        /// Serialized Name: ConnectionStringType.allConnectionStrings
+        /// </param>
+        /// <param name="dedicated">
+        /// The database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.dedicated
+        /// </param>
+        /// <param name="high">
+        /// The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.high
+        /// </param>
+        /// <param name="low">
+        /// The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.low
+        /// </param>
+        /// <param name="medium">
+        /// The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.medium
+        /// </param>
+        /// <param name="profiles">
+        /// A list of connection string profiles to allow clients to group, filter and select connection string values based on structured metadata.
+        /// Serialized Name: ConnectionStringType.profiles
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectionStringType(AllConnectionStringType allConnectionStrings, string dedicated, string high, string low, string medium, IReadOnlyList<ProfileType> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,17 +91,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Returns all connection strings that can be used to connect to the Autonomous Database. </summary>
+        /// <summary>
+        /// Returns all connection strings that can be used to connect to the Autonomous Database.
+        /// Serialized Name: ConnectionStringType.allConnectionStrings
+        /// </summary>
         public AllConnectionStringType AllConnectionStrings { get; }
-        /// <summary> The database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </summary>
+        /// <summary>
+        /// The database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.dedicated
+        /// </summary>
         public string Dedicated { get; }
-        /// <summary> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </summary>
+        /// <summary>
+        /// The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.high
+        /// </summary>
         public string High { get; }
-        /// <summary> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </summary>
+        /// <summary>
+        /// The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.low
+        /// </summary>
         public string Low { get; }
-        /// <summary> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </summary>
+        /// <summary>
+        /// The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements.
+        /// Serialized Name: ConnectionStringType.medium
+        /// </summary>
         public string Medium { get; }
-        /// <summary> A list of connection string profiles to allow clients to group, filter and select connection string values based on structured metadata. </summary>
+        /// <summary>
+        /// A list of connection string profiles to allow clients to group, filter and select connection string values based on structured metadata.
+        /// Serialized Name: ConnectionStringType.profiles
+        /// </summary>
         public IReadOnlyList<ProfileType> Profiles { get; }
     }
 }

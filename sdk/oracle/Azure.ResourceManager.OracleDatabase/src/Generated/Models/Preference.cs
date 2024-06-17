@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Preference enum. </summary>
+    /// <summary>
+    /// Preference enum
+    /// Serialized Name: Preference
+    /// </summary>
     public readonly partial struct Preference : IEquatable<Preference>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string NoPreferenceValue = "NoPreference";
         private const string CustomPreferenceValue = "CustomPreference";
 
-        /// <summary> No preference. </summary>
+        /// <summary>
+        /// No preference
+        /// Serialized Name: Preference.NoPreference
+        /// </summary>
         public static Preference NoPreference { get; } = new Preference(NoPreferenceValue);
-        /// <summary> Custom preference. </summary>
+        /// <summary>
+        /// Custom preference
+        /// Serialized Name: Preference.CustomPreference
+        /// </summary>
         public static Preference CustomPreference { get; } = new Preference(CustomPreferenceValue);
         /// <summary> Determines if two <see cref="Preference"/> values are the same. </summary>
         public static bool operator ==(Preference left, Preference right) => left.Equals(right);

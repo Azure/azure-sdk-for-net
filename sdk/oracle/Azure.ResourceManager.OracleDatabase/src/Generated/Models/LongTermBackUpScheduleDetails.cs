@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Details for the long-term backup schedule. </summary>
+    /// <summary>
+    /// Details for the long-term backup schedule.
+    /// Serialized Name: LongTermBackUpScheduleDetails
+    /// </summary>
     public partial class LongTermBackUpScheduleDetails
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LongTermBackUpScheduleDetails"/>. </summary>
-        /// <param name="repeatCadence"> The frequency of the long-term backup schedule. </param>
-        /// <param name="timeOfBackup"> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </param>
-        /// <param name="retentionPeriodInDays"> Retention period, in days, for backups. </param>
-        /// <param name="isDisabled"> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </param>
+        /// <param name="repeatCadence">
+        /// The frequency of the long-term backup schedule
+        /// Serialized Name: LongTermBackUpScheduleDetails.repeatCadence
+        /// </param>
+        /// <param name="timeOfBackup">
+        /// The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month.
+        /// Serialized Name: LongTermBackUpScheduleDetails.timeOfBackup
+        /// </param>
+        /// <param name="retentionPeriodInDays">
+        /// Retention period, in days, for backups.
+        /// Serialized Name: LongTermBackUpScheduleDetails.retentionPeriodInDays
+        /// </param>
+        /// <param name="isDisabled">
+        /// Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`.
+        /// Serialized Name: LongTermBackUpScheduleDetails.isDisabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LongTermBackUpScheduleDetails(RepeatCadenceType? repeatCadence, DateTimeOffset? timeOfBackup, int? retentionPeriodInDays, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The frequency of the long-term backup schedule. </summary>
+        /// <summary>
+        /// The frequency of the long-term backup schedule
+        /// Serialized Name: LongTermBackUpScheduleDetails.repeatCadence
+        /// </summary>
         public RepeatCadenceType? RepeatCadence { get; set; }
-        /// <summary> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </summary>
+        /// <summary>
+        /// The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month.
+        /// Serialized Name: LongTermBackUpScheduleDetails.timeOfBackup
+        /// </summary>
         public DateTimeOffset? TimeOfBackup { get; set; }
-        /// <summary> Retention period, in days, for backups. </summary>
+        /// <summary>
+        /// Retention period, in days, for backups.
+        /// Serialized Name: LongTermBackUpScheduleDetails.retentionPeriodInDays
+        /// </summary>
         public int? RetentionPeriodInDays { get; set; }
-        /// <summary> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </summary>
+        /// <summary>
+        /// Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`.
+        /// Serialized Name: LongTermBackUpScheduleDetails.isDisabled
+        /// </summary>
         public bool? IsDisabled { get; set; }
     }
 }

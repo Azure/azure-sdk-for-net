@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
+    /// <summary>
+    /// The connection string profile to allow clients to group, filter and select connection string values based on structured metadata.
+    /// Serialized Name: AllConnectionStringType
+    /// </summary>
     public partial class AllConnectionStringType
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllConnectionStringType"/>. </summary>
-        /// <param name="high"> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </param>
-        /// <param name="low"> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
-        /// <param name="medium"> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </param>
+        /// <param name="high">
+        /// The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.high
+        /// </param>
+        /// <param name="low">
+        /// The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.low
+        /// </param>
+        /// <param name="medium">
+        /// The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.medium
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AllConnectionStringType(string high, string low, string medium, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </summary>
+        /// <summary>
+        /// The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.high
+        /// </summary>
         public string High { get; }
-        /// <summary> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </summary>
+        /// <summary>
+        /// The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.low
+        /// </summary>
         public string Low { get; }
-        /// <summary> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </summary>
+        /// <summary>
+        /// The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements.
+        /// Serialized Name: AllConnectionStringType.medium
+        /// </summary>
         public string Medium { get; }
     }
 }
