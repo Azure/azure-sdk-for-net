@@ -2,6 +2,11 @@
 
 ## 1.4.0-beta.1 (2024-06-11)
 
+### Features Added
+
+* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extensions.
+  ([#44617](https://github.com/Azure/azure-sdk-for-net/pull/44617))
+
 ### Other Changes
 
 * Changed `AzureMonitorLogExporter` to be public.
