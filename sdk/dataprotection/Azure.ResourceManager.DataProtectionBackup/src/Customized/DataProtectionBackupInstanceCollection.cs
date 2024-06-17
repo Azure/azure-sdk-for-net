@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
         {
             return await CreateOrUpdateAsync(waitUntil, backupInstanceName, data, null, cancellationToken).ConfigureAwait(false);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, backupInstanceName, data, null, cancellationToken);
         }

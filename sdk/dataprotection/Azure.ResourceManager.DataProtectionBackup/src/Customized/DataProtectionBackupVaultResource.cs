@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken)
         {
             return await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
         }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken)
         {
             return Update(waitUntil, patch, null, cancellationToken);
         }

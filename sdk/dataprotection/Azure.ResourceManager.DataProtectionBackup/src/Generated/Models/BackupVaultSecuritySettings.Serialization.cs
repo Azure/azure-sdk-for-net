@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             BackupVaultSoftDeleteSettings softDeleteSettings = default;
             ImmutabilitySettings immutabilitySettings = default;
-            EncryptionSettings encryptionSettings = default;
+            BackupVaultEncryptionSettings encryptionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    encryptionSettings = EncryptionSettings.DeserializeEncryptionSettings(property.Value, options);
+                    encryptionSettings = BackupVaultEncryptionSettings.DeserializeBackupVaultEncryptionSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

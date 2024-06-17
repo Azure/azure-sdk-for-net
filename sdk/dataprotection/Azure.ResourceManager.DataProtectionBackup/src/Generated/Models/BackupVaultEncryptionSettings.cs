@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Customer Managed Key details of the resource. </summary>
-    public partial class EncryptionSettings
+    public partial class BackupVaultEncryptionSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionSettings"/>. </summary>
-        public EncryptionSettings()
+        /// <summary> Initializes a new instance of <see cref="BackupVaultEncryptionSettings"/>. </summary>
+        public BackupVaultEncryptionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultEncryptionSettings"/>. </summary>
         /// <param name="state"> Encryption state of the Backup Vault. </param>
         /// <param name="keyVaultProperties"> The properties of the Key Vault which hosts CMK. </param>
         /// <param name="kekIdentity"> The details of the managed identity used for CMK. </param>
         /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionSettings(EncryptionState? state, CmkKeyVaultProperties keyVaultProperties, CmkKekIdentity kekIdentity, InfrastructureEncryptionState? infrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupVaultEncryptionSettings(BackupVaultEncryptionState? state, CmkKeyVaultProperties keyVaultProperties, BackupVaulCmkKekIdentity kekIdentity, BackupVaultInfrastructureEncryptionState? infrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             KeyVaultProperties = keyVaultProperties;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Encryption state of the Backup Vault. </summary>
-        public EncryptionState? State { get; set; }
+        public BackupVaultEncryptionState? State { get; set; }
         /// <summary> The properties of the Key Vault which hosts CMK. </summary>
         internal CmkKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The key uri of the Customer Managed Key. </summary>
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> The details of the managed identity used for CMK. </summary>
-        public CmkKekIdentity KekIdentity { get; set; }
+        public BackupVaulCmkKekIdentity KekIdentity { get; set; }
         /// <summary> Enabling/Disabling the Double Encryption state. </summary>
-        public InfrastructureEncryptionState? InfrastructureEncryption { get; set; }
+        public BackupVaultInfrastructureEncryptionState? InfrastructureEncryption { get; set; }
     }
 }

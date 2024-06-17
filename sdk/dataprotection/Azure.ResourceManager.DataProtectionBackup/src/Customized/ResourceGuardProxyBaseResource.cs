@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken)
         {
             return await UnlockDeleteAsync(content, null, cancellationToken).ConfigureAwait(false);
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken)
         {
             return UnlockDelete(content, null, cancellationToken);
         }

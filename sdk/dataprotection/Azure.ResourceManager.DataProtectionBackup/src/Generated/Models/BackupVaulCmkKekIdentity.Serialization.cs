@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class CmkKekIdentity : IUtf8JsonSerializable, IJsonModel<CmkKekIdentity>
+    public partial class BackupVaulCmkKekIdentity : IUtf8JsonSerializable, IJsonModel<BackupVaulCmkKekIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CmkKekIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaulCmkKekIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CmkKekIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupVaulCmkKekIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaulCmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaulCmkKekIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        CmkKekIdentity IJsonModel<CmkKekIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupVaulCmkKekIdentity IJsonModel<BackupVaulCmkKekIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaulCmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaulCmkKekIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCmkKekIdentity(document.RootElement, options);
+            return DeserializeBackupVaulCmkKekIdentity(document.RootElement, options);
         }
 
-        internal static CmkKekIdentity DeserializeCmkKekIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BackupVaulCmkKekIdentity DeserializeBackupVaulCmkKekIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            IdentityType? identityType = default;
+            BackupVaultCmkKekIdentityType? identityType = default;
             string identityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityType = new IdentityType(property.Value.GetString());
+                    identityType = new BackupVaultCmkKekIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityId"u8))
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CmkKekIdentity(identityType, identityId, serializedAdditionalRawData);
+            return new BackupVaulCmkKekIdentity(identityType, identityId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CmkKekIdentity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BackupVaulCmkKekIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaulCmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaulCmkKekIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CmkKekIdentity IPersistableModel<CmkKekIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BackupVaulCmkKekIdentity IPersistableModel<BackupVaulCmkKekIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaulCmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCmkKekIdentity(document.RootElement, options);
+                        return DeserializeBackupVaulCmkKekIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaulCmkKekIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CmkKekIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupVaulCmkKekIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

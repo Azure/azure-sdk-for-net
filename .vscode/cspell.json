@@ -408,6 +408,7 @@
     {
       "filename": "**/sdk/dataprotection/**/*.cs",
       "words": [
+        "Bcdr",
         "Undelete"
       ]
     },

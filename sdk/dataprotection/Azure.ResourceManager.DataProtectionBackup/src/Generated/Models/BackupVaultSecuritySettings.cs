@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, EncryptionSettings encryptionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, BackupVaultEncryptionSettings encryptionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftDeleteSettings = softDeleteSettings;
             ImmutabilitySettings = immutabilitySettings;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Customer Managed Key details of the resource. </summary>
-        public EncryptionSettings EncryptionSettings { get; set; }
+        public BackupVaultEncryptionSettings EncryptionSettings { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The details of the managed identity used for CMK. </summary>
-    public partial class CmkKekIdentity
+    public partial class BackupVaulCmkKekIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
-        public CmkKekIdentity()
+        /// <summary> Initializes a new instance of <see cref="BackupVaulCmkKekIdentity"/>. </summary>
+        public BackupVaulCmkKekIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaulCmkKekIdentity"/>. </summary>
         /// <param name="identityType"> The identity type. 'SystemAssigned' and 'UserAssigned' are mutually exclusive. 'SystemAssigned' will use implicitly created managed identity. </param>
         /// <param name="identityId"> The managed identity to be used which has access permissions to the Key Vault. Provide a value here in case identity types: 'UserAssigned' only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CmkKekIdentity(IdentityType? identityType, string identityId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupVaulCmkKekIdentity(BackupVaultCmkKekIdentityType? identityType, string identityId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             IdentityId = identityId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> The identity type. 'SystemAssigned' and 'UserAssigned' are mutually exclusive. 'SystemAssigned' will use implicitly created managed identity. </summary>
-        public IdentityType? IdentityType { get; set; }
+        public BackupVaultCmkKekIdentityType? IdentityType { get; set; }
         /// <summary> The managed identity to be used which has access permissions to the Key Vault. Provide a value here in case identity types: 'UserAssigned' only. </summary>
         public string IdentityId { get; set; }
     }

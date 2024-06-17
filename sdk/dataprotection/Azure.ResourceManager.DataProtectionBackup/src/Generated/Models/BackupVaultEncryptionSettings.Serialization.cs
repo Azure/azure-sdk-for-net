@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class EncryptionSettings : IUtf8JsonSerializable, IJsonModel<EncryptionSettings>
+    public partial class BackupVaultEncryptionSettings : IUtf8JsonSerializable, IJsonModel<BackupVaultEncryptionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaultEncryptionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupVaultEncryptionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultEncryptionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        EncryptionSettings IJsonModel<EncryptionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupVaultEncryptionSettings IJsonModel<BackupVaultEncryptionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultEncryptionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionSettings(document.RootElement, options);
+            return DeserializeBackupVaultEncryptionSettings(document.RootElement, options);
         }
 
-        internal static EncryptionSettings DeserializeEncryptionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BackupVaultEncryptionSettings DeserializeBackupVaultEncryptionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            EncryptionState? state = default;
+            BackupVaultEncryptionState? state = default;
             CmkKeyVaultProperties keyVaultProperties = default;
-            CmkKekIdentity kekIdentity = default;
-            InfrastructureEncryptionState? infrastructureEncryption = default;
+            BackupVaulCmkKekIdentity kekIdentity = default;
+            BackupVaultInfrastructureEncryptionState? infrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    state = new EncryptionState(property.Value.GetString());
+                    state = new BackupVaultEncryptionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value, options);
+                    kekIdentity = BackupVaulCmkKekIdentity.DeserializeBackupVaulCmkKekIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("infrastructureEncryption"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    infrastructureEncryption = new InfrastructureEncryptionState(property.Value.GetString());
+                    infrastructureEncryption = new BackupVaultInfrastructureEncryptionState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,38 +134,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionSettings(state, keyVaultProperties, kekIdentity, infrastructureEncryption, serializedAdditionalRawData);
+            return new BackupVaultEncryptionSettings(state, keyVaultProperties, kekIdentity, infrastructureEncryption, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EncryptionSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BackupVaultEncryptionSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultEncryptionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionSettings IPersistableModel<EncryptionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BackupVaultEncryptionSettings IPersistableModel<BackupVaultEncryptionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEncryptionSettings(document.RootElement, options);
+                        return DeserializeBackupVaultEncryptionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultEncryptionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupVaultEncryptionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

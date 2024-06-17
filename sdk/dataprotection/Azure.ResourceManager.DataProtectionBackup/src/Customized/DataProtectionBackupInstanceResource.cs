@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             return await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
         }
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default) instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken) instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             return Delete(waitUntil, null, cancellationToken);
         }
@@ -103,13 +103,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, StopProtectionContent content = null,  CancellationToken cancellationToken = default)
-        {
-            return await StopProtectionAsync(waitUntil, content, null, cancellationToken).ConfigureAwait(false);
-        }
+        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => await StopProtectionAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This operation will stop protection of a backup instance and data will be held forever
@@ -133,13 +130,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation StopProtection(WaitUntil waitUntil, StopProtectionContent content = null, CancellationToken cancellationToken = default)
-        {
-            return StopProtection(waitUntil, content, null, cancellationToken);
-        }
+        public virtual ArmOperation StopProtection(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => StopProtection(waitUntil, null, null, cancellationToken);
 
         /// <summary>
         /// This operation will stop backup for a backup instance and retains the backup data as per the policy (except latest Recovery point, which will be retained forever)
@@ -163,14 +157,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, SuspendBackupContent content = null, CancellationToken cancellationToken = default)
-        {
-            return await SuspendBackupsAsync(waitUntil, content, null, cancellationToken).ConfigureAwait(false);
-            { }
-        }
+        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => await SuspendBackupsAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This operation will stop backup for a backup instance and retains the backup data as per the policy (except latest Recovery point, which will be retained forever)
@@ -194,13 +184,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, SuspendBackupContent content = null, CancellationToken cancellationToken = default)
-        {
-            return SuspendBackups(waitUntil, content, null, cancellationToken);
-        }
+        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => SuspendBackups(waitUntil, null, null, cancellationToken);
 
         /// <summary>
         /// Create or update a backup instance in a backup vault
@@ -228,7 +215,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
         {
             return await UpdateAsync(waitUntil, data, null, cancellationToken).ConfigureAwait(false);
         }
@@ -259,7 +246,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<DataProtectionBackupInstanceResource> Update(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionBackupInstanceResource> Update(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
         {
             return Update(waitUntil, data, null, cancellationToken);
         }
@@ -290,7 +277,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken)
         {
             return await TriggerRestoreAsync(waitUntil, content, null, cancellationToken).ConfigureAwait(false);
         }
@@ -321,7 +308,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerRestore(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerRestore(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken)
         {
             return TriggerRestore(waitUntil, content, null, cancellationToken);
         }
