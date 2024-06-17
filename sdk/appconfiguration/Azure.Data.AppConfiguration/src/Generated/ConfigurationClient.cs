@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
@@ -15,16 +16,15 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     // Data plane generated client.
-    /// <summary> The Configuration service client. </summary>
+    /// <summary> Azure App Configuration REST API. </summary>
     public partial class ConfigurationClient
     {
         private const string AuthorizationHeader = "Connection String";
         private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _syncToken;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,6 +33,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -44,18 +45,26 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeysAsync(string,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> CheckKeysAsync(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeysRequest(name, after, acceptDatetime, context);
+                using HttpMessage message = CreateCheckKeysRequest(name, syncToken, after, acceptDatetime, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -65,6 +74,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -76,18 +86,26 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeys(string,string,string,string,RequestContext)']/*" />
+        public virtual Response CheckKeys(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeysRequest(name, after, acceptDatetime, context);
+                using HttpMessage message = CreateCheckKeysRequest(name, syncToken, after, acceptDatetime, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -97,6 +115,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -107,23 +126,41 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, string snapshot = null, IEnumerable<string> tags = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -133,6 +170,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -143,24 +181,136 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
+        public virtual Response CheckKeyValues(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, string snapshot = null, IEnumerable<string> tags = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value. </summary>
+        /// <param name="key"> The key of the key-value. </param>
+        /// <param name="label"> The label of the key-value to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValueAsync(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(string key, string label = null, IEnumerable<KeyValueFields> select = null, string syncToken = null, string acceptDatetime = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetKeyValueAsync(key, label, select, syncToken, acceptDatetime, matchConditions, context).ConfigureAwait(false);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a single key-value. </summary>
+        /// <param name="key"> The key of the key-value. </param>
+        /// <param name="label"> The label of the key-value to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValue(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual Response<KeyValue> GetKeyValue(string key, string label = null, IEnumerable<KeyValueFields> select = null, string syncToken = null, string acceptDatetime = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetKeyValue(key, label, select, syncToken, acceptDatetime, matchConditions, context);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a single key-value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeyValueAsync(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key"> The key of the key-value. </param>
+        /// <param name="label"> The label of the key-value to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValueAsync(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetKeyValueAsync(string key, string label, IEnumerable<KeyValueFields> select, string syncToken, string acceptDatetime, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetKeyValue");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetKeyValueRequest(key, label, select, syncToken, acceptDatetime, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -177,28 +327,38 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeyValue(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
+        /// <param name="key"> The key of the key-value. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValue(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response GetKeyValue(string key, string label, IEnumerable<KeyValueFields> select, string syncToken, string acceptDatetime, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetKeyValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetKeyValueRequest(key, label, select, syncToken, acceptDatetime, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -207,36 +367,85 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <summary> Creates a key-value. </summary>
+        /// <param name="key"> The key of the key-value to create. </param>
+        /// <param name="entity"> The key-value to create. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "application/json" | "text/json" | "application/*+json" | "application/json-patch+json". </param>
+        /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutKeyValueAsync(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyValue>> PutKeyValueAsync(string key, KeyValue entity = null, ContentType contentTypeHeader, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using RequestContent content = entity?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await PutKeyValueAsync(key, content, contentTypeHeader, label, syncToken, matchConditions, context).ConfigureAwait(false);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a key-value. </summary>
+        /// <param name="key"> The key of the key-value to create. </param>
+        /// <param name="entity"> The key-value to create. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "application/json" | "text/json" | "application/*+json" | "application/json-patch+json". </param>
+        /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutKeyValue(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual Response<KeyValue> PutKeyValue(string key, KeyValue entity = null, ContentType contentTypeHeader, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using RequestContent content = entity?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = PutKeyValue(key, content, contentTypeHeader, label, syncToken, matchConditions, context);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Gets a single key-value.
+        /// [Protocol Method] Creates a key-value.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PutKeyValueAsync(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="key"> The key of the key-value to create. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "application/json" | "text/json" | "application/*+json" | "application/json-patch+json". </param>
+        /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutKeyValueAsync(string,RequestContent,ContentType,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> PutKeyValueAsync(string key, RequestContent content, ContentType contentTypeHeader, string label = null, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutKeyValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreatePutKeyValueRequest(key, content, contentTypeHeader, label, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -253,28 +462,35 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PutKeyValue(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/*+json" | "application/json" | "application/json-patch+json" | "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "text/json". </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "application/json" | "text/json" | "application/*+json" | "application/json-patch+json". </param>
         /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutKeyValue(string,RequestContent,ContentType,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response PutKeyValue(string key, RequestContent content, ContentType contentTypeHeader, string label = null, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutKeyValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreatePutKeyValueRequest(key, content, contentTypeHeader, label, syncToken, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -283,36 +499,86 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <summary> Deletes a key-value. </summary>
+        /// <param name="key"> The key of the key-value to delete. </param>
+        /// <param name="label"> The label of the key-value to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteKeyValueAsync(string,string,string,ETag?,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyValue>> DeleteKeyValueAsync(string key, string label = null, string syncToken = null, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteKeyValueAsync(key, label, syncToken, ifMatch, context).ConfigureAwait(false);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary> Deletes a key-value. </summary>
+        /// <param name="key"> The key of the key-value to delete. </param>
+        /// <param name="label"> The label of the key-value to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteKeyValue(string,string,string,ETag?,CancellationToken)']/*" />
+        public virtual Response<KeyValue> DeleteKeyValue(string key, string label = null, string syncToken = null, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeleteKeyValue(key, label, syncToken, ifMatch, context);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Creates a key-value.
+        /// [Protocol Method] Deletes a key-value.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteKeyValueAsync(string,string,string,ETag?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> The key of the key-value to create. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/*+json" | "application/json" | "application/json-patch+json" | "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "text/json". </param>
-        /// <param name="label"> The label of the key-value to create. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="key"> The key of the key-value to delete. </param>
+        /// <param name="label"> The label of the key-value to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteKeyValueAsync(string,string,string,ETag?,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteKeyValueAsync(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteKeyValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateDeleteKeyValueRequest(key, label, syncToken, ifMatch, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -329,61 +595,35 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a key-value.
-        /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// Please try the simpler <see cref="DeleteKeyValue(string,string,string,ETag?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to delete. </param>
         /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteKeyValue(string,string,string,ETag?,RequestContext)']/*" />
+        public virtual Response DeleteKeyValue(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteKeyValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
+                using HttpMessage message = CreateDeleteKeyValueRequest(key, label, syncToken, ifMatch, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -393,6 +633,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -405,7 +646,11 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to retrieve. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -413,7 +658,8 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValueAsync(string,string,string,string,IEnumerable{KeyValueFields},MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> CheckKeyValueAsync(string key, string label = null, string syncToken = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -421,7 +667,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValueRequest(key, label, acceptDatetime, select, matchConditions, context);
+                using HttpMessage message = CreateCheckKeyValueRequest(key, label, syncToken, acceptDatetime, select, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -431,6 +677,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -443,7 +690,11 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to retrieve. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -451,7 +702,8 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckKeyValue(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValue(string,string,string,string,IEnumerable{KeyValueFields},MatchConditions,RequestContext)']/*" />
+        public virtual Response CheckKeyValue(string key, string label = null, string syncToken = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -459,7 +711,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValueRequest(key, label, acceptDatetime, select, matchConditions, context);
+                using HttpMessage message = CreateCheckKeyValueRequest(key, label, syncToken, acceptDatetime, select, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -469,6 +721,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -479,17 +732,22 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckSnapshotsAsync(string after = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotsAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> CheckSnapshotsAsync(string syncToken = null, string after = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckSnapshotsRequest(after, context);
+                using HttpMessage message = CreateCheckSnapshotsRequest(syncToken, after, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -499,6 +757,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -509,18 +768,102 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckSnapshots(string after = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshots(string,string,RequestContext)']/*" />
+        public virtual Response CheckSnapshots(string syncToken = null, string after = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckSnapshotsRequest(after, context);
+                using HttpMessage message = CreateCheckSnapshotsRequest(syncToken, after, context);
                 return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<Snapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSnapshotAsync(name, select, syncToken, matchConditions, context).ConfigureAwait(false);
+            return Response.FromValue(Snapshot.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)']/*" />
+        public virtual Response<Snapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSnapshot(name, select, syncToken, matchConditions, context);
+            return Response.FromValue(Snapshot.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a single key-value snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshotAsync(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(string,IEnumerable{SnapshotFields},string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -537,17 +880,24 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshot(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
+        /// <param name="name"> The name of the snapshot. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(string,IEnumerable{SnapshotFields},string,MatchConditions,RequestContext)']/*" />
+        public virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -555,43 +905,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a single key-value snapshot.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, syncToken, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -601,428 +915,32 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Updates the state of a key-value snapshot.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/merge-patch+json". </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <summary> Gets the state of a long running operation. </summary>
+        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<OperationDetails>> GetOperationDetailsAsync(string snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, contentType, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetOperationDetailsAsync(snapshot, context).ConfigureAwait(false);
+            return Response.FromValue(OperationDetails.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Updates the state of a key-value snapshot.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/merge-patch+json". </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
+        /// <summary> Gets the state of a long running operation. </summary>
+        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(string,CancellationToken)']/*" />
+        public virtual Response<OperationDetails> GetOperationDetails(string snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, contentType, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to check. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckSnapshotAsync(string name, MatchConditions matchConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckSnapshotRequest(name, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the key-value snapshot to check. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckSnapshot(string name, MatchConditions matchConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckSnapshotRequest(name, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckLabelsRequest(name, after, acceptDatetime, select, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckLabelsRequest(name, after, acceptDatetime, select, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Locks a key-value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="label"> The label, if any, of the key-value to lock. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Locks a key-value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="label"> The label, if any, of the key-value to lock. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Unlocks a key-value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Unlocks a key-value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckRevisionsRequest(key, label, after, acceptDatetime, select, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckRevisionsRequest(key, label, after, acceptDatetime, select, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetOperationDetails(snapshot, context);
+            return Response.FromValue(OperationDetails.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1033,6 +951,11 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperationDetailsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
@@ -1040,7 +963,8 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1066,6 +990,11 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperationDetails(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
@@ -1073,7 +1002,8 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetOperationDetails(string snapshot, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(string,RequestContext)']/*" />
+        public virtual Response GetOperationDetails(string snapshot, RequestContext context)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1089,6 +1019,638 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the state of a key-value snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the key-value snapshot to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/merge-patch+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateSnapshotAsync(string name, RequestContent content, ContentType contentTypeHeader, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSnapshotRequest(name, content, contentTypeHeader, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the state of a key-value snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the key-value snapshot to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/merge-patch+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshot(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response UpdateSnapshot(string name, RequestContent content, ContentType contentTypeHeader, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSnapshotRequest(name, content, contentTypeHeader, syncToken, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the key-value snapshot to check. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotAsync(string,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> CheckSnapshotAsync(string name, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotRequest(name, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the key-value snapshot to check. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshot(string,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response CheckSnapshot(string name, string syncToken = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotRequest(name, syncToken, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabelsAsync(string,string,string,string,IEnumerable{LabelFields},RequestContext)']/*" />
+        public virtual async Task<Response> CheckLabelsAsync(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<LabelFields> select = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabels(string,string,string,string,IEnumerable{LabelFields},RequestContext)']/*" />
+        public virtual Response CheckLabels(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<LabelFields> select = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Locks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutLockAsync(string,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyValue>> PutLockAsync(string key, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await PutLockAsync(key, label, syncToken, matchConditions, context).ConfigureAwait(false);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary> Locks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutLock(string,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual Response<KeyValue> PutLock(string key, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = PutLock(key, label, syncToken, matchConditions, context);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Locks a key-value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PutLockAsync(string,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutLockAsync(string,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> PutLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePutLockRequest(key, label, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Locks a key-value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PutLock(string,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='PutLock(string,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response PutLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePutLockRequest(key, label, syncToken, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unlocks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteLockAsync(string,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyValue>> DeleteLockAsync(string key, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteLockAsync(key, label, syncToken, matchConditions, context).ConfigureAwait(false);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary> Unlocks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteLock(string,string,string,MatchConditions,CancellationToken)']/*" />
+        public virtual Response<KeyValue> DeleteLock(string key, string label = null, string syncToken = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeleteLock(key, label, syncToken, matchConditions, context);
+            return Response.FromValue(KeyValue.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Unlocks a key-value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteLockAsync(string,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteLockAsync(string,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLockRequest(key, label, syncToken, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Unlocks a key-value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteLock(string,string,string,MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteLock(string,string,string,MatchConditions,RequestContext)']/*" />
+        public virtual Response DeleteLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLockRequest(key, label, syncToken, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Response> CheckRevisionsAsync(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, IEnumerable<string> tags = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)']/*" />
+        public virtual Response CheckRevisions(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, IEnumerable<string> tags = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of keys. </summary>
+        /// <param name="name"> A filter for the name of the returned keys. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(string,string,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<Key> GetKeysAsync(string name = null, string after = null, string syncToken = null, string acceptDatetime = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, syncToken, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, syncToken, acceptDatetime, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Key.DeserializeKey(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of keys. </summary>
+        /// <param name="name"> A filter for the name of the returned keys. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(string,string,string,string,CancellationToken)']/*" />
+        public virtual Pageable<Key> GetKeys(string name = null, string after = null, string syncToken = null, string acceptDatetime = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, syncToken, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, syncToken, acceptDatetime, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Key.DeserializeKey(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1099,18 +1661,31 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeysAsync(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetKeysAsync(string name, string after, string acceptDatetime, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(string,string,string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetKeysAsync(string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, syncToken, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, syncToken, acceptDatetime, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
@@ -1122,19 +1697,108 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeys(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetKeys(string name, string after, string acceptDatetime, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(string,string,string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetKeys(string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, syncToken, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, syncToken, acceptDatetime, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-values. </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)']/*" />
+        public virtual AsyncPageable<KeyValue> GetKeyValuesAsync(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, string snapshot = null, IEnumerable<string> tags = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyValuesNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyValue.DeserializeKeyValue(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeyValues", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-values. </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)']/*" />
+        public virtual Pageable<KeyValue> GetKeyValues(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, string snapshot = null, IEnumerable<string> tags = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyValuesNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyValue.DeserializeKeyValue(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeyValues", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1145,23 +1809,49 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetKeyValuesAsync(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, string snapshot, IEnumerable<string> tags, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyValuesNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeyValues", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1172,23 +1862,87 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetKeyValues(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, string snapshot, IEnumerable<string> tags, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyValuesRequest(key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyValuesNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, snapshot, tags, matchConditions, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeyValues", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)']/*" />
+        public virtual AsyncPageable<Snapshot> GetSnapshotsAsync(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, IEnumerable<ConfigurationSnapshotStatus> status = null, string syncToken = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, syncToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Snapshot.DeserializeSnapshot(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)']/*" />
+        public virtual Pageable<Snapshot> GetSnapshots(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, IEnumerable<ConfigurationSnapshotStatus> status = null, string syncToken = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, syncToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Snapshot.DeserializeSnapshot(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1199,19 +1953,29 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshotsAsync(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<SnapshotFields> select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, syncToken, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
         }
 
@@ -1223,20 +1987,74 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshots(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<SnapshotFields> select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, syncToken, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(string,string,string,string,IEnumerable{LabelFields},CancellationToken)']/*" />
+        public virtual AsyncPageable<Label> GetLabelsAsync(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<LabelFields> select = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, syncToken, after, acceptDatetime, select, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Label.DeserializeLabel(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(string,string,string,string,IEnumerable{LabelFields},CancellationToken)']/*" />
+        public virtual Pageable<Label> GetLabels(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<LabelFields> select = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, syncToken, after, acceptDatetime, select, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Label.DeserializeLabel(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1247,19 +2065,32 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLabelsAsync(string,string,string,string,IEnumerable{LabelFields},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(string,string,string,string,IEnumerable{LabelFields},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> select, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, syncToken, after, acceptDatetime, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
@@ -1271,20 +2102,99 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLabels(string,string,string,string,IEnumerable{LabelFields},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetLabels(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(string,string,string,string,IEnumerable{LabelFields},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetLabels(string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> select, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, syncToken, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, syncToken, after, acceptDatetime, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value revisions. </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<KeyValue> GetRevisionsAsync(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, tags, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyValue.DeserializeKeyValue(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value revisions. </summary>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<KeyValue> GetRevisions(string key = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, IEnumerable<KeyValueFields> select = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, tags, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyValue.DeserializeKeyValue(e), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1295,20 +2205,43 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, tags, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
@@ -1320,23 +2253,88 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="key"> A filter used to match keys. </param>
-        /// <param name="label"> A filter used to match labels. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetRevisions(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetRevisions(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, syncToken, after, acceptDatetime, select, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, syncToken, after, acceptDatetime, select, tags, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.snapshot+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="entity"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshotAsync(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)']/*" />
+        public virtual async Task<Operation<Snapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, Snapshot entity, ContentType contentTypeHeader, string syncToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(entity, nameof(entity));
+
+            using RequestContent content = entity.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await CreateSnapshotAsync(waitUntil, name, content, contentTypeHeader, syncToken, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, Snapshot.FromResponse, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.snapshot+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="entity"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshot(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)']/*" />
+        public virtual Operation<Snapshot> CreateSnapshot(WaitUntil waitUntil, string name, Snapshot entity, ContentType contentTypeHeader, string syncToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(entity, nameof(entity));
+
+            using RequestContent content = entity.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = CreateSnapshot(waitUntil, name, content, contentTypeHeader, syncToken, context);
+            return ProtocolOperationHelpers.Convert(response, Snapshot.FromResponse, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a key-value snapshot.
         /// <list type="bullet">
@@ -1345,18 +2343,25 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateSnapshotAsync(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/vnd.microsoft.appconfig.snapshot+json". </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.snapshot+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshotAsync(WaitUntil,string,RequestContent,ContentType,string,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, RequestContent content, ContentType contentTypeHeader, string syncToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -1365,8 +2370,8 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentTypeHeader, syncToken, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1383,18 +2388,25 @@ namespace Azure.Data.AppConfiguration
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateSnapshot(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/vnd.microsoft.appconfig.snapshot+json". </param>
+        /// <param name="contentTypeHeader"> Content-Type header. Allowed values: "application/vnd.microsoft.appconfig.snapshot+json" | "application/json". </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshot(WaitUntil,string,RequestContent,ContentType,string,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, RequestContent content, ContentType contentTypeHeader, string syncToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -1403,8 +2415,8 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentTypeHeader, syncToken, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1413,7 +2425,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string name, string after, string acceptDatetime, RequestContext context)
+        internal HttpMessage CreateGetKeysRequest(string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1421,20 +2433,20 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1443,7 +2455,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckKeysRequest(string name, string after, string acceptDatetime, RequestContext context)
+        internal HttpMessage CreateCheckKeysRequest(string name, string syncToken, string after, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1451,19 +2463,20 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
             request.Uri = uri;
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1472,7 +2485,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetKeyValuesRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, string snapshot, IEnumerable<string> tags, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1480,6 +2493,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1488,12 +2502,11 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
@@ -1501,11 +2514,18 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("snapshot", snapshot, true);
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
-            if (_syncToken != null)
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                foreach (var param in tags)
+                {
+                    uri.AppendQuery("tags", param, true);
+                }
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1518,7 +2538,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, string snapshot, IEnumerable<string> tags, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1526,6 +2546,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1534,12 +2555,11 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
@@ -1547,10 +2567,18 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("snapshot", snapshot, true);
             }
-            request.Uri = uri;
-            if (_syncToken != null)
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                foreach (var param in tags)
+                {
+                    uri.AppendQuery("tags", param, true);
+                }
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1563,7 +2591,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetKeyValueRequest(string key, string label, IEnumerable<KeyValueFields> select, string syncToken, string acceptDatetime, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1572,20 +2600,20 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1598,7 +2626,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateSetConfigurationSettingRequest(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreatePutKeyValueRequest(string key, RequestContent content, ContentType contentTypeHeader, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1607,27 +2635,27 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.Add("Content-Type", contentType.ToString());
+            request.Headers.Add("Content-Type", contentTypeHeader.ToString());
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string label, ETag? ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteKeyValueRequest(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
@@ -1636,16 +2664,16 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (ifMatch != null)
             {
@@ -1654,7 +2682,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string syncToken, string acceptDatetime, IEnumerable<KeyValueFields> select, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1663,19 +2691,20 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -1688,7 +2717,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<SnapshotFields> select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1696,33 +2725,33 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
-            if (status != null && !(status is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (status != null && !(status is ChangeTrackingList<ConfigurationSnapshotStatus> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("status", status, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             return message;
         }
 
-        internal HttpMessage CreateCheckSnapshotsRequest(string after, RequestContext context)
+        internal HttpMessage CreateCheckSnapshotsRequest(string syncToken, string after, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1736,14 +2765,15 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQuery("After", after, true);
             }
             request.Uri = uri;
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<SnapshotFields> select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1753,283 +2783,19 @@ namespace Azure.Data.AppConfiguration
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (select != null && !(select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateCreateSnapshotRequest(string name, RequestContent content, ContentType contentType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/snapshots/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/snapshots/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCheckSnapshotRequest(string name, MatchConditions matchConditions, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/snapshots/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateGetLabelsRequest(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/labels", false);
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", select, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.Add("Accept-Datetime", acceptDatetime);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateCheckLabelsRequest(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/labels", false);
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", select, ",", true);
-            }
-            request.Uri = uri;
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.Add("Accept-Datetime", acceptDatetime);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/locks/", false);
-            uri.AppendPath(key, true);
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/locks/", false);
-            uri.AppendPath(key, true);
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateGetRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/revisions", false);
-            if (key != null)
-            {
-                uri.AppendQuery("key", key, true);
-            }
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", select, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.Add("Accept-Datetime", acceptDatetime);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/revisions", false);
-            if (key != null)
-            {
-                uri.AppendQuery("key", key, true);
-            }
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", select, ",", true);
-            }
-            request.Uri = uri;
-            if (_syncToken != null)
-            {
-                request.Headers.Add("Sync-Token", _syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
             return message;
         }
@@ -2049,19 +2815,101 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeysNextPageRequest(string nextLink, string name, string after, string acceptDatetime, RequestContext context)
+        internal HttpMessage CreateCreateSnapshotRequest(string name, RequestContent content, ContentType contentTypeHeader, string syncToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            request.Headers.Add("Content-Type", contentTypeHeader.ToString());
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateSnapshotRequest(string name, RequestContent content, ContentType contentTypeHeader, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.Add("Content-Type", contentTypeHeader.ToString());
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCheckSnapshotRequest(string name, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
-            if (_syncToken != null)
+            uri.AppendPath("/labels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (name != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                uri.AppendQuery("name", name, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && !(select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -2070,7 +2918,185 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> select, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/labels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && !(select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreatePutLockRequest(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/locks/", false);
+            uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteLockRequest(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/locks/", false);
+            uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, IEnumerable<string> tags, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in tags)
+                {
+                    uri.AppendQuery("tags", param, true);
+                }
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, IEnumerable<string> tags, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && !(select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in tags)
+                {
+                    uri.AppendQuery("tags", param, true);
+                }
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetKeysNextPageRequest(string nextLink, string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2079,10 +3105,31 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetKeyValuesNextPageRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, string snapshot, IEnumerable<string> tags, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json");
+            if (syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -2095,7 +3142,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<SnapshotFields> select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2104,15 +3151,15 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             return message;
         }
 
-        internal HttpMessage CreateGetLabelsNextPageRequest(string nextLink, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetLabelsNextPageRequest(string nextLink, string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2121,10 +3168,10 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
@@ -2133,7 +3180,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetRevisionsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetRevisionsNextPageRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> select, IEnumerable<string> tags, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2142,16 +3189,27 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
-            if (_syncToken != null)
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json");
+            if (syncToken != null)
             {
-                request.Headers.Add("Sync-Token", _syncToken);
+                request.Headers.Add("Sync-Token", syncToken);
             }
             if (acceptDatetime != null)
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

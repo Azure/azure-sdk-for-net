@@ -1,0 +1,1697 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CheckKeysAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call CheckKeysAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeysAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeysAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeysAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckKeys(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call CheckKeys.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeys();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeys with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeys(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckKeyValuesAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeyValuesAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeyValuesAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeyValuesAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckKeyValues.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeyValues();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeyValues with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeyValues(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetKeyValueAsync(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetKeyValueAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.GetKeyValueAsync("<key>");
+]]></code>
+This sample shows how to call GetKeyValueAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.GetKeyValueAsync("<key>", label: "<label>", select: new KeyValueFields[] { KeyValueFields.Key }, syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="GetKeyValue(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetKeyValue.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.GetKeyValue("<key>");
+]]></code>
+This sample shows how to call GetKeyValue with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.GetKeyValue("<key>", label: "<label>", select: new KeyValueFields[] { KeyValueFields.Key }, syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="GetKeyValueAsync(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetKeyValueAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetKeyValueAsync("<key>", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetKeyValueAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetKeyValueAsync("<key>", "<label>", new KeyValueFields[] { KeyValueFields.Key }, "<syncToken>", "<acceptDatetime>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="GetKeyValue(string,string,IEnumerable{KeyValueFields},string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetKeyValue and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetKeyValue("<key>", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetKeyValue with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetKeyValue("<key>", "<label>", new KeyValueFields[] { KeyValueFields.Key }, "<syncToken>", "<acceptDatetime>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="PutKeyValueAsync(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call PutKeyValueAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.PutKeyValueAsync("<key>", new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+]]></code>
+This sample shows how to call PutKeyValueAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+KeyValue entity = new KeyValue
+{
+    Label = "<label>",
+    ContentType = "<content_type>",
+    Value = "<value>",
+    LastModified = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+    Locked = true,
+    Etag = "<etag>",
+};
+Response<KeyValue> response = await client.PutKeyValueAsync("<key>", entity: entity, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="PutKeyValue(string,KeyValue,ContentType,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call PutKeyValue.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.PutKeyValue("<key>", new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+]]></code>
+This sample shows how to call PutKeyValue with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+KeyValue entity = new KeyValue
+{
+    Label = "<label>",
+    ContentType = "<content_type>",
+    Value = "<value>",
+    LastModified = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+    Locked = true,
+    Etag = "<etag>",
+};
+Response<KeyValue> response = client.PutKeyValue("<key>", entity: entity, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="PutKeyValueAsync(string,RequestContent,ContentType,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call PutKeyValueAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = null;
+Response response = await client.PutKeyValueAsync("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call PutKeyValueAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    label = "<label>",
+    content_type = "<content_type>",
+    value = "<value>",
+    last_modified = "2022-05-10T18:57:31.2311892Z",
+    tags = new
+    {
+        key = "<tags>",
+    },
+    locked = true,
+    etag = "<etag>",
+});
+Response response = await client.PutKeyValueAsync("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="PutKeyValue(string,RequestContent,ContentType,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call PutKeyValue and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = null;
+Response response = client.PutKeyValue("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call PutKeyValue with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    label = "<label>",
+    content_type = "<content_type>",
+    value = "<value>",
+    last_modified = "2022-05-10T18:57:31.2311892Z",
+    tags = new
+    {
+        key = "<tags>",
+    },
+    locked = true,
+    etag = "<etag>",
+});
+Response response = client.PutKeyValue("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteKeyValueAsync(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call DeleteKeyValueAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.DeleteKeyValueAsync("<key>");
+]]></code>
+This sample shows how to call DeleteKeyValueAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.DeleteKeyValueAsync("<key>", label: "<label>", syncToken: "<syncToken>", ifMatch: new ETag("<ifMatch>"));
+]]></code></example>
+    </member>
+    <member name="DeleteKeyValue(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call DeleteKeyValue.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.DeleteKeyValue("<key>");
+]]></code>
+This sample shows how to call DeleteKeyValue with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.DeleteKeyValue("<key>", label: "<label>", syncToken: "<syncToken>", ifMatch: new ETag("<ifMatch>"));
+]]></code></example>
+    </member>
+    <member name="DeleteKeyValueAsync(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call DeleteKeyValueAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.DeleteKeyValueAsync("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call DeleteKeyValueAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.DeleteKeyValueAsync("<key>", "<label>", "<syncToken>", new ETag("<ifMatch>"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteKeyValue(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call DeleteKeyValue and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.DeleteKeyValue("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call DeleteKeyValue with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.DeleteKeyValue("<key>", "<label>", "<syncToken>", new ETag("<ifMatch>"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="CheckKeyValueAsync(string,string,string,string,IEnumerable{KeyValueFields},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckKeyValueAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeyValueAsync("<key>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeyValueAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckKeyValueAsync("<key>", label: "<label>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckKeyValue(string,string,string,string,IEnumerable{KeyValueFields},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckKeyValue.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeyValue("<key>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckKeyValue with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckKeyValue("<key>", label: "<label>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckSnapshotsAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call CheckSnapshotsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckSnapshotsAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshotsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckSnapshotsAsync(syncToken: "<syncToken>", after: "<after>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckSnapshots(string,string,RequestContext)">
+      <example>
+This sample shows how to call CheckSnapshots.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckSnapshots();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshots with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckSnapshots(syncToken: "<syncToken>", after: "<after>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetSnapshotAsync(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshotAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<Snapshot> response = await client.GetSnapshotAsync("<name>");
+]]></code>
+This sample shows how to call GetSnapshotAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<Snapshot> response = await client.GetSnapshotAsync("<name>", select: new SnapshotFields[] { SnapshotFields.Name }, syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="GetSnapshot(string,IEnumerable{SnapshotFields},string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshot.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<Snapshot> response = client.GetSnapshot("<name>");
+]]></code>
+This sample shows how to call GetSnapshot with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<Snapshot> response = client.GetSnapshot("<name>", select: new SnapshotFields[] { SnapshotFields.Name }, syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="GetSnapshotAsync(string,IEnumerable{SnapshotFields},string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshotAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetSnapshotAsync("<name>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetSnapshotAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetSnapshotAsync("<name>", new SnapshotFields[] { SnapshotFields.Name }, "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSnapshot(string,IEnumerable{SnapshotFields},string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshot and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetSnapshot("<name>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call GetSnapshot with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetSnapshot("<name>", new SnapshotFields[] { SnapshotFields.Name }, "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="GetOperationDetailsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetOperationDetailsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<OperationDetails> response = await client.GetOperationDetailsAsync("<snapshot>");
+]]></code>
+This sample shows how to call GetOperationDetailsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<OperationDetails> response = await client.GetOperationDetailsAsync("<snapshot>");
+]]></code></example>
+    </member>
+    <member name="GetOperationDetails(string,CancellationToken)">
+      <example>
+This sample shows how to call GetOperationDetails.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<OperationDetails> response = client.GetOperationDetails("<snapshot>");
+]]></code>
+This sample shows how to call GetOperationDetails with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<OperationDetails> response = client.GetOperationDetails("<snapshot>");
+]]></code></example>
+    </member>
+    <member name="GetOperationDetailsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetOperationDetailsAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetOperationDetailsAsync("<snapshot>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetOperationDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.GetOperationDetailsAsync("<snapshot>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetOperationDetails(string,RequestContext)">
+      <example>
+This sample shows how to call GetOperationDetails and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetOperationDetails("<snapshot>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetOperationDetails with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.GetOperationDetails("<snapshot>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateSnapshotAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call UpdateSnapshotAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateSnapshotAsync("<name>", content, new ContentType("application/merge-patch+json"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call UpdateSnapshotAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    status = "provisioning",
+});
+Response response = await client.UpdateSnapshotAsync("<name>", content, new ContentType("application/merge-patch+json"), syncToken: "<syncToken>", matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateSnapshot(string,RequestContent,ContentType,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call UpdateSnapshot and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateSnapshot("<name>", content, new ContentType("application/merge-patch+json"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call UpdateSnapshot with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    status = "provisioning",
+});
+Response response = client.UpdateSnapshot("<name>", content, new ContentType("application/merge-patch+json"), syncToken: "<syncToken>", matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="CheckSnapshotAsync(string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckSnapshotAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckSnapshotAsync("<name>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshotAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckSnapshotAsync("<name>", syncToken: "<syncToken>", matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckSnapshot(string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CheckSnapshot.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckSnapshot("<name>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckSnapshot with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckSnapshot("<name>", syncToken: "<syncToken>", matchConditions: null);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckLabelsAsync(string,string,string,string,IEnumerable{LabelFields},RequestContext)">
+      <example>
+This sample shows how to call CheckLabelsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckLabelsAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckLabelsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckLabelsAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name });
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckLabels(string,string,string,string,IEnumerable{LabelFields},RequestContext)">
+      <example>
+This sample shows how to call CheckLabels.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckLabels();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckLabels with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckLabels(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name });
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="PutLockAsync(string,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call PutLockAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.PutLockAsync("<key>");
+]]></code>
+This sample shows how to call PutLockAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.PutLockAsync("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="PutLock(string,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call PutLock.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.PutLock("<key>");
+]]></code>
+This sample shows how to call PutLock with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.PutLock("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="PutLockAsync(string,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call PutLockAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.PutLockAsync("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call PutLockAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.PutLockAsync("<key>", "<label>", "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="PutLock(string,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call PutLock and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.PutLock("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call PutLock with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.PutLock("<key>", "<label>", "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteLockAsync(string,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call DeleteLockAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.DeleteLockAsync("<key>");
+]]></code>
+This sample shows how to call DeleteLockAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = await client.DeleteLockAsync("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="DeleteLock(string,string,string,MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call DeleteLock.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.DeleteLock("<key>");
+]]></code>
+This sample shows how to call DeleteLock with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response<KeyValue> response = client.DeleteLock("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+]]></code></example>
+    </member>
+    <member name="DeleteLockAsync(string,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteLockAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.DeleteLockAsync("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call DeleteLockAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.DeleteLockAsync("<key>", "<label>", "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteLock(string,string,string,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteLock and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.DeleteLock("<key>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+]]></code>
+This sample shows how to call DeleteLock with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.DeleteLock("<key>", "<label>", "<syncToken>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("content_type").ToString());
+Console.WriteLine(result.GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("last_modified").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("locked").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="CheckRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call CheckRevisionsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckRevisionsAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckRevisionsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = await client.CheckRevisionsAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" });
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CheckRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call CheckRevisions.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckRevisions();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CheckRevisions with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Response response = client.CheckRevisions(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" });
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetKeysAsync(string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetKeysAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Key item in client.GetKeysAsync())
+{
+}
+]]></code>
+This sample shows how to call GetKeysAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Key item in client.GetKeysAsync(name: "<name>", after: "<after>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetKeys(string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetKeys.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Key item in client.GetKeys())
+{
+}
+]]></code>
+This sample shows how to call GetKeys with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Key item in client.GetKeys(name: "<name>", after: "<after>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetKeysAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetKeysAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetKeysAsync(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetKeysAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetKeysAsync("<name>", "<after>", "<syncToken>", "<acceptDatetime>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetKeys(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetKeys and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetKeys(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetKeys with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetKeys("<name>", "<after>", "<syncToken>", "<acceptDatetime>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetKeyValuesAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (KeyValue item in client.GetKeyValuesAsync())
+{
+}
+]]></code>
+This sample shows how to call GetKeyValuesAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (KeyValue item in client.GetKeyValuesAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,CancellationToken)">
+      <example>
+This sample shows how to call GetKeyValues.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (KeyValue item in client.GetKeyValues())
+{
+}
+]]></code>
+This sample shows how to call GetKeyValues with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (KeyValue item in client.GetKeyValues(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetKeyValuesAsync(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetKeyValuesAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetKeyValuesAsync(null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetKeyValuesAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetKeyValuesAsync("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, "<snapshot>", new string[] { "<tags>" }, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("content_type").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("last_modified").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("locked").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetKeyValues(string,string,string,string,string,IEnumerable{KeyValueFields},string,IEnumerable{string},MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call GetKeyValues and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetKeyValues(null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetKeyValues with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetKeyValues("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, "<snapshot>", new string[] { "<tags>" }, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("content_type").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("last_modified").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("locked").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSnapshotsAsync(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshotsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Snapshot item in client.GetSnapshotsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetSnapshotsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Snapshot item in client.GetSnapshotsAsync(name: "<name>", after: "<after>", select: new SnapshotFields[] { SnapshotFields.Name }, status: new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, syncToken: "<syncToken>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSnapshots(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshots.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Snapshot item in client.GetSnapshots())
+{
+}
+]]></code>
+This sample shows how to call GetSnapshots with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Snapshot item in client.GetSnapshots(name: "<name>", after: "<after>", select: new SnapshotFields[] { SnapshotFields.Name }, status: new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, syncToken: "<syncToken>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSnapshotsAsync(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshotsAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetSnapshotsAsync(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetSnapshotsAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetSnapshotsAsync("<name>", "<after>", new SnapshotFields[] { SnapshotFields.Name }, new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, "<syncToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+    Console.WriteLine(result.GetProperty("composition_type").ToString());
+    Console.WriteLine(result.GetProperty("created").ToString());
+    Console.WriteLine(result.GetProperty("expires").ToString());
+    Console.WriteLine(result.GetProperty("retention_period").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+    Console.WriteLine(result.GetProperty("items_count").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSnapshots(string,string,IEnumerable{SnapshotFields},IEnumerable{ConfigurationSnapshotStatus},string,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshots and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetSnapshots(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetSnapshots with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetSnapshots("<name>", "<after>", new SnapshotFields[] { SnapshotFields.Name }, new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, "<syncToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+    Console.WriteLine(result.GetProperty("composition_type").ToString());
+    Console.WriteLine(result.GetProperty("created").ToString());
+    Console.WriteLine(result.GetProperty("expires").ToString());
+    Console.WriteLine(result.GetProperty("retention_period").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+    Console.WriteLine(result.GetProperty("items_count").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLabelsAsync(string,string,string,string,IEnumerable{LabelFields},CancellationToken)">
+      <example>
+This sample shows how to call GetLabelsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Label item in client.GetLabelsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetLabelsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (Label item in client.GetLabelsAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name }))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLabels(string,string,string,string,IEnumerable{LabelFields},CancellationToken)">
+      <example>
+This sample shows how to call GetLabels.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Label item in client.GetLabels())
+{
+}
+]]></code>
+This sample shows how to call GetLabels with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (Label item in client.GetLabels(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name }))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLabelsAsync(string,string,string,string,IEnumerable{LabelFields},RequestContext)">
+      <example>
+This sample shows how to call GetLabelsAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetLabelsAsync(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetLabelsAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetLabelsAsync("<name>", "<syncToken>", "<after>", "<acceptDatetime>", new LabelFields[] { LabelFields.Name }, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLabels(string,string,string,string,IEnumerable{LabelFields},RequestContext)">
+      <example>
+This sample shows how to call GetLabels and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetLabels(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetLabels with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetLabels("<name>", "<syncToken>", "<after>", "<acceptDatetime>", new LabelFields[] { LabelFields.Name }, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call GetRevisionsAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (KeyValue item in client.GetRevisionsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetRevisionsAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (KeyValue item in client.GetRevisionsAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" }))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call GetRevisions.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (KeyValue item in client.GetRevisions())
+{
+}
+]]></code>
+This sample shows how to call GetRevisions with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (KeyValue item in client.GetRevisions(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" }))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRevisionsAsync(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call GetRevisionsAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetRevisionsAsync(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetRevisionsAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+await foreach (BinaryData item in client.GetRevisionsAsync("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, new string[] { "<tags>" }, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("content_type").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("last_modified").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("locked").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetRevisions(string,string,string,string,string,IEnumerable{KeyValueFields},IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call GetRevisions and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetRevisions(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+}
+]]></code>
+This sample shows how to call GetRevisions with all parameters and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+foreach (BinaryData item in client.GetRevisions("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, new string[] { "<tags>" }, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("content_type").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("last_modified").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("locked").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="CreateSnapshotAsync(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateSnapshotAsync.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Snapshot entity = new Snapshot(new KeyValueFilter[]
+{
+    new KeyValueFilter("<key>")
+});
+Operation<Snapshot> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+Snapshot responseData = operation.Value;
+]]></code>
+This sample shows how to call CreateSnapshotAsync with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Snapshot entity = new Snapshot(new KeyValueFilter[]
+{
+    new KeyValueFilter("<key>")
+    {
+        Label = "<label>",
+        Tags = {"<tags>"},
+    }
+})
+{
+    CompositionType = CompositionType.Key,
+    RetentionPeriod = 1234L,
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<Snapshot> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+Snapshot responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CreateSnapshot(WaitUntil,string,Snapshot,ContentType,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateSnapshot.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Snapshot entity = new Snapshot(new KeyValueFilter[]
+{
+    new KeyValueFilter("<key>")
+});
+Operation<Snapshot> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+Snapshot responseData = operation.Value;
+]]></code>
+This sample shows how to call CreateSnapshot with all parameters.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+Snapshot entity = new Snapshot(new KeyValueFilter[]
+{
+    new KeyValueFilter("<key>")
+    {
+        Label = "<label>",
+        Tags = {"<tags>"},
+    }
+})
+{
+    CompositionType = CompositionType.Key,
+    RetentionPeriod = 1234L,
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Operation<Snapshot> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+Snapshot responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CreateSnapshotAsync(WaitUntil,string,RequestContent,ContentType,string,RequestContext)">
+      <example>
+This sample shows how to call CreateSnapshotAsync and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    filters = new object[]
+    {
+        new
+        {
+            key = "<key>",
+        }
+    },
+});
+Operation<BinaryData> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call CreateSnapshotAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    filters = new object[]
+    {
+        new
+        {
+            key = "<key>",
+            label = "<label>",
+            tags = new object[]
+            {
+                "<tags>"
+            },
+        }
+    },
+    composition_type = "key",
+    retention_period = 1234L,
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateSnapshot(WaitUntil,string,RequestContent,ContentType,string,RequestContext)">
+      <example>
+This sample shows how to call CreateSnapshot and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    filters = new object[]
+    {
+        new
+        {
+            key = "<key>",
+        }
+    },
+});
+Operation<BinaryData> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+]]></code>
+This sample shows how to call CreateSnapshot with all parameters and request content and parse the result.
+<code><![CDATA[
+ConfigurationClient client = new ConfigurationClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    filters = new object[]
+    {
+        new
+        {
+            key = "<key>",
+            label = "<label>",
+            tags = new object[]
+            {
+                "<tags>"
+            },
+        }
+    },
+    composition_type = "key",
+    retention_period = 1234L,
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+Console.WriteLine(result.GetProperty("composition_type").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("expires").ToString());
+Console.WriteLine(result.GetProperty("retention_period").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+Console.WriteLine(result.GetProperty("items_count").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
