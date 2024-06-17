@@ -59,6 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new InvalidOperationException("The provided TracerProviderBuilder does not implement IDeferredTracerProviderBuilder.");
             }
 
+            // TODO: Do we need provide an option to alter BatchExportActivityProcessorOptions?
             return deferredBuilder.Configure((sp, builder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
@@ -211,7 +212,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return builder.AddProcessor(sp =>
             {
                 AzureMonitorExporterOptions exporterOptions;
-                BatchExportLogRecordProcessorOptions batchExportLogRecordProcessorOptions;
 
                 if (name == null)
                 {
@@ -221,7 +221,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // name, delegates for all signals will mix together. See:
                     // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
                     exporterOptions = sp.GetRequiredService<IOptionsFactory<AzureMonitorExporterOptions>>().Create(finalOptionsName);
-                    batchExportLogRecordProcessorOptions = sp.GetRequiredService<IOptionsFactory<BatchExportLogRecordProcessorOptions>>().Create(finalOptionsName);
 
                     // Configuration delegate is executed inline on the fresh instance.
                     configure?.Invoke(exporterOptions);
@@ -231,7 +230,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // When using named options we can properly utilize Options
                     // API to create or reuse an instance.
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
-                    batchExportLogRecordProcessorOptions = sp.GetRequiredService<IOptionsMonitor<BatchExportLogRecordProcessorOptions>>().Get(finalOptionsName);
                 }
 
                 if (credential != null)
@@ -241,6 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions.Credential ??= credential;
                 }
 
+                // TODO: Do we need provide an option to alter BatchExportActivityProcessorOptions?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));
             });
         }
