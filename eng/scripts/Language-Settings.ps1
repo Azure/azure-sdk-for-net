@@ -15,6 +15,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  Write-Host "Get-AllPackageInfoFromRepo-Executing msbuild"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
@@ -41,6 +43,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
         $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       }
+    } else {
+      Write-Host "$dllFolder/Release/netstandard2.0/ did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
