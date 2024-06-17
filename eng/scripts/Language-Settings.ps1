@@ -40,8 +40,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # Add a step to extract namespaces
     $namespaces = @()
     # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
-    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
-      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
+    $releaseFolderPath = Join-Path -Path $dllFolder -ChildPath "/Release/netstandard2.0/"
+    Write-Host "releaseFolderPath=$releaseFolderPath"
+    if (Test-Path $releaseFolderPath) {
+      $defaultDll = Get-ChildItem $releaseFolderPath -Filter "$pkgName.dll" -Recurse
       if ($defaultDll -and (Test-Path $defaultDll)) {
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
         $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
