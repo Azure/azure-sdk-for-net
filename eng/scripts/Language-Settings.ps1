@@ -49,7 +49,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       }
     } else {
-      Write-Host "$dllFolder/Release/netstandard2.0/ did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
+      Write-Host "$releaseFolderPath did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
