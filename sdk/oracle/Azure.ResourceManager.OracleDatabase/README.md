@@ -1,6 +1,6 @@
 # Microsoft Azure OracleDatabase management client library for .NET
 
-**[Describe the service briefly first.]**
+Oracle Database@Azure delivers all the performance, scale, and workload availability advantages of Oracle Database on OCI with the security, flexibility, and best-in-class services of Microsoft Azure, including best-in-class AI services like Azure OpenAI. This combination provides customers with more flexibility regarding where they run their workloads. It also provides a streamlined environment that simplifies cloud purchasing and management between Oracle Database and Azure services.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
