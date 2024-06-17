@@ -15,7 +15,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
-  Write-Host "Get-AllPackageInfoFromRepo-Executing msbuild"
+  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
@@ -26,7 +26,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    if (!$projectOutput) { continue }
+    if (!$projectOutput) {
+      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      continue
+    }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
