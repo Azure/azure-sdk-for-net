@@ -857,8 +857,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="conflictPolicy"> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore. </param>
         /// <param name="namespaceMappings"> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </param>
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </param>
+        /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterRestoreCriteria"/> instance for mocking. </returns>
-        public static KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null)
+        public static KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, NamespacedName resourceModifierReference = null)
         {
             includedNamespaces ??= new List<string>();
             excludedNamespaces ??= new List<string>();
@@ -880,7 +881,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 persistentVolumeRestoreMode,
                 conflictPolicy,
                 namespaceMappings,
-                restoreHookReferences?.ToList());
+                restoreHookReferences?.ToList(),
+                resourceModifierReference);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
@@ -896,8 +898,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore from vault. </param>
         /// <param name="stagingResourceGroupId"> Gets or sets the staging RG Id for creating staging disks and snapshots during restore from vault. </param>
         /// <param name="stagingStorageAccountId"> Gets or sets the staging Storage Account Id for creating backup extension object store data during restore from vault. </param>
+        /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/> instance for mocking. </returns>
-        public static KubernetesClusterVaultTierRestoreCriteria KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, ResourceIdentifier stagingResourceGroupId = null, ResourceIdentifier stagingStorageAccountId = null)
+        public static KubernetesClusterVaultTierRestoreCriteria KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, ResourceIdentifier stagingResourceGroupId = null, ResourceIdentifier stagingStorageAccountId = null, NamespacedName resourceModifierReference = null)
         {
             includedNamespaces ??= new List<string>();
             excludedNamespaces ??= new List<string>();
@@ -921,7 +924,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 namespaceMappings,
                 restoreHookReferences?.ToList(),
                 stagingResourceGroupId,
-                stagingStorageAccountId);
+                stagingStorageAccountId,
+                resourceModifierReference);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreFilesTargetInfo"/>. </summary>
