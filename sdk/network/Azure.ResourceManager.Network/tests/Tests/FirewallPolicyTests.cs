@@ -1,8 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -148,8 +145,8 @@ namespace Azure.ResourceManager.Network.Tests
             var policy = await _resourceGroup
                 .GetFirewallPolicies()
                 .CreateOrUpdateAsync(WaitUntil.Completed, policyName, policyData);
-            Assert.AreEqual(FirewallPolicySkuTier.Standard, policy.Value.Data.Sku);
-            Assert.AreEqual(AzureFirewallThreatIntelMode.Alert, policy.Value.Data.ThreatIntelMode);
+            Assert.AreEqual(FirewallPolicySkuTier.Standard.ToString(), policy.Value.Data.Sku.Tier.ToString());
+            Assert.AreEqual(AzureFirewallThreatIntelMode.Alert.ToString(), policy.Value.Data.ThreatIntelMode.ToString());
             var rcg = new FirewallPolicyRuleCollectionGroupData()
             {
                 Priority = 110,
@@ -184,20 +181,21 @@ namespace Azure.ResourceManager.Network.Tests
             var policyResource = await _resourceGroup.GetFirewallPolicies().GetAsync(policyName);
             var client = GetArmClient();
             var rcgResponse = await client
-                .GetFirewallPolicyRuleCollectionGroupResource(policyResource.Value.Id)
+                .GetFirewallPolicyRuleCollectionGroupResource(FirewallPolicyRuleCollectionGroupResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup"))
                 .UpdateAsync(WaitUntil.Completed, rcg);
             Assert.AreEqual(
-                rcgResponse.Value.Data.ProvisioningState,
-                NetworkProvisioningState.Succeeded
+                rcgResponse.Value.Data.ProvisioningState.ToString(),
+                NetworkProvisioningState.Succeeded.ToString()
             );
             var policyDraft = new FirewallPolicyDraftData()
             {
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Deny,
             };
-            var draftResource = new FirewallPolicyDraftResource(client, policyDraft);
+            var draftResource = new FirewallPolicyDraftResource(client, FirewallPolicyDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName));
             await draftResource.CreateOrUpdateAsync(WaitUntil.Completed, policyDraft);
             var rcgPolicyDraft = new FirewallPolicyRuleCollectionGroupDraftData()
             {
+                Id = FirewallPolicyRuleCollectionGroupDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup"),
                 Priority = 111,
                 RuleCollections =
                 {
@@ -229,25 +227,25 @@ namespace Azure.ResourceManager.Network.Tests
             };
             var rcgDraftResource = new FirewallPolicyRuleCollectionGroupDraftResource(
                 client,
-                rcgPolicyDraft
+                FirewallPolicyRuleCollectionGroupDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup")
             );
             await rcgDraftResource.CreateOrUpdateAsync(WaitUntil.Completed, rcgPolicyDraft);
             await policyResource.Value.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed);
             var updatedPolicy = await _resourceGroup.GetFirewallPolicies().GetAsync(policyName);
             Assert.AreEqual(
-                updatedPolicy.Value.Data.ThreatIntelMode,
-                AzureFirewallThreatIntelMode.Deny
+                updatedPolicy.Value.Data.ThreatIntelMode.ToString(),
+                AzureFirewallThreatIntelMode.Deny.ToString()
             );
             Assert.AreEqual(
-                updatedPolicy.Value.Data.ProvisioningState,
-                NetworkProvisioningState.Succeeded
+                updatedPolicy.Value.Data.ProvisioningState.ToString(),
+                NetworkProvisioningState.Succeeded.ToString()
             );
             var updatedRcg = await updatedPolicy.Value.GetFirewallPolicyRuleCollectionGroupAsync(
                 "RuleCollectionGroup"
             );
             Assert.AreEqual(
-                updatedRcg.Value.Data.ProvisioningState,
-                NetworkProvisioningState.Succeeded
+                updatedRcg.Value.Data.ProvisioningState.ToString(),
+                NetworkProvisioningState.Succeeded.ToString()
             );
             Assert.AreEqual(updatedRcg.Value.Data.Priority, 111);
             var ruleCollection = (FirewallPolicyFilterRuleCollectionInfo)
