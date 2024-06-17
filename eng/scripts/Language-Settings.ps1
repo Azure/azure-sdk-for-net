@@ -45,7 +45,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if (Test-Path $releaseFolderPath) {
       $defaultDll = Get-ChildItem $releaseFolderPath -Filter "$pkgName.dll" -Recurse
       if ($defaultDll -and (Test-Path $defaultDll)) {
-        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
+        Write-Host "Here is the dll file path: $($defaultDll.FullName)"
         $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       } else {
         Write-Host "$defaultDll didn't exist, unable to get namespaces for $pkgName, version=$pkgVersion"
@@ -59,7 +59,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.ArtifactName = $pkgName
     if ($namespaces) {
       $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
+      Write-Host "Here are the namespaces: $($pkgProp.Namespaces)"
     }
 
     $allPackageProps += $pkgProp
