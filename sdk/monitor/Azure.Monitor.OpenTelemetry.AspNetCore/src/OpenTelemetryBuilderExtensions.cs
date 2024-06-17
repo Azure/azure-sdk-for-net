@@ -50,12 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
@@ -82,12 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (builder.Services == null)
             {
