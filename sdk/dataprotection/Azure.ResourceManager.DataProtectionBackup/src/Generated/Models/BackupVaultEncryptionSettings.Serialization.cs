@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             BackupVaultEncryptionState? state = default;
             CmkKeyVaultProperties keyVaultProperties = default;
-            BackupVaulCmkKekIdentity kekIdentity = default;
+            BackupVaultCmkKekIdentity kekIdentity = default;
             BackupVaultInfrastructureEncryptionState? infrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    kekIdentity = BackupVaulCmkKekIdentity.DeserializeBackupVaulCmkKekIdentity(property.Value, options);
+                    kekIdentity = BackupVaultCmkKekIdentity.DeserializeBackupVaultCmkKekIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("infrastructureEncryption"u8))

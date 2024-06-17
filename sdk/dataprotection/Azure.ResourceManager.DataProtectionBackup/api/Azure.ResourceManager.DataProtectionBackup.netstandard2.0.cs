@@ -1081,16 +1081,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BackupVaulCmkKekIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>
+    public partial class BackupVaultCmkKekIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>
     {
-        public BackupVaulCmkKekIdentity() { }
+        public BackupVaultCmkKekIdentity() { }
         public string IdentityId { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType? IdentityType { get { throw null; } set { } }
-        Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BackupVaultCmkKekIdentityType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public BackupVaultEncryptionSettings() { }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState? InfrastructureEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaulCmkKekIdentity KekIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity KekIdentity { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState? State { get { throw null; } set { } }
         Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

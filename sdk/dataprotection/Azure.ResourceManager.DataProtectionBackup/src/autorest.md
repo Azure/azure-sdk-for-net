@@ -268,7 +268,7 @@ rename-mapping:
   FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
   BackupVault.replicatedRegions : -|azure-location
   RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
-  CmkKekIdentity: BackupVaulCmkKekIdentity
+  CmkKekIdentity: BackupVaultCmkKekIdentity
   EncryptionSettings: BackupVaultEncryptionSettings
   EncryptionState: BackupVaultEncryptionState
   IdentityType: BackupVaultCmkKekIdentityType
