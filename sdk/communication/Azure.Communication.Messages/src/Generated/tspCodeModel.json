@@ -294,9 +294,8 @@
      "Description": "The native external platform user identifiers of the recipient.",
      "Type": {
       "$id": "42",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$id": "43",
        "Kind": "string",
        "IsNullable": false
@@ -336,9 +335,8 @@
      "Description": "Receipts of the send message operation.",
      "Type": {
       "$id": "47",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$id": "48",
        "Kind": "Model",
        "Name": "MessageReceipt",
@@ -401,9 +399,8 @@
      "Description": "The MessageTemplateItem items on this page",
      "Type": {
       "$id": "55",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$id": "56",
        "Kind": "Model",
        "Name": "MessageTemplateItem",
@@ -616,9 +613,8 @@
         "Description": "The template values.",
         "Type": {
          "$id": "81",
-         "Kind": "Array",
-         "Name": "Array",
-         "ElementType": {
+         "Kind": "array",
+         "ValueType": {
           "$id": "82",
           "Kind": "Model",
           "Name": "MessageTemplateValue",
@@ -1026,9 +1022,8 @@
      "Description": "The header template bindings",
      "Type": {
       "$id": "129",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$id": "130",
        "Kind": "Model",
        "Name": "WhatsAppMessageTemplateBindingsComponent",
@@ -1064,9 +1059,8 @@
      "Description": "The body template bindings",
      "Type": {
       "$id": "134",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$ref": "130"
       },
       "IsNullable": false
@@ -1081,9 +1075,8 @@
      "Description": "The footer template bindings",
      "Type": {
       "$id": "136",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$ref": "130"
       },
       "IsNullable": false
@@ -1098,9 +1091,8 @@
      "Description": "The button template bindings",
      "Type": {
       "$id": "138",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
+      "Kind": "array",
+      "ValueType": {
        "$id": "139",
        "Kind": "Model",
        "Name": "WhatsAppMessageTemplateBindingsButton",
