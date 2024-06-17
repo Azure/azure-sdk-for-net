@@ -25,3 +25,7 @@ jobs:
       - name: Run Unit Tests
         run: npm run test
         working-directory: ./tools/js-sdk-release-tools/
+
+      - name: Run CI E2E Tests
+        run: npm run test:ci
+        working-directory: ./tools/js-sdk-release-tools/
