@@ -127,7 +127,7 @@ jobs:
 
       - task: Powershell@2
         inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Namespaces-Property.ps1
+          filePath: $(Build.SourcesDirectory)/eng/scripts/Save-Package-Namespaces-Property.ps1
           arguments: >
             -RepoRoot $(Build.SourcesDirectory)
             -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
