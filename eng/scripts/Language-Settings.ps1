@@ -38,38 +38,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    # Add a step to extract namespaces
-    $namespaces = @()
-    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
-    $releaseFolderPath = Join-Path -Path $dllFolder -ChildPath "/Release/netstandard2.0/"
-    Write-Host "releaseFolderPath=$releaseFolderPath"
-    if (Test-Path $releaseFolderPath) {
-      $defaultDll = Get-ChildItem $releaseFolderPath -Filter "$pkgName.dll" -Recurse
-      if ($defaultDll -and (Test-Path $defaultDll)) {
-        Write-Host "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
-        Write-Host "Get-NamespacesFromDll returned the following namespaces"
-        Write-Host "namespaces:"
-        foreach ($namespace in $namespaces) {
-          Write-Host "  $namespace"
-        }
-      } else {
-        Write-Host "$defaultDll didn't exist, unable to get namespaces for $pkgName, version=$pkgVersion"
-      }
-    } else {
-      Write-Host "$releaseFolderPath path did not exist. Unable to get namespaces for $pkgName, version=$pkgVersion"
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    if ($namespaces) {
-      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-      Write-Host "Here are the namespaces for $pkgName, version=$($pkgVersion):"
-      foreach ($namespace in $pkgProp.Namespaces) {
-        Write-Host "  $namespace"
-      }
-    }
 
     $allPackageProps += $pkgProp
   }

@@ -125,6 +125,16 @@ jobs:
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
 
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Namespaces-Property.ps1
+          arguments: >
+            -RepoRoot $(Build.SourcesDirectory)
+            -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with namespaces
+
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
