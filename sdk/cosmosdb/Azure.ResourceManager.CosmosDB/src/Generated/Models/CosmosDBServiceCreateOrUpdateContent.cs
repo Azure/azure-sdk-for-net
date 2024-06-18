@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Parameters for Create or Update Request for ServiceResource. </summary>
+    /// <summary> Parameters for Create or Update request for ServiceResource. </summary>
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         /// <summary>
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties.instanceCount")]
         public int? InstanceCount { get; set; }
         /// <summary> ServiceType for the service. </summary>
-        [WirePath("properties.serviceType")]
-        public CosmosDBServiceType? ServiceType { get; set; }
+        internal CosmosDBServiceType? ServiceType { get; set; }
     }
 }
