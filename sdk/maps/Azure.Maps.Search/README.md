@@ -153,19 +153,18 @@ Console.WriteLine(result);
 ### Example Get Geocoding Batch
 
 ```C# Snippet:GetGeocodingBatch
-List<GeocodingBatchRequestItem> queries = new List<GeocodingBatchRequestItem>
+List<GeocodingQuery> queries = new List<GeocodingQuery>
         {
-            new GeocodingBatchRequestItem()
+            new GeocodingQuery()
             {
                 Query ="15171 NE 24th St, Redmond, WA 98052, United States"
             },
-            new GeocodingBatchRequestItem()
+            new GeocodingQuery()
             {
                  Coordinates = new GeoPosition(121.5, 25.0)
             },
         };
-GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);
-Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(body);
+Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
 Console.WriteLine(results);
 ```
 
@@ -179,19 +178,18 @@ Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
 ### Example Get Reverse Geocoding Batch
 
 ```C# Snippet:GetReverseGeocodingBatch
-List<ReverseGeocodingBatchRequestItem> items = new List<ReverseGeocodingBatchRequestItem>
+List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
         {
-            new ReverseGeocodingBatchRequestItem()
+            new ReverseGeocodingQuery()
             {
                 Coordinates = new GeoPosition(121.53, 25.0)
             },
-            new ReverseGeocodingBatchRequestItem()
+            new ReverseGeocodingQuery()
             {
                 Coordinates = new GeoPosition(121.5, 25.0)
             },
         };
-ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);
-Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(body);
+Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(items);
 ```
 
 ## Troubleshooting
