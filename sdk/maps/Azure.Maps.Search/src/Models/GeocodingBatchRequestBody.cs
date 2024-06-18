@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeocodingBatchRequestBody
+    internal partial class GeocodingBatchRequestBody
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GeocodingBatchRequestBody"/> class.

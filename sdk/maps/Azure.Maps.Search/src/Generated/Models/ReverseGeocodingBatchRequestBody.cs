@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </summary>
-    public partial class ReverseGeocodingBatchRequestBody
+    internal partial class ReverseGeocodingBatchRequestBody
     {
         /// <summary> Initializes a new instance of <see cref="ReverseGeocodingBatchRequestBody"/>. </summary>
         public ReverseGeocodingBatchRequestBody()

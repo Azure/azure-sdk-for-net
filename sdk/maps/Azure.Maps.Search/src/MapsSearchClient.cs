@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,6 +14,7 @@ using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
 using Azure.Maps.Search.Models.Options;
+using Azure.Maps.Search.Models.Queries;
 
 namespace Azure.Maps.Search
 {
@@ -134,7 +136,7 @@ namespace Azure.Maps.Search
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name = "options" > additional options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, GetGeocodingOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, GeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
@@ -172,7 +174,7 @@ namespace Azure.Maps.Search
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name = "options" > additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, GetGeocodingOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, GeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
@@ -204,16 +206,18 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
-        public virtual async Task<Response<GeocodingBatchResponse>> GetGeocodingBatchAsync(GeocodingBatchRequestBody geocodingBatchRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is emoty. </exception>
+        public virtual async Task<Response<GeocodingBatchResponse>> GetGeocodingBatchAsync(IEnumerable<GeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocodingBatch");
             scope.Start();
             try
             {
-                return await RestClient.GetGeocodingBatchAsync(geocodingBatchRequestBody, cancellationToken).ConfigureAwait(false);
+                GeocodingBatchRequestBody batchRequestBody = geocodingQueriesToGecodingBatchRequestBody(queries);
+
+                return await RestClient.GetGeocodingBatchAsync(batchRequestBody, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -222,16 +226,18 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
-        public virtual Response<GeocodingBatchResponse> GetGeocodingBatch(GeocodingBatchRequestBody geocodingBatchRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
+        public virtual Response<GeocodingBatchResponse> GetGeocodingBatch(IEnumerable<GeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocodingBatch");
             scope.Start();
             try
             {
-                return RestClient.GetGeocodingBatch(geocodingBatchRequestBody, cancellationToken);
+                GeocodingBatchRequestBody batchRequestBody = geocodingQueriesToGecodingBatchRequestBody(queries);
+
+                return RestClient.GetGeocodingBatch(batchRequestBody, cancellationToken);
             }
             catch (Exception e)
             {
@@ -243,7 +249,7 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name = "options" > additional options </param>
+        /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
@@ -274,7 +280,7 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name = "options" > additional options </param>
+        /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Boundary> GetPolygon(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
@@ -306,10 +312,10 @@ namespace Azure.Maps.Search
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name = "options" > additional options </param>
+        /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, GetReverseGeocodingOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, ReverseGeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
@@ -339,11 +345,11 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
-        /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name = "options" > additional options </param>
+        /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Here it is represented by GeoPosition. Example: &amp;coordinates=lon,lat. </param>
+        /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, GetReverseGeocodingOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, ReverseGeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
@@ -380,16 +386,18 @@ namespace Azure.Maps.Search
         /// The batch should contain at least <c>1</c> query.
         ///
         /// </summary>
-        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
-        public virtual async Task<Response<GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
+        public virtual async Task<Response<GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(IEnumerable<ReverseGeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
             scope.Start();
             try
             {
-                return await RestClient.GetReverseGeocodingBatchAsync(reverseGeocodingBatchRequestBody, cancellationToken).ConfigureAwait(false);
+                ReverseGeocodingBatchRequestBody requestBody = reverseGeocodingQueriesReversToGecodingBatchRequestBody(queries);
+
+                return await RestClient.GetReverseGeocodingBatchAsync(requestBody, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -407,22 +415,95 @@ namespace Azure.Maps.Search
         /// The batch should contain at least <c>1</c> query.
         ///
         /// </summary>
-        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
-        public virtual Response<GeocodingBatchResponse> GetReverseGeocodingBatch(ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
+        public virtual Response<GeocodingBatchResponse> GetReverseGeocodingBatch(IEnumerable<ReverseGeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
             scope.Start();
             try
             {
-                return RestClient.GetReverseGeocodingBatch(reverseGeocodingBatchRequestBody, cancellationToken);
+                ReverseGeocodingBatchRequestBody requestBody = reverseGeocodingQueriesReversToGecodingBatchRequestBody(queries);
+
+                return RestClient.GetReverseGeocodingBatch(requestBody, cancellationToken);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static ReverseGeocodingBatchRequestBody reverseGeocodingQueriesReversToGecodingBatchRequestBody(IEnumerable<ReverseGeocodingQuery> queries)
+        {
+            IList<ReverseGeocodingBatchRequestItem> items = new ChangeTrackingList<ReverseGeocodingBatchRequestItem>();
+
+            if (!queries.Any())
+            {
+                return null;
+            }
+
+            foreach (ReverseGeocodingQuery query in queries)
+            {
+                ReverseGeocodingBatchRequestItem item = new ReverseGeocodingBatchRequestItem();
+                item.OptionalId = query.OptionalId;
+                if (query.Coordinates != null)
+                {
+                    item.Coordinates = new GeoPosition(Convert.ToDouble(query.Coordinates.Longitude), Convert.ToDouble(query.Coordinates.Latitude));
+                }
+                item.ResultTypes = new List<ResultTypeEnum>();
+                foreach (ReverseGeocodingResultTypeEnum resultType in query.ResultTypes)
+                {
+                    item.ResultTypes.Add(new ResultTypeEnum(resultType.ToString()));
+                }
+                if (query.LocalizedMapView != null)
+                {
+                    item.LocalizedMapView = new LocalizedMapView(query.LocalizedMapView.ToString());
+                }
+
+                items.Add(item);
+            }
+
+            return new ReverseGeocodingBatchRequestBody(items);
+        }
+        private static GeocodingBatchRequestBody geocodingQueriesToGecodingBatchRequestBody(IEnumerable<GeocodingQuery> queries)
+        {
+            IList<GeocodingBatchRequestItem> items = new ChangeTrackingList<GeocodingBatchRequestItem>();
+
+            if (!queries.Any())
+            {
+                return null;
+            }
+
+            foreach (GeocodingQuery query in queries)
+            {
+                GeocodingBatchRequestItem item = new GeocodingBatchRequestItem();
+                item.OptionalId = query.OptionalId;
+                item.Top = query.Top;
+                item.Query = query.Query;
+                item.AddressLine = query.AddressLine;
+                item.CountryRegion = query.CountryRegion;
+                if (query.BoundingBox != null)
+                {
+                    item.BoundingBox = new[] { query.BoundingBox.North, query.BoundingBox.West, query.BoundingBox.South, query.BoundingBox.East };
+                }
+                if (query.LocalizedMapView != null)
+                {
+                    item.View = query.LocalizedMapView.ToString();
+                }
+                if (query.Coordinates != null)
+                {
+                    item.Coordinates = new GeoPosition(Convert.ToDouble(query.Coordinates?.Longitude), Convert.ToDouble(query.Coordinates?.Latitude));
+                }
+                item.AdminDistrict = query.AdminDistrict;
+                item.AdminDistrict2 = query.AdminDistrict2;
+                item.AdminDistrict3 = query.AdminDistrict3;
+                item.Locality = query.Locality;
+                item.PostalCode = query.PostalCode;
+                items.Add(item);
+            }
+            return new GeocodingBatchRequestBody(items);
         }
     }
 }

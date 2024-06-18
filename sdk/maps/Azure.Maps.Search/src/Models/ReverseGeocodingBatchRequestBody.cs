@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseGeocodingBatchRequestBody
+    internal partial class ReverseGeocodingBatchRequestBody
     {
         /// <summary> Initializes a new instance of <see cref="ReverseGeocodingBatchRequestBody"/>. </summary>
         /// <param name="batchItems"> The list of queries to process. </param>
