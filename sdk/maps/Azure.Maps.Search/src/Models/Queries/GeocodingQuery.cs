@@ -2,14 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.Core.GeoJson;
+using Azure.Maps.Search.Models.Options;
 
-namespace Azure.Maps.Search.Models.Options
+namespace Azure.Maps.Search.Models.Queries
 {
     /// <summary> Options. </summary>
-    public class GetGeocodingOptions : BaseOptions
+    public class GeocodingQuery : BaseOptions
     {
         /// <summary> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </summary>
         public int? Top { get; set; }
+
+        /// <summary> id of the request which would show in corresponding batchItem. </summary>
+        public string OptionalId { get; set; }
+        /// <summary> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </summary>
+
+        public string Query { get; set; }
 
         /// <summary> Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./ If query is given, should not use this parameter.</summary>
         public string AddressLine { get; set; }

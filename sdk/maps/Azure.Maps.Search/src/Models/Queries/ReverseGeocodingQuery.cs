@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Search.Models.Options
+namespace Azure.Maps.Search.Models.Queries
 {
     /// <summary> Options. </summary>
-    public class GetReverseGeocodingOptions
+    public class ReverseGeocodingQuery
     {
         /// <summary>
         /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
@@ -28,5 +29,11 @@ namespace Azure.Maps.Search.Models.Options
 
         /// <summary>A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request. Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views. </summary>
         public LocalizedMapView? LocalizedMapView { get; set; }
+
+        /// <summary> The coordinates of the location that you want to reverse geocode. Example: [lon,lat]. </summary>
+        public GeoPosition Coordinates { get; set; }
+
+        /// <summary> id of the request which would show in corresponding batchItem. </summary>
+        public string OptionalId { get; set; }
     }
 }

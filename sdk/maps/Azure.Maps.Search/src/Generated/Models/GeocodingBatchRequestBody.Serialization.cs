@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeocodingBatchRequestBody : IUtf8JsonSerializable
+    internal partial class GeocodingBatchRequestBody : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
