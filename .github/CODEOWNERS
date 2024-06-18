@@ -947,6 +947,13 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Informatica Data Management
+/sdk/informaticadatamanagement/Azure.ResourceManager
+.Informaticadatamanagement/                                        @almasak
+
+# ServiceLabel: %Informaticadatamanagement %Mgmt
+# ServiceOwners:                                                   @almasak
+
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -988,13 +995,6 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
-
-# PRLabel: %Informaticadatamanagement
-/sdk/informaticadatamanagement/Azure.ResourceManager
-.Informaticadatamanagement/                                        @almasak
-
-# ServiceLabel: %Informaticadatamanagement %Mgmt
-# ServiceOwners:                                                   @almasak
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
