@@ -15,6 +15,8 @@ public class MockPipelineTransport : PipelineTransport
 {
     private readonly Func<int, int> _responseFactory;
     private int _retryCount;
+    private readonly Func<PipelineMessage, MockPipelineResponse> _mockResponseFactory;
+    private readonly bool _useMockResponseFactory = false;
 
     public string Id { get; }
 
@@ -30,10 +32,23 @@ public class MockPipelineTransport : PipelineTransport
     {
         Id = id;
         _responseFactory = responseFactory;
+        _mockResponseFactory = _ => throw new NotImplementedException();
+    }
+
+    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory)
+    {
+        Id = id;
+        _mockResponseFactory = responseFactory;
+        _useMockResponseFactory = true;
+        _responseFactory = _ => throw new NotImplementedException();
     }
 
     protected override PipelineMessage CreateMessageCore()
     {
+        if (_useMockResponseFactory)
+        {
+            return new MockPipelineMessage();
+        }
         return new RetriableTransportMessage();
     }
 
@@ -49,6 +64,10 @@ public class MockPipelineTransport : PipelineTransport
             {
                 int status = _responseFactory(_retryCount);
                 transportMessage.SetResponse(status);
+            }
+            if (message is MockPipelineMessage pipelineMessage)
+            {
+                pipelineMessage.SetResponse(_mockResponseFactory(message));
             }
 
             OnReceivedResponse?.Invoke(_retryCount);
@@ -71,6 +90,11 @@ public class MockPipelineTransport : PipelineTransport
             {
                 int status = _responseFactory(_retryCount);
                 transportMessage.SetResponse(status);
+            }
+
+            if (message is MockPipelineMessage pipelineMessage)
+            {
+                pipelineMessage.SetResponse(_mockResponseFactory(message));
             }
 
             OnReceivedResponse?.Invoke(_retryCount);
@@ -119,6 +143,7 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
+        private string _method;
         private Uri? _uri;
         private readonly PipelineRequestHeaders _headers;
 
@@ -126,13 +151,14 @@ public class MockPipelineTransport : PipelineTransport
         {
             _headers = new MockRequestHeaders();
             _uri = new Uri("https://www.example.com");
+            _method = "GET";
         }
 
         public override void Dispose() { }
 
         protected override BinaryContent? ContentCore
         {
-            get => throw new NotImplementedException();
+            get => null;
             set => throw new NotImplementedException();
         }
 
@@ -141,8 +167,8 @@ public class MockPipelineTransport : PipelineTransport
 
         protected override string MethodCore
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => _method;
+            set => _method = value;
         }
 
         protected override Uri? UriCore
@@ -161,7 +187,7 @@ public class MockPipelineTransport : PipelineTransport
 
         public override int Status { get; }
 
-        public override string ReasonPhrase => throw new NotImplementedException();
+        public override string ReasonPhrase => string.Empty;
 
         public override Stream? ContentStream
         {
@@ -169,7 +195,7 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        public override BinaryData Content => throw new NotImplementedException();
+        public override BinaryData Content => new BinaryData(new byte[] { 1, 2, 3 });
 
         protected override PipelineResponseHeaders HeadersCore
             => new MockResponseHeaders();

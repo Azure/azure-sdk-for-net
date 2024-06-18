@@ -26,7 +26,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly string? _clientRequestIdHeaderName;
     private readonly bool _isLoggingEnabled;
     private readonly PipelineMessageSanitizer _sanitizer;
-    private readonly ILogger? _logger;
+    private readonly ILogger _logger;
 
     /// <summary>
     /// TODO.
@@ -41,7 +41,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
         _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory?.CreateLogger("System-ClientModel"); // TODO name conventions?
+        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel"); // TODO name conventions?
     }
 
     /// <inheritdoc/>
@@ -54,7 +54,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!_isLoggingEnabled || _logger == null)
+        if (!_isLoggingEnabled)
         {
             if (async)
             {

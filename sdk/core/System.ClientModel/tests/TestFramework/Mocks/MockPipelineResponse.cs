@@ -21,11 +21,11 @@ public class MockPipelineResponse : PipelineResponse
 
     private bool _disposed;
 
-    public MockPipelineResponse(int status = 0, string reasonPhrase = "")
+    public MockPipelineResponse(int status = 0, string reasonPhrase = "", MockResponseHeaders? mockHeaders = default)
     {
         _status = status;
         _reasonPhrase = reasonPhrase;
-        _headers = new MockResponseHeaders();
+        _headers = mockHeaders ?? new MockResponseHeaders();
     }
 
     public override int Status => _status;
@@ -127,6 +127,7 @@ public class MockPipelineResponse : PipelineResponse
         // Less efficient FromStream method called here because it is a mock.
         // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
+        _contentStream.Seek(0, SeekOrigin.Begin);
         return _bufferedContent;
     }
 
@@ -158,6 +159,7 @@ public class MockPipelineResponse : PipelineResponse
         // Less efficient FromStream method called here because it is a mock.
         // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
+        _contentStream.Seek(0, SeekOrigin.Begin);
         return _bufferedContent;
     }
 }
