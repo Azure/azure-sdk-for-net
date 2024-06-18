@@ -151,25 +151,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
 
                         var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
-                        var logProcessor = enableLogSampling
-                            ? new LogFilteringProcessor(exporter)
-                            : new BatchLogRecordExportProcessor(exporter);
-
-                        if (azureMonitorOptions.EnableLiveMetrics)
-                        {
-                            var manager = sp.GetRequiredService<Manager>();
-                            var liveMetricsProcessor = new LiveMetricsLogProcessor(manager);
-
-                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
-                            {
-                                liveMetricsProcessor,
-                                logProcessor
-                            });
-                        }
-
-                        return logProcessor;
+                        return enableLogSampling ? new LogFilteringProcessor(exporter) : new BatchLogRecordExportProcessor(exporter);
                     }),
                     options => options.IncludeFormattedMessage = true);
+
+            builder.Services.ConfigureOpenTelemetryLoggerProvider((sp, builder) =>
+            {
+                var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+                if (azureMonitorOptions.EnableLiveMetrics)
+                {
+                    var manager = sp.GetRequiredService<Manager>();
+                    builder.AddProcessor(new LiveMetricsLogProcessor(manager));
+                }
+            });
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
