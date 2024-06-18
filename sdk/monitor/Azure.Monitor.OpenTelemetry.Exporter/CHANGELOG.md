@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extensions.
+* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extension.
   ([#44617](https://github.com/Azure/azure-sdk-for-net/pull/44617))
 
 ### Other Changes
