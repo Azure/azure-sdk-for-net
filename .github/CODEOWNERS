@@ -990,7 +990,8 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Informaticadatamanagement
-/sdk/Informaticadatamanagement/Azure.ResourceManager.Informaticadatamanagement/     @almasak
+/sdk/Informaticadatamanagement/Azure.ResourceManager
+.Informaticadatamanagement/                                        @almasak
 
 # ServiceLabel: %Informaticadatamanagement %Mgmt
 # ServiceOwners:                                                   @almasak
