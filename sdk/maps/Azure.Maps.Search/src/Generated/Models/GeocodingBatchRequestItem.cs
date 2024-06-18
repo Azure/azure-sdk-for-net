@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         public GeocodingBatchRequestItem()
         {
             BoundingBox = new ChangeTrackingList<double>();
-            Coordinates = new ChangeTrackingList<double>();
+            _Coordinates = new ChangeTrackingList<double>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeocodingBatchRequestItem"/>. </summary>
@@ -75,7 +75,7 @@ namespace Azure.Maps.Search.Models
             CountryRegion = countryRegion;
             BoundingBox = boundingBox;
             View = view;
-            Coordinates = coordinates;
+            _Coordinates = coordinates;
             AdminDistrict = adminDistrict;
             AdminDistrict2 = adminDistrict2;
             AdminDistrict3 = adminDistrict3;

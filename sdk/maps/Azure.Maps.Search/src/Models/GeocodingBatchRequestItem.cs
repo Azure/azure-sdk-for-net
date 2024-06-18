@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
@@ -15,7 +16,9 @@ namespace Azure.Maps.Search.Models
         /// </summary>
         public IList<double> BoundingBox { get; set; }
 
+        [CodeGenMember("Coordinates")]
+        internal IList<double> _Coordinates { get; }
         /// <summary> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: [lon, lat]. </summary>
-        public IList<double> Coordinates { get; set; }
+        public GeoPosition Coordinates { get; set; }
     }
 }
