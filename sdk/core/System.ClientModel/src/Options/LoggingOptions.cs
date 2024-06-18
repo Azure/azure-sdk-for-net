@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -17,6 +18,7 @@ public class LoggingOptions
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
     private const bool DefaultIsLoggingEnabled = true;
     private const bool DefaultIsLoggingContentEnabled = false;
+
     private static readonly string[] s_defaultAllowedHeaderNames =
         new[] {
             "traceparent",
@@ -49,6 +51,7 @@ public class LoggingOptions
     private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
     private string? _clientAssembly;
     private string? _requestIdHeaderName;
+    private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     /// <summary>
     /// Get or sets value indicating whether HTTP pipeline logging is enabled.
@@ -67,7 +70,16 @@ public class LoggingOptions
     /// <summary>
     /// TODO.
     /// </summary>
-    public ILoggerFactory? LoggerFactory { get; set; }
+    public ILoggerFactory LoggerFactory
+    {
+        get => _loggerFactory;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggerFactory = value;
+        }
+    }
 
     /// <summary>
     /// Gets or sets value indicating if request or response content should be logged.
