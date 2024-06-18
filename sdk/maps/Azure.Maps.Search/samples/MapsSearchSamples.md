@@ -51,7 +51,7 @@ List<GeocodingBatchRequestItem> queries = new List<GeocodingBatchRequestItem>
             },
             new GeocodingBatchRequestItem()
             {
-                Coordinates = new GeoPosition(121.5, 25.0)
+                 Coordinates = new GeoPosition(121.5, 25.0)
             },
         };
 GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);

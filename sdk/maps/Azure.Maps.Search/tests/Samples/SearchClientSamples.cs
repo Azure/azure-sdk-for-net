@@ -110,7 +110,7 @@ namespace Azure.Maps.Search.Tests
                         },
                         new GeocodingBatchRequestItem()
                         {
-                             Coordinates = new GeoPosition(121.5, 25.0, 121.6)
+                             Coordinates = new GeoPosition(121.5, 25.0)
                         },
                     };
             GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);

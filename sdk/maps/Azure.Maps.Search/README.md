@@ -161,7 +161,7 @@ List<GeocodingBatchRequestItem> queries = new List<GeocodingBatchRequestItem>
             },
             new GeocodingBatchRequestItem()
             {
-                Coordinates =  new GeoPosition(121.5, 25.0, 121.6, 25.1)
+                 Coordinates = new GeoPosition(121.5, 25.0)
             },
         };
 GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);
@@ -183,11 +183,11 @@ List<ReverseGeocodingBatchRequestItem> items = new List<ReverseGeocodingBatchReq
         {
             new ReverseGeocodingBatchRequestItem()
             {
-                Coordinates =  new GeoPosition(121.53, 25.0)
+                Coordinates = new GeoPosition(121.53, 25.0)
             },
             new ReverseGeocodingBatchRequestItem()
             {
-                Coordinates =  new GeoPosition(121.5, 25.0)
+                Coordinates = new GeoPosition(121.5, 25.0)
             },
         };
 ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);

@@ -225,7 +225,7 @@ namespace Azure.Maps.Search.Models
         public string AdminDistrict2 { get { throw null; } set { } }
         public string AdminDistrict3 { get { throw null; } set { } }
         public System.Collections.Generic.IList<double> BoundingBox { get { throw null; } set { } }
-        public System.Collections.Generic.IList<double> Coordinates { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
         public string CountryRegion { get { throw null; } set { } }
         public string Locality { get { throw null; } set { } }
         public string OptionalId { get { throw null; } set { } }
@@ -519,10 +519,10 @@ namespace Azure.Maps.Search.Models
     public partial class ReverseGeocodingBatchRequestItem
     {
         public ReverseGeocodingBatchRequestItem() { }
-        public System.Collections.Generic.IList<double> Coordinates { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView LocalizedMapView { get { throw null; } set { } }
         public string OptionalId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Search.Models.ResultTypeEnum> ResultTypes { get { throw null; } set { } }
-        public string View { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReverseGeocodingResultTypeEnum : System.IEquatable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum>
