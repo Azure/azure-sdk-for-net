@@ -239,7 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions.Credential ??= credential;
                 }
 
-                // TODO: Do we need provide an option to alter BatchExportActivityProcessorOptions?
+                // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));
             });
         }
