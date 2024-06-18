@@ -21,11 +21,11 @@ namespace Azure.Maps.Search.Models
                 writer.WritePropertyName("optionalId"u8);
                 writer.WriteStringValue(OptionalId);
             }
-            if (Common.Optional.IsCollectionDefined(Coordinates))
+            if (Common.Optional.IsCollectionDefined(_Coordinates))
             {
                 writer.WritePropertyName("coordinates"u8);
                 writer.WriteStartArray();
-                foreach (var item in Coordinates)
+                foreach (var item in _Coordinates)
                 {
                     writer.WriteNumberValue(item);
                 }

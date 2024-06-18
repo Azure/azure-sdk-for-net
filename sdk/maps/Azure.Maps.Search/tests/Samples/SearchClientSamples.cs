@@ -110,7 +110,7 @@ namespace Azure.Maps.Search.Tests
                         },
                         new GeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] {121.5, 25.0, 121.6, 25.1}
+                             Coordinates = new GeoPosition(121.5, 25.0, 121.6)
                         },
                     };
             GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);
@@ -148,11 +148,11 @@ namespace Azure.Maps.Search.Tests
                     {
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[]{ 121.53, 25.0, 121.56, 25.04 }
+                            Coordinates = new GeoPosition(121.53, 25.0)
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { 121.5, 25.0, 121.6, 25.1 }
+                            Coordinates = new GeoPosition(121.5, 25.0)
                         },
                     };
             ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);

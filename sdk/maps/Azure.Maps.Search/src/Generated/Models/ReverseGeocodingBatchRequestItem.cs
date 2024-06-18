@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="ReverseGeocodingBatchRequestItem"/>. </summary>
         public ReverseGeocodingBatchRequestItem()
         {
-            Coordinates = new ChangeTrackingList<double>();
+            _Coordinates = new ChangeTrackingList<double>();
             ResultTypes = new ChangeTrackingList<ResultTypeEnum>();
         }
 
@@ -42,14 +42,12 @@ namespace Azure.Maps.Search.Models
         internal ReverseGeocodingBatchRequestItem(string optionalId, IList<double> coordinates, IList<ResultTypeEnum> resultTypes, string view)
         {
             OptionalId = optionalId;
-            Coordinates = coordinates;
+            _Coordinates = coordinates;
             ResultTypes = resultTypes;
             View = view;
         }
 
         /// <summary> id of the request which would show in corresponding batchItem. </summary>
         public string OptionalId { get; set; }
-        /// <summary> A string that specifies an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. </summary>
-        public string View { get; set; }
     }
 }
