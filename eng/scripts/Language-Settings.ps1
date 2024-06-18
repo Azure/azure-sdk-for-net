@@ -15,12 +15,13 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  $ServiceProj = Join-Path -Path $EngDir -ChildPath "/service.proj"
   Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $EngDir/service.proj `
+    $ServiceProj `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion
 

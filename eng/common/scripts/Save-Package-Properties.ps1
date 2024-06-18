@@ -7,10 +7,10 @@ Saves package properties in source of a given service directory to JSON files.
 JSON files are named in the form <package name>.json or <artifact name>.json if
 an artifact name property is available in the package properties.
 
-Can optionally add a dev version property which can be used logic for daily 
+Can optionally add a dev version property which can be used logic for daily
 builds.
 
-In cases of collisions where track 2 packages (IsNewSdk = true) have the same 
+In cases of collisions where track 2 packages (IsNewSdk = true) have the same
 filename as track 1 packages (e.g. same artifact name or package name), the
 track 2 package properties will be written.
 
@@ -18,15 +18,15 @@ track 2 package properties will be written.
 Service directory in which to search for packages
 
 .PARAMETER outDirectory
-Output location (generally a package artifact directory in DevOps) for JSON 
+Output location (generally a package artifact directory in DevOps) for JSON
 files
 
 .PARAMETER addDevVersion
-Reads the version out of the source and adds a DevVersion property to the 
-package properties JSON file. If the package properties JSON file already 
+Reads the version out of the source and adds a DevVersion property to the
+package properties JSON file. If the package properties JSON file already
 exists, read the Version property from the existing package properties JSON file
 and set that as the Version property for the new output. This has the effect of
-"adding" a DevVersion property to the file which could be different from the 
+"adding" a DevVersion property to the file which could be different from the
 Verison property in that file.
 #>
 
@@ -53,13 +53,22 @@ function SetOutput($outputPath, $incomingPackageSpec) {
   {
     $outputObject = $incomingPackageSpec
   }
-  
+
 
   if ($addDevVersion)
   {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
     $outputObject.DevVersion = $incomingPackageSpec.Version
+  }
+
+  # This script is called multiple times, the first time it's called is prior to
+  # the build and package steps of the language repository. This means that, for
+  # languages that compute the namespaces and put them in the packageInfo, that they
+  # won't be there the first time this is run. Because subsequent runs of this, only
+  # the above DevVersion was being set, nothing else was being added or updated.
+  if ($incomingPackageSpec.PSobject.Properties.Name -contains "Namespaces") {
+    $outputObject.Namespaces = $incomingPackageSpec.Namespaces
   }
 
   # Set file paths to relative paths
