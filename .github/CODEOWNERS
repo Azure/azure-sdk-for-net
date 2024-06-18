@@ -948,7 +948,7 @@
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
 # PRLabel: %Informatica Data Management
-/sdk/informaticadatamanagement/Azure.ResourceManager.Informaticadatamanagement/ @almasak
+/sdk/informaticadatamanagement/Azure.ResourceManager*/             @almasak
 
 # ServiceLabel: %Informaticadatamanagement %Mgmt
 # ServiceOwners:                                                   @almasak
