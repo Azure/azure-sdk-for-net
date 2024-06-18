@@ -18,6 +18,11 @@ The root of the repository. This, along with the information in the packageInfo
 files, is used to compute the the build path to the .dll so namespaces can be
 parsed from it. Using Azure.Template as an example, the path to the binary would
 be in $repoRoot/artifacts/bin/Azure.Template/Release/netstandard2.0/Azure.Template.dll
+
+.PARAMETER buildConfiguration
+Debug or Release. This is the same $(BuildConfiguration) variable that's used to set
+in the dotnet pack command of the Build and Package task. It's necessary in order to
+construct the artifacts bin directory correctly.
 #>
 [CmdletBinding()]
 Param (
