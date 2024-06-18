@@ -76,9 +76,11 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable when used as part of a chained credential such as <see cref="DefaultAzureCredential"/> or <see cref="ChainedTokenCredential"/>.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -87,9 +89,11 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable when used as part of a chained credential such as <see cref="DefaultAzureCredential"/> or <see cref="ChainedTokenCredential"/>.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
