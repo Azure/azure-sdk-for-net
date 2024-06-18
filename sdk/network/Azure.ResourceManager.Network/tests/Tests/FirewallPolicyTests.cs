@@ -23,26 +23,30 @@ namespace Azure.ResourceManager.Network.Tests
         private ResourceIdentifier _publicIPAddressIdentifier;
         private ResourceIdentifier _firewallIdentifier;
 
+        private string _firewallLocation;
+        private string _policyLocation;
+
         public FirewallPolicyTests(bool isAsync)
             : base(isAsync) { }
 
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
+            _firewallLocation = AzureLocation.WestUS2;
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             var rgLro = await subscription
                 .GetResourceGroups()
                 .CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     SessionRecording.GenerateAssetName("FirewallPolicyRG-"),
-                    new ResourceGroupData(AzureLocation.WestUS2)
+                    new ResourceGroupData(_firewallLocation)
                 );
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
-                Location = AzureLocation.WestUS2,
+                Location = _firewallLocation,
                 AddressSpace = new AddressSpace() { AddressPrefixes = { "10.26.0.0/16", } },
                 Subnets =
                 {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             PublicIPAddressData ipData = new PublicIPAddressData()
             {
-                Location = AzureLocation.WestUS2,
+                Location = _firewallLocation,
                 PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
             AzureFirewallData firewallData = new AzureFirewallData();
-            firewallData.Location = AzureLocation.WestUS2;
+            firewallData.Location = _firewallLocation;
             firewallData.IPConfigurations.Add(
                 new AzureFirewallIPConfiguration()
                 {
@@ -137,10 +141,11 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CreateAndDeployDraft()
         {
+            _policyLocation = AzureLocation.CanadaCentral;
             var policyName = Recording.GenerateAssetName("policy-");
             var policyData = new FirewallPolicyData();
             policyData.SkuTier = FirewallPolicySkuTier.Standard;
-            policyData.Location = AzureLocation.WestUS2;
+            policyData.Location = _policyLocation;
             policyData.ThreatIntelMode = AzureFirewallThreatIntelMode.Alert;
             var policy = await _resourceGroup
                 .GetFirewallPolicies()
@@ -195,7 +200,6 @@ namespace Azure.ResourceManager.Network.Tests
             await draftResource.CreateOrUpdateAsync(WaitUntil.Completed, policyDraft);
             var rcgPolicyDraft = new FirewallPolicyRuleCollectionGroupDraftData()
             {
-                Id = FirewallPolicyRuleCollectionGroupDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup"),
                 Priority = 111,
                 RuleCollections =
                 {
