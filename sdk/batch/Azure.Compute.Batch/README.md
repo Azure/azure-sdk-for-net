@@ -26,6 +26,7 @@ dotnet add package Azure.Compute.Batch --prerelease
 - A Batch account with a linked Azure Storage account. You can create the accounts by using any of the following methods: [Azure CLI](https://learn.microsoft.com/azure/batch/quick-create-cli) | [Azure portal](https://learn.microsoft.com/azure/batch/quick-create-portal) | [Bicep](https://learn.microsoft.com/azure/batch/quick-create-bicep) | [ARM template](https://learn.microsoft.com/azure/batch/quick-create-template) | [Terraform](https://learn.microsoft.com/azure/batch/quick-create-terraform).
 
 - [Visual Studio 2019](https://www.visualstudio.com/vs) or later, or [.NET 6.0](https://dotnet.microsoft.com/download/dotnet) or later, for Linux or Windows.
+
 ### Authenticate the client
 
 Batch account access supports two methods of authentication: Shared Key and Microsoft Entra ID.
