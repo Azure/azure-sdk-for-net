@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
@@ -1575,11 +1575,11 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
-                Protocols = ShareProtocols.Nfs
+                Protocols = ShareProtocols.Nfs,
             };
 
             try
@@ -1589,7 +1589,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
                 {
                     EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
-                    AccessTier = ShareAccessTier.TransactionOptimized
                 };
 
                 // Act

@@ -19,20 +19,22 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         public async Task DiscoveryNlpSubscriptionScopeTest()
         {
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
-            var solutionNlpMetadataResource = DefaultSubscription.PostDiscoverySolutionNLPSubscriptionScopesAsync(discoveryNlpReqObject);
-            var response = await solutionNlpMetadataResource.ToEnumerableAsync();
-
-            Assert.IsNotNull(response.First());
+            await foreach (SolutionNlpMetadata item in DefaultSubscription.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
+            {
+                Assert.IsNotNull(item);
+                break;
+            }
         }
 
         [Test]
         public async Task DiscoveryNlpTenantScopeTest()
         {
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
-            var solutionNlpMetadataResource = DefaultTenantResource.PostDiscoverySolutionNLPTenantScopesAsync(discoveryNlpReqObject);
-            var response = await solutionNlpMetadataResource.ToEnumerableAsync();
-
-            Assert.IsNotNull(response.First());
+            await foreach (SolutionNlpMetadata item in DefaultTenantResource.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
+            {
+                Assert.IsNotNull(item);
+                break;
+            }
         }
 
         private DiscoveryNlpContent GetDiscoveryNlpContent()

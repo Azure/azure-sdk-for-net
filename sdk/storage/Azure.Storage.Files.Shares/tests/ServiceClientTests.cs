@@ -363,7 +363,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {

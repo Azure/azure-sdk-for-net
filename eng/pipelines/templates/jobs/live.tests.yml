@@ -134,11 +134,12 @@ jobs:
                   Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
                 ServiceDirectory: '${{ directory }}'
                 TestResourcesDirectory: '$(TestResourcesDirectory)'
+                EnvVars: ${{ parameters.EnvVars }}
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 ArmTemplateParameters: $(ArmTemplateParameters)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
@@ -146,11 +147,12 @@ jobs:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
               ServiceDirectory: '${{ parameters.ServiceDirectory }}'
               TestResourcesDirectory: '$(TestResourcesDirectory)'
+              EnvVars: ${{ parameters.EnvVars }}
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-              SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -187,7 +189,9 @@ jobs:
               /p:BuildInParallel=${{ parameters.BuildInParallel }}
               /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
               /p:EnableSourceLink=false
-              $(AdditionalTestArguments)
+              $(AdditionalTestArguments);
+              Write-Host "Last exit code: $LASTEXITCODE";
+              exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
             ${{ each var in parameters.EnvVars }}:
@@ -227,7 +231,7 @@ jobs:
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/remove-test-resources.yml
@@ -236,7 +240,7 @@ jobs:
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-              SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - task: PublishTestResults@2
         condition: always()

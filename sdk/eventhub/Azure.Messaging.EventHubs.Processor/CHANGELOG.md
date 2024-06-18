@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection. 
+
 ### Other Changes
+
+- The processor will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
 
 ## 5.12.0-beta.1 (2024-05-17)
 

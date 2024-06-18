@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The AlternativeAuthenticationNameSource. </summary>
+    /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>
     public readonly partial struct AlternativeAuthenticationNameSource : IEquatable<AlternativeAuthenticationNameSource>
     {
         private readonly string _value;

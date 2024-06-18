@@ -1,35 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>
-      Azure's official .NET library for OpenAI inference that supports Completions, Chat, and Embeddings.
-      Works with Azure OpenAI resources as well as the non-Azure OpenAI endpoint.
+      Azure OpenAI's official extension package for using OpenAI's .NET library with the Azure OpenAI Service.
     </Description>
-    <AssemblyTitle>Microsoft Azure.AI.OpenAI client library</AssemblyTitle>
-    <Version>1.0.0-beta.18</Version>
+    <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
+    <Version>2.0.0-beta.3</Version>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="OpenAI" VersionOverride="2.0.0-*" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
-  </ItemGroup>
 </Project>
