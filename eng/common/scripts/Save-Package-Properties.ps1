@@ -67,8 +67,16 @@ function SetOutput($outputPath, $incomingPackageSpec) {
   # languages that compute the namespaces and put them in the packageInfo, that they
   # won't be there the first time this is run. Because subsequent runs of this, only
   # the above DevVersion was being set, nothing else was being added or updated.
-  if ($incomingPackageSpec.PSobject.Properties.Name -contains "Namespaces") {
-    $outputObject.Namespaces = $incomingPackageSpec.Namespaces
+  if ($incomingPackageSpec.PSobject.Properties.Name -contains "Namespaces")
+  {
+    if ($outputObject.PSobject.Properties.Name -contains "Namespaces")
+    {
+      $outputObject.Namespaces = $incomingPackageSpec.Namespaces
+    }
+    else
+    {
+      $outputObject = $outputObject | Add-Member -MemberType NoteProperty -Name Namespaces -Value $incomingPackageSpec.Namespaces -PassThru
+    }
   }
 
   # Set file paths to relative paths
