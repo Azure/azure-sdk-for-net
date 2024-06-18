@@ -142,14 +142,14 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(token, actualToken.Token);
 
+            Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
+
             switch (eventLevel)
             {
                 case EventLevel.Informational:
-                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
                     Assert.False(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
                     break;
                 case EventLevel.Verbose:
-                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
                     Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
                     break;
                 default:
