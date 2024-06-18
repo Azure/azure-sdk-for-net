@@ -131,6 +131,7 @@ jobs:
           arguments: >
             -RepoRoot $(Build.SourcesDirectory)
             -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -BuildConfiguration $(BuildConfiguration)
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with namespaces

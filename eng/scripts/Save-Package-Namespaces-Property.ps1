@@ -24,7 +24,9 @@ Param (
     [Parameter(Mandatory = $True)]
     [string] $repoRoot,
     [Parameter(Mandatory = $True)]
-    [string] $packageInfoDirectory
+    [string] $packageInfoDirectory,
+    [Parameter(Mandatory = $True)]
+    [string] $buildConfiguration
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
@@ -51,11 +53,11 @@ $foundError = $false
 foreach ($packageInfoFile in $packageInfoFiles) {
     Write-Host "processing $($packageInfoFile.FullName)"
     $packageInfo = ConvertFrom-Json (Get-Content $packageInfoFile -Raw)
-    # Piece together the releaseFolderPath
-    $releaseFolderPath = Join-Path $repoRoot "artifacts" "bin" $packageInfo.Name "Release" "netstandard2.0"
-    Write-Host "releaseFolderPath=$releaseFolderPath"
-    if (Test-Path $releaseFolderPath) {
-        $defaultDll = Join-Path $releaseFolderPath "$($packageInfo.Name).dll"
+    # Piece together the artifacts bin directory
+    $artifactsBinDir = Join-Path $repoRoot "artifacts" "bin" $packageInfo.Name $buildConfiguration "netstandard2.0"
+    Write-Host "artifactsBinDir=$artifactsBinDir"
+    if (Test-Path $artifactsBinDir) {
+        $defaultDll = Join-Path $artifactsBinDir "$($packageInfo.Name).dll"
         if ($defaultDll -and (Test-Path $defaultDll)) {
             Write-Host "dll file path: $($defaultDll.FullName)"
             $namespaces = @(Get-NamespacesFromDll $defaultDll)
@@ -89,7 +91,7 @@ foreach ($packageInfoFile in $packageInfoFiles) {
         }
     }
     else {
-        LogError "$releaseFolderPath path did not exist. Unable to get namespaces for for $($packageInfo.Name), version=$($packageInfo.Verison)"
+        LogError "$artifactsBinDir path did not exist. Unable to get namespaces for for $($packageInfo.Name), version=$($packageInfo.Verison)"
         $foundError = $true
     }
 }
