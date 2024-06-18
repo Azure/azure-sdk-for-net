@@ -32,59 +32,69 @@ Write-Host "repoRoot=$repoRoot"
 Write-Host "packageInfoDirectory=$packageInfoDirectory"
 if (-not (Test-Path -Path $packageInfoDirectory)) {
     LogError "packageInfoDirectory '$packageInfoDirectory' does not exist."
+    exit 1
 }
 if (-not (Test-Path -Path $repoRoot)) {
     LogError "repoRoot '$repoRoot' does not exist."
+    exit 1
 }
 # Get all of the packageInfo files
 $packageInfoFiles = Get-ChildItem -Path $packageInfoDirectory -Filter *.json
 if ($packageInfoFiles.Length -eq 0) {
     LogWarning "packageInfoDirectory '$packageInfoDirectory' does not contain any json files. Please ensure that the packageInfo files were generated prior to running this."
+    exit 0
 }
-else {
-    # At this point the packageInfo files should have been already been created
-    # and the only thing being done here is adding namespaces
-    foreach ($packageInfoFile in $packageInfoFiles) {
-        Write-Host "processing $($packageInfoFile.FullName)"
-        $packageInfo = ConvertFrom-Json (Get-Content $packageInfoFile -Raw)
-        # Piece together the releaseFolderPath
-        $releaseFolderPath = Join-Path $repoRoot -ChildPath "artifacts\bin" | Join-Path -ChildPath $packageInfo.Name | Join-Path -ChildPath "Release\netstandard2.0"
-        Write-Host "releaseFolderPath=$releaseFolderPath"
-        if (Test-Path $releaseFolderPath) {
-            $defaultDll = Get-ChildItem $releaseFolderPath -Filter "$($packageInfo.Name).dll" -Recurse
-            if ($defaultDll -and (Test-Path $defaultDll)) {
-                Write-Host "dll file path: $($defaultDll.FullName)"
-                $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
-                if ($namespaces.Count -gt 0) {
-                    Write-Host "Get-NamespacesFromDll returned the following namespaces:"
-                    foreach ($namespace in $namespaces) {
-                        Write-Host "  $namespace"
-                    }
-                    # If by some reason, the namespaces already exist, overwrite them with
-                    # what was just computed
-                    if ($packageInfo.PSobject.Properties.Name -contains "Namespaces") {
-                        $packageInfo.Namespaces = $namespaces
-                    }
-                    else {
-                        $packageInfo = $packageInfo | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-                    }
-                    $packageInfoJson = ConvertTo-Json -InputObject $packageInfo -Depth 100
-                    Write-Host "The updated packageInfo for $packageInfoFile is:"
-                    Write-Host "$packageInfoJson"
-                    Set-Content `
-                        -Path $packageInfoFile `
-                        -Value $packageInfoJson
+
+$foundError = $false
+# At this point the packageInfo files should have been already been created
+# and the only thing being done here is adding namespaces
+foreach ($packageInfoFile in $packageInfoFiles) {
+    Write-Host "processing $($packageInfoFile.FullName)"
+    $packageInfo = ConvertFrom-Json (Get-Content $packageInfoFile -Raw)
+    # Piece together the releaseFolderPath
+    $releaseFolderPath = Join-Path $repoRoot "artifacts" "bin" $packageInfo.Name "Release" "netstandard2.0"
+    Write-Host "releaseFolderPath=$releaseFolderPath"
+    if (Test-Path $releaseFolderPath) {
+        $defaultDll = Join-Path $releaseFolderPath "$($packageInfo.Name).dll"
+        if ($defaultDll -and (Test-Path $defaultDll)) {
+            Write-Host "dll file path: $($defaultDll.FullName)"
+            $namespaces = @(Get-NamespacesFromDll $defaultDll)
+            if ($namespaces.Count -gt 0) {
+                Write-Host "Get-NamespacesFromDll returned the following namespaces:"
+                foreach ($namespace in $namespaces) {
+                    Write-Host "  $namespace"
+                }
+                # If by some reason, the namespaces already exist, overwrite them with
+                # what was just computed
+                if ($packageInfo.PSobject.Properties.Name -contains "Namespaces") {
+                    $packageInfo.Namespaces = $namespaces
                 }
                 else {
-                    LogWarning "Unable to get namespaces for $($defaultDll.FullName)"
+                    $packageInfo = $packageInfo | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
                 }
+                $packageInfoJson = ConvertTo-Json -InputObject $packageInfo -Depth 100
+                Write-Host "The updated packageInfo for $packageInfoFile is:"
+                Write-Host "$packageInfoJson"
+                Set-Content `
+                    -Path $packageInfoFile `
+                    -Value $packageInfoJson
             }
             else {
-                Write-Host "$defaultDll didn't exist, unable to get namespaces for $($packageInfo.Name), version=$($packageInfo.Verison)"
+                LogWarning "Unable to get namespaces for $($defaultDll.FullName)"
             }
         }
         else {
-            Write-Host "$releaseFolderPath path did not exist. Unable to get namespaces for for $($packageInfo.Name), version=$($packageInfo.Verison)"
+            LogError "$defaultDll didn't exist, unable to get namespaces for $($packageInfo.Name), version=$($packageInfo.Verison)"
+            $foundError = $true
         }
     }
+    else {
+        LogError "$releaseFolderPath path did not exist. Unable to get namespaces for for $($packageInfo.Name), version=$($packageInfo.Verison)"
+        $foundError = $true
+    }
 }
+
+if ($foundError) {
+    exit 1
+}
+exit 0
