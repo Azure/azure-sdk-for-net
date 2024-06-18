@@ -2,11 +2,16 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
+    [CodeGenSerialization(nameof(Coordinates), SerializationValueHook = nameof(SerializeCoordinatesValue))]
+    [CodeGenSuppress("ReverseGeocodingBatchRequestItem", typeof(string), typeof(IList<double>), typeof(IList<ResultTypeEnum>), typeof(string))]
     public partial class ReverseGeocodingBatchRequestItem
     {
         [CodeGenMember("Coordinates")]
@@ -38,5 +43,17 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> A string that specifies an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. </summary>
         public LocalizedMapView LocalizedMapView { get; set; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SerializeCoordinatesValue(Utf8JsonWriter writer)
+        {
+            if (Coordinates != null)
+            {
+                writer.WriteStartArray();
+                writer.WriteNumberValue(Coordinates.Longitude);
+                writer.WriteNumberValue(Coordinates.Latitude);
+                writer.WriteEndArray();
+            }
+        }
     }
 }

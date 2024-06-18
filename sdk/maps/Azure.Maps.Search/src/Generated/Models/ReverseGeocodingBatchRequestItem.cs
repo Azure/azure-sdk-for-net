@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
@@ -18,33 +19,6 @@ namespace Azure.Maps.Search.Models
         {
             _Coordinates = new ChangeTrackingList<double>();
             ResultTypes = new ChangeTrackingList<ResultTypeEnum>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ReverseGeocodingBatchRequestItem"/>. </summary>
-        /// <param name="optionalId"> id of the request which would show in corresponding batchItem. </param>
-        /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: [lon,lat]. </param>
-        /// <param name="resultTypes">
-        /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
-        /// Default value is all possible entities.
-        /// A comma separated list of entity types selected from the following options.
-        ///
-        /// - Address
-        /// - Neighborhood
-        /// - PopulatedPlace
-        /// - Postcode1
-        /// - AdminDivision1
-        /// - AdminDivision2
-        /// - CountryRegion
-        ///
-        /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
-        /// </param>
-        /// <param name="view"> A string that specifies an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. </param>
-        internal ReverseGeocodingBatchRequestItem(string optionalId, IList<double> coordinates, IList<ResultTypeEnum> resultTypes, string view)
-        {
-            OptionalId = optionalId;
-            _Coordinates = coordinates;
-            ResultTypes = resultTypes;
-            View = view;
         }
 
         /// <summary> id of the request which would show in corresponding batchItem. </summary>
