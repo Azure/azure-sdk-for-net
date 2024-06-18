@@ -989,6 +989,12 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
+# PRLabel: %Informaticadatamanagement
+/sdk/Informaticadatamanagement/Azure.ResourceManager.Informaticadatamanagement/     @almasak
+
+# ServiceLabel: %Informaticadatamanagement %Mgmt
+# ServiceOwners:                                                   @almasak
+
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
 
