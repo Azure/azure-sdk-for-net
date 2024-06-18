@@ -439,7 +439,7 @@ namespace Azure.Maps.Search
         {
             IList<ReverseGeocodingBatchRequestItem> items = new ChangeTrackingList<ReverseGeocodingBatchRequestItem>();
 
-            if (!queries.Any())
+            if (queries == null)
             {
                 return null;
             }
@@ -453,9 +453,12 @@ namespace Azure.Maps.Search
                     item.Coordinates = new GeoPosition(Convert.ToDouble(query.Coordinates.Longitude), Convert.ToDouble(query.Coordinates.Latitude));
                 }
                 item.ResultTypes = new List<ResultTypeEnum>();
-                foreach (ReverseGeocodingResultTypeEnum resultType in query.ResultTypes)
+                if (query.ResultTypes != null)
                 {
-                    item.ResultTypes.Add(new ResultTypeEnum(resultType.ToString()));
+                    foreach (ReverseGeocodingResultTypeEnum resultType in query.ResultTypes)
+                    {
+                        item.ResultTypes.Add(new ResultTypeEnum(resultType.ToString()));
+                    }
                 }
                 if (query.LocalizedMapView != null)
                 {
@@ -471,7 +474,7 @@ namespace Azure.Maps.Search
         {
             IList<GeocodingBatchRequestItem> items = new ChangeTrackingList<GeocodingBatchRequestItem>();
 
-            if (!queries.Any())
+            if (queries == null)
             {
                 return null;
             }

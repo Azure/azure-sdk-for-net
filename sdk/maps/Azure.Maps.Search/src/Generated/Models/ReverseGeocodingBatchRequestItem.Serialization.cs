@@ -46,6 +46,8 @@ namespace Azure.Maps.Search.Models
                 writer.WritePropertyName("view"u8);
                 writer.WriteStringValue(View);
             }
+            writer.WritePropertyName("coordinates"u8);
+            SerializeCoordinatesValue(writer);
             writer.WriteEndObject();
         }
 
