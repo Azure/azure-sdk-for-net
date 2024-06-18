@@ -40,8 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
             {
-                InstanceSize = CosmosDBServiceSize.CosmosD4S,
-                InstanceCount = 1,
+                Properties = new DataTransferServiceResourceCreateUpdateProperties()
+                {
+                    InstanceSize = CosmosDBServiceSize.CosmosD4S,
+                    InstanceCount = 1,
+                },
             };
             ArmOperation<CosmosDBServiceResource> lro = await cosmosDBService.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBServiceResource result = lro.Value;
@@ -78,8 +81,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
             {
-                InstanceSize = CosmosDBServiceSize.CosmosD4S,
-                InstanceCount = 1,
+                Properties = new GraphApiComputeServiceResourceCreateUpdateProperties()
+                {
+                    InstanceSize = CosmosDBServiceSize.CosmosD4S,
+                    InstanceCount = 1,
+                },
             };
             ArmOperation<CosmosDBServiceResource> lro = await cosmosDBService.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBServiceResource result = lro.Value;
@@ -116,8 +122,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
             {
-                InstanceSize = CosmosDBServiceSize.CosmosD4S,
-                InstanceCount = 1,
+                Properties = new MaterializedViewsBuilderServiceResourceCreateUpdateProperties()
+                {
+                    InstanceSize = CosmosDBServiceSize.CosmosD4S,
+                    InstanceCount = 1,
+                },
             };
             ArmOperation<CosmosDBServiceResource> lro = await cosmosDBService.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBServiceResource result = lro.Value;
@@ -154,8 +163,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
             {
-                InstanceSize = CosmosDBServiceSize.CosmosD4S,
-                InstanceCount = 1,
+                Properties = new SqlDedicatedGatewayServiceResourceCreateUpdateProperties()
+                {
+                    DedicatedGatewayType = DedicatedGatewayType.IntegratedCache,
+                    InstanceSize = CosmosDBServiceSize.CosmosD4S,
+                    InstanceCount = 1,
+                },
             };
             ArmOperation<CosmosDBServiceResource> lro = await cosmosDBService.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBServiceResource result = lro.Value;
