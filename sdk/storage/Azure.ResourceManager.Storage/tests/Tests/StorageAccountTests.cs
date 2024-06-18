@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account = (await account.UpdateAsync(updateParameters)).Value;
             Assert.AreEqual(StorageAccountAccessTier.Cool, account.Data.AccessTier);
 
-            //create storage account with accesstier cool, update to cold
+            //create storage account with accesstier cool, update to cool
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             parameters.AccessTier = StorageAccountAccessTier.Cool;
             account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters)).Value;
@@ -965,7 +965,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Looks like server still not work with Cold tier.")]
         public async Task CreateUpdateStorageAccountWithAccessTierCold()
         {
             //create storage account with accesstier cool, update to cold
