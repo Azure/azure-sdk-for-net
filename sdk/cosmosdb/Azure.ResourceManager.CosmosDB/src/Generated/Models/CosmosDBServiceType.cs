@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> ServiceType for the service. </summary>
-    internal readonly partial struct CosmosDBServiceType : IEquatable<CosmosDBServiceType>
+    public readonly partial struct CosmosDBServiceType : IEquatable<CosmosDBServiceType>
     {
         private readonly string _value;
 
