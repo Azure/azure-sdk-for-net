@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Search.Models;
+using Azure.Maps.Search.Models.Queries;
 using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
@@ -41,23 +40,22 @@ namespace Azure.Maps.Search.Tests
         public async Task GetGeocodingBatchTest()
         {
             var client = CreateClient();
-            List<GeocodingBatchRequestItem> queries = new List<GeocodingBatchRequestItem>
+            List<GeocodingQuery> queries = new List<GeocodingQuery>
                     {
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query ="400 Broad St, Seattle, WA 98109"
                         },
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query ="400 Broad St, Seattle, WA 98109"
                         },
-                           new GeocodingBatchRequestItem()
+                           new GeocodingQuery()
                         {
                             Query ="350 5th Ave, New York, NY 10118"
                         },
                     };
-            GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);
-            var response = await client.GetGeocodingBatchAsync(body);
+            var response = await client.GetGeocodingBatchAsync(queries);
             Assert.AreEqual(3, response.Value.Summary.SuccessfulRequests);
             Assert.AreEqual(3, response.Value.Summary.TotalRequests);
         }
@@ -66,27 +64,26 @@ namespace Azure.Maps.Search.Tests
         public async Task GetGeocodingBatchOneInvalidQueryTest()
         {
             var client = CreateClient();
-            List<GeocodingBatchRequestItem> queries = new List<GeocodingBatchRequestItem>
+            List<GeocodingQuery> queries = new List<GeocodingQuery>
                     {
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query ="400 Broad St, Seattle, WA 98109"
                         },
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query ="400 Broad St, Seattle, WA 98109"
                         },
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query ="350 5th Ave, New York, NY 10118"
                         },
-                        new GeocodingBatchRequestItem()
+                        new GeocodingQuery()
                         {
                             Query =""
                         },
                     };
-            GeocodingBatchRequestBody body = new GeocodingBatchRequestBody(queries);
-            var response = await client.GetGeocodingBatchAsync(body);
+            var response = await client.GetGeocodingBatchAsync(queries);
             Assert.AreEqual(4, response.Value.Summary.TotalRequests);
             Assert.AreEqual(3, response.Value.Summary.SuccessfulRequests);
         }
@@ -96,7 +93,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                   async () => await client.GetGeocodingBatchAsync(new GeocodingBatchRequestBody()));
+                   async () => await client.GetGeocodingBatchAsync(new List<GeocodingQuery>()));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -124,19 +121,18 @@ namespace Azure.Maps.Search.Tests
         public async Task GetReverseGeocodingBatchTest()
         {
             var client = CreateClient();
-            List<ReverseGeocodingBatchRequestItem> items = new List<ReverseGeocodingBatchRequestItem>
+            List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
                     {
-                        new ReverseGeocodingBatchRequestItem()
+                        new ReverseGeocodingQuery()
                         {
                             Coordinates = new GeoPosition(-122.34255, 47.0)
                         },
-                        new ReverseGeocodingBatchRequestItem()
+                        new ReverseGeocodingQuery()
                         {
                             Coordinates = new GeoPosition(-122.34255, 47.0)
                         },
                     };
-            ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);
-            var response = await client.GetReverseGeocodingBatchAsync(body);
+            var response = await client.GetReverseGeocodingBatchAsync(items);
             Assert.AreEqual(2, response.Value.Summary.SuccessfulRequests);
             Assert.AreEqual(2, response.Value.Summary.TotalRequests);
         }
@@ -145,23 +141,22 @@ namespace Azure.Maps.Search.Tests
         public async Task GetReverseGeocodingBatchOneInvalidItemTest()
         {
             var client = CreateClient();
-            List<ReverseGeocodingBatchRequestItem> items = new List<ReverseGeocodingBatchRequestItem>
+            List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
                     {
-                        new ReverseGeocodingBatchRequestItem()
+                        new ReverseGeocodingQuery()
                         {
                             Coordinates = new GeoPosition(-122.34255, 47.0)
                         },
-                        new ReverseGeocodingBatchRequestItem()
+                        new ReverseGeocodingQuery()
                         {
                             Coordinates = new GeoPosition(-122.34255, 47.0)
                         },
-                        new ReverseGeocodingBatchRequestItem()
+                        new ReverseGeocodingQuery()
                         {
                             Coordinates = new GeoPosition(2.0, 148.0)
                         },
                     };
-            ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);
-            var response = await client.GetReverseGeocodingBatchAsync(body);
+            var response = await client.GetReverseGeocodingBatchAsync(items);
             Assert.AreEqual(2, response.Value.Summary.SuccessfulRequests);
             Assert.AreEqual(3, response.Value.Summary.TotalRequests);
         }
