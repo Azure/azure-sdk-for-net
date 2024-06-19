@@ -53,20 +53,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
-            {
-                writer.WritePropertyName("billingStartDate"u8);
-                writer.WriteStringValue(BillingStartOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            {
+                writer.WritePropertyName("billingStartDate"u8);
+                writer.WriteStringValue(BillingStartOn.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            {
+                writer.WritePropertyName("billingEndDate"u8);
+                writer.WriteStringValue(BillingEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
             }
             if (Optional.IsCollectionDefined(ProductFeatures))
             {
@@ -130,9 +140,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LicenseProfileMachineInstanceViewEsuProperties esuProfile = default;
             LicenseProfileSubscriptionStatus? subscriptionStatus = default;
             LicenseProfileProductType? productType = default;
-            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? disenrollmentDate = default;
+            DateTimeOffset? billingEndDate = default;
+            ResponseError error = default;
             IList<HybridComputeProductFeature> productFeatures = default;
             bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,15 +201,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             productType = new LicenseProfileProductType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingStartDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingStartDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("enrollmentDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -207,6 +210,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             enrollmentDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("billingStartDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingStartDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                         if (property0.NameEquals("disenrollmentDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -214,6 +226,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                                 continue;
                             }
                             disenrollmentDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("billingEndDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingEndDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("error"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("productFeatures"u8))
@@ -266,9 +296,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 esuProfile,
                 subscriptionStatus,
                 productType,
-                billingStartDate,
                 enrollmentDate,
+                billingStartDate,
                 disenrollmentDate,
+                billingEndDate,
+                error,
                 productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
                 softwareAssuranceCustomer,
                 serializedAdditionalRawData);

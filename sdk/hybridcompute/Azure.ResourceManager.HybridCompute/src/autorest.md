@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d15d528c272bda96ecee82003d06998ca1efea4f/specification/hybridcompute/resource-manager/readme.md
 #tag: package-preview-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -274,8 +274,6 @@ directive:
   - remove-operation: NetworkConfigurations_Get
   - remove-operation: NetworkConfigurations_Update
   - remove-operation: NetworkConfigurations_CreateOrUpdate
-
-  - remove-operation: NetworkSecurityPerimeterConfigurations_ReconcileForPrivateLinkScope
 
   # we will generate a seperate SDK for them
   - remove-operation: Gateways_CreateOrUpdate

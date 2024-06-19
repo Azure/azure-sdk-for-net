@@ -53,11 +53,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeWindowsConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="enableHotpatching"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? enableHotpatching, PatchSettingsStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssessmentMode = assessmentMode;
             PatchMode = patchMode;
+            EnableHotpatching = enableHotpatching;
+            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +69,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public AssessmentModeType? AssessmentMode { get; set; }
         /// <summary> Specifies the patch mode. </summary>
         public PatchModeType? PatchMode { get; set; }
+        /// <summary> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </summary>
+        public bool? EnableHotpatching { get; set; }
+        /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
+        public PatchSettingsStatus Status { get; }
     }
 }
