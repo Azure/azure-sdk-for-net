@@ -353,4 +353,19 @@ directive:
     transform: >
       $['type'] = "integer";
       $['format'] = "int32";
+  - from: blob.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
+  - from: file.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
+  - from: queue.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
 ```
