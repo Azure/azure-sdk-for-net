@@ -58,7 +58,8 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             {
                 await client.DeletePoolAsync(PoolId);
                 WaitForPoolDeletion(client, PoolId);
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 int x = 0;
                 x++;
