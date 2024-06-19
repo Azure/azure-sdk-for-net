@@ -292,7 +292,17 @@ namespace Azure.Messaging.EventHubs
         ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
         ///
-        public long Offset => _amqpMessage.GetOffset(long.MinValue);
+        public long Offset
+        {
+            get
+            {
+                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+                // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+                // compatibility to avoid breaking existing code that uses only offset properties.
+
+                return _amqpMessage.GetSequenceNumber(long.MinValue);
+            }
+        }
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -383,7 +393,17 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
-        internal long? LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
+        internal long? LastPartitionOffset
+        {
+            get
+            {
+                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+                // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+                // compatibility to avoid breaking existing code that uses only offset properties.
+
+                return _amqpMessage.GetLastPartitionSequenceNumber();
+            }
+        }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from

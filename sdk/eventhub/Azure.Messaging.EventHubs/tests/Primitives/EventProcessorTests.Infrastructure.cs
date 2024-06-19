@@ -72,8 +72,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(() => default);
 
             mockConnection
-                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitionIds);
+                .Setup(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties("", DateTime.Now, partitionIds, false));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -129,8 +129,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockConnection
-                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitionIds);
+                .Setup(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties("", DateTime.Now, partitionIds, false));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())

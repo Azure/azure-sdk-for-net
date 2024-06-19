@@ -81,7 +81,12 @@ namespace Azure.Messaging.EventHubs
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
-            LastEnqueuedOffset = lastOffset;
+
+            // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+            // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+            // compatibility to avoid breaking existing code that uses only offset properties.
+
+            LastEnqueuedOffset = lastSequenceNumber;
             LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }
