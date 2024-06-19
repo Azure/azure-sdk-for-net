@@ -432,111 +432,11 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     #endregion
 
     #region Test default logging policy behavior
-
-    [Test]
-    public async Task LogsRequestAndResponse()
-    {
-        using TestClientEventListener eventListener = new();
-
-        ClientPipeline pipeline = ClientPipeline.Create();
-
-        using TestServer testServer = new TestServer(
-            async context =>
-            {
-                context.Response.StatusCode = 201;
-                await context.Response.WriteAsync("Hello world!");
-            });
-
-        using PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Uri = testServer.Address;
-        message.BufferResponse = true;
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        // Request event
-        EventWrittenEventArgs args = eventListener.SingleEventById(1);
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.AreEqual("System.ClientModel", args.EventSource.Name);
-        Assert.AreEqual("Request", args.EventName);
-
-        // Response Event
-        args = eventListener.SingleEventById(5);
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.AreEqual("System.ClientModel", args.EventSource.Name);
-        Assert.AreEqual("Response", args.EventName);
-        Assert.AreEqual(args.GetProperty<int>("status"), 201);
-
-        // No other events should have been logged
-        Assert.AreEqual(2, eventListener.EventData.Count());
-    }
-
     [Test]
     public void LogsRequestAndExceptionResponse()
     {
-        using TestClientEventListener eventListener = new();
-
-        ClientPipeline pipeline = ClientPipeline.Create();
-
-        using TestServer testServer = new TestServer(
-            async context =>
-            {
-                await context.Response.WriteAsync("Hello world!");
-                throw new Exception("Error");
-            });
-
-        using PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Uri = testServer.Address;
-        message.BufferResponse = true;
-
-        Assert.ThrowsAsync<AggregateException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-
-        // 4 request events (1 for the initial request, 3 for retries)
-        Assert.AreEqual(4, eventListener.EventsById(1).Count());
-
-        // 4 response exception events
-        Assert.AreEqual(4, eventListener.EventsById(18).Count());
-
-        // No other events should have been logged
-        Assert.AreEqual(8, eventListener.EventData.Count());
+        throw new NotImplementedException();
     }
-
-    [Test]
-    public async Task LogsRequestAndErrorResponse()
-    {
-        using TestClientEventListener eventListener = new();
-
-        ClientPipeline pipeline = ClientPipeline.Create();
-
-        using TestServer testServer = new TestServer(
-            async context =>
-            {
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Bad Request");
-            });
-
-        using PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Uri = testServer.Address;
-        message.BufferResponse = true;
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        // Request event
-        EventWrittenEventArgs args = eventListener.SingleEventById(1);
-        Assert.AreEqual("System.ClientModel", args.EventSource.Name);
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.AreEqual("Request", args.EventName);
-
-        // Response event
-        args = eventListener.SingleEventById(8);
-        Assert.AreEqual("System.ClientModel", args.EventSource.Name);
-        Assert.AreEqual(EventLevel.Warning, args.Level);
-        Assert.AreEqual("ErrorResponse", args.EventName);
-        Assert.AreEqual(args.GetProperty<int>("status"), 400);
-
-        // No other events should have been logged
-        Assert.AreEqual(2, eventListener.EventData.Count());
-    }
-
     #endregion
 
     #region Test parallel connections

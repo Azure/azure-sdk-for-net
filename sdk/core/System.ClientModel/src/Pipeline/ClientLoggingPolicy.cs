@@ -22,9 +22,6 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private readonly bool _logContent;
     private readonly int _maxLength;
-    private readonly string? _assemblyName;
-    private readonly string? _clientRequestIdHeaderName;
-    private readonly bool _isLoggingEnabled;
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly ILogger _logger;
 
@@ -37,11 +34,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         LoggingOptions loggingOptions = options ?? new LoggingOptions();
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
-        _assemblyName = loggingOptions.LoggedClientAssemblyName;
-        _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
-        _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel"); // TODO name conventions?
+        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
     }
 
     /// <inheritdoc/>
@@ -54,18 +48,18 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!_isLoggingEnabled)
-        {
-            if (async)
-            {
-                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-            }
-            else
-            {
-                ProcessNext(message, pipeline, currentIndex);
-            }
-            return;
-        }
+        //if (!_isLoggingEnabled)
+        //{
+        //    if (async)
+        //    {
+        //        await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        //    }
+        //    else
+        //    {
+        //        ProcessNext(message, pipeline, currentIndex);
+        //    }
+        //    return;
+        //}
 
         // Log the request
 
@@ -124,11 +118,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     internal string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
-        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        keyValuePairs.TryGetValue("x-ms-client-request-id", out var clientRequestId);
         return clientRequestId;
     }
 
@@ -141,7 +131,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         string uri = _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri);
         string headers = FormatHeaders(request.Headers, _sanitizer);
-        ClientModelLogMessages.Request(logger, requestId, request.Method, uri, headers, _assemblyName);
+        ClientModelLogMessages.Request(logger, requestId, request.Method, uri, headers, "System.ClientModel");
     }
 
     private async Task LogRequestContent(ILogger logger, PipelineRequest request, string requestId, bool async, CancellationToken cancellationToken)
@@ -266,11 +256,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private string? GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
     {
-        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        keyValuePairs.TryGetValue("x-ms-client-request-id", out var clientRequestId);
         return clientRequestId;
     }
 

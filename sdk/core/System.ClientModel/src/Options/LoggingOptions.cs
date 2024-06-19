@@ -16,8 +16,8 @@ public class LoggingOptions
     private bool _frozen;
 
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
-    private const bool DefaultIsLoggingEnabled = true;
     private const bool DefaultIsLoggingContentEnabled = false;
+    private const bool DefaultCombineLogs = true;
 
     private static readonly string[] s_defaultAllowedHeaderNames =
         new[] {
@@ -44,28 +44,12 @@ public class LoggingOptions
             "WWW-Authenticate" };
     private static readonly string[] s_defaultAllowedQueryParameters = new[] { "api-version" };
 
-    private bool _isLoggingEnabled = DefaultIsLoggingEnabled;
     private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
     private IList<string> _allowedHeaderNames = new List<string>(s_defaultAllowedHeaderNames);
     private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
-    private string? _clientAssembly;
-    private string? _requestIdHeaderName;
+    private bool _combineLogs = DefaultCombineLogs;
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
-
-    /// <summary>
-    /// Get or sets value indicating whether HTTP pipeline logging is enabled.
-    /// </summary>
-    public bool IsLoggingEnabled
-    {
-        get => _isLoggingEnabled;
-        set
-        {
-            AssertNotFrozen();
-
-            _isLoggingEnabled = value;
-        }
-    }
 
     /// <summary>
     /// TODO.
@@ -126,30 +110,16 @@ public class LoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets the name of the client assembly to include in logging.
-    /// </summary>
-    public string? LoggedClientAssemblyName
-    {
-        get => _clientAssembly;
-        set
-        {
-            AssertNotFrozen();
-
-            _clientAssembly = value;
-        }
-    }
-
-    /// <summary>
     /// Gets or sets the header name that contains the request Id to include in logging.
     /// </summary>
-    public string? RequestIdHeaderName
+    public bool CombineLogs
     {
-        get => _requestIdHeaderName;
+        get => _combineLogs;
         set
         {
             AssertNotFrozen();
 
-            _requestIdHeaderName = value;
+            _combineLogs = value;
         }
     }
 

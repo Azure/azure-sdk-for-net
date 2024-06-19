@@ -33,12 +33,69 @@ public class TestLogger : ILogger
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
-        if (!IsEnabled(logLevel))
+        if (IsEnabled(logLevel))
         {
-            var arguments = GetProperties(state);
-            TestLoggingEventSource.Log.LogMessage(logLevel, _name, eventId.Id, eventId.Name, exception, arguments);
+            int eventNum = eventId.Id;
+            IReadOnlyList<KeyValuePair<string, string?>> arguments = GetProperties(state);
+
+            string requestId = GetValue(arguments, "requestId");
+
+            switch (eventNum)
+            {
+                case 1:
+                    TestLoggingEventSource.Log.Request(requestId, GetValue(arguments, "method"), GetValue(arguments, "uri"), GetValue(arguments, "headers"), GetValue(arguments, "assemblyName"));
+                    break;
+                case 2:
+                    TestLoggingEventSource.Log.RequestContent(requestId, Encoding.UTF8.GetBytes(GetValue(arguments, "content")));
+                    break;
+                case 5:
+                    TestLoggingEventSource.Log.Response(requestId, int.Parse(GetValue(arguments, "status")), GetValue(arguments, "reasonPhrase"), GetValue(arguments, "headers"), double.Parse(GetValue(arguments, "seconds")));
+                    break;
+                case 6:
+                    TestLoggingEventSource.Log.ResponseContent(requestId, Encoding.UTF8.GetBytes(GetValue(arguments, "content")));
+                    break;
+                case 7:
+                    TestLoggingEventSource.Log.ResponseDelay(requestId, double.Parse(GetValue(arguments, "seconds")));
+                    break;
+                case 8:
+                    TestLoggingEventSource.Log.ErrorResponse(requestId, int.Parse(GetValue(arguments, "status")), GetValue(arguments, "reasonPhrase"), GetValue(arguments, "headers"), double.Parse(GetValue(arguments, "seconds")));
+                    break;
+                case 9:
+                    TestLoggingEventSource.Log.ErrorResponseContent(requestId, Encoding.UTF8.GetBytes(GetValue(arguments, "content")));
+                    break;
+                case 10:
+                    TestLoggingEventSource.Log.RequestRetrying(requestId, int.Parse(GetValue(arguments, "retryCount")), double.Parse(GetValue(arguments, "delaySeconds")));
+                    break;
+                case 11:
+                    TestLoggingEventSource.Log.ResponseContentBlock(requestId, int.Parse(GetValue(arguments, "blockNumber")), Encoding.UTF8.GetBytes(GetValue(arguments, "content")));
+                    break;
+                case 12:
+                    TestLoggingEventSource.Log.ErrorResponseContentBlock(requestId, int.Parse(GetValue(arguments, "blockNumber")), Encoding.UTF8.GetBytes(GetValue(arguments, "content")));
+                    break;
+                case 13:
+                    TestLoggingEventSource.Log.ResponseContentText(requestId, GetValue(arguments, "content"));
+                    break;
+                case 14:
+                    TestLoggingEventSource.Log.ErrorResponseContentText(requestId, GetValue(arguments, "content"));
+                    break;
+                case 15:
+                    TestLoggingEventSource.Log.ResponseContentTextBlock(requestId, int.Parse(GetValue(arguments, "blockNumber")), GetValue(arguments, "content"));
+                    break;
+                case 16:
+                    TestLoggingEventSource.Log.ErrorResponseContentTextBlock(requestId, int.Parse(GetValue(arguments, "blockNumber")), GetValue(arguments, "content"));
+                    break;
+                case 17:
+                    TestLoggingEventSource.Log.RequestContentText(requestId, GetValue(arguments, "content"));
+                    break;
+                case 18:
+                    TestLoggingEventSource.Log.ExceptionResponse(requestId, GetValue(arguments, "exception"));
+                    break;
+            }
         }
     }
+
+    private static string GetValue(IReadOnlyList<KeyValuePair<string, string?>> arguments, string key)
+        => arguments.Single(kvp => kvp.Key == key).Value ?? string.Empty;
 
     private static KeyValuePair<string, string?>[] GetProperties(object? state)
     {

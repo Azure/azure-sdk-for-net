@@ -28,9 +28,6 @@ namespace System.ClientModel.Tests.Options
             Assert.AreEqual(21, options.AllowedHeaderNames.Count);
             Assert.AreEqual(1, options.AllowedQueryParameters.Count);
             Assert.AreEqual(false, options.IsLoggingContentEnabled);
-            Assert.AreEqual(true, options.IsLoggingEnabled);
-            Assert.AreEqual(null, options.LoggedClientAssemblyName);
-            Assert.AreEqual(null, options.RequestIdHeaderName);
             Assert.AreEqual(null, options.LoggerFactory);
         }
 
@@ -39,18 +36,14 @@ namespace System.ClientModel.Tests.Options
         {
             LoggingOptions options = new()
             {
-                LoggedClientAssemblyName = "MyAssembly",
-                RequestIdHeaderName = "RequestID"
             };
 
             options.Freeze();
 
             Assert.Throws<NotSupportedException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
-            Assert.Throws<InvalidOperationException>(() => options.IsLoggingEnabled = false);
             Assert.Throws<InvalidOperationException>(() => options.LoggedContentSizeLimit = 5);
             Assert.Throws<InvalidOperationException>(() => options.IsLoggingContentEnabled = true);
             Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
-            Assert.Throws<InvalidOperationException>(() => options.LoggedClientAssemblyName = "other name");
             // Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = ); TODO
         }
     }
