@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             UseDefaultGuidFormatForClientRequestId = true;
         }
 
-        public bool isPlayBack()
+        public bool IsPlayBack()
         {
             return this.Mode == RecordedTestMode.Playback;
         }
