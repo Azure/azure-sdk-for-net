@@ -4,8 +4,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenSerialization(nameof(BoundingBox), "boundingBox")]
-    public partial class Boundary
+    public partial class BoundaryProperties
     {
         /// <summary> A URL that lists many of the data providers for Azure Maps and their related copyright information. </summary>
         [CodeGenMember("CopyrightURL")]

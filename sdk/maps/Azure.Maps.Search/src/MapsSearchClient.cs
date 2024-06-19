@@ -489,7 +489,7 @@ namespace Azure.Maps.Search
                 item.CountryRegion = query.CountryRegion;
                 if (query.BoundingBox != null)
                 {
-                    item.BoundingBox = new[] { query.BoundingBox.North, query.BoundingBox.West, query.BoundingBox.South, query.BoundingBox.East };
+                    item.BoundingBox = new GeoBoundingBox(query.BoundingBox.West, query.BoundingBox.South, query.BoundingBox.East, query.BoundingBox.North);
                 }
                 if (query.LocalizedMapView != null)
                 {

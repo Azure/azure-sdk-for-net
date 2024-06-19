@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
@@ -16,71 +17,8 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeocodingBatchRequestItem"/>. </summary>
         public GeocodingBatchRequestItem()
         {
-            BoundingBox = new ChangeTrackingList<double>();
+            _BoundingBox = new ChangeTrackingList<double>();
             _Coordinates = new ChangeTrackingList<double>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GeocodingBatchRequestItem"/>. </summary>
-        /// <param name="optionalId"> id of the request which would show in corresponding batchItem. </param>
-        /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
-        /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
-        /// <param name="addressLine">
-        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="countryRegion">
-        /// Signal for the geocoding result to an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) that is specified e.g. FR./
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="boundingBox">
-        /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. For more information, see Location and Area Types. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
-        ///
-        /// Example: [lon1, lat1, lon2, lat2]
-        /// </param>
-        /// <param name="view"> A string that specifies an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. </param>
-        /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: [lon, lat]. </param>
-        /// <param name="adminDistrict">
-        /// The country subdivision portion of an address, such as WA.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="adminDistrict2">
-        /// The county for the structured address, such as King.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="adminDistrict3">
-        /// The named area for the structured address.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="locality">
-        /// The locality portion of an address, such as Seattle.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        /// <param name="postalCode">
-        /// The postal code portion of an address.
-        ///
-        /// **If query is given, should not use this parameter.**
-        /// </param>
-        internal GeocodingBatchRequestItem(string optionalId, int? top, string query, string addressLine, string countryRegion, IList<double> boundingBox, string view, IList<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
-        {
-            OptionalId = optionalId;
-            Top = top;
-            Query = query;
-            AddressLine = addressLine;
-            CountryRegion = countryRegion;
-            BoundingBox = boundingBox;
-            View = view;
-            _Coordinates = coordinates;
-            AdminDistrict = adminDistrict;
-            AdminDistrict2 = adminDistrict2;
-            AdminDistrict3 = adminDistrict3;
-            Locality = locality;
-            PostalCode = postalCode;
         }
 
         /// <summary> id of the request which would show in corresponding batchItem. </summary>
