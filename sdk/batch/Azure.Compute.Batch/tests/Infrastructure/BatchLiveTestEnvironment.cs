@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
-    public class BatchLiveTestEnvironment:  TestEnvironment
+    public class BatchLiveTestEnvironment : TestEnvironment
     {
         public string BatchAccountName => GetRecordedVariable("batch_account_name");
 
