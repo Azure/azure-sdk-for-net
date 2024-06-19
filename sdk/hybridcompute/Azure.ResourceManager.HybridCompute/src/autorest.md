@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/d15d528c272bda96ecee82003d06998ca1efea4f/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -244,15 +244,13 @@ directive:
         }
       }
 
-  # remove operations
-  - remove-operation: Machines_CreateOrUpdate
-  - remove-operation: MachineRunCommands_Update
+  # we don't want user to interact with them / we don't support some operations
+  - remove-operation: MachineRunCommands_Update #PATCH
   - remove-operation: AgentVersion_List
   - remove-operation: AgentVersion_Get
   - remove-operation: HybridIdentityMetadata_Get
   - remove-operation: HybridIdentityMetadata_ListByMachines
 
-  # we don't want user to interact with them
   - remove-operation: Licenses_ValidateLicense
   - remove-operation: Licenses_Update #PATCH
 
