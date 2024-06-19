@@ -4,6 +4,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: communication
+    DeployTestResources: false
     Project: Azure.Communication.Rooms
     CloudConfig:
       Public:
