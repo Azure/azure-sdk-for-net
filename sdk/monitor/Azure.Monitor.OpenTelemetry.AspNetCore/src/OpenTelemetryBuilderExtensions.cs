@@ -132,22 +132,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
-            builder.Services.AddLogging(logging =>
-            {
-                logging.AddOpenTelemetry(builderOptions =>
-                {
-                    builderOptions.IncludeFormattedMessage = true;
-                });
-            });
-
-            // Add AzureMonitorLogExporter to AzureMonitorOptions
-            // once the service provider is available containing the final
-            // AzureMonitorOptions.
-            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
+            builder.WithLogging(
+                    logging => logging.AddProcessor(sp =>
                     {
-                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
-
                         bool enableLogSampling = false;
                         try
                         {
@@ -159,26 +146,30 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
                         }
 
-                        if (enableLogSampling)
-                        {
-                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        }
-                        else
-                        {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        }
+                        var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
+                        var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                        azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
+
+                        var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
+                        var logProcessor = enableLogSampling
+                            ? new LogFilteringProcessor(exporter)
+                            : new BatchLogRecordExportProcessor(exporter);
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
-                            loggingOptions.AddProcessor(sp =>
+                            var manager = sp.GetRequiredService<Manager>();
+                            var liveMetricsProcessor = new LiveMetricsLogProcessor(manager);
+
+                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
                             {
-                                var manager = sp.GetRequiredService<Manager>();
-                                return new LiveMetricsLogProcessor(manager);
+                                liveMetricsProcessor,
+                                logProcessor
                             });
                         }
-                    });
+
+                        return logProcessor;
+                    }),
+                    options => options.IncludeFormattedMessage = true);
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
