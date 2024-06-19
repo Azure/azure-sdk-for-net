@@ -106,18 +106,27 @@ param (
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
 
-$azsdkPipelineVnet = "/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/azsdk-pools/providers/Microsoft.Network/virtualNetworks/azsdk-pipeline-vnet-wus"
-$azsdkPipelineSubnets = @(
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-1804-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2204-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-1804-storage"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-storage"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-storage"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-storage")
-)
+$azsdkPipelineVnetWestUS = '/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/azsdk-pools/providers/Microsoft.Network/virtualNetworks/azsdk-pipeline-vnet-wus'
+$azsdkPipelineVnetCanadaCentral = '/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/azsdk-pools/providers/Microsoft.Network/virtualNetworks/azsdk-pipeline-vnet-cnc'
+$azsdkPipelineSubnetMap = @{
+    'azsdk-pool-mms-ubuntu-1804-general' = ($azsdkPipelineVnetWestUS + '/subnets/pipeline-subnet-ubuntu-1804-general')
+    'azsdk-pool-mms-ubuntu-2004-general' = ($azsdkPipelineVnetWestUS + '/subnets/pipeline-subnet-ubuntu-2004-general')
+    'azsdk-pool-mms-ubuntu-2204-general' = ($azsdkPipelineVnetWestUS + '/subnets/pipeline-subnet-ubuntu-2204-general')
+    'azsdk-pool-mms-win-2019-general' = ($azsdkPipelineVnetWestUS + '/subnets/pipeline-subnet-win-2019-general')
+    'azsdk-pool-mms-win-2022-general' = ($azsdkPipelineVnetWestUS + '/subnets/pipeline-subnet-win-2022-general')
+    'azsdk-pool-mms-ubuntu-1804-storage' = ($azsdkPipelineVnetCanadaCentral + '/subnets/pipeline-subnet-ubuntu-1804-storage')
+    'azsdk-pool-mms-ubuntu-2004-storage' = ($azsdkPipelineVnetCanadaCentral + '/subnets/pipeline-subnet-ubuntu-2004-storage')
+    'azsdk-pool-mms-win-2019-storage' = ($azsdkPipelineVnetCanadaCentral + '/subnets/pipeline-subnet-win-2019-storage')
+    'azsdk-pool-mms-win-2022-storage' = ($azsdkPipelineVnetCanadaCentral + '/subnets/pipeline-subnet-win-2022-storage')
+    'Azure Pipelines' = ''
+}
+
+$poolSubnet = ''
+if ($env:Pool) {
+  $poolSubnet = $azsdkPipelineSubnetMap[$env:Pool]
+} else {
+  Write-Warning "Pool environment variable is not defined! Subnet allowlisting will not work and live test resources may be non-compliant."
+}
 
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
@@ -763,8 +772,8 @@ try {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
     # Only add subnets when running in an azure pipeline context
-    if ($CI -and $Environment -eq 'AzureCloud') {
-        $templateParameters.Add('azsdkPipelineSubnetList', $azsdkPipelineSubnets)
+    if ($CI -and $Environment -eq 'AzureCloud' -and $poolSubnet) {
+        $templateParameters.Add('azsdkPipelineSubnetList', @($poolSubnet))
     }
 
     $defaultCloudParameters = LoadCloudConfig $Environment
@@ -851,12 +860,10 @@ try {
                 if ($rules -and $rules.DefaultAction -eq "Allow") {
                     Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
                     Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
-                    if ($CI) {
-                        Write-Host "Enabling access to '$($account.Name)' from pipeline subnets"
-                        foreach ($subnet in $azsdkPipelineSubnets) {
-                            Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $subnet }
-                        }
-                    } else {
+                    if ($CI -and $poolSubnet) {
+                        Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $poolSubnet"
+                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $poolSubnet }
+                    } elseif (!$CI -or $env:Pool -eq 'Azure Pipelines') {
                         Write-Host "Enabling access to '$($account.Name)' from client IP"
                         $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
                         Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
