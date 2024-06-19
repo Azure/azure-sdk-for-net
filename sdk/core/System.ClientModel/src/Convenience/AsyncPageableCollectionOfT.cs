@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a collection of results returned from a cloud service operation
+/// Represents a collection of values returned from a cloud service operation
 /// sequentially over one or more calls to the service.
 /// </summary>
-public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
+public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
 {
     /// <summary>
     /// Create a new instance of <see cref="AsyncPageableCollection{T}"/>.
@@ -26,20 +26,39 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
     }
 
     /// <summary>
-    /// Return an enumerable of <see cref="ResultPage{T}"/> that aynchronously
+    /// Return an enumerable of <see cref="PageResult{T}"/> that aynchronously
     /// enumerates the collection's pages instead of the collection's individual
     /// values. This may make multiple service requests.
     /// </summary>
-    /// <param name="continuationToken">A token indicating where the collection
+    /// <param name="pageToken">A token indicating where the collection
     /// of results returned from the service should begin. Passing <c>null</c>
     /// will start the collection at the first page of values.</param>
-    /// <param name="pageSizeHint">The number of items to request that the
-    /// service return in a <see cref="ResultPage{T}"/>, if the service supports
-    /// such requests.</param>
-    /// <returns>An async sequence of <see cref="ResultPage{T}"/>, each holding
+    /// <returns>An async sequence of <see cref="PageResult{T}"/>, each holding
     /// the subset of collection values contained in a given service response.
     /// </returns>
-    public abstract IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
+    public abstract IAsyncEnumerable<PageResult<T>> AsPages(string? pageToken = default);
+
+    /// <summary>
+    /// Return the <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.
+    /// </summary>
+    /// <param name="pageToken">The page token indicating which page of
+    /// collection values to return.</param>
+    /// <param name="cancellationToken">TBD.</param>
+    /// <returns>The <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.</returns>
+    public virtual async Task<PageResult<T>> GetPageAsync(string? pageToken = default, CancellationToken cancellationToken = default)
+    {
+        IAsyncEnumerable<PageResult<T>> pages = AsPages(pageToken);
+        await foreach (PageResult<T> page in pages.ConfigureAwait(false).WithCancellation(cancellationToken))
+        {
+            return page;
+        }
+
+        return PageResult<T>.Create(new List<T>().AsReadOnly(), null, GetRawResponse());
+    }
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection
@@ -51,9 +70,9 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
     /// asynchronously through the collection values.</returns>
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (ResultPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (PageResult<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
-            foreach (T value in page)
+            foreach (T value in page.Values)
             {
                 yield return value;
             }
