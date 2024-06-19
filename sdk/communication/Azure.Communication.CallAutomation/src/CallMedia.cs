@@ -1480,7 +1480,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual async Task<Response> StartMediaStreamingAsync(StartMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreamingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
             scope.Start();
             try
             {

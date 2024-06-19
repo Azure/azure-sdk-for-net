@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Azure.Communication.PhoneNumbers;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
-using Azure.Communication.PhoneNumbers;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
@@ -140,6 +140,489 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 await CleanUpCall(client, callConnectionId);
             }
+        }
+
+        [RecordedTest]
+        public async Task CreateCallWithMediaStreaming()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false);
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyMediaStreaming(client, result.CallerCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnswerCallWithMediaStreaming()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false);
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.TargetCallConnectionId;
+                    await VerifyMediaStreaming(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnswerCallWithMediaStreamingUnmixed()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Unmixed,
+                        MediaStreamingTransport.Websocket,
+                        false);
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.TargetCallConnectionId;
+                    await VerifyMediaStreaming(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateCallAndTranscription()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription options
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggerred
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        "en-CA",
+                        false);
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnswerCallAndTranscription()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call
+             * 2. Answer a call with transcription options
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggerred
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        "en-CA",
+                        false);
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
+                          null, transcriptionOptions);
+                    callConnectionId = result.TargetCallConnectionId;
+                    await VerifyTranscription(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        private async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCallWithMediaOrTranscriptionOptions(
+            CallAutomationClient client,
+            CallAutomationClient targetClient,
+            CommunicationUserIdentifier target,
+            string uniqueId,
+            bool isOutboundValidation,
+            MediaStreamingOptions? mediaStreamingOptions,
+            TranscriptionOptions? transcriptionOptions
+            )
+        {
+            try
+            {
+                // create call and assert response
+                var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                if (isOutboundValidation)
+                {
+                    if (mediaStreamingOptions != null)
+                    {
+                        createCallOptions.MediaStreamingOptions = mediaStreamingOptions;
+                    }
+                    if (transcriptionOptions != null)
+                    {
+                        createCallOptions.TranscriptionOptions = transcriptionOptions;
+                        createCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
+                        {
+                            CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
+                        };
+                    }
+                }
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                var callerCallConnectionId = response.CallConnectionProperties.CallConnectionId;
+                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+
+                // wait for incomingcall context
+                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(incomingCallContext);
+
+                // answer the call
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                if (!isOutboundValidation)
+                {
+                    if (mediaStreamingOptions != null)
+                    {
+                        answerCallOptions.MediaStreamingOptions = mediaStreamingOptions;
+                    }
+                    if (transcriptionOptions != null)
+                    {
+                        answerCallOptions.TranscriptionOptions = transcriptionOptions;
+                        answerCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
+                        {
+                            CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
+                        };
+                    }
+                }
+                AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
+
+                var targetCallConnectionId = answerResponse.CallConnectionProperties.CallConnectionId;
+                // wait for callConnected
+
+                var connectedEvent = await WaitForEvent<CallConnected>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(connectedEvent);
+                Assert.IsTrue(connectedEvent is CallConnected);
+                Assert.AreEqual(targetCallConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                return (callerCallConnectionId, targetCallConnectionId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private async Task VerifyMediaStreaming(CallAutomationClient client,
+            string callConnectionId)
+        {
+            //Start media streaming
+            StartMediaStreamingOptions startMediaStreamingOptions = new StartMediaStreamingOptions()
+            {
+                OperationContext = "startMediaStreamingContext"
+            };
+
+            var callerMedia = client.GetCallConnection(callConnectionId).GetCallMedia();
+            await callerMedia.StartMediaStreamingAsync(startMediaStreamingOptions);
+
+            // wait for callConnected
+            var mediaStreamingStartedEvent = await WaitForEvent<MediaStreamingStarted>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(mediaStreamingStartedEvent);
+            Assert.IsTrue(mediaStreamingStartedEvent is MediaStreamingStarted);
+
+            // Assert call connection properties
+            var connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+            Assert.IsNotNull(connectionProperties);
+            Assert.IsNotNull(connectionProperties.Value.MediaStreamingSubscription);
+            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionState.Active);
+
+            //Stop media streaming
+            StopMediaStreamingOptions stopMediaStreamingOptions = new StopMediaStreamingOptions();
+
+            await callerMedia.StopMediaStreamingAsync(stopMediaStreamingOptions);
+
+            // wait for callConnected
+            var stopMediaStreamingEvent = await WaitForEvent<MediaStreamingStopped>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(stopMediaStreamingEvent);
+            Assert.IsTrue(stopMediaStreamingEvent is MediaStreamingStopped);
+
+            // Assert call connection properties
+            connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+            Assert.IsNotNull(connectionProperties);
+            Assert.IsNotNull(connectionProperties.Value.MediaStreamingSubscription);
+            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionState.Inactive);
+
+            // try hangup
+            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+            var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(disconnectedEvent);
+            Assert.IsTrue(disconnectedEvent is CallDisconnected);
+            Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+        }
+
+        private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
+        {
+            //Start Transcription
+            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
+            {
+                Locale = "en-CA",
+                OperationContext = "Start"
+            };
+
+            var callerMedia = client.GetCallConnection(callConnectionId).GetCallMedia();
+            var startTranscriptionResponse = await callerMedia.StartTranscriptionAsync(startTranscriptionOptions);
+            var startTranscriptionEvent = await WaitForEvent<TranscriptionStarted>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(startTranscriptionEvent);
+            Assert.IsTrue(startTranscriptionEvent is TranscriptionStarted);
+
+            var source = new TextSource("Hello, this is live test", "en-US-ElizabethNeural");
+            var options = new PlayToAllOptions(source);
+            callerMedia.PlayToAll(options);
+
+            // test get properties
+            var connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+            Assert.IsNotNull(connectionProperties);
+            Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
+            Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
+
+            //Stop Transcription
+            StopTranscriptionOptions stopTranscriptionOptions = new StopTranscriptionOptions() { OperationContext = "Stop" };
+            var stopTranscriptionResponse = await callerMedia.StopTranscriptionAsync(stopTranscriptionOptions);
+            connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+            Assert.IsNotNull(connectionProperties);
+            Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
+            Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Inactive);
+            var stopTranscriptionEvent = await WaitForEvent<TranscriptionStopped>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(stopTranscriptionEvent);
+            Assert.IsTrue(stopTranscriptionEvent is TranscriptionStopped);
+
+            // try hangup
+            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+            var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+            Assert.IsNotNull(disconnectedEvent);
+            Assert.IsTrue(disconnectedEvent is CallDisconnected);
+            Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
         }
     }
 }
