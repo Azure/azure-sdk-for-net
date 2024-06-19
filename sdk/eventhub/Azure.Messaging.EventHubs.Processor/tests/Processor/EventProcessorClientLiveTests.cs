@@ -932,7 +932,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProcessorClientCanCheckpointAfterStoppping()
+        public async Task ProcessorClientCanCheckpointAfterStopping()
         {
             // Setup the environment.
 
