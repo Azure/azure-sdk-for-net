@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             if (concurrency < 0)
             {
-                throw new ArgumentOutOfRangeException($"Concurrency value='{concurrency}' used for target based scale must be > 0");
+                throw new ArgumentOutOfRangeException($"Concurrency value='{concurrency}' used for target based scale must be > 0.");
             }
 
             int targetWorkerCount = (int)Math.Ceiling(queueLength / (decimal)concurrency);
