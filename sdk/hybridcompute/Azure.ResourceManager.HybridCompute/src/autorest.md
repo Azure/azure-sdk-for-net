@@ -244,15 +244,6 @@ directive:
         }
       }
 
-  # remove cmdlets
-  - where:
-      subject: NetworkProfile
-    remove: true
-  - where:
-      subject: MachineRunCommand
-      verb: Set
-    remove: true
-
   # remove operations
   - remove-operation: Machines_CreateOrUpdate
   - remove-operation: MachineRunCommands_Update
@@ -261,7 +252,7 @@ directive:
   - remove-operation: HybridIdentityMetadata_Get
   - remove-operation: HybridIdentityMetadata_ListByMachines
 
-  # add back when swagger change is checked in
+  # we don't want user to interact with them
   - remove-operation: Licenses_ValidateLicense
   - remove-operation: Licenses_Update #PATCH
 
@@ -271,18 +262,6 @@ directive:
   - remove-operation: LicenseProfiles_List
   - remove-operation: LicenseProfiles_CreateOrUpdate
 
-  - remove-operation: NetworkConfigurations_Get
-  - remove-operation: NetworkConfigurations_Update
-  - remove-operation: NetworkConfigurations_CreateOrUpdate
-
-  # we will generate a seperate SDK for them
-  - remove-operation: Gateways_CreateOrUpdate
-  - remove-operation: Gateways_Get
-  - remove-operation: Gateways_ListByResourceGroup
-  - remove-operation: Gateways_ListBySubscription
-  - remove-operation: Gateways_Delete
-  - remove-operation: Gateways_Update
-  - remove-operation: Settings_Update
   - remove-operation: Settings_Get
   - remove-operation: Settings_Patch
 

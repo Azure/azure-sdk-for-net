@@ -10,13 +10,10 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HybridCompute
+namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary>
-    /// A class representing the HybridComputeExtensionValue data model.
-    /// Describes a Extension Metadata
-    /// </summary>
-    public partial class HybridComputeExtensionValueData : ResourceData
+    /// <summary> The Settings. </summary>
+    public partial class Settings : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,33 +47,29 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
-        public HybridComputeExtensionValueData()
+        /// <summary> Initializes a new instance of <see cref="Settings"/>. </summary>
+        public Settings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Settings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="version"> The version of the Extension being received. </param>
-        /// <param name="extensionType"> The type of the Extension being received. </param>
-        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="tenantId"> Azure resource tenant Id. </param>
+        /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeExtensionValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string extensionType, string publisher, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal Settings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Version = version;
-            ExtensionType = extensionType;
-            Publisher = publisher;
+            TenantId = tenantId;
+            GatewayResourceId = gatewayResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The version of the Extension being received. </summary>
-        public string Version { get; }
-        /// <summary> The type of the Extension being received. </summary>
-        public string ExtensionType { get; }
-        /// <summary> The publisher of the Extension being received. </summary>
-        public string Publisher { get; }
+        /// <summary> Azure resource tenant Id. </summary>
+        public Guid? TenantId { get; }
+        /// <summary> Associated Gateway Resource Id. </summary>
+        public ResourceIdentifier GatewayResourceId { get; set; }
     }
 }

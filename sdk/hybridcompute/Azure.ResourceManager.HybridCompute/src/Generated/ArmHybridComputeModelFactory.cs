@@ -692,6 +692,59 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.GatewayData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="gatewayId"> A unique, immutable, identifier for the Gateway. </param>
+        /// <param name="gatewayType"> The type of the Gateway resource. </param>
+        /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
+        /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <returns> A new <see cref="HybridCompute.GatewayData"/> instance for mocking. </returns>
+        public static GatewayData GatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, GatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            allowedFeatures ??= new List<string>();
+
+            return new GatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                gatewayId,
+                gatewayType,
+                gatewayEndpoint,
+                allowedFeatures?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Settings"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> Azure resource tenant Id. </param>
+        /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
+        /// <returns> A new <see cref="Models.Settings"/> instance for mocking. </returns>
+        public static Settings Settings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, ResourceIdentifier gatewayResourceId = null)
+        {
+            return new Settings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                gatewayResourceId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
