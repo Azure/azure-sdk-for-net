@@ -112,7 +112,11 @@ $azsdkPipelineSubnets = @(
     ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-general"),
     ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2204-general"),
     ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-general")
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-general"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-1804-storage"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-storage"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-storage"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-storage")
 )
 
 if (!$ServicePrincipalAuth) {
