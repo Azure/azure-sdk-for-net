@@ -46,13 +46,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
         /// <param name="name"> The name associated with the geographical area. </param>
         /// <param name="copyright"> The copyright string. </param>
-        /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
+        /// <param name="copyrightUrl"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
-        internal Boundary(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, GeoJsonGeometry geometry, object properties, string id, string featureType, string name, string copyright, string copyrightURL, IReadOnlyList<GeometryCopyright> geometriesCopyright) : base(type, boundingBox, geometry, properties, id, featureType)
+        internal Boundary(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, GeoJsonGeometry geometry, object properties, string id, string featureType, string name, string copyright, string copyrightUrl, IReadOnlyList<GeometryCopyright> geometriesCopyright) : base(type, boundingBox, geometry, properties, id, featureType)
         {
             Name = name;
             Copyright = copyright;
-            CopyrightURL = copyrightURL;
+            CopyrightUrl = copyrightUrl;
             GeometriesCopyright = geometriesCopyright;
             Type = type;
         }
@@ -61,8 +61,6 @@ namespace Azure.Maps.Search.Models
         public string Name { get; }
         /// <summary> The copyright string. </summary>
         public string Copyright { get; }
-        /// <summary> A URL that lists many of the data providers for Azure Maps and their related copyright information. </summary>
-        public string CopyrightURL { get; }
         /// <summary> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </summary>
         public IReadOnlyList<GeometryCopyright> GeometriesCopyright { get; }
     }

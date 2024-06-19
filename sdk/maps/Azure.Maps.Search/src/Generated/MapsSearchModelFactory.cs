@@ -286,10 +286,10 @@ namespace Azure.Maps.Search.Models
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
         /// <param name="name"> The name associated with the geographical area. </param>
         /// <param name="copyright"> The copyright string. </param>
-        /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
+        /// <param name="copyrightUrl"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
         /// <returns> A new <see cref="Models.Boundary"/> instance for mocking. </returns>
-        public static Boundary Boundary(IEnumerable<double> boundingBox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightURL = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
+        public static Boundary Boundary(IEnumerable<double> boundingBox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightUrl = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
         {
             boundingBox ??= new List<double>();
             geometriesCopyright ??= new List<GeometryCopyright>();
@@ -303,7 +303,7 @@ namespace Azure.Maps.Search.Models
                 featureType,
                 name,
                 copyright,
-                copyrightURL,
+                copyrightUrl,
                 geometriesCopyright?.ToList());
         }
 
@@ -349,14 +349,14 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="Models.BoundaryProperties"/>. </summary>
         /// <param name="name"> The name associated with the geographical area. </param>
         /// <param name="copyright"> The copyright string. </param>
-        /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
+        /// <param name="copyrightUrl"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
         /// <returns> A new <see cref="Models.BoundaryProperties"/> instance for mocking. </returns>
-        public static BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightURL = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
+        public static BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
         {
             geometriesCopyright ??= new List<GeometryCopyright>();
 
-            return new BoundaryProperties(name, copyright, copyrightURL, geometriesCopyright?.ToList());
+            return new BoundaryProperties(name, copyright, copyrightUrl, geometriesCopyright?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeometryCopyright"/>. </summary>

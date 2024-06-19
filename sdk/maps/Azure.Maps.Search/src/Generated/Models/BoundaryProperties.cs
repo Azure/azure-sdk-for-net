@@ -22,13 +22,13 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="BoundaryProperties"/>. </summary>
         /// <param name="name"> The name associated with the geographical area. </param>
         /// <param name="copyright"> The copyright string. </param>
-        /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
+        /// <param name="copyrightUrl"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
-        internal BoundaryProperties(string name, string copyright, string copyrightURL, IReadOnlyList<GeometryCopyright> geometriesCopyright)
+        internal BoundaryProperties(string name, string copyright, string copyrightUrl, IReadOnlyList<GeometryCopyright> geometriesCopyright)
         {
             Name = name;
             Copyright = copyright;
-            CopyrightURL = copyrightURL;
+            CopyrightUrl = copyrightUrl;
             GeometriesCopyright = geometriesCopyright;
         }
 
@@ -36,8 +36,6 @@ namespace Azure.Maps.Search.Models
         public string Name { get; }
         /// <summary> The copyright string. </summary>
         public string Copyright { get; }
-        /// <summary> A URL that lists many of the data providers for Azure Maps and their related copyright information. </summary>
-        public string CopyrightURL { get; }
         /// <summary> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </summary>
         public IReadOnlyList<GeometryCopyright> GeometriesCopyright { get; }
     }

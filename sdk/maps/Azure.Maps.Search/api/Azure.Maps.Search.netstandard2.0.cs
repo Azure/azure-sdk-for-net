@@ -54,14 +54,14 @@ namespace Azure.Maps.Search.Models
     public partial class AddressCountryRegion
     {
         internal AddressCountryRegion() { }
-        public string ISO { get { throw null; } }
+        public string Iso { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class Boundary : Azure.Maps.Search.Models.GeoJsonFeature
     {
         internal Boundary() { }
         public string Copyright { get { throw null; } }
-        public string CopyrightURL { get { throw null; } }
+        public string CopyrightUrl { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeometryCopyright> GeometriesCopyright { get { throw null; } }
         public string Name { get { throw null; } }
     }
@@ -69,7 +69,7 @@ namespace Azure.Maps.Search.Models
     {
         internal BoundaryProperties() { }
         public string Copyright { get { throw null; } }
-        public string CopyrightURL { get { throw null; } }
+        public string CopyrightUrl { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeometryCopyright> GeometriesCopyright { get { throw null; } }
         public string Name { get { throw null; } }
     }
@@ -218,7 +218,7 @@ namespace Azure.Maps.Search.Models
         public string AdminDistrict { get { throw null; } set { } }
         public string AdminDistrict2 { get { throw null; } set { } }
         public string AdminDistrict3 { get { throw null; } set { } }
-        public System.Collections.Generic.IList<double> BoundingBox { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
         public string CountryRegion { get { throw null; } set { } }
         public string Locality { get { throw null; } set { } }
@@ -407,8 +407,8 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.Address Address(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, Azure.Maps.Search.Models.Intersection intersection = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressAdminDistrictsItem AddressAdminDistrictsItem(string name = null, string shortName = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressCountryRegion AddressCountryRegion(string iso = null, string name = null) { throw null; }
-        public static Azure.Maps.Search.Models.Boundary Boundary(System.Collections.Generic.IEnumerable<double> boundingBox = null, Azure.Maps.Search.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightURL = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
-        public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightURL = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
+        public static Azure.Maps.Search.Models.Boundary Boundary(System.Collections.Generic.IEnumerable<double> boundingBox = null, Azure.Maps.Search.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
+        public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
         public static Azure.Maps.Search.Models.FeaturesItem FeaturesItem(Azure.Maps.Search.Models.FeatureTypeEnum? type = default(Azure.Maps.Search.Models.FeatureTypeEnum?), string id = null, Azure.Maps.Search.Models.FeaturesItemProperties properties = null, Azure.Maps.Search.Models.GeoJsonPoint geometry = null, System.Collections.Generic.IEnumerable<double> boundingBox = null) { throw null; }

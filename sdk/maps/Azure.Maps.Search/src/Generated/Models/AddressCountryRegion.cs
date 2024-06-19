@@ -20,12 +20,9 @@ namespace Azure.Maps.Search.Models
         /// <param name="name"> name of country/region. </param>
         internal AddressCountryRegion(string iso, string name)
         {
-            ISO = iso;
+            Iso = iso;
             Name = name;
         }
-
-        /// <summary> ISO of country/region. </summary>
-        public string ISO { get; }
         /// <summary> name of country/region. </summary>
         public string Name { get; }
     }

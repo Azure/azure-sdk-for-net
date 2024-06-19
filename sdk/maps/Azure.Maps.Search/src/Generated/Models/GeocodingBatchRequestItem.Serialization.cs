@@ -41,11 +41,11 @@ namespace Azure.Maps.Search.Models
                 writer.WritePropertyName("countryRegion"u8);
                 writer.WriteStringValue(CountryRegion);
             }
-            if (Common.Optional.IsCollectionDefined(BoundingBox))
+            if (Common.Optional.IsCollectionDefined(_BoundingBox))
             {
                 writer.WritePropertyName("boundingBox"u8);
                 writer.WriteStartArray();
-                foreach (var item in BoundingBox)
+                foreach (var item in _BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -90,6 +90,11 @@ namespace Azure.Maps.Search.Models
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
+            }
+            if (Common.Optional.IsDefined(BoundingBox))
+            {
+                writer.WritePropertyName("boundingBox"u8);
+                SerializeBoundingBoxValue(writer);
             }
             writer.WriteEndObject();
         }
