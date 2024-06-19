@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
 using OpenAI;
 using OpenAI.Assistants;
@@ -28,8 +29,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicAssistantOperationsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
         Assert.That(assistant.Name, Is.Null.Or.Empty);
@@ -106,8 +107,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task SettingResponseFormatWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
 
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
@@ -135,8 +136,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task StreamingToolCall()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         FunctionToolDefinition getWeatherTool = new("get_current_weather", "Gets the user's current weather");
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
@@ -297,8 +298,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicRunOperationsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
         AssistantThread thread = await client.CreateThreadAsync();
@@ -354,8 +355,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicRunStepFunctionalityWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
         {
             Tools = { new CodeInterpreterToolDefinition() },
@@ -410,8 +411,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task FunctionToolsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
         {
             Tools =
@@ -491,9 +492,9 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     public async Task BasicFileSearchWorks()
     {
         // First, we need to upload a simple test file.
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
-        FileClient fileClient = GetChildTestClient<FileClient>(client);
+        string modelName = client.DeploymentOrThrow();
+        FileClient fileClient = GetTestClientFrom<FileClient>(client);
 
         OpenAIFileInfo testFile = await fileClient.UploadFileAsync(
             BinaryData.FromString("""
@@ -609,8 +610,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task StreamingRunWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
 

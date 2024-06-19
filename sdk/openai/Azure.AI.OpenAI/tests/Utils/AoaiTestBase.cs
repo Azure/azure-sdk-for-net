@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+#nullable enable
 
 using System;
 using System.ClientModel;
@@ -12,10 +12,9 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Castle.DynamicProxy;
 using OpenAI.Assistants;
 using OpenAI.Audio;
 using OpenAI.Batch;
@@ -32,9 +31,9 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
-    protected static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
+    public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
 
-    protected static readonly DateTimeOffset UNIX_EPOCH =
+    public static readonly DateTimeOffset UNIX_EPOCH =
 #if NETFRAMEWORK
         DateTimeOffset.Parse("1970-01-01T00:00:00.0000000+00:00");
 #else
@@ -44,13 +43,11 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     internal TestConfig TestConfig { get; }
     internal Assets Assets { get; }
 
-    // TODO FIXME: Until we figure out recording, force into live mode. This works around the really low (but badly implemented) timeouts
-    //             that are enforced by the test framework
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Live)
         : base(isAsync, mode)
     {
-        TestConfig = new TestConfig();
-        if (TestConfig.GetConfig("chat").Endpoint is null)
+        TestConfig = new TestConfig(Mode);
+        if (TestConfig.GetConfig<ChatClient>()?.Endpoint is null)
         {
             // TODO: as a temporary CI exclusion, make forced live tests inconclusive. Remove this for development and as soon as recording support is available.
             Assert.Inconclusive($"Tests are currently disabled via inconclusivity if both default and chat configuration settings are not available.");
@@ -58,84 +55,170 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         Assets = new Assets(TestEnvironment);
     }
 
-    internal AzureOpenAIClient GetTestTopLevelClient(string @override, TestClientOptions options = null)
-        => GetExplicitTestTopLevelClient<TClient, ApiKeyCredential>(@override, options);
-    internal AzureOpenAIClient GetTestTopLevelClient<TCredential>(string @override, TestClientOptions options = null)
-        => GetExplicitTestTopLevelClient<TClient, TCredential>(@override, options);
-    private AzureOpenAIClient GetExplicitTestTopLevelClient<TForExplicitClient,TCredential>(string @override, TestClientOptions options = null, bool honorParentClient = true)
+    /// <summary>
+    /// Gets the top level test client to use for testing.
+    /// </summary>
+    /// <param name="config">The test configuration to use</param>
+    /// <param name="options">(Optional) The client options to use.</param>
+    /// <param name="tokenCredential">(Optional) The token credential to use. If this is null, an API key will be read from the
+    /// test configuration.</param>
+    /// <param name="keyCredential">(Optional) The key credential to use instead of the one from the configuration.</param>
+    public virtual AzureOpenAIClient GetTestTopLevelClient(
+        IConfiguration? config,
+        TestClientOptions? options = null,
+        TokenCredential? tokenCredential = null,
+        ApiKeyCredential? keyCredential = null)
     {
-        // If the top-level client is being requested on behalf of another client (e.g. a file client for resources to
-        // use with an assistant client), then we'll ensure we match the configuration of the dependent client to its
-        // progenitor.
-        if (honorParentClient && options?.ParentClientObject is not null)
+        // First validate that the config has the parameters we need
+        if (config == null)
         {
-            return options.ParentClientObject switch
-            {
-                AssistantClient => GetExplicitTestTopLevelClient<AssistantClient, TCredential>(@override, options, false),
-                BatchClient => GetExplicitTestTopLevelClient<BatchClient, TCredential>(@override, options, false),
-                ChatClient => GetExplicitTestTopLevelClient<ChatClient, TCredential>(@override, options, false),
-                EmbeddingClient => GetExplicitTestTopLevelClient<EmbeddingClient, TCredential>(@override, options, false),
-                FileClient => GetExplicitTestTopLevelClient<FileClient, TCredential>(@override, options, false),
-                FineTuningClient => GetExplicitTestTopLevelClient<FineTuningClient, TCredential>(@override, options, false),
-                ImageClient => GetExplicitTestTopLevelClient<ImageClient, TCredential>(@override, options, false),
-                VectorStoreClient => GetExplicitTestTopLevelClient<VectorStoreClient, TCredential>(@override, options, false),
-                _ => throw new NotImplementedException()
-            };
+            throw CreateKeyNotFoundEx("any configuration");
+        }
+        else if (config.Endpoint is null)
+        {
+            throw CreateKeyNotFoundEx("endpoint");
+        }
+        else if (tokenCredential == null && keyCredential == null && string.IsNullOrEmpty(config.Key))
+        {
+            throw CreateKeyNotFoundEx("API key");
         }
 
-        Uri endpoint = TestConfig.GetEndpointFor<TForExplicitClient>(@override);
-
-        ApiKeyCredential apiKeyCredential = typeof(TCredential) == typeof(ApiKeyCredential)
-            ? TestConfig.GetApiKeyFor<TForExplicitClient>(@override)
-            : null;
-        TokenCredential tokenCredential = typeof(TCredential) == typeof(TokenCredential)
-            ? new DefaultAzureCredential()
-            : null;
-
+        // Configure the test options as needed
         options ??= new();
-        Action<PipelineRequest> requestAction = options.ShouldOutputRequests ? DumpRequest : null;
-        Action<PipelineResponse> responseAction = options.ShouldOutputResponses ? DumpResponse : null;
+        Action<PipelineRequest>? requestAction = options.ShouldOutputRequests ? DumpRequest : null;
+        Action<PipelineResponse>? responseAction = options.ShouldOutputResponses ? DumpResponse : null;
         options.AddPolicy(new TestPipelinePolicy(requestAction, responseAction), PipelinePosition.PerCall);
 
-        AzureOpenAIClient client =
-            typeof(TCredential) == typeof(ApiKeyCredential)
-                ? new(endpoint, apiKeyCredential, options)
-            : (typeof(TCredential) == typeof(TokenCredential))
-                ? new(endpoint, tokenCredential, options)
-            : throw new NotImplementedException();
+        // If we are in playback, or record mode we should set the transport to the test proxy transport, except
+        // in the case where we've explicitly specified the transport ourselves. There are cases where we use a
+        // mock pipeline and we don't want those to go to the test proxy.
+        if (options.Transport == null)
+        {
+            // TODO FIXME Normally we would call the base class RecordedTestBase.InstrumentClientOptions. Unfortunately
+            //            this doesn't currently work since the test framework still relies on a version of Azure.Core
+            //            that has not been updated to use the new System.ClientModel types. Thus InstrumentClientOptions
+            //            expects a type that inherits from Azure.Core.ClientOptions, whereas we inherit from
+            //            System.ClientModel.Primitives.ClientPipelineOptions. For now we duplicate the code from
+            //            InstrumentClientOptions here, but this should be updated once Azure.Core has been updated
+            //if (Mode == RecordedTestMode.Playback)
+            //{
+            //    // Not making the timeout zero so retry code still goes async
+            //    options.Retry.Delay = TimeSpan.FromMilliseconds(10);
+            //    options.Retry.Mode = RetryMode.Fixed;
+            //}
+            //// No need to set the transport if we are in Live mode
+            //if (Mode != RecordedTestMode.Live)
+            //{
+            //    options.Transport = Recording.CreateTransport(options.Transport);
+            //}
+        }
 
-        return client;
+
+        AzureOpenAIClient topLevelClient;
+        if (tokenCredential != null)
+        {
+            topLevelClient = new AzureOpenAIClient(config.Endpoint, tokenCredential, options);
+        }
+        else
+        {
+            topLevelClient = new AzureOpenAIClient(config.Endpoint, keyCredential ?? new ApiKeyCredential(config.Key!), options);
+        }
+
+        return topLevelClient;
     }
 
-    internal TClient GetTestClient(string overrideName, TestClientOptions options = null)
-        => GetExplicitTestClient<TClient, ApiKeyCredential>(overrideName, options);
-    internal TClient GetTestClient(TestClientOptions options = null)
-        => GetExplicitTestClient<TClient, ApiKeyCredential>(null, options);
-    internal TClient GetTestClient<TCredential>(TestClientOptions options = null)
-        => GetExplicitTestClient<TClient, TCredential>(null, options);
-    internal TChildClient GetChildTestClient<TChildClient>(TClient parentClient)
-        => GetExplicitTestClient<TChildClient, ApiKeyCredential>(null, new() { ParentClientObject = parentClient });
-    private TExplicitClient GetExplicitTestClient<TExplicitClient,TCredential>(string overrideName = null, TestClientOptions options = null)
+    /// <summary>
+    /// Gets the properly instrumented client to use for testing. This have proper support for automatic sync/async method testing,
+    /// as well as recording, and playback support.
+    /// </summary>
+    /// <param name="options">(Optional) The client options to use.</param>
+    /// <param name="tokenCredential">(Optional) The token credential to use. If this is null, an API key will be read from the
+    /// test configuration.</param>
+    /// <param name="keyCredential">(Optional) The key credential to use instead of the one from the configuration.</param>
+    /// <returns>The test client instance.</returns>
+    public virtual TClient GetTestClient(TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
+        => GetTestClient(TestConfig.GetConfig<TClient>(), options, tokenCredential, keyCredential);
+
+    /// <summary>
+    /// Gets the properly instrumented client to use for testing. This have proper support for automatic sync/async method testing,
+    /// as well as recording, and playback support.
+    /// </summary>
+    /// <param name="configName"></param>
+    /// <param name="options">(Optional) The client options to use.</param>
+    /// <param name="tokenCredential">(Optional) The token credential to use. If this is null, an API key will be read from the
+    /// test configuration.</param>
+    /// <param name="keyCredential">(Optional) The key credential to use instead of the one from the configuration.</param>
+    /// <returns>The test client instance.</returns>
+    public virtual TClient GetTestClient(string configName, TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
+        => GetTestClient(TestConfig.GetConfig(configName), options, tokenCredential, keyCredential);
+
+    /// <summary>
+    /// Gets a different type of client using the same configuration as the specified client.
+    /// </summary>
+    /// <typeparam name="TExplicitClient">The type of other client to create.</typeparam>
+    /// <param name="client">The client instance whose configuration we want to use.</param>
+    /// <param name="deploymentName">(Optional) The specific deployment to use instead of the one from the config.</param>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException">The client instance passed was not instrumented</exception>
+    public virtual TExplicitClient GetTestClientFrom<TExplicitClient>(TClient client, string? deploymentName = null)
     {
-        AzureOpenAIClient topLevelClient = GetExplicitTestTopLevelClient<TExplicitClient,TCredential>(overrideName, options);
-        string deploymentName = TestConfig.GetDeploymentNameFor<TExplicitClient>(overrideName);
-        object clientObject = null;
+        AzureOpenAiInstrumented? instrumented = _clientToTopLevel.FirstOrDefault(e => ReferenceEquals(client, e.Client));
+        if (instrumented?.TopLevelClient != null
+            && instrumented?.Config != null)
+        {
+            return GetTestClient<TExplicitClient>(instrumented.TopLevelClient, instrumented.Config, deploymentName);
+        }
+
+        throw new NotSupportedException("The client provided was not properly instrumented. Please make sure to get your test client " +
+            "instances using the GetTestClient() methods");
+    }
+
+    /// <summary>
+    /// Gets the properly instrumented client to use for testing. This have proper support for automatic sync/async method testing,
+    /// as well as recording, and playback support.
+    /// </summary>
+    /// <param name="config">The test configuration to use</param>
+    /// <param name="options">(Optional) The client options to use.</param>
+    /// <param name="tokenCredential">(Optional) The token credential to use. If this is null, an API key will be read from the
+    /// test configuration.</param>
+    /// <param name="keyCredential">(Optional) The key credential to use instead of the one from the configuration.</param>
+    /// <returns>The test client instance.</returns>
+    protected virtual TClient GetTestClient(IConfiguration? config, TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
+    {
+        AzureOpenAIClient topLevelClient = GetTestTopLevelClient(config, options, tokenCredential, keyCredential);
+        return GetTestClient<TClient>(topLevelClient, config!);
+    }
+
+    /// <summary>
+    /// Gets the properly instrumented client to use for testing. This have proper support for automatic sync/async method testing,
+    /// as well as recording, and playback support.
+    /// </summary>
+    /// <typeparam name="TExplicitClient">The type of test client to get.</typeparam>
+    /// <param name="topLevelClient">The top level client to use.</param>
+    /// <param name="config">The configuration to use to get the deployment information (if needed).</param>
+    /// <returns>The instrumented client instance to use.</returns>
+    /// <exception cref="NotImplementedException">Support for the type of client being requested has not been implemented yet.</exception>
+    protected virtual TExplicitClient GetTestClient<TExplicitClient>(AzureOpenAIClient topLevelClient, IConfiguration config, string? deploymentName = null)
+    {
+        Func<string> getDeployment = () => deploymentName ?? config?.Deployment ?? throw CreateKeyNotFoundEx("deployment");
+        object clientObject;
+
         switch (typeof(TExplicitClient).Name)
         {
             case nameof(AssistantClient):
                 clientObject = topLevelClient.GetAssistantClient();
                 break;
             case nameof(AudioClient):
-                clientObject = topLevelClient.GetAudioClient(deploymentName);
+                clientObject = topLevelClient.GetAudioClient(getDeployment());
                 break;
             case nameof(BatchClient):
-                clientObject = topLevelClient.GetBatchClient(deploymentName);
+                clientObject = topLevelClient.GetBatchClient(getDeployment());
                 break;
             case nameof(ChatClient):
-                clientObject = topLevelClient.GetChatClient(deploymentName);
+                clientObject = topLevelClient.GetChatClient(getDeployment());
                 break;
             case nameof(EmbeddingClient):
-                clientObject = topLevelClient.GetEmbeddingClient(deploymentName);
+                clientObject = topLevelClient.GetEmbeddingClient(getDeployment());
                 break;
             case nameof(FileClient):
                 clientObject = topLevelClient.GetFileClient();
@@ -144,7 +227,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
                 clientObject = topLevelClient.GetFineTuningClient();
                 break;
             case nameof(ImageClient):
-                clientObject = topLevelClient.GetImageClient(deploymentName);
+                clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
@@ -152,22 +235,38 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             case nameof(ModelClient):
                 clientObject = topLevelClient.GetModelClient();
                 break;
-            default: throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
+            default:
+                throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };
 
-        var instrumented = InstrumentClient(typeof(TExplicitClient), clientObject, null);
+        object instrumented = InstrumentClient(typeof(TExplicitClient), clientObject, null!);
+
+        // Keep track of the corresponding top level client and config
+        _clientToTopLevel.Add(new AzureOpenAiInstrumented
+        {
+            Client = instrumented,
+            TopLevelClient = topLevelClient,
+            Config = config,
+        });
+
         return (TExplicitClient)instrumented;
+    }
+
+    private Exception CreateKeyNotFoundEx(string whatIsMissing)
+    {
+        return new KeyNotFoundException($"Could not find any {whatIsMissing} to use. Please make sure you have the necessary" +
+                $" {TestConfig.AssetsJson} config file, or have the needed environment variables set");
     }
 
     private static void DumpRequest(PipelineRequest request)
     {
         Console.WriteLine($"--- New request ---");
-        string headers = request.Headers?
+        string headers = request.Headers
             .Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}")
             .Aggregate(string.Empty, (current, next) => string.Format("{0},{1}", current, next));
         Console.WriteLine($"Headers: {headers}");
         Console.WriteLine($"{request.Method} URI: {request?.Uri}");
-        if (request.Content is not null)
+        if (request!.Content is not null)
         {
             using MemoryStream stream = new();
             request.Content.WriteTo(stream, default);
@@ -247,7 +346,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     [TearDown]
     protected void Cleanup()
     {
-        AzureOpenAIClient topLevelCleanupClient = GetTestTopLevelClient(null, new()
+        AzureOpenAIClient topLevelCleanupClient = GetTestTopLevelClient(TestConfig.GetConfig<TClient>(), new()
         {
             ShouldOutputRequests = false,
             ShouldOutputResponses = false,
@@ -311,64 +410,28 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     {
         var response = ValidateClientResultResponse(result);
 
-        TModel model = ModelReaderWriter.Read<TModel>(response.Content, ModelReaderWriterOptions.Json);
+        TModel? model = ModelReaderWriter.Read<TModel>(response.Content, ModelReaderWriterOptions.Json);
         Assert.That(model, Is.Not.Null);
-        return model;
+        return model!;
     }
 
-    protected virtual TModel ValidateAndParse<TModel>(ClientResult result, JsonSerializerOptions options = null)
+    protected virtual TModel ValidateAndParse<TModel>(ClientResult result, JsonSerializerOptions? options = null)
     {
         var response = ValidateClientResultResponse(result);
 
         using Stream stream = response.Content.ToStream();
         Assert.That(stream, Is.Not.Null);
 
-        TModel model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonHelpers.OpenAIJsonOptions);
+        TModel? model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonHelpers.OpenAIJsonOptions);
         Assert.That(model, Is.Not.Null);
-        return model;
-    }
-
-    protected override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
-    {
-        // TODO FIXME For now this is a super simplified version of the base ClientTestBase.InstrumentClient method
-        // with just the bare minimum need to be able to test async and sync versions of methods
-        if (client is IProxyTargetAccessor)
-        {
-            // Already instrumented
-            return client;
-        }
-
-        List<IInterceptor> interceptors = new List<IInterceptor>();
-        if (preInterceptors != null)
-        {
-            interceptors.AddRange(preInterceptors);
-        }
-
-        interceptors.Add(new OriginalInterceptor(client));
-        interceptors.Add(new UseSyncMethodsInterceptor(!IsAsync));
-
-        return ProxyGenerator.CreateClassProxyWithTarget(
-            clientType,
-            [ typeof(IInstrumented) ],
-            client,
-            interceptors.ToArray());
-    }
-
-    protected virtual T Uninstrument<T>(T instrumented)
-    {
-        if (instrumented is IInstrumented wrapped)
-        {
-            return (T)wrapped.Original;
-        }
-
-        return instrumented;
+        return model!;
     }
 
     protected AsyncResultCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, ResultCollection<T>> sync, Func<TClient, AsyncResultCollection<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = Uninstrument(client);
+        TClient rawClient = GetOriginal(client);
 
         if (IsAsync)
         {
@@ -385,7 +448,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = Uninstrument(client);
+        TClient rawClient = GetOriginal(client);
 
         if (IsAsync)
         {
@@ -402,7 +465,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = Uninstrument(client);
+        TClient rawClient = GetOriginal(client);
 
         if (IsAsync)
         {
@@ -414,35 +477,11 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
     }
 
-    // TODO FIXME: For some bizarre reason, InternalVisibleTo on the Azure core test framework library
-    // decided it doesn't want to work for the original internal only IInstrumented. This is a duplicate
-    // of that interface that is public to avoid headaches
-    public interface IInstrumented
+    internal class AzureOpenAiInstrumented
     {
-        public object Original { get; }
-    }
-
-    // TODO FIXME: As per the previous interface, this is a public version to avoid headaches
-    public class OriginalInterceptor : IInterceptor
-    {
-        private readonly object _original;
-
-        public OriginalInterceptor(object original)
-        {
-            _original = original;
-        }
-
-        public void Intercept(IInvocation invocation)
-        {
-            if (invocation.Method.DeclaringType == typeof(IInstrumented))
-            {
-                invocation.ReturnValue = _original;
-            }
-            else
-            {
-                invocation.Proceed();
-            }
-        }
+        required public object Client { get; init; }
+        required public AzureOpenAIClient TopLevelClient { get; init; }
+        required public IConfiguration Config { get; init; }
     }
 
     private readonly List<string> _assistantIdsToDelete = [];
@@ -451,9 +490,10 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     private readonly List<string> _fileIdsToDelete = [];
     private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
+    internal readonly List<AzureOpenAiInstrumented> _clientToTopLevel = new();
 }
 
-internal class TestClientOptions : AzureOpenAIClientOptions
+public class TestClientOptions : AzureOpenAIClientOptions
 {
     public TestClientOptions() : base()
     { }
@@ -463,5 +503,4 @@ internal class TestClientOptions : AzureOpenAIClientOptions
 
     public bool ShouldOutputRequests { get; set; } = true;
     public bool ShouldOutputResponses { get; set; } = true;
-    public object ParentClientObject { get; set; }
 }

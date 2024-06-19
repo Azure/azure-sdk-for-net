@@ -1,0 +1,33 @@
+﻿{
+    "default": {
+        "endpoint": "https://not-a-real-resource.openai.azure.com/",
+        "key": "not-a-real-key",
+        "deployment": "gpt-4-turbo",
+        "subscription_id": "not-a-real-subs",
+        "resource_group": "not-a-real-rg"
+    },
+    "audio": {
+        "deployment": "whisper"
+    },
+    "embedding": {
+        "deployment": "text-embedding-ada-002"
+    },
+    "fine_tuning": {
+        "deployment": "gpt-35-turbo-0613",
+        "fine_tuned_model": "gpt-35-turbo-0613.ft-53f9c10199f84dfea3ec772341862ff5-azure-ai-openai-integration-test"
+    },
+    "image": {
+        "deployment": "dall-e-3"
+    },
+    "search": {
+        "endpoint": "https://not-a-real-resource.search.windows.net",
+        "key": "not-a-real-key",
+        "index": "notarealindex"
+    },
+    "tts": {
+        "deployment": "tts"
+    },
+    "vision": {
+        "deployment": "gpt-4-vision-preview"
+    }
+}
