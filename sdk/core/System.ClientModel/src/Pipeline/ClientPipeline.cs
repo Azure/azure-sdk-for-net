@@ -113,10 +113,7 @@ public sealed partial class ClientPipeline
         pipelineLength++; // for retry policy
         pipelineLength++; // for transport
 
-        if (options.LoggingOptions.IsLoggingEnabled)
-        {
-            pipelineLength++; // for logging policy
-        }
+        pipelineLength++; // for logging policy
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
 
@@ -149,12 +146,9 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        if (options.LoggingOptions.IsLoggingEnabled)
-        {
-            PipelinePolicy loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options.LoggingOptions);
-            policies[index++] = loggingPolicy;
-            ClientRetryPolicy? retryPolicy = options.RetryPolicy as ClientRetryPolicy;
-        }
+        PipelinePolicy loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options.LoggingOptions);
+        policies[index++] = loggingPolicy;
+        ClientRetryPolicy? retryPolicy = options.RetryPolicy as ClientRetryPolicy;
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

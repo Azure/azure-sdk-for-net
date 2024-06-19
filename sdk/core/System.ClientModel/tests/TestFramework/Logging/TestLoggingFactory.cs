@@ -10,9 +10,14 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests;
 
-public class TestLoggingProvider : ILoggerProvider
+public class TestLoggingFactory : ILoggerFactory
 {
     public LogLevel LogLevel { get; set; }
+
+    public void AddProvider(ILoggerProvider provider)
+    {
+        throw new NotImplementedException();
+    }
 
     public ILogger CreateLogger(string categoryName)
     {

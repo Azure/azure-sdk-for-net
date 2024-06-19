@@ -38,10 +38,10 @@ internal static partial class ClientModelLogMessages
 
     // same as above
     [LoggerMessage(RequestContentTextEvent, LogLevel.Information, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
-    public static partial void RequestContentText(ILogger logger, string requestID, string content);
+    public static partial void RequestContentText(ILogger logger, string requestId, string content);
 
     [LoggerMessage(ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
-    public static partial void Response(ILogger logger, string requestID, int status, string reasonPhrase, double seconds, string headers);
+    public static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, double seconds, string headers);
 
     // same
     [LoggerMessage(ResponseContentEvent, LogLevel.Information, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]

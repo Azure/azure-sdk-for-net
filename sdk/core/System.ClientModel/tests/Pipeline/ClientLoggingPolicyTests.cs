@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using ClientModel.Tests;
@@ -18,104 +22,199 @@ namespace System.ClientModel.Tests.Pipeline;
 public class ClientLoggingPolicyTests : SyncAsyncTestBase
 {
     private const int RequestEvent = 1;
+    private const int RequestContentEvent = 2;
+    private const int RequestContentTextEvent = 17;
     private const int ResponseEvent = 5;
+    private const int ResponseContentEvent = 6;
+    private const int ResponseContentBlockEvent = 11;
+    private const int ErrorResponseEvent = 8;
+    private const int ErrorResponseContentEvent = 9;
+    private const int ErrorResponseContentBlockEvent = 12;
+    private const int ResponseContentTextEvent = 13;
+    private const int ResponseContentTextBlockEvent = 15;
+    private const int ErrorResponseContentTextEvent = 14;
+    private const int ErrorResponseContentTextBlockEvent = 16;
+    private const int ExceptionResponseEvent = 18;
 
     private ILoggerFactory _loggerFactory;
 
-    protected ILoggerFactory CreateLoggerFactory()
-    {
-        _loggerFactory ??= new LoggerFactory();
-        _loggerFactory.CreateLogger("Test");
-        return _loggerFactory;
-    }
-
     public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
+        _loggerFactory = new TestLoggingFactory();
     }
 
     [Test]
-    public async Task MultiplePipelinesCanLog()
+    public async Task SendingRequestLogs()
     {
-        using AzureCoreEventListener azureCoreListener = new AzureCoreEventListener();
-        string clientIdHeaderName = "Client-ID";
+        using TestEventListenerVerbose listener = new();
 
-        // Pipeline 1
-        MockPipelineResponse response1 = new(200, mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { clientIdHeaderName, "client1" } }));
-        response1.SetContent("Response from pipeline 1");
-        ClientPipelineOptions options1 = new()
+        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
+        var response = new MockPipelineResponse(200, mockHeaders: headers);
+        response.SetContent("World.");
+
+        ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response1),
-            LoggingPolicy = new AzureCoreLoggingPolicy(new LoggingOptions() { LoggedClientAssemblyName = "SampleSDK1", RequestIdHeaderName = clientIdHeaderName })
+            Transport = new MockPipelineTransport("Transport", i => response),
+            LoggingOptions = new LoggingOptions()
+            {
+                LoggerFactory = _loggerFactory
+            }
         };
-        ClientPipeline pipeline1 = ClientPipeline.Create(options1);
 
-        // Pipeline 2
-        MockPipelineResponse response2 = new(200, mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { clientIdHeaderName, "client2" } }));
-        response2.SetContent("Response from pipeline 2");
-        ClientPipelineOptions options2 = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response2),
-            LoggingPolicy = new AzureCoreLoggingPolicy(new LoggingOptions() { LoggedClientAssemblyName = "SampleSDK2", RequestIdHeaderName = clientIdHeaderName })
-        };
-        ClientPipeline pipeline2 = ClientPipeline.Create(options2);
+        ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        // Send Messages
-        PipelineMessage message1 = pipeline1.CreateMessage();
-        message1.Request.Uri = new Uri("http://example.com");
-        message1.Request.Headers.Add(clientIdHeaderName, "client1");
-        message1.Request.Content = BinaryContent.Create(new BinaryData("Request to pipeline 1"));
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Headers.Add("Custom-Header", "Value");
+        message.Request.Headers.Add("Date", "3/28/2024");
+        message.Request.Content = BinaryContent.Create(new BinaryData("Hello"));
 
-        PipelineMessage message2 = pipeline2.CreateMessage();
-        message2.Request.Uri = new Uri("http://example.com");
-        message2.Request.Headers.Add(clientIdHeaderName, "client2");
-        message2.Request.Content = BinaryContent.Create(new BinaryData("Request to pipeline 2"));
-
-        List<Task> sendTasks = new()
-        {
-            pipeline1.SendSyncOrAsync(message1, IsAsync),
-            pipeline2.SendSyncOrAsync(message2, IsAsync)
-        };
-        await Task.WhenAll(sendTasks);
-        Assert.AreEqual(4, azureCoreListener.EventData.Count());
-
-        azureCoreListener.SingleEventById(RequestEvent, e => e.GetProperty<string>("requestId").Equals("client1"));
-        azureCoreListener.SingleEventById(RequestEvent, e => e.GetProperty<string>("requestId").Equals("client2"));
-        azureCoreListener.SingleEventById(ResponseEvent, e => e.GetProperty<string>("requestId").Equals("client1"));
-        azureCoreListener.SingleEventById(ResponseEvent, e => e.GetProperty<string>("requestId").Equals("client2"));
+        await pipeline.SendSyncOrAsync(message, IsAsync);
     }
 
     #region Helpers
 
-    // In order to test listeners with different event levels and event source names, each case has to has its own listener.
+    // In order to test listeners with different event levels, each case has to has its own listener.
     // This is because the constructor does not necessarily finish before the callbacks are called, meaning that any runtime
     // configurations to event listener classes aren't reliably applied.
     // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
 
-    private class ClientCustomEventListener : TestClientEventListener
+    private class TestEventListenerWarning : TestEventListener
     {
-        public ClientCustomEventListener() { }
-
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == "My.Client")
+            if (eventSource.Name == "ClientModel.Tests.TestLoggingEventSource")
+            {
+                EnableEvents(eventSource, EventLevel.Warning);
+            }
+        }
+    }
+
+    private class TestEventListenerVerbose : TestEventListener
+    {
+        protected override void OnEventSourceCreated(EventSource eventSource)
+        {
+            if (eventSource.Name == "ClientModel.Tests.TestLoggingEventSource")
             {
                 EnableEvents(eventSource, EventLevel.Verbose);
             }
         }
     }
 
-    private class AzureCoreEventListener : TestClientEventListener
+    private class TestEventListener : EventListener
     {
-        public AzureCoreEventListener() { }
+        private volatile bool _disposed;
+        private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new();
 
-        protected override void OnEventSourceCreated(EventSource eventSource)
+        protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            if (eventSource.Name == "Azure-Core")
+            // See: https://github.com/dotnet/corefx/issues/42600
+            if (eventData.EventId != -1 && !_disposed)
             {
-                EnableEvents(eventSource, EventLevel.Verbose);
+                FormatPayload(eventData);
+                _events.Enqueue(eventData);
             }
         }
-    }
 
+        public EventWrittenEventArgs SingleEventById(int id, Func<EventWrittenEventArgs, bool>? filter = default) => EventsById(id).Single(filter ?? (_ => true));
+
+        public IEnumerable<EventWrittenEventArgs> EventsById(int id) => _events.Where(e => e.EventId == id);
+
+        public override void Dispose()
+        {
+            _disposed = true;
+            base.Dispose();
+        }
+
+        private static string FormatPayload(EventWrittenEventArgs eventData)
+        {
+            if (eventData.Payload == null || eventData.Payload.Count == 0)
+            {
+                return string.Empty;
+            }
+            var payloadArray = eventData.Payload.ToArray();
+            var loggerArgs =  payloadArray[payloadArray.Length];
+
+            StringBuilder stringBuilder = new StringBuilder();
+            if (loggerArgs is IReadOnlyList<KeyValuePair<string, string?>> arguments)
+            {
+                payloadArray = payloadArray.Take(payloadArray.Length - 1).ToArray();
+                ProcessPayloadArray(payloadArray);
+
+                stringBuilder = new StringBuilder();
+                stringBuilder.Append(eventData.EventName);
+
+                if (!string.IsNullOrWhiteSpace(eventData.Message))
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
+                }
+
+                for (int i = 0; i < arguments.Count; i++)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(arguments[i].Key).Append(" = ").Append(arguments[i].Value);
+                }
+
+                return stringBuilder.ToString();
+            }
+
+            ProcessPayloadArray(payloadArray);
+
+            if (eventData.Message != null)
+            {
+                try
+                {
+                    return string.Format(CultureInfo.InvariantCulture, eventData.Message, payloadArray);
+                }
+                catch (FormatException)
+                {
+                }
+            }
+
+            stringBuilder.Append(eventData.EventName);
+
+            if (!string.IsNullOrWhiteSpace(eventData.Message))
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
+            }
+
+            if (eventData.PayloadNames != null)
+            {
+                for (int i = 0; i < eventData.PayloadNames.Count; i++)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                }
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        private static void ProcessPayloadArray(object?[] payloadArray)
+        {
+            for (int i = 0; i < payloadArray.Length; i++)
+            {
+                payloadArray[i] = FormatValue(payloadArray[i]);
+            }
+        }
+
+        private static object? FormatValue(object? o)
+        {
+            if (o is byte[] bytes)
+            {
+                var stringBuilder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    stringBuilder.AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", b);
+                }
+
+                return stringBuilder.ToString();
+            }
+            return o;
+        }
+    }
     #endregion
 }
