@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task JobOperations()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "JobOperations", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "JobOperations", IsPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableJobAsync(jobID);
                 Assert.IsFalse(response.IsError);
 
-                await waitForTasksToComplete(client, jobID, isPlayBack());
+                await waitForTasksToComplete(client, jobID, IsPlayBack());
 
                 // get JobPreparationAndReleaseTaskStatuses
                 int count = 0;
@@ -131,7 +131,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PatchJob()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PatchJob", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PatchJob", IsPlayBack());
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob2";
             string commandLine = "cmd /c echo Hello World";

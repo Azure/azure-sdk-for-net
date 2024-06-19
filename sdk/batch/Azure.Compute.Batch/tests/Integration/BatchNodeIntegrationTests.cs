@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task ListBatchNode()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ListBatchNode", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ListBatchNode", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task BatchNodeUser()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "BatchNodeUser", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "BatchNodeUser", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
             var userName = "User1";
             var userPassWord = "Password1";
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task RebootBatchNode()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "RebootBatchNode", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "RebootBatchNode", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task BatchNodeExtension()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "BatchNodeExtension", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "BatchNodeExtension", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -187,7 +187,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetRemoteLoginSettings()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetRemoteLoginSettings", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetRemoteLoginSettings", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
@@ -216,7 +216,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task Scheduling()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "Scheduling", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "Scheduling", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
 
             try

@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetTaskFile()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetTaskFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetTaskFile", IsPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             try
@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
-                await waitForTasksToComplete(client, jobId, isPlayBack());
+                await waitForTasksToComplete(client, jobId, IsPlayBack());
                 var completedTasks = client.GetTasksAsync(jobId, filter: "state eq 'completed'");
 
                 int index = 0;
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task DeleteTaskFile()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeleteTaskFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeleteTaskFile", IsPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             string taskId = "batchTask1";
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World"));
 
-                await waitForTasksToComplete(client, jobId, isPlayBack());
+                await waitForTasksToComplete(client, jobId, IsPlayBack());
 
                 BinaryData fileContents = await client.GetTaskFileAsync(jobId, taskId, outputFileName);
                 using (var reader = new StreamReader(fileContents.ToStream()))
@@ -137,7 +137,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetNodeFile()
         {
             var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetNodeFile", isPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "GetNodeFile", IsPlayBack());
             string poolId = iaasWindowsPoolFixture.PoolId;
             string jobId = "batchJob1";
             string file = "workitems\\batchJob1\\job-1\\task-0\\stdout.txt";
@@ -154,7 +154,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
-                await waitForTasksToComplete(client, jobId, isPlayBack());
+                await waitForTasksToComplete(client, jobId, IsPlayBack());
 
                 await foreach (BatchNode item in client.GetNodesAsync(poolId))
                 {
