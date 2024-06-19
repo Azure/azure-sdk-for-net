@@ -51,7 +51,7 @@ To create an Azure Function app, follow these steps:
 
 ---
 
-### Install NuGet packages and build the project
+### Install NuGet packages and build the project (Install the package)
 
 After creating the project, you'll need to install the required NuGet packages and build the project.
 
@@ -273,7 +273,7 @@ The function needs to be deployed to Azure using our IDE. Check that you're corr
 
 ---
 
-## Configure authentication for your Azure Function
+## Configure authentication for your Azure Function (Authenticate the client)
 
 There are three ways to set up authentication for your Azure Function: 
 
