@@ -10,7 +10,7 @@ Both the **Azure.Compute.Batch** and the ARM based **Azure.Management.Batch** sd
 
 In order to create Batch Pool from the Azure.Managment.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
-```C#
+```C# Snippet:Batch_Sample01_CreateBatchMgmtClient
 var credential = new DefaultAzureCredential();
 ArmClient _armClient = new ArmClient(credential);
 ```
@@ -19,8 +19,9 @@ ArmClient _armClient = new ArmClient(credential);
 ### Pool Creation
 
 Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
-```C#
-BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource("your-batch-account-resource-id").GetAsync();
+```C# Snippet:Batch_Sample01_GetBatchMgmtAccount
+var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
+BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource(batchAccountIdentifier).GetAsync();
 ```
 
 With the BatchAccountResource you can create a pool with the [batchAccount.GetBatchAccountPools().CreateOrUpdateAsync](https://learn.microsoft.com/dotnet/api/azure.resourcemanager.batch.batchaccountpoolcollection.createorupdateasync?view=azure-dotnet) command
@@ -56,11 +57,10 @@ BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().Creat
 ## Authenticating the Azure.Compute.Batch `BatchClient`
 Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` sdk.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
 
-```C#
+```C# Snippet:Batch_Sample01_CreateBatchClient
 var credential = new DefaultAzureCredential();
 BatchClient _batchClient = new BatchClient(
-    new Uri("https://examplebatchaccount.eastus.batch.azure.com"),
-    credential);
+new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 ```
 
 ### Job Creation

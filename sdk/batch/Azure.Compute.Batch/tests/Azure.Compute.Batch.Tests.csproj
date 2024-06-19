@@ -9,6 +9,7 @@
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.ResourceManager.Batch\src\Azure.ResourceManager.Batch.csproj" />
     <ProjectReference Include="..\src\Azure.Compute.Batch.csproj" />
   </ItemGroup>
   
@@ -17,6 +18,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 
   <ItemGroup>
