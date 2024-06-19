@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(maxpagesize:"1").ToEnumerableAsync();
+            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(maxpagesize:1).ToEnumerableAsync();
             Assert.IsTrue(assignments.Count >= 2);
         }
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var reports = await taskAssignment.GetStorageTaskAssignmentInstancesReportsAsync(maxpagesize: "3", filter: "startswith(name, report)").ToEnumerableAsync();
+            var reports = await taskAssignment.GetStorageTaskAssignmentInstancesReportsAsync(maxpagesize: 3, filter: "startswith(name, report)").ToEnumerableAsync();
             Assert.AreEqual(0, reports.Count);
         }
     }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize, string filter)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/reports", false);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             if (filter != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize, string filter)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/reports", false);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             if (filter != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskReportSummary>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageTaskReportSummary>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskReportSummary> List(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<StorageTaskReportSummary> List(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize, string filter)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Storage
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskReportSummary>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageTaskReportSummary>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskReportSummary> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<StorageTaskReportSummary> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

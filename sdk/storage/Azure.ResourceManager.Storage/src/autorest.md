@@ -347,4 +347,10 @@ directive:
   - from: swagger-document
     where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
+# maxpagesize should be int
+  - from: storageTaskAssignments.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
 ```

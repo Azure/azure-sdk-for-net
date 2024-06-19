@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageTaskAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageTaskAssignmentResource> GetAllAsync(string maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageTaskAssignmentResource> GetAllAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxpagesize);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxpagesize);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTaskAssignmentResource(Client, StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(e)), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageTaskAssignmentResource> GetAll(string maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageTaskAssignmentResource> GetAll(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxpagesize);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxpagesize);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTaskAssignmentResource(Client, StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(e)), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
