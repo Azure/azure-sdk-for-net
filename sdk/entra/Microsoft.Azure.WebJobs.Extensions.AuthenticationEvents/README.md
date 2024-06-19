@@ -19,7 +19,7 @@ You can follow this article to start creating your function: [Create a REST API 
     - Visual Studio with [Azure Development workload for Visual Studio](https://learn.microsoft.com/en-us/dotnet/azure/configure-visual-studio) configured.
     - Visual Studio Code, with the [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) extension enabled.
 
-## Create and build the Azure Function app
+### Create and build the Azure Function app
 
 In this step, you create an HTTP trigger function API using your IDE, install the required NuGet packages and copy in the sample code. You build the project and run the function to extract the local function URL.
 
@@ -27,7 +27,7 @@ In this step, you create an HTTP trigger function API using your IDE, install th
 
 To create an Azure Function app, follow these steps:
 
-### [Visual Studio](#tab/visual-studio)
+#### [Visual Studio](#tab/visual-studio)
 
 1. Open Visual Studio, and select **Create a new project**.
 2. Search for and select **Azure Functions**, then select **Next**.
@@ -37,7 +37,7 @@ To create an Azure Function app, follow these steps:
 6. Select *Http trigger* as the **Function** type, and that **Authorization level** is set to *Function*. Select **Create**.
 7. In the **Solution Explorer**, rename the *Function1.cs* file to *AuthEventsTrigger.cs*, and accept the rename change suggestion.
 
-### [Visual Studio Code](#tab/visual-studio-code)
+#### [Visual Studio Code](#tab/visual-studio-code)
 
 1. Open Visual Studio Code.
 2. Select the **New Folder** icon in the **Explorer** window, and create a new folder for your project, for example *AuthEventsTrigger*.
@@ -51,17 +51,17 @@ To create an Azure Function app, follow these steps:
 
 ---
 
-### Install NuGet packages and build the project (Install the package)
+### Install the package
 
 After creating the project, you'll need to install the required NuGet packages and build the project.
 
-### [Visual Studio](#tab/visual-studio)
+#### [Visual Studio](#tab/visual-studio)
 
 1. In the top menu of Visual Studio, select **Project**, then **Manage NuGet packages**.
 2. Select the **Browse** tab, then search for and select *Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents* in the right pane. Select **Install**.
 3. Apply and accept the changes in the popups that appear.
 
-### [Visual Studio Code](#tab/visual-studio-code)
+#### [Visual Studio Code](#tab/visual-studio-code)
 
 1. Open the **Terminal** in Visual Studio Code, and navigate to the project folder.
 2. Enter the following command into the console to install the *Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents* NuGet package.
@@ -130,20 +130,20 @@ namespace AuthEventsTrigger
 
 The project has been created, and the sample code has been added. Using your IDE, we need to build and run the project locally to extract the local function URL.
 
-### [Visual Studio](#tab/visual-studio)
+#### [Visual Studio](#tab/visual-studio)
 
 1. Navigate to **Build** in the top menu, and select **Build Solution**.
 2. Press **F5** or select *AuthEventsTrigger* from the top menu to run the function. 
 3. Copy the **Function url** from the terminal that popups up when running the function. This can be used when setting up a custom authentication extension.
 
-### [Visual Studio Code](#tab/visual-studio-code)
+#### [Visual Studio Code](#tab/visual-studio-code)
 
 1. In the top menu, select **Run** > **Start Debugging** or press **F5** to run the function.
 2. In the terminal, copy the **Function url** that appears. This can be used when setting up a custom authentication extension.
 
 ---
 
-## Run the function locally (recommended)
+### Run the function locally (recommended)
 
 It's a good idea to test the function locally before deploying it to Azure. We can use a dummy JSON body that imitates the request that Microsoft Entra ID sends to your REST API. Use your preferred API testing tool to call the function directly.
 
@@ -235,11 +235,11 @@ It's a good idea to test the function locally before deploying it to Azure. We c
 }
 ```
 
-## Deploy the function and publish to Azure 
+### Deploy the function and publish to Azure 
 
 The function needs to be deployed to Azure using our IDE. Check that you're correctly signed in to your Azure account so the function can be published.
 
-### [Visual Studio](#tab/visual-studio)
+#### [Visual Studio](#tab/visual-studio)
 
 1. In the Solution Explorer, right-click on the project and select **Publish**. 
 1. In **Target**, select **Azure**, then select **Next**.
@@ -262,7 +262,7 @@ The function needs to be deployed to Azure using our IDE. Check that you're corr
 2. Wait a few moments for your function app to be deployed. Once the window closes, select **Finish**.
 3. A new **Publish** pane opens. At the top, select **Publish**. Wait a few minutes for your function app to be deployed and show up in the Azure portal.
 
-### [Visual Studio Code](#tab/visual-studio-code)
+#### [Visual Studio Code](#tab/visual-studio-code)
 
 1. Select the **Azure** extension icon. In **Resources**, select the **+** icon to **Create a resource**.
 1. Select **Create Function App in Azure**. Use the following settings for setting up your function app.
@@ -273,7 +273,7 @@ The function needs to be deployed to Azure using our IDE. Check that you're corr
 
 ---
 
-## Configure authentication for your Azure Function (Authenticate the client)
+### Authenticate the client
 
 There are three ways to set up authentication for your Azure Function: 
 
@@ -289,18 +289,18 @@ By default, the code has been set up for authentication in the Azure portal usin
    | *AuthenticationEvents__AuthorityUrl* | &#8226; Workforce tenant `https://login.microsoftonline.com/<tenantID>` <br> &#8226; External tenant `https://<mydomain>.ciamlogin.com/<tenantID>` | 
    | *AuthenticationEvents__AuthorizedPartyAppId* | `99045fe1-7639-4a75-9d4a-577b6ca3810f` or another authorized party | 
 
-### [Set up authentication in Azure portal](#tab/azure-portal)
+#### [Set up authentication in Azure portal](#tab/azure-portal)
 
-### Set up authentication in the Azure portal using environment variables
+#### Set up authentication in the Azure portal using environment variables
 
 1. Sign in to the [Azure portal](https://portal.azure.com) as at least an [Application Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#application-developer) or [Authentication Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#authentication-administrator).
 2. Navigate to the function app you created, and under **Settings**, select **Configuration**.
 3. Under **Application settings**, select **New application setting** and add the environment variables from the table and their associated values.  
 4. Select **Save** to save the application settings.
 
-### [Set up authentication in your code](#tab/nuget-library)
+#### [Set up authentication in your code](#tab/nuget-library)
 
-### Set up authentication in your code using `WebJobsAuthenticationEventsTriggerAttribute`
+#### Set up authentication in your code using `WebJobsAuthenticationEventsTriggerAttribute`
 
 1. Open the *AuthEventsTrigger.cs* file in your IDE.
 1. Modify the `WebJobsAuthenticationEventsTriggerAttribute` include the `AuthorityUrl`, `AudienceAppId` and `AuthorizedPartyAppId` properties, as shown in the below snippet.
