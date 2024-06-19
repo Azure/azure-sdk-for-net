@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
 using Microsoft.AspNetCore.Builder;
@@ -24,9 +25,9 @@ using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryV
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
-    public class DistroWebAppLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
+    public class TwoResourcesLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        private const string TestServerPort = "9998";
+        private const string TestServerPort = "9997";
         private const string TestServerTarget = $"localhost:{TestServerPort}";
         private const string TestServerUrl = $"http://{TestServerTarget}/";
 
@@ -34,14 +35,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
         // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
+        public TwoResourcesLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        public async Task VerifyDistro()
+        public async Task VerifySendingToTwoResources_UsingExporter()
         {
             var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
-            Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
+            Console.WriteLine($"Integration test '{nameof(VerifySendingToTwoResources_UsingExporter)}' running in mode '{TestEnvironment.Mode}'");
             var logMessage = "Message via ILogger";
 
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
@@ -77,10 +78,57 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
             builder.Services.AddOpenTelemetry()
-                .UseAzureMonitor(options =>
+                //.UseAzureMonitor(options =>
+                //{
+                //    options.EnableLiveMetrics = false;
+                //    options.ConnectionString = TestEnvironment.ConnectionString;
+                //})
+                //CALLING THIS TWICE DOES NOT WORK.
+                //THE SECOND CONNECTION STRING OVERRIDES THE FIRST
+                //CAUSING 2x TELEMETRY IN THE SECOND RESOURCE
+                //.UseAzureMonitor(options =>
+                //{
+                //    options.EnableLiveMetrics = false;
+                //    options.ConnectionString = TestEnvironment.SecondaryConnectionString;
+                //})
+                .WithTracing(builder =>
                 {
-                    options.EnableLiveMetrics = false;
-                    options.ConnectionString = TestEnvironment.ConnectionString;
+                    builder.AddAspNetCoreInstrumentation();
+                    builder.AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
+                    {
+                        // Azure SDKs create their own client span before calling the service using HttpClient
+                        // In this case, we would see two spans corresponding to the same operation
+                        // 1) created by Azure SDK 2) created by HttpClient
+                        // To prevent this duplication we are filtering the span from HttpClient
+                        // as span from Azure SDK contains all relevant information needed.
+                        var parentActivity = Activity.Current?.Parent;
+                        if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
+                        {
+                            return false;
+                        }
+                        return true;
+                    });
+                    builder.AddAzureMonitorTraceExporter(name: "primary", configure: options => options.ConnectionString = TestEnvironment.ConnectionString);
+                    builder.AddAzureMonitorTraceExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
+                })
+                .WithMetrics(builder =>
+                {
+                    if (Environment.Version.Major >= 8)
+                    {
+                        builder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http");
+                    }
+                    else
+                    {
+                        builder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
+                    }
+
+                    builder.AddAzureMonitorMetricExporter(name: "primary", configure: options => options.ConnectionString = TestEnvironment.ConnectionString);
+                    builder.AddAzureMonitorMetricExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
+                })
+                .WithLogging(builder =>
+                {
+                    builder.AddAzureMonitorLogExporter(name: "primary", configure: options => options.ConnectionString = TestEnvironment.ConnectionString);
+                    builder.AddAzureMonitorLogExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
                 })
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(resourceAttributes));
@@ -122,10 +170,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // C#:      var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
             // QUERY:   | where TimeGenerated >= datetime({testStartTimeStamp})
 
+            #region Primary Resources
             await QueryAndVerifyDependency(
                 workspaceId: TestEnvironment.WorkspaceId,
-                description: "Dependency for invoking HttpClient, from testhost",
-                //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({ testStartTimeStamp}) | top 1 by TimeGenerated",
+                description: "PRIMARY Dependency for invoking HttpClient, from testhost",
+                //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppDependency: new ExpectedAppDependency
                 {
@@ -150,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyRequest(
                 workspaceId: TestEnvironment.WorkspaceId,
-                description: "RequestTelemetry, from WebApp",
+                description: "PRIMARY RequestTelemetry, from WebApp",
                 //query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppRequest: new ExpectedAppRequest
@@ -175,7 +224,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyMetric(
                 workspaceId: TestEnvironment.WorkspaceId,
-                description: "Metric for outgoing request, from testhost",
+                description: "PRIMARY Metric for outgoing request, from testhost",
                 //query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
                 expectedAppMetric: new ExpectedAppMetric
@@ -198,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyMetric(
                 workspaceId: TestEnvironment.WorkspaceId,
-                description: "Metric for incoming request, from WebApp",
+                description: "PRIMARY Metric for incoming request, from WebApp",
                 //query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppMetric: new ExpectedAppMetric
@@ -220,8 +269,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await QueryAndVerifyTrace(
                 workspaceId: TestEnvironment.WorkspaceId,
-                description: "ILogger LogInformation, from WebApp",
-                //query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                description: "PRIMARY ILogger LogInformation, from WebApp",
+                //query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppTrace: new ExpectedAppTrace
                 {
@@ -233,6 +282,121 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Type = "AppTraces",
                     AppRoleInstance = serviceInstance,
                 });
+            #endregion
+
+            #region Secondary Resources
+            await QueryAndVerifyDependency(
+                workspaceId: TestEnvironment.SecondaryWorkspaceId,
+                description: "SECONDARY Dependency for invoking HttpClient, from testhost",
+                //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppDependency: new ExpectedAppDependency
+                {
+                    Target = TestServerTarget,
+                    DependencyType = "HTTP",
+                    Name = "GET /",
+                    Data = TestServerUrl,
+                    Success = "True",
+                    ResultCode = "200",
+                    AppVersion = serviceVersion,
+                    AppRoleName = roleName,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppDependencies",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
+                });
+
+            await QueryAndVerifyRequest(
+                workspaceId: TestEnvironment.SecondaryWorkspaceId,
+                description: "SECONDARY RequestTelemetry, from WebApp",
+                //query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppRequest: new ExpectedAppRequest
+                {
+                    Url = TestServerUrl,
+                    AppRoleName = roleName,
+                    Name = "GET /",
+                    Success = "True",
+                    ResultCode = "200",
+                    OperationName = "GET /",
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppRequests",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
+                });
+
+            await QueryAndVerifyMetric(
+                workspaceId: TestEnvironment.SecondaryWorkspaceId,
+                description: "SECONDARY Metric for outgoing request, from testhost",
+                //query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.client.request.duration",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("network.protocol.version", "1.1"),
+                        new("server.address", "localhost"),
+                        new("server.port", TestServerPort),
+                        new("url.scheme", "http"),
+                    },
+                });
+
+            await QueryAndVerifyMetric(
+                workspaceId: TestEnvironment.SecondaryWorkspaceId,
+                description: "SECONDARY Metric for incoming request, from WebApp",
+                //query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.server.request.duration",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("http.route", "/"),
+                        new("network.protocol.version", "1.1"),
+                        new("url.scheme", "http")
+                    }
+                });
+
+            await QueryAndVerifyTrace(
+                workspaceId: TestEnvironment.SecondaryWorkspaceId,
+                description: "SECONDARY ILogger LogInformation, from WebApp",
+                //query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppTrace: new ExpectedAppTrace
+                {
+                    Message = logMessage,
+                    SeverityLevel = "1",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppTraces",
+                    AppRoleInstance = serviceInstance,
+                });
+            #endregion
         }
 
         private async Task QueryAndVerifyDependency(string workspaceId, string description, string query, ExpectedAppDependency expectedAppDependency)
