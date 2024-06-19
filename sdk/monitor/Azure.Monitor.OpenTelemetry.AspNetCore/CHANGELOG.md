@@ -22,8 +22,10 @@
 
 * Update OpenTelemetry dependencies.
   ([#44522](https://github.com/Azure/azure-sdk-for-net/pull/44522))
-  - OpenTelemetry 1.9.0-rc.1
-  - OpenTelemetry.Extensions.Hosting 1.9.0-rc.1
+  - OpenTelemetry 1.9.0
+  - OpenTelemetry.Extensions.Hosting 1.9.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.9.0
+  - OpenTelemetry.Instrumentation.Http 1.9.0
 
 ## 1.2.0 (2024-06-11)
 
