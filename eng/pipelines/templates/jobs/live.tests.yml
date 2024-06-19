@@ -134,12 +134,14 @@ jobs:
                   Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
                 ServiceDirectory: '${{ directory }}'
                 TestResourcesDirectory: '$(TestResourcesDirectory)'
-                EnvVars: ${{ parameters.EnvVars }}
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 ArmTemplateParameters: $(ArmTemplateParameters)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
                 SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+                EnvVars:
+                  Pool: $(Pool)
+                  ${{ insert }}: ${{ parameters.EnvVars }}
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
@@ -147,12 +149,14 @@ jobs:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
               ServiceDirectory: '${{ parameters.ServiceDirectory }}'
               TestResourcesDirectory: '$(TestResourcesDirectory)'
-              EnvVars: ${{ parameters.EnvVars }}
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
               SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+              EnvVars:
+                Pool: $(Pool)
+                ${{ insert }}: ${{ parameters.EnvVars }}
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
