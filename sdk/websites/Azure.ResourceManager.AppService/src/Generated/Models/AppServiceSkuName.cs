@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         private const string PremiumContainerValue = "PremiumContainer";
         private const string ElasticPremiumValue = "ElasticPremium";
         private const string ElasticIsolatedValue = "ElasticIsolated";
+        private const string FlexConsumptionValue = "FlexConsumption";
 
         /// <summary> Free. </summary>
         public static AppServiceSkuName Free { get; } = new AppServiceSkuName(FreeValue);
@@ -62,6 +63,8 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceSkuName ElasticPremium { get; } = new AppServiceSkuName(ElasticPremiumValue);
         /// <summary> ElasticIsolated. </summary>
         public static AppServiceSkuName ElasticIsolated { get; } = new AppServiceSkuName(ElasticIsolatedValue);
+        /// <summary> FlexConsumption. </summary>
+        public static AppServiceSkuName FlexConsumption { get; } = new AppServiceSkuName(FlexConsumptionValue);
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are the same. </summary>
         public static bool operator ==(AppServiceSkuName left, AppServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are not the same. </summary>

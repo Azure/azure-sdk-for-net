@@ -101,9 +101,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Azure-AsyncOperation Status info. </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary> Azure-AsyncOperation Error info. </summary>
-        [WirePath("error")]
-        public ResponseError Error { get; }
         /// <summary> MSI resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }

@@ -28,10 +28,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (options.Format != "W" && Optional.IsDefined(ActionType))
             {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
+                writer.WritePropertyName("actionType"u8);
+                writer.WriteStringValue(ActionType.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W")
             {
@@ -53,19 +58,6 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActionType))
-            {
-                writer.WritePropertyName("actionType"u8);
-                writer.WriteStringValue(ActionType.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,20 +96,32 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string kind = default;
+            CertificateOrderActionType? actionType = default;
+            DateTimeOffset? createdAt = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            CertificateOrderActionType? actionType = default;
-            DateTimeOffset? createdAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (property.NameEquals("actionType"u8))
                 {
-                    kind = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionType = property.Value.GetString().ToCertificateOrderActionType();
+                    continue;
+                }
+                if (property.NameEquals("createdAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -144,36 +148,6 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("actionType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            actionType = property0.Value.GetString().ToCertificateOrderActionType();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -187,7 +161,6 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 actionType,
                 createdAt,
-                kind,
                 serializedAdditionalRawData);
         }
 
@@ -225,26 +198,34 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  kind: ");
+                builder.Append("  actionType: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Kind))
+                if (Optional.IsDefined(ActionType))
                 {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
+                    builder.Append("  actionType: ");
+                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  createdAt: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("  createdAt: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -278,40 +259,6 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    actionType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ActionType))
-                {
-                    builder.Append("    actionType: ");
-                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    createdAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("    createdAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }

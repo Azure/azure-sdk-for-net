@@ -59,24 +59,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ActionType = actionType;
             CreatedOn = createdOn;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Action type. </summary>
-        [WirePath("properties.actionType")]
+        [WirePath("actionType")]
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
-        [WirePath("properties.createdAt")]
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }
