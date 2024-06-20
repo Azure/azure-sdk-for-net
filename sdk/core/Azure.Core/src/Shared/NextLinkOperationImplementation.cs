@@ -539,8 +539,8 @@ namespace Azure.Core
                         switch (headerSource)
                         {
                             case HeaderSource.None when root.TryGetProperty("properties", out var properties) && properties.TryGetProperty("provisioningState", out JsonElement property):
-                            case HeaderSource.OperationLocation when root.TryGetProperty("properties", out properties) && properties.TryGetProperty("provisioningState", out property):
-                            case HeaderSource.AzureAsyncOperation when root.TryGetProperty("properties", out properties) && properties.TryGetProperty("provisioningState", out property):
+                            case HeaderSource.OperationLocation when root.TryGetProperty("status", out property):
+                            case HeaderSource.AzureAsyncOperation when root.TryGetProperty("status", out property):
                                 var state = GetRequiredString(property).ToLowerInvariant();
                                 if (FailureStates.Contains(state))
                                 {
