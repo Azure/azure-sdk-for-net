@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private const string TestServerTarget = $"localhost:{TestServerPort}";
         private const string TestServerUrl = $"http://{TestServerTarget}/";
 
-        private const string TestServiceName = "TestName", TestServiceNamespace = "TestNamespace", TestServiceInstance = "TestInstance", TestServiceVersion = "TestVersion";
+        private const string TestServiceName = nameof(TestServiceName), TestServiceNamespace = nameof(TestServiceNamespace), TestServiceInstance = nameof(TestServiceInstance), TestServiceVersion = nameof(TestServiceVersion);
         private const string TestRoleName = $"[{TestServiceNamespace}]/{TestServiceName}";
         private readonly Dictionary<string, object> _testResourceAttributes = new()
         {
@@ -178,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        public async Task VerifySendingToTwoResources_UsingDistrsoWithExporter()
+        public async Task VerifySendingToTwoResources_UsingDistroWithExporter()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var builder = WebApplication.CreateBuilder();
