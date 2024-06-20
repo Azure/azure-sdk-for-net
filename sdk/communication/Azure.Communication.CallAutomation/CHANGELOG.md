@@ -1,36 +1,9 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.2.0 (2024-04-15)
-
-### Features Added
-
-- Support for Bring Your Own Storage recording option
-- Support for PauseOnStart recording option
-- Support for Recording state change with new recording kind's
-
-### Breaking Changes
-
-- Support for MicrosoftTeamsAppIdentifier CommunicationIdentifier
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Support for PauseOnStart recording option
+- StartRecording now accepts PauseOnStart.
 
 ### Breaking Changes
 
