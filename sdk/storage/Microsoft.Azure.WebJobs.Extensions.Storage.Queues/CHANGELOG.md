@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Rely on PeekMessagesAsync when calculating message queue length
+- Fixing target base scale instance concurrency for queues
 
 ### Other Changes
 
