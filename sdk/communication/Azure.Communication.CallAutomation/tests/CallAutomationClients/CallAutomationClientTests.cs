@@ -299,6 +299,60 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_ConnectCall))]
+        public async Task ConnectCallAsync_200OK(CallLocator callLocator, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyConnectPayload);
+
+            var response = await callAutomationClient.ConnectCallAsync(callLocator, callbackUri).ConfigureAwait(false);
+            ConnectCallResult result = (ConnectCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties, isConnectApi: true);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_ConnectCall))]
+        public void ConnectCall_200OK(CallLocator callLocator, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyConnectPayload);
+
+            var response = callAutomationClient.ConnectCall(callLocator, callbackUri);
+            ConnectCallResult result = (ConnectCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties, isConnectApi: true);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_ConnectCall))]
+        public async Task ConnectCallWithOptionsAsync_200OK(CallLocator callLocator, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyConnectPayload);
+
+            var options = new  ConnectCallOptions(callLocator, callbackUri);
+            var response = await callAutomationClient.ConnectCallAsync(options).ConfigureAwait(false);
+            ConnectCallResult result = (ConnectCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties, isConnectApi: true);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_ConnectCall))]
+        public void ConnectCallWithOptions_200OK(CallLocator callLocator, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyConnectPayload);
+
+            var options = new ConnectCallOptions(callLocator, callbackUri);
+            var response = callAutomationClient.ConnectCall(options);
+            ConnectCallResult result = (ConnectCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties, isConnectApi: true);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
         [TestCaseSource(nameof(TestData_GetCallConnection))]
         public void GetCallConnection(string callConnectionId)
         {
@@ -475,6 +529,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 new object?[]
                 {
                     "12345"
+                },
+            };
+        }
+        private static IEnumerable<object?[]> TestData_ConnectCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    _serverCallLocator,
+                    new Uri("https://bot.contoso.com/callback")
                 },
             };
         }
