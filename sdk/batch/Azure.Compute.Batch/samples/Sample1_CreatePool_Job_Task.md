@@ -67,7 +67,9 @@ Before we can create Batch Tasks we first need to create a Job for the tasks to 
 ```C# Snippet:Batch_Sample01_CreateBatchJob
 await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
+
 ### Task Creation
+
 Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The basic elements needed are the name of the job the task will be assigned to, and id for the task itself, and a command to run.
 ```C# Snippet:Batch_Sample01_CreateBatchTask
 await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
