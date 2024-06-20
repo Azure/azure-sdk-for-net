@@ -96,14 +96,6 @@ namespace Azure.AI.Inference
             return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestUserMessage"/>. </summary>
-        /// <param name="content"> The contents of the user message, with available input types varying by selected model. </param>
-        /// <returns> A new <see cref="Inference.ChatRequestUserMessage"/> instance for mocking. </returns>
-        public static ChatRequestUserMessage ChatRequestUserMessage(BinaryData content = null)
-        {
-            return new ChatRequestUserMessage(ChatRole.User, serializedAdditionalRawData: null, content);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>
         /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>
