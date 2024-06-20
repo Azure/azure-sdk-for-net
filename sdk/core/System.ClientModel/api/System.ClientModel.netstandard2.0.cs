@@ -92,6 +92,12 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
+    public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public ClientLoggingPolicy(System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -104,6 +110,8 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Primitives.LoggingOptions LoggingOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -151,6 +159,18 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    public partial class LoggingOptions
+    {
+        public LoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory LoggerFactory { get { throw null; } set { } }
+        public string? RequestIdHeaderName { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public static partial class ModelReaderWriter
     {

@@ -48,7 +48,7 @@ public class LoggingOptions
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
     private IList<string> _allowedHeaderNames = new List<string>(s_defaultAllowedHeaderNames);
     private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
-    private bool _combineLogs = DefaultCombineLogs;
+    private string? _requestIdHeaderName;
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     /// <summary>
@@ -112,14 +112,14 @@ public class LoggingOptions
     /// <summary>
     /// Gets or sets the header name that contains the request Id to include in logging.
     /// </summary>
-    public bool CombineLogs
+    public string? RequestIdHeaderName
     {
-        get => _combineLogs;
+        get => _requestIdHeaderName;
         set
         {
             AssertNotFrozen();
 
-            _combineLogs = value;
+            _requestIdHeaderName = value;
         }
     }
 
