@@ -80,7 +80,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/batch/Azure.Compute.Batch/samples/README.md).
+
 ## Troubleshooting
+
 ## Next steps
 
 View more https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/samples here for common usages of the Batch client library: [Batch Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/samples).
