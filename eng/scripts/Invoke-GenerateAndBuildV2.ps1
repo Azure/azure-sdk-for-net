@@ -22,8 +22,8 @@ please refer to eng/scripts/automation/unified-pipeline-test.md for more test sc
 
 #>
 param (
-  [string]$inputJsonFile="D:/project/azure-sdk-for-net/eng/scripts/input.json",
-  [string]$outputJsonFile="D:/project/azure-sdk-for-net/eng/scripts/output.json"
+  [string]$inputJsonFile="C:/project/azure-sdk-for-net/eng/scripts/input.json",
+  [string]$outputJsonFile="C:/project/azure-sdk-for-net/eng/scripts/output.json"
 )
 
 . (Join-Path $PSScriptRoot ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
@@ -116,6 +116,12 @@ if ($relatedTypeSpecProjectFolder) {
         $processScript = Resolve-Path (Join-Path $sdkPath "eng/common/scripts" "TypeSpec-Project-Process.ps1")
         $sdkProjectFolders = Get-ChildItem -Path (Join-Path $sdkPath "sdk") -Depth 1 -Directory | Select-Object -ExpandProperty FullName
 
+        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+        $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
+        if (Test-Path -Path $sdkAutorestConfigFile) {
+            Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
+            Remove-Item -Path $sdkAutorestConfigFile
+        }
         # Invoke Process script. SkipSyncAndGenerate only when it's not a new SDK project
         # $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
         $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
@@ -124,12 +130,6 @@ if ($relatedTypeSpecProjectFolder) {
         $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
-
-        # $sdkAutorestConfigFile = Resolve-Path(Join-path $sdkProjectFolder "src" "autorest.md"))
-        # if (Test-Path -Path $sdkAutorestConfigFile) {
-        #     Write-Host "remove autorest.md for sdk from typespec."
-        #     Remove-Item -Path $sdkAutorestConfigFile
-        # }
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
           Write-Error "Failed to generate typespec project. Exit code: $LASTEXITCODE"
@@ -138,12 +138,12 @@ if ($relatedTypeSpecProjectFolder) {
             path=@("");
           })
         } else {
-            $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
-            $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
-            if (Test-Path -Path $sdkAutorestConfigFile) {
-                Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
-                Remove-Item -Path $sdkAutorestConfigFile
-            }
+            # $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+            # $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
+            # if (Test-Path -Path $sdkAutorestConfigFile) {
+            #     Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
+            #     Remove-Item -Path $sdkAutorestConfigFile
+            # }
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
             -projectFolder $sdkProjectFolder `
