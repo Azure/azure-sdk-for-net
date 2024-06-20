@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\DistroWebAppLiveTests\" />
   </ItemGroup>
 
 </Project>

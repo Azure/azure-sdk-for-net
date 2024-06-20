@@ -30,8 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private const string TestServerTarget = $"localhost:{TestServerPort}";
         private const string TestServerUrl = $"http://{TestServerTarget}/";
 
-        private const string LogMessage = "Message via ILogger";
-
         private LogsQueryClient? _logsQueryClient = null;
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
@@ -42,8 +40,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
         public async Task VerifyDistro()
         {
-            var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
             Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
+            var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            var logMessage = "Message via ILogger";
 
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
@@ -54,8 +53,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Diagnostics = { IsLoggingContentEnabled = true }
                 })
             ));
-
-            _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             string serviceName = "TestName", serviceNamespace = "TestNamespace", serviceInstance = "TestInstance", serviceVersion = "TestVersion";
@@ -91,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var app = builder.Build();
             app.MapGet("/", () =>
             {
-                app.Logger.LogInformation(LogMessage);
+                app.Logger.LogInformation(logMessage);
 
                 return "Response from Test Server";
             });
@@ -126,6 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // QUERY:   | where TimeGenerated >= datetime({testStartTimeStamp})
 
             await QueryAndVerifyDependency(
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Dependency for invoking HttpClient, from testhost",
                 //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({ testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -151,6 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyRequest(
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "RequestTelemetry, from WebApp",
                 //query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -175,6 +174,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyMetric(
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Metric for outgoing request, from testhost",
                 //query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
@@ -197,6 +197,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyMetric(
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Metric for incoming request, from WebApp",
                 //query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -218,12 +219,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyTrace(
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "ILogger LogInformation, from WebApp",
                 //query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
                 expectedAppTrace: new ExpectedAppTrace
                 {
-                    Message = LogMessage,
+                    Message = logMessage,
                     SeverityLevel = "1",
                     AppRoleName = roleName,
                     AppVersion = serviceVersion,
@@ -233,27 +235,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
         }
 
-        private async Task QueryAndVerifyDependency(string description, string query, ExpectedAppDependency expectedAppDependency)
+        private async Task QueryAndVerifyDependency(string workspaceId, string description, string query, ExpectedAppDependency expectedAppDependency)
         {
-            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(workspaceId, description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppDependency);
         }
 
-        private async Task QueryAndVerifyRequest(string description, string query, ExpectedAppRequest expectedAppRequest)
+        private async Task QueryAndVerifyRequest(string workspaceId, string description, string query, ExpectedAppRequest expectedAppRequest)
         {
-            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(workspaceId, description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppRequest);
         }
 
-        private async Task QueryAndVerifyMetric(string description, string query, ExpectedAppMetric expectedAppMetric)
+        private async Task QueryAndVerifyMetric(string workspaceId, string description, string query, ExpectedAppMetric expectedAppMetric)
         {
-            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(workspaceId, description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppMetric);
         }
 
-        private async Task QueryAndVerifyTrace(string description, string query, ExpectedAppTrace expectedAppTrace)
+        private async Task QueryAndVerifyTrace(string workspaceId, string description, string query, ExpectedAppTrace expectedAppTrace)
         {
-            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(workspaceId, description, query);
             ValidateExpectedTelemetry(description, logsTable, expectedAppTrace);
         }
 
