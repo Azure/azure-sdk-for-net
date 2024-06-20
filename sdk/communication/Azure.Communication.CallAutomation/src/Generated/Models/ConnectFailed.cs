@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ConnectFailed event. </summary>
-    internal partial class ConnectFailed
+    public partial class ConnectFailed
     {
         /// <summary> Initializes a new instance of <see cref="ConnectFailed"/>. </summary>
         internal ConnectFailed()
@@ -29,16 +29,5 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
         }
-
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
-        /// <summary> Used by customers to set the context for connecting to a call. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
-        public ResultInformation ResultInformation { get; }
     }
 }

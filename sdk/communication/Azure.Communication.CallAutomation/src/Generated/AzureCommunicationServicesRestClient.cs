@@ -315,7 +315,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateConnectRequest(ConnectRequest connectRequest)
+        internal HttpMessage CreateConnectRequest(ConnectRequestInternal connectRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -340,7 +340,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectRequest"/> is null. </exception>
         /// <remarks> Create a connection to a CallLocator. </remarks>
-        public async Task<Response<CallConnectionPropertiesInternal>> ConnectAsync(ConnectRequest connectRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesInternal>> ConnectAsync(ConnectRequestInternal connectRequest, CancellationToken cancellationToken = default)
         {
             if (connectRequest == null)
             {
@@ -368,7 +368,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectRequest"/> is null. </exception>
         /// <remarks> Create a connection to a CallLocator. </remarks>
-        public Response<CallConnectionPropertiesInternal> Connect(ConnectRequest connectRequest, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesInternal> Connect(ConnectRequestInternal connectRequest, CancellationToken cancellationToken = default)
         {
             if (connectRequest == null)
             {

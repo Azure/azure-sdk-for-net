@@ -10,13 +10,13 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for creating a connection to a CallLocator. </summary>
-    public partial class ConnectRequest
+    internal partial class ConnectRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="callbackUri"/> is null. </exception>
-        public ConnectRequest(CallLocatorInternal callLocator, string callbackUri)
+        public ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri)
         {
             Argument.AssertNotNull(callLocator, nameof(callLocator));
             Argument.AssertNotNull(callbackUri, nameof(callbackUri));
@@ -25,12 +25,12 @@ namespace Azure.Communication.CallAutomation
             CallbackUri = callbackUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        internal ConnectRequest(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions)
+        internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions)
         {
             CallLocator = callLocator;
             CallbackUri = callbackUri;
