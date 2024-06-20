@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Client options for SystemEventsClient. </summary>
-    public partial class SystemEventsClientOptions : ClientOptions
+    internal partial class SystemEventsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_01;
 
         /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> Service version "2024-01-01". </summary>
             V2024_01_01 = 1,
