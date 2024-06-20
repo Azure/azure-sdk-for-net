@@ -1,6 +1,6 @@
 # Azure Event Grid System Events client library for .NET
 
-Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/azure/event-grid/overview)
+Azure Event Grid allows you to build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/azure/event-grid/overview)
 
 Use the client library for Azure Event Grid System Events to:
 - Deserialize Event Grid system events into strongly typed models.
