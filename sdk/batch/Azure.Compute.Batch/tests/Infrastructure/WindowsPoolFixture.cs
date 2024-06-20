@@ -23,8 +23,6 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             {
                 BatchPoolCreateContent batchPoolCreateOptions = CreatePoolOptions(targetDedicatedNodes);
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
-                if (response == null)
-                { }
             }
 
             return await WaitForPoolAllocation(client, PoolId);

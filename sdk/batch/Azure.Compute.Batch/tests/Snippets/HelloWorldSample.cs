@@ -1,81 +1,6 @@
-# Creating a Batch Pool, Job, and Tasks
-
-This sample demonstrates how to create a pool, job, and tasks for a Batch account.
-
-## Special Note for Batch Pools
-
-Both the **Azure.Compute.Batch** and the ARM based **Azure.Management.Batch** sdk's support the creating and managing of Batch Pools with the only difference being that **Azure.Management.Batch** supports creating [Batch Pools with Managed Idenities](https://learn.microsoft.com/azure/batch/managed-identity-pools), for this reason creating pools via **Azure.Management.Batch** is considered a best practice.  This example will use **Azure.Management.Batch** for pool creation and thus will need to create an ArmClient to do so.
-
-## Authenticating the Azure.ResourceManager `ArmClient`
-
-In order to create Batch Pool from the Azure.Managment.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-
-```C# Snippet:Batch_Sample01_CreateBatchMgmtClient
-var credential = new DefaultAzureCredential();
-ArmClient _armClient = new ArmClient(credential);
-```
-
-
-### Pool Creation
-
-Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
-```C# Snippet:Batch_Sample01_GetBatchMgmtAccount
-var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
-BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource(batchAccountIdentifier).GetAsync();
-```
-
-With the BatchAccountResource you can create a pool with the [batchAccount.GetBatchAccountPools().CreateOrUpdateAsync](https://learn.microsoft.com/dotnet/api/azure.resourcemanager.batch.batchaccountpoolcollection.createorupdateasync?view=azure-dotnet) command
-```C# Snippet:Batch_Sample01_PoolCreation
-var poolName = "HelloWorldPool";
-var imageReference = new BatchImageReference()
-{
-    Publisher = "canonical",
-    Offer = "0001-com-ubuntu-server-jammy",
-    Sku = "22_04-lts",
-    Version = "latest"
-};
-string nodeAgentSku = "batch.node.ubuntu 22.04";
-
-BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(WaitUntil.Completed, poolName, new BatchAccountPoolData()
-{
-    VmSize = "Standard_DS1_v2",
-    DeploymentConfiguration = new BatchDeploymentConfiguration()
-    {
-        VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
-    },
-    ScaleSettings = new BatchAccountPoolScaleSettings()
-    {
-        FixedScale = new BatchAccountFixedScaleSettings()
-        {
-            TargetDedicatedNodes = 1
-        }
-    }
-})).Value;
-```
-
-## Authenticating the Azure.Compute.Batch `BatchClient`
-Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` sdk.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
-
-```C# Snippet:Batch_Sample01_CreateBatchClient
-var credential = new DefaultAzureCredential();
-BatchClient _batchClient = new BatchClient(
-new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
-```
-
-### Job Creation
-
-Before we can create Batch Tasks we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are a Id for job itself and the name of the pool that this job will run against. 
-```C# Snippet:Batch_Sample01_CreateBatchJob
-await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
-```
-### Task Creation
-Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The basic elements needed are the name of the job the task will be assigned to, and id for the task itself, and a command to run.
-```C# Snippet:Batch_Sample01_CreateBatchTask
-await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
-```
-### Full Sample
-
-```C# Snippet:Batch_Sample01_FullExample
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+#region Snippet:Batch_Sample01_FullExample
 using Azure.Core;
 using Azure.Identity;
 using Azure.Compute.Batch;
@@ -154,7 +79,7 @@ namespace Batch.Samples.HelloWorld
                 }
 
                 Console.WriteLine("Waiting for all tasks to complete on job: {0} ...", jobId);
-                await waitForTasksToComplete(jobId);
+                await WaitForTasksToComplete(jobId);
 
                 var completedTasks = _batchClient.GetTasksAsync(jobId, filter: "state eq 'completed'");
                 await foreach (BatchTask t in completedTasks)
@@ -186,7 +111,7 @@ namespace Batch.Samples.HelloWorld
         /// <param name="jobId">The ID of the job to poll</param>
         /// <returns>A task that will complete when all Batch tasks have completed.</returns>
         /// <exception cref="TimeoutException">Thrown if all tasks haven't reached the completed state after a certain period of time</exception>
-        private async Task waitForTasksToComplete(String jobId)
+        private async Task WaitForTasksToComplete(String jobId)
         {
             // Note that this timeout should take into account the time it takes for the pool to scale up
             var timeoutAfter = DateTime.Now.AddMinutes(10);
@@ -225,6 +150,7 @@ namespace Batch.Samples.HelloWorld
             return string.Format("{0}-{1}-{2}", prefix, currentUser, DateTime.Now.ToString("yyyyMMdd-HHmmss"));
         }
 
+#if SNIPPET
         public static async Task Main(string[] args)
         {
             string batchAccountResourceId = "your-batch-account-resource-id";
@@ -234,6 +160,7 @@ namespace Batch.Samples.HelloWorld
             Console.WriteLine("Press return to exit...");
             Console.ReadLine();
         }
+#endif
     }
 }
-```
+#endregion

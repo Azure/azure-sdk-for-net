@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableJobAsync(jobID);
                 Assert.IsFalse(response.IsError);
 
-                await waitForTasksToComplete(client, jobID, IsPlayBack());
+                await WaitForTasksToComplete(client, jobID, IsPlayBack());
 
                 // get JobPreparationAndReleaseTaskStatuses
                 int count = 0;

@@ -2,22 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml;
-using Azure.Compute.Batch.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using static System.Net.WebRequestMethods;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Batch.Models;
 
 namespace Azure.Compute.Batch.Tests.Snippets
 {
@@ -31,7 +20,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
         ///   Code to create a Batch client contained snippet.
         /// </summary>
         ///
-        public void  CreateBatchClient()
+        public async void CreateBatchClient()
         {
             #region Snippet:Batch_Sample01_CreateBatchClient
 
@@ -39,13 +28,21 @@ namespace Azure.Compute.Batch.Tests.Snippets
             BatchClient _batchClient = new BatchClient(
             new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
             #endregion
+
+            #region Snippet:Batch_Sample01_CreateBatchJob
+            await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+            #endregion
+
+            #region Snippet:Batch_Sample01_CreateBatchTask
+            await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+            #endregion
         }
 
         /// <summary>
         ///   Code to create a Batch mgmt client contained snippet.
         /// </summary>
         ///
-        public async void CreateBatchArmClient()
+        public async void PoolCreation()
         {
             #region Snippet:Batch_Sample01_CreateBatchMgmtClient
 
@@ -56,6 +53,34 @@ namespace Azure.Compute.Batch.Tests.Snippets
             #region Snippet:Batch_Sample01_GetBatchMgmtAccount
             var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
             BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource(batchAccountIdentifier).GetAsync();
+            #endregion
+
+            #region Snippet:Batch_Sample01_PoolCreation
+            var poolName = "HelloWorldPool";
+            var imageReference = new BatchImageReference()
+            {
+                Publisher = "canonical",
+                Offer = "0001-com-ubuntu-server-jammy",
+                Sku = "22_04-lts",
+                Version = "latest"
+            };
+            string nodeAgentSku = "batch.node.ubuntu 22.04";
+
+            BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(WaitUntil.Completed, poolName, new BatchAccountPoolData()
+            {
+                VmSize = "Standard_DS1_v2",
+                DeploymentConfiguration = new BatchDeploymentConfiguration()
+                {
+                    VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings()
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings()
+                    {
+                        TargetDedicatedNodes = 1
+                    }
+                }
+            })).Value;
             #endregion
         }
     }

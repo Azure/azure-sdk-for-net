@@ -37,10 +37,10 @@ We strongly recommend using Microsoft Entra ID for Batch account authentication.
 Azure Batch provides integration with Microsoft Entra ID for identity-based authentication of requests. With Azure AD, you can use role-based access control (RBAC) to grant access to your Azure Batch resources to users, groups, or applications. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides easy Microsoft Entra ID support for authentication.
 
 
-```C#
-BatchClient client = new BatchClient(
-    new Uri("https://examplebatchaccount.eastus.batch.azure.com"),
-    new DefaultAzureCredential());
+```C# Snippet:Batch_Sample01_CreateBatchClient
+var credential = new DefaultAzureCredential();
+BatchClient _batchClient = new BatchClient(
+new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 ```
 
 #### Authenticate using Shared Key
@@ -51,11 +51,11 @@ You can also use Shared Key authentication to sign into your Batch account. This
 az batch account keys list --name <your-batch-account> --resource-group <your-resource-group-name>
 ```
 
-```C#
+```C# Snippet:Batch_Readme_AzureNameKeyCredential
 var credential = new AzureNamedKeyCredential("examplebatchaccount", "BatchAccountKey");
 BatchClient client = new BatchClient(
     new Uri("https://examplebatchaccount.eastus.batch.azure.com"),
-    new credential());
+    credential);
 ```
 
 ## Key concepts

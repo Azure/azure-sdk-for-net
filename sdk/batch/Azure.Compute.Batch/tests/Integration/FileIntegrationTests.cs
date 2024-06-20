@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
-                await waitForTasksToComplete(client, jobId, IsPlayBack());
+                await WaitForTasksToComplete(client, jobId, IsPlayBack());
                 var completedTasks = client.GetTasksAsync(jobId, filter: "state eq 'completed'");
 
                 int index = 0;
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World"));
 
-                await waitForTasksToComplete(client, jobId, IsPlayBack());
+                await WaitForTasksToComplete(client, jobId, IsPlayBack());
 
                 BinaryData fileContents = await client.GetTaskFileAsync(jobId, taskId, outputFileName);
                 using (var reader = new StreamReader(fileContents.ToStream()))
@@ -154,7 +154,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
-                await waitForTasksToComplete(client, jobId, IsPlayBack());
+                await WaitForTasksToComplete(client, jobId, IsPlayBack());
 
                 await foreach (BatchNode item in client.GetNodesAsync(poolId))
                 {
