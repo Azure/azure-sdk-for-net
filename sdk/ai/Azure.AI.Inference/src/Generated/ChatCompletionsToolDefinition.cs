@@ -15,7 +15,6 @@ namespace Azure.AI.Inference
     /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "AZC0031:Improper model name suffix")]
     public abstract partial class ChatCompletionsToolDefinition
     {
         /// <summary>
