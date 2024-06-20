@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01";
+            _apiVersion = apiVersion ?? "2024-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List all network manager security configuration admin rules. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List all network manager security configuration admin rules. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a network manager security configuration admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a network manager security configuration admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Creates or updates an admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Creates or updates an admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes an admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes an admin rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all network manager security configuration admin rules. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all network manager security configuration admin rules. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
