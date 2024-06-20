@@ -34,8 +34,10 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
-    public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
+    private const string MASKED_SUBDOMAIN = "***";
+    private const string HOST_SUBDOMAIN_MATCHER = @"(?<=.+://)([^\.]+)(?=[\./])";
 
+    public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
 #if NETFRAMEWORK
         DateTimeOffset.Parse("1970-01-01T00:00:00.0000000+00:00");
@@ -59,6 +61,17 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 
         // Disable additional fluff that is causing issues
         TestDiagnostics = false;
+
+        // Add sanitizers to prevent resource names from leaking into recordings
+        UriRegexSanitizers.Add(new Core.TestFramework.Models.UriRegexSanitizer(HOST_SUBDOMAIN_MATCHER)
+        {
+            Value = MASKED_SUBDOMAIN
+        });
+        BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("*..endpoint")
+        {
+            Regex = HOST_SUBDOMAIN_MATCHER,
+            Value = MASKED_SUBDOMAIN
+        });
 
         // Add sanitizers to prevent our keys from leaking into the recordings
         JsonPathSanitizers.Add("*..key");
