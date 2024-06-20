@@ -5,31 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HybridContainerServiceVmSkuProperties : IUtf8JsonSerializable
+    public partial class HybridContainerServiceVmSkuProperties : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceVmSkuProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVmSkuProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridContainerServiceVmSkuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridContainerServiceVmSkuProperties DeserializeHybridContainerServiceVmSkuProperties(JsonElement element)
+        HybridContainerServiceVmSkuProperties IJsonModel<HybridContainerServiceVmSkuProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridContainerServiceVmSkuProperties(document.RootElement, options);
+        }
+
+        internal static HybridContainerServiceVmSkuProperties DeserializeHybridContainerServiceVmSkuProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<HybridContainerServiceVmSkuCapabilities>> capabilities = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
+            string resourceType = default;
+            IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -46,7 +117,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceVmSkuCapabilities> array = new List<HybridContainerServiceVmSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVmSkuCapabilities.DeserializeHybridContainerServiceVmSkuCapabilities(item));
+                        array.Add(HybridContainerServiceVmSkuCapabilities.DeserializeHybridContainerServiceVmSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -66,8 +137,50 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     size = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridContainerServiceVmSkuProperties(resourceType.Value, Optional.ToList(capabilities), name.Value, tier.Value, size.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridContainerServiceVmSkuProperties(
+                resourceType,
+                capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>(),
+                name,
+                tier,
+                size,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridContainerServiceVmSkuProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridContainerServiceVmSkuProperties IPersistableModel<HybridContainerServiceVmSkuProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridContainerServiceVmSkuProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridContainerServiceVmSkuProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

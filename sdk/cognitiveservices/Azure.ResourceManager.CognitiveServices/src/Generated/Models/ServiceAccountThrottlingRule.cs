@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The ServiceAccountThrottlingRule. </summary>
     public partial class ServiceAccountThrottlingRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingRule"/>. </summary>
         internal ServiceAccountThrottlingRule()
         {
@@ -26,7 +58,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="minCount"></param>
         /// <param name="isDynamicThrottlingEnabled"></param>
         /// <param name="matchPatterns"></param>
-        internal ServiceAccountThrottlingRule(string key, float? renewalPeriod, float? count, float? minCount, bool? isDynamicThrottlingEnabled, IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountThrottlingRule(string key, float? renewalPeriod, float? count, float? minCount, bool? isDynamicThrottlingEnabled, IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             RenewalPeriod = renewalPeriod;
@@ -34,19 +67,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             MinCount = minCount;
             IsDynamicThrottlingEnabled = isDynamicThrottlingEnabled;
             MatchPatterns = matchPatterns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the key. </summary>
+        [WirePath("key")]
         public string Key { get; }
         /// <summary> Gets the renewal period. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; }
         /// <summary> Gets the count. </summary>
+        [WirePath("count")]
         public float? Count { get; }
         /// <summary> Gets the min count. </summary>
+        [WirePath("minCount")]
         public float? MinCount { get; }
         /// <summary> Gets the is dynamic throttling enabled. </summary>
+        [WirePath("dynamicThrottlingEnabled")]
         public bool? IsDynamicThrottlingEnabled { get; }
         /// <summary> Gets the match patterns. </summary>
+        [WirePath("matchPatterns")]
         public IReadOnlyList<ServiceAccountThrottlingMatchPattern> MatchPatterns { get; }
     }
 }

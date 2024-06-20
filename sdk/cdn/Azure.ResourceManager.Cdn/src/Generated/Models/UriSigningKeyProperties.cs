@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -30,15 +31,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UriSigningKeyProperties(SecretType secretType, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType)
+        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType, serializedAdditionalRawData)
         {
             KeyId = keyId;
             SecretSource = secretSource;
             SecretVersion = secretVersion;
             SecretType = secretType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/> for deserialization. </summary>
+        internal UriSigningKeyProperties()
+        {
         }
 
         /// <summary> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </summary>

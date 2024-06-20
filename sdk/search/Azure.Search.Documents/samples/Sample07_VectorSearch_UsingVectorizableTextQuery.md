@@ -11,7 +11,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string modelName = "text-embedding-ada-002";
+string deploymentId = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
 string indexName = "hotel";
@@ -47,7 +47,8 @@ SearchIndex searchIndex = new(indexName)
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentId = modelName,
+                    DeploymentId = deploymentId,
+                    ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                 }
             }
         }
@@ -93,11 +94,11 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
-    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+    AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-    return embeddings.Data[0].Embedding;
+    Embedding embedding = embeddingClient.GenerateEmbedding(input);
+    return embedding.Vector;
 }
 ```
 
@@ -130,7 +131,7 @@ public static Hotel[] GetHotelDocuments()
             Description = "Cheapest hotel in town. Infact, a motel.",
             DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = GetEmbeddings("Luxury")
+            CategoryVector = GetEmbeddings("Budget")
         },
         // Add more hotel documents here...
     };

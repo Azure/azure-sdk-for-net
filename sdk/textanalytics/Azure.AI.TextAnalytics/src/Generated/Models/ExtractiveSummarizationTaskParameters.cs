@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics;
-
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>

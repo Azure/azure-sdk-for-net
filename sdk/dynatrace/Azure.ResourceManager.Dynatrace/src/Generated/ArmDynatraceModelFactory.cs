@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Dynatrace;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceAccountCredentialsInfo"/> instance for mocking. </returns>
         public static DynatraceAccountCredentialsInfo DynatraceAccountCredentialsInfo(string accountId = null, string apiKey = null, string regionId = null)
         {
-            return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId);
+            return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitoredResourceDetails"/>. </summary>
@@ -36,7 +35,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceMonitoredResourceDetails"/> instance for mocking. </returns>
         public static DynatraceMonitoredResourceDetails DynatraceMonitoredResourceDetails(ResourceIdentifier id = null, MetricsSendingStatus? sendingMetricsStatus = null, string reasonForMetricsStatus = null, LogsSendingStatus? sendingLogsStatus = null, string reasonForLogsStatus = null)
         {
-            return new DynatraceMonitoredResourceDetails(id, sendingMetricsStatus, reasonForMetricsStatus, sendingLogsStatus, reasonForLogsStatus);
+            return new DynatraceMonitoredResourceDetails(
+                id,
+                sendingMetricsStatus,
+                reasonForMetricsStatus,
+                sendingLogsStatus,
+                reasonForLogsStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceVmExtensionPayload"/>. </summary>
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceVmExtensionPayload"/> instance for mocking. </returns>
         public static DynatraceVmExtensionPayload DynatraceVmExtensionPayload(string ingestionKey = null, string environmentId = null)
         {
-            return new DynatraceVmExtensionPayload(ingestionKey, environmentId);
+            return new DynatraceVmExtensionPayload(ingestionKey, environmentId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceSingleSignOnProperties"/>. </summary>
@@ -59,7 +64,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             aadDomains ??= new List<string>();
 
-            return new DynatraceSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
+            return new DynatraceSingleSignOnProperties(
+                singleSignOnState,
+                enterpriseAppId,
+                singleSignOnUri,
+                aadDomains?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceTagRuleData"/>. </summary>
@@ -75,7 +86,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             metricRulesFilteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
 
-            return new DynatraceTagRuleData(id, name, resourceType, systemData, logRules, metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList()) : null, provisioningState);
+            return new DynatraceTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                logRules,
+                metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList(), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceSingleSignOnData"/>. </summary>
@@ -93,7 +112,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             aadDomains ??= new List<string>();
 
-            return new DynatraceSingleSignOnData(id, name, resourceType, systemData, singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
+            return new DynatraceSingleSignOnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                singleSignOnState,
+                enterpriseAppId,
+                singleSignOnUri,
+                aadDomains?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitorVmInfo"/>. </summary>
@@ -109,7 +138,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceMonitorVmInfo"/> instance for mocking. </returns>
         public static DynatraceMonitorVmInfo DynatraceMonitorVmInfo(ResourceIdentifier resourceId = null, string version = null, DynatraceOneAgentMonitoringType? monitoringType = null, DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting = null, DynatraceOneAgentUpdateStatus? updateStatus = null, DynatraceOneAgentAvailabilityState? availabilityState = null, DynatraceLogModuleState? logModule = null, string hostGroup = null, string hostName = null)
         {
-            return new DynatraceMonitorVmInfo(resourceId, version, monitoringType, autoUpdateSetting, updateStatus, availabilityState, logModule, hostGroup, hostName);
+            return new DynatraceMonitorVmInfo(
+                resourceId,
+                version,
+                monitoringType,
+                autoUpdateSetting,
+                updateStatus,
+                availabilityState,
+                logModule,
+                hostGroup,
+                hostName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>
@@ -125,7 +164,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceOneAgentEnabledAppServiceInfo"/> instance for mocking. </returns>
         public static DynatraceOneAgentEnabledAppServiceInfo DynatraceOneAgentEnabledAppServiceInfo(ResourceIdentifier resourceId = null, string version = null, DynatraceOneAgentMonitoringType? monitoringType = null, DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting = null, DynatraceOneAgentUpdateStatus? updateStatus = null, DynatraceOneAgentAvailabilityState? availabilityState = null, DynatraceLogModuleState? logModule = null, string hostGroup = null, string hostName = null)
         {
-            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId, version, monitoringType, autoUpdateSetting, updateStatus, availabilityState, logModule, hostGroup, hostName);
+            return new DynatraceOneAgentEnabledAppServiceInfo(
+                resourceId,
+                version,
+                monitoringType,
+                autoUpdateSetting,
+                updateStatus,
+                availabilityState,
+                logModule,
+                hostGroup,
+                hostName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceSsoDetailsResult"/>. </summary>
@@ -140,7 +189,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
             aadDomains ??= new List<string>();
             adminUsers ??= new List<string>();
 
-            return new DynatraceSsoDetailsResult(isSsoEnabled, metadataUri, singleSignOnUri, aadDomains?.ToList(), adminUsers?.ToList());
+            return new DynatraceSsoDetailsResult(
+                isSsoEnabled,
+                metadataUri,
+                singleSignOnUri,
+                aadDomains?.ToList(),
+                adminUsers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkableEnvironmentResult"/>. </summary>
@@ -150,7 +205,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.LinkableEnvironmentResult"/> instance for mocking. </returns>
         public static LinkableEnvironmentResult LinkableEnvironmentResult(string environmentId = null, string environmentName = null, DynatraceBillingPlanInfo planData = null)
         {
-            return new LinkableEnvironmentResult(environmentId, environmentName, planData);
+            return new LinkableEnvironmentResult(environmentId, environmentName, planData, serializedAdditionalRawData: null);
         }
     }
 }

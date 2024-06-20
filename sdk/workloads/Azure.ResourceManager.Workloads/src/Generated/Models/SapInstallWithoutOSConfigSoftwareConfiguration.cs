@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -32,17 +32,23 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, Uri bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
+        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             BomUri = bomUri;
             SapBitsStorageAccountId = sapBitsStorageAccountId;
             SoftwareVersion = softwareVersion;
             HighAvailabilitySoftwareConfiguration = highAvailabilitySoftwareConfiguration;
             SoftwareInstallationType = softwareInstallationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> for deserialization. </summary>
+        internal SapInstallWithoutOSConfigSoftwareConfiguration()
+        {
         }
 
         /// <summary> The URL to the SAP Build of Materials(BOM) file. </summary>

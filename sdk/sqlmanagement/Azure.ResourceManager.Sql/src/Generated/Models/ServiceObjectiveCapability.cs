@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The service objectives capability. </summary>
     public partial class ServiceObjectiveCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
         internal ServiceObjectiveCapability()
         {
@@ -38,7 +69,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -54,35 +86,50 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique ID of the service objective. </summary>
+        [WirePath("id")]
         public Guid? Id { get; }
         /// <summary> The service objective name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported maximum database sizes. </summary>
+        [WirePath("supportedMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedMaxSizes { get; }
         /// <summary> The performance level. </summary>
+        [WirePath("performanceLevel")]
         public PerformanceLevelCapability PerformanceLevel { get; }
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; }
         /// <summary> List of supported license types. </summary>
+        [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> The included (free) max size. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> Whether or not zone redundancy is supported for the service objective. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> Supported time range for auto pause delay. </summary>
+        [WirePath("supportedAutoPauseDelay")]
         public AutoPauseDelayTimeRange SupportedAutoPauseDelay { get; }
         /// <summary> List of supported min capacities. </summary>
+        [WirePath("supportedMinCapacities")]
         public IReadOnlyList<MinCapacityCapability> SupportedMinCapacities { get; }
         /// <summary> The compute model. </summary>
+        [WirePath("computeModel")]
         public string ComputeModel { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

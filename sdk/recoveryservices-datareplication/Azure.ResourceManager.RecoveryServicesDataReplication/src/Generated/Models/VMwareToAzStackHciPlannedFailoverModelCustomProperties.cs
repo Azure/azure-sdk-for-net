@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware to AzStackHCI planned failover model custom properties. </summary>
@@ -20,11 +23,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
-        internal VMwareToAzStackHciPlannedFailoverModelCustomProperties(string instanceType, bool shutdownSourceVm) : base(instanceType)
+        internal VMwareToAzStackHciPlannedFailoverModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shutdownSourceVm) : base(instanceType, serializedAdditionalRawData)
         {
             ShutdownSourceVm = shutdownSourceVm;
             InstanceType = instanceType ?? "VMwareToAzStackHCI";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/> for deserialization. </summary>
+        internal VMwareToAzStackHciPlannedFailoverModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets a value indicating whether VM needs to be shut down. </summary>

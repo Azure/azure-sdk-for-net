@@ -48,7 +48,14 @@ namespace Azure.Storage.Blobs.Models
             {
                 nextMarker = (string)nextMarkerElement;
             }
-            return new ListBlobsFlatSegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, segment, nextMarker);
+            return new ListBlobsFlatSegmentResponse(
+                serviceEndpoint,
+                containerName,
+                prefix,
+                marker,
+                maxResults,
+                segment,
+                nextMarker);
         }
     }
 }

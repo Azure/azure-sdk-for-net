@@ -30,10 +30,10 @@ namespace Azure.Core.Expressions.DataFactory.Samples
             Assert.AreEqual("some/secret/path", blobDataSet.FolderPath.ToString());
 
             #region Snippet:DataFactoryElementKeyVaultSecretReference
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
                 "referenceName");
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
-            blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference);
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
+            blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             #endregion
 
             Assert.AreEqual("secretName", blobDataSet.FolderPath.ToString());

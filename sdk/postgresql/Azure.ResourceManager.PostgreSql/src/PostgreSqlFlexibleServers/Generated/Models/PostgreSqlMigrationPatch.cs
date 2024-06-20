@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a migration resource for patch. </summary>
     public partial class PostgreSqlMigrationPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
         public PostgreSqlMigrationPatch()
         {
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
         /// <param name="migrationMode"> There are two types of migration modes Online and Offline. </param>
-        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             SourceDbServerResourceId = sourceDbServerResourceId;
@@ -56,37 +89,53 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Cancel = cancel;
             DbsToCancelMigrationOn = dbsToCancelMigrationOn;
             MigrationMode = migrationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> ResourceId of the source database server. </summary>
+        [WirePath("properties.sourceDbServerResourceId")]
         public ResourceIdentifier SourceDbServerResourceId { get; set; }
         /// <summary> Source server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
         public string SourceDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Migration secret parameters. </summary>
+        [WirePath("properties.secretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
         /// <summary> Number of databases to migrate. </summary>
+        [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </summary>
+        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
         public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
         /// <summary> Indicates whether the databases on the target server can be overwritten, if already present. If set to False, the migration workflow will wait for a confirmation, if it detects that the database already exists. </summary>
+        [WirePath("properties.overwriteDbsInTarget")]
         public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
         /// <summary> Start time in UTC for migration window. </summary>
+        [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
         /// <summary> Indicates whether the data migration should start right away. </summary>
+        [WirePath("properties.startDataMigration")]
         public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
         /// <summary> To trigger cutover for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.triggerCutover")]
         public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
         /// <summary> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; }
         /// <summary> To trigger cancel for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.cancel")]
         public PostgreSqlMigrationCancel? Cancel { get; set; }
         /// <summary> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; }
         /// <summary> There are two types of migration modes Online and Offline. </summary>
+        [WirePath("properties.migrationMode")]
         public PostgreSqlMigrationMode? MigrationMode { get; set; }
     }
 }

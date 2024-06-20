@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
         public FunctionAppStack()
         {
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOS"> Function App stack preferred OS. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayText = displayText;
@@ -39,19 +73,26 @@ namespace Azure.ResourceManager.AppService.Models
             MajorVersions = majorVersions;
             PreferredOS = preferredOS;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Function App stack location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Function App stack (display only). </summary>
+        [WirePath("properties.displayText")]
         public string DisplayText { get; }
         /// <summary> Function App stack name. </summary>
+        [WirePath("properties.value")]
         public string Value { get; }
         /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
         public IReadOnlyList<FunctionAppMajorVersion> MajorVersions { get; }
         /// <summary> Function App stack preferred OS. </summary>
+        [WirePath("properties.preferredOs")]
         public StackPreferredOS? PreferredOS { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

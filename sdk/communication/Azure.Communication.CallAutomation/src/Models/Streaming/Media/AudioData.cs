@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
             Timestamp = timestamp;
             if (participantId != null)
             {
-                Participant = new CommunicationUserIdentifier(participantId);
+                Participant = CommunicationIdentifier.FromRawId(participantId);;
             }
             IsSilent = silent;
         }

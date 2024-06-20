@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationRule : IUtf8JsonSerializable, IJsonModel<ApplicationRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeadersToInsert)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,27 +165,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationRule DeserializeApplicationRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;
-            Optional<IList<string>> targetFqdns = default;
-            Optional<IList<string>> targetUrls = default;
-            Optional<IList<string>> fqdnTags = default;
-            Optional<IList<string>> sourceIPGroups = default;
-            Optional<bool> terminateTLS = default;
-            Optional<IList<string>> webCategories = default;
-            Optional<IList<FirewallPolicyHttpHeaderToInsert>> httpHeadersToInsert = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<FirewallPolicyRuleApplicationProtocol> protocols = default;
+            IList<string> targetFqdns = default;
+            IList<string> targetUrls = default;
+            IList<string> fqdnTags = default;
+            IList<string> sourceIPGroups = default;
+            bool? terminateTLS = default;
+            IList<string> webCategories = default;
+            IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceAddresses"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyRuleApplicationProtocol> array = new List<FirewallPolicyRuleApplicationProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyRuleApplicationProtocol.DeserializeFirewallPolicyRuleApplicationProtocol(item));
+                        array.Add(FirewallPolicyRuleApplicationProtocol.DeserializeFirewallPolicyRuleApplicationProtocol(item, options));
                     }
                     protocols = array;
                     continue;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyHttpHeaderToInsert> array = new List<FirewallPolicyHttpHeaderToInsert>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyHttpHeaderToInsert.DeserializeFirewallPolicyHttpHeaderToInsert(item));
+                        array.Add(FirewallPolicyHttpHeaderToInsert.DeserializeFirewallPolicyHttpHeaderToInsert(item, options));
                     }
                     httpHeadersToInsert = array;
                     continue;
@@ -340,11 +340,25 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories), Optional.ToList(httpHeadersToInsert));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationRule(
+                name,
+                description,
+                ruleType,
+                serializedAdditionalRawData,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>(),
+                targetFqdns ?? new ChangeTrackingList<string>(),
+                targetUrls ?? new ChangeTrackingList<string>(),
+                fqdnTags ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                terminateTLS,
+                webCategories ?? new ChangeTrackingList<string>(),
+                httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());
         }
 
         BinaryData IPersistableModel<ApplicationRule>.Write(ModelReaderWriterOptions options)
@@ -356,7 +370,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +386,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationRule)} does not support reading '{options.Format}' format.");
             }
         }
 

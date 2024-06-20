@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -22,8 +21,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal ResourceGuardProxyBaseResourceList(string nextLink, IReadOnlyList<ResourceGuardProxyBaseResourceData> value) : base(nextLink)
+        internal ResourceGuardProxyBaseResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ResourceGuardProxyBaseResourceData> value) : base(nextLink, serializedAdditionalRawData)
         {
             Value = value;
         }

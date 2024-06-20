@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2024-02-27)
+
+### Features Added
+
+ - Update API version to 2024-01-01
+ - Add Tags Support for Experiment resource
 
 ## 1.0.0 (2024-01-17)
 

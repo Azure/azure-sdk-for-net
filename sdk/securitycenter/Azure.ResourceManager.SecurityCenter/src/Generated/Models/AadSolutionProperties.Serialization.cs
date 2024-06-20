@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class AadSolutionProperties : IUtf8JsonSerializable, IJsonModel<AadSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadSolutionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadSolutionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AadSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AadSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AadSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadSolutionProperties DeserializeAadSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AadConnectivityStateType> connectivityState = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            AadConnectivityStateType? connectivityState = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AadSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, Optional.ToNullable(connectivityState));
+            return new AadSolutionProperties(deviceVendor, deviceType, workspace, additionalProperties, connectivityState);
         }
 
         BinaryData IPersistableModel<AadSolutionProperties>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAadSolutionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

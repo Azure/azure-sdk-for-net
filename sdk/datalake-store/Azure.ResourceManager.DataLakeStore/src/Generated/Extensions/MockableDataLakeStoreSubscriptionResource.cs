@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.DataLakeStore.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Mocking
@@ -79,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(e), DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(e), DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +291,7 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         public virtual AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DataLakeStoreUsage.DeserializeDataLakeStoreUsage(e), LocationsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +317,7 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         public virtual Pageable<DataLakeStoreUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DataLakeStoreUsage.DeserializeDataLakeStoreUsage(e), LocationsClientDiagnostics, Pipeline, "MockableDataLakeStoreSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
         }
     }
 }

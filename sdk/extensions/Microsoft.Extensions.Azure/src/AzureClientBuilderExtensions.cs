@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -78,6 +79,8 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder">The client builder instance.</param>
         /// <param name="configuration">The configuration instance to use.</param>
         /// <returns>The client builder instance.</returns>
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, IConfiguration configuration) where TOptions : class
         {
             return builder.ConfigureOptions(options => configuration.Bind(options));

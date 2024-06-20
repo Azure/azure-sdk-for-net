@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeProductFeature : IUtf8JsonSerializable
+    public partial class HybridComputeProductFeature : IUtf8JsonSerializable, IJsonModel<HybridComputeProductFeature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProductFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridComputeProductFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeature>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeProductFeature)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -26,20 +36,66 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            {
+                writer.WritePropertyName("billingStartDate"u8);
+                writer.WriteStringValue(BillingStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
+            {
+                writer.WritePropertyName("enrollmentDate"u8);
+                writer.WriteStringValue(EnrollmentOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
+            {
+                writer.WritePropertyName("disenrollmentDate"u8);
+                writer.WriteStringValue(DisenrollmentOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputeProductFeature DeserializeHybridComputeProductFeature(JsonElement element)
+        HybridComputeProductFeature IJsonModel<HybridComputeProductFeature>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeature>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeProductFeature)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeProductFeature(document.RootElement, options);
+        }
+
+        internal static HybridComputeProductFeature DeserializeHybridComputeProductFeature(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
+            string name = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,8 +139,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     disenrollmentDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridComputeProductFeature(name.Value, Optional.ToNullable(subscriptionStatus), Optional.ToNullable(billingStartDate), Optional.ToNullable(enrollmentDate), Optional.ToNullable(disenrollmentDate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridComputeProductFeature(
+                name,
+                subscriptionStatus,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridComputeProductFeature>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeature>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeProductFeature)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridComputeProductFeature IPersistableModel<HybridComputeProductFeature>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeature>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputeProductFeature(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeProductFeature)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputeProductFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

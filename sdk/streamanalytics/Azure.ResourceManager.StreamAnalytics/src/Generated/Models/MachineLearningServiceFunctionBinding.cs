@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServiceFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The Request-Response execute endpoint of the Azure Machine Learning web service. </param>
         /// <param name="apiKey"> The API key used to authenticate with Request-Response endpoint. </param>
         /// <param name="inputs"> The inputs for the Azure Machine Learning web service endpoint. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="numberOfParallelRequests"> The number of parallel requests that will be sent per partition of your job to the machine learning service. Default is 1. </param>
         /// <param name="inputRequestName"> Label for the input request object. </param>
         /// <param name="outputResponseName"> Label for the output request object. </param>
-        internal MachineLearningServiceFunctionBinding(string functionBindingType, string endpoint, string apiKey, IList<MachineLearningServiceInputColumn> inputs, IList<MachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName) : base(functionBindingType)
+        internal MachineLearningServiceFunctionBinding(string functionBindingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string endpoint, string apiKey, IList<MachineLearningServiceInputColumn> inputs, IList<MachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName) : base(functionBindingType, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             ApiKey = apiKey;

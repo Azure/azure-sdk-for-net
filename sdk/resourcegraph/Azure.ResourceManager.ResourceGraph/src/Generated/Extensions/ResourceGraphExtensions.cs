@@ -8,9 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceGraph.Mocking;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;

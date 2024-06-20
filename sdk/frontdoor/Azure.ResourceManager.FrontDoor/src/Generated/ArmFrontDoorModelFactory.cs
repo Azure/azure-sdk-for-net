@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -46,7 +44,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             routingRuleLinks ??= new List<SubResource>();
             securityPolicyLinks ??= new List<SubResource>();
 
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new FrontDoorSku(skuName) : null, policySettings, rules != null ? new CustomRuleList(rules?.ToList()) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList()) : null, frontendEndpointLinks?.ToList(), routingRuleLinks?.ToList(), securityPolicyLinks?.ToList(), provisioningState, resourceState);
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                skuName != null ? new FrontDoorSku(skuName, serializedAdditionalRawData: null) : null,
+                policySettings,
+                rules != null ? new CustomRuleList(rules?.ToList(), serializedAdditionalRawData: null) : null,
+                managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
+                frontendEndpointLinks?.ToList(),
+                routingRuleLinks?.ToList(),
+                securityPolicyLinks?.ToList(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
@@ -67,7 +82,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             tags ??= new Dictionary<string, string>();
             ruleGroups ??= new List<ManagedRuleGroupDefinition>();
 
-            return new ManagedRuleSetDefinition(id, name, resourceType, systemData, tags, location, provisioningState, ruleSetId, ruleSetType, ruleSetVersion, ruleGroups?.ToList());
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                ruleSetId,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
@@ -79,7 +106,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             rules ??= new List<ManagedRuleDefinition>();
 
-            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList());
+            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -90,7 +117,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
         public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, ManagedRuleEnabledState? defaultState = null, RuleMatchActionType? defaultAction = null, string description = null)
         {
-            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description);
+            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorNameAvailabilityResult"/>. </summary>
@@ -100,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorNameAvailabilityResult"/> instance for mocking. </returns>
         public static FrontDoorNameAvailabilityResult FrontDoorNameAvailabilityResult(FrontDoorNameAvailabilityState? nameAvailability = null, string reason = null, string message = null)
         {
-            return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message);
+            return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorData"/>. </summary>
@@ -136,7 +163,28 @@ namespace Azure.ResourceManager.FrontDoor.Models
             rulesEngines ??= new List<FrontDoorRulesEngineData>();
             extendedProperties ??= new Dictionary<string, string>();
 
-            return new FrontDoorData(id, name, resourceType, systemData, tags, location, friendlyName, routingRules?.ToList(), loadBalancingSettings?.ToList(), healthProbeSettings?.ToList(), backendPools?.ToList(), frontendEndpoints?.ToList(), backendPoolsSettings, enabledState, resourceState, provisioningState, cname, frontdoorId, rulesEngines?.ToList(), extendedProperties);
+            return new FrontDoorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                friendlyName,
+                routingRules?.ToList(),
+                loadBalancingSettings?.ToList(),
+                healthProbeSettings?.ToList(),
+                backendPools?.ToList(),
+                frontendEndpoints?.ToList(),
+                backendPoolsSettings,
+                enabledState,
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                rulesEngines?.ToList(),
+                extendedProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorRulesEngineData"/>. </summary>
@@ -151,7 +199,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             rules ??= new List<RulesEngineRule>();
 
-            return new FrontDoorRulesEngineData(id, name, resourceType, systemData, rules?.ToList(), resourceState);
+            return new FrontDoorRulesEngineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                rules?.ToList(),
+                resourceState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoutingRuleData"/>. </summary>
@@ -177,7 +232,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             acceptedProtocols ??= new List<FrontDoorProtocol>();
             patternsToMatch ??= new List<string>();
 
-            return new RoutingRuleData(id, name, resourceType, frontendEndpoints?.ToList(), acceptedProtocols?.ToList(), patternsToMatch?.ToList(), enabledState, routeConfiguration, rulesEngineId != null ? ResourceManagerModelFactory.WritableSubResource(rulesEngineId) : null, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState);
+            return new RoutingRuleData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                frontendEndpoints?.ToList(),
+                acceptedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                enabledState,
+                routeConfiguration,
+                rulesEngineId != null ? ResourceManagerModelFactory.WritableSubResource(rulesEngineId) : null,
+                webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null,
+                resourceState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorResourceData"/>. </summary>
@@ -187,7 +254,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorResourceData"/> instance for mocking. </returns>
         public static FrontDoorResourceData FrontDoorResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new FrontDoorResourceData(id, name, resourceType);
+            return new FrontDoorResourceData(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorLoadBalancingSettingsData"/>. </summary>
@@ -201,7 +268,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorLoadBalancingSettingsData"/> instance for mocking. </returns>
         public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, int? sampleSize = null, int? successfulSamplesRequired = null, int? additionalLatencyMilliseconds = null, FrontDoorResourceState? resourceState = null)
         {
-            return new FrontDoorLoadBalancingSettingsData(id, name, resourceType, sampleSize, successfulSamplesRequired, additionalLatencyMilliseconds, resourceState);
+            return new FrontDoorLoadBalancingSettingsData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                sampleSize,
+                successfulSamplesRequired,
+                additionalLatencyMilliseconds,
+                resourceState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorHealthProbeSettingsData"/>. </summary>
@@ -217,7 +292,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorHealthProbeSettingsData"/> instance for mocking. </returns>
         public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string path = null, FrontDoorProtocol? protocol = null, int? intervalInSeconds = null, FrontDoorHealthProbeMethod? healthProbeMethod = null, HealthProbeEnabled? enabledState = null, FrontDoorResourceState? resourceState = null)
         {
-            return new FrontDoorHealthProbeSettingsData(id, name, resourceType, path, protocol, intervalInSeconds, healthProbeMethod, enabledState, resourceState);
+            return new FrontDoorHealthProbeSettingsData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                path,
+                protocol,
+                intervalInSeconds,
+                healthProbeMethod,
+                enabledState,
+                resourceState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackendPool"/>. </summary>
@@ -233,7 +318,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             backends ??= new List<FrontDoorBackend>();
 
-            return new FrontDoorBackendPool(id, name, resourceType, backends?.ToList(), loadBalancingSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId) : null, healthProbeSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId) : null, resourceState);
+            return new FrontDoorBackendPool(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                backends?.ToList(),
+                loadBalancingSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId) : null,
+                healthProbeSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId) : null,
+                resourceState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackend"/>. </summary>
@@ -252,7 +345,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorBackend"/> instance for mocking. </returns>
         public static FrontDoorBackend FrontDoorBackend(string address = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, AzureLocation? privateLinkLocation = null, BackendPrivateEndpointStatus? privateEndpointStatus = null, string privateLinkApprovalMessage = null, int? httpPort = null, int? httpsPort = null, BackendEnabledState? enabledState = null, int? priority = null, int? weight = null, string backendHostHeader = null)
         {
-            return new FrontDoorBackend(address, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateEndpointStatus, privateLinkApprovalMessage, httpPort, httpsPort, enabledState, priority, weight, backendHostHeader);
+            return new FrontDoorBackend(
+                address,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateEndpointStatus,
+                privateLinkApprovalMessage,
+                httpPort,
+                httpsPort,
+                enabledState,
+                priority,
+                weight,
+                backendHostHeader,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontendEndpointData"/>. </summary>
@@ -270,7 +376,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="FrontDoor.FrontendEndpointData"/> instance for mocking. </returns>
         public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string hostName = null, SessionAffinityEnabledState? sessionAffinityEnabledState = null, int? sessionAffinityTtlInSeconds = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, FrontDoorResourceState? resourceState = null, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = null, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = null, CustomHttpsConfiguration customHttpsConfiguration = null)
         {
-            return new FrontendEndpointData(id, name, resourceType, hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState, customHttpsProvisioningState, customHttpsProvisioningSubstate, customHttpsConfiguration);
+            return new FrontendEndpointData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                hostName,
+                sessionAffinityEnabledState,
+                sessionAffinityTtlInSeconds,
+                webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsProvisioningSubstate,
+                customHttpsConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorValidateCustomDomainResult"/>. </summary>
@@ -280,7 +398,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorValidateCustomDomainResult"/> instance for mocking. </returns>
         public static FrontDoorValidateCustomDomainResult FrontDoorValidateCustomDomainResult(bool? isCustomDomainValidated = null, string reason = null, string message = null)
         {
-            return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message);
+            return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/>. </summary>
@@ -298,7 +416,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontDoorNetworkExperimentProfileData(id, name, resourceType, systemData, tags, location, etag, resourceState, enabledState);
+            return new FrontDoorNetworkExperimentProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                resourceState,
+                enabledState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PreconfiguredEndpoint"/>. </summary>
@@ -317,7 +445,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PreconfiguredEndpoint(id, name, resourceType, systemData, tags, location, description, endpoint, endpointType, backend);
+            return new PreconfiguredEndpoint(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                endpoint,
+                endpointType,
+                backend,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorExperimentData"/>. </summary>
@@ -339,7 +478,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontDoorExperimentData(id, name, resourceType, systemData, tags, location, description, experimentEndpointA, experimentEndpointB, enabledState, resourceState, status, scriptFileUri);
+            return new FrontDoorExperimentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                experimentEndpointA,
+                experimentEndpointB,
+                enabledState,
+                resourceState,
+                status,
+                scriptFileUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LatencyScorecard"/>. </summary>
@@ -364,7 +517,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
             tags ??= new Dictionary<string, string>();
             latencyMetrics ??= new List<LatencyMetric>();
 
-            return new LatencyScorecard(id, name, resourceType, systemData, tags, location, latencyScorecardId, latencyScorecardName, description, scorecardEndpointA, scorecardEndpointB, startOn, endOn, country, latencyMetrics?.ToList());
+            return new LatencyScorecard(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                latencyScorecardId,
+                latencyScorecardName,
+                description,
+                scorecardEndpointA,
+                scorecardEndpointB,
+                startOn,
+                endOn,
+                country,
+                latencyMetrics?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LatencyMetric"/>. </summary>
@@ -381,7 +550,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.LatencyMetric"/> instance for mocking. </returns>
         public static LatencyMetric LatencyMetric(string name = null, DateTimeOffset? endOn = null, float? aValue = null, float? bValue = null, float? delta = null, float? deltaPercent = null, float? acLower95CI = null, float? ahUpper95CI = null, float? bcLower95CI = null, float? bUpper95CI = null)
         {
-            return new LatencyMetric(name, endOn, aValue, bValue, delta, deltaPercent, acLower95CI, ahUpper95CI, bcLower95CI, bUpper95CI);
+            return new LatencyMetric(
+                name,
+                endOn,
+                aValue,
+                bValue,
+                delta,
+                deltaPercent,
+                acLower95CI,
+                ahUpper95CI,
+                bcLower95CI,
+                bUpper95CI,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorTimeSeriesInfo"/>. </summary>
@@ -404,7 +584,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
             tags ??= new Dictionary<string, string>();
             timeSeriesData ??= new List<FrontDoorTimeSeriesDataPoint>();
 
-            return new FrontDoorTimeSeriesInfo(id, name, resourceType, systemData, tags, location, endpoint, startOn, endOn, aggregationInterval, timeSeriesType, country, timeSeriesData?.ToList());
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                endpoint,
+                startOn,
+                endOn,
+                aggregationInterval,
+                timeSeriesType,
+                country,
+                timeSeriesData?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

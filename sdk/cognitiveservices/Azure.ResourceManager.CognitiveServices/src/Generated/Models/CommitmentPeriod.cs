@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment period. </summary>
     public partial class CommitmentPeriod
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CommitmentPeriod"/>. </summary>
         public CommitmentPeriod()
         {
@@ -23,24 +56,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
         /// <param name="startOn"> Commitment period start date. </param>
         /// <param name="endOn"> Commitment period end date. </param>
-        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tier = tier;
             Count = count;
             Quota = quota;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Commitment period commitment tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
         /// <summary> Commitment period commitment count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> Cognitive Services account commitment quota. </summary>
+        [WirePath("quota")]
         public CommitmentQuota Quota { get; }
         /// <summary> Commitment period start date. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Commitment period end date. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Optional<KeyValueType> type = default;
+            KeyValueType? type = default;
             string text = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
-            Optional<IReadOnlyList<string>> elements = default;
+            IReadOnlyList<float> boundingBox = default;
+            IReadOnlyList<string> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -70,7 +69,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Optional.ToNullable(type), text, Optional.ToList(boundingBox), Optional.ToList(elements));
+            return new KeyValueElement(type, text, boundingBox ?? new ChangeTrackingList<float>(), elements ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyValueElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyValueElement(document.RootElement);
         }
     }
 }

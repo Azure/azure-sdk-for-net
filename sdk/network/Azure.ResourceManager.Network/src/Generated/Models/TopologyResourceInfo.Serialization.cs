@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class TopologyResourceInfo : IUtf8JsonSerializable, IJsonModel<TopologyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopologyResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopologyResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TopologyResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TopologyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopologyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TopologyResourceInfo DeserializeTopologyResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologyAssociation>> associations = default;
+            string name = default;
+            string id = default;
+            AzureLocation? location = default;
+            IReadOnlyList<TopologyAssociation> associations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.Network.Models
                     List<TopologyAssociation> array = new List<TopologyAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item));
+                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item, options));
                     }
                     associations = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TopologyResourceInfo(name, id, location, associations ?? new ChangeTrackingList<TopologyAssociation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTopologyResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologyResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

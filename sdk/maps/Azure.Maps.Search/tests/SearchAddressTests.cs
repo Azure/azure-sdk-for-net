@@ -157,8 +157,6 @@ namespace Azure.Maps.Search.Tests
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
 
-            // delay 400 ms for the task to complete
-            await Task.Delay(400);
             var searchResult = operation.WaitForCompletion();
             Assert.AreEqual(2, searchResult.Value.Results.Count);
             Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);

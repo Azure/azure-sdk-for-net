@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         Id = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
                     },
-                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Auto-Approved", "None"),
+                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Auto-Approved", "None", null),
                 },
             };
             var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);

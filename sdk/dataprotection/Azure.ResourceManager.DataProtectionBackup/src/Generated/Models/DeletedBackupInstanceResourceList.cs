@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -22,8 +21,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DeletedBackupInstanceResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal DeletedBackupInstanceResourceList(string nextLink, IReadOnlyList<DeletedDataProtectionBackupInstanceData> value) : base(nextLink)
+        internal DeletedBackupInstanceResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DeletedDataProtectionBackupInstanceData> value) : base(nextLink, serializedAdditionalRawData)
         {
             Value = value;
         }

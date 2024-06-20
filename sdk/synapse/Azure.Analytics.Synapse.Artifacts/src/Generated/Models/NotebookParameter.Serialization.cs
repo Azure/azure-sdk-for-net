@@ -20,15 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                if (Value != null)
-                {
-                    writer.WritePropertyName("value"u8);
-                    writer.WriteObjectValue(Value);
-                }
-                else
-                {
-                    writer.WriteNull("value");
-                }
+                writer.WritePropertyName("value"u8);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsDefined(Type))
             {
@@ -44,15 +37,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> value = default;
-            Optional<NotebookParameterType> type = default;
+            object value = default;
+            NotebookParameterType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
                         continue;
                     }
                     value = property.Value.GetObject();
@@ -68,7 +60,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookParameter(value.Value, Optional.ToNullable(type));
+            return new NotebookParameter(value, type);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>
@@ -77,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override NotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

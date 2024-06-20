@@ -48,7 +48,14 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 deletionId = (string)deletionIdElement;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, deletionId);
+            return new BlobItemInternal(
+                name,
+                deleted,
+                snapshot,
+                versionId,
+                isCurrentVersion,
+                properties,
+                deletionId);
         }
     }
 }

@@ -1,15 +1,19 @@
 parameters: 
-  - name: ContainerRegistryClientId
+  - name: ServiceConnectionName
     type: string
-  - name: ContainerRegistryClientSecret
-    type: string
+    default: azuresdkimages_container-registry
   - name: ImageId
     type: string
 steps:
-- pwsh: |
-    $containerRegistry = ("${{parameters.ImageId}}" -split "\/")[0]
-    docker login $containerRegistry -u "${{ parameters.ContainerRegistryClientId }}" -p "${{ parameters.ContainerRegistryClientSecret }}"
-  displayName: Login container registry
-- pwsh: |
-    docker pull '${{ parameters.ImageId}}'
-  displayName: Pull docker image ${{ parameters.ImageId }}
+  - task: AzureCLI@2
+    displayName: Docker Auth and Pull
+    inputs:
+      azureSubscription: ${{ parameters.ServiceConnectionName }}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        # azuresdkimages.azurecr.io/pyrefautocr:latest -> azuresdkimages
+        $containerRegistryName = ("${{ parameters.ImageId }}" -split "\/")[0].Replace(".azurecr.io", "")
+
+        az acr login --name $containerRegistryName
+        docker pull '${{ parameters.ImageId }}'

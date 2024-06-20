@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveRouteMapRoute : IUtf8JsonSerializable, IJsonModel<EffectiveRouteMapRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRouteMapRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRouteMapRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveRouteMapRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRouteMapRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRouteMapRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveRouteMapRoute DeserializeEffectiveRouteMapRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> bgpCommunities = default;
-            Optional<string> asPath = default;
+            string prefix = default;
+            string bgpCommunities = default;
+            string asPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRouteMapRoute(prefix.Value, bgpCommunities.Value, asPath.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EffectiveRouteMapRoute(prefix, bgpCommunities, asPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRouteMapRoute>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveRouteMapRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

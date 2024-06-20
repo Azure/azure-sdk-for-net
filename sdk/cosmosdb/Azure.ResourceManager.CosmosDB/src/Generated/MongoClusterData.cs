@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoClusterData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MongoClusterData(AzureLocation location) : base(location)
@@ -42,7 +75,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> A provisioning state of the mongo cluster. </param>
         /// <param name="clusterStatus"> A status of the mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
-        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -54,27 +88,43 @@ namespace Azure.ResourceManager.CosmosDB
             ProvisioningState = provisioningState;
             ClusterStatus = clusterStatus;
             NodeGroupSpecs = nodeGroupSpecs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/> for deserialization. </summary>
+        internal MongoClusterData()
+        {
         }
 
         /// <summary> The mode to create a mongo cluster. </summary>
+        [WirePath("properties.createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
         /// <summary> Parameters used for restore operations. </summary>
+        [WirePath("properties.restoreParameters")]
         public MongoClusterRestoreParameters RestoreParameters { get; set; }
         /// <summary> The administrator's login for the mongo cluster. </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
+        [WirePath("properties.serverVersion")]
         public string ServerVersion { get; set; }
         /// <summary> The default mongo connection string for the cluster. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString { get; }
         /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
+        [WirePath("properties.earliestRestoreTime")]
         public string EarliestRestoreTime { get; }
         /// <summary> A provisioning state of the mongo cluster. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> A status of the mongo cluster. </summary>
+        [WirePath("properties.clusterStatus")]
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> The list of node group specs in the cluster. </summary>
+        [WirePath("properties.nodeGroupSpecs")]
         public IList<NodeGroupSpec> NodeGroupSpecs { get; }
     }
 }

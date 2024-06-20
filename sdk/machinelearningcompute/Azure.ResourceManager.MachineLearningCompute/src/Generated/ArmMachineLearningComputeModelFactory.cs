@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
@@ -41,7 +40,25 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             tags ??= new Dictionary<string, string>();
             provisioningErrors ??= new List<ErrorResponseWrapper>();
 
-            return new OperationalizationClusterData(id, name, resourceType, systemData, tags, location, description, createdOn, modifiedOn, provisioningState, provisioningErrors?.ToList(), clusterType, storageAccountResourceId != null ? new StorageAccountProperties(storageAccountResourceId) : null, containerRegistryResourceId != null ? new ContainerRegistryProperties(containerRegistryResourceId) : null, containerService, appInsightsResourceId != null ? new AppInsightsProperties(appInsightsResourceId) : null, globalServiceConfiguration);
+            return new OperationalizationClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                createdOn,
+                modifiedOn,
+                provisioningState,
+                provisioningErrors?.ToList(),
+                clusterType,
+                storageAccountResourceId != null ? new StorageAccountProperties(storageAccountResourceId, serializedAdditionalRawData: null) : null,
+                containerRegistryResourceId != null ? new ContainerRegistryProperties(containerRegistryResourceId, serializedAdditionalRawData: null) : null,
+                containerService,
+                appInsightsResourceId != null ? new AppInsightsProperties(appInsightsResourceId, serializedAdditionalRawData: null) : null,
+                globalServiceConfiguration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorResponseWrapper"/>. </summary>
@@ -49,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.ErrorResponseWrapper"/> instance for mocking. </returns>
         public static ErrorResponseWrapper ErrorResponseWrapper(ErrorResponse error = null)
         {
-            return new ErrorResponseWrapper(error);
+            return new ErrorResponseWrapper(error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorResponse"/>. </summary>
@@ -61,26 +78,16 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             details ??= new List<ErrorDetail>();
 
-            return new ErrorResponse(code, message, details?.ToList());
+            return new ErrorResponse(code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
         public static ErrorDetail ErrorDetail(string code = null, string message = null)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            return new ErrorDetail(code, message);
+            return new ErrorDetail(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AcsClusterProperties"/>. </summary>
@@ -96,7 +103,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             systemServices ??= new List<SystemService>();
 
-            return new AcsClusterProperties(clusterFqdn, orchestratorType, orchestratorServicePrincipal != null ? new KubernetesClusterProperties(orchestratorServicePrincipal) : null, systemServices?.ToList(), masterCount, agentCount, agentVmSize);
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorServicePrincipal != null ? new KubernetesClusterProperties(orchestratorServicePrincipal, serializedAdditionalRawData: null) : null,
+                systemServices?.ToList(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SystemService"/>. </summary>
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.SystemService"/> instance for mocking. </returns>
         public static SystemService SystemService(SystemServiceType systemServiceType = default, string publicIPAddress = null, string version = null)
         {
-            return new SystemService(systemServiceType, publicIPAddress, version);
+            return new SystemService(systemServiceType, publicIPAddress, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalizationClusterCredentials"/>. </summary>
@@ -119,7 +134,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.OperationalizationClusterCredentials"/> instance for mocking. </returns>
         public static OperationalizationClusterCredentials OperationalizationClusterCredentials(StorageAccountCredentials storageAccount = null, ContainerRegistryCredentials containerRegistry = null, ContainerServiceCredentials containerService = null, AppInsightsCredentials appInsights = null, ServiceAuthConfiguration serviceAuthConfiguration = null, SslConfiguration sslConfiguration = null)
         {
-            return new OperationalizationClusterCredentials(storageAccount, containerRegistry, containerService, appInsights, serviceAuthConfiguration, sslConfiguration);
+            return new OperationalizationClusterCredentials(
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                serviceAuthConfiguration,
+                sslConfiguration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountCredentials"/>. </summary>
@@ -129,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.StorageAccountCredentials"/> instance for mocking. </returns>
         public static StorageAccountCredentials StorageAccountCredentials(string resourceId = null, string primaryKey = null, string secondaryKey = null)
         {
-            return new StorageAccountCredentials(resourceId, primaryKey, secondaryKey);
+            return new StorageAccountCredentials(resourceId, primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryCredentials"/>. </summary>
@@ -140,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.ContainerRegistryCredentials"/> instance for mocking. </returns>
         public static ContainerRegistryCredentials ContainerRegistryCredentials(string loginServer = null, string password = null, string password2 = null, string username = null)
         {
-            return new ContainerRegistryCredentials(loginServer, password, password2, username);
+            return new ContainerRegistryCredentials(loginServer, password, password2, username, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceCredentials"/>. </summary>
@@ -150,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.ContainerServiceCredentials"/> instance for mocking. </returns>
         public static ContainerServiceCredentials ContainerServiceCredentials(string acsKubeConfig = null, ServicePrincipalProperties servicePrincipalConfiguration = null, string imagePullSecretName = null)
         {
-            return new ContainerServiceCredentials(acsKubeConfig, servicePrincipalConfiguration, imagePullSecretName);
+            return new ContainerServiceCredentials(acsKubeConfig, servicePrincipalConfiguration, imagePullSecretName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppInsightsCredentials"/>. </summary>
@@ -159,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.AppInsightsCredentials"/> instance for mocking. </returns>
         public static AppInsightsCredentials AppInsightsCredentials(string appId = null, string instrumentationKey = null)
         {
-            return new AppInsightsCredentials(appId, instrumentationKey);
+            return new AppInsightsCredentials(appId, instrumentationKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckSystemServicesUpdatesAvailableResponse"/>. </summary>
@@ -167,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.CheckSystemServicesUpdatesAvailableResponse"/> instance for mocking. </returns>
         public static CheckSystemServicesUpdatesAvailableResponse CheckSystemServicesUpdatesAvailableResponse(UpdatesAvailable? updatesAvailable = null)
         {
-            return new CheckSystemServicesUpdatesAvailableResponse(updatesAvailable);
+            return new CheckSystemServicesUpdatesAvailableResponse(updatesAvailable, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpdateSystemServicesResponse"/>. </summary>
@@ -177,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.UpdateSystemServicesResponse"/> instance for mocking. </returns>
         public static UpdateSystemServicesResponse UpdateSystemServicesResponse(OperationStatus? updateStatus = null, DateTimeOffset? updateStartedOn = null, DateTimeOffset? updateCompletedOn = null)
         {
-            return new UpdateSystemServicesResponse(updateStatus, updateStartedOn, updateCompletedOn);
+            return new UpdateSystemServicesResponse(updateStatus, updateStartedOn, updateCompletedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceOperation"/>. </summary>
@@ -187,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.ResourceOperation"/> instance for mocking. </returns>
         public static ResourceOperation ResourceOperation(string name = null, ResourceOperationDisplay display = null, string origin = null)
         {
-            return new ResourceOperation(name, display, origin);
+            return new ResourceOperation(name, display, origin, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceOperationDisplay"/>. </summary>
@@ -198,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.ResourceOperationDisplay"/> instance for mocking. </returns>
         public static ResourceOperationDisplay ResourceOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
         {
-            return new ResourceOperationDisplay(provider, resource, operation, description);
+            return new ResourceOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
         }
     }
 }

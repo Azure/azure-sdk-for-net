@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -204,6 +202,10 @@ namespace Azure.AI.Language.Conversations.Samples
             Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -221,6 +223,10 @@ namespace Azure.AI.Language.Conversations.Samples
             Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -238,6 +244,21 @@ namespace Azure.AI.Language.Conversations.Samples
             Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -272,6 +293,21 @@ namespace Azure.AI.Language.Conversations.Samples
             Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -338,6 +374,10 @@ kind = "ConversationalSummarizationTask",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -387,6 +427,10 @@ kind = "ConversationalSummarizationTask",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -439,6 +483,8 @@ summaryAspects = new object[]
 {
 "issue"
 },
+sentenceCount = 1234,
+stringIndexType = "Utf16CodeUnit",
 modelVersion = "<modelVersion>",
 loggingOptOut = true,
 },
@@ -451,6 +497,21 @@ taskName = "<taskName>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -520,6 +581,8 @@ summaryAspects = new object[]
 {
 "issue"
 },
+sentenceCount = 1234,
+stringIndexType = "Utf16CodeUnit",
 modelVersion = "<modelVersion>",
 loggingOptOut = true,
 },
@@ -532,6 +595,21 @@ taskName = "<taskName>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());

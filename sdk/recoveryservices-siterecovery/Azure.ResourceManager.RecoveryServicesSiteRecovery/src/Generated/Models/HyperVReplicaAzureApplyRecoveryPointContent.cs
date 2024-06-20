@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ApplyRecoveryPoint input specific to HyperVReplicaAzure provider. </summary>
@@ -18,9 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryKekCertificatePfx"> The primary kek certificate pfx. </param>
         /// <param name="secondaryKekCertificatePfx"> The secondary kek certificate pfx. </param>
-        internal HyperVReplicaAzureApplyRecoveryPointContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx) : base(instanceType)
+        internal HyperVReplicaAzureApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx) : base(instanceType, serializedAdditionalRawData)
         {
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;

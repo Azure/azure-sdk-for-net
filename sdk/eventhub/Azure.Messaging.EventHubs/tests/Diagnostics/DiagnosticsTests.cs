@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,6 +17,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -394,15 +396,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
+            var id0 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            var id1 = "00-1123456789abcdef0123456789abcdef-0123456789abcdef-01";
+
             await producer.SendAsync(new[]
             {
-                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id" } }),
-                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id2" } })
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, id0 } }),
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, id1 } })
             });
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
 
-            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(id0), new ClientDiagnosticListener.ProducedLink(id1) };
             var links = sendScope.Links.ToList();
 
             Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
@@ -445,10 +450,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
-
-            var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id" } });
-            var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id2" } });
-            var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id3" } });
+            var id0 = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            var id1 = "00-1123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            var id2 = "00-2123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, id0 } });
+            var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, id1 } });
+            var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, id2 } });
             var batch = await producer.CreateBatchAsync();
 
             Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
@@ -459,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
 
-            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(id0), new ClientDiagnosticListener.ProducedLink(id1) };
             var links = sendScope.Links.ToList();
 
             Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
@@ -480,7 +487,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = 12;
+            var traceparents = new List<string>();
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var fullyQualifiedNamespace = "namespace";
             var eventHubName = "eventHub";
@@ -492,13 +499,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime)
             };
 
-            eventBatch.ForEach(evt => evt.Properties.Add(MessagingClientDiagnostics.DiagnosticIdAttribute, (++diagnosticId).ToString()));
+            for (int i = 0; i < eventBatch.Count; i++)
+            {
+                traceparents.Add($"00-0123456789abcdef0123456789abcde{i}-0123456789abcde{i}-01");
+                eventBatch[i].Properties.Add(MessagingClientDiagnostics.DiagnosticIdAttribute, traceparents[i]);
+            }
             await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
             // Validate the diagnostics.
-
-            diagnosticId -= eventBatch.Count;
-
             var expectedTags = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind),
@@ -513,7 +521,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
-                var targetId = new ClientDiagnosticListener.ProducedLink((++diagnosticId).ToString());
+                var targetId = new ClientDiagnosticListener.ProducedLink(traceparents[index]);
                 Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
 
@@ -537,7 +545,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = "OMGHAI2U!";
+            var diagnosticId = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             var eventBatch = new List<EventData>
             {
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime)
@@ -559,12 +567,43 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processingScope.Activity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
 
+            var targetId = new ClientDiagnosticListener.ProducedLink(diagnosticId);
+            Assert.That(processingScope.Links, Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: {targetId}");
+
             var expectedTag =
                 new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute,
                     enqueuedTime.ToUnixTimeMilliseconds().ToString());
 
             var tags = processingScope.Activity.Tags;
             Assert.That(tags.Contains(expectedTag), Is.True, "The processing scope should have contained the enqueued time tag.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   class when processing a single event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorDisabledBatchTracing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: DateTimeOffset.UtcNow) };
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockProcessor = new MockEventProcessor(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default);
+
+            mockProcessor.EnableBatchTracing = false;
+            await mockProcessor.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            // Validate the diagnostics.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.IsEmpty(listener.Scopes);
         }
 
         /// <summary>
@@ -581,7 +620,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = "OMGHAI2U!";
+            var diagnosticId = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
             var eventBatch = new List<EventData>
             {
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime),
@@ -637,6 +676,36 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options,
                                                                     bool useTls = true) => Mock.Of<TransportClient>();
+        }
+
+        /// <summary>
+        ///   A minimal mock processor that allows toggling the batch tracing
+        ///   flag.
+        /// </summary>
+        ///
+        private class MockEventProcessor : EventProcessor<EventProcessorPartition>
+        {
+            public MockEventProcessor(int identifier,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      TokenCredential credential,
+                                      EventProcessorOptions options) : base(identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public new bool EnableBatchTracing
+            {
+                get => base.EnableBatchTracing;
+                set => base.EnableBatchTracing = value;
+            }
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => Task.CompletedTask;
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => Task.CompletedTask;
         }
     }
 }

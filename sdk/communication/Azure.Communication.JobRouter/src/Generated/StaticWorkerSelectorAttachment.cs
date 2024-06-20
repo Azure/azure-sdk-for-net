@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -15,10 +15,16 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerSelector"> The worker selector to attach. </param>
-        internal StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterWorkerSelector workerSelector) : base(kind)
+        internal StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterWorkerSelector workerSelector) : base(kind, serializedAdditionalRawData)
         {
             WorkerSelector = workerSelector;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal StaticWorkerSelectorAttachment()
+        {
         }
 
         /// <summary> The worker selector to attach. </summary>

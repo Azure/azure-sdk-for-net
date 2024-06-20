@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -38,7 +36,23 @@ namespace Azure.ResourceManager.PrivateDns.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PrivateDnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, numberOfRecords, maxNumberOfVirtualNetworkLinks, numberOfVirtualNetworkLinks, maxNumberOfVirtualNetworkLinksWithRegistration, numberOfVirtualNetworkLinksWithRegistration, privateDnsProvisioningState, internalId);
+            return new PrivateDnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                maxNumberOfRecords,
+                numberOfRecords,
+                maxNumberOfVirtualNetworkLinks,
+                numberOfVirtualNetworkLinks,
+                maxNumberOfVirtualNetworkLinksWithRegistration,
+                numberOfVirtualNetworkLinksWithRegistration,
+                privateDnsProvisioningState,
+                internalId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
@@ -58,7 +72,19 @@ namespace Azure.ResourceManager.PrivateDns.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new VirtualNetworkLinkData(id, name, resourceType, systemData, tags, location, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, registrationEnabled, virtualNetworkLinkState, privateDnsProvisioningState);
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                registrationEnabled,
+                virtualNetworkLinkState,
+                privateDnsProvisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

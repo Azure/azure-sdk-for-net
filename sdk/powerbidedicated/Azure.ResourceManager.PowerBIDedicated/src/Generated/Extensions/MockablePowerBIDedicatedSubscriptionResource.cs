@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PowerBIDedicated;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
@@ -133,7 +130,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +159,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>

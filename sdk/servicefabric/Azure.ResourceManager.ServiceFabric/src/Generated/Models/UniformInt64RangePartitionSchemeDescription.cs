@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
@@ -50,12 +51,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// should be split between the partition ‘count’
         ///
         /// </param>
-        internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, string lowKey, string highKey) : base(partitionScheme)
+        internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, string lowKey, string highKey) : base(partitionScheme, serializedAdditionalRawData)
         {
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
             PartitionScheme = partitionScheme;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/> for deserialization. </summary>
+        internal UniformInt64RangePartitionSchemeDescription()
+        {
         }
 
         /// <summary> The number of partitions. </summary>

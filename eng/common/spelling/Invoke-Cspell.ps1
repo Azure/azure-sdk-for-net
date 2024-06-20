@@ -87,7 +87,7 @@ function Test-VersionReportMatches() {
   $expectedPackageVersion = '6.12.0'
 
   # Act
-  $actual = &"$PSSCriptRoot/Invoke-Cspell.ps1" `
+  $actual = &"$PSScriptRoot/Invoke-Cspell.ps1" `
     -JobType '--version'
 
   # Assert

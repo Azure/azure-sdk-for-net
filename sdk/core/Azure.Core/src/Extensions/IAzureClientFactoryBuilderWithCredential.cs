@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core.Extensions
 {
@@ -18,6 +19,6 @@ namespace Azure.Core.Extensions
         /// <param name="clientFactory">The factory, that given the instance of options and credential, returns a client instance.</param>
         /// <param name="requiresCredential">Specifies whether the credential is optional (client supports anonymous authentication).</param>
         /// <returns><see cref="IAzureClientBuilder{TClient,TOptions}"/> that allows customizing the client registration.</returns>
-        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential = true) where TOptions : class;
+        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential = true) where TOptions : class;
     }
 }

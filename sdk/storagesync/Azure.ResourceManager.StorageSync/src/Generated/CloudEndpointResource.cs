@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -633,7 +631,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_restoreheartbeat</description>
+        /// <description>CloudEndpoints_Restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -671,7 +669,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudEndpoints_restoreheartbeat</description>
+        /// <description>CloudEndpoints_Restoreheartbeat</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

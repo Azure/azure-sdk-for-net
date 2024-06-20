@@ -17,9 +17,9 @@ namespace Azure.AI.Personalizer.Models
         {
             PersonalizerErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<PersonalizerError>> details = default;
-            Optional<InternalError> innerError = default;
+            string target = default;
+            IReadOnlyList<PersonalizerError> details = default;
+            InternalError innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -63,7 +63,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new PersonalizerError(code, message, target.Value, Optional.ToList(details), innerError.Value);
+            return new PersonalizerError(code, message, target, details ?? new ChangeTrackingList<PersonalizerError>(), innerError);
         }
     }
 }

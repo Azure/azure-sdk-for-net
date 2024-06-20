@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -614,7 +612,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppWritableSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(e), _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -643,7 +641,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppWritableSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(e), _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>

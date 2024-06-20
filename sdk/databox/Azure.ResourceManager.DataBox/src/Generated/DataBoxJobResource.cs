@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
 
@@ -635,7 +633,7 @@ namespace Azure.ResourceManager.DataBox
         public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -664,7 +662,7 @@ namespace Azure.ResourceManager.DataBox
         public virtual Pageable<UnencryptedCredentials> GetCredentials(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>

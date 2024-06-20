@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     [PersistableModelProxy(typeof(UnknownActiveBaseSecurityAdminRule))]
     public partial class ActiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveBaseSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveBaseSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveBaseSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActiveBaseSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ActiveBaseSecurityAdminRule DeserializeActiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element);
-                    case "Default": return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element);
+                    case "Custom": return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element, options);
+                    case "Default": return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element, options);
                 }
             }
-            return UnknownActiveBaseSecurityAdminRule.DeserializeUnknownActiveBaseSecurityAdminRule(element);
+            return UnknownActiveBaseSecurityAdminRule.DeserializeUnknownActiveBaseSecurityAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<ActiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

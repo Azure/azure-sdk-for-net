@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -41,18 +40,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(description, nameof(description));
-
             Script = script;
             Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/> for deserialization. </summary>
+        internal RunCommandDocument()
+        {
         }
 
         /// <summary> The script to be executed. </summary>

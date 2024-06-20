@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="probes"> List of probes for the container. </param>
-        internal ContainerAppContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IList<ContainerAppProbe> probes) : base(image, name, command, args, env, resources, volumeMounts)
+        internal ContainerAppContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ContainerAppProbe> probes) : base(image, name, command, args, env, resources, volumeMounts, serializedAdditionalRawData)
         {
             Probes = probes;
         }

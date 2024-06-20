@@ -5,20 +5,27 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownJobSecrets. </summary>
+    /// <summary> Unknown version of JobSecrets. </summary>
     internal partial class UnknownJobSecrets : JobSecrets
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal UnknownJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
         {
             JobSecretsType = jobSecretsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownJobSecrets"/> for deserialization. </summary>
+        internal UnknownJobSecrets()
+        {
         }
     }
 }

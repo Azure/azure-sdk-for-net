@@ -105,8 +105,40 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(PageBlobClient objectClient)
-            => new PageBlobStorageResource(objectClient);
+        protected override StorageResourceItem GetDestinationStorageResourceItem(
+            PageBlobClient objectClient,
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
+        {
+            PageBlobStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new()
+                {
+                    ContentDisposition = new("attachment"),
+                    ContentLanguage = new("en-US"),
+                    CacheControl = new("no-cache")
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new()
+                {
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new()
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true)
+                };
+            }
+            return new PageBlobStorageResource(objectClient, options);
+        }
 
         protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await SourceClientBuilder.GetTestShareAsync(service, containerName);
@@ -187,6 +219,48 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        protected override Task VerifyPropertiesCopyAsync(
+            DataTransfer transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            ShareFileClient sourceClient,
+            PageBlobClient destinationClient)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_DefaultProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_PreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NoPreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NewProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
         }
     }
 }

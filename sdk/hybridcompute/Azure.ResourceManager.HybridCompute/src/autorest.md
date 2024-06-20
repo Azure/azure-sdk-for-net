@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2023-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +20,9 @@ modelerfour:
   flatten-payloads: false
   # Mitigate the duplication schema named 'ErrorDetail'
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 prepend-rp-prefix:
@@ -54,6 +55,17 @@ prepend-rp-prefix:
   - ServiceStatus
   - ServiceStatuses
   - WindowsParameters
+  - AccessMode
+  - ResourceAssociation
+  - AccessRule
+  - AccessRuleDirection
+  - ProgramYear
+  - ProvisioningIssue
+  - ProvisioningIssueSeverity
+  - ProvisioningIssueType
+
+list-exception: 
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
 
 rename-mapping:
   AgentUpgrade.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
@@ -121,7 +133,7 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - AgentConfiguration
 
-directive:  
+directive:
   - from: HybridCompute.json
     where: $.definitions.MachineInstallPatchesParameters.properties.maximumDuration
     transform: $['format'] = 'duration'
@@ -133,11 +145,11 @@ directive:
   - from: HybridCompute.json
     where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
     transform: $['format'] = 'arm-id'
-  
+
   - from: HybridCompute.json
     where: $.definitions.AgentUpgrade.properties.correlationId
     transform: $['format'] = 'uuid'
-  
+
   - from: HybridCompute.json
     where: $.definitions.AgentUpgrade.properties.lastAttemptTimestamp
     transform: $['format'] = 'date-time'
@@ -195,7 +207,7 @@ directive:
           }
         ]
 
-  # add 200 response to run-command delete 
+  # add 200 response to run-command delete
   - from: HybridCompute.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}"].delete.responses
     transform: >-
@@ -231,7 +243,7 @@ directive:
           }
         }
       }
-  
+
   # remove cmdlets
   - where:
       subject: NetworkProfile
@@ -250,13 +262,8 @@ directive:
   - remove-operation: HybridIdentityMetadata_ListByMachines
 
   # add back when swagger change is checked in
-  - remove-operation: Licenses_Get
   - remove-operation: Licenses_ValidateLicense
-  - remove-operation: Licenses_ListBySubscription
-  - remove-operation: Licenses_ListByResourceGroup
-  - remove-operation: Licenses_Delete
-  - remove-operation: Licenses_Update
-  - remove-operation: Licenses_CreateOrUpdate
+  - remove-operation: Licenses_Update #PATCH
 
   - remove-operation: LicenseProfiles_Get
   - remove-operation: LicenseProfiles_Delete
@@ -268,8 +275,17 @@ directive:
   - remove-operation: NetworkConfigurations_Update
   - remove-operation: NetworkConfigurations_CreateOrUpdate
 
-  - remove-operation: NetworkSecurityPerimeterConfigurations_GetByPrivateLinkScope
-  - remove-operation: NetworkSecurityPerimeterConfigurations_ListByPrivateLinkScope
   - remove-operation: NetworkSecurityPerimeterConfigurations_ReconcileForPrivateLinkScope
+
+  # we will generate a seperate SDK for them
+  - remove-operation: Gateways_CreateOrUpdate
+  - remove-operation: Gateways_Get
+  - remove-operation: Gateways_ListByResourceGroup
+  - remove-operation: Gateways_ListBySubscription
+  - remove-operation: Gateways_Delete
+  - remove-operation: Gateways_Update
+  - remove-operation: Settings_Update
+  - remove-operation: Settings_Get
+  - remove-operation: Settings_Patch
 
 ```

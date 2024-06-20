@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -23,12 +22,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
         /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, string username, string acrToken, Uri acrServerUri, IReadOnlyList<string> repositories, DateTimeOffset? expiry) : base(credentialType)
+        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string acrToken, Uri acrServerUri, IReadOnlyList<string> repositories, DateTimeOffset? expiry) : base(credentialType, serializedAdditionalRawData)
         {
             Username = username;
             AcrToken = acrToken;

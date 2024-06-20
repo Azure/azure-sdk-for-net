@@ -9,21 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SubscriptionSupportTicketResource
     {
-        // Checks whether name is available for SupportTicket resource
+        // Checks whether name is available for a subscription support ticket resource
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckSupportTicketNameAvailability_ChecksWhetherNameIsAvailableForSupportTicketResource()
+        public async Task CheckSupportTicketNameAvailability_ChecksWhetherNameIsAvailableForASubscriptionSupportTicketResource()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CheckNameAvailabilityWithSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CheckNameAvailabilityWithSubscription.json
             // this example is just showing the usage of "SupportTickets_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -49,7 +47,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDetailsOfASubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetSubscriptionSupportTicketDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetSubscriptionSupportTicketDetails.json
             // this example is just showing the usage of "SupportTickets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +57,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
@@ -74,12 +72,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update advanced diagnostic consent of a support ticket
+        // Update advanced diagnostic consent of a subscription support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAdvancedDiagnosticConsentOfASupportTicket()
+        public async Task Update_UpdateAdvancedDiagnosticConsentOfASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateAdvancedDiagnosticConsentOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UpdateAdvancedDiagnosticConsentOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +87,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
@@ -108,12 +106,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update contact details of a support ticket
+        // Update contact details of a subscription support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateContactDetailsOfASupportTicket()
+        public async Task Update_UpdateContactDetailsOfASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateContactDetailsOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UpdateContactDetailsOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
@@ -156,12 +154,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update severity of a support ticket
+        // Update severity of a subscription support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateSeverityOfASupportTicket()
+        public async Task Update_UpdateSeverityOfASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateSeverityOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UpdateSeverityOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +169,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
@@ -190,12 +188,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update status of a support ticket
+        // Update status of a subscription support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateStatusOfASupportTicket()
+        public async Task Update_UpdateStatusOfASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateStatusOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UpdateStatusOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +203,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
@@ -224,12 +222,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Checks whether name is available for Communication resource
+        // Checks whether name is available for Communication resource for a subscription support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckCommunicationNameAvailability_ChecksWhetherNameIsAvailableForCommunicationResource()
+        public async Task CheckCommunicationNameAvailability_ChecksWhetherNameIsAvailableForCommunicationResourceForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CheckNameAvailabilityForSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CheckNameAvailabilityForSupportTicketCommunication.json
             // this example is just showing the usage of "Communications_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +237,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SubscriptionSupportTicketResource created on azure
             // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
             SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);

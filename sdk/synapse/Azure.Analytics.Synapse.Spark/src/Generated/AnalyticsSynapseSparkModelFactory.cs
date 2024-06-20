@@ -53,7 +53,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkBatchJob(
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                scheduler,
+                plugin,
+                errors?.ToList(),
+                tags,
+                id,
+                appId,
+                appInfo,
+                state,
+                logLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
@@ -69,7 +87,16 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(
+                notStartedAt,
+                startingAt,
+                runningAt,
+                deadAt,
+                successAt,
+                terminatedAt,
+                recoveringAt,
+                currentState,
+                jobCreationRequest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
@@ -97,7 +124,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
             archives ??= new List<string>();
             configuration ??= new Dictionary<string, string>();
 
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+            return new SparkRequest(
+                name,
+                file,
+                className,
+                arguments?.ToList(),
+                jars?.ToList(),
+                pythonFiles?.ToList(),
+                files?.ToList(),
+                archives?.ToList(),
+                configuration,
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                executorCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
@@ -122,7 +163,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+            return new SparkServicePlugin(
+                preparationStartedAt,
+                resourceAcquisitionStartedAt,
+                submissionStartedAt,
+                monitoringStartedAt,
+                cleanupStartedAt,
+                currentState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
@@ -174,7 +221,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkSession(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkSession(
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                scheduler,
+                plugin,
+                errors?.ToList(),
+                tags,
+                id,
+                appId,
+                appInfo,
+                state,
+                logLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkSessionState"/>. </summary>
@@ -192,7 +257,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkSessionState"/> instance for mocking. </returns>
         public static SparkSessionState SparkSessionState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? idleAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? shuttingDownAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, DateTimeOffset? busyAt = null, DateTimeOffset? errorAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, terminatedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest);
+            return new SparkSessionState(
+                notStartedAt,
+                startingAt,
+                idleAt,
+                deadAt,
+                shuttingDownAt,
+                terminatedAt,
+                recoveringAt,
+                busyAt,
+                errorAt,
+                currentState,
+                jobCreationRequest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCollection"/>. </summary>
@@ -229,7 +305,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             traceback ??= new List<string>();
 
-            return new SparkStatementOutput(status, executionCount, data, errorName, errorValue, traceback?.ToList());
+            return new SparkStatementOutput(
+                status,
+                executionCount,
+                data,
+                errorName,
+                errorValue,
+                traceback?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCancellationResult"/>. </summary>

@@ -10,7 +10,8 @@ namespace System.ClientModel.Tests.Client
     {
         public static string GetLocation(string fileName)
         {
-            string testsLocation = Directory.GetParent(typeof(TestData).Assembly.Location).FullName;
+            string? testsLocation = (Directory.GetParent(typeof(TestData).Assembly.Location)?.FullName)
+                ?? throw new InvalidOperationException("Failed to find test location");
             StringBuilder builder = new StringBuilder();
             int indexAfter = testsLocation.IndexOf(".Tests") + 6;
             builder.Append(testsLocation.Substring(0, indexAfter));

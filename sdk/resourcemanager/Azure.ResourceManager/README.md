@@ -46,7 +46,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 ```
@@ -388,7 +387,7 @@ ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}
 var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
 Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} updated");
 ```
-### Update GenericResourc Tags
+### Update GenericResource Tags
 ```C# Snippet:Update_GenericResourc_Tags
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
@@ -428,6 +427,24 @@ GenericResource resource = client.GetGenericResources().Get(id).Value;
 
 var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
 Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
+```
+
+### Rehydrate a long-running operation
+```C# Snippet:Readme_LRORehydration
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+// We initialize a long-running operation
+var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+// We get the rehydration token from the operation
+var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+// We rehydrate the long-running operation with the rehydration token, we can also do this asynchronously
+var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+var rehydratedOrgOperationAsync = await ArmOperation.RehydrateAsync<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+// Now we can operate with the rehydrated operation
+var rawResponse = rehydratedOrgOperation.GetRawResponse();
+await rehydratedOrgOperation.WaitForCompletionAsync();
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.

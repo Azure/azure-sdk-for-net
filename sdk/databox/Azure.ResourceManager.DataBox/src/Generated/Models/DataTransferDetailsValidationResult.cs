@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -21,8 +22,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataTransferDetailsValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Data transfer details validation status. </param>
-        internal DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, DataBoxValidationStatus? status) : base(validationType, error)
+        internal DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxValidationStatus? status) : base(validationType, error, serializedAdditionalRawData)
         {
             Status = status;
             ValidationType = validationType;

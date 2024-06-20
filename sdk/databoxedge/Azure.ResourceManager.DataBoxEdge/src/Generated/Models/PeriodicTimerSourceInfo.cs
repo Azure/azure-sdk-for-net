@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Periodic timer event source. </summary>
     public partial class PeriodicTimerSourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PeriodicTimerSourceInfo"/>. </summary>
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
         /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
@@ -29,11 +61,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
         /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
         /// <param name="topic"> Topic where periodic events are published to IoT device. </param>
-        internal PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule, string topic)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule, string topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             Schedule = schedule;
             Topic = topic;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerSourceInfo"/> for deserialization. </summary>
+        internal PeriodicTimerSourceInfo()
+        {
         }
 
         /// <summary> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </summary>

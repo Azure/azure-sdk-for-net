@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="NumberNotInRangeFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal NumberNotInRangeFilter(FilterOperatorType operatorType, string key, IList<IList<double>> values) : base(operatorType, key)
+        internal NumberNotInRangeFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<double>> values) : base(operatorType, key, serializedAdditionalRawData)
         {
             Values = values;
             OperatorType = operatorType;

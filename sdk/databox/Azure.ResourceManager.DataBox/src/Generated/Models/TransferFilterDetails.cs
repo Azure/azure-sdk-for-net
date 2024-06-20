@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Details of the filtering the transfer of data. </summary>
     public partial class TransferFilterDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         public TransferFilterDetails(DataAccountType dataAccountType)
@@ -26,12 +58,19 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
         /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
-        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataAccountType = dataAccountType;
             BlobFilterDetails = blobFilterDetails;
             AzureFileFilterDetails = azureFileFilterDetails;
             FilterFileDetails = filterFileDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/> for deserialization. </summary>
+        internal TransferFilterDetails()
+        {
         }
 
         /// <summary> Type of the account of data. </summary>

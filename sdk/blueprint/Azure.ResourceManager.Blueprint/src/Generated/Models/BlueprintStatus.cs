@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of <see cref="BlueprintStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
-        internal BlueprintStatus(DateTimeOffset? timeCreated, DateTimeOffset? lastModified) : base(timeCreated, lastModified)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlueprintStatus(DateTimeOffset? timeCreated, DateTimeOffset? lastModified, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(timeCreated, lastModified, serializedAdditionalRawData)
         {
         }
     }

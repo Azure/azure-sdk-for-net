@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisCacheAccessPolicyAssignmentData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentData"/>. </summary>
         public RedisCacheAccessPolicyAssignmentData()
         {
@@ -32,21 +65,27 @@ namespace Azure.ResourceManager.Redis
         /// <param name="objectId"> Object Id to assign access policy to. </param>
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
-        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProvisioningState? provisioningState, Guid? objectId, string objectIdAlias, string accessPolicyName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProvisioningState? provisioningState, Guid? objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ObjectId = objectId;
             ObjectIdAlias = objectIdAlias;
             AccessPolicyName = accessPolicyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of an access policy assignment set. </summary>
+        [WirePath("properties.provisioningState")]
         public AccessPolicyAssignmentProvisioningState? ProvisioningState { get; }
         /// <summary> Object Id to assign access policy to. </summary>
+        [WirePath("properties.objectId")]
         public Guid? ObjectId { get; set; }
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
+        [WirePath("properties.objectIdAlias")]
         public string ObjectIdAlias { get; set; }
         /// <summary> The name of the access policy that is being assigned. </summary>
+        [WirePath("properties.accessPolicyName")]
         public string AccessPolicyName { get; set; }
     }
 }

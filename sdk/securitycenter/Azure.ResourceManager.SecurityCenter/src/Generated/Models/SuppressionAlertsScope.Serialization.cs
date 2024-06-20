@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SuppressionAlertsScope : IUtf8JsonSerializable, IJsonModel<SuppressionAlertsScope>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionAlertsScope>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionAlertsScope>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SuppressionAlertsScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SuppressionAlertsScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in AllOf)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuppressionAlertsScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SuppressionAlertsScope DeserializeSuppressionAlertsScope(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             IList<SuppressionAlertsScopeElement> allOf = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allOf"u8))
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SuppressionAlertsScopeElement> array = new List<SuppressionAlertsScopeElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item));
+                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item, options));
                     }
                     allOf = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SuppressionAlertsScope(allOf, serializedAdditionalRawData);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSuppressionAlertsScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuppressionAlertsScope)} does not support reading '{options.Format}' format.");
             }
         }
 

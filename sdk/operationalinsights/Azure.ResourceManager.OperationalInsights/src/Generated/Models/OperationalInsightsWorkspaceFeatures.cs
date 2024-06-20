@@ -38,14 +38,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Flag that indicate if data should be exported. </summary>
+        [WirePath("enableDataExport")]
         public bool? IsDataExportEnabled { get; set; }
         /// <summary> Flag that describes if we want to remove the data after 30 days. </summary>
+        [WirePath("immediatePurgeDataOn30Days")]
         public bool? ImmediatePurgeDataOn30Days { get; set; }
         /// <summary> Flag that indicate which permission to use - resource or workspace or both. </summary>
+        [WirePath("enableLogAccessUsingOnlyResourcePermissions")]
         public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get; set; }
         /// <summary> Dedicated LA cluster resourceId that is linked to the workspaces. </summary>
+        [WirePath("clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; set; }
         /// <summary> Disable Non-AAD based Auth. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// Additional Properties
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

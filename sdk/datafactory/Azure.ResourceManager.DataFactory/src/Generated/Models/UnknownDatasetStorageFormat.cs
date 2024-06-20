@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownDatasetStorageFormat. </summary>
+    /// <summary> Unknown version of DatasetStorageFormat. </summary>
     internal partial class UnknownDatasetStorageFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetStorageFormat"/>. </summary>
@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownDatasetStorageFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             DatasetStorageFormatType = datasetStorageFormatType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatasetStorageFormat"/> for deserialization. </summary>
+        internal UnknownDatasetStorageFormat()
+        {
         }
     }
 }

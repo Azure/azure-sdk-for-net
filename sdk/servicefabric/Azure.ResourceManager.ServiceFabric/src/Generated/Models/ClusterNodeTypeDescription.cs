@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
     public partial class ClusterNodeTypeDescription
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
         /// <param name="clientConnectionEndpointPort"> The TCP cluster management endpoint port. </param>
@@ -55,7 +86,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="reverseProxyEndpointPort"> The endpoint used by reverse proxy. </param>
         /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
         /// <param name="isMultipleAvailabilityZonesSupported"> Indicates if the node type is enabled to support multiple zones. </param>
-        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported)
+        /// <param name="httpGatewayTokenAuthEndpointPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported, int? httpGatewayTokenAuthEndpointPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PlacementProperties = placementProperties;
@@ -70,6 +103,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ReverseProxyEndpointPort = reverseProxyEndpointPort;
             IsStateless = isStateless;
             IsMultipleAvailabilityZonesSupported = isMultipleAvailabilityZonesSupported;
+            HttpGatewayTokenAuthEndpointPort = httpGatewayTokenAuthEndpointPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/> for deserialization. </summary>
+        internal ClusterNodeTypeDescription()
+        {
         }
 
         /// <summary> The name of the node type. </summary>
@@ -105,5 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public bool? IsStateless { get; set; }
         /// <summary> Indicates if the node type is enabled to support multiple zones. </summary>
         public bool? IsMultipleAvailabilityZonesSupported { get; set; }
+        /// <summary> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </summary>
+        public int? HttpGatewayTokenAuthEndpointPort { get; set; }
     }
 }

@@ -9,16 +9,13 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Microsoft.Diagnostics.Symbols;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -450,7 +447,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
@@ -1388,7 +1385,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
@@ -1736,7 +1733,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             FileSmbProperties smbProperties = new FileSmbProperties
             {
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
@@ -1830,7 +1827,7 @@ namespace Azure.Storage.Files.Shares.Tests
             FileSmbProperties smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
@@ -2001,6 +1998,25 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task StartCopyAsync_SourceErrorAndStatusCode()
+        {
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.StartCopyAsync(sourceUri: s_invalidUri),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 400"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: InvalidQueryParameterValue"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Value for one of the query parameters specified in the request URI is invalid."));
+                });
+        }
+
         [RecordedTest]
         public async Task StartCopyAsync_CopySourceFileCreatedOnError()
         {
@@ -2096,7 +2112,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SmbPropertiesToCopy = CopyableFileSmbProperties.FileAttributes,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
+                    FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly")
                 }
             };
 
@@ -3089,6 +3105,80 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
             Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
             Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_05_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetRangeListDiffWithRenameAsync(bool? renameSupport)
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.MB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await sourceFile.UploadRangeAsync(
+                   range: range,
+                   content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse0 = await test.Share.CreateSnapshotAsync();
+
+            stream.Position = 0;
+            HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
+            await sourceFile.UploadRangeAsync(
+                   range: range2,
+                   content: stream);
+
+            HttpRange range3 = new HttpRange(0, 512);
+            Response<ShareFileUploadInfo> response = await sourceFile.ClearRangeAsync(range3);
+
+            // rename file after first snapshot
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
+
+            // take another share snapshot
+            Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Snapshot = snapshotResponse1.Value.Snapshot,
+                PreviousSnapshot = snapshotResponse0.Value.Snapshot,
+                IncludeRenames = renameSupport
+            };
+
+            try
+            {
+                if (renameSupport == true)
+                {
+                    // Act - renamed file range diff
+                    Response<ShareFileRangeInfo> rangeListResponse = await destFile.GetRangeListDiffAsync(options);
+                    // Assert
+                    // Ensure that we grab the whole ETag value from the service without removing the quotes
+                    Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+                    // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
+                    Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
+                    Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
+                    Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
+                    Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+                }
+                else
+                {
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        destFile.GetRangeListDiffAsync(options),
+                        e => Assert.AreEqual(ShareErrorCode.PreviousSnapshotNotFound.ToString(), e.ErrorCode));
+                }
+            }
+            finally
+            {
+                await destFile.DeleteAsync();
+            }
         }
 
         [RecordedTest]
@@ -4317,6 +4407,39 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task UploadRangeFromUriAsync_SourceErrorAndStatusCode()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync(shareName: GetNewShareName());
+            ShareClient share = test.Share;
+
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateIfNotExistsAsync();
+
+            ShareFileClient sourceFile = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            ShareFileClient destFile = directory.GetFileClient(GetNewFileName());
+            await destFile.CreateAsync(maxSize: Constants.KB);
+
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destFile.UploadRangeFromUriAsync(
+                sourceUri: destFile.Uri,
+                range: range,
+                sourceRange: range),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         [TestCase(null)]
         [TestCase(FileLastWrittenMode.Now)]
@@ -4490,19 +4613,18 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
-        // Uncomment this test when Client Name is enabled with STG 93.
-        //[PlaybackOnly("Not possible to make this test live")]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
-        //public async Task ListHandlesWithClientName()
-        //{
-        //    ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
-        //    ShareClient shareClient = serviceClient.GetShareClient("myshare");
-        //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
-        //    ShareFileClient fileClient = directoryClient.GetFileClient("file");
-        //    IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
-        //    // Assert
-        //    Assert.NotNull(handles[0].ClientName);
-        //}
+        [PlaybackOnly("Not possible to make this test live")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        public async Task ListHandlesWithClientName()
+        {
+            ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient shareClient = serviceClient.GetShareClient("myshare");
+            ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
+            ShareFileClient fileClient = directoryClient.GetFileClient("file");
+            IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
+            // Assert
+            Assert.NotNull(handles[0].ClientName);
+        }
 
         [RecordedTest]
         public async Task ListHandles_Min()
@@ -5874,7 +5996,7 @@ namespace Azure.Storage.Files.Shares.Tests
             FileSmbProperties smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 FileChangedOn = new DateTimeOffset(2010, 8, 26, 5, 15, 21, 60, TimeSpan.Zero),
@@ -6064,6 +6186,40 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             ShareFileClient destFile = await sasFileClient.RenameAsync(destinationPath: newPath + "?" + destSas);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task RenameAsync_SourceSasUri()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            ShareDirectoryClient sourceDirectoryClient = await directoryClient.CreateSubdirectoryAsync(sourceDirectoryName);
+            ShareFileClient sourceFile = await sourceDirectoryClient.CreateFileAsync(GetNewFileName(), Constants.MB);
+
+            // Make unique source sas
+            SasQueryParameters sourceSas = GetNewFileServiceSasCredentialsShare(shareName);
+            ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(sourceDirectoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destFileName = GetNewFileName();
+
+            ShareDirectoryClient sasDirectoryClient = InstrumentClient(new ShareDirectoryClient(sourceUriBuilder.ToUri(), GetOptions()));
+            ShareFileClient sasFileClient = InstrumentClient(sasDirectoryClient.GetFileClient(sourceFile.Name));
+
+            // Make unique destination sas
+            string newPath = sourceDirectoryClient.Path + "/" + destFileName;
+
+            // Act
+            ShareFileClient destFile = await sasFileClient.RenameAsync(destinationPath: newPath);
 
             // Assert
             Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();

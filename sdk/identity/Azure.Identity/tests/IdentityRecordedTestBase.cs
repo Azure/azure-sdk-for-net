@@ -37,14 +37,14 @@ namespace Azure.Identity.Tests
             SanitizedHeaders.Add("secret");
             JsonPathSanitizers.Add("$..refresh_token");
             JsonPathSanitizers.Add("$..access_token");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+", "=" + SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+")
             {
-                Condition = new Condition { UriRegex = ".*/token([?].*)?$" }
+                Condition = new Condition { UriRegex = ".*/token([?].*)?$" },
+                Value = "=" + SanitizeValue
             });
-            HeaderTransforms.Add(new HeaderTransform(
-                "WWW-Authenticate",
-                $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}")
+            HeaderTransforms.Add(new HeaderTransform("WWW-Authenticate")
             {
+                Value = $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}",
                 Condition = new Condition
                 {
                     ResponseHeader = new HeaderCondition

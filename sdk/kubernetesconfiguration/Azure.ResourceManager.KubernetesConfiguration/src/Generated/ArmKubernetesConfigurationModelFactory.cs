@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
@@ -48,7 +46,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             statuses ??= new List<KubernetesClusterExtensionStatus>();
             customLocationSettings ??= new Dictionary<string, string>();
 
-            return new KubernetesClusterExtensionData(id, name, resourceType, systemData, identity, plan, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, currentVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity, isSystemExtension);
+            return new KubernetesClusterExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                plan,
+                extensionType,
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
+                scope,
+                configurationSettings,
+                configurationProtectedSettings,
+                currentVersion,
+                provisioningState,
+                statuses?.ToList(),
+                errorInfo,
+                customLocationSettings,
+                packageUri,
+                aksAssignedIdentity,
+                isSystemExtension,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesConfiguration.KubernetesFluxConfigurationData"/>. </summary>
@@ -80,7 +100,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             configurationProtectedSettings ??= new Dictionary<string, string>();
             statuses ??= new List<KubernetesObjectStatus>();
 
-            return new KubernetesFluxConfigurationData(id, name, resourceType, systemData, scope, @namespace, sourceKind, isReconciliationSuspended, gitRepository, bucket, azureBlob, kustomizations, configurationProtectedSettings, statuses?.ToList(), repositoryPublicKey, sourceSyncedCommitId, sourceUpdatedOn, statusUpdatedOn, complianceState, provisioningState, errorMessage);
+            return new KubernetesFluxConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scope,
+                @namespace,
+                sourceKind,
+                isReconciliationSuspended,
+                gitRepository,
+                bucket,
+                azureBlob,
+                kustomizations,
+                configurationProtectedSettings,
+                statuses?.ToList(),
+                repositoryPublicKey,
+                sourceSyncedCommitId,
+                sourceUpdatedOn,
+                statusUpdatedOn,
+                complianceState,
+                provisioningState,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Kustomization"/>. </summary>
@@ -97,7 +139,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         {
             dependsOn ??= new List<string>();
 
-            return new Kustomization(name, path, dependsOn?.ToList(), timeoutInSeconds, syncIntervalInSeconds, retryIntervalInSeconds, prune, force);
+            return new Kustomization(
+                name,
+                path,
+                dependsOn?.ToList(),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                prune,
+                force,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectStatus"/>. </summary>
@@ -113,7 +164,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         {
             statusConditions ??= new List<KubernetesObjectStatusCondition>();
 
-            return new KubernetesObjectStatus(name, @namespace, kind, complianceState, appliedBy, statusConditions?.ToList(), helmReleaseProperties);
+            return new KubernetesObjectStatus(
+                name,
+                @namespace,
+                kind,
+                complianceState,
+                appliedBy,
+                statusConditions?.ToList(),
+                helmReleaseProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectReference"/>. </summary>
@@ -122,7 +181,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <returns> A new <see cref="Models.KubernetesObjectReference"/> instance for mocking. </returns>
         public static KubernetesObjectReference KubernetesObjectReference(string name = null, string @namespace = null)
         {
-            return new KubernetesObjectReference(name, @namespace);
+            return new KubernetesObjectReference(name, @namespace, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectStatusCondition"/>. </summary>
@@ -134,7 +193,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <returns> A new <see cref="Models.KubernetesObjectStatusCondition"/> instance for mocking. </returns>
         public static KubernetesObjectStatusCondition KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn = null, string message = null, string reason = null, string status = null, string objectStatusConditionDefinitionType = null)
         {
-            return new KubernetesObjectStatusCondition(lastTransitionOn, message, reason, status, objectStatusConditionDefinitionType);
+            return new KubernetesObjectStatusCondition(
+                lastTransitionOn,
+                message,
+                reason,
+                status,
+                objectStatusConditionDefinitionType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HelmReleaseProperties"/>. </summary>
@@ -146,7 +211,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <returns> A new <see cref="Models.HelmReleaseProperties"/> instance for mocking. </returns>
         public static HelmReleaseProperties HelmReleaseProperties(long? lastRevisionApplied = null, KubernetesObjectReference helmChartRef = null, long? failureCount = null, long? installFailureCount = null, long? upgradeFailureCount = null)
         {
-            return new HelmReleaseProperties(lastRevisionApplied, helmChartRef, failureCount, installFailureCount, upgradeFailureCount);
+            return new HelmReleaseProperties(
+                lastRevisionApplied,
+                helmChartRef,
+                failureCount,
+                installFailureCount,
+                upgradeFailureCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesConfiguration.KubernetesSourceControlConfigurationData"/>. </summary>
@@ -172,7 +243,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         {
             configurationProtectedSettings ??= new Dictionary<string, string>();
 
-            return new KubernetesSourceControlConfigurationData(id, name, resourceType, systemData, repositoryUri, operatorNamespace, operatorInstanceName, operatorType, operatorParams, configurationProtectedSettings, operatorScope, repositoryPublicKey, sshKnownHostsContents, isHelmOperatorEnabled, helmOperatorProperties, provisioningState, complianceStatus);
+            return new KubernetesSourceControlConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                repositoryUri,
+                operatorNamespace,
+                operatorInstanceName,
+                operatorType,
+                operatorParams,
+                configurationProtectedSettings,
+                operatorScope,
+                repositoryPublicKey,
+                sshKnownHostsContents,
+                isHelmOperatorEnabled,
+                helmOperatorProperties,
+                provisioningState,
+                complianceStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesConfigurationComplianceStatus"/>. </summary>
@@ -183,7 +272,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <returns> A new <see cref="Models.KubernetesConfigurationComplianceStatus"/> instance for mocking. </returns>
         public static KubernetesConfigurationComplianceStatus KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState = null, DateTimeOffset? lastConfigAppliedOn = null, string message = null, KubernetesConfigurationMesageLevel? messageLevel = null)
         {
-            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigAppliedOn, message, messageLevel);
+            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigAppliedOn, message, messageLevel, serializedAdditionalRawData: null);
         }
     }
 }

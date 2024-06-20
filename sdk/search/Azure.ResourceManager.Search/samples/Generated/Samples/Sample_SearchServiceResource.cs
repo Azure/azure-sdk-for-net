@@ -7,13 +7,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search.Samples
@@ -25,7 +22,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdminKey_SearchGetAdminKeys()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchGetAdminKeys.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchGetAdminKeys.json
             // this example is just showing the usage of "AdminKeys_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateAdminKey_SearchRegenerateAdminKey()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchRegenerateAdminKey.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchRegenerateAdminKey.json
             // this example is just showing the usage of "AdminKeys_Regenerate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +77,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateQueryKey_SearchCreateQueryKey()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchCreateQueryKey.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchCreateQueryKey.json
             // this example is just showing the usage of "QueryKeys_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            string name = "Query key for browser-based clients";
+            string name = "An API key granting read-only access to the documents collection of an index.";
             SearchServiceQueryKey result = await searchService.CreateQueryKeyAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetQueryKeysBySearchService_SearchListQueryKeysBySearchService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchListQueryKeysBySearchService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListQueryKeysBySearchService.json
             // this example is just showing the usage of "QueryKeys_ListBySearchService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteQueryKey_SearchDeleteQueryKey()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchDeleteQueryKey.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchDeleteQueryKey.json
             // this example is just showing the usage of "QueryKeys_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +163,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateService.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +203,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceAuthOptions()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceAuthOptions.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceAuthOptions.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +247,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceDisableLocalAuth()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceDisableLocalAuth.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceDisableLocalAuth.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +288,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceToAllowAccessFromPrivateEndpoints()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceToAllowAccessFromPrivateEndpoints.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPrivateEndpoints.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +309,7 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 ReplicaCount = 1,
                 PartitionCount = 1,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Disabled,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
 
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceToAllowAccessFromPublicCustomIPs()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceToAllowAccessFromPublicCustomIPs.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPublicCustomIPs.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -349,8 +346,10 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 ReplicaCount = 3,
                 PartitionCount = 1,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Enabled,
-                IPRules =
+                PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
+                {
+                    IPRules =
 {
 new SearchServiceIPRule()
 {
@@ -360,6 +359,7 @@ Value = "123.4.5.6",
 Value = "123.4.6.0/18",
 }
 },
+                },
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
 
@@ -370,12 +370,12 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SearchUpdateServiceToRemoveIdentity
+        // SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_SearchUpdateServiceToRemoveIdentity()
+        public async Task Update_SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceToRemoveIdentity.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -394,7 +394,58 @@ Value = "123.4.6.0/18",
             // invoke the operation
             SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
             {
-                SkuName = SearchSkuName.Standard,
+                ReplicaCount = 3,
+                PartitionCount = 1,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
+                {
+                    IPRules =
+{
+new SearchServiceIPRule()
+{
+Value = "123.4.5.6",
+},new SearchServiceIPRule()
+{
+Value = "123.4.6.0/18",
+}
+},
+                    Bypass = SearchBypass.AzurePortal,
+                },
+            };
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SearchServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // SearchUpdateServiceToRemoveIdentity
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_SearchUpdateServiceToRemoveIdentity()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceToRemoveIdentity.json
+            // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SearchServiceResource created on azure
+            // for more information of creating SearchServiceResource, please refer to the document of SearchServiceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string searchServiceName = "mysearchservice";
+            ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
+            SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
+
+            // invoke the operation
+            SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
+            {
+                SearchSkuName = SearchServiceSkuName.Standard,
                 Identity = new ManagedServiceIdentity("None"),
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
@@ -411,7 +462,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceWithCmkEnforcement()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceWithCmkEnforcement.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithCmkEnforcement.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -450,12 +501,56 @@ Value = "123.4.6.0/18",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // SearchUpdateServiceWithDataExfiltration
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_SearchUpdateServiceWithDataExfiltration()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithDataExfiltration.json
+            // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SearchServiceResource created on azure
+            // for more information of creating SearchServiceResource, please refer to the document of SearchServiceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string searchServiceName = "mysearchservice";
+            ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
+            SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
+
+            // invoke the operation
+            SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
+            {
+                ReplicaCount = 2,
+                DisabledDataExfiltrationOptions =
+{
+SearchDisabledDataExfiltrationOption.All
+},
+                Tags =
+{
+["app-name"] = "My e-commerce app",
+["new-tag"] = "Adding a new tag",
+},
+            };
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SearchServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // SearchUpdateServiceWithSemanticSearch
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SearchUpdateServiceWithSemanticSearch()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchUpdateServiceWithSemanticSearch.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchUpdateServiceWithSemanticSearch.json
             // this example is just showing the usage of "Services_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -496,7 +591,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SearchGetService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchGetService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchGetService.json
             // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -527,7 +622,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SearchDeleteService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchDeleteService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchDeleteService.json
             // this example is just showing the usage of "Services_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -554,7 +649,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSearchServices_SearchListServicesBySubscription()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchListServicesBySubscription.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListServicesBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -586,7 +681,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckSearchServiceNameAvailability_SearchCheckNameAvailability()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/SearchCheckNameAvailability.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchCheckNameAvailability.json
             // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -612,7 +707,7 @@ Value = "123.4.6.0/18",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSupportedPrivateLinkResources_ListSupportedPrivateLinkResources()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/ListSupportedPrivateLinkResources.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/ListSupportedPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListSupported" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

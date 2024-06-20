@@ -8,11 +8,8 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Samples
 {

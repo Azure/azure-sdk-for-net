@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ElasticSan.Mocking;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;

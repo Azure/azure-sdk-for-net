@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Table column. </summary>
     public partial class OperationalInsightsColumn
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumn"/>. </summary>
         public OperationalInsightsColumn()
         {
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="description"> Column description. </param>
         /// <param name="isDefaultDisplay"> Is displayed by default. </param>
         /// <param name="isHidden"> Is column hidden. </param>
-        internal OperationalInsightsColumn(string name, OperationalInsightsColumnType? columnType, OperationalInsightsColumnDataTypeHint? dataTypeHint, string displayName, string description, bool? isDefaultDisplay, bool? isHidden)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsColumn(string name, OperationalInsightsColumnType? columnType, OperationalInsightsColumnDataTypeHint? dataTypeHint, string displayName, string description, bool? isDefaultDisplay, bool? isHidden, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ColumnType = columnType;
@@ -32,21 +68,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Description = description;
             IsDefaultDisplay = isDefaultDisplay;
             IsHidden = isHidden;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Column name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Column data type. </summary>
+        [WirePath("type")]
         public OperationalInsightsColumnType? ColumnType { get; set; }
         /// <summary> Column data type logical hint. </summary>
+        [WirePath("dataTypeHint")]
         public OperationalInsightsColumnDataTypeHint? DataTypeHint { get; set; }
         /// <summary> Column display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Column description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Is displayed by default. </summary>
+        [WirePath("isDefaultDisplay")]
         public bool? IsDefaultDisplay { get; }
         /// <summary> Is column hidden. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
     }
 }

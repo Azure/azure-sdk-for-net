@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -25,8 +24,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
-        internal DataBoxHeavyJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
+        internal DataBoxHeavyJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
         {
             CabinetPodSecrets = cabinetPodSecrets;
             JobSecretsType = jobSecretsType;

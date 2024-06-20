@@ -32,7 +32,7 @@ namespace Azure.Storage.Queues.Tests
         public static QueueServiceClient GetServiceClient_SharedKey(this QueuesClientBuilder clientBuilder, QueueClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
-        public static QueueServiceClient GetServiceClient_OAuth(this QueuesClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
+        public static QueueServiceClient GetServiceClient_OAuth(this QueuesClientBuilder clientBuilder, QueueClientOptions options = default)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
     }
 }

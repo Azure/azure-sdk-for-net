@@ -39,6 +39,11 @@ namespace Azure.Communication.CallAutomation
         public Uri OperationCallbackUri { get; set; }
 
         /// <summary>
+        /// If set play can barge into other existing queued-up/currently-processing requests.
+        /// </summary>
+        internal bool InterruptCallMediaOperation { get; set; }
+
+        /// <summary>
         /// Creates a new PlayOptions object.
         /// </summary>
         public PlayOptions(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo)

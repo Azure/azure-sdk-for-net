@@ -27,7 +27,8 @@ namespace Azure.Storage.DataMovement
         /// Returns storage resources from the parent resource container
         /// </summary>
         /// <param name="path"></param>
-        protected internal abstract StorageResourceItem GetStorageResourceReference(string path);
+        /// <param name="resourceId"></param>
+        protected internal abstract StorageResourceItem GetStorageResourceReference(string path, string resourceId);
 
         /// <summary>
         /// Creates storage resource container if it does not already exists.

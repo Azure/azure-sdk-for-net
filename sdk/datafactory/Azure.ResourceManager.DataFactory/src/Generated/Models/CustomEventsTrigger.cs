@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -47,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Events = events;
             Scope = scope;
             TriggerType = triggerType ?? "CustomEventsTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/> for deserialization. </summary>
+        internal CustomEventsTrigger()
+        {
         }
 
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>

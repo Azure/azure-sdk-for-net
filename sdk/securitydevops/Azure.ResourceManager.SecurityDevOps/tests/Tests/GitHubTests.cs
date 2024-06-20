@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             : base(async)//, RecordedTestMode.Record)
         {
             // Sanitize GitHub OAuth code for Connector creation
-            BodyKeySanitizers.Add(new BodyKeySanitizer("Sanitized") { JsonPath = "properties.code" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.code"));
         }
 
         [Test]

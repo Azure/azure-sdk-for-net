@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -17,17 +18,17 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry);
-            if (Optional.IsDefined(Properties))
+            if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<object>(Properties);
             }
-            if (Optional.IsDefined(Id))
+            if (Common.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(FeatureType))
+            if (Common.Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
@@ -35,6 +36,14 @@ namespace Azure.Maps.Routing.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

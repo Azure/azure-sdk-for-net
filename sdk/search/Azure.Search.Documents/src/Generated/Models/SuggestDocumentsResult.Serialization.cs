@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             IReadOnlyList<SuggestResult> value = default;
-            Optional<double> searchCoverage = default;
+            double? searchCoverage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +42,15 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SuggestDocumentsResult(value, Optional.ToNullable(searchCoverage));
+            return new SuggestDocumentsResult(value, searchCoverage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SuggestDocumentsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSuggestDocumentsResult(document.RootElement);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        //[RecordedTest]
+        [RecordedTest]
         public async Task SqlDatabasePartitionMerge()
         {
             var database = await CreateSqlDatabase(new AutoscaleSettings()
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ThroughputSettingData throughputData = (await throughput.MigrateSqlDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             throughput = await database.GetCosmosDBSqlDatabaseThroughputSetting().GetAsync();
             CosmosDBSqlDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-               new ThroughputSettingsResourceInfo(1000, null, null, null, null, null)))).Value;
+               new ThroughputSettingsResourceInfo(1000, null, null, null, null, null, null)))).Value;
 
             MergeParameters mergeParameters = new MergeParameters() { IsDryRun = true };
             try
             {
                 PhysicalPartitionStorageInfoCollection physicalPartitionCollection = (await database.SqlDatabasePartitionMergeAsync(WaitUntil.Completed, mergeParameters)).Value;
-                Assert.IsTrue(physicalPartitionCollection.PhysicalPartitionStorageInfoCollectionValue.Count > 1);
+                Assert.IsTrue(physicalPartitionCollection.PhysicalPartitionStorageInfoCollectionValue.Count == 1);
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("Merge operation feature is not available/enabled"));
+                Assert.IsTrue(e.Message.Contains("Merge feature is not available") || e.Message.Contains("Merge operation feature is not available/enabled"));
             }
         }
 

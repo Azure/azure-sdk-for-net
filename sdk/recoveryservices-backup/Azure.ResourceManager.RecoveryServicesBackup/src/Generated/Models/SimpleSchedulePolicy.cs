@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -24,12 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
         /// <param name="scheduleRunDays"> List of days of week this schedule has to be run. </param>
         /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
         /// <param name="hourlySchedule"> Hourly Schedule of this Policy. </param>
         /// <param name="scheduleWeeklyFrequency"> At every number weeks this schedule has to be run. </param>
-        internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, BackupHourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
+        internal SimpleSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, BackupHourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType, serializedAdditionalRawData)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             ScheduleRunDays = scheduleRunDays;

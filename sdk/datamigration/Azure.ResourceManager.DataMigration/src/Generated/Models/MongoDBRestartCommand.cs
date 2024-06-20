@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -22,8 +23,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
-        internal MongoDBRestartCommand(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MongoDBCommandInput input) : base(commandType, errors, state)
+        internal MongoDBRestartCommand(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MongoDBCommandInput input) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             CommandType = commandType;

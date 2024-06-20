@@ -38,6 +38,7 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataTransferStatusInternal.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestConstants.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestEventsRaised.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.cs" LinkBase="Shared\DataMovement" />

@@ -155,7 +155,16 @@
         public bool IsTypeCollection => this.Type.Contains("IList") ||
                                         this.Type.Contains("IEnumerable") ||
                                         this.Type.Contains("List") ||
+                                        this.Type.Contains("Dictionary") ||
+                                        this.Type.Contains("IDictionary") ||
                                         this.Type.Contains("IReadOnlyList");
+
+        /// <summary>
+        /// Gets if the type is a collection.
+        /// </summary>
+        //TODO: Kinda hacky
+        public bool IsDictionary =>     this.Type.Contains("Dictionary") ||
+                                        this.Type.Contains("IDictionary");
 
         /// <summary>
         /// Gets the generic type parameter of this property.

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -21,9 +23,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCount"> The max permitted usage of this resource. </param>
         /// <param name="currentCount"> The current usage of this resource. </param>
-        internal StreamAnalyticsSubscriptionQuota(ResourceIdentifier id, string name, ResourceType? resourceType, int? maxCount, int? currentCount) : base(id, name, resourceType)
+        internal StreamAnalyticsSubscriptionQuota(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCount, int? currentCount) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             MaxCount = maxCount;
             CurrentCount = currentCount;

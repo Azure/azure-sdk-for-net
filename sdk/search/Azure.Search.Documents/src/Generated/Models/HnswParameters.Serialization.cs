@@ -72,10 +72,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int?> m = default;
-            Optional<int?> efConstruction = default;
-            Optional<int?> efSearch = default;
-            Optional<VectorSearchAlgorithmMetric?> metric = default;
+            int? m = default;
+            int? efConstruction = default;
+            int? efSearch = default;
+            VectorSearchAlgorithmMetric? metric = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m"u8))
@@ -119,7 +119,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric));
+            return new HnswParameters(m, efConstruction, efSearch, metric);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HnswParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHnswParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

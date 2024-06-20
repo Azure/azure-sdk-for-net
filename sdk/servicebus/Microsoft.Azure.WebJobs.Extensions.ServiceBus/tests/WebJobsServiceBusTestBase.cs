@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             SecondaryNamespaceQueueScope = await CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: _isSession,
-                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace,
+                useSecondaryNamespace: true,
                 lockDuration: TimeSpan.FromSeconds(15));
             _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
             _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);

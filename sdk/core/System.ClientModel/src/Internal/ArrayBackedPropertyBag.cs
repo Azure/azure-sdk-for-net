@@ -15,9 +15,9 @@ namespace System.ClientModel.Internal;
 /// </summary>
 internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquatable<TKey>
 {
-    private (TKey Key, TValue Value) _first;
-    private (TKey Key, TValue Value) _second;
-    private (TKey Key, TValue Value)[]? _rest;
+    private (TKey Key, TValue? Value) _first;
+    private (TKey Key, TValue? Value) _second;
+    private (TKey Key, TValue? Value)[]? _rest;
     private int _count;
     private readonly object _lock = new();
 #if DEBUG
@@ -46,7 +46,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         }
     }
 
-    public void GetAt(int index, out TKey key, out TValue value)
+    public void GetAt(int index, out TKey key, out TValue? value)
     {
         CheckDisposed();
         (key, value) = index switch
@@ -57,7 +57,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         };
     }
 
-    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
+    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue? value)
     {
         CheckDisposed();
         var index = GetIndex(key);
@@ -86,7 +86,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         return true;
     }
 
-    public void Set(TKey key, TValue value)
+    public void Set(TKey key, TValue? value)
     {
         CheckDisposed();
         var index = GetIndex(key);
@@ -131,7 +131,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
 
                 return false;
             default:
-                (TKey Key, TValue Value)[] rest = GetRest();
+                (TKey Key, TValue? Value)[] rest = GetRest();
                 if (IsFirst(key))
                 {
                     _first = _second;
@@ -173,7 +173,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     private bool IsSecond(TKey key) => _second.Key.Equals(key);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void AddInternal(TKey key, TValue value)
+    private void AddInternal(TKey key, TValue? value)
     {
         switch (_count)
         {
@@ -196,18 +196,18 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
             default:
                 if (_rest == null)
                 {
-                    _rest = ArrayPool<(TKey Key, TValue Value)>.Shared.Rent(8);
+                    _rest = ArrayPool<(TKey Key, TValue? Value)>.Shared.Rent(8);
                     _rest[_count++ - 2] = (key, value);
                     return;
                 }
 
                 if (_rest.Length <= _count)
                 {
-                    var larger = ArrayPool<(TKey Key, TValue Value)>.Shared.Rent(_rest.Length << 1);
+                    var larger = ArrayPool<(TKey Key, TValue? Value)>.Shared.Rent(_rest.Length << 1);
                     _rest.CopyTo(larger, 0);
                     var old = _rest;
                     _rest = larger;
-                    ArrayPool<(TKey Key, TValue Value)>.Shared.Return(old, true);
+                    ArrayPool<(TKey Key, TValue? Value)>.Shared.Return(old, true);
                 }
                 _rest[_count++ - 2] = (key, value);
                 return;
@@ -215,7 +215,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void SetAt(int index, (TKey Key, TValue Value) value)
+    private void SetAt(int index, (TKey Key, TValue? Value) value)
     {
         if (index == 0)
             _first = value;
@@ -226,7 +226,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private TValue GetAt(int index) => index switch
+    private TValue? GetAt(int index) => index switch
     {
         0 => _first.Value,
         1 => _second.Value,
@@ -246,7 +246,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         if (_count <= 2)
             return -1;
 
-        (TKey Key, TValue Value)[] rest = GetRest();
+        (TKey Key, TValue? Value)[] rest = GetRest();
         int max = _count - 2;
         for (var i = 0; i < max; i++)
         {
@@ -276,13 +276,13 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
                 return;
             }
 
-            var rest = _rest;
+            (TKey Key, TValue? Value)[] rest = _rest;
             _rest = default;
-            ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
+            ArrayPool<(TKey Key, TValue? Value)>.Shared.Return(rest, true);
         }
     }
 
-    private (TKey Key, TValue Value)[] GetRest() => _rest ??
+    private (TKey Key, TValue? Value)[] GetRest() => _rest ??
         throw new InvalidOperationException($"{nameof(_rest)} field is null while {nameof(_count)} == {_count}");
 
     [Conditional("DEBUG")]

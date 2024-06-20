@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -48,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebServiceOutputs = webServiceOutputs;
             WebServiceInputs = webServiceInputs;
             ActivityType = activityType ?? "AzureMLBatchExecution";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownSearchIndexerSkill. </summary>
+    /// <summary> Unknown version of SearchIndexerSkill. </summary>
     internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/>. </summary>

@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {

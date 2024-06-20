@@ -44,7 +44,8 @@ namespace Azure.Identity.Tests
         }
 
         [NonParallelizable]
-        [Test]
+        [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))

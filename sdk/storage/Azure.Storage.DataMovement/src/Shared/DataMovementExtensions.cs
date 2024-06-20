@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Azure.Storage.DataMovement.JobPlan;
 
@@ -9,13 +10,15 @@ namespace Azure.Storage.DataMovement
 {
     internal static class DataMovementExtensions
     {
-        internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)
+        internal static StorageResourceItemProperties ToStorageResourceProperties(this FileInfo fileInfo)
         {
-            return new StorageResourceProperties(
-                lastModified: fileInfo.LastWriteTimeUtc,
-                createdOn: fileInfo.CreationTimeUtc,
-                contentLength: fileInfo.Length,
-                lastAccessed: fileInfo.LastAccessTimeUtc);
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            return new StorageResourceItemProperties(
+                resourceLength: fileInfo.Length,
+                eTag: default,
+                lastModifiedTime: fileInfo.LastWriteTimeUtc,
+                properties: properties);
         }
 
         public static StreamToUriJobPart ToJobPartAsync(
@@ -137,8 +140,8 @@ namespace Azure.Storage.DataMovement
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName, header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName, header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,
@@ -171,8 +174,8 @@ namespace Azure.Storage.DataMovement
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1), header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1), header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,
@@ -208,8 +211,8 @@ namespace Azure.Storage.DataMovement
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName, header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName, header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,

@@ -173,7 +173,7 @@ resource dataCollectionRuleRoleAssignment 'Microsoft.Authorization/roleAssignmen
 }
 
 @description('The base resource name.')
-param storageAccountName string = 'nibhatistorage'
+param storageAccountName string = uniqueString(baseName, 'storage')
 @description('The base resource name.')
 param storageAccountsku string = 'Standard_LRS'
 

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The name of the group. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The friendly name of the group. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
     }
 }

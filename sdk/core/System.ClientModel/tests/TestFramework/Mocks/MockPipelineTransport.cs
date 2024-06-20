@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
@@ -118,46 +119,36 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
-        public TransportRequest() { }
+        private Uri? _uri;
+        private readonly PipelineRequestHeaders _headers;
 
-        public override void Dispose()
+        public TransportRequest()
         {
-            throw new NotImplementedException();
+            _headers = new MockRequestHeaders();
+            _uri = new Uri("https://www.example.com");
         }
 
-        protected override BinaryContent? GetContentCore()
+        public override void Dispose() { }
+
+        protected override BinaryContent? ContentCore
         {
-            throw new NotImplementedException();
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders HeadersCore
+            => _headers;
+
+        protected override string MethodCore
         {
-            throw new NotImplementedException();
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        protected override string GetMethodCore()
+        protected override Uri? UriCore
         {
-            throw new NotImplementedException();
-        }
-
-        protected override Uri GetUriCore()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetContentCore(BinaryContent? content)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetMethodCore(string method)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetUriCore(Uri uri)
-        {
-            throw new NotImplementedException();
+            get => _uri;
+            set => _uri = value;
         }
     }
 
@@ -178,12 +169,19 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        public override BinaryData Content => throw new NotImplementedException();
+
+        protected override PipelineResponseHeaders HeadersCore
+            => throw new NotImplementedException();
+
+        public override void Dispose() { }
+
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public override void Dispose()
+        public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

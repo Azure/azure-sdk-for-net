@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Details of a Master Target Server. </summary>
     public partial class MasterTargetServer
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MasterTargetServer"/>. </summary>
         internal MasterTargetServer()
         {
@@ -43,7 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgentExpireOn"> MARS agent expiry date. </param>
         /// <param name="agentVersionDetails"> Agent version details. </param>
         /// <param name="marsAgentVersionDetails"> Mars agent version details. </param>
-        internal MasterTargetServer(string id, IPAddress ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes, IReadOnlyList<SiteRecoveryDataStore> dataStores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpireOn, string marsAgentVersion, DateTimeOffset? marsAgentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryVersionDetails marsAgentVersionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MasterTargetServer(string id, IPAddress ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes, IReadOnlyList<SiteRecoveryDataStore> dataStores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpireOn, string marsAgentVersion, DateTimeOffset? marsAgentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryVersionDetails marsAgentVersionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             IPAddress = ipAddress;
@@ -63,6 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgentExpireOn = marsAgentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             MarsAgentVersionDetails = marsAgentVersionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The server Id. </summary>

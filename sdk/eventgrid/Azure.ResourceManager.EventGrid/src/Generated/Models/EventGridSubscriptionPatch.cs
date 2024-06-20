@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Event Subscription update. </summary>
     public partial class EventGridSubscriptionPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventGridSubscriptionPatch"/>. </summary>
         public EventGridSubscriptionPatch()
         {
@@ -46,7 +77,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (topic / domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
-        internal EventGridSubscriptionPatch(EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridSubscriptionPatch(EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Destination = destination;
             DeliveryWithResourceIdentity = deliveryWithResourceIdentity;
@@ -57,6 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
             DeadLetterWithResourceIdentity = deadLetterWithResourceIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

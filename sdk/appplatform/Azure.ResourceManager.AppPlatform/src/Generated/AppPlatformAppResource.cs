@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform
@@ -565,7 +563,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Apps_GetResourceUploadUrl</description>
+        /// <description>Apps_GetResourceUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -603,7 +601,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Apps_GetResourceUploadUrl</description>
+        /// <description>Apps_GetResourceUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

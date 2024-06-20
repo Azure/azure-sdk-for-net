@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> nameLocale = default;
-            Optional<string> name = default;
+            string nameLocale = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameLocale"u8))
@@ -33,7 +32,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ClassificationName(nameLocale.Value, name.Value);
+            return new ClassificationName(nameLocale, name);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ClassificationName FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeClassificationName(document.RootElement);
         }
     }
 }

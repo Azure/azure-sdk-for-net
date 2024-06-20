@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHttpSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayBackendHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining);
+                writer.WriteObjectValue(ConnectionDraining, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,32 +162,32 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
-            Optional<int> requestTimeout = default;
-            Optional<WritableSubResource> probe = default;
-            Optional<IList<WritableSubResource>> authenticationCertificates = default;
-            Optional<IList<WritableSubResource>> trustedRootCertificates = default;
-            Optional<ApplicationGatewayConnectionDraining> connectionDraining = default;
-            Optional<string> hostName = default;
-            Optional<bool> pickHostNameFromBackendAddress = default;
-            Optional<string> affinityCookieName = default;
-            Optional<bool> probeEnabled = default;
-            Optional<string> path = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? port = default;
+            ApplicationGatewayProtocol? protocol = default;
+            ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default;
+            int? requestTimeout = default;
+            WritableSubResource probe = default;
+            IList<WritableSubResource> authenticationCertificates = default;
+            IList<WritableSubResource> trustedRootCertificates = default;
+            ApplicationGatewayConnectionDraining connectionDraining = default;
+            string hostName = default;
+            bool? pickHostNameFromBackendAddress = default;
+            string affinityCookieName = default;
+            bool? probeEnabled = default;
+            string path = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
+                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -361,11 +360,30 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayBackendHttpSettings(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                port,
+                protocol,
+                cookieBasedAffinity,
+                requestTimeout,
+                probe,
+                authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                connectionDraining,
+                hostName,
+                pickHostNameFromBackendAddress,
+                affinityCookieName,
+                probeEnabled,
+                path,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options)
@@ -377,7 +395,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -393,7 +411,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayBackendHttpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

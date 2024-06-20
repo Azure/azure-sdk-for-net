@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> SKU availability. </summary>
     public partial class CognitiveServicesSkuAvailabilityList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityList"/>. </summary>
         internal CognitiveServicesSkuAvailabilityList()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="isSkuAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="message"> Additional error message. </param>
-        internal CognitiveServicesSkuAvailabilityList(string kind, string skuAvailabilityType, string skuName, bool? isSkuAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuAvailabilityList(string kind, string skuAvailabilityType, string skuName, bool? isSkuAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             SkuAvailabilityType = skuAvailabilityType;
@@ -30,19 +66,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IsSkuAvailable = isSkuAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public string SkuAvailabilityType { get; }
         /// <summary> The SKU of Cognitive Services account. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
         /// <summary> Indicates the given SKU is available or not. </summary>
+        [WirePath("skuAvailable")]
         public bool? IsSkuAvailable { get; }
         /// <summary> Reason why the SKU is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> Additional error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -9,6 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(EstimatedWaitTimes), SerializationValueHook = nameof(WriteEstimatedWaitTimes), DeserializationValueHook = nameof(ReadEstimatedWaitTimes))]
     public partial class RouterQueueStatistics
     {
         /// <summary>
@@ -16,11 +18,10 @@ namespace Azure.Communication.JobRouter
         /// by job priority
         /// </summary>
         [CodeGenMember("EstimatedWaitTimeMinutes")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteEstimatedWaitTimes), DeserializationValueHook = nameof(ReadEstimatedWaitTimes))]
         public IDictionary<int, TimeSpan> EstimatedWaitTimes { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteEstimatedWaitTimes(Utf8JsonWriter writer)
+        internal void WriteEstimatedWaitTimes(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             foreach (var item in EstimatedWaitTimes)
@@ -32,7 +33,7 @@ namespace Azure.Communication.JobRouter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadEstimatedWaitTimes(JsonProperty property, ref Optional<IDictionary<int, TimeSpan>> estimatedWaitTimes)
+        internal static void ReadEstimatedWaitTimes(JsonProperty property, ref IDictionary<int, TimeSpan> estimatedWaitTimes)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

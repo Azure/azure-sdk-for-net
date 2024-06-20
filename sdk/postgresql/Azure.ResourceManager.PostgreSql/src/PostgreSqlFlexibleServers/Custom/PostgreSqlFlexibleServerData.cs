@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     {
         /// <summary> Max storage allowed for a server. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
             get => Storage is null ? default : Storage.StorageSizeInGB;
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
         /// <summary> Replicas allowed for a server. </summary>
+        [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity
         {
             get;

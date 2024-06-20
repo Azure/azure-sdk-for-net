@@ -16,6 +16,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
@@ -313,9 +315,6 @@ directive:
         "itemName": "keys",
         "nextLinkName": null
       };
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
-    transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
   - from: swagger-document
     where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;

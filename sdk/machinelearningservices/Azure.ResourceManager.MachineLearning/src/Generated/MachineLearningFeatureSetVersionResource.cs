@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -541,7 +539,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(e), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -575,7 +573,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(e), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
     }
 }

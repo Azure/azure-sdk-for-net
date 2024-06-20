@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.HDInsight.Containers.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Mocking
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +205,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +216,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +232,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +243,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +259,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +270,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +286,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +297,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

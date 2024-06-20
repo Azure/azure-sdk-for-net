@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <NoWarn>SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
+    <NoWarn>$(NoWarn);SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<WritableSubResource>> predefinedPolicies = default;
-            Optional<ApplicationGatewaySslPolicyName> defaultPolicy = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> availableCipherSuites = default;
-            Optional<IList<ApplicationGatewaySslProtocol>> availableProtocols = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<WritableSubResource> predefinedPolicies = default;
+            ApplicationGatewaySslPolicyName? defaultPolicy = default;
+            IList<ApplicationGatewaySslCipherSuite> availableCipherSuites = default;
+            IList<ApplicationGatewaySslProtocol> availableProtocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -162,7 +161,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayAvailableSslOptionsInfo(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
+            return new ApplicationGatewayAvailableSslOptionsInfo(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                predefinedPolicies ?? new ChangeTrackingList<WritableSubResource>(),
+                defaultPolicy,
+                availableCipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(),
+                availableProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>());
         }
     }
 }

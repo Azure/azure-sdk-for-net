@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy based on running averages of the primary metric of all runs. </summary>
@@ -20,7 +23,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        internal MedianStoppingPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType) : base(delayEvaluation, evaluationInterval, policyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MedianStoppingPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData)
         {
             PolicyType = policyType;
         }

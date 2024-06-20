@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAutoUserSpecification : IUtf8JsonSerializable, IJsonModel<BatchAutoUserSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAutoUserSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAutoUserSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAutoUserSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAutoUserSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAutoUserSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAutoUserSpecification DeserializeBatchAutoUserSpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BatchAutoUserScope> scope = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
+            BatchAutoUserScope? scope = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAutoUserSpecification(Optional.ToNullable(scope), Optional.ToNullable(elevationLevel), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchAutoUserSpecification(scope, elevationLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAutoUserSpecification>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAutoUserSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

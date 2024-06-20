@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> The details for role assignment response. </summary>
     public partial class RoleAssignmentDetail
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentDetail"/>. </summary>
         /// <param name="roleId"> Role Id of the Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
@@ -50,7 +81,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
         /// <param name="role"> Data Product role to be assigned to a user. </param>
         /// <param name="roleAssignmentId"> Id of role assignment request. </param>
-        internal RoleAssignmentDetail(string roleId, string principalId, string userName, IList<string> dataTypeScope, string principalType, DataProductUserRole role, string roleAssignmentId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentDetail(string roleId, string principalId, string userName, IList<string> dataTypeScope, string principalType, DataProductUserRole role, string roleAssignmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoleId = roleId;
             PrincipalId = principalId;
@@ -59,6 +91,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             PrincipalType = principalType;
             Role = role;
             RoleAssignmentId = roleAssignmentId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentDetail"/> for deserialization. </summary>
+        internal RoleAssignmentDetail()
+        {
         }
 
         /// <summary> Role Id of the Built-In Role. </summary>

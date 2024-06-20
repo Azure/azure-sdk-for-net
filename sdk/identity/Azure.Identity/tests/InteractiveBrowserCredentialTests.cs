@@ -42,6 +42,14 @@ namespace Azure.Identity.Tests
             {
                 options.Transport = config.Transport;
             }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
@@ -268,6 +276,8 @@ namespace Azure.Identity.Tests
             }
 
             public bool IsProofOfPossessionRequired { get; set; }
+
+            public bool UseDefaultBrokerAccount { get; set; }
 
             Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
         }

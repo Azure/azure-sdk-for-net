@@ -260,7 +260,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
         $innerExceptionPresent = $_.Exception.psobject.Properties.name -contains "InnerException"
         
         $errorCodePresent = $false
-        if ($innerExceptionPresent) {
+        if ($innerExceptionPresent -and $_.Exception.InnerException) {
           $errorCodePresent = $_.Exception.InnerException.psobject.Properties.name -contains "ErrorCode"
         }
 

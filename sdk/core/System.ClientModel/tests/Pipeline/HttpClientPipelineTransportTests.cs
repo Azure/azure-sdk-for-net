@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -136,6 +137,364 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         CollectionAssert.AreEqual(new[] { headerValue }, values);
 
         CollectionAssert.Contains(response.Headers, new KeyValuePair<string, string>(headerName, headerValue));
+    }
+
+    [Test]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TransportBuffersBasedOnBufferResponse(bool bufferResponse)
+    {
+        var mockHandler = new MockHttpClientHandler(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = bufferResponse;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        if (bufferResponse)
+        {
+            Assert.AreEqual(message.Response!.Content.ToString(), "Mock content");
+        }
+        else
+        {
+            Assert.Throws<InvalidOperationException>(() => { var content = message.Response!.Content; });
+        }
+    }
+
+    [Test]
+    public async Task BufferedResponseContentContainsResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual("Mock content", message.Response!.Content.ToString());
+    }
+
+    [Test]
+    public async Task BufferedResponseContentEmptyWhenNoResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(0, message.Response!.Content.ToMemory().Length);
+    }
+
+    [Test]
+    public async Task BufferedResponseContentStreamContainsResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+    }
+
+    [Test]
+    public async Task BufferedResponseContentStreamEmptyWhenNoResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(0, message.Response!.ContentStream!.Length);
+    }
+
+    [Test]
+    public async Task BufferedResponseContentStreamCanBeReadMultipleTimes()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+    }
+
+    [Test]
+    public async Task BufferedResponseContentAvailableAfterResponseDisposed()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        message.Response!.Dispose();
+
+        Assert.AreEqual("Mock content", message.Response!.Content.ToString());
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+    }
+
+    [Test]
+    public async Task UnbufferedResponseContentThrows()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = false;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.Throws<InvalidOperationException>(() => { var content = message.Response!.Content; });
+    }
+
+    [Test]
+    public async Task UnbufferedResponseContentStreamContainsResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = false;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+
+        // The second time it's read the stream's Position is at the end
+        Assert.AreEqual(string.Empty, BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+    }
+
+    [Test]
+    public async Task UnbufferedResponseContentStreamEmptyIfNoResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = false;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(string.Empty, BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+    }
+
+    [Test]
+    public async Task ResponseReadContentReturnsContentIfBuffered()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = true;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
+
+        Assert.AreEqual(message.Response!.Content, content);
+    }
+
+    [Test]
+    public async Task ResponseReadContentReturnsEmptyWhenNoResponseContent()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
+
+        Assert.AreEqual(0, content.ToMemory().Length);
+    }
+
+    [Test]
+    public async Task ResponseReadContentReturnsEmptyWhenContentStreamNull()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        // Explicitly assign ContentStream via property setter
+        message.Response!.ContentStream = null;
+
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
+
+        Assert.AreEqual(0, content.ToMemory().Length);
+    }
+
+    [Test]
+    public async Task ResponseReadContentThrowsWhenPositionNonZero()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = false;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        message.Response!.ContentStream!.ReadByte();
+
+        Assert.ThrowsAsync<InvalidOperationException>(async() => { await message.Response!.BufferContentSyncOrAsync(default, IsAsync); });
+    }
+
+    [Test]
+    public async Task CachedResponseContentReplacedWhenContentStreamReplaced()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content - 1")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        // Explicitly assign ContentStream via property setter
+        message.Response!.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("Mock content - 2"));
+
+        Assert.AreEqual("Mock content - 2", message.Response!.Content.ToString());
+        Assert.AreEqual("Mock content - 2", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
     }
 
     #region Helpers

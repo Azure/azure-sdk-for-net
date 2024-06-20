@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.CaCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.CaCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CaCertificateData : Azure.ResourceManager.Models.ResourceData
+    public partial class CaCertificateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>
     {
         public CaCertificateData() { }
         public string Description { get { throw null; } set { } }
@@ -25,8 +25,13 @@ namespace Azure.ResourceManager.EventGrid
         public System.DateTimeOffset? ExpiryTimeInUtc { get { throw null; } }
         public System.DateTimeOffset? IssueTimeInUtc { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EventGrid.CaCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.CaCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CaCertificateResource : Azure.ResourceManager.ArmResource
+    public partial class CaCertificateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CaCertificateResource() { }
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.CaCertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.CaCertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.CaCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.CaCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.CaCertificateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.CaCertificateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.CaCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.CaCertificateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.CaCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -57,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DomainEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class DomainEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DomainEventSubscriptionResource() { }
@@ -72,6 +82,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -90,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DomainNetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class DomainNetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DomainNetworkSecurityPerimeterConfigurationResource() { }
@@ -101,6 +116,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.DomainNetworkSecurityPerimeterConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainNetworkSecurityPerimeterConfigurationResource> Reconcile(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DomainTopicCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.DomainTopicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.DomainTopicResource>, System.Collections.IEnumerable
     {
@@ -119,10 +139,15 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.DomainTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.DomainTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DomainTopicData : Azure.ResourceManager.Models.ResourceData
+    public partial class DomainTopicData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>
     {
         public DomainTopicData() { }
         public Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EventGrid.DomainTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.DomainTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DomainTopicEventSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource>, System.Collections.IEnumerable
     {
@@ -141,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DomainTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class DomainTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DomainTopicEventSubscriptionResource() { }
@@ -156,10 +181,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DomainTopicResource : Azure.ResourceManager.ArmResource
+    public partial class DomainTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DomainTopicResource() { }
@@ -173,6 +203,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource> GetDomainTopicEventSubscription(string eventSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource>> GetDomainTopicEventSubscriptionAsync(string eventSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionCollection GetDomainTopicEventSubscriptions() { throw null; }
+        Azure.ResourceManager.EventGrid.DomainTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.DomainTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.DomainTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainTopicResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.DomainTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -193,7 +228,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridDomainData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventGridDomainData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>
     {
         public EventGridDomainData(Azure.Core.AzureLocation location) { }
         public bool? AutoCreateTopicWithFirstSubscription { get { throw null; } set { } }
@@ -212,6 +247,11 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridSku? SkuName { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridDomainData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridDomainPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -230,7 +270,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridDomainPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridDomainPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridDomainPrivateEndpointConnectionResource() { }
@@ -241,10 +281,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridDomainPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridDomainPrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridDomainPrivateLinkResource() { }
@@ -253,6 +298,11 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridDomainPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -269,7 +319,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridDomainResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridDomainResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridDomainResource() { }
@@ -305,6 +355,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridDomainData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -430,7 +485,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridNamespaceClientData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridNamespaceClientData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>
     {
         public EventGridNamespaceClientData() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Attributes { get { throw null; } }
@@ -439,6 +494,11 @@ namespace Azure.ResourceManager.EventGrid
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState? State { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridNamespaceClientGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource>, System.Collections.IEnumerable
     {
@@ -457,14 +517,19 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridNamespaceClientGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridNamespaceClientGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>
     {
         public EventGridNamespaceClientGroupData() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState? ProvisioningState { get { throw null; } }
         public string Query { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridNamespaceClientGroupResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridNamespaceClientGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridNamespaceClientGroupResource() { }
@@ -475,10 +540,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridNamespaceClientResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridNamespaceClientResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridNamespaceClientResource() { }
@@ -489,6 +559,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceClientData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceClientData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespaceClientData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespaceClientData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -509,7 +584,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventGridNamespaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>
     {
         public EventGridNamespaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -520,8 +595,13 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.NamespaceSku Sku { get { throw null; } set { } }
-        public string TopicsHostname { get { throw null; } }
+        public Azure.ResourceManager.EventGrid.Models.TopicsConfiguration TopicsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration TopicSpacesConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridNamespacePermissionBindingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource>, System.Collections.IEnumerable
     {
@@ -540,7 +620,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridNamespacePermissionBindingData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridNamespacePermissionBindingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>
     {
         public EventGridNamespacePermissionBindingData() { }
         public string ClientGroupName { get { throw null; } set { } }
@@ -548,8 +628,13 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.PermissionType? Permission { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState? ProvisioningState { get { throw null; } }
         public string TopicSpaceName { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridNamespacePermissionBindingResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridNamespacePermissionBindingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridNamespacePermissionBindingResource() { }
@@ -560,10 +645,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridNamespaceResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridNamespaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridNamespaceResource() { }
@@ -602,8 +692,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridNamespaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult> ValidateCustomDomainOwnership(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>> ValidateCustomDomainOwnershipAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EventGridPartnerNamespacePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -622,7 +719,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridPartnerNamespacePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridPartnerNamespacePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridPartnerNamespacePrivateEndpointConnectionResource() { }
@@ -633,26 +730,41 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>
     {
         public EventGridPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>
     {
         internal EventGridPrivateLinkResourceData() { }
         public string DisplayName { get { throw null; } }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridSubscriptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventGridSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public EventGridSubscriptionData() { }
         public Azure.ResourceManager.EventGrid.Models.DeadLetterDestination DeadLetterDestination { get { throw null; } set { } }
@@ -666,6 +778,11 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy RetryPolicy { get { throw null; } set { } }
         public string Topic { get { throw null; } }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridTopicCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicResource>, System.Collections.IEnumerable
     {
@@ -684,7 +801,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridTopicData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventGridTopicData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>
     {
         public EventGridTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
@@ -703,6 +820,11 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridSku? SkuName { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.EventGridTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridTopicPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -721,7 +843,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridTopicPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridTopicPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridTopicPrivateEndpointConnectionResource() { }
@@ -732,10 +854,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridTopicPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridTopicPrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridTopicPrivateLinkResource() { }
@@ -744,6 +871,11 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventGridTopicPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -760,7 +892,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventGridTopicResource : Azure.ResourceManager.ArmResource
+    public partial class EventGridTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventGridTopicResource() { }
@@ -793,6 +925,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -813,7 +950,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.EventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class EventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EventSubscriptionResource() { }
@@ -828,16 +965,26 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.EventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ExtensionTopicData : Azure.ResourceManager.Models.ResourceData
+    public partial class ExtensionTopicData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>
     {
         public ExtensionTopicData() { }
         public string Description { get { throw null; } set { } }
         public string SystemTopic { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.ExtensionTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.ExtensionTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtensionTopicResource : Azure.ResourceManager.ArmResource
+    public partial class ExtensionTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ExtensionTopicResource() { }
@@ -846,6 +993,11 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.ExtensionTopicResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.ExtensionTopicResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.ExtensionTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.ExtensionTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.ExtensionTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NamespaceTopicCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicResource>, System.Collections.IEnumerable
     {
@@ -864,13 +1016,18 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.NamespaceTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NamespaceTopicData : Azure.ResourceManager.Models.ResourceData
+    public partial class NamespaceTopicData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>
     {
         public NamespaceTopicData() { }
         public int? EventRetentionInDays { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventInputSchema? InputSchema { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.PublisherType? PublisherType { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.NamespaceTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NamespaceTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NamespaceTopicEventSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource>, System.Collections.IEnumerable
     {
@@ -889,15 +1046,21 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NamespaceTopicEventSubscriptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class NamespaceTopicEventSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>
     {
         public NamespaceTopicEventSubscriptionData() { }
         public Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration DeliveryConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DeliverySchema? EventDeliverySchema { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.FiltersConfiguration FiltersConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class NamespaceTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NamespaceTopicEventSubscriptionResource() { }
@@ -910,10 +1073,17 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NamespaceTopicResource : Azure.ResourceManager.ArmResource
+    public partial class NamespaceTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NamespaceTopicResource() { }
@@ -931,10 +1101,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>> GetSharedAccessKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys> RegenerateKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>> RegenerateKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.NamespaceTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NamespaceTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NamespaceTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.NamespaceTopicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.NamespaceTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkSecurityPerimeterConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkSecurityPerimeterConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>
     {
         public NetworkSecurityPerimeterConfigurationData() { }
         public Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo NetworkSecurityPerimeter { get { throw null; } set { } }
@@ -942,14 +1117,24 @@ namespace Azure.ResourceManager.EventGrid
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.ResourceAssociation ResourceAssociation { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class PartnerConfigurationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>
     {
         public PartnerConfigurationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerAuthorization PartnerAuthorization { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.PartnerConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerConfigurationResource() { }
@@ -970,6 +1155,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> UnauthorizePartner(Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerConfigurationResource>> UnauthorizePartnerAsync(Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -992,7 +1182,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerDestinationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerDestinationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerDestinationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class PartnerDestinationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>
     {
         public PartnerDestinationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState? ActivationState { get { throw null; } set { } }
@@ -1002,8 +1192,13 @@ namespace Azure.ResourceManager.EventGrid
         public string MessageForActivation { get { throw null; } set { } }
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EventGrid.PartnerDestinationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerDestinationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerDestinationResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerDestinationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerDestinationResource() { }
@@ -1022,6 +1217,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerDestinationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerDestinationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerDestinationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerDestinationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerDestinationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerDestinationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.PartnerDestinationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.PartnerDestinationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1042,7 +1242,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerNamespaceChannelData : Azure.ResourceManager.Models.ResourceData
+    public partial class PartnerNamespaceChannelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>
     {
         public PartnerNamespaceChannelData() { }
         public Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType? ChannelType { get { throw null; } set { } }
@@ -1052,8 +1252,13 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo PartnerTopicInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState? ReadinessState { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerNamespaceChannelResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerNamespaceChannelResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerNamespaceChannelResource() { }
@@ -1066,6 +1271,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response Update(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1086,7 +1296,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerNamespaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class PartnerNamespaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>
     {
         public PartnerNamespaceData(Azure.Core.AzureLocation location) { }
         public System.Uri Endpoint { get { throw null; } }
@@ -1098,8 +1308,13 @@ namespace Azure.ResourceManager.EventGrid
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerNamespacePrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerNamespacePrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerNamespacePrivateLinkResource() { }
@@ -1108,6 +1323,11 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PartnerNamespacePrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -1124,7 +1344,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerNamespaceResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerNamespaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerNamespaceResource() { }
@@ -1154,6 +1374,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1174,13 +1399,18 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerRegistrationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class PartnerRegistrationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>
     {
         public PartnerRegistrationData(Azure.Core.AzureLocation location) { }
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EventGrid.PartnerRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerRegistrationResource() { }
@@ -1197,6 +1427,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerRegistrationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerRegistrationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1217,7 +1452,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerTopicData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class PartnerTopicData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>
     {
         public PartnerTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState? ActivationState { get { throw null; } set { } }
@@ -1229,6 +1464,11 @@ namespace Azure.ResourceManager.EventGrid
         public string PartnerTopicFriendlyDescription { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState? ProvisioningState { get { throw null; } }
         public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.PartnerTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PartnerTopicEventSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource>, System.Collections.IEnumerable
     {
@@ -1247,7 +1487,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PartnerTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerTopicEventSubscriptionResource() { }
@@ -1262,10 +1502,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PartnerTopicResource : Azure.ResourceManager.ArmResource
+    public partial class PartnerTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PartnerTopicResource() { }
@@ -1289,6 +1534,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.PartnerTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.PartnerTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.PartnerTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource> Update(Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource>> UpdateAsync(Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1309,7 +1559,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.SystemTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.SystemTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SystemTopicData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SystemTopicData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>
     {
         public SystemTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -1317,6 +1567,11 @@ namespace Azure.ResourceManager.EventGrid
         public Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier Source { get { throw null; } set { } }
         public string TopicType { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.SystemTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.SystemTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SystemTopicEventSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource>, System.Collections.IEnumerable
     {
@@ -1335,7 +1590,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SystemTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class SystemTopicEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SystemTopicEventSubscriptionResource() { }
@@ -1350,10 +1605,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SystemTopicResource : Azure.ResourceManager.ArmResource
+    public partial class SystemTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SystemTopicResource() { }
@@ -1373,6 +1633,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.SystemTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.SystemTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.SystemTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.SystemTopicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.SystemTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.SystemTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.SystemTopicPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1393,7 +1658,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.TopicEventSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.TopicEventSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TopicEventSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class TopicEventSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TopicEventSubscriptionResource() { }
@@ -1408,6 +1673,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> GetDeliveryAttributesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri> GetFullUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>> GetFullUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.EventGridSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.EventGridSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicEventSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicEventSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1426,7 +1696,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TopicNetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class TopicNetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TopicNetworkSecurityPerimeterConfigurationResource() { }
@@ -1437,6 +1707,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.TopicNetworkSecurityPerimeterConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicNetworkSecurityPerimeterConfigurationResource> Reconcile(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TopicSpaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.TopicSpaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.TopicSpaceResource>, System.Collections.IEnumerable
     {
@@ -1455,14 +1730,19 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.TopicSpaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.TopicSpaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TopicSpaceData : Azure.ResourceManager.Models.ResourceData
+    public partial class TopicSpaceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>
     {
         public TopicSpaceData() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> TopicTemplates { get { throw null; } }
+        Azure.ResourceManager.EventGrid.TopicSpaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.TopicSpaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TopicSpaceResource : Azure.ResourceManager.ArmResource
+    public partial class TopicSpaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TopicSpaceResource() { }
@@ -1473,6 +1753,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.TopicSpaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.TopicSpaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.TopicSpaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.TopicSpaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicSpaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicSpaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.TopicSpaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventGrid.TopicSpaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventGrid.TopicSpaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1491,7 +1776,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.TopicTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.TopicTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TopicTypeData : Azure.ResourceManager.Models.ResourceData
+    public partial class TopicTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>
     {
         public TopicTypeData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions { get { throw null; } }
@@ -1504,8 +1789,13 @@ namespace Azure.ResourceManager.EventGrid
         public string SourceResourceFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedLocations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope> SupportedScopesForSource { get { throw null; } }
+        Azure.ResourceManager.EventGrid.TopicTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.TopicTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TopicTypeResource : Azure.ResourceManager.ArmResource
+    public partial class TopicTypeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TopicTypeResource() { }
@@ -1516,6 +1806,11 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.TopicTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.TopicTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.TopicTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.TopicTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VerifiedPartnerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>, System.Collections.IEnumerable
     {
@@ -1532,7 +1827,7 @@ namespace Azure.ResourceManager.EventGrid
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventGrid.VerifiedPartnerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VerifiedPartnerData : Azure.ResourceManager.Models.ResourceData
+    public partial class VerifiedPartnerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>
     {
         public VerifiedPartnerData() { }
         public string OrganizationName { get { throw null; } set { } }
@@ -1541,8 +1836,13 @@ namespace Azure.ResourceManager.EventGrid
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerDetails PartnerTopicDetails { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState? ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.VerifiedPartnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.VerifiedPartnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VerifiedPartnerResource : Azure.ResourceManager.ArmResource
+    public partial class VerifiedPartnerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VerifiedPartnerResource() { }
@@ -1551,6 +1851,11 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string verifiedPartnerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventGrid.VerifiedPartnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.VerifiedPartnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.VerifiedPartnerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.EventGrid.Mocking
@@ -1676,10 +1981,15 @@ namespace Azure.ResourceManager.EventGrid.Mocking
 }
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public abstract partial class AdvancedFilter
+    public abstract partial class AdvancedFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>
     {
         protected AdvancedFilter() { }
         public string Key { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.AdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.AdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlternativeAuthenticationNameSource : System.IEquatable<Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource>
@@ -1705,12 +2015,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     public static partial class ArmEventGridModelFactory
     {
         public static Azure.ResourceManager.EventGrid.CaCertificateData CaCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string encodedCertificate = null, System.DateTimeOffset? issueTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? expiryTimeInUtc = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult CustomDomainOwnershipValidationResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomainsForTopicsConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomainsForTopicSpacesConfiguration = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.DomainTopicData DomainTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridDomainData EventGridDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.EventGridSku? skuName = default(Azure.ResourceManager.EventGrid.Models.EventGridSku?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState?), Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?), System.Uri endpoint = null, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? inputSchema = default(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema?), Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo = null, Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping inputSchemaMapping = null, string metricResourceId = null, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? dataResidencyBoundary = default(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys EventGridDomainSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridNamespaceClientData EventGridNamespaceClientData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string authenticationName = null, Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication clientCertificateAuthentication = null, Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState? state = default(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState?), System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupData EventGridNamespaceClientGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string query = null, Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.EventGrid.EventGridNamespaceData EventGridNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.NamespaceSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState?), string topicsHostname = null, Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?)) { throw null; }
+        public static Azure.ResourceManager.EventGrid.EventGridNamespaceData EventGridNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.NamespaceSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState?), Azure.ResourceManager.EventGrid.Models.TopicsConfiguration topicsConfiguration = null, Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingData EventGridNamespacePermissionBindingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string topicSpaceName = null, Azure.ResourceManager.EventGrid.Models.PermissionType? permission = default(Azure.ResourceManager.EventGrid.Models.PermissionType?), string clientGroupName = null, Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState connectionState = null, Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData EventGridPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, string displayName = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
@@ -1721,7 +2032,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.ExtensionTopicData ExtensionTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string systemTopic = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys NamespaceSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.NamespaceTopicData NamespaceTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState?), Azure.ResourceManager.EventGrid.Models.PublisherType? publisherType = default(Azure.ResourceManager.EventGrid.Models.PublisherType?), Azure.ResourceManager.EventGrid.Models.EventInputSchema? inputSchema = default(Azure.ResourceManager.EventGrid.Models.EventInputSchema?), int? eventRetentionInDays = default(int?)) { throw null; }
-        public static Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState?), Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration deliveryConfiguration = null, Azure.ResourceManager.EventGrid.Models.DeliverySchema? eventDeliverySchema = default(Azure.ResourceManager.EventGrid.Models.DeliverySchema?), Azure.ResourceManager.EventGrid.Models.FiltersConfiguration filtersConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState?), Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration deliveryConfiguration = null, Azure.ResourceManager.EventGrid.Models.DeliverySchema? eventDeliverySchema = default(Azure.ResourceManager.EventGrid.Models.DeliverySchema?), Azure.ResourceManager.EventGrid.Models.FiltersConfiguration filtersConfiguration = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues> provisioningIssues = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo networkSecurityPerimeter = null, Azure.ResourceManager.EventGrid.Models.ResourceAssociation resourceAssociation = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile profile = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerConfigurationData PartnerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.PartnerAuthorization partnerAuthorization = null, Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerDestinationData PartnerDestinationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string endpointServiceContext = null, System.DateTimeOffset? expirationTimeIfNotActivatedUtc = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState?), Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState? activationState = default(Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState?), System.Uri endpointBaseUri = null, string messageForActivation = null) { throw null; }
@@ -1730,37 +2041,59 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys PartnerNamespaceSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerRegistrationData PartnerRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState?), System.Guid? partnerRegistrationImmutableId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerTopicData PartnerTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string source = null, Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo = null, System.DateTimeOffset? expireOnIfNotActivated = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState?), Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState? activationState = default(Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState?), string partnerTopicFriendlyDescription = null, string messageForActivation = null) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri SubscriptionFullUri(System.Uri endpointUri = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.SystemTopicData SystemTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState?), Azure.Core.ResourceIdentifier source = null, string topicType = null, System.Guid? metricResourceId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.TopicsConfiguration TopicsConfiguration(string hostname = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomains = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys TopicSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.TopicSpaceData TopicSpaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> topicTemplates = null, Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration TopicSpacesConfiguration(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? state = default(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState?), string routeTopicResourceId = null, string hostname = null, Azure.ResourceManager.EventGrid.Models.RoutingEnrichments routingEnrichments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = null, int? maximumSessionExpiryInHours = default(int?), int? maximumClientSessionsPerAuthenticationName = default(int?), Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo routingIdentityInfo = null) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration TopicSpacesConfiguration(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? state = default(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState?), string routeTopicResourceId = null, string hostname = null, Azure.ResourceManager.EventGrid.Models.RoutingEnrichments routingEnrichments = null, Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings clientAuthentication = null, int? maximumSessionExpiryInHours = default(int?), int? maximumClientSessionsPerAuthenticationName = default(int?), Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo routingIdentityInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomains = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.TopicTypeData TopicTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provider = null, string displayName = null, string description = null, Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType? resourceRegionType = default(Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType?), Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState?), System.Collections.Generic.IEnumerable<string> supportedLocations = null, string sourceResourceFormat = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope> supportedScopesForSource = null, bool? areRegionalAndGlobalSourcesSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.VerifiedPartnerData VerifiedPartnerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string organizationName = null, string partnerDisplayName = null, Azure.ResourceManager.EventGrid.Models.PartnerDetails partnerTopicDetails = null, Azure.ResourceManager.EventGrid.Models.PartnerDetails partnerDestinationDetails = null, Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(System.Uri endpoint = null, System.Uri baseEndpoint = null, int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), System.Guid? azureActiveDirectoryTenantId = default(System.Guid?), string uriOrAzureActiveDirectoryApplicationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> deliveryAttributeMappings = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?)) { throw null; }
     }
-    public partial class AzureADPartnerClientAuthentication : Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication
+    public partial class AzureADPartnerClientAuthentication : Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>
     {
         public AzureADPartnerClientAuthentication() { }
         public System.Uri AzureActiveDirectoryApplicationIdOrUri { get { throw null; } set { } }
         public string AzureActiveDirectoryTenantId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureFunctionEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class AzureFunctionEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>
     {
         public AzureFunctionEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public int? MaxEventsPerBatch { get { throw null; } set { } }
         public int? PreferredBatchSizeInKilobytes { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BoolEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class BoolEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>
     {
         public BoolEqualsAdvancedFilter() { }
         public bool? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BoolEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class BoolEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>
     {
         public BoolEqualsFilter() { }
         public bool? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CaCertificateProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState>
@@ -1785,11 +2118,27 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState left, Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ClientCertificateAuthentication
+    public partial class ClientAuthenticationSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>
+    {
+        public ClientAuthenticationSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources { get { throw null; } }
+        public Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings CustomJwtAuthentication { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClientCertificateAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>
     {
         public ClientCertificateAuthentication() { }
         public System.Collections.Generic.IList<string> AllowedThumbprints { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme? ValidationScheme { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ClientCertificateAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientCertificateValidationScheme : System.IEquatable<Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme>
@@ -1836,6 +2185,120 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState left, Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CustomDomainConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>
+    {
+        public CustomDomainConfiguration(string fullyQualifiedDomainName) { }
+        public System.Uri CertificateUri { get { throw null; } set { } }
+        public string ExpectedTxtRecordName { get { throw null; } set { } }
+        public string ExpectedTxtRecordValue { get { throw null; } set { } }
+        public string FullyQualifiedDomainName { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState? ValidationState { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomDomainIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>
+    {
+        public CustomDomainIdentity() { }
+        public Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType? IdentityType { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CustomDomainIdentityType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CustomDomainIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CustomDomainOwnershipValidationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>
+    {
+        internal CustomDomainOwnershipValidationResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> CustomDomainsForTopicsConfiguration { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> CustomDomainsForTopicSpacesConfiguration { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CustomDomainValidationState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CustomDomainValidationState(string value) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState Approved { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState ErrorRetrievingDnsRecord { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState Pending { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState left, Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState left, Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CustomJwtAuthenticationManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>
+    {
+        public CustomJwtAuthenticationManagedIdentity(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType identityType) { }
+        public Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType IdentityType { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CustomJwtAuthenticationManagedIdentityType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CustomJwtAuthenticationManagedIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CustomJwtAuthenticationSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>
+    {
+        public CustomJwtAuthenticationSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo> IssuerCertificates { get { throw null; } }
+        public string TokenIssuer { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataResidencyBoundary : System.IEquatable<Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary>
     {
@@ -1854,27 +2317,47 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary left, Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class DeadLetterDestination
+    public abstract partial class DeadLetterDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>
     {
         protected DeadLetterDestination() { }
+        Azure.ResourceManager.EventGrid.Models.DeadLetterDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DeadLetterDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeadLetterWithResourceIdentity
+    public partial class DeadLetterWithResourceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>
     {
         public DeadLetterWithResourceIdentity() { }
         public Azure.ResourceManager.EventGrid.Models.DeadLetterDestination DeadLetterDestination { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DeliveryAttributeMapping
+    public abstract partial class DeliveryAttributeMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>
     {
         protected DeliveryAttributeMapping() { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeliveryConfiguration
+    public partial class DeliveryConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>
     {
         public DeliveryConfiguration() { }
         public Azure.ResourceManager.EventGrid.Models.DeliveryMode? DeliveryMode { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PushInfo Push { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.QueueInfo Queue { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeliveryMode : System.IEquatable<Azure.ResourceManager.EventGrid.Models.DeliveryMode>
@@ -1911,11 +2394,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.DeliverySchema left, Azure.ResourceManager.EventGrid.Models.DeliverySchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeliveryWithResourceIdentity
+    public partial class DeliveryWithResourceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>
     {
         public DeliveryWithResourceIdentity() { }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainTopicProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState>
@@ -1939,16 +2427,26 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynamicDeliveryAttributeMapping : Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping
+    public partial class DynamicDeliveryAttributeMapping : Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>
     {
         public DynamicDeliveryAttributeMapping() { }
         public string SourceField { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynamicRoutingEnrichment
+    public partial class DynamicRoutingEnrichment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>
     {
         public DynamicRoutingEnrichment() { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventDefinitionKind : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventDefinitionKind>
@@ -1986,7 +2484,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventDeliverySchema left, Azure.ResourceManager.EventGrid.Models.EventDeliverySchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridDomainPatch
+    public partial class EventGridDomainPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>
     {
         public EventGridDomainPatch() { }
         public bool? AutoCreateTopicWithFirstSubscription { get { throw null; } set { } }
@@ -2000,6 +2498,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridSku? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridDomainProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState>
@@ -2023,27 +2526,47 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridDomainRegenerateKeyContent
+    public partial class EventGridDomainRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>
     {
         public EventGridDomainRegenerateKeyContent(string keyName) { }
         public string KeyName { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridDomainSharedAccessKeys
+    public partial class EventGridDomainSharedAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>
     {
         internal EventGridDomainSharedAccessKeys() { }
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class EventGridFilter
+    public abstract partial class EventGridFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>
     {
         protected EventGridFilter() { }
         public string Key { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridInboundIPRule
+    public partial class EventGridInboundIPRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>
     {
         public EventGridInboundIPRule() { }
         public Azure.ResourceManager.EventGrid.Models.EventGridIPActionType? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridInputSchema : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridInputSchema>
@@ -2064,9 +2587,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema left, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class EventGridInputSchemaMapping
+    public abstract partial class EventGridInputSchemaMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>
     {
         protected EventGridInputSchemaMapping() { }
+        Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridIPActionType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridIPActionType>
@@ -2085,7 +2613,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType left, Azure.ResourceManager.EventGrid.Models.EventGridIPActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridJsonInputSchemaMapping : Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping
+    public partial class EventGridJsonInputSchemaMapping : Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>
     {
         public EventGridJsonInputSchemaMapping() { }
         public Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault DataVersion { get { throw null; } set { } }
@@ -2094,6 +2622,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string IdSourceField { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault Subject { get { throw null; } set { } }
         public string TopicSourceField { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridNamespaceClientProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState>
@@ -2136,7 +2669,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState left, Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridNamespacePatch
+    public partial class EventGridNamespacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>
     {
         public EventGridNamespacePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -2144,21 +2677,37 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.NamespaceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> TopicsCustomDomains { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo TopicSpacesConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridNamespacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridPartnerContent
+    public partial class EventGridPartnerContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>
     {
         public EventGridPartnerContent() { }
         public System.DateTimeOffset? AuthorizationExpireOn { get { throw null; } set { } }
         public string PartnerName { get { throw null; } set { } }
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridPrivateEndpointConnectionState
+    public partial class EventGridPrivateEndpointConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>
     {
         public EventGridPrivateEndpointConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridPrivateEndpointPersistedConnectionStatus : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus>
@@ -2274,7 +2823,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridSkuName left, Azure.ResourceManager.EventGrid.Models.EventGridSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridSubscriptionPatch
+    public partial class EventGridSubscriptionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>
     {
         public EventGridSubscriptionPatch() { }
         public Azure.ResourceManager.EventGrid.Models.DeadLetterDestination DeadLetterDestination { get { throw null; } set { } }
@@ -2286,8 +2835,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy RetryPolicy { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridSubscriptionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridTopicPatch
+    public partial class EventGridTopicPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>
     {
         public EventGridTopicPatch() { }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
@@ -2299,6 +2853,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridSku? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventGridTopicPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridTopicProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState>
@@ -2322,11 +2881,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class EventHubEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>
     {
         public EventHubEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventInputSchema : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventInputSchema>
@@ -2345,11 +2909,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventInputSchema left, Azure.ResourceManager.EventGrid.Models.EventInputSchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class EventSubscriptionDestination
+    public abstract partial class EventSubscriptionDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>
     {
         protected EventSubscriptionDestination() { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventSubscriptionFilter
+    public partial class EventSubscriptionFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>
     {
         public EventSubscriptionFilter() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.AdvancedFilter> AdvancedFilters { get { throw null; } }
@@ -2358,17 +2927,32 @@ namespace Azure.ResourceManager.EventGrid.Models
         public bool? IsSubjectCaseSensitive { get { throw null; } set { } }
         public string SubjectBeginsWith { get { throw null; } set { } }
         public string SubjectEndsWith { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventSubscriptionFullUri
+    public partial class EventSubscriptionFullUri : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>
     {
         internal EventSubscriptionFullUri() { }
         public System.Uri Endpoint { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventSubscriptionIdentity
+    public partial class EventSubscriptionIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>
     {
         public EventSubscriptionIdentity() { }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType? IdentityType { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventSubscriptionIdentityType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType>
@@ -2411,68 +2995,134 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventSubscriptionRetryPolicy
+    public partial class EventSubscriptionRetryPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>
     {
         public EventSubscriptionRetryPolicy() { }
         public int? EventTimeToLiveInMinutes { get { throw null; } set { } }
         public int? MaxDeliveryAttempts { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventTypeUnderTopic : Azure.ResourceManager.Models.ResourceData
+    public partial class EventTypeUnderTopic : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>
     {
         public EventTypeUnderTopic() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsInDefaultSet { get { throw null; } set { } }
         public System.Uri SchemaUri { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FiltersConfiguration
+    public partial class FiltersConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>
     {
         public FiltersConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridFilter> Filters { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedEventTypes { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.FiltersConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.FiltersConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.FiltersConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridConnectionEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class HybridConnectionEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>
     {
         public HybridConnectionEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InlineEventProperties
+    public partial class InlineEventProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>
     {
         public InlineEventProperties() { }
         public System.Uri DataSchemaUri { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Uri DocumentationUri { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.InlineEventProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.InlineEventProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.InlineEventProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IsNotNullAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class IsNotNullAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>
     {
         public IsNotNullAdvancedFilter() { }
+        Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IsNotNullFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class IsNotNullFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>
     {
         public IsNotNullFilter() { }
+        Azure.ResourceManager.EventGrid.Models.IsNotNullFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.IsNotNullFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNotNullFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IsNullOrUndefinedAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class IsNullOrUndefinedAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>
     {
         public IsNullOrUndefinedAdvancedFilter() { }
+        Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IsNullOrUndefinedFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class IsNullOrUndefinedFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>
     {
         public IsNullOrUndefinedFilter() { }
+        Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IsNullOrUndefinedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JsonFieldWithDefault
+    public partial class IssuerCertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>
+    {
+        public IssuerCertificateInfo(System.Uri certificateUri) { }
+        public System.Uri CertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.IssuerCertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class JsonFieldWithDefault : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>
     {
         public JsonFieldWithDefault() { }
         public string DefaultValue { get { throw null; } set { } }
         public string SourceField { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.JsonFieldWithDefault>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MonitorAlertEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class MonitorAlertEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>
     {
         public MonitorAlertEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroups { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity? Severity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorAlertSeverity : System.IEquatable<Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity>
@@ -2521,39 +3171,70 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NamespaceRegenerateKeyContent
+    public partial class NamespaceRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>
     {
         public NamespaceRegenerateKeyContent(string keyName) { }
         public string KeyName { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceSharedAccessKeys
+    public partial class NamespaceSharedAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>
     {
         internal NamespaceSharedAccessKeys() { }
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceSku
+    public partial class NamespaceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>
     {
         public NamespaceSku() { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridSkuName? Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceTopicEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class NamespaceTopicEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>
     {
         public NamespaceTopicEventSubscriptionDestination() { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceTopicEventSubscriptionPatch
+    public partial class NamespaceTopicEventSubscriptionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>
     {
         public NamespaceTopicEventSubscriptionPatch() { }
         public Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration DeliveryConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DeliverySchema? EventDeliverySchema { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.FiltersConfiguration FiltersConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamespaceTopicPatch
+    public partial class NamespaceTopicPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>
     {
         public NamespaceTopicPatch() { }
         public int? EventRetentionInDays { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NamespaceTopicPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NamespaceTopicProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState>
@@ -2624,7 +3305,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkSecurityPerimeterConfigurationIssues
+    public partial class NetworkSecurityPerimeterConfigurationIssues : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>
     {
         public NetworkSecurityPerimeterConfigurationIssues() { }
         public string Description { get { throw null; } set { } }
@@ -2633,6 +3314,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity? Severity { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IList<string> SuggestedResourceIds { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkSecurityPerimeterConfigurationIssueSeverity : System.IEquatable<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity>
@@ -2672,7 +3358,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkSecurityPerimeterConfigurationProfile
+    public partial class NetworkSecurityPerimeterConfigurationProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>
     {
         public NetworkSecurityPerimeterConfigurationProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule> AccessRules { get { throw null; } }
@@ -2680,15 +3366,25 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string DiagnosticSettingsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkSecurityPerimeterInfo
+    public partial class NetworkSecurityPerimeterInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>
     {
         public NetworkSecurityPerimeterInfo() { }
         public string Id { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string PerimeterGuid { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkSecurityPerimeterProfileAccessRule
+    public partial class NetworkSecurityPerimeterProfileAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>
     {
         public NetworkSecurityPerimeterProfileAccessRule() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
@@ -2700,7 +3396,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string NetworkSecurityPerimeterProfileAccessRuleType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
-        public System.Collections.Generic.IList<string> Subscriptions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkSecurityPerimeterProfileAccessRuleDirection : System.IEquatable<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection>
@@ -2720,101 +3421,196 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NumberGreaterThanAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberGreaterThanAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>
     {
         public NumberGreaterThanAdvancedFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberGreaterThanFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberGreaterThanFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>
     {
         public NumberGreaterThanFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberGreaterThanOrEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberGreaterThanOrEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>
     {
         public NumberGreaterThanOrEqualsAdvancedFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberGreaterThanOrEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberGreaterThanOrEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>
     {
         public NumberGreaterThanOrEqualsFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberGreaterThanOrEqualsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>
     {
         public NumberInAdvancedFilter() { }
         public System.Collections.Generic.IList<double> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>
     {
         public NumberInFilter() { }
         public System.Collections.Generic.IList<double> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberInFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberInFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberInRangeAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberInRangeAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>
     {
         public NumberInRangeAdvancedFilter() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberInRangeFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberInRangeFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>
     {
         public NumberInRangeFilter() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberInRangeFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberLessThanAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberLessThanAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>
     {
         public NumberLessThanAdvancedFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberLessThanFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberLessThanFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>
     {
         public NumberLessThanFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberLessThanOrEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberLessThanOrEqualsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>
     {
         public NumberLessThanOrEqualsAdvancedFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberLessThanOrEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberLessThanOrEqualsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>
     {
         public NumberLessThanOrEqualsFilter() { }
         public double? Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberLessThanOrEqualsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberNotInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberNotInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>
     {
         public NumberNotInAdvancedFilter() { }
         public System.Collections.Generic.IList<double> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberNotInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberNotInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>
     {
         public NumberNotInFilter() { }
         public System.Collections.Generic.IList<double> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberNotInRangeAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class NumberNotInRangeAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>
     {
         public NumberNotInRangeAdvancedFilter() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NumberNotInRangeFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class NumberNotInRangeFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>
     {
         public NumberNotInRangeFilter() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.NumberNotInRangeFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerAuthorization
+    public partial class PartnerAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>
     {
         public PartnerAuthorization() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridPartnerContent> AuthorizedPartnersList { get { throw null; } }
         public int? DefaultMaximumExpirationTimeInDays { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerAuthorization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class PartnerClientAuthentication
+    public abstract partial class PartnerClientAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>
     {
         protected PartnerClientAuthentication() { }
+        Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerConfigurationPatch
+    public partial class PartnerConfigurationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>
     {
         public PartnerConfigurationPatch() { }
         public int? DefaultMaximumExpirationTimeInDays { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState>
@@ -2856,7 +3652,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState left, Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class PartnerDestinationInfo
+    public abstract partial class PartnerDestinationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>
     {
         protected PartnerDestinationInfo() { }
         public string AzureSubscriptionId { get { throw null; } set { } }
@@ -2864,11 +3660,21 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory> ResourceMoveChangeHistory { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerDestinationPatch
+    public partial class PartnerDestinationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>
     {
         public PartnerDestinationPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDestinationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerDestinationProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState>
@@ -2893,24 +3699,39 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PartnerDetails
+    public partial class PartnerDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>
     {
         public PartnerDetails() { }
         public string Description { get { throw null; } set { } }
         public string LongDescription { get { throw null; } set { } }
         public System.Uri SetupUri { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class PartnerEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>
     {
         public PartnerEventSubscriptionDestination() { }
         public string ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerNamespaceChannelPatch
+    public partial class PartnerNamespaceChannelPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>
     {
         public PartnerNamespaceChannelPatch() { }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOnIfNotActivated { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo PartnerDestinationInfo { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerNamespaceChannelProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState>
@@ -2954,7 +3775,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType left, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PartnerNamespacePatch
+    public partial class PartnerNamespacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>
     {
         public PartnerNamespacePatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
@@ -2962,6 +3783,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.TlsVersion? MinimumTlsVersionAllowed { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerNamespaceProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState>
@@ -2985,21 +3811,36 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PartnerNamespaceRegenerateKeyContent
+    public partial class PartnerNamespaceRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>
     {
         public PartnerNamespaceRegenerateKeyContent(string keyName) { }
         public string KeyName { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerNamespaceSharedAccessKeys
+    public partial class PartnerNamespaceSharedAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>
     {
         internal PartnerNamespaceSharedAccessKeys() { }
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerRegistrationPatch
+    public partial class PartnerRegistrationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>
     {
         public PartnerRegistrationPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerRegistrationProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState>
@@ -3042,13 +3883,18 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PartnerTopicEventTypeInfo
+    public partial class PartnerTopicEventTypeInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>
     {
         public PartnerTopicEventTypeInfo() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.EventGrid.Models.InlineEventProperties> InlineEventTypes { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventDefinitionKind? Kind { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerTopicInfo
+    public partial class PartnerTopicInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>
     {
         public PartnerTopicInfo() { }
         public System.Guid? AzureSubscriptionId { get { throw null; } set { } }
@@ -3056,12 +3902,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartnerTopicPatch
+    public partial class PartnerTopicPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>
     {
         public PartnerTopicPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerTopicPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerTopicProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState>
@@ -3122,9 +3978,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode left, Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class PartnerUpdateDestinationInfo
+    public abstract partial class PartnerUpdateDestinationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>
     {
         protected PartnerUpdateDestinationInfo() { }
+        Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PermissionBindingProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState>
@@ -3184,27 +4045,43 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PublisherType left, Azure.ResourceManager.EventGrid.Models.PublisherType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PushInfo
+    public partial class PushInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PushInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PushInfo>
     {
         public PushInfo() { }
         public Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public string EventTimeToLive { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.PushInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PushInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.PushInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.PushInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PushInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PushInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.PushInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueInfo
+    public partial class QueueInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>
     {
         public QueueInfo() { }
         public Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity { get { throw null; } set { } }
         public System.TimeSpan? EventTimeToLive { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public int? ReceiveLockDurationInSeconds { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.QueueInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.QueueInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.QueueInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceAssociation
+    public partial class ResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>
     {
         public ResourceAssociation() { }
         public Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceKind : System.IEquatable<Azure.ResourceManager.EventGrid.Models.ResourceKind>
@@ -3224,24 +4101,39 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.ResourceKind left, Azure.ResourceManager.EventGrid.Models.ResourceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceMoveChangeHistory
+    public partial class ResourceMoveChangeHistory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>
     {
         public ResourceMoveChangeHistory() { }
         public string AzureSubscriptionId { get { throw null; } set { } }
         public System.DateTimeOffset? ChangedTimeUtc { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ResourceMoveChangeHistory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RoutingEnrichments
+    public partial class RoutingEnrichments : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>
     {
         public RoutingEnrichments() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DynamicRoutingEnrichment> Dynamic { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment> Static { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.RoutingEnrichments System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.RoutingEnrichments System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingEnrichments>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RoutingIdentityInfo
+    public partial class RoutingIdentityInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>
     {
         public RoutingIdentityInfo() { }
         public Azure.ResourceManager.EventGrid.Models.RoutingIdentityType? IdentityType { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoutingIdentityType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.RoutingIdentityType>
@@ -3262,126 +4154,251 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.RoutingIdentityType left, Azure.ResourceManager.EventGrid.Models.RoutingIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusQueueEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class ServiceBusQueueEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>
     {
         public ServiceBusQueueEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusTopicEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class ServiceBusTopicEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>
     {
         public ServiceBusTopicEventSubscriptionDestination() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StaticDeliveryAttributeMapping : Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping
+    public partial class StaticDeliveryAttributeMapping : Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>
     {
         public StaticDeliveryAttributeMapping() { }
         public bool? IsSecret { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class StaticRoutingEnrichment
+    public abstract partial class StaticRoutingEnrichment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>
     {
         protected StaticRoutingEnrichment() { }
         public string Key { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StaticStringRoutingEnrichment : Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment
+    public partial class StaticStringRoutingEnrichment : Azure.ResourceManager.EventGrid.Models.StaticRoutingEnrichment, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>
     {
         public StaticStringRoutingEnrichment() { }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageBlobDeadLetterDestination : Azure.ResourceManager.EventGrid.Models.DeadLetterDestination
+    public partial class StorageBlobDeadLetterDestination : Azure.ResourceManager.EventGrid.Models.DeadLetterDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>
     {
         public StorageBlobDeadLetterDestination() { }
         public string BlobContainerName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageQueueEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class StorageQueueEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>
     {
         public StorageQueueEventSubscriptionDestination() { }
         public long? QueueMessageTimeToLiveInSeconds { get { throw null; } set { } }
         public string QueueName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringBeginsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringBeginsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>
     {
         public StringBeginsWithAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringBeginsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringBeginsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>
     {
         public StringBeginsWithFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringBeginsWithFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringContainsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringContainsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>
     {
         public StringContainsAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringContainsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringContainsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>
     {
         public StringContainsFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringContainsFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringContainsFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringContainsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringEndsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringEndsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>
     {
         public StringEndsWithAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringEndsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringEndsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>
     {
         public StringEndsWithFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringEndsWithFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>
     {
         public StringInAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>
     {
         public StringInFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringInFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringInFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringInFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotBeginsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringNotBeginsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>
     {
         public StringNotBeginsWithAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotBeginsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringNotBeginsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>
     {
         public StringNotBeginsWithFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotBeginsWithFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotContainsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringNotContainsAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>
     {
         public StringNotContainsAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotContainsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringNotContainsFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>
     {
         public StringNotContainsFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotContainsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotEndsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringNotEndsWithAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>
     {
         public StringNotEndsWithAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotEndsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringNotEndsWithFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>
     {
         public StringNotEndsWithFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotEndsWithFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
+    public partial class StringNotInAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>
     {
         public StringNotInAdvancedFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringNotInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter
+    public partial class StringNotInFilter : Azure.ResourceManager.EventGrid.Models.EventGridFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>
     {
         public StringNotInFilter() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.StringNotInFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.StringNotInFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.StringNotInFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SubscriptionFullUri : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>
+    {
+        internal SubscriptionFullUri() { }
+        public System.Uri EndpointUri { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SubscriptionFullUri>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SubscriptionProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState>
@@ -3410,11 +4427,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState left, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SystemTopicPatch
+    public partial class SystemTopicPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>
     {
         public SystemTopicPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.SystemTopicPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.SystemTopicPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.SystemTopicPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TlsVersion : System.IEquatable<Azure.ResourceManager.EventGrid.Models.TlsVersion>
@@ -3435,16 +4457,37 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.TlsVersion left, Azure.ResourceManager.EventGrid.Models.TlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TopicRegenerateKeyContent
+    public partial class TopicRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>
     {
         public TopicRegenerateKeyContent(string keyName) { }
         public string KeyName { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TopicSharedAccessKeys
+    public partial class TopicsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>
+    {
+        public TopicsConfiguration() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> CustomDomains { get { throw null; } }
+        public string Hostname { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.TopicsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.TopicsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TopicSharedAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>
     {
         internal TopicSharedAccessKeys() { }
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
+        Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TopicSpaceProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState>
@@ -3469,10 +4512,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TopicSpacesConfiguration
+    public partial class TopicSpacesConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>
     {
         public TopicSpacesConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources { get { throw null; } }
+        public Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings ClientAuthentication { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> CustomDomains { get { throw null; } }
         public string Hostname { get { throw null; } }
         public int? MaximumClientSessionsPerAuthenticationName { get { throw null; } set { } }
         public int? MaximumSessionExpiryInHours { get { throw null; } set { } }
@@ -3480,6 +4524,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.RoutingEnrichments RoutingEnrichments { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo RoutingIdentityInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? State { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TopicSpacesConfigurationState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState>
@@ -3499,11 +4548,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState left, Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TopicTypeAdditionalEnforcedPermission
+    public partial class TopicTypeAdditionalEnforcedPermission : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>
     {
         public TopicTypeAdditionalEnforcedPermission() { }
         public bool? IsDataAction { get { throw null; } set { } }
         public string PermissionName { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TopicTypeProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState>
@@ -3547,16 +4601,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope left, Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UpdateTopicSpacesConfigurationInfo
+    public partial class UpdateTopicSpacesConfigurationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>
     {
         public UpdateTopicSpacesConfigurationInfo() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources { get { throw null; } }
+        public Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings ClientAuthentication { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> CustomDomains { get { throw null; } }
         public int? MaximumClientSessionsPerAuthenticationName { get { throw null; } set { } }
         public int? MaximumSessionExpiryInHours { get { throw null; } set { } }
         public string RouteTopicResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.RoutingEnrichments RoutingEnrichments { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo RoutingIdentityInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? State { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.UpdateTopicSpacesConfigurationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VerifiedPartnerProvisioningState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState>
@@ -3580,7 +4640,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState left, Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebHookEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
+    public partial class WebHookEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>
     {
         public WebHookEventSubscriptionDestination() { }
         public System.Guid? AzureActiveDirectoryTenantId { get { throw null; } set { } }
@@ -3591,19 +4651,34 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.TlsVersion? MinimumTlsVersionAllowed { get { throw null; } set { } }
         public int? PreferredBatchSizeInKilobytes { get { throw null; } set { } }
         public string UriOrAzureActiveDirectoryApplicationId { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebhookPartnerDestinationInfo : Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo
+    public partial class WebhookPartnerDestinationInfo : Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>
     {
         public WebhookPartnerDestinationInfo() { }
         public Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication ClientAuthentication { get { throw null; } set { } }
         public System.Uri EndpointBaseUri { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebhookUpdatePartnerDestinationInfo : Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo
+    public partial class WebhookUpdatePartnerDestinationInfo : Azure.ResourceManager.EventGrid.Models.PartnerUpdateDestinationInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>
     {
         public WebhookUpdatePartnerDestinationInfo() { }
         public Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication ClientAuthentication { get { throw null; } set { } }
         public System.Uri EndpointBaseUri { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
+        Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.WebhookUpdatePartnerDestinationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
 
@@ -185,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
+        /// <description>BackupResourceStorageConfigsNonCRR_Patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
+        /// <description>BackupResourceStorageConfigsNonCRR_Patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

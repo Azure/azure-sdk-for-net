@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The ImputeMode. </summary>
     public readonly partial struct ImputeMode : IEquatable<ImputeMode>
     {
         private readonly string _value;

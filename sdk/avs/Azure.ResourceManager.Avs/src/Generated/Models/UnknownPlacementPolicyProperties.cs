@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The UnknownPlacementPolicyProperties. </summary>
+    /// <summary> Unknown version of PlacementPolicyProperties. </summary>
     internal partial class UnknownPlacementPolicyProperties : PlacementPolicyProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPlacementPolicyProperties"/>. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal UnknownPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState) : base(policyType, state, displayName, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             PolicyType = policyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownPlacementPolicyProperties"/> for deserialization. </summary>
+        internal UnknownPlacementPolicyProperties()
+        {
         }
     }
 }

@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class AuthenticationMethodLdapProperties : IUtf8JsonSerializable
+    public partial class AuthenticationMethodLdapProperties : IUtf8JsonSerializable, IJsonModel<AuthenticationMethodLdapProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationMethodLdapProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AuthenticationMethodLdapProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerHostname))
             {
@@ -52,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,23 +73,54 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthenticationMethodLdapProperties DeserializeAuthenticationMethodLdapProperties(JsonElement element)
+        AuthenticationMethodLdapProperties IJsonModel<AuthenticationMethodLdapProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
+        }
+
+        internal static AuthenticationMethodLdapProperties DeserializeAuthenticationMethodLdapProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> serverHostname = default;
-            Optional<int> serverPort = default;
-            Optional<string> serviceUserDistinguishedName = default;
-            Optional<string> serviceUserPassword = default;
-            Optional<string> searchBaseDistinguishedName = default;
-            Optional<string> searchFilterTemplate = default;
-            Optional<IList<CassandraCertificate>> serverCertificates = default;
-            Optional<int> connectionTimeoutInMs = default;
+            string serverHostname = default;
+            int? serverPort = default;
+            string serviceUserDistinguishedName = default;
+            string serviceUserPassword = default;
+            string searchBaseDistinguishedName = default;
+            string searchFilterTemplate = default;
+            IList<CassandraCertificate> serverCertificates = default;
+            int? connectionTimeoutInMs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverHostname"u8))
@@ -123,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     serverCertificates = array;
                     continue;
@@ -137,8 +180,238 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionTimeoutInMs = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates), Optional.ToNullable(connectionTimeoutInMs));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AuthenticationMethodLdapProperties(
+                serverHostname,
+                serverPort,
+                serviceUserDistinguishedName,
+                serviceUserPassword,
+                searchBaseDistinguishedName,
+                searchFilterTemplate,
+                serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                connectionTimeoutInMs,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerHostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverHostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerHostname))
+                {
+                    builder.Append("  serverHostname: ");
+                    if (ServerHostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerHostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerHostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerPort))
+                {
+                    builder.Append("  serverPort: ");
+                    builder.AppendLine($"{ServerPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserDistinguishedName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceUserDistinguishedName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserDistinguishedName))
+                {
+                    builder.Append("  serviceUserDistinguishedName: ");
+                    if (ServiceUserDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceUserPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserPassword))
+                {
+                    builder.Append("  serviceUserPassword: ");
+                    if (ServiceUserPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchBaseDistinguishedName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  searchBaseDistinguishedName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchBaseDistinguishedName))
+                {
+                    builder.Append("  searchBaseDistinguishedName: ");
+                    if (SearchBaseDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchBaseDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchBaseDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchFilterTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  searchFilterTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchFilterTemplate))
+                {
+                    builder.Append("  searchFilterTemplate: ");
+                    if (SearchFilterTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchFilterTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchFilterTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerCertificates))
+                {
+                    if (ServerCertificates.Any())
+                    {
+                        builder.Append("  serverCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serverCertificates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionTimeoutInMs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectionTimeoutInMs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionTimeoutInMs))
+                {
+                    builder.Append("  connectionTimeoutInMs: ");
+                    builder.AppendLine($"{ConnectionTimeoutInMs.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AuthenticationMethodLdapProperties IPersistableModel<AuthenticationMethodLdapProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AuthenticationMethodLdapProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

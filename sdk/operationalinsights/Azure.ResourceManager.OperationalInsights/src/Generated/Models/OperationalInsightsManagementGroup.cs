@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> A management group that is connected to a workspace. </summary>
     public partial class OperationalInsightsManagementGroup
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsManagementGroup"/>. </summary>
         internal OperationalInsightsManagementGroup()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="dataReceivedOn"> The last datetime that the management group received data. </param>
         /// <param name="version"> The version of System Center that is managing the management group. </param>
         /// <param name="sku"> The SKU of System Center that is managing the management group. </param>
-        internal OperationalInsightsManagementGroup(int? serverCount, bool? isGateway, string name, string id, DateTimeOffset? createdOn, DateTimeOffset? dataReceivedOn, string version, string sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsManagementGroup(int? serverCount, bool? isGateway, string name, string id, DateTimeOffset? createdOn, DateTimeOffset? dataReceivedOn, string version, string sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerCount = serverCount;
             IsGateway = isGateway;
@@ -36,23 +70,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             DataReceivedOn = dataReceivedOn;
             Version = version;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of servers connected to the management group. </summary>
+        [WirePath("properties.serverCount")]
         public int? ServerCount { get; }
         /// <summary> Gets or sets a value indicating whether the management group is a gateway. </summary>
+        [WirePath("properties.isGateway")]
         public bool? IsGateway { get; }
         /// <summary> The name of the management group. </summary>
+        [WirePath("properties.name")]
         public string Name { get; }
         /// <summary> The unique ID of the management group. </summary>
+        [WirePath("properties.id")]
         public string Id { get; }
         /// <summary> The datetime that the management group was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The last datetime that the management group received data. </summary>
+        [WirePath("properties.dataReceived")]
         public DateTimeOffset? DataReceivedOn { get; }
         /// <summary> The version of System Center that is managing the management group. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> The SKU of System Center that is managing the management group. </summary>
+        [WirePath("properties.sku")]
         public string Sku { get; }
     }
 }

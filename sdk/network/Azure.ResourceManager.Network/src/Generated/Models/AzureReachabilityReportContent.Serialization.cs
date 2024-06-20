@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AzureReachabilityReportContent : IUtf8JsonSerializable, IJsonModel<AzureReachabilityReportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReportContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReportContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureReachabilityReportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation);
+            writer.WriteObjectValue(ProviderLocation, options);
             if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureReachabilityReportContent DeserializeAzureReachabilityReportContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AzureReachabilityReportLocation providerLocation = default;
-            Optional<IList<string>> providers = default;
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<string> providers = default;
+            IList<AzureLocation> azureLocations = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))
@@ -144,11 +144,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportContent(providerLocation, Optional.ToList(providers), Optional.ToList(azureLocations), startTime, endTime, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureReachabilityReportContent(
+                providerLocation,
+                providers ?? new ChangeTrackingList<string>(),
+                azureLocations ?? new ChangeTrackingList<AzureLocation>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportContent>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureReachabilityReportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

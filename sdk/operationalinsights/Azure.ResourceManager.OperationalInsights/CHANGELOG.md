@@ -7,10 +7,29 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix [BUG] Wrong request during the LRO of OperationaIInsights - Cluster - PUT #40606
+### Other Changes
+
+## 1.2.2 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.2.1 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+### Bugs Fixed
 
 - Add `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
-
-### Other Changes
 
 ## 1.2.0 (2023-11-29)
 

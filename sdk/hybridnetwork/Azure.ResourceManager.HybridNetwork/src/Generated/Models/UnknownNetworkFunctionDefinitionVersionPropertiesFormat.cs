@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownNetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+    /// <summary> Unknown version of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionDefinitionVersionPropertiesFormat : NetworkFunctionDefinitionVersionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
-        internal UnknownNetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType) : base(provisioningState, versionState, description, deployParameters, networkFunctionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, versionState, description, deployParameters, networkFunctionType, serializedAdditionalRawData)
         {
             NetworkFunctionType = networkFunctionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionDefinitionVersionPropertiesFormat"/> for deserialization. </summary>
+        internal UnknownNetworkFunctionDefinitionVersionPropertiesFormat()
+        {
         }
     }
 }

@@ -18,4 +18,3 @@ extends:
     Clouds: Public,Int
     TestResourceDirectories:
       - communication/test-resources/
-    EnvVars:

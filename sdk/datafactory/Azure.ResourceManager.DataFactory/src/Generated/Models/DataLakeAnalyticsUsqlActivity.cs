@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -60,6 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeVersion = runtimeVersion;
             CompilationMode = compilationMode;
             ActivityType = activityType ?? "DataLakeAnalyticsU-SQL";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/> for deserialization. </summary>
+        internal DataLakeAnalyticsUsqlActivity()
+        {
         }
 
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>

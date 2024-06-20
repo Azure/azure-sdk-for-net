@@ -329,7 +329,7 @@ if (!string.IsNullOrEmpty(property.RemarksComment))
 if (property.IsWritable)
 {
     var setterVisibility = property.HasPublicSetter ? "" : "private ";
-    if (!property.IsTypeCollection)
+    if (!property.IsTypeCollection || property.IsDictionary)
     {
 
             this.Write("            ");

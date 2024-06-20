@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AvailableProvidersListCity : IUtf8JsonSerializable, IJsonModel<AvailableProvidersListCity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableProvidersListCity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableProvidersListCity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableProvidersListCity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AvailableProvidersListCity DeserializeAvailableProvidersListCity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> cityName = default;
-            Optional<IReadOnlyList<string>> providers = default;
+            string cityName = default;
+            IReadOnlyList<string> providers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cityName"u8))
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListCity(cityName.Value, Optional.ToList(providers), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvailableProvidersListCity(cityName, providers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListCity>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAvailableProvidersListCity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCity)} does not support reading '{options.Format}' format.");
             }
         }
 

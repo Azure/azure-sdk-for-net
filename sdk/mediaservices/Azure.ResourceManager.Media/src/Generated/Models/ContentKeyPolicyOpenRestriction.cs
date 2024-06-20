@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents an open restriction. License or key will be delivered on every request. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOpenRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal ContentKeyPolicyOpenRestriction(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyOpenRestriction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyOpenRestriction";
         }

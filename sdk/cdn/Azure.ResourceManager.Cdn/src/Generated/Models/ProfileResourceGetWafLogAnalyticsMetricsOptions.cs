@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -32,6 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
             Actions = new ChangeTrackingList<WafAction>();
             GroupBy = new ChangeTrackingList<WafRankingGroupBy>();
             RuleTypes = new ChangeTrackingList<WafRuleType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The metrics. </summary>

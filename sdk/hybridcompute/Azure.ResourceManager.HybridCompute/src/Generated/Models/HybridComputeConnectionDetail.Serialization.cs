@@ -5,24 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeConnectionDetail
+    public partial class HybridComputeConnectionDetail : IUtf8JsonSerializable, IJsonModel<HybridComputeConnectionDetail>
     {
-        internal static HybridComputeConnectionDetail DeserializeHybridComputeConnectionDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeConnectionDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridComputeConnectionDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConnectionDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeConnectionDetail)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
+            {
+                writer.WritePropertyName("linkIdentifier"u8);
+                writer.WriteStringValue(LinkIdentifier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
+            {
+                writer.WritePropertyName("memberName"u8);
+                writer.WriteStringValue(MemberName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HybridComputeConnectionDetail IJsonModel<HybridComputeConnectionDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConnectionDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeConnectionDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeConnectionDetail(document.RootElement, options);
+        }
+
+        internal static HybridComputeConnectionDetail DeserializeHybridComputeConnectionDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            ResourceIdentifier id = default;
+            string privateIPAddress = default;
+            string linkIdentifier = default;
+            string groupId = default;
+            string memberName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,8 +127,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     memberName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridComputeConnectionDetail(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridComputeConnectionDetail(
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridComputeConnectionDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConnectionDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeConnectionDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridComputeConnectionDetail IPersistableModel<HybridComputeConnectionDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConnectionDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputeConnectionDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeConnectionDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputeConnectionDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

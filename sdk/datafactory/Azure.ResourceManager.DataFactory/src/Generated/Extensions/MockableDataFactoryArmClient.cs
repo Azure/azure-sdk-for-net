@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
@@ -145,15 +143,15 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryManagedIdentityCredentialResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedIdentityCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataFactoryServiceCredentialResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryServiceCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryServiceCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource"/> object. </returns>
-        public virtual DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryServiceCredentialResource"/> object. </returns>
+        public virtual DataFactoryServiceCredentialResource GetDataFactoryServiceCredentialResource(ResourceIdentifier id)
         {
-            DataFactoryManagedIdentityCredentialResource.ValidateResourceId(id);
-            return new DataFactoryManagedIdentityCredentialResource(Client, id);
+            DataFactoryServiceCredentialResource.ValidateResourceId(id);
+            return new DataFactoryServiceCredentialResource(Client, id);
         }
 
         /// <summary>

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PolicySettingsLogScrubbing : IUtf8JsonSerializable, IJsonModel<PolicySettingsLogScrubbing>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettingsLogScrubbing>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettingsLogScrubbing>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicySettingsLogScrubbing>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettingsLogScrubbing>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ScrubbingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettingsLogScrubbing>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PolicySettingsLogScrubbing DeserializePolicySettingsLogScrubbing(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WebApplicationFirewallScrubbingState> state = default;
-            Optional<IList<WebApplicationFirewallScrubbingRules>> scrubbingRules = default;
+            WebApplicationFirewallScrubbingState? state = default;
+            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Network.Models
                     List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item));
+                        array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
                     }
                     scrubbingRules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettingsLogScrubbing(Optional.ToNullable(state), Optional.ToList(scrubbingRules), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicySettingsLogScrubbing(state, scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettingsLogScrubbing>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePolicySettingsLogScrubbing(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support reading '{options.Format}' format.");
             }
         }
 

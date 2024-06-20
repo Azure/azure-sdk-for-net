@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCommitmentPlanPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
-        internal CognitiveServicesCommitmentPlanPatch(IDictionary<string, string> tags, CognitiveServicesSku sku) : base(tags)
+        internal CognitiveServicesCommitmentPlanPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesSku sku) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
         }
 
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; set; }
     }
 }

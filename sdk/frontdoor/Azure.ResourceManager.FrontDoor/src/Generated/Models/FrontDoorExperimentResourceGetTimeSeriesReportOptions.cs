@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             TimeSeriesType = timeSeriesType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResourceGetTimeSeriesReportOptions"/> for deserialization. </summary>
+        internal FrontDoorExperimentResourceGetTimeSeriesReportOptions()
+        {
+        }
+
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         public DateTimeOffset StartOn { get; }
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>

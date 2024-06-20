@@ -26,7 +26,13 @@ namespace Azure.IoT.TimeSeriesInsights
             details ??= new List<TimeSeriesOperationErrorDetails>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new TimeSeriesOperationError(code, message, target, innerError, details?.ToList(), additionalProperties);
+            return new TimeSeriesOperationError(
+                code,
+                message,
+                target,
+                innerError,
+                details?.ToList(),
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.TimeSeriesOperationErrorDetails"/>. </summary>

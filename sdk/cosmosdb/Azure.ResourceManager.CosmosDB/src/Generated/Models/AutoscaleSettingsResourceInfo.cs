@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB provisioned throughput settings object. </summary>
     public partial class AutoscaleSettingsResourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutoscaleSettingsResourceInfo"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput container can scale up to. </param>
         public AutoscaleSettingsResourceInfo(int maxThroughput)
@@ -21,18 +56,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="maxThroughput"> Represents maximum throughput container can scale up to. </param>
         /// <param name="autoUpgradePolicy"> Cosmos DB resource auto-upgrade policy. </param>
         /// <param name="targetMaxThroughput"> Represents target maximum throughput container can scale up to once offer is no longer in pending state. </param>
-        internal AutoscaleSettingsResourceInfo(int maxThroughput, AutoUpgradePolicyResourceInfo autoUpgradePolicy, int? targetMaxThroughput)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleSettingsResourceInfo(int maxThroughput, AutoUpgradePolicyResourceInfo autoUpgradePolicy, int? targetMaxThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxThroughput = maxThroughput;
             AutoUpgradePolicy = autoUpgradePolicy;
             TargetMaxThroughput = targetMaxThroughput;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingsResourceInfo"/> for deserialization. </summary>
+        internal AutoscaleSettingsResourceInfo()
+        {
         }
 
         /// <summary> Represents maximum throughput container can scale up to. </summary>
+        [WirePath("maxThroughput")]
         public int MaxThroughput { get; set; }
         /// <summary> Cosmos DB resource auto-upgrade policy. </summary>
         internal AutoUpgradePolicyResourceInfo AutoUpgradePolicy { get; set; }
         /// <summary> Represents throughput policy which service must adhere to for auto-upgrade. </summary>
+        [WirePath("autoUpgradePolicy.throughputPolicy")]
         public ThroughputPolicyResourceInfo AutoUpgradeThroughputPolicy
         {
             get => AutoUpgradePolicy is null ? default : AutoUpgradePolicy.ThroughputPolicy;
@@ -45,6 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Represents target maximum throughput container can scale up to once offer is no longer in pending state. </summary>
+        [WirePath("targetMaxThroughput")]
         public int? TargetMaxThroughput { get; }
     }
 }

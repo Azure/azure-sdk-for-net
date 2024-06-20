@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -20,8 +22,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, ManagedServiceIdentity identity) : base(computeIdentityType)
+        internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(computeIdentityType, serializedAdditionalRawData)
         {
             Identity = identity;
             ComputeIdentityType = computeIdentityType;

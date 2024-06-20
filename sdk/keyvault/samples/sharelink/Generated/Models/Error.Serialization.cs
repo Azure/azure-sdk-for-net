@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<Error> innererror = default;
+            string code = default;
+            string message = default;
+            Error innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,7 +42,15 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value, innererror.Value);
+            return new Error(code, message, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Error FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeError(document.RootElement);
         }
     }
 }

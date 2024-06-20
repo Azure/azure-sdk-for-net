@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class BgpPeerStatus : IUtf8JsonSerializable, IJsonModel<BgpPeerStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpPeerStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpPeerStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BgpPeerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> neighbor = default;
-            Optional<long> asn = default;
-            Optional<BgpPeerState> state = default;
-            Optional<TimeSpan> connectedDuration = default;
-            Optional<long> routesReceived = default;
-            Optional<long> messagesSent = default;
-            Optional<long> messagesReceived = default;
+            string localAddress = default;
+            string neighbor = default;
+            long? asn = default;
+            BgpPeerState? state = default;
+            TimeSpan? connectedDuration = default;
+            long? routesReceived = default;
+            long? messagesSent = default;
+            long? messagesReceived = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -182,11 +182,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BgpPeerStatus(
+                localAddress,
+                neighbor,
+                asn,
+                state,
+                connectedDuration,
+                routesReceived,
+                messagesSent,
+                messagesReceived,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatus>.Write(ModelReaderWriterOptions options)
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBgpPeerStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

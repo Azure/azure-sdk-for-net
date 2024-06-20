@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownWorkloadProtectableItem. </summary>
+    /// <summary> Unknown version of WorkloadProtectableItem. </summary>
     internal partial class UnknownWorkloadProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkloadProtectableItem"/>. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal UnknownWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData)
         {
             ProtectableItemType = protectableItemType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkloadProtectableItem"/> for deserialization. </summary>
+        internal UnknownWorkloadProtectableItem()
+        {
         }
     }
 }

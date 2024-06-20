@@ -41,13 +41,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var (payload, expected, expectedStatus) = GetTestData(testType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
+                await eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
             });
 
             Assert.AreEqual(expectedStatus, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(expected, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(expected, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
 

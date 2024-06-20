@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownDatasetStorageFormat. </summary>
+    /// <summary> Unknown version of DatasetStorageFormat. </summary>
     internal partial class UnknownDatasetStorageFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetStorageFormat"/>. </summary>

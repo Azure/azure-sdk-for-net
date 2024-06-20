@@ -12,46 +12,38 @@ namespace Microsoft.Extensions.Azure
     {
         public string Name { get; set; }
         public object Version { get; set; }
-        public bool RequiresTokenCredential { get; set; }
 
+        private readonly bool _requiresCredential;
         private readonly Func<IServiceProvider, object, TokenCredential, TClient> _factory;
 
-        private readonly object _cacheLock = new object();
-        private readonly bool _asyncDisposable;
-        private readonly bool _disposable;
+        private readonly object _cacheLock = new();
 
         private bool _clientInitialized;
         private TClient _cachedClient;
         private ExceptionDispatchInfo _cachedException;
 
-        public ClientRegistration(string name, Func<IServiceProvider, object, TokenCredential, TClient> factory)
+        public ClientRegistration(string name, bool requiresCredential, Func<IServiceProvider, object, TokenCredential, TClient> factory)
         {
             Name = name;
+            _requiresCredential = requiresCredential;
             _factory = factory;
-
-            _asyncDisposable = typeof(IAsyncDisposable).IsAssignableFrom(typeof(TClient));
-            _disposable = typeof(IDisposable).IsAssignableFrom(typeof(TClient));
         }
 
         public TClient GetClient(IServiceProvider serviceProvider, object options, TokenCredential tokenCredential)
         {
-            _cachedException?.Throw();
-
-            if (_clientInitialized)
+            if (TryGetCachedClientOrThrow(out var cachedClient))
             {
-                return _cachedClient;
+                return cachedClient;
             }
 
             lock (_cacheLock)
             {
-                _cachedException?.Throw();
-
-                if (_clientInitialized)
+                if (TryGetCachedClientOrThrow(out cachedClient))
                 {
-                    return _cachedClient;
+                    return cachedClient;
                 }
 
-                if (RequiresTokenCredential && tokenCredential == null)
+                if (_requiresCredential && tokenCredential == null)
                 {
                     throw new InvalidOperationException("Client registration requires a TokenCredential. Configure it using UseCredential method.");
                 }
@@ -71,63 +63,87 @@ namespace Microsoft.Extensions.Azure
             }
         }
 
-        public async ValueTask DisposeAsync()
+        /// <summary>
+        /// Client registration can be in one of 4 states:
+        ///  - _clientInitialized is false, _cachedException is null: _factory has never been called, client hasn't been initialized yet
+        ///  - _clientInitialized is false, _cachedException is not null: _factory has been called, but exception has happened. Client isn't been initialized.
+        ///  - _clientInitialized is true, _cachedClient is not null: client has been initialized and is not disposed yet
+        ///  - _clientInitialized is true, _cachedClient is null: client has been initialized and is disposed
+        /// </summary>
+        /// <param name="cachedClient"></param>
+        /// <returns>True if client is initialized and not disposed, otherwise false.</returns>
+        private bool TryGetCachedClientOrThrow(out TClient cachedClient)
         {
+            _cachedException?.Throw();
             if (_clientInitialized)
             {
-                if (_asyncDisposable)
-                {
-                    IAsyncDisposable disposableClient;
+                cachedClient = _cachedClient ?? throw new ObjectDisposedException(nameof(ClientRegistration<TClient>));
+                return true;
+            }
 
-                    lock (_cacheLock)
-                    {
-                       if (!_clientInitialized)
-                       {
-                           return;
-                       }
+            cachedClient = default;
+            return false;
+        }
 
-                       disposableClient = (IAsyncDisposable)_cachedClient;
+        public async ValueTask DisposeAsync()
+        {
+            if (!_clientInitialized)
+            {
+                return;
+            }
 
-                       _cachedClient = default;
-                       _clientInitialized = false;
-                    }
+            if (_cachedClient is null)
+            {
+                return;
+            }
 
-                    await disposableClient.DisposeAsync().ConfigureAwait(false);
-                }
-                else if (_disposable)
-                {
-                    Dispose();
-                }
+            IDisposable disposableClient;
+            IAsyncDisposable asyncDisposableClient;
+            lock (_cacheLock)
+            {
+                disposableClient = _cachedClient as IDisposable;
+                asyncDisposableClient = _cachedClient as IAsyncDisposable;
+                _cachedClient = default;
+            }
+
+            if (asyncDisposableClient is not null)
+            {
+                await asyncDisposableClient.DisposeAsync().ConfigureAwait(false);
+            }
+            else if (disposableClient is not null)
+            {
+                disposableClient.Dispose();
             }
         }
 
         public void Dispose()
         {
-            if (_clientInitialized)
+            if (!_clientInitialized)
             {
-                if (_disposable)
-                {
-                    IDisposable disposableClient;
+                return;
+            }
 
-                    lock (_cacheLock)
-                    {
-                       if (!_clientInitialized)
-                       {
-                           return;
-                       }
+            if (_cachedClient is null)
+            {
+                return;
+            }
 
-                       disposableClient = (IDisposable)_cachedClient;
+            IDisposable disposableClient;
+            IAsyncDisposable asyncDisposableClient;
+            lock (_cacheLock)
+            {
+                disposableClient = _cachedClient as IDisposable;
+                asyncDisposableClient = _cachedClient as IAsyncDisposable;
+                _cachedClient = default;
+            }
 
-                       _cachedClient = default;
-                       _clientInitialized = false;
-                    }
-
-                    disposableClient.Dispose();
-                }
-                else if (_asyncDisposable)
-                {
-                    DisposeAsync().GetAwaiter().GetResult();
-                }
+            if (disposableClient is not null)
+            {
+                disposableClient.Dispose();
+            }
+            else if (asyncDisposableClient is not null)
+            {
+                asyncDisposableClient.DisposeAsync().GetAwaiter().GetResult();
             }
         }
     }

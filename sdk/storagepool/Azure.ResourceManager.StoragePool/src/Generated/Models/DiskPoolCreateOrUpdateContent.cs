@@ -16,6 +16,38 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for create or update Disk Pool request. </summary>
     public partial class DiskPoolCreateOrUpdateContent : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DiskPoolCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for a Disk Pool. </param>
-        internal DiskPoolCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePoolSku sku, IDictionary<string, string> tags, AzureLocation location, string managedBy, IList<string> managedByExtended, IList<string> availabilityZones, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePoolSku sku, IDictionary<string, string> tags, AzureLocation location, string managedBy, IList<string> managedByExtended, IList<string> availabilityZones, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Tags = tags;
@@ -61,6 +94,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             Disks = disks;
             SubnetId = subnetId;
             AdditionalCapabilities = additionalCapabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DiskPoolCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Determines the SKU of the Disk Pool. </summary>

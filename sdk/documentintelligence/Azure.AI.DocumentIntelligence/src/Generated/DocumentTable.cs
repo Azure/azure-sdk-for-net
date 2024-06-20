@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> A table object consisting table cells arranged in a rectangular layout. </summary>
     public partial class DocumentTable
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
@@ -42,7 +73,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
         /// <param name="caption"> Caption associated with the table. </param>
         /// <param name="footnotes"> List of footnotes associated with the table. </param>
-        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
@@ -51,6 +83,12 @@ namespace Azure.AI.DocumentIntelligence
             Spans = spans;
             Caption = caption;
             Footnotes = footnotes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/> for deserialization. </summary>
+        internal DocumentTable()
+        {
         }
 
         /// <summary> Number of rows in the table. </summary>

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
@@ -34,6 +32,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridComputeLicenseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeLicenseResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridComputeLicenseResource"/> object. </returns>
+        public virtual HybridComputeLicenseResource GetHybridComputeLicenseResource(ResourceIdentifier id)
+        {
+            HybridComputeLicenseResource.ValidateResourceId(id);
+            return new HybridComputeLicenseResource(Client, id);
         }
 
         /// <summary>
@@ -118,6 +128,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
             HybridComputePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HybridComputePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

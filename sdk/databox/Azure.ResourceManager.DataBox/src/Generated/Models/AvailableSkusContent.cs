@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The filters for showing the available skus. </summary>
     public partial class AvailableSkusContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AvailableSkusContent"/>. </summary>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
@@ -34,12 +66,19 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuNames"> Sku Names to filter for available skus. </param>
-        internal AvailableSkusContent(DataBoxJobTransferType transferType, string country, AzureLocation location, IList<DataBoxSkuName> skuNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableSkusContent(DataBoxJobTransferType transferType, string country, AzureLocation location, IList<DataBoxSkuName> skuNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransferType = transferType;
             Country = country;
             Location = location;
             SkuNames = skuNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableSkusContent"/> for deserialization. </summary>
+        internal AvailableSkusContent()
+        {
         }
 
         /// <summary> Type of the transfer. </summary>

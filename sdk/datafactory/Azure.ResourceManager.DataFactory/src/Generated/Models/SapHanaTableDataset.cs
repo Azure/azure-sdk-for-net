@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -42,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "SapHanaTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapHanaTableDataset"/> for deserialization. </summary>
+        internal SapHanaTableDataset()
+        {
         }
 
         /// <summary> The schema name of SAP HANA. Type: string (or Expression with resultType string). </summary>

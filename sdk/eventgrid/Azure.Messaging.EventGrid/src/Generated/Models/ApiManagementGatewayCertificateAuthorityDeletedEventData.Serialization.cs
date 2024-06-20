@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> resourceUri = default;
+            string resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -30,7 +29,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ApiManagementGatewayCertificateAuthorityDeletedEventData(resourceUri.Value);
+            return new ApiManagementGatewayCertificateAuthorityDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementGatewayCertificateAuthorityDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementGatewayCertificateAuthorityDeletedEventData(document.RootElement);
         }
 
         internal partial class ApiManagementGatewayCertificateAuthorityDeletedEventDataConverter : JsonConverter<ApiManagementGatewayCertificateAuthorityDeletedEventData>
@@ -39,6 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ApiManagementGatewayCertificateAuthorityDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

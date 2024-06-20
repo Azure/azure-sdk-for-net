@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -29,13 +29,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inferencingComputeBinding"> [Required] AML compute binding used in inferencing. </param>
         /// <param name="trainingComputeBinding"> [Required] AML compute binding used in training. </param>
-        internal MachineLearningAssistEnabledConfiguration(MLAssistConfigurationType mlAssist, string inferencingComputeBinding, string trainingComputeBinding) : base(mlAssist)
+        internal MachineLearningAssistEnabledConfiguration(MLAssistConfigurationType mlAssist, IDictionary<string, BinaryData> serializedAdditionalRawData, string inferencingComputeBinding, string trainingComputeBinding) : base(mlAssist, serializedAdditionalRawData)
         {
             InferencingComputeBinding = inferencingComputeBinding;
             TrainingComputeBinding = trainingComputeBinding;
             MlAssist = mlAssist;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/> for deserialization. </summary>
+        internal MachineLearningAssistEnabledConfiguration()
+        {
         }
 
         /// <summary> [Required] AML compute binding used in inferencing. </summary>

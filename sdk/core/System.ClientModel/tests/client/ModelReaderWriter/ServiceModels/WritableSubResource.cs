@@ -17,7 +17,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
-        protected internal WritableSubResource(string id)
+        protected internal WritableSubResource(string? id)
         {
             Id = id;
         }
@@ -26,6 +26,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// Gets or sets the ARM resource identifier.
         /// </summary>
         /// <value></value>
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MixedReality;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <returns> A new <see cref="Models.MixedRealityNameAvailabilityResult"/> instance for mocking. </returns>
         public static MixedRealityNameAvailabilityResult MixedRealityNameAvailabilityResult(bool isNameAvailable = default, MixedRealityNameUnavailableReason? reason = null, string message = null)
         {
-            return new MixedRealityNameAvailabilityResult(isNameAvailable, reason, message);
+            return new MixedRealityNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MixedReality.SpatialAnchorsAccountData"/>. </summary>
@@ -45,7 +44,21 @@ namespace Azure.ResourceManager.MixedReality.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpatialAnchorsAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
+            return new SpatialAnchorsAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                plan,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MixedRealityAccountKeys"/>. </summary>
@@ -54,7 +67,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <returns> A new <see cref="Models.MixedRealityAccountKeys"/> instance for mocking. </returns>
         public static MixedRealityAccountKeys MixedRealityAccountKeys(string primaryKey = null, string secondaryKey = null)
         {
-            return new MixedRealityAccountKeys(primaryKey, secondaryKey);
+            return new MixedRealityAccountKeys(primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MixedReality.RemoteRenderingAccountData"/>. </summary>
@@ -76,7 +89,21 @@ namespace Azure.ResourceManager.MixedReality.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RemoteRenderingAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
+            return new RemoteRenderingAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                plan,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
+                serializedAdditionalRawData: null);
         }
     }
 }

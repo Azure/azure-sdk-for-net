@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Protectable item for Azure Fileshare workloads. </summary>
@@ -22,10 +25,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentContainerFabricId"> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </param>
         /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
         /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
-        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData)
         {
             ParentContainerFabricId = parentContainerFabricId;
             ParentContainerFriendlyName = parentContainerFriendlyName;

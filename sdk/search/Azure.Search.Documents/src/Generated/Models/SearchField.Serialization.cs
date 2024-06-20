@@ -30,6 +30,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
+            if (Optional.IsDefined(IsStored))
+            {
+                writer.WritePropertyName("stored"u8);
+                writer.WriteBooleanValue(IsStored.Value);
+            }
             if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
@@ -122,6 +127,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
+            if (Optional.IsDefined(VectorEncodingFormat))
+            {
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding");
+                }
+            }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
@@ -138,7 +155,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -153,20 +170,22 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SearchFieldDataType type = default;
-            Optional<bool> key = default;
-            Optional<bool> retrievable = default;
-            Optional<bool> searchable = default;
-            Optional<bool> filterable = default;
-            Optional<bool> sortable = default;
-            Optional<bool> facetable = default;
-            Optional<LexicalAnalyzerName?> analyzer = default;
-            Optional<LexicalAnalyzerName?> searchAnalyzer = default;
-            Optional<LexicalAnalyzerName?> indexAnalyzer = default;
-            Optional<LexicalNormalizerName?> normalizer = default;
-            Optional<int?> dimensions = default;
-            Optional<string> vectorSearchProfile = default;
-            Optional<IList<string>> synonymMaps = default;
-            Optional<IList<SearchField>> fields = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? stored = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            LexicalNormalizerName? normalizer = default;
+            int? dimensions = default;
+            string vectorSearchProfile = default;
+            VectorEncodingFormat? vectorEncoding = default;
+            IList<string> synonymMaps = default;
+            IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -195,6 +214,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     retrievable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stored"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stored = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"u8))
@@ -293,6 +321,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearchProfile = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vectorEncoding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vectorEncoding = null;
+                        continue;
+                    }
+                    vectorEncoding = new VectorEncodingFormat(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("synonymMaps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -322,7 +360,41 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
+            return new SearchField(
+                name,
+                type,
+                key,
+                retrievable,
+                stored,
+                searchable,
+                filterable,
+                sortable,
+                facetable,
+                analyzer,
+                searchAnalyzer,
+                indexAnalyzer,
+                normalizer,
+                dimensions,
+                vectorSearchProfile,
+                vectorEncoding,
+                synonymMaps ?? new ChangeTrackingList<string>(),
+                fields ?? new ChangeTrackingList<SearchField>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchField(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

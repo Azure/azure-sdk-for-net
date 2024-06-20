@@ -9,9 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -66,7 +64,8 @@ namespace Azure.ResourceManager.CosmosDB
                 data.Tags,
                 data.Location,
                 data.Resource,
-                data.Identity);
+                data.Identity,
+                null);
         }
 
         private string GetName(string param, ResourceIdentifier id)

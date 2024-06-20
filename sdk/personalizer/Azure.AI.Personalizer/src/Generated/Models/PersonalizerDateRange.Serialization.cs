@@ -15,8 +15,8 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerDateRange DeserializePersonalizerDateRange(JsonElement element)
         {
-            Optional<DateTimeOffset> @from = default;
-            Optional<DateTimeOffset> to = default;
+            DateTimeOffset? @from = default;
+            DateTimeOffset? to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"))
@@ -40,7 +40,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerDateRange(Optional.ToNullable(@from), Optional.ToNullable(to));
+            return new PersonalizerDateRange(@from, to);
         }
     }
 }

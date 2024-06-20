@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ExperimentExecutionActionTargetDetailsProperties : IUtf8JsonSerializable, IJsonModel<ExperimentExecutionActionTargetDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionActionTargetDetailsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionActionTargetDetailsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExperimentExecutionActionTargetDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error);
+                    writer.WriteObjectValue(Error, options);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> target = default;
-            Optional<DateTimeOffset?> targetFailedTime = default;
-            Optional<DateTimeOffset?> targetCompletedTime = default;
-            Optional<ExperimentExecutionActionTargetDetailsError> error = default;
+            string status = default;
+            string target = default;
+            DateTimeOffset? targetFailedTime = default;
+            DateTimeOffset? targetCompletedTime = default;
+            ExperimentExecutionActionTargetDetailsError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -156,16 +156,22 @@ namespace Azure.ResourceManager.Chaos.Models
                         error = null;
                         continue;
                     }
-                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value);
+                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentExecutionActionTargetDetailsProperties(status.Value, target.Value, Optional.ToNullable(targetFailedTime), Optional.ToNullable(targetCompletedTime), error.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExperimentExecutionActionTargetDetailsProperties(
+                status,
+                target,
+                targetFailedTime,
+                targetCompletedTime,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>.Write(ModelReaderWriterOptions options)
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeExperimentExecutionActionTargetDetailsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SensitivitySettingCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<SensitivitySettingCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SensitivitySettingCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SensitivitySettingCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SensitivitySettingCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SensitivitySettingCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivitySettingCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SensitivitySettingCreateOrUpdateContent DeserializeSensitivitySettingCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<Guid> sensitiveInfoTypesIds = default;
-            Optional<float> sensitivityThresholdLabelOrder = default;
-            Optional<Guid> sensitivityThresholdLabelId = default;
+            float? sensitivityThresholdLabelOrder = default;
+            Guid? sensitivityThresholdLabelId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sensitiveInfoTypesIds"u8))
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds, Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds, sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSensitivitySettingCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivitySettingCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

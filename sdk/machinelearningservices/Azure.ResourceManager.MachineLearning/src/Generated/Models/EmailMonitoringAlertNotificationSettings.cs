@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The EmailMonitoringAlertNotificationSettings. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="EmailMonitoringAlertNotificationSettings"/>. </summary>
         /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="emailNotificationSetting"> Configuration for notification. </param>
-        internal EmailMonitoringAlertNotificationSettings(MonitoringAlertNotificationType alertNotificationType, NotificationSetting emailNotificationSetting) : base(alertNotificationType)
+        internal EmailMonitoringAlertNotificationSettings(MonitoringAlertNotificationType alertNotificationType, IDictionary<string, BinaryData> serializedAdditionalRawData, NotificationSetting emailNotificationSetting) : base(alertNotificationType, serializedAdditionalRawData)
         {
             EmailNotificationSetting = emailNotificationSetting;
             AlertNotificationType = alertNotificationType;

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure ML batch inferencing server configurations. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMLBatchInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="codeConfiguration"> Code configuration for AML batch inferencing server. </param>
-        internal AzureMLBatchInferencingServer(InferencingServerType serverType, MachineLearningCodeConfiguration codeConfiguration) : base(serverType)
+        internal AzureMLBatchInferencingServer(InferencingServerType serverType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningCodeConfiguration codeConfiguration) : base(serverType, serializedAdditionalRawData)
         {
             CodeConfiguration = codeConfiguration;
             ServerType = serverType;

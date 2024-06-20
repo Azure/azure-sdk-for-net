@@ -40,7 +40,26 @@ namespace Azure.Quantum.Jobs.Models
             metadata ??= new Dictionary<string, string>();
             tags ??= new List<string>();
 
-            return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, costEstimate, errorData, tags?.ToList());
+            return new JobDetails(
+                id,
+                name,
+                containerUri,
+                inputDataUri,
+                inputDataFormat,
+                inputParams,
+                providerId,
+                target,
+                metadata,
+                outputDataUri,
+                outputDataFormat,
+                status,
+                creationTime,
+                beginExecutionTime,
+                endExecutionTime,
+                cancellationTime,
+                costEstimate,
+                errorData,
+                tags?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CostEstimate"/>. </summary>
@@ -65,7 +84,13 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.UsageEvent"/> instance for mocking. </returns>
         public static UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = null, float? amountConsumed = null, float? unitPrice = null)
         {
-            return new UsageEvent(dimensionId, dimensionName, measureUnit, amountBilled, amountConsumed, unitPrice);
+            return new UsageEvent(
+                dimensionId,
+                dimensionName,
+                measureUnit,
+                amountBilled,
+                amountConsumed,
+                unitPrice);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorData"/>. </summary>
@@ -130,7 +155,14 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.QuantumJobQuota"/> instance for mocking. </returns>
         public static QuantumJobQuota QuantumJobQuota(string dimension = null, DimensionScope? scope = null, string providerId = null, float? utilization = null, float? holds = null, float? limit = null, MeterPeriod? period = null)
         {
-            return new QuantumJobQuota(dimension, scope, providerId, utilization, holds, limit, period);
+            return new QuantumJobQuota(
+                dimension,
+                scope,
+                providerId,
+                utilization,
+                holds,
+                limit,
+                period);
         }
     }
 }

@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The AssignmentPrincipal. </summary>
     public partial class AssignmentPrincipal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/>. </summary>
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
@@ -32,11 +63,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
         /// <param name="principalMetadata"> Other metadata for the principal. </param>
-        internal AssignmentPrincipal(string principalId, string principalType, IDictionary<string, string> principalMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentPrincipal(string principalId, string principalType, IDictionary<string, string> principalMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             PrincipalType = principalType;
             PrincipalMetadata = principalMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/> for deserialization. </summary>
+        internal AssignmentPrincipal()
+        {
         }
 
         /// <summary> The principal id being assigned to. </summary>

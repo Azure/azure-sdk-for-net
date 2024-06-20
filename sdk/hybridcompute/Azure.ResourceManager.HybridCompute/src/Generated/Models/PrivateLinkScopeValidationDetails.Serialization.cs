@@ -5,23 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class PrivateLinkScopeValidationDetails
+    public partial class PrivateLinkScopeValidationDetails : IUtf8JsonSerializable, IJsonModel<PrivateLinkScopeValidationDetails>
     {
-        internal static PrivateLinkScopeValidationDetails DeserializePrivateLinkScopeValidationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkScopeValidationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PrivateLinkScopeValidationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ConnectionDetails))
+            {
+                writer.WritePropertyName("connectionDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectionDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateLinkScopeValidationDetails IJsonModel<PrivateLinkScopeValidationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkScopeValidationDetails(document.RootElement, options);
+        }
+
+        internal static PrivateLinkScopeValidationDetails DeserializePrivateLinkScopeValidationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<HybridComputeConnectionDetail>> connectionDetails = default;
+            ResourceIdentifier id = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
+            IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -51,13 +118,49 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item, options));
                     }
                     connectionDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(connectionDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateLinkScopeValidationDetails IPersistableModel<PrivateLinkScopeValidationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateLinkScopeValidationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateLinkScopeValidationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

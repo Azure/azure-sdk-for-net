@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Messages.Tests
 {
@@ -19,19 +22,20 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
 
             // Act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
             Assert.IsNotNull(templates);
-            var templatesEnumerable = templates.ToEnumerableAsync().Result;
+            List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
             Assert.IsNotEmpty(templatesEnumerable);
-            foreach (MessageTemplateItem template in templatesEnumerable)
+            foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;
@@ -42,19 +46,20 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClientWithAzureKeyCredential();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
 
             // Act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
             Assert.IsNotNull(templates);
-            var templatesEnumerable = templates.ToEnumerableAsync().Result;
+            List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
             Assert.IsNotEmpty(templatesEnumerable);
-            foreach (MessageTemplateItem template in templatesEnumerable)
+            foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;

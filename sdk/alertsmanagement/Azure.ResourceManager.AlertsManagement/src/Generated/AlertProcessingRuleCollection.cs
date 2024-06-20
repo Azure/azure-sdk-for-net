@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = await _alertProcessingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = _alertProcessingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

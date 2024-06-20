@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Elastic;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Elastic.Models
@@ -31,7 +30,17 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ElasticMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName) : null, properties, identity);
+            return new ElasticMonitorResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorProperties"/>. </summary>
@@ -44,7 +53,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
         public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, ElasticProperties elasticProperties = null, UserInfo userInfo = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
         {
-            return new MonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, liftrResourceCategory, liftrResourcePreference);
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                elasticProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticCloudUser"/>. </summary>
@@ -54,7 +70,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticCloudUser"/> instance for mocking. </returns>
         public static ElasticCloudUser ElasticCloudUser(string emailAddress = null, string id = null, Uri elasticCloudSsoDefaultUri = null)
         {
-            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUri);
+            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticCloudDeployment"/>. </summary>
@@ -68,7 +84,15 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticCloudDeployment"/> instance for mocking. </returns>
         public static ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, Uri elasticsearchServiceUri = null, Uri kibanaServiceUri = null, Uri kibanaSsoUri = null)
         {
-            return new ElasticCloudDeployment(name, deploymentId, azureSubscriptionId, elasticsearchRegion, elasticsearchServiceUri, kibanaServiceUri, kibanaSsoUri);
+            return new ElasticCloudDeployment(
+                name,
+                deploymentId,
+                azureSubscriptionId,
+                elasticsearchRegion,
+                elasticsearchServiceUri,
+                kibanaServiceUri,
+                kibanaSsoUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
@@ -78,7 +102,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
         public static MonitoredResourceContent MonitoredResourceContent(string id = null, SendingLog? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus);
+            return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentInfoResponse"/>. </summary>
@@ -89,7 +113,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.DeploymentInfoResponse"/> instance for mocking. </returns>
         public static DeploymentInfoResponse DeploymentInfoResponse(ElasticDeploymentStatus? status = null, string version = null, string memoryCapacity = null, string diskCapacity = null)
         {
-            return new DeploymentInfoResponse(status, version, memoryCapacity, diskCapacity);
+            return new DeploymentInfoResponse(status, version, memoryCapacity, diskCapacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Elastic.MonitoringTagRuleData"/>. </summary>
@@ -101,7 +125,13 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Elastic.MonitoringTagRuleData"/> instance for mocking. </returns>
         public static MonitoringTagRuleData MonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRulesProperties properties = null)
         {
-            return new MonitoringTagRuleData(id, name, resourceType, systemData, properties);
+            return new MonitoringTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmResources"/>. </summary>
@@ -109,7 +139,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.VmResources"/> instance for mocking. </returns>
         public static VmResources VmResources(string vmResourceId = null)
         {
-            return new VmResources(vmResourceId);
+            return new VmResources(vmResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmIngestionDetailsResponse"/>. </summary>
@@ -118,7 +148,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.VmIngestionDetailsResponse"/> instance for mocking. </returns>
         public static VmIngestionDetailsResponse VmIngestionDetailsResponse(string cloudId = null, string ingestionKey = null)
         {
-            return new VmIngestionDetailsResponse(cloudId, ingestionKey);
+            return new VmIngestionDetailsResponse(cloudId, ingestionKey, serializedAdditionalRawData: null);
         }
     }
 }

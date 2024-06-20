@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Mocking
 {
@@ -46,6 +44,18 @@ namespace Azure.ResourceManager.Purview.Mocking
         {
             PurviewAccountResource.ValidateResourceId(id);
             return new PurviewAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PurviewKafkaConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewKafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PurviewKafkaConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PurviewKafkaConfigurationResource"/> object. </returns>
+        public virtual PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(ResourceIdentifier id)
+        {
+            PurviewKafkaConfigurationResource.ValidateResourceId(id);
+            return new PurviewKafkaConfigurationResource(Client, id);
         }
 
         /// <summary>

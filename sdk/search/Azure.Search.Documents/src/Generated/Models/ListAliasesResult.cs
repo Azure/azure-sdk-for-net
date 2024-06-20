@@ -5,10 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,11 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/>. </summary>
         /// <param name="aliases"> The aliases in the Search service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliases"/> is null. </exception>
         internal ListAliasesResult(IEnumerable<SearchAlias> aliases)
         {
-            Argument.AssertNotNull(aliases, nameof(aliases));
-
             Aliases = aliases.ToList();
         }
 

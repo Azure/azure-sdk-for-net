@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         {
             var data = new CognitiveServicesAccountDeploymentData()
             {
-                Sku = new CognitiveServicesSku("Standard", null, null, null, 1),
+                Sku = new CognitiveServicesSku("Standard", null, null, null, 1, null),
                 Properties = new CognitiveServicesAccountDeploymentProperties
                 {
                     Model = new CognitiveServicesAccountDeploymentModel()

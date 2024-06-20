@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -24,6 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id, string resultType, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<ReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate, string objectSummary) : base(id, resultType)
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<ReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate, string objectSummary) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;

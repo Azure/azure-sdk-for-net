@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string DisablingValue = "Disabling";
         private const string DisableFailedValue = "DisableFailed";
         private const string DisabledValue = "Disabled";
+        private const string ScalingValue = "Scaling";
+        private const string ScalingFailedValue = "ScalingFailed";
 
         /// <summary> Running. </summary>
         public static RedisEnterpriseClusterResourceState Running { get; } = new RedisEnterpriseClusterResourceState(RunningValue);
@@ -59,6 +61,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClusterResourceState DisableFailed { get; } = new RedisEnterpriseClusterResourceState(DisableFailedValue);
         /// <summary> Disabled. </summary>
         public static RedisEnterpriseClusterResourceState Disabled { get; } = new RedisEnterpriseClusterResourceState(DisabledValue);
+        /// <summary> Scaling. </summary>
+        public static RedisEnterpriseClusterResourceState Scaling { get; } = new RedisEnterpriseClusterResourceState(ScalingValue);
+        /// <summary> ScalingFailed. </summary>
+        public static RedisEnterpriseClusterResourceState ScalingFailed { get; } = new RedisEnterpriseClusterResourceState(ScalingFailedValue);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are not the same. </summary>

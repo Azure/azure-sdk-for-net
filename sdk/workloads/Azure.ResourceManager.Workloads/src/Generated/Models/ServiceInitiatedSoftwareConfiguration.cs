@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -38,13 +38,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceInitiatedSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="sapFqdn"> The FQDN to set for the SAP system during install. </param>
         /// <param name="sshPrivateKey"> The SSH private key. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
+        internal ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             BomUri = bomUri;
             SoftwareVersion = softwareVersion;
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.Workloads.Models
             SshPrivateKey = sshPrivateKey;
             HighAvailabilitySoftwareConfiguration = highAvailabilitySoftwareConfiguration;
             SoftwareInstallationType = softwareInstallationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceInitiatedSoftwareConfiguration"/> for deserialization. </summary>
+        internal ServiceInitiatedSoftwareConfiguration()
+        {
         }
 
         /// <summary> The URL to the SAP Build of Materials(BOM) file. </summary>

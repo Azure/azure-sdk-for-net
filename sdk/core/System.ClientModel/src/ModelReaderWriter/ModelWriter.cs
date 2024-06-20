@@ -3,13 +3,12 @@
 
 using System.ClientModel.Primitives;
 
-namespace System.ClientModel.Internal
+namespace System.ClientModel.Internal;
+
+internal class ModelWriter : ModelWriter<object>
 {
-    internal class ModelWriter : ModelWriter<object>
+    public ModelWriter(IJsonModel<object> model, ModelReaderWriterOptions options)
+        : base(model, options)
     {
-        public ModelWriter(IJsonModel<object> model, ModelReaderWriterOptions options)
-            : base(model, options)
-        {
-        }
     }
 }

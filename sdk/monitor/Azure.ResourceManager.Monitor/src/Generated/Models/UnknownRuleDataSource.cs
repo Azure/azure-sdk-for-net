@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownRuleDataSource. </summary>
+    /// <summary> Unknown version of RuleDataSource. </summary>
     internal partial class UnknownRuleDataSource : RuleDataSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRuleDataSource"/>. </summary>
@@ -18,9 +20,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
-        internal UnknownRuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRuleDataSource"/> for deserialization. </summary>
+        internal UnknownRuleDataSource()
+        {
         }
     }
 }

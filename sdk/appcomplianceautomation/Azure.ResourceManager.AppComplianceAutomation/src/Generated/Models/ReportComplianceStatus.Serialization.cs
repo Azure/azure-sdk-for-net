@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     internal partial class ReportComplianceStatus : IUtf8JsonSerializable, IJsonModel<ReportComplianceStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportComplianceStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportComplianceStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReportComplianceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReportComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue(M365);
+                writer.WriteObjectValue(M365, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ReportComplianceStatus DeserializeReportComplianceStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OverviewStatus> m365 = default;
+            OverviewStatus m365 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m365"u8))
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value);
+                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportComplianceStatus(m365.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReportComplianceStatus(m365, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportComplianceStatus>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeReportComplianceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

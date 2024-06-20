@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
         /// <param name="eventGridResourceId"> The resource ID of the event grid that is subscribed to the storage account events. </param>
         /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventGridResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? isFirstRecordIgnored, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventGridResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? isFirstRecordIgnored, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             EventGridResourceId = eventGridResourceId;

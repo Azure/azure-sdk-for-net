@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Rule counter. </summary>
     public partial class FirewallRuleCounter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FirewallRuleCounter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleName"> rule name. </param>
@@ -37,7 +69,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="responseOn"> timestamp of response. </param>
         /// <param name="requestOn"> timestamp of request. </param>
         /// <param name="lastUpdatedOn"> last updated timestamp. </param>
-        internal FirewallRuleCounter(string priority, string ruleStackName, string ruleListName, string firewallName, string ruleName, int? hitCount, AppSeenInfoList appSeen, DateTimeOffset? responseOn, DateTimeOffset? requestOn, DateTimeOffset? lastUpdatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallRuleCounter(string priority, string ruleStackName, string ruleListName, string firewallName, string ruleName, int? hitCount, AppSeenInfoList appSeen, DateTimeOffset? responseOn, DateTimeOffset? requestOn, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Priority = priority;
             RuleStackName = ruleStackName;
@@ -49,6 +82,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             ResponseOn = responseOn;
             RequestOn = requestOn;
             LastUpdatedOn = lastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleCounter"/> for deserialization. </summary>
+        internal FirewallRuleCounter()
+        {
         }
 
         /// <summary> priority number. </summary>

@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Generic object modeling results of script execution. </summary>
     public partial class ScriptStatus
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ScriptStatus"/>. </summary>
         internal ScriptStatus()
         {
@@ -25,7 +57,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="endOn"> End time of the script execution. </param>
         /// <param name="expireOn"> Time the deployment script resource will expire. </param>
         /// <param name="error"> Error that is relayed from the script execution. </param>
-        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expireOn, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expireOn, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
@@ -33,19 +66,26 @@ namespace Azure.ResourceManager.Resources.Models
             EndOn = endOn;
             ExpireOn = expireOn;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ACI resource Id. </summary>
+        [WirePath("containerInstanceId")]
         public string ContainerInstanceId { get; }
         /// <summary> Storage account resource Id. </summary>
+        [WirePath("storageAccountId")]
         public string StorageAccountId { get; }
         /// <summary> Start time of the script execution. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the script execution. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Time the deployment script resource will expire. </summary>
+        [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Error that is relayed from the script execution. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

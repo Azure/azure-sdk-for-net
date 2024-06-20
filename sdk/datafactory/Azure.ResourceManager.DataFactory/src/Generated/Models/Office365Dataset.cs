@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -45,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TableName = tableName;
             Predicate = predicate;
             DatasetType = datasetType ?? "Office365Table";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Office365Dataset"/> for deserialization. </summary>
+        internal Office365Dataset()
+        {
         }
 
         /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>

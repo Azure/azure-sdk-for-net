@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownIntegrationRuntimeStatus. </summary>
+    /// <summary> Unknown version of IntegrationRuntimeStatus. </summary>
     internal partial class UnknownIntegrationRuntimeStatus : SynapseIntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntimeStatus"/>. </summary>
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Synapse.Models
         internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             RuntimeType = runtimeType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntimeStatus"/> for deserialization. </summary>
+        internal UnknownIntegrationRuntimeStatus()
+        {
         }
     }
 }

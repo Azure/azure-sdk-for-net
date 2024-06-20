@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -34,7 +32,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LogAnalyticsQueryPackData(id, name, resourceType, systemData, tags, location, queryPackId, createdOn, modifiedOn, provisioningState);
+            return new LogAnalyticsQueryPackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                queryPackId,
+                createdOn,
+                modifiedOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryData"/>. </summary>
@@ -57,7 +66,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tags ??= new Dictionary<string, IList<string>>();
 
-            return new LogAnalyticsQueryData(id, name, resourceType, systemData, applicationId, displayName, createdOn, modifiedOn, author, description, body, related, tags, properties);
+            return new LogAnalyticsQueryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                applicationId,
+                displayName,
+                createdOn,
+                modifiedOn,
+                author,
+                description,
+                body,
+                related,
+                tags,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataExportData"/>. </summary>
@@ -78,7 +102,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tableNames ??= new List<string>();
 
-            return new OperationalInsightsDataExportData(id, name, resourceType, systemData, dataExportId, tableNames?.ToList(), isEnabled, createdOn, lastModifiedOn, resourceId, destinationType, eventHubName);
+            return new OperationalInsightsDataExportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                dataExportId,
+                tableNames?.ToList(),
+                isEnabled,
+                createdOn,
+                lastModifiedOn,
+                resourceId,
+                destinationType,
+                eventHubName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataSourceData"/>. </summary>
@@ -95,7 +132,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OperationalInsightsDataSourceData(id, name, resourceType, systemData, properties, etag, kind, tags);
+            return new OperationalInsightsDataSourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                kind,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsIntelligencePack"/>. </summary>
@@ -105,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsIntelligencePack"/> instance for mocking. </returns>
         public static OperationalInsightsIntelligencePack OperationalInsightsIntelligencePack(string name = null, bool? isEnabled = null, string displayName = null)
         {
-            return new OperationalInsightsIntelligencePack(name, isEnabled, displayName);
+            return new OperationalInsightsIntelligencePack(name, isEnabled, displayName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/>. </summary>
@@ -122,7 +168,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OperationalInsightsLinkedServiceData(id, name, resourceType, systemData, tags, resourceId, writeAccessResourceId, provisioningState);
+            return new OperationalInsightsLinkedServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                resourceId,
+                writeAccessResourceId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedStorageAccountsData"/>. </summary>
@@ -137,7 +192,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             storageAccountIds ??= new List<ResourceIdentifier>();
 
-            return new OperationalInsightsLinkedStorageAccountsData(id, name, resourceType, systemData, dataSourceType, storageAccountIds?.ToList());
+            return new OperationalInsightsLinkedStorageAccountsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                dataSourceType,
+                storageAccountIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsManagementGroup"/>. </summary>
@@ -152,7 +214,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsManagementGroup"/> instance for mocking. </returns>
         public static OperationalInsightsManagementGroup OperationalInsightsManagementGroup(int? serverCount = null, bool? isGateway = null, string name = null, string id = null, DateTimeOffset? createdOn = null, DateTimeOffset? dataReceivedOn = null, string version = null, string sku = null)
         {
-            return new OperationalInsightsManagementGroup(serverCount, isGateway, name, id, createdOn, dataReceivedOn, version, sku);
+            return new OperationalInsightsManagementGroup(
+                serverCount,
+                isGateway,
+                name,
+                id,
+                createdOn,
+                dataReceivedOn,
+                version,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/>. </summary>
@@ -161,7 +232,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspaceSharedKeys OperationalInsightsWorkspaceSharedKeys(string primarySharedKey = null, string secondarySharedKey = null)
         {
-            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey);
+            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsUsageMetric"/>. </summary>
@@ -174,7 +245,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsUsageMetric"/> instance for mocking. </returns>
         public static OperationalInsightsUsageMetric OperationalInsightsUsageMetric(OperationalInsightsMetricName name = null, string unit = null, double? currentValue = null, double? limit = null, DateTimeOffset? nextResetOn = null, string quotaPeriod = null)
         {
-            return new OperationalInsightsUsageMetric(name, unit, currentValue, limit, nextResetOn, quotaPeriod);
+            return new OperationalInsightsUsageMetric(
+                name,
+                unit,
+                currentValue,
+                limit,
+                nextResetOn,
+                quotaPeriod,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsMetricName"/>. </summary>
@@ -183,7 +261,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsMetricName"/> instance for mocking. </returns>
         public static OperationalInsightsMetricName OperationalInsightsMetricName(string value = null, string localizedValue = null)
         {
-            return new OperationalInsightsMetricName(value, localizedValue);
+            return new OperationalInsightsMetricName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.StorageInsightData"/>. </summary>
@@ -204,7 +282,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             containers ??= new List<string>();
             tables ??= new List<string>();
 
-            return new StorageInsightData(id, name, resourceType, systemData, etag, tags, containers?.ToList(), tables?.ToList(), storageAccount, status);
+            return new StorageInsightData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                tags,
+                containers?.ToList(),
+                tables?.ToList(),
+                storageAccount,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageInsightStatus"/>. </summary>
@@ -213,7 +302,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.StorageInsightStatus"/> instance for mocking. </returns>
         public static StorageInsightStatus StorageInsightStatus(StorageInsightState state = default, string description = null)
         {
-            return new StorageInsightStatus(state, description);
+            return new StorageInsightStatus(state, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/>. </summary>
@@ -234,7 +323,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             tags ??= new List<OperationalInsightsTag>();
 
-            return new OperationalInsightsSavedSearchData(id, name, resourceType, systemData, etag, category, displayName, query, functionAlias, functionParameters, version, tags?.ToList());
+            return new OperationalInsightsSavedSearchData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                category,
+                displayName,
+                query,
+                functionAlias,
+                functionParameters,
+                version,
+                tags?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsAvailableServiceTier"/>. </summary>
@@ -248,7 +350,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsAvailableServiceTier"/> instance for mocking. </returns>
         public static OperationalInsightsAvailableServiceTier OperationalInsightsAvailableServiceTier(OperationalInsightsSkuName? serviceTier = null, bool? isEnabled = null, long? minimumRetention = null, long? maximumRetention = null, long? defaultRetention = null, long? capacityReservationLevel = null, DateTimeOffset? lastSkuUpdatedOn = null)
         {
-            return new OperationalInsightsAvailableServiceTier(serviceTier, isEnabled, minimumRetention, maximumRetention, defaultRetention, capacityReservationLevel, lastSkuUpdatedOn);
+            return new OperationalInsightsAvailableServiceTier(
+                serviceTier,
+                isEnabled,
+                minimumRetention,
+                maximumRetention,
+                defaultRetention,
+                capacityReservationLevel,
+                lastSkuUpdatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSearchSchemaValue"/>. </summary>
@@ -264,21 +374,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             ownerType ??= new List<string>();
 
-            return new OperationalInsightsSearchSchemaValue(name, displayName, searchSchemaValueType, indexed, stored, facet, ownerType?.ToList());
+            return new OperationalInsightsSearchSchemaValue(
+                name,
+                displayName,
+                searchSchemaValueType,
+                indexed,
+                stored,
+                facet,
+                ownerType?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeResult"/>. </summary>
         /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = null)
         {
-            if (operationStringId == null)
-            {
-                throw new ArgumentNullException(nameof(operationStringId));
-            }
-
-            return new OperationalInsightsWorkspacePurgeResult(operationStringId);
+            return new OperationalInsightsWorkspacePurgeResult(operationStringId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/>. </summary>
@@ -286,7 +398,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
         {
-            return new OperationalInsightsWorkspacePurgeStatusResult(status);
+            return new OperationalInsightsWorkspacePurgeStatusResult(status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
@@ -314,7 +426,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             tags ??= new Dictionary<string, string>();
             associatedWorkspaces ??= new List<OperationalInsightsClusterAssociatedWorkspace>();
 
-            return new OperationalInsightsClusterData(id, name, resourceType, systemData, tags, location, identity, sku, clusterId, provisioningState, isDoubleEncryptionEnabled, isAvailabilityZonesEnabled, billingType, keyVaultProperties, lastModifiedOn, createdOn, associatedWorkspaces?.ToList(), capacityReservationProperties);
+            return new OperationalInsightsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                sku,
+                clusterId,
+                provisioningState,
+                isDoubleEncryptionEnabled,
+                isAvailabilityZonesEnabled,
+                billingType,
+                keyVaultProperties,
+                lastModifiedOn,
+                createdOn,
+                associatedWorkspaces?.ToList(),
+                capacityReservationProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
@@ -325,7 +456,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/> instance for mocking. </returns>
         public static OperationalInsightsClusterAssociatedWorkspace OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId = null, string workspaceName = null, ResourceIdentifier resourceId = null, DateTimeOffset? associatedOn = null)
         {
-            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn);
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsCapacityReservationProperties"/>. </summary>
@@ -334,7 +465,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsCapacityReservationProperties"/> instance for mocking. </returns>
         public static OperationalInsightsCapacityReservationProperties OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn = null, long? minCapacity = null)
         {
-            return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity);
+            return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
@@ -365,7 +496,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
 
-            return new OperationalInsightsWorkspaceData(id, name, resourceType, systemData, tags, location, identity, etag, provisioningState, customerId, sku, retentionInDays, workspaceCapping, createdOn, modifiedOn, publicNetworkAccessForIngestion, publicNetworkAccessForQuery, forceCmkForQuery, privateLinkScopedResources?.ToList(), features, defaultDataCollectionRuleResourceId);
+            return new OperationalInsightsWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                etag,
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdOn,
+                modifiedOn,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
+                privateLinkScopedResources?.ToList(),
+                features,
+                defaultDataCollectionRuleResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSku"/>. </summary>
@@ -375,7 +528,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSku"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspaceSku OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name = default, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel = null, DateTimeOffset? lastSkuUpdatedOn = null)
         {
-            return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn);
+            return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceCapping"/>. </summary>
@@ -385,7 +538,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceCapping"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspaceCapping OperationalInsightsWorkspaceCapping(double? dailyQuotaInGB = null, string quotaNextResetTime = null, OperationalInsightsDataIngestionStatus? dataIngestionStatus = null)
         {
-            return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus);
+            return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/>. </summary>
@@ -394,7 +547,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
         public static OperationalInsightsPrivateLinkScopedResourceInfo OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId = null, string scopeId = null)
         {
-            return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId);
+            return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
@@ -424,7 +577,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
 
-            return new OperationalInsightsWorkspacePatch(id, name, resourceType, systemData, identity, tags, provisioningState, customerId, sku, retentionInDays, workspaceCapping, createdOn, modifiedOn, publicNetworkAccessForIngestion, publicNetworkAccessForQuery, forceCmkForQuery, privateLinkScopedResources?.ToList(), features, defaultDataCollectionRuleResourceId, etag);
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                tags,
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdOn,
+                modifiedOn,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
+                privateLinkScopedResources?.ToList(),
+                features,
+                defaultDataCollectionRuleResourceId,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
@@ -447,7 +621,24 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
         public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, bool? isRetentionInDaysAsDefault = null, bool? isTotalRetentionInDaysAsDefault = null)
         {
-            return new OperationalInsightsTableData(id, name, resourceType, systemData, retentionInDays, totalRetentionInDays, archiveRetentionInDays, searchResults, restoredLogs, resultStatistics, plan, lastPlanModifiedDate, schema, provisioningState, isRetentionInDaysAsDefault, isTotalRetentionInDaysAsDefault);
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                retentionInDays,
+                totalRetentionInDays,
+                archiveRetentionInDays,
+                searchResults,
+                restoredLogs,
+                resultStatistics,
+                plan,
+                lastPlanModifiedDate,
+                schema,
+                provisioningState,
+                isRetentionInDaysAsDefault,
+                isTotalRetentionInDaysAsDefault,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableSearchResults"/>. </summary>
@@ -461,7 +652,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsTableSearchResults"/> instance for mocking. </returns>
         public static OperationalInsightsTableSearchResults OperationalInsightsTableSearchResults(string query = null, string description = null, int? limit = null, DateTimeOffset? startSearchOn = null, DateTimeOffset? endSearchOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
         {
-            return new OperationalInsightsTableSearchResults(query, description, limit, startSearchOn, endSearchOn, sourceTable, azureAsyncOperationId);
+            return new OperationalInsightsTableSearchResults(
+                query,
+                description,
+                limit,
+                startSearchOn,
+                endSearchOn,
+                sourceTable,
+                azureAsyncOperationId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableRestoredLogs"/>. </summary>
@@ -472,7 +671,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsTableRestoredLogs"/> instance for mocking. </returns>
         public static OperationalInsightsTableRestoredLogs OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn = null, DateTimeOffset? endRestoreOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
         {
-            return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId);
+            return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableResultStatistics"/>. </summary>
@@ -482,7 +681,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsTableResultStatistics"/> instance for mocking. </returns>
         public static OperationalInsightsTableResultStatistics OperationalInsightsTableResultStatistics(float? progress = null, int? ingestedRecords = null, float? scannedGB = null)
         {
-            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB);
+            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSchema"/>. </summary>
@@ -506,7 +705,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             labels ??= new List<string>();
             solutions ??= new List<string>();
 
-            return new OperationalInsightsSchema(name, displayName, description, columns?.ToList(), standardColumns?.ToList(), categories?.ToList(), labels?.ToList(), source, tableType, tableSubType, solutions?.ToList());
+            return new OperationalInsightsSchema(
+                name,
+                displayName,
+                description,
+                columns?.ToList(),
+                standardColumns?.ToList(),
+                categories?.ToList(),
+                labels?.ToList(),
+                source,
+                tableType,
+                tableSubType,
+                solutions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsColumn"/>. </summary>
@@ -520,7 +731,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsColumn"/> instance for mocking. </returns>
         public static OperationalInsightsColumn OperationalInsightsColumn(string name = null, OperationalInsightsColumnType? columnType = null, OperationalInsightsColumnDataTypeHint? dataTypeHint = null, string displayName = null, string description = null, bool? isDefaultDisplay = null, bool? isHidden = null)
         {
-            return new OperationalInsightsColumn(name, columnType, dataTypeHint, displayName, description, isDefaultDisplay, isHidden);
+            return new OperationalInsightsColumn(
+                name,
+                columnType,
+                dataTypeHint,
+                displayName,
+                description,
+                isDefaultDisplay,
+                isHidden,
+                serializedAdditionalRawData: null);
         }
     }
 }

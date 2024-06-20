@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,12 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sources"> List of sources in Flowlet. </param>
         /// <param name="sinks"> List of sinks in Flowlet. </param>
         /// <param name="transformations"> List of transformations in Flowlet. </param>
         /// <param name="script"> Flowlet script. </param>
         /// <param name="scriptLines"> Flowlet script lines. </param>
-        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
         {
             Sources = sources;
             Sinks = sinks;

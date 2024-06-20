@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -42,7 +41,25 @@ namespace Azure.ResourceManager.Qumulo.Models
             tags ??= new Dictionary<string, string>();
             privateIPs ??= new List<IPAddress>();
 
-            return new QumuloFileSystemResourceData(id, name, resourceType, systemData, tags, location, identity, marketplaceDetails, provisioningState, storageSku, userDetailsEmail != null ? new QumuloUserDetails(userDetailsEmail) : null, delegatedSubnetId, clusterLoginUri, privateIPs?.ToList(), adminPassword, initialCapacity, availabilityZone);
+            return new QumuloFileSystemResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                marketplaceDetails,
+                provisioningState,
+                storageSku,
+                userDetailsEmail != null ? new QumuloUserDetails(userDetailsEmail, serializedAdditionalRawData: null) : null,
+                delegatedSubnetId,
+                clusterLoginUri,
+                privateIPs?.ToList(),
+                adminPassword,
+                initialCapacity,
+                availabilityZone,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
@@ -54,7 +71,13 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
         public static MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null)
         {
-            return new MarketplaceDetails(marketplaceSubscriptionId, planId, offerId, publisherId, marketplaceSubscriptionStatus);
+            return new MarketplaceDetails(
+                marketplaceSubscriptionId,
+                planId,
+                offerId,
+                publisherId,
+                marketplaceSubscriptionStatus,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -4,6 +4,7 @@
     <Description>Test client code for use in System.ClientModel test libraries.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

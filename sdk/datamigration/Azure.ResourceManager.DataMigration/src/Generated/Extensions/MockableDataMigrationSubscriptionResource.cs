@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration.Mocking
@@ -140,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +336,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -366,7 +363,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

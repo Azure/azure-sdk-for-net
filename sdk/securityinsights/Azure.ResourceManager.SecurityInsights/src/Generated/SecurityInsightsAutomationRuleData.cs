@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -18,6 +17,38 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class representing the SecurityInsightsAutomationRule data model. </summary>
     public partial class SecurityInsightsAutomationRuleData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
         /// <param name="displayName"> The display name of the automation rule. </param>
         /// <param name="order"> The order of execution of the automation rule. </param>
@@ -58,7 +89,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
         /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsAutomationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IList<SecurityInsightsAutomationRuleAction> actions, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, SecurityInsightsClientInfo lastModifiedBy, SecurityInsightsClientInfo createdBy, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAutomationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IList<SecurityInsightsAutomationRuleAction> actions, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, SecurityInsightsClientInfo lastModifiedBy, SecurityInsightsClientInfo createdBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Order = order;
@@ -69,6 +101,12 @@ namespace Azure.ResourceManager.SecurityInsights
             LastModifiedBy = lastModifiedBy;
             CreatedBy = createdBy;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/> for deserialization. </summary>
+        internal SecurityInsightsAutomationRuleData()
+        {
         }
 
         /// <summary> The display name of the automation rule. </summary>

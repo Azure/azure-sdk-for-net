@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -725,7 +723,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -756,7 +754,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

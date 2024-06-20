@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisGatewayStatus : IUtf8JsonSerializable, IJsonModel<AnalysisGatewayStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisGatewayStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisGatewayStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisGatewayStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisGatewayStatus DeserializeAnalysisGatewayStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AnalysisStatus> status = default;
+            AnalysisStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisGatewayStatus(Optional.ToNullable(status), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AnalysisGatewayStatus(status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisGatewayStatus>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisGatewayStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisGatewayStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

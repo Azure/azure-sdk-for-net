@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    /// <summary> The UnknownDataSetMapping. </summary>
+    /// <summary> Unknown version of DataSetMapping. </summary>
     internal partial class UnknownDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataSetMapping"/>. </summary>
@@ -20,9 +21,15 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
-        internal UnknownDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataSetMapping"/> for deserialization. </summary>
+        internal UnknownDataSetMapping()
+        {
         }
     }
 }

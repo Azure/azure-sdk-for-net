@@ -375,6 +375,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -645,6 +646,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task UploadPagesAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3368,6 +3370,32 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task UploadPagesFromUriAsync_SourceErrorAndStatusCode()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.UploadPagesFromUriAsync(sourceBlob.Uri, range, range),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                });
+        }
+
         [RecordedTest]
         [TestCase(nameof(PageBlobRequestConditions.LeaseId))]
         [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
@@ -3423,6 +3451,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -4120,6 +4149,44 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_UnevenPageRanges()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Create Page Blob with different page ranges
+            int pageBlobSize = 10 * Constants.KB;
+            StorageTransferOptions transferOptions = new()
+            {
+                InitialTransferLength = 4 * Constants.KB,
+                MaximumTransferSize = 4 * Constants.KB,
+            };
+            PageBlobClient pageBlobClient = test.Container.GetPageBlobClient(GetNewBlobName());
+            await pageBlobClient.CreateIfNotExistsAsync(pageBlobSize);
+            int offset = 2 * Constants.KB + 512;
+            int length = Constants.KB;
+            var data = GetRandomBuffer(length);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await pageBlobClient.UploadPagesAsync(
+                    content: stream,
+                    offset: offset);
+            }
+            // Act
+            Response<BlobDownloadStreamingResult> result = await pageBlobClient.DownloadStreamingAsync();
+
+            // Assert
+            var actual = new MemoryStream();
+            await result.Value.Content.CopyToAsync(actual);
+            actual.Seek(offset, SeekOrigin.Begin);
+            byte[] resultArray = new byte[length];
+            await actual.ReadAsync(resultArray, 0, length, CancellationToken.None);
+            Assert.AreEqual(pageBlobSize, actual.Length);
+            Assert.That(data, Is.EqualTo(resultArray));
         }
 
         public static PageBlobRequestConditions BuildAccessConditions(

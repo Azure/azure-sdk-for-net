@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformBuildResultUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformBuildResultUserSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildResultUserSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildResultUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformBuildResultUserSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildResultUserSourceInfo DeserializeAppPlatformBuildResultUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> buildResultId = default;
+            string buildResultId = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildResultId"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultUserSourceInfo(type, version.Value, serializedAdditionalRawData, buildResultId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformBuildResultUserSourceInfo(type, version, serializedAdditionalRawData, buildResultId);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultUserSourceInfo>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformBuildResultUserSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultUserSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

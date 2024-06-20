@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -50,19 +48,46 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="extensions"> extensions used by virtual kubelet. </param>
         /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
         /// <param name="priority"> The priority of the container group. </param>
+        /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
             containers ??= new List<ContainerInstanceContainer>();
             imageRegistryCredentials ??= new List<ContainerGroupImageRegistryCredential>();
             volumes ??= new List<ContainerVolume>();
             subnetIds ??= new List<ContainerGroupSubnetId>();
             initContainers ??= new List<InitContainerDefinitionContent>();
             extensions ??= new List<DeploymentExtensionSpec>();
+            zones ??= new List<string>();
 
-            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics) : null, subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), extensions?.ToList(), confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy) : null, priority);
+            return new ContainerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                containers?.ToList(),
+                imageRegistryCredentials?.ToList(),
+                restartPolicy,
+                ipAddress,
+                osType,
+                volumes?.ToList(),
+                instanceView,
+                diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics, serializedAdditionalRawData: null) : null,
+                subnetIds?.ToList(),
+                dnsConfig,
+                sku,
+                encryptionProperties,
+                initContainers?.ToList(),
+                extensions?.ToList(),
+                confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy, serializedAdditionalRawData: null) : null,
+                priority,
+                zones?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupPatch"/>. </summary>
@@ -79,7 +104,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new ContainerGroupPatch(id, name, resourceType, systemData, tags, location, zones?.ToList());
+            return new ContainerGroupPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                zones?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
@@ -102,7 +135,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             environmentVariables ??= new List<ContainerEnvironmentVariable>();
             volumeMounts ??= new List<ContainerVolumeMount>();
 
-            return new ContainerInstanceContainer(name, image, command?.ToList(), ports?.ToList(), environmentVariables?.ToList(), instanceView, resources, volumeMounts?.ToList(), livenessProbe, readinessProbe, securityContext);
+            return new ContainerInstanceContainer(
+                name,
+                image,
+                command?.ToList(),
+                ports?.ToList(),
+                environmentVariables?.ToList(),
+                instanceView,
+                resources,
+                volumeMounts?.ToList(),
+                livenessProbe,
+                readinessProbe,
+                securityContext,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceView"/>. </summary>
@@ -115,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new List<ContainerEvent>();
 
-            return new ContainerInstanceView(restartCount, currentState, previousState, events?.ToList());
+            return new ContainerInstanceView(restartCount, currentState, previousState, events?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerState"/>. </summary>
@@ -127,7 +172,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerState"/> instance for mocking. </returns>
         public static ContainerState ContainerState(string state = null, DateTimeOffset? startOn = null, int? exitCode = null, DateTimeOffset? finishOn = null, string detailStatus = null)
         {
-            return new ContainerState(state, startOn, exitCode, finishOn, detailStatus);
+            return new ContainerState(
+                state,
+                startOn,
+                exitCode,
+                finishOn,
+                detailStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerEvent"/>. </summary>
@@ -140,7 +191,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerEvent"/> instance for mocking. </returns>
         public static ContainerEvent ContainerEvent(int? count = null, DateTimeOffset? firstTimestamp = null, DateTimeOffset? lastTimestamp = null, string name = null, string message = null, string eventType = null)
         {
-            return new ContainerEvent(count, firstTimestamp, lastTimestamp, name, message, eventType);
+            return new ContainerEvent(
+                count,
+                firstTimestamp,
+                lastTimestamp,
+                name,
+                message,
+                eventType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupIPAddress"/>. </summary>
@@ -155,7 +213,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             ports ??= new List<ContainerGroupPort>();
 
-            return new ContainerGroupIPAddress(ports?.ToList(), addressType, ip, dnsNameLabel, autoGeneratedDomainNameLabelScope, fqdn);
+            return new ContainerGroupIPAddress(
+                ports?.ToList(),
+                addressType,
+                ip,
+                dnsNameLabel,
+                autoGeneratedDomainNameLabelScope,
+                fqdn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
@@ -166,7 +231,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new List<ContainerEvent>();
 
-            return new ContainerGroupInstanceView(events?.ToList(), state);
+            return new ContainerGroupInstanceView(events?.ToList(), state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
@@ -184,7 +249,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             environmentVariables ??= new List<ContainerEnvironmentVariable>();
             volumeMounts ??= new List<ContainerVolumeMount>();
 
-            return new InitContainerDefinitionContent(name, image, command?.ToList(), environmentVariables?.ToList(), instanceView, volumeMounts?.ToList(), securityContext);
+            return new InitContainerDefinitionContent(
+                name,
+                image,
+                command?.ToList(),
+                environmentVariables?.ToList(),
+                instanceView,
+                volumeMounts?.ToList(),
+                securityContext,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InitContainerPropertiesDefinitionInstanceView"/>. </summary>
@@ -197,7 +270,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new List<ContainerEvent>();
 
-            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList());
+            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsage"/>. </summary>
@@ -209,7 +282,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerInstanceUsage"/> instance for mocking. </returns>
         public static ContainerInstanceUsage ContainerInstanceUsage(string id = null, string unit = null, int? currentValue = null, int? limit = null, ContainerInstanceUsageName name = null)
         {
-            return new ContainerInstanceUsage(id, unit, currentValue, limit, name);
+            return new ContainerInstanceUsage(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsageName"/>. </summary>
@@ -218,7 +297,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerInstanceUsageName"/> instance for mocking. </returns>
         public static ContainerInstanceUsageName ContainerInstanceUsageName(string value = null, string localizedValue = null)
         {
-            return new ContainerInstanceUsageName(value, localizedValue);
+            return new ContainerInstanceUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerLogs"/>. </summary>
@@ -226,7 +305,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerLogs"/> instance for mocking. </returns>
         public static ContainerLogs ContainerLogs(string content = null)
         {
-            return new ContainerLogs(content);
+            return new ContainerLogs(content, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerExecResult"/>. </summary>
@@ -235,7 +314,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerExecResult"/> instance for mocking. </returns>
         public static ContainerExecResult ContainerExecResult(Uri webSocketUri = null, string password = null)
         {
-            return new ContainerExecResult(webSocketUri, password);
+            return new ContainerExecResult(webSocketUri, password, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAttachResult"/>. </summary>
@@ -244,26 +323,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerAttachResult"/> instance for mocking. </returns>
         public static ContainerAttachResult ContainerAttachResult(Uri webSocketUri = null, string password = null)
         {
-            return new ContainerAttachResult(webSocketUri, password);
+            return new ContainerAttachResult(webSocketUri, password, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>
         /// <returns> A new <see cref="Models.CachedImages"/> instance for mocking. </returns>
         public static CachedImages CachedImages(string osType = null, string image = null)
         {
-            if (osType == null)
-            {
-                throw new ArgumentNullException(nameof(osType));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-
-            return new CachedImages(osType, image);
+            return new CachedImages(osType, image, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerCapabilities"/>. </summary>
@@ -276,7 +345,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerCapabilities"/> instance for mocking. </returns>
         public static ContainerCapabilities ContainerCapabilities(string resourceType = null, string osType = null, AzureLocation? location = null, string ipAddressType = null, string gpu = null, ContainerSupportedCapabilities capabilities = null)
         {
-            return new ContainerCapabilities(resourceType, osType, location, ipAddressType, gpu, capabilities);
+            return new ContainerCapabilities(
+                resourceType,
+                osType,
+                location,
+                ipAddressType,
+                gpu,
+                capabilities,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerSupportedCapabilities"/>. </summary>
@@ -286,7 +362,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerSupportedCapabilities"/> instance for mocking. </returns>
         public static ContainerSupportedCapabilities ContainerSupportedCapabilities(float? maxMemoryInGB = null, float? maxCpu = null, float? maxGpuCount = null)
         {
-            return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount);
+            return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, serializedAdditionalRawData: null);
         }
     }
 }

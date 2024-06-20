@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new UnknownEndpointBase(type, credentials.Value, url);
+            return new UnknownEndpointBase(type, credentials, url);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownEndpointBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownEndpointBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EndpointBase>(this);
+            return content;
         }
     }
 }

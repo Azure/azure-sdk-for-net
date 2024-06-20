@@ -23,11 +23,27 @@ namespace Azure.Search.Documents.Indexes
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
         private readonly ObjectSerializer _serializer;
-
         private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
+
+        /// <summary>
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// Gets the URI endpoint of the Search service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// </summary>
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets the name of the Search service.
+        /// </summary>
+        public virtual string ServiceName =>
+            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexClient"/> class for mocking.
@@ -152,18 +168,6 @@ namespace Azure.Search.Documents.Indexes
             _pipeline = pipeline;
             _version = version;
         }
-
-        /// <summary>
-        /// Gets the URI endpoint of the Search service.  This is likely
-        /// to be similar to "https://{search_service}.search.windows.net".
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the name of the Search service.
-        /// </summary>
-        public virtual string ServiceName =>
-            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.

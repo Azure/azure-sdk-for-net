@@ -5,24 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmOperationDescription
+    public partial class CsmOperationDescription : IUtf8JsonSerializable, IJsonModel<CsmOperationDescription>
     {
-        internal static CsmOperationDescription DeserializeCsmOperationDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmOperationDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CsmOperationDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CsmOperationDescription)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsDataAction))
+            {
+                writer.WritePropertyName("isDataAction"u8);
+                writer.WriteBooleanValue(IsDataAction.Value);
+            }
+            if (Optional.IsDefined(Display))
+            {
+                writer.WritePropertyName("display"u8);
+                writer.WriteObjectValue(Display, options);
+            }
+            if (Optional.IsDefined(Origin))
+            {
+                writer.WritePropertyName("origin"u8);
+                writer.WriteStringValue(Origin);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CsmOperationDescription IJsonModel<CsmOperationDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CsmOperationDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCsmOperationDescription(document.RootElement, options);
+        }
+
+        internal static CsmOperationDescription DeserializeCsmOperationDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<CsmOperationDisplay> display = default;
-            Optional<string> origin = default;
-            Optional<CsmOperationDescriptionProperties> properties = default;
+            string name = default;
+            bool? isDataAction = default;
+            CsmOperationDisplay display = default;
+            string origin = default;
+            CsmOperationDescriptionProperties properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value);
+                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -59,11 +133,165 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value);
+                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CsmOperationDescription(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDataAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isDataAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDataAction))
+                {
+                    builder.Append("  isDataAction: ");
+                    var boolValue = IsDataAction.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Display), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  display: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Display))
+                {
+                    builder.Append("  display: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Display, options, 2, false, "  display: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Origin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  origin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Origin))
+                {
+                    builder.Append("  origin: ");
+                    if (Origin.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Origin}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Origin}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CsmOperationDescriptionServiceSpecification", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine("{");
+                builder.Append("    serviceSpecification: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CsmOperationDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CsmOperationDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CsmOperationDescription IPersistableModel<CsmOperationDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCsmOperationDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CsmOperationDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CsmOperationDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

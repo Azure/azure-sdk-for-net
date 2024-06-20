@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -29,13 +29,19 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseEnvironmentVariableSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>
-        internal SynapseEnvironmentVariableSetup(string customSetupBaseType, string variableName, string variableValue) : base(customSetupBaseType)
+        internal SynapseEnvironmentVariableSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string variableName, string variableValue) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             VariableName = variableName;
             VariableValue = variableValue;
             CustomSetupBaseType = customSetupBaseType ?? "EnvironmentVariableSetup";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseEnvironmentVariableSetup"/> for deserialization. </summary>
+        internal SynapseEnvironmentVariableSetup()
+        {
         }
 
         /// <summary> The name of the environment variable. </summary>

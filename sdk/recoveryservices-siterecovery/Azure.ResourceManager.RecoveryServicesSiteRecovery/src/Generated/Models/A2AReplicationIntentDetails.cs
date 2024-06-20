@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="A2AReplicationIntentDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
         /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
         /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
-        internal A2AReplicationIntentDetails(string instanceType, ResourceIdentifier fabricObjectId, AzureLocation? primaryLocation, AzureLocation? recoveryLocation, string recoverySubscriptionId, IReadOnlyList<A2AProtectionIntentDiskDetails> vmDisks, IReadOnlyList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, ProtectionProfileCustomDetails protectionProfile, StorageAccountCustomDetails primaryStagingStorageAccount, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, string recoveryAvailabilityType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType)
+        internal A2AReplicationIntentDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, AzureLocation? primaryLocation, AzureLocation? recoveryLocation, string recoverySubscriptionId, IReadOnlyList<A2AProtectionIntentDiskDetails> vmDisks, IReadOnlyList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, ProtectionProfileCustomDetails protectionProfile, StorageAccountCustomDetails primaryStagingStorageAccount, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, string recoveryAvailabilityType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType, serializedAdditionalRawData)
         {
             FabricObjectId = fabricObjectId;
             PrimaryLocation = primaryLocation;
@@ -100,6 +101,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AutomationAccountArmId = automationAccountArmId;
             AutomationAccountAuthenticationType = automationAccountAuthenticationType;
             InstanceType = instanceType ?? "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationIntentDetails"/> for deserialization. </summary>
+        internal A2AReplicationIntentDetails()
+        {
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>

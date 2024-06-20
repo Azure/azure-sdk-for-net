@@ -28,7 +28,8 @@ For more general information and examples on mocking with the Azure SDK, please 
   - [Simulating the `ServiceBusProcessor` running](#for-the-servicebusprocessor-1)
   - [Simulating the `ServiceBusSessionProcessor` running](#for-the-servicebussessionprocessor-1)
 - **CRUD operations**
-  - [Creating Topics and Subscriptions](#creating-topics-and-subscriptions-using-the-servicebusadministrationclient)
+  - [Getting `NamespaceProperties`](#get-namespace-properties-using-the-servicebusadministrationclient)
+  - [Creating topics and subscriptions](#creating-topics-and-subscriptions-using-the-servicebusadministrationclient)
   - [Creating a queue](#creating-a-queue-using-the-servicebusadministrationclient)
   - [Creating a rule](#creating-a-rule-using-the-servicebusadministrationclient)
 - **Rule Manager**
@@ -1405,6 +1406,33 @@ await mockProcessor.Object.StartProcessingAsync();
 
 await mockProcessor.Object.StopProcessingAsync();
 ```
+
+## Get namespace properties using the `ServiceBusAdministrationClient`
+The following snippet demonstrates how to mock `ServiceBusAdministrationClient.GetNamespaceProperties()` using the `ServiceBusModelFactory` to create `NamespaceProperties`.
+
+```C# Snippet:ServiceBus_MockingNamespaceProperties
+Mock<Response<NamespaceProperties>> mockResponse = new Mock<Response<NamespaceProperties>>();
+Mock<ServiceBusAdministrationClient> mockAdministrationClient = new Mock<ServiceBusAdministrationClient>();
+
+NamespaceProperties mockNamespaceProperties = ServiceBusModelFactory.NamespaceProperties("name", DateTimeOffset.UtcNow, DateTime.UtcNow, MessagingSku.Basic, 100, "alias");
+
+mockResponse
+    .SetupGet(response => response.Value)
+    .Returns(mockNamespaceProperties);
+
+mockAdministrationClient
+    .Setup(client => client.GetNamespacePropertiesAsync(It.IsAny<CancellationToken>()))
+    .ReturnsAsync(mockResponse.Object);
+
+ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
+
+// The rest of this snippet illustrates how to access the namespace properties using the mocked service bus
+// administration client above, this would be where application methods calling GetNamespaceProperties() would be called.
+
+Response<NamespaceProperties> namespacePropertiesResponse = await administrationClient.GetNamespacePropertiesAsync(CancellationToken.None);
+NamespaceProperties namespaceProperties = namespacePropertiesResponse.Value;
+```
+
 
 ## Creating topics and subscriptions using the `ServiceBusAdministrationClient`
 

@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> The details for storage account sas creation. </summary>
     public partial class AccountSasContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
         /// <param name="startTimeStamp"> Sas token start timestamp. </param>
         /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
@@ -25,6 +57,24 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             StartTimeStamp = startTimeStamp;
             ExpiryTimeStamp = expiryTimeStamp;
             IPAddress = ipAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
+        /// <param name="startTimeStamp"> Sas token start timestamp. </param>
+        /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
+        /// <param name="ipAddress"> Ip Address. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountSasContent(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTimeStamp = startTimeStamp;
+            ExpiryTimeStamp = expiryTimeStamp;
+            IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/> for deserialization. </summary>
+        internal AccountSasContent()
+        {
         }
 
         /// <summary> Sas token start timestamp. </summary>

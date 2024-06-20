@@ -58,12 +58,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxShingleSize = default;
-            Optional<int> minShingleSize = default;
-            Optional<bool> outputUnigrams = default;
-            Optional<bool> outputUnigramsIfNoShingles = default;
-            Optional<string> tokenSeparator = default;
-            Optional<string> filterToken = default;
+            int? maxShingleSize = default;
+            int? minShingleSize = default;
+            bool? outputUnigrams = default;
+            bool? outputUnigramsIfNoShingles = default;
+            string tokenSeparator = default;
+            string filterToken = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,31 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ShingleTokenFilter(odataType, name, Optional.ToNullable(maxShingleSize), Optional.ToNullable(minShingleSize), Optional.ToNullable(outputUnigrams), Optional.ToNullable(outputUnigramsIfNoShingles), tokenSeparator.Value, filterToken.Value);
+            return new ShingleTokenFilter(
+                odataType,
+                name,
+                maxShingleSize,
+                minShingleSize,
+                outputUnigrams,
+                outputUnigramsIfNoShingles,
+                tokenSeparator,
+                filterToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ShingleTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShingleTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

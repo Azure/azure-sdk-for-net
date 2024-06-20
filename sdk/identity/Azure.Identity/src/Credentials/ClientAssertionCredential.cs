@@ -18,16 +18,14 @@ namespace Azure.Identity
     public class ClientAssertionCredential : TokenCredential
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
-
         internal string TenantId { get; }
         internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
-        internal bool AllowMultiTenantAuthentication { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected ClientAssertionCredential()
         { }
@@ -46,8 +44,8 @@ namespace Azure.Identity
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId;
 
-            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
-            Pipeline = options?.Pipeline ?? options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+            Pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, assertionCallback, options);
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
@@ -88,7 +86,7 @@ namespace Azure.Identity
 
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {
@@ -112,7 +110,7 @@ namespace Azure.Identity
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

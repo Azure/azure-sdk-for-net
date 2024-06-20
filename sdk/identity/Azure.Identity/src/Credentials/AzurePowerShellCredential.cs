@@ -159,7 +159,7 @@ namespace Azure.Identity
             try
             {
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
-                CheckForErrors(output);
+                CheckForErrors(output, processRunner.ExitCode);
                 ValidateResult(output);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
@@ -168,7 +168,7 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
-                CheckForErrors(exception.Message);
+                CheckForErrors(exception.Message, processRunner.ExitCode);
                 if (_isChainedCredential)
                 {
                     throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
@@ -181,9 +181,10 @@ namespace Azure.Identity
             return DeserializeOutput(output);
         }
 
-        private static void CheckForErrors(string output)
+        private static void CheckForErrors(string output, int exitCode)
         {
-            bool noPowerShell = (output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+            int notFoundExitCode = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 9009 : 127;
+            bool noPowerShell = (exitCode == notFoundExitCode || output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
                                 output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1) &&
                                 // If the error contains AADSTS, this should be treated as a general error to be bubbled to the user
                                 output.IndexOf("AADSTS", StringComparison.OrdinalIgnoreCase) == -1;
@@ -264,7 +265,7 @@ return $x.Objects.FirstChild.OuterXml
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(DefaultWorkingDirWindows, "cmd.exe");
-                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \"";
+                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \" & exit";
             }
             else
             {

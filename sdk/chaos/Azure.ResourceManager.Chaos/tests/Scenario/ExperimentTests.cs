@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies.Utilities;
 using Azure.ResourceManager.Resources;
@@ -38,20 +41,37 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var resourceResponse = await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
+            var resourceResponse = await this.ExperimentCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                this.ExperimentName,
+                this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             Assert.AreEqual(this.ExperimentName, resourceResponse.Value.Data.Name);
         }
 
         [TestCase, Order(2)]
         [RecordedTest]
+        public async Task Update()
+        {
+            var experimentTags = new Dictionary<string, string>() { { "key2", "value2" } };
+
+            var experiment = await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
+            var resourceResponse = await experiment.Value.UpdateAsync(
+                WaitUntil.Completed,
+                this.MockExperimentEntities.GetSamplePatch());
+            Assert.AreEqual(experimentTags, resourceResponse.Value.Data.Tags);
+        }
+
+        [TestCase, Order(3)]
+        [RecordedTest]
         public async Task Get()
         {
             await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             var getResourceResponse = await this.ExperimentCollection.GetAsync(this.ExperimentName).ConfigureAwait(false);
+
             Assert.AreEqual(this.ExperimentName, getResourceResponse.Value.Data.Name);
         }
 
-        [TestCase, Order(3)]
+        [TestCase, Order(4)]
         [RecordedTest]
         public async Task List()
         {
@@ -59,7 +79,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.True(experimentList.Any());
         }
 
-        [TestCase, Order(4)]
+        [TestCase, Order(5)]
         [RecordedTest]
         public async Task Delete()
         {
@@ -76,7 +96,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.AreEqual(false, existsResponse.Value);
         }
 
-        [TestCase, Order(5)]
+        [TestCase, Order(6)]
         [RecordedTest]
         public async Task StartAndCheckExecutionStatus()
         {
@@ -93,7 +113,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.AreEqual(200, executionResponse.GetRawResponse().Status);
         }
 
-        [TestCase, Order(6)]
+        [TestCase, Order(7)]
         [RecordedTest]
         public async Task Cancel()
         {

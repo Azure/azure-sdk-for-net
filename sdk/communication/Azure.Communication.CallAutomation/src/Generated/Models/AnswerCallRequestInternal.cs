@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -35,11 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
-        /// </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel sourceCallerIdNumber)
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -48,7 +42,6 @@ namespace Azure.Communication.CallAutomation
             TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
-            SourceCallerIdNumber = sourceCallerIdNumber;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -65,10 +58,5 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
-        /// <summary>
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
-        /// </summary>
-        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
     }
 }

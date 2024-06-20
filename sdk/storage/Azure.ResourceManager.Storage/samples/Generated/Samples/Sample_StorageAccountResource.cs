@@ -7,13 +7,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage.Samples
@@ -839,7 +836,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
         public async Task GetAccountSas_StorageAccountListAccountSAS()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListAccountSAS.json
-            // this example is just showing the usage of "StorageAccounts_ListAccountSAS" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageAccounts_ListAccountSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -872,7 +869,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
         public async Task GetServiceSas_StorageAccountListServiceSAS()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListServiceSAS.json
-            // this example is just showing the usage of "StorageAccounts_ListServiceSAS" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageAccounts_ListServiceSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1035,9 +1032,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             {
 new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
             });
-            await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            BlobRestoreStatus result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // StorageAccountRevokeUserDelegationKeys

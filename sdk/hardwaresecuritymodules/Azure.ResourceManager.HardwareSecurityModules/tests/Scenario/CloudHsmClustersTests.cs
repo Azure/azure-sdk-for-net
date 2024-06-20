@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                     ["Env"] = "df",
                 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
-                BackupProperties = new BackupProperties(azureStorageBlobContainerUri, null, null),
-                RestoreProperties = new RestoreProperties("blobDirectory", azureStorageBlobContainerUri)
+                BackupProperties = new BackupProperties(azureStorageBlobContainerUri, null, null, null),
+                RestoreProperties = new RestoreProperties("blobDirectory", azureStorageBlobContainerUri, null)
             };
 
             cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());

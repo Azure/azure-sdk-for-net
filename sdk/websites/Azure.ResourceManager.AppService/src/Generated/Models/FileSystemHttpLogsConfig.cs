@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to file system configuration. </summary>
     public partial class FileSystemHttpLogsConfig
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FileSystemHttpLogsConfig"/>. </summary>
         public FileSystemHttpLogsConfig()
         {
@@ -27,11 +62,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// 0 or lower means no retention.
         /// </param>
         /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RetentionInMb = retentionInMb;
             RetentionInDays = retentionInDays;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -39,14 +76,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
         /// </summary>
+        [WirePath("retentionInMb")]
         public int? RetentionInMb { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -22,8 +25,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal AzureArcKubernetesNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, AzureArcKubernetesArtifactType artifactType) : base(name, dependsOnProfile)
+        internal AzureArcKubernetesNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureArcKubernetesArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
         }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan HVR Azure failback input. </summary>
@@ -22,13 +25,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailbackContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSyncOption"> The data sync option. </param>
         /// <param name="recoveryVmCreationOption"> The ALR option. </param>
-        internal RecoveryPlanHyperVReplicaAzureFailbackContent(string instanceType, SiteRecoveryDataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption) : base(instanceType)
+        internal RecoveryPlanHyperVReplicaAzureFailbackContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, SiteRecoveryDataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption) : base(instanceType, serializedAdditionalRawData)
         {
             DataSyncOption = dataSyncOption;
             RecoveryVmCreationOption = recoveryVmCreationOption;
             InstanceType = instanceType ?? "HyperVReplicaAzureFailback";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailbackContent"/> for deserialization. </summary>
+        internal RecoveryPlanHyperVReplicaAzureFailbackContent()
+        {
         }
 
         /// <summary> The data sync option. </summary>

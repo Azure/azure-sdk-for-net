@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies a list of role instances from the cloud service. </summary>
     public partial class RoleInstances
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoleInstances"/>. </summary>
         /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstancesValue"/> is null. </exception>
@@ -27,9 +58,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RoleInstances"/>. </summary>
         /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
-        internal RoleInstances(IList<string> roleInstancesValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleInstances(IList<string> roleInstancesValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoleInstancesValue = roleInstancesValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleInstances"/> for deserialization. </summary>
+        internal RoleInstances()
+        {
         }
 
         /// <summary> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </summary>

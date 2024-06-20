@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualHubRouteV2 : IUtf8JsonSerializable, IJsonModel<VirtualHubRouteV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHubRouteV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHubRouteV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualHubRouteV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubRouteV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubRouteV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRouteV2 DeserializeVirtualHubRouteV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> destinationType = default;
-            Optional<IList<string>> destinations = default;
-            Optional<string> nextHopType = default;
-            Optional<IList<string>> nextHops = default;
+            string destinationType = default;
+            IList<string> destinations = default;
+            string nextHopType = default;
+            IList<string> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationType"u8))
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteV2(destinationType.Value, Optional.ToList(destinations), nextHopType.Value, Optional.ToList(nextHops), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualHubRouteV2(destinationType, destinations ?? new ChangeTrackingList<string>(), nextHopType, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRouteV2>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualHubRouteV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support reading '{options.Format}' format.");
             }
         }
 

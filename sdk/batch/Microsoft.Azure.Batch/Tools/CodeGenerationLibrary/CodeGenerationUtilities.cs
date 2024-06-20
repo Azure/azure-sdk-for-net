@@ -44,6 +44,12 @@
                 return GetEnumConversionString(omPropertyData, protocolPropertyData, protocolObjectSimpleGetter);
             }
 
+            if(omPropertyData.IsDictionary)
+            {
+                // just return simple setter
+                return protocolObjectSimpleGetter;
+            }
+
             if (omPropertyData.IsTypeCollection)
             {
                 return GetProtocolCollectionToObjectModelCollectionString(protocolObjectSimpleGetter, omPropertyData, protocolPropertyData);
@@ -127,6 +133,7 @@
         public static bool IsTypeComplex(string typeString)
         {
             bool result = !(typeString.Equals("string") ||
+                            typeString.Equals("string, string") ||
                             typeString.Equals("bool") ||
                             typeString.Equals("bool?") ||
                             typeString.Equals("int") ||
@@ -146,6 +153,7 @@
 
         private static string GetProtocolCollectionToObjectModelCollectionString(string protocolObjectSimpleGetter, PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+
             if (IsMappedEnumPair(omPropertyData?.GenericTypeParameter, protocolPropertyData?.GenericTypeParameter))
             {
                 string omType = StripNullable(omPropertyData.GenericTypeParameter);

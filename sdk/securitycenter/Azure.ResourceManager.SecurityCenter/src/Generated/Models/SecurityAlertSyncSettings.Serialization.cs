@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAlertSyncSettings : IUtf8JsonSerializable, IJsonModel<SecurityAlertSyncSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertSyncSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertSyncSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAlertSyncSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSyncSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSyncSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAlertSyncSettings DeserializeSecurityAlertSyncSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -157,11 +157,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertSyncSettings(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(enabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAlertSyncSettings(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                enabled);
         }
 
         BinaryData IPersistableModel<SecurityAlertSyncSettings>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAlertSyncSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSyncSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

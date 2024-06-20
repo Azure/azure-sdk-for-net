@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,10 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             string version = default;
-            Optional<IReadOnlyList<ReadResult>> readResults = default;
-            Optional<IReadOnlyList<PageResult>> pageResults = default;
-            Optional<IReadOnlyList<DocumentResult>> documentResults = default;
-            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            IReadOnlyList<ReadResult> readResults = default;
+            IReadOnlyList<PageResult> pageResults = default;
+            IReadOnlyList<DocumentResult> documentResults = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -91,7 +90,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new V2AnalyzeResult(version, Optional.ToList(readResults), Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors));
+            return new V2AnalyzeResult(version, readResults ?? new ChangeTrackingList<ReadResult>(), pageResults ?? new ChangeTrackingList<PageResult>(), documentResults ?? new ChangeTrackingList<DocumentResult>(), errors ?? new ChangeTrackingList<FormRecognizerError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static V2AnalyzeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeV2AnalyzeResult(document.RootElement);
         }
     }
 }

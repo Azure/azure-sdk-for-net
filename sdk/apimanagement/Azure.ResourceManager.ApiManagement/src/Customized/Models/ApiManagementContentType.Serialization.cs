@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<BinaryData> schema = default;
-            Optional<string> version = default;
+            string id0 = default;
+            string name0 = default;
+            string description = default;
+            BinaryData schema = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementContentType(id, name, type, id0.Value, name0.Value, description.Value, schema.Value, version.Value, serializedAdditionalRawData);
+            return new ApiManagementContentType(id, name, type, id0, name0, description, schema, version, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<ApiManagementContentType>.Write(ModelReaderWriterOptions options)
         {

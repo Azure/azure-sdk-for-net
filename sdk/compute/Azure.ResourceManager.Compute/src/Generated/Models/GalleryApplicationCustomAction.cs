@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A custom action that can be performed with a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomAction
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomAction"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <param name="script"> The script to run when executing this custom action. </param>
@@ -33,12 +64,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="script"> The script to run when executing this custom action. </param>
         /// <param name="description"> Description to help the users understand what this custom action does. </param>
         /// <param name="parameters"> The parameters that this custom action uses. </param>
-        internal GalleryApplicationCustomAction(string name, string script, string description, IList<GalleryApplicationCustomActionParameter> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationCustomAction(string name, string script, string description, IList<GalleryApplicationCustomActionParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Script = script;
             Description = description;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomAction"/> for deserialization. </summary>
+        internal GalleryApplicationCustomAction()
+        {
         }
 
         /// <summary> The name of the custom action.  Must be unique within the Gallery Application Version. </summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,15 +17,15 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<MapsQueryType> queryType = default;
-            Optional<int> queryTime = default;
-            Optional<int> numResults = default;
-            Optional<int> limit = default;
-            Optional<int> offset = default;
-            Optional<int> totalResults = default;
-            Optional<int> fuzzyLevel = default;
-            Optional<LatLongPairAbbreviated> geoBias = default;
+            string query = default;
+            MapsQueryType? queryType = default;
+            int? queryTime = default;
+            int numResults = default;
+            int? limit = default;
+            int? offset = default;
+            int? totalResults = default;
+            int? fuzzyLevel = default;
+            LatLongPairAbbreviated geoBias = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -107,7 +106,24 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), numResults, Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias.Value);
+            return new SearchSummary(
+                query,
+                queryType,
+                queryTime,
+                numResults,
+                limit,
+                offset,
+                totalResults,
+                fuzzyLevel,
+                geoBias);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchSummary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchSummary(document.RootElement);
         }
     }
 }

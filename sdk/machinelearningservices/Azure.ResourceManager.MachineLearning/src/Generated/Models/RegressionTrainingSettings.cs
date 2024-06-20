@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -37,9 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
         /// If 'NonDistributed' then only non distributed algorithms are chosen.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for regression task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for regression task. </param>
-        internal RegressionTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode, IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms, IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings, trainingMode)
+        internal RegressionTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms, IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings, trainingMode, serializedAdditionalRawData)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;

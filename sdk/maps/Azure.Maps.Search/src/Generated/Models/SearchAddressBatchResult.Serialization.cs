@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchAddressBatchItem>> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            IReadOnlyList<SearchAddressBatchItem> batchItems = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressBatchResult(summary.Value, Optional.ToList(batchItems));
+            return new SearchAddressBatchResult(summary, batchItems ?? new ChangeTrackingList<SearchAddressBatchItem>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SearchAddressBatchResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchAddressBatchResult(document.RootElement);
         }
     }
 }

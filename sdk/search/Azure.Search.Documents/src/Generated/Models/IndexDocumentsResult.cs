@@ -5,10 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -17,11 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/>. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal IndexDocumentsResult(IEnumerable<IndexingResult> results)
         {
-            Argument.AssertNotNull(results, nameof(results));
-
             Results = results.ToList();
         }
 

@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HybridContainerServiceCredentialListResult
+    public partial class HybridContainerServiceCredentialListResult : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceCredentialListResult>
     {
-        internal static HybridContainerServiceCredentialListResult DeserializeHybridContainerServiceCredentialListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceCredentialListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridContainerServiceCredentialListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HybridContainerServiceCredentialListResult IJsonModel<HybridContainerServiceCredentialListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridContainerServiceCredentialListResult(document.RootElement, options);
+        }
+
+        internal static HybridContainerServiceCredentialListResult DeserializeHybridContainerServiceCredentialListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<HybridContainerServiceResourceProvisioningState> status = default;
-            Optional<HybridContainerServiceCredentialListError> error = default;
-            Optional<ListCredentialResponseProperties> properties = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            HybridContainerServiceResourceProvisioningState? status = default;
+            HybridContainerServiceCredentialListError error = default;
+            ListCredentialResponseProperties properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value);
+                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -69,11 +147,54 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value);
+                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridContainerServiceCredentialListResult(id.Value, name.Value, resourceId.Value, Optional.ToNullable(status), error.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridContainerServiceCredentialListResult(
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridContainerServiceCredentialListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridContainerServiceCredentialListResult IPersistableModel<HybridContainerServiceCredentialListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridContainerServiceCredentialListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridContainerServiceCredentialListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

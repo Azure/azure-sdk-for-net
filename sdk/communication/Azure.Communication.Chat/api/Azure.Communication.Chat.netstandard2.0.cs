@@ -20,6 +20,7 @@ namespace Azure.Communication.Chat
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ChatAttachmentType(string value) { throw null; }
+        public static Azure.Communication.Chat.ChatAttachmentType File { get { throw null; } }
         public static Azure.Communication.Chat.ChatAttachmentType Image { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.ChatAttachmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -45,12 +46,13 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2023_11_07) { }
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2024_03_07) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2021_09_07 = 2,
             V2023_11_07 = 3,
+            V2024_03_07 = 4,
         }
     }
     public partial class ChatError

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -19,8 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="helmArtifactProfile"> Helm artifact profile. </param>
-        internal AzureArcKubernetesArtifactProfile(WritableSubResource artifactStore, HelmArtifactProfile helmArtifactProfile) : base(artifactStore)
+        internal AzureArcKubernetesArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, HelmArtifactProfile helmArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             HelmArtifactProfile = helmArtifactProfile;
         }

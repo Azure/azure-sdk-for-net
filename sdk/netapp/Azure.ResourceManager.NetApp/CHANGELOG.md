@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-03-15)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-netapp-2023-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
+
+## 1.5.0-beta.1 (2024-02-28)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-preview-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/netapp/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.1
 
 ## 1.4.2 (2023-11-29)
 
@@ -24,7 +47,7 @@
 
 ### Bugs Fixed
 
-- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string 
+- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string
 
 ## 1.4.0 (2023-10-19)
 
@@ -40,6 +63,7 @@
 ## 1.3.0 (2023-08-15)
 
 ### Features Added
+
 - Updated to support ANF api-version 2022-11-01
 - Added `GetGetGroupIdListForLdapUser` to `NetAppVolumeResource` and `NetAppVolumeGroupVolume` to get a list of group Ids for a specific LDAP User
 - Added `ActualThroughputMibps` to `NetAppVolumeData` to show actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
@@ -63,6 +87,7 @@
 ## 1.1.0 (2023-04-04)
 
 ### Features Added
+
 - Updated to support ANF api-version 2022-09-01
 - Added `BackupRestoreFiles` to `NetAppVolumeResource` to restore the specified files from the specified backup to the active file system
 - Added `BreakFileLocks` to `NetAppVolumeResource` to allow clients to break file locks on a volume
@@ -74,8 +99,10 @@
 - Added `RestoreFiles` for `NetAppVolumeBackupResource`
 
 ### Breaking Changes
+
 - `NetAppVault` is no longer needed scheduled for deprecation
 - `VaultId` is not longer needed it has been deprecated from `NetAppVolumeBackupConfiguration` in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
+
 ## 1.0.1 (2023-02-15)
 
 ### Other Changes

@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -35,13 +36,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostPlatform"> Host OS supported by the Kubernetes role. </param>
         /// <param name="provisioningState"> State of Kubernetes deployment. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;

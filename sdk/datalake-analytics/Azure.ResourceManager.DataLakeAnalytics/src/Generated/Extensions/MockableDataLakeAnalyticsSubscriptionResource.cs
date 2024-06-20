@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
@@ -79,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(e), DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(e), DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

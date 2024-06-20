@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDataDriftMetricThresholdBase. </summary>
+    /// <summary> Unknown version of DataDriftMetricThresholdBase. </summary>
     internal partial class UnknownDataDriftMetricThresholdBase : DataDriftMetricThresholdBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        internal UnknownDataDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold) : base(dataType, threshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataType, threshold, serializedAdditionalRawData)
         {
             DataType = dataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataDriftMetricThresholdBase"/> for deserialization. </summary>
+        internal UnknownDataDriftMetricThresholdBase()
+        {
         }
     }
 }

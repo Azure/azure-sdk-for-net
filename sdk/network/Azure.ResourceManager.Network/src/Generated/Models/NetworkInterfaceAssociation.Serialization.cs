@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkInterfaceAssociation : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkInterfaceAssociation DeserializeNetworkInterfaceAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
+            ResourceIdentifier id = default;
+            IReadOnlyList<SecurityRuleData> securityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,18 +103,18 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                     }
                     securityRules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceAssociation(id.Value, Optional.ToList(securityRules), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkInterfaceAssociation(id, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceAssociation>.Write(ModelReaderWriterOptions options)
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkInterfaceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 

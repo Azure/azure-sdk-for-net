@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkSecurityGroupResult : IUtf8JsonSerializable, IJsonModel<NetworkSecurityGroupResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkSecurityGroupResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkSecurityGroupResult DeserializeNetworkSecurityGroupResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SecurityRuleAccess> securityRuleAccessResult = default;
-            Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
+            SecurityRuleAccess? securityRuleAccessResult = default;
+            IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityRuleAccessResult"u8))
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Network.Models
                     List<EvaluatedNetworkSecurityGroup> array = new List<EvaluatedNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item));
+                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item, options));
                     }
                     evaluatedNetworkSecurityGroups = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResult(Optional.ToNullable(securityRuleAccessResult), Optional.ToList(evaluatedNetworkSecurityGroups), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkSecurityGroupResult(securityRuleAccessResult, evaluatedNetworkSecurityGroups ?? new ChangeTrackingList<EvaluatedNetworkSecurityGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkSecurityGroupResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support reading '{options.Format}' format.");
             }
         }
 

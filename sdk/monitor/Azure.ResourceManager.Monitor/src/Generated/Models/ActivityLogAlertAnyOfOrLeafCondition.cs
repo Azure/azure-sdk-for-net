@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </param>
         /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
-        internal ActivityLogAlertAnyOfOrLeafCondition(string field, string equalsValue, IList<string> containsAny, IList<AlertRuleLeafCondition> anyOf) : base(field, equalsValue, containsAny)
+        internal ActivityLogAlertAnyOfOrLeafCondition(string field, string equalsValue, IList<string> containsAny, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AlertRuleLeafCondition> anyOf) : base(field, equalsValue, containsAny, serializedAdditionalRawData)
         {
             AnyOf = anyOf;
         }

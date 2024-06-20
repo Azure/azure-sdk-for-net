@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -36,7 +35,21 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
 
-            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName, state, provisioningState);
+            return new DedicatedCapacityData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null,
+                sku,
+                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
+                mode,
+                tenantId,
+                friendlyName,
+                state,
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PowerBIDedicatedResourceData"/>. </summary>
@@ -51,7 +64,37 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
+            return new PowerBIDedicatedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DedicatedCapacityPatch"/>. </summary>
+        /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
+        /// <param name="friendlyName"> Capacity name. </param>
+        /// <returns> A new <see cref="Models.DedicatedCapacityPatch"/> instance for mocking. </returns>
+        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = null, IDictionary<string, string> tags = null, IEnumerable<string> administrationMembers = null, Mode? mode = null, Guid? tenantId = null, string friendlyName = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            administrationMembers ??= new List<string>();
+
+            return new DedicatedCapacityPatch(
+                sku,
+                tags,
+                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
+                mode,
+                tenantId,
+                friendlyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuDetails"/>. </summary>
@@ -60,7 +103,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
         public static SkuDetails SkuDetails(string resourceType = null, CapacitySku sku = null)
         {
-            return new SkuDetails(resourceType, sku);
+            return new SkuDetails(resourceType, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckCapacityNameAvailabilityResult"/>. </summary>
@@ -70,7 +113,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <returns> A new <see cref="Models.CheckCapacityNameAvailabilityResult"/> instance for mocking. </returns>
         public static CheckCapacityNameAvailabilityResult CheckCapacityNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message);
+            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PowerBIDedicated.AutoScaleVCoreData"/>. </summary>
@@ -89,7 +132,18 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutoScaleVCoreData(id, name, resourceType, location, tags, systemData, sku, capacityLimit, capacityObjectId, provisioningState);
+            return new AutoScaleVCoreData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null,
+                sku,
+                capacityLimit,
+                capacityObjectId,
+                provisioningState);
         }
     }
 }

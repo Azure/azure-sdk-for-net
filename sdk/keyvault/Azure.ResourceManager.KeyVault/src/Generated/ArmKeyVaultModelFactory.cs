@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -18,6 +16,18 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, KeyVaultProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new KeyVaultCreateOrUpdateContent(location, tags, properties, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
@@ -42,7 +52,25 @@ namespace Azure.ResourceManager.KeyVault.Models
             accessPolicies ??= new List<KeyVaultAccessPolicy>();
             privateEndpointConnections ??= new List<KeyVaultPrivateEndpointConnectionItemData>();
 
-            return new KeyVaultProperties(tenantId, sku, accessPolicies?.ToList(), vaultUri, hsmPoolResourceId, enabledForDeployment, enabledForDiskEncryption, enabledForTemplateDeployment, enableSoftDelete, softDeleteRetentionInDays, enableRbacAuthorization, createMode, enablePurgeProtection, networkRuleSet, provisioningState, privateEndpointConnections?.ToList(), publicNetworkAccess);
+            return new KeyVaultProperties(
+                tenantId,
+                sku,
+                accessPolicies?.ToList(),
+                vaultUri,
+                hsmPoolResourceId,
+                enabledForDeployment,
+                enabledForDiskEncryption,
+                enabledForTemplateDeployment,
+                enableSoftDelete,
+                softDeleteRetentionInDays,
+                enableRbacAuthorization,
+                createMode,
+                enablePurgeProtection,
+                networkRuleSet,
+                provisioningState,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/>. </summary>
@@ -54,7 +82,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new KeyVaultPrivateEndpointConnectionItemData(
+                id,
+                etag,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultData"/>. </summary>
@@ -70,7 +104,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultData(id, name, resourceType, systemData, tags, location, properties);
+            return new KeyVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultAccessPolicyParameters"/>. </summary>
@@ -85,7 +127,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             accessPolicies ??= new List<KeyVaultAccessPolicy>();
 
-            return new KeyVaultAccessPolicyParameters(id, name, resourceType, systemData, location, accessPolicies != null ? new KeyVaultAccessPolicyProperties(accessPolicies?.ToList()) : null);
+            return new KeyVaultAccessPolicyParameters(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                accessPolicies != null ? new KeyVaultAccessPolicyProperties(accessPolicies?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.DeletedKeyVaultData"/>. </summary>
@@ -97,7 +146,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="KeyVault.DeletedKeyVaultData"/> instance for mocking. </returns>
         public static DeletedKeyVaultData DeletedKeyVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeletedKeyVaultProperties properties = null)
         {
-            return new DeletedKeyVaultData(id, name, resourceType, systemData, properties);
+            return new DeletedKeyVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedKeyVaultProperties"/>. </summary>
@@ -112,7 +167,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DeletedKeyVaultProperties(vaultId, location, deletedOn, scheduledPurgeOn, tags, purgeProtectionEnabled);
+            return new DeletedKeyVaultProperties(
+                vaultId,
+                location,
+                deletedOn,
+                scheduledPurgeOn,
+                tags,
+                purgeProtectionEnabled,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
+        /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, ResourceType resourceType = default)
+        {
+            return new KeyVaultNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultNameAvailabilityResult"/>. </summary>
@@ -122,7 +193,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityResult"/> instance for mocking. </returns>
         public static KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = null, KeyVaultNameUnavailableReason? reason = null, string message = null)
         {
-            return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message);
+            return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/>. </summary>
@@ -141,7 +212,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, location, tags);
+            return new KeyVaultPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateLinkResourceData"/>. </summary>
@@ -161,7 +243,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             requiredZoneNames ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), location, tags);
+            return new KeyVaultPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>
@@ -178,7 +270,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedHsmData(id, name, resourceType, systemData, tags, location, properties, sku);
+            return new ManagedHsmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmProperties"/>. </summary>
@@ -204,7 +305,23 @@ namespace Azure.ResourceManager.KeyVault.Models
             regions ??= new List<ManagedHsmGeoReplicatedRegion>();
             privateEndpointConnections ??= new List<ManagedHsmPrivateEndpointConnectionItemData>();
 
-            return new ManagedHsmProperties(tenantId, initialAdminObjectIds?.ToList(), hsmUri, enableSoftDelete, softDeleteRetentionInDays, enablePurgeProtection, createMode, statusMessage, provisioningState, networkRuleSet, regions?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, scheduledPurgeOn, securityDomainProperties);
+            return new ManagedHsmProperties(
+                tenantId,
+                initialAdminObjectIds?.ToList(),
+                hsmUri,
+                enableSoftDelete,
+                softDeleteRetentionInDays,
+                enablePurgeProtection,
+                createMode,
+                statusMessage,
+                provisioningState,
+                networkRuleSet,
+                regions?.ToList(),
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                scheduledPurgeOn,
+                securityDomainProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmGeoReplicatedRegion"/>. </summary>
@@ -214,7 +331,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmGeoReplicatedRegion"/> instance for mocking. </returns>
         public static ManagedHsmGeoReplicatedRegion ManagedHsmGeoReplicatedRegion(string name = null, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = null, bool? isPrimary = null)
         {
-            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary);
+            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
@@ -226,7 +343,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
+            return new ManagedHsmPrivateEndpointConnectionItemData(
+                id,
+                etag,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHSMSecurityDomainProperties"/>. </summary>
@@ -235,7 +358,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHSMSecurityDomainProperties"/> instance for mocking. </returns>
         public static ManagedHSMSecurityDomainProperties ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus = null, string activationStatusMessage = null)
         {
-            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage);
+            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
@@ -255,7 +378,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, sku);
+            return new ManagedHsmPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.DeletedManagedHsmData"/>. </summary>
@@ -267,7 +402,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="KeyVault.DeletedManagedHsmData"/> instance for mocking. </returns>
         public static DeletedManagedHsmData DeletedManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeletedManagedHsmProperties properties = null)
         {
-            return new DeletedManagedHsmData(id, name, resourceType, systemData, properties);
+            return new DeletedManagedHsmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedManagedHsmProperties"/>. </summary>
@@ -282,7 +423,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DeletedManagedHsmProperties(managedHsmId, location, deletedOn, scheduledPurgeOn, purgeProtectionEnabled, tags);
+            return new DeletedManagedHsmProperties(
+                managedHsmId,
+                location,
+                deletedOn,
+                scheduledPurgeOn,
+                purgeProtectionEnabled,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResourceData"/>. </summary>
@@ -303,7 +451,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), sku);
+            return new ManagedHsmPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmNameAvailabilityResult"/>. </summary>
@@ -313,7 +472,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityResult"/> instance for mocking. </returns>
         public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, ManagedHsmNameUnavailableReason? reason = null, string message = null)
         {
-            return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message);
+            return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultSecretCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the secret. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        /// <returns> A new <see cref="Models.KeyVaultSecretCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultSecretCreateOrUpdateContent KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags = null, SecretProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new KeyVaultSecretCreateOrUpdateContent(tags, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecretProperties"/>. </summary>
@@ -325,7 +495,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.SecretProperties"/> instance for mocking. </returns>
         public static SecretProperties SecretProperties(string value = null, string contentType = null, SecretAttributes attributes = null, Uri secretUri = null, string secretUriWithVersion = null)
         {
-            return new SecretProperties(value, contentType, attributes, secretUri, secretUriWithVersion);
+            return new SecretProperties(
+                value,
+                contentType,
+                attributes,
+                secretUri,
+                secretUriWithVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecretAttributes"/>. </summary>
@@ -337,7 +513,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.SecretAttributes"/> instance for mocking. </returns>
         public static SecretAttributes SecretAttributes(bool? enabled = null, DateTimeOffset? notBefore = null, DateTimeOffset? expires = null, DateTimeOffset? created = null, DateTimeOffset? updated = null)
         {
-            return new SecretAttributes(enabled, notBefore, expires, created, updated);
+            return new SecretAttributes(
+                enabled,
+                notBefore,
+                expires,
+                created,
+                updated,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecretBaseAttributes"/>. </summary>
@@ -349,7 +531,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.SecretBaseAttributes"/> instance for mocking. </returns>
         public static SecretBaseAttributes SecretBaseAttributes(bool? enabled = null, DateTimeOffset? notBefore = null, DateTimeOffset? expires = null, DateTimeOffset? created = null, DateTimeOffset? updated = null)
         {
-            return new SecretBaseAttributes(enabled, notBefore, expires, created, updated);
+            return new SecretBaseAttributes(
+                enabled,
+                notBefore,
+                expires,
+                created,
+                updated,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultSecretData"/>. </summary>
@@ -365,7 +553,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultSecretData(id, name, resourceType, systemData, properties, location, tags);
+            return new KeyVaultSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Communication.Chat;
 
 namespace Azure.Communication
 {

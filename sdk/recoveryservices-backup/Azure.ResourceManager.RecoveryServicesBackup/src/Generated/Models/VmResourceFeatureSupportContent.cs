@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> AzureResource(IaaS VM) Specific feature support request. </summary>
@@ -18,9 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportContent"/>. </summary>
         /// <param name="featureType"> backup support feature type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmSize"> Size of the resource: VM size(A/D series etc) in case of IaasVM. </param>
         /// <param name="vmSku"> SKUs (Premium/Managed etc) in case of IaasVM. </param>
-        internal VmResourceFeatureSupportContent(string featureType, string vmSize, string vmSku) : base(featureType)
+        internal VmResourceFeatureSupportContent(string featureType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmSize, string vmSku) : base(featureType, serializedAdditionalRawData)
         {
             VmSize = vmSize;
             VmSku = vmSku;

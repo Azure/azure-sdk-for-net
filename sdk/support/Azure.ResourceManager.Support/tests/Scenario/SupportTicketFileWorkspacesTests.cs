@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Support.Tests
     internal class SupportTicketFileWorkspacesTests : SupportManagementTestBase
     {
         private SubscriptionFileWorkspaceCollection _subscriptionFileWorkspaceCollection;
-        private const string _existSupportTicketFileWorkspaceName = "dotnet_test_workspacename2";
+        private const string _existSupportTicketFileWorkspaceName = "dotnet_test_workspacename4";
 
         public SupportTicketFileWorkspacesTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="policyId"> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> domain, DataFactorySecretBaseDefinition accessToken, DataFactoryElement<string> authentication, DataFactoryElement<string> workspaceResourceId, DataFactoryElement<string> existingClusterId, DataFactoryElement<string> instancePoolId, DataFactoryElement<string> newClusterVersion, DataFactoryElement<string> newClusterNumOfWorker, DataFactoryElement<string> newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, DataFactoryElement<string> newClusterLogDestination, DataFactoryElement<string> newClusterDriverNodeType, DataFactoryElement<IList<string>> newClusterInitScripts, DataFactoryElement<bool> newClusterEnableElasticDisk, string encryptedCredential, DataFactoryElement<string> policyId, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> domain, DataFactorySecret accessToken, DataFactoryElement<string> authentication, DataFactoryElement<string> workspaceResourceId, DataFactoryElement<string> existingClusterId, DataFactoryElement<string> instancePoolId, DataFactoryElement<string> newClusterVersion, DataFactoryElement<string> newClusterNumOfWorker, DataFactoryElement<string> newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, DataFactoryElement<string> newClusterLogDestination, DataFactoryElement<string> newClusterDriverNodeType, DataFactoryElement<IList<string>> newClusterInitScripts, DataFactoryElement<bool> newClusterEnableElasticDisk, string encryptedCredential, DataFactoryElement<string> policyId, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -79,10 +78,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDatabricks";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksLinkedService()
+        {
+        }
+
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Domain { get; set; }
         /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecretBaseDefinition AccessToken { get; set; }
+        public DataFactorySecret AccessToken { get; set; }
         /// <summary> Required to specify MSI, if using Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Authentication { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>

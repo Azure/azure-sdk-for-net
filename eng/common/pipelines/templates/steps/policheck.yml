@@ -2,14 +2,20 @@ parameters:
   ExclusionDataBaseFileName: ''
   TargetDirectory: ''
   PublishAnalysisLogs: false
-  PoliCheckBlobSAS: "$(azuresdk-policheck-blob-SAS)"
   ExclusionFilePath: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
 
 steps:
-  - pwsh: |
-      azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/${{ parameters.ExclusionDataBaseFileName }}.mdb?${{ parameters.PoliCheckBlobSAS }}" `
-      "$(Build.BinariesDirectory)"
-    displayName: 'Download PoliCheck Exclusion Database'
+  - task: AzurePowerShell@5
+    displayName: 'Download Policheck Exclusion Database'
+    inputs:
+      azureSubscription: 'Azure SDK Artifacts'
+      ScriptType: 'InlineScript'
+      azurePowerShellVersion: LatestVersion 
+      pwsh: true
+      Inline: |
+        azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/${{ parameters.ExclusionDataBaseFileName }}.mdb" "$(Build.BinariesDirectory)"
+    env:
+      AZCOPY_AUTO_LOGIN_TYPE: 'PSCRED'
 
   - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
     displayName: 'Run PoliCheck'

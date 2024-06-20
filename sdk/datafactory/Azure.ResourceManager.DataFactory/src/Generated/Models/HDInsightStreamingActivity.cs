@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -83,6 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CommandEnvironment = commandEnvironment;
             Defines = defines;
             ActivityType = activityType ?? "HDInsightStreaming";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/> for deserialization. </summary>
+        internal HDInsightStreamingActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

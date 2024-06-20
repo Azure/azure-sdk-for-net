@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SourceControlSyncJobResult : IUtf8JsonSerializable, IJsonModel<SourceControlSyncJobResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SourceControlSyncJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,22 +115,22 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<SourceControlProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<SourceControlSyncType> syncType = default;
-            Optional<string> exception = default;
+            ResourceIdentifier id = default;
+            string sourceControlSyncJobId = default;
+            DateTimeOffset? creationTime = default;
+            SourceControlProvisioningState? provisioningState = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            SourceControlSyncType? syncType = default;
+            string exception = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,11 +213,20 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SourceControlSyncJobResult(
+                id,
+                sourceControlSyncJobId,
+                creationTime,
+                provisioningState,
+                startTime,
+                endTime,
+                syncType,
+                exception,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobResult>.Write(ModelReaderWriterOptions options)
@@ -229,7 +238,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSourceControlSyncJobResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support reading '{options.Format}' format.");
             }
         }
 

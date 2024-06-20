@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a migration name's availability. </summary>
     public partial class PostgreSqlCheckMigrationNameAvailabilityContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
@@ -31,24 +64,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Migration name availability reason. </param>
         /// <param name="message"> Migration name availability message. </param>
-        internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? isNameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? isNameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/> for deserialization. </summary>
+        internal PostgreSqlCheckMigrationNameAvailabilityContent()
+        {
         }
 
         /// <summary> The resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; set; }
         /// <summary> Indicates whether the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> Migration name availability reason. </summary>
+        [WirePath("reason")]
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
         /// <summary> Migration name availability message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

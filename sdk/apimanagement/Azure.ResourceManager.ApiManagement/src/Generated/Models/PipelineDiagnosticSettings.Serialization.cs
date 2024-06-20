@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable, IJsonModel<PipelineDiagnosticSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineDiagnosticSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineDiagnosticSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PipelineDiagnosticSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineDiagnosticSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue(Request, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                writer.WriteObjectValue(Response, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PipelineDiagnosticSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static PipelineDiagnosticSettings DeserializePipelineDiagnosticSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<HttpMessageDiagnostic> request = default;
-            Optional<HttpMessageDiagnostic> response = default;
+            HttpMessageDiagnostic request = default;
+            HttpMessageDiagnostic response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PipelineDiagnosticSettings(request.Value, response.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PipelineDiagnosticSettings(request, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PipelineDiagnosticSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializePipelineDiagnosticSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineDiagnosticSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

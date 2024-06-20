@@ -18,11 +18,11 @@ namespace Azure.Identity.Broker.Tests
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
-                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsLegacyMsaPassthroughEnabled = enableMsaPassthrough.Value } as IMsalPublicClientInitializerOptions;
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsLegacyMsaPassthroughEnabled = enableMsaPassthrough.Value };
             }
             else
             {
-                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) as IMsalPublicClientInitializerOptions;
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle);
             }
             PublicClientApplicationBuilder builder = PublicClientApplicationBuilder
                 .Create(Guid.NewGuid().ToString());
@@ -32,6 +32,20 @@ namespace Azure.Identity.Broker.Tests
             (BrokerOptions Options, Func<object> Parent) = GetBrokerOptions(builder);
             Assert.AreEqual(enableMsaPassthrough ?? false, Options?.MsaPassthrough);
             Assert.AreEqual(parentWindowHandle, Parent());
+        }
+
+        [Test]
+        public void RespectsUseOperatingSystemAccount(
+            [Values(true, false)] bool enableUseOperatingSystemAccount)
+        {
+            IntPtr parentWindowHandle = new(1234);
+            IMsalPublicClientInitializerOptions credentialOptions;
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseDefaultBrokerAccount = enableUseOperatingSystemAccount };
+            PublicClientApplicationBuilder builder = PublicClientApplicationBuilder
+                .Create(Guid.NewGuid().ToString());
+
+            var credential = new InteractiveBrowserCredential((InteractiveBrowserCredentialBrokerOptions)credentialOptions);
+            Assert.AreEqual(enableUseOperatingSystemAccount, credential.UseOperatingSystemAccount);
         }
 
         private static (BrokerOptions Options, Func<object> Parent) GetBrokerOptions(PublicClientApplicationBuilder builder)

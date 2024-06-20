@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: IotFirmwareDefense
 namespace: Azure.ResourceManager.IotFirmwareDefense
-require: https://github.com/Azure/azure-rest-api-specs/blob/97a3d07807c5e7f23e0f47f532d0555ff2aa5d5d/specification/fist/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cf5ad1932d00c7d15497705ad6b71171d3d68b1e/specification/fist/resource-manager/readme.md
+#tag: package-2024-01-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -16,8 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,31 +50,46 @@ acronym-mapping:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Url: Uri
   Etag: ETag|etag
-  FirmwareId: FirmwareName
-  UrlToken: UriToken
-  CryptoKey: FirmwareCryptoKey
-  CryptoCertificate: FirmwareCryptoCertificate
-  GetGenerate: Get
-  GenerateBinaryHardeningList: BinaryHardeningResults
-  GenerateComponentList: SbomComponents
-  GenerateCryptoCertificateList: CryptoCertificates
-  GenerateCryptoKeyList: CryptoKeys
-  GenerateCveList: Cves
-  GeneratePasswordHashList: PasswordHashes
-  GenerateBinaryHardeningDetails: GetBinaryHardeningDetails
-  GenerateBinaryHardeningSummary: GetBinaryHardeningSummary
-  GenerateComponentDetails: GetComponentDetails
-  GenerateCveSummary: GetCveSummary
-  GenerateCryptoCertificateSummary: GetCryptoCertificateSummary
-  GenerateCryptoKeySummary: GetCryptoKeySummary
-  GenerateSummary: GetFirmwareSummary
+
+override-operation-name:
+  BinaryHardening_ListByFirmware: GetBinaryHardeningResults
 
 rename-mapping:
-  GenerateUploadUrlRequest: UploadUrlRequest
-  Models.Status: AnalysisStatus
-  Component: SbomComponent
-  Workspace: FirmwareWorkspace
-  Cve: FirmwareCve
+  GenerateUploadUrlRequest: FirmwareUploadUrlRequest
+  Workspace: FirmwareAnalysisWorkspace
+  BinaryHardeningResource: BinaryHardeningResult
+  BinaryHardeningSummaryResource: BinaryHardeningSummary
+  CveResource: CveResult
+  PasswordHashResource: PasswordHashResult
+  SbomComponentResource: SbomComponentResult
+  SummaryName: FirmwareAnalysisSummaryName
+  SummaryName.CVE: Cve
+  SummaryType: FirmwareAnalysisSummaryType
+  SummaryType.CVE: Cve
+  CryptoCertificateResource: CryptoCertificateResult
+  CryptoCertificateSummaryResource: CryptoCertificateSummary
+  CryptoKeyResource: CryptoKeyResult
+  CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
+  CryptoKeySummaryResource: CryptoKeySummary
+  Firmware: IotFirmware
+  ProvisioningState: FirmwareProvisioningState
+  SummaryResource: FirmwareAnalysisSummary
+  SummaryResourceProperties: FirmwareAnalysisSummaryProperties
+  BinaryHardeningResource.properties.features.nx: NXFlag
+  BinaryHardeningResource.properties.features.pie: PieFlag
+  BinaryHardeningResource.properties.features.relro: RelroFlag
+  BinaryHardeningResource.properties.features.canary: CanaryFlag
+  BinaryHardeningResource.properties.features.stripped: StrippedFlag
+  BinaryHardeningSummaryResource.nx: NXPercentage
+  BinaryHardeningSummaryResource.pie: PiePercentage
+  BinaryHardeningSummaryResource.relro: RelroPercentage
+  BinaryHardeningSummaryResource.canary: CanaryPercentage
+  BinaryHardeningSummaryResource.stripped: StrippedPercentage
+  Status: FirmwareAnalysisStatus
+  StatusMessage: FirmwareAnalysisStatusMessage
+  PairedKey: CryptoPairedKey
+  UrlToken: FirmwareUrlToken
 
 ```

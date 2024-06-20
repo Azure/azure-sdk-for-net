@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -49,7 +50,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage is null)
+            {
+                throw new ArgumentNullException(expectedOverwriteExceptionMessage);
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", expectedOverwriteExceptionMessage);
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
             _firstItemName = "item1";
@@ -257,8 +265,8 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
-        [TestCase(Constants.KB / 2, 10)]
-        [TestCase(Constants.KB, 10)]
+        [TestCase(DataMovementTestConstants.KB / 2, 10)]
+        [TestCase(DataMovementTestConstants.KB, 10)]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -297,10 +305,10 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(4 * Constants.MB, 200)]
-        [TestCase(257 * Constants.MB, 500)]
-        [TestCase(Constants.GB, 500)]
+        [TestCase(4 * DataMovementTestConstants.MB, 20)]
+        [TestCase(4 * DataMovementTestConstants.MB, 200)]
+        [TestCase(257 * DataMovementTestConstants.MB, 500)]
+        [TestCase(DataMovementTestConstants.GB, 500)]
         public async Task DirectoryToDirectory_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -388,7 +396,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
             await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName1);
 
             string destinationPrefix = "destFolder";
 
@@ -415,15 +423,15 @@ namespace Azure.Storage.DataMovement.Tests
             string subDir1 = string.Join("/", sourcePrefix, "foo");
             await CreateDirectoryInSourceAsync(source.Container, subDir1);
             string itemName1 = string.Join("/", subDir1, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName1);
             string subDir2 = string.Join("/", sourcePrefix, "rul");
             await CreateDirectoryInSourceAsync(source.Container, subDir2);
             string itemName2 = string.Join("/", subDir2, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName2);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName2);
             string subDir3 = string.Join("/", sourcePrefix, "pik");
             await CreateDirectoryInSourceAsync(source.Container, subDir3);
             string itemName3 = string.Join("/", subDir3, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName3);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName3);
 
             string destinationPrefix = "destFolder";
 
@@ -457,7 +465,7 @@ namespace Azure.Storage.DataMovement.Tests
                 subDirPrefix = string.Join("/", subDirPrefix, $"folder{i}");
                 await CreateDirectoryInSourceAsync(source.Container, subDirPrefix);
                 string fullFilePath = string.Join("/", subDirPrefix, GetNewObjectName());
-                await CreateObjectInSourceAsync(source.Container, Constants.KB, fullFilePath);
+                await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, fullFilePath);
             }
 
             string destinationPrefix = "destFolder";
@@ -479,7 +487,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destPrefix";
 
@@ -529,7 +537,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destPrefix";
 
@@ -572,7 +580,7 @@ namespace Azure.Storage.DataMovement.Tests
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             int waitTimeInSec = 20;
             string sourceContainerName = GetNewObjectName();
             string destContainerName = GetNewObjectName();
@@ -641,7 +649,7 @@ namespace Azure.Storage.DataMovement.Tests
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
-            int size = Constants.KB)
+            int size = DataMovementTestConstants.KB)
         {
             // Arrange
             string sourcePrefix = "sourceFolder";
@@ -914,7 +922,7 @@ namespace Azure.Storage.DataMovement.Tests
                 1,
                 createFailedCondition: true,
                 options: options,
-                size: Constants.KB * 4);
+                size: DataMovementTestConstants.KB * 4);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));

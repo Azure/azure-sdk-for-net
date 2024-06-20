@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<LatLongPair> center = default;
-            Optional<IReadOnlyList<LatLongPair>> boundary = default;
+            LatLongPair center = default;
+            IReadOnlyList<LatLongPair> boundary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("center"u8))
@@ -47,7 +47,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteRange(center.Value, Optional.ToList(boundary));
+            return new RouteRange(center, boundary ?? new ChangeTrackingList<LatLongPair>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteRange FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteRange(document.RootElement);
         }
     }
 }

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +337,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,7 +383,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -431,7 +429,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +442,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(e), _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +458,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -473,7 +471,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(e), _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -489,7 +487,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,7 +549,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -613,7 +611,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -670,7 +668,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -727,7 +725,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -787,7 +785,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

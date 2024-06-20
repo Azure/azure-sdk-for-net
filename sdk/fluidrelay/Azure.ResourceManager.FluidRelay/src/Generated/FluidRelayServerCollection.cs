@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FluidRelay
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.FluidRelay
             try
             {
                 var response = await _fluidRelayServerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, fluidRelayServerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FluidRelayArmOperation<FluidRelayServerResource>(Response.FromValue(new FluidRelayServerResource(Client, response), response.GetRawResponse()));
+                var uri = _fluidRelayServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, fluidRelayServerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new FluidRelayArmOperation<FluidRelayServerResource>(Response.FromValue(new FluidRelayServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.FluidRelay
             try
             {
                 var response = _fluidRelayServerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, fluidRelayServerName, data, cancellationToken);
-                var operation = new FluidRelayArmOperation<FluidRelayServerResource>(Response.FromValue(new FluidRelayServerResource(Client, response), response.GetRawResponse()));
+                var uri = _fluidRelayServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, fluidRelayServerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new FluidRelayArmOperation<FluidRelayServerResource>(Response.FromValue(new FluidRelayServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

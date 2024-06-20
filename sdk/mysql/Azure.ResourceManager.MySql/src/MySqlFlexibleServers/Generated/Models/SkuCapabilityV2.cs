@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Sku capability. </summary>
     public partial class SkuCapabilityV2
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SkuCapabilityV2"/>. </summary>
         internal SkuCapabilityV2()
         {
@@ -27,7 +59,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="supportedMemoryPerVCoreMB"> supported memory per vCore in MB. </param>
         /// <param name="supportedZones"> Supported zones. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>
-        internal SkuCapabilityV2(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreMB, IReadOnlyList<string> supportedZones, IReadOnlyList<string> supportedHAMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkuCapabilityV2(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreMB, IReadOnlyList<string> supportedZones, IReadOnlyList<string> supportedHAMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
@@ -35,6 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             SupportedMemoryPerVCoreMB = supportedMemoryPerVCoreMB;
             SupportedZones = supportedZones;
             SupportedHAMode = supportedHAMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> vCore name. </summary>

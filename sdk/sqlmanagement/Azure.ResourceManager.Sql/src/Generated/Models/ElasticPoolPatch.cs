@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An elastic pool update. </summary>
     public partial class ElasticPoolPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticPoolPatch"/>. </summary>
         public ElasticPoolPatch()
         {
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
-        internal ElasticPoolPatch(SqlSku sku, IDictionary<string, string> tags, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPatch(SqlSku sku, IDictionary<string, string> tags, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -44,29 +78,41 @@ namespace Azure.ResourceManager.Sql.Models
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
             PreferredEnclaveType = preferredEnclaveType;
             AvailabilityZone = availabilityZone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An ARM Resource SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
+        [WirePath("properties.maxSizeBytes")]
         public long? MaxSizeBytes { get; set; }
         /// <summary> Minimal capacity that serverless pool will not shrink below, if not paused. </summary>
+        [WirePath("properties.minCapacity")]
         public double? MinCapacity { get; set; }
         /// <summary> The per database settings for the elastic pool. </summary>
+        [WirePath("properties.perDatabaseSettings")]
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this elastic pool. </summary>
+        [WirePath("properties.licenseType")]
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
+        [WirePath("properties.maintenanceConfigurationId")]
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
+        [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> Type of enclave requested on the elastic pool. </summary>
+        [WirePath("properties.preferredEnclaveType")]
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
         /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
+        [WirePath("properties.availabilityZone")]
         public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
     }
 }

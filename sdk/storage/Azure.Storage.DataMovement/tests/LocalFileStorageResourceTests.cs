@@ -246,12 +246,12 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+            StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, size);
-            Assert.NotNull(result.ETag);
+            Assert.AreEqual(result.ResourceLength, size);
+            Assert.NotNull(result.RawProperties);
         }
 
         [Test]

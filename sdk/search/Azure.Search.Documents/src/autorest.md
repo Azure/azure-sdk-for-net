@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5a1fe448805429403c38a2637ee32c82ba755530/specification/search/data-plane/Azure.Search/preview/2024-05-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5a1fe448805429403c38a2637ee32c82ba755530/specification/search/data-plane/Azure.Search/preview/2024-05-01-preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -81,15 +81,25 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Rename one of SearchError definitions
+### Change VectorizableImageUrlQuery.Url type to Uri
 
-SearchError is duplicated between two swaggers, rename one of them
+```yaml
+directive:
+  from: swagger-document
+  where: $.definitions.VectorizableImageUrlQuery.properties.url
+  transform: $.format = "url"
+```
+
+### Set `hybridSearch` property to be type `HybridSearch` in SearchRequest
 
 ``` yaml
 directive:
-- from: searchservice.json
-  where: $.definitions.SearchError
-  transform: $["x-ms-client-name"] = "SearchServiceError"
+  - from: searchindex.json
+    where: $.definitions.SearchRequest.properties
+    transform: >
+        delete $.hybridSearch["type"];
+        delete $.hybridSearch.items;
+        $.hybridSearch["$ref"] = "#/definitions/HybridSearch";
 ```
 
 ### Enable `RawVectorQuery.vector` as embedding field
@@ -110,12 +120,48 @@ directive:
   transform: $["x-accessibility"] = "internal"
 ```
 
+### Make `VectorSearchCompressionKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorSearchCompressionKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
+```
+
 ### Make `VectorQueryKind` internal
 
 ```yaml
 directive:
 - from: searchindex.json
   where: $.definitions.VectorQueryKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorSearchVectorizerKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchVectorizerKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorThresholdKind` internal
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorThresholdKind
   transform: $["x-accessibility"] = "internal"
 ```
 
@@ -126,6 +172,33 @@ directive:
 - from: searchindex.json
   where: $.definitions.RawVectorQuery
   transform: $["x-ms-client-name"] = "VectorizedQuery";
+```
+
+### Rename `AMLVectorizer` to `AzureMachineLearningVectorizer`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.AMLVectorizer
+  transform: $["x-ms-client-name"] = "AzureMachineLearningVectorizer";
+```
+
+### Rename `AMLParameters` to `AzureMachineLearningParameters`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.AMLParameters
+  transform: $["x-ms-client-name"] = "AzureMachineLearningParameters";
+```
+
+### Rename `ServiceLimits.maxStoragePerIndex` to `ServiceLimits.maxStoragePerIndexInBytes`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.ServiceLimits
+  transform: $.properties.maxStoragePerIndex["x-ms-client-name"] = "maxStoragePerIndexInBytes";
 ```
 
 ### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`

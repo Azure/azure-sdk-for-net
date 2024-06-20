@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
         /// <param name="storageSizeInMB"> Storage size in MB. </param>
         /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
         /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;
@@ -34,10 +35,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedIopsTiers = supportedIopsTiers;
         }
         /// <summary> Storage size in MB. </summary>
+        [WirePath("storageSizeMb")]
         public long? StorageSizeInMB { get; }
         /// <summary> Default tier for IOPS. </summary>
+        [WirePath("defaultIopsTier")]
         public string DefaultIopsTier { get; }
         /// <summary> List of available options to upgrade the storage performance. </summary>
+        [WirePath("supportedIopsTiers")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownLinkedIntegrationRuntimeType. </summary>
+    /// <summary> Unknown version of LinkedIntegrationRuntimeType. </summary>
     internal partial class UnknownLinkedIntegrationRuntimeType : LinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLinkedIntegrationRuntimeType"/>. </summary>

@@ -15,6 +15,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
@@ -137,7 +138,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Page });
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Page) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {

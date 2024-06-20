@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -25,10 +24,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="passkey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
-        internal DataBoxDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string passkey, bool? isPasskeyUserDefined) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
+        internal DataBoxDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string passkey, bool? isPasskeyUserDefined) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
         {
             DiskSecrets = diskSecrets;
             Passkey = passkey;

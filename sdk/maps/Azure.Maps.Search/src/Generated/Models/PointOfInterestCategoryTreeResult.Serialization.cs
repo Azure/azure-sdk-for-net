@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PointOfInterestCategory>> poiCategories = default;
+            IReadOnlyList<PointOfInterestCategory> poiCategories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("poiCategories"u8))
@@ -37,7 +37,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategoryTreeResult(Optional.ToList(poiCategories));
+            return new PointOfInterestCategoryTreeResult(poiCategories ?? new ChangeTrackingList<PointOfInterestCategory>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PointOfInterestCategoryTreeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePointOfInterestCategoryTreeResult(document.RootElement);
         }
     }
 }

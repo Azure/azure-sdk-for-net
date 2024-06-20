@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -35,15 +34,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="policyRules">
         /// Policy rule dictionary that contains rules for each backuptype i.e Full/Incremental/Logs etc
         /// Please note <see cref="DataProtectionBasePolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataProtectionBackupRule"/> and <see cref="DataProtectionRetentionRule"/>.
         /// </param>
-        internal RuleBasedBackupPolicy(IList<string> dataSourceTypes, string objectType, IList<DataProtectionBasePolicyRule> policyRules) : base(dataSourceTypes, objectType)
+        internal RuleBasedBackupPolicy(IList<string> dataSourceTypes, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataProtectionBasePolicyRule> policyRules) : base(dataSourceTypes, objectType, serializedAdditionalRawData)
         {
             PolicyRules = policyRules;
             ObjectType = objectType ?? "BackupPolicy";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/> for deserialization. </summary>
+        internal RuleBasedBackupPolicy()
+        {
         }
 
         /// <summary>

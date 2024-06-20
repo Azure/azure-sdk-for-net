@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
@@ -137,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiPatch patch = new ApiPatch()
             {
                 DisplayName = "Echo API New",
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/api2"),
+                ServiceLink = "http://echoapi.cloudapp.net/api2",
                 Path = "newecho",
             };
             ApiResource result = await api.UpdateAsync(ifMatch, patch);

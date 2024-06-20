@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForContainersGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForContainersGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersGcpOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForContainersGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
-                writer.WriteObjectValue(NativeCloudConnection);
+                writer.WriteObjectValue(NativeCloudConnection, options);
             }
             if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
-                writer.WriteObjectValue(DataPipelineNativeCloudConnection);
+                writer.WriteObjectValue(DataPipelineNativeCloudConnection, options);
             }
             if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                writer.WriteObjectValue(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,23 +100,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
-            Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
-            Optional<bool> auditLogsAutoProvisioningFlag = default;
-            Optional<bool> defenderAgentAutoProvisioningFlag = default;
-            Optional<bool> policyAgentAutoProvisioningFlag = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default;
+            DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default;
+            bool? auditLogsAutoProvisioningFlag = default;
+            bool? defenderAgentAutoProvisioningFlag = default;
+            bool? policyAgentAutoProvisioningFlag = default;
+            DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nativeCloudConnection"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value);
+                    nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataPipelineNativeCloudConnection"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value);
+                    dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("auditLogsAutoProvisioningFlag"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value);
+                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -194,11 +194,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForContainersGcpOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                nativeCloudConnection,
+                dataPipelineNativeCloudConnection,
+                auditLogsAutoProvisioningFlag,
+                defenderAgentAutoProvisioningFlag,
+                policyAgentAutoProvisioningFlag,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)
@@ -210,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForContainersGcpOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

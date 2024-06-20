@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -66,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RetryPolicy = retryPolicy;
             DependsOn = dependsOn;
             TriggerType = triggerType ?? "TumblingWindowTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/> for deserialization. </summary>
+        internal TumblingWindowTrigger()
+        {
         }
 
         /// <summary> Pipeline for which runs are created when an event is fired for trigger window that is ready. </summary>

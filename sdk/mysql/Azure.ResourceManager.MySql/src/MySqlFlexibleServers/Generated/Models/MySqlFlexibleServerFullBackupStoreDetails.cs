@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -28,11 +27,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasUriList"> SASUriList of storage containers where backup data is to be streamed/copied. </param>
-        internal MySqlFlexibleServerFullBackupStoreDetails(string objectType, IList<string> sasUriList) : base(objectType)
+        internal MySqlFlexibleServerFullBackupStoreDetails(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> sasUriList) : base(objectType, serializedAdditionalRawData)
         {
             SasUriList = sasUriList;
             ObjectType = objectType ?? "FullBackupStoreDetails";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFullBackupStoreDetails"/> for deserialization. </summary>
+        internal MySqlFlexibleServerFullBackupStoreDetails()
+        {
         }
 
         /// <summary> SASUriList of storage containers where backup data is to be streamed/copied. </summary>

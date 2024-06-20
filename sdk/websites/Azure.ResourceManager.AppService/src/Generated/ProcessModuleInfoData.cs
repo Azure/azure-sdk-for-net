@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,6 +18,38 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         public ProcessModuleInfoData()
         {
@@ -38,7 +72,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BaseAddress = baseAddress;
             FileName = fileName;
@@ -52,31 +87,44 @@ namespace Azure.ResourceManager.AppService
             IsDebug = isDebug;
             Language = language;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
+        [WirePath("properties.base_address")]
         public string BaseAddress { get; set; }
         /// <summary> File name. </summary>
+        [WirePath("properties.file_name")]
         public string FileName { get; set; }
         /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
         public string Href { get; set; }
         /// <summary> File path. </summary>
+        [WirePath("properties.file_path")]
         public string FilePath { get; set; }
         /// <summary> Module memory size. </summary>
+        [WirePath("properties.module_memory_size")]
         public int? ModuleMemorySize { get; set; }
         /// <summary> File version. </summary>
+        [WirePath("properties.file_version")]
         public string FileVersion { get; set; }
         /// <summary> File description. </summary>
+        [WirePath("properties.file_description")]
         public string FileDescription { get; set; }
         /// <summary> Product name. </summary>
+        [WirePath("properties.product")]
         public string Product { get; set; }
         /// <summary> Product version. </summary>
+        [WirePath("properties.product_version")]
         public string ProductVersion { get; set; }
         /// <summary> Is debug?. </summary>
+        [WirePath("properties.is_debug")]
         public bool? IsDebug { get; set; }
         /// <summary> Module language (locale). </summary>
+        [WirePath("properties.language")]
         public string Language { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

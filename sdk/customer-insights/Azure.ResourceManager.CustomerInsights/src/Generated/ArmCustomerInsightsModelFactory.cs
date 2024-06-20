@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -34,7 +33,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HubData(id, name, resourceType, systemData, tags, location, apiEndpoint, webEndpoint, provisioningState, tenantFeatures, hubBillingInfo);
+            return new HubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                apiEndpoint,
+                webEndpoint,
+                provisioningState,
+                tenantFeatures,
+                hubBillingInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.ProfileResourceFormatData"/>. </summary>
@@ -70,7 +81,30 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             fields ??= new List<PropertyDefinition>();
             strongIds ??= new List<StrongId>();
 
-            return new ProfileResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, strongIds?.ToList());
+            return new ProfileResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                attributes,
+                description,
+                displayName,
+                localizedAttributes,
+                smallImage,
+                mediumImage,
+                largeImage,
+                apiEntitySetName,
+                entityType,
+                fields?.ToList(),
+                instancesCount,
+                lastChangedUtc,
+                provisioningState,
+                schemaItemTypeLink,
+                tenantId,
+                timestampFieldName,
+                typeName,
+                strongIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PropertyDefinition"/>. </summary>
@@ -96,7 +130,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             enumValidValues ??= new List<ProfileEnumValidValuesFormat>();
             dataSourcePrecedenceRules ??= new List<DataSourcePrecedence>();
 
-            return new PropertyDefinition(arrayValueSeparator, enumValidValues?.ToList(), fieldName, fieldType, isArray, isEnum, isFlagEnum, isImage, isLocalizedString, isName, isRequired, propertyId, schemaItemPropLink, maxLength, isAvailableInGraph, dataSourcePrecedenceRules?.ToList());
+            return new PropertyDefinition(
+                arrayValueSeparator,
+                enumValidValues?.ToList(),
+                fieldName,
+                fieldType,
+                isArray,
+                isEnum,
+                isFlagEnum,
+                isImage,
+                isLocalizedString,
+                isName,
+                isRequired,
+                propertyId,
+                schemaItemPropLink,
+                maxLength,
+                isAvailableInGraph,
+                dataSourcePrecedenceRules?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataSourcePrecedence"/>. </summary>
@@ -109,7 +160,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.DataSourcePrecedence"/> instance for mocking. </returns>
         public static DataSourcePrecedence DataSourcePrecedence(int? precedence = null, string name = null, DataSourceType? dataSourceType = null, Status? status = null, int? id = null, string dataSourceReferenceId = null)
         {
-            return new DataSourcePrecedence(precedence, name, dataSourceType, status, id, dataSourceReferenceId);
+            return new DataSourcePrecedence(
+                precedence,
+                name,
+                dataSourceType,
+                status,
+                id,
+                dataSourceReferenceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KpiDefinition"/>. </summary>
@@ -143,7 +201,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             aliases ??= new List<KpiAlias>();
             extracts ??= new List<KpiExtract>();
 
-            return new KpiDefinition(entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList());
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                tenantId,
+                kpiName,
+                displayName,
+                description,
+                calculationWindow,
+                calculationWindowFieldName,
+                function,
+                expression,
+                unit,
+                filter,
+                groupBy?.ToList(),
+                groupByMetadata?.ToList(),
+                participantProfilesMetadata?.ToList(),
+                provisioningState,
+                thresHolds,
+                aliases?.ToList(),
+                extracts?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KpiGroupByMetadata"/>. </summary>
@@ -155,21 +233,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new KpiGroupByMetadata(displayName, fieldName, fieldType);
+            return new KpiGroupByMetadata(displayName, fieldName, fieldType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KpiParticipantProfilesMetadata"/>. </summary>
         /// <param name="typeName"> Name of the type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> A new <see cref="Models.KpiParticipantProfilesMetadata"/> instance for mocking. </returns>
         public static KpiParticipantProfilesMetadata KpiParticipantProfilesMetadata(string typeName = null)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-
-            return new KpiParticipantProfilesMetadata(typeName);
+            return new KpiParticipantProfilesMetadata(typeName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.InteractionResourceFormatData"/>. </summary>
@@ -216,7 +288,39 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             participantProfiles ??= new List<Participant>();
             dataSourcePrecedenceRules ??= new List<DataSourcePrecedence>();
 
-            return new InteractionResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, idPropertyNames?.ToList(), participantProfiles?.ToList(), primaryParticipantProfilePropertyName, dataSourcePrecedenceRules?.ToList(), isActivity, namePropertiesDefaultDataSourceName, dataSourceType, status, idPropertiesDefaultDataSourceId, dataSourceReferenceId);
+            return new InteractionResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                attributes,
+                description,
+                displayName,
+                localizedAttributes,
+                smallImage,
+                mediumImage,
+                largeImage,
+                apiEntitySetName,
+                entityType,
+                fields?.ToList(),
+                instancesCount,
+                lastChangedUtc,
+                provisioningState,
+                schemaItemTypeLink,
+                tenantId,
+                timestampFieldName,
+                typeName,
+                idPropertyNames?.ToList(),
+                participantProfiles?.ToList(),
+                primaryParticipantProfilePropertyName,
+                dataSourcePrecedenceRules?.ToList(),
+                isActivity,
+                namePropertiesDefaultDataSourceName,
+                dataSourceType,
+                status,
+                idPropertiesDefaultDataSourceId,
+                dataSourceReferenceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SuggestRelationshipLinksResponse"/>. </summary>
@@ -227,7 +331,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             suggestedRelationships ??= new List<RelationshipsLookup>();
 
-            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships?.ToList());
+            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelationshipsLookup"/>. </summary>
@@ -242,7 +346,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             profilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
             relatedProfilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
 
-            return new RelationshipsLookup(profileName, profilePropertyReferences?.ToList(), relatedProfileName, relatedProfilePropertyReferences?.ToList(), existingRelationshipName);
+            return new RelationshipsLookup(
+                profileName,
+                profilePropertyReferences?.ToList(),
+                relatedProfileName,
+                relatedProfilePropertyReferences?.ToList(),
+                existingRelationshipName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.RelationshipResourceFormatData"/>. </summary>
@@ -270,7 +380,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             fields ??= new List<PropertyDefinition>();
             lookupMappings ??= new List<RelationshipTypeMapping>();
 
-            return new RelationshipResourceFormatData(id, name, resourceType, systemData, cardinality, displayName, description, expiryDateTimeUtc, fields?.ToList(), lookupMappings?.ToList(), profileType, provisioningState, relationshipName, relatedProfileType, relationshipGuidId, tenantId);
+            return new RelationshipResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cardinality,
+                displayName,
+                description,
+                expiryDateTimeUtc,
+                fields?.ToList(),
+                lookupMappings?.ToList(),
+                profileType,
+                provisioningState,
+                relationshipName,
+                relatedProfileType,
+                relationshipGuidId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.RelationshipLinkResourceFormatData"/>. </summary>
@@ -298,7 +425,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             profilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
             relatedProfilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
 
-            return new RelationshipLinkResourceFormatData(id, name, resourceType, systemData, displayName, description, interactionType, linkName, mappings?.ToList(), profilePropertyReferences?.ToList(), provisioningState, relatedProfilePropertyReferences?.ToList(), relationshipName, relationshipGuidId, tenantId);
+            return new RelationshipLinkResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                interactionType,
+                linkName,
+                mappings?.ToList(),
+                profilePropertyReferences?.ToList(),
+                provisioningState,
+                relatedProfilePropertyReferences?.ToList(),
+                relationshipName,
+                relationshipGuidId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.AuthorizationPolicyResourceFormatData"/>. </summary>
@@ -315,7 +458,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             permissions ??= new List<PermissionType>();
 
-            return new AuthorizationPolicyResourceFormatData(id, name, resourceType, systemData, policyName, permissions?.ToList(), primaryKey, secondaryKey);
+            return new AuthorizationPolicyResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyName,
+                permissions?.ToList(),
+                primaryKey,
+                secondaryKey,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AuthorizationPolicy"/>. </summary>
@@ -328,7 +480,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             permissions ??= new List<PermissionType>();
 
-            return new AuthorizationPolicy(policyName, permissions?.ToList(), primaryKey, secondaryKey);
+            return new AuthorizationPolicy(policyName, permissions?.ToList(), primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.ConnectorResourceFormatData"/>. </summary>
@@ -352,7 +504,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             connectorProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ConnectorResourceFormatData(id, name, resourceType, systemData, connectorId, connectorName, connectorType, displayName, description, connectorProperties, created, lastModified, state, tenantId, isInternal);
+            return new ConnectorResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectorId,
+                connectorName,
+                connectorType,
+                displayName,
+                description,
+                connectorProperties,
+                created,
+                lastModified,
+                state,
+                tenantId,
+                isInternal,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.ConnectorMappingResourceFormatData"/>. </summary>
@@ -378,7 +546,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="CustomerInsights.ConnectorMappingResourceFormatData"/> instance for mocking. </returns>
         public static ConnectorMappingResourceFormatData ConnectorMappingResourceFormatData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectorName = null, ConnectorType? connectorType = null, DateTimeOffset? created = null, DateTimeOffset? lastModified = null, EntityType? entityType = null, string entityTypeName = null, string connectorMappingName = null, string displayName = null, string description = null, string dataFormatId = null, ConnectorMappingProperties mappingProperties = null, DateTimeOffset? nextRunOn = null, string runId = null, ConnectorMappingState? state = null, Guid? tenantId = null)
         {
-            return new ConnectorMappingResourceFormatData(id, name, resourceType, systemData, connectorName, connectorType, created, lastModified, entityType, entityTypeName, connectorMappingName, displayName, description, dataFormatId, mappingProperties, nextRunOn, runId, state, tenantId);
+            return new ConnectorMappingResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectorName,
+                connectorType,
+                created,
+                lastModified,
+                entityType,
+                entityTypeName,
+                connectorMappingName,
+                displayName,
+                description,
+                dataFormatId,
+                mappingProperties,
+                nextRunOn,
+                runId,
+                state,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectorMappingFormat"/>. </summary>
@@ -391,7 +579,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.ConnectorMappingFormat"/> instance for mocking. </returns>
         public static ConnectorMappingFormat ConnectorMappingFormat(FormatType formatType = default, string columnDelimiter = null, string acceptLanguage = null, string quoteCharacter = null, string quoteEscapeCharacter = null, string arraySeparator = null)
         {
-            return new ConnectorMappingFormat(formatType, columnDelimiter, acceptLanguage, quoteCharacter, quoteEscapeCharacter, arraySeparator);
+            return new ConnectorMappingFormat(
+                formatType,
+                columnDelimiter,
+                acceptLanguage,
+                quoteCharacter,
+                quoteEscapeCharacter,
+                arraySeparator,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.KpiResourceFormatData"/>. </summary>
@@ -429,7 +624,31 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             aliases ??= new List<KpiAlias>();
             extracts ??= new List<KpiExtract>();
 
-            return new KpiResourceFormatData(id, name, resourceType, systemData, entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList());
+            return new KpiResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                entityType,
+                entityTypeName,
+                tenantId,
+                kpiName,
+                displayName,
+                description,
+                calculationWindow,
+                calculationWindowFieldName,
+                function,
+                expression,
+                unit,
+                filter,
+                groupBy?.ToList(),
+                groupByMetadata?.ToList(),
+                participantProfilesMetadata?.ToList(),
+                provisioningState,
+                thresHolds,
+                aliases?.ToList(),
+                extracts?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.WidgetTypeResourceFormatData"/>. </summary>
@@ -451,7 +670,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new WidgetTypeResourceFormatData(id, name, resourceType, systemData, widgetTypeName, definition, description, displayName, imageUri, tenantId, widgetVersion, changed, created);
+            return new WidgetTypeResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                widgetTypeName,
+                definition,
+                description,
+                displayName,
+                imageUri,
+                tenantId,
+                widgetVersion,
+                changed,
+                created,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.ViewResourceFormatData"/>. </summary>
@@ -471,7 +704,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new ViewResourceFormatData(id, name, resourceType, systemData, viewName, userId, tenantId, displayName, definition, changed, created);
+            return new ViewResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                viewName,
+                userId,
+                tenantId,
+                displayName,
+                definition,
+                changed,
+                created,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.LinkResourceFormatData"/>. </summary>
@@ -500,7 +745,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             mappings ??= new List<TypePropertiesMapping>();
             participantPropertyReferences ??= new List<ParticipantPropertyReference>();
 
-            return new LinkResourceFormatData(id, name, resourceType, systemData, tenantId, linkName, sourceEntityType, targetEntityType, sourceEntityTypeName, targetEntityTypeName, displayName, description, mappings?.ToList(), participantPropertyReferences?.ToList(), provisioningState, referenceOnly, operationType);
+            return new LinkResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                linkName,
+                sourceEntityType,
+                targetEntityType,
+                sourceEntityTypeName,
+                targetEntityTypeName,
+                displayName,
+                description,
+                mappings?.ToList(),
+                participantPropertyReferences?.ToList(),
+                provisioningState,
+                referenceOnly,
+                operationType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoleResourceFormat"/>. </summary>
@@ -513,7 +776,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.RoleResourceFormat"/> instance for mocking. </returns>
         public static RoleResourceFormat RoleResourceFormat(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, string description = null)
         {
-            return new RoleResourceFormat(id, name, resourceType, systemData, roleName, description);
+            return new RoleResourceFormat(
+                id,
+                name,
+                resourceType,
+                systemData,
+                roleName,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.RoleAssignmentResourceFormatData"/>. </summary>
@@ -548,7 +818,32 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             description ??= new Dictionary<string, string>();
             principals ??= new List<AssignmentPrincipal>();
 
-            return new RoleAssignmentResourceFormatData(id, name, resourceType, systemData, tenantId, assignmentName, displayName, description, provisioningState, role, principals?.ToList(), profiles, interactions, links, kpis, sasPolicies, connectors, views, relationshipLinks, relationships, widgetTypes, roleAssignments, conflationPolicies, segments);
+            return new RoleAssignmentResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                assignmentName,
+                displayName,
+                description,
+                provisioningState,
+                role,
+                principals?.ToList(),
+                profiles,
+                interactions,
+                links,
+                kpis,
+                sasPolicies,
+                connectors,
+                views,
+                relationshipLinks,
+                relationships,
+                widgetTypes,
+                roleAssignments,
+                conflationPolicies,
+                segments,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImageDefinition"/>. </summary>
@@ -558,7 +853,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.ImageDefinition"/> instance for mocking. </returns>
         public static ImageDefinition ImageDefinition(bool? imageExists = null, Uri contentUri = null, string relativePath = null)
         {
-            return new ImageDefinition(imageExists, contentUri, relativePath);
+            return new ImageDefinition(imageExists, contentUri, relativePath, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerInsights.PredictionResourceFormatData"/>. </summary>
@@ -593,7 +888,29 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             involvedRelationships ??= new List<string>();
             grades ??= new List<PredictionGradesItem>();
 
-            return new PredictionResourceFormatData(id, name, resourceType, systemData, description, displayName, involvedInteractionTypes?.ToList(), involvedKpiTypes?.ToList(), involvedRelationships?.ToList(), negativeOutcomeExpression, positiveOutcomeExpression, primaryProfileType, provisioningState, predictionName, scopeExpression, tenantId, autoAnalyze, mappings, scoreLabel, grades?.ToList(), systemGeneratedEntities);
+            return new PredictionResourceFormatData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                displayName,
+                involvedInteractionTypes?.ToList(),
+                involvedKpiTypes?.ToList(),
+                involvedRelationships?.ToList(),
+                negativeOutcomeExpression,
+                positiveOutcomeExpression,
+                primaryProfileType,
+                provisioningState,
+                predictionName,
+                scopeExpression,
+                tenantId,
+                autoAnalyze,
+                mappings,
+                scoreLabel,
+                grades?.ToList(),
+                systemGeneratedEntities,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictionSystemGeneratedEntities"/>. </summary>
@@ -607,7 +924,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             generatedLinks ??= new List<string>();
             generatedKpis ??= new Dictionary<string, string>();
 
-            return new PredictionSystemGeneratedEntities(generatedInteractionTypes?.ToList(), generatedLinks?.ToList(), generatedKpis);
+            return new PredictionSystemGeneratedEntities(generatedInteractionTypes?.ToList(), generatedLinks?.ToList(), generatedKpis, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictionTrainingResults"/>. </summary>
@@ -621,7 +938,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             canonicalProfiles ??= new List<CanonicalProfileDefinition>();
 
-            return new PredictionTrainingResults(tenantId, scoreName, predictionDistribution, canonicalProfiles?.ToList(), primaryProfileInstanceCount);
+            return new PredictionTrainingResults(
+                tenantId,
+                scoreName,
+                predictionDistribution,
+                canonicalProfiles?.ToList(),
+                primaryProfileInstanceCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictionDistributionDefinition"/>. </summary>
@@ -633,7 +956,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             distributions ??= new List<PredictionDistributionDefinitionDistributionsItem>();
 
-            return new PredictionDistributionDefinition(totalPositives, totalNegatives, distributions?.ToList());
+            return new PredictionDistributionDefinition(totalPositives, totalNegatives, distributions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictionDistributionDefinitionDistributionsItem"/>. </summary>
@@ -645,7 +968,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.PredictionDistributionDefinitionDistributionsItem"/> instance for mocking. </returns>
         public static PredictionDistributionDefinitionDistributionsItem PredictionDistributionDefinitionDistributionsItem(int? scoreThreshold = null, long? positives = null, long? negatives = null, long? positivesAboveThreshold = null, long? negativesAboveThreshold = null)
         {
-            return new PredictionDistributionDefinitionDistributionsItem(scoreThreshold, positives, negatives, positivesAboveThreshold, negativesAboveThreshold);
+            return new PredictionDistributionDefinitionDistributionsItem(
+                scoreThreshold,
+                positives,
+                negatives,
+                positivesAboveThreshold,
+                negativesAboveThreshold,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CanonicalProfileDefinition"/>. </summary>
@@ -656,7 +985,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             properties ??= new List<CanonicalProfileDefinitionPropertiesItem>();
 
-            return new CanonicalProfileDefinition(canonicalProfileId, properties?.ToList());
+            return new CanonicalProfileDefinition(canonicalProfileId, properties?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CanonicalProfileDefinitionPropertiesItem"/>. </summary>
@@ -668,7 +997,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.CanonicalProfileDefinitionPropertiesItem"/> instance for mocking. </returns>
         public static CanonicalProfileDefinitionPropertiesItem CanonicalProfileDefinitionPropertiesItem(string profileName = null, string profilePropertyName = null, int? rank = null, CanonicalPropertyValueType? valueType = null, string value = null)
         {
-            return new CanonicalProfileDefinitionPropertiesItem(profileName, profilePropertyName, rank, valueType, value);
+            return new CanonicalProfileDefinitionPropertiesItem(
+                profileName,
+                profilePropertyName,
+                rank,
+                valueType,
+                value,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictionModelStatus"/>. </summary>
@@ -686,7 +1021,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.PredictionModelStatus"/> instance for mocking. </returns>
         public static PredictionModelStatus PredictionModelStatus(Guid? tenantId = null, string predictionName = null, string predictionGuidId = null, PredictionModelLifeCycle status = default, string message = null, int? trainingSetCount = null, int? testSetCount = null, int? validationSetCount = null, decimal? trainingAccuracy = null, int? signalsUsed = null, string modelVersion = null)
         {
-            return new PredictionModelStatus(tenantId, predictionName, predictionGuidId, status, message, trainingSetCount, testSetCount, validationSetCount, trainingAccuracy, signalsUsed, modelVersion);
+            return new PredictionModelStatus(
+                tenantId,
+                predictionName,
+                predictionGuidId,
+                status,
+                message,
+                trainingSetCount,
+                testSetCount,
+                validationSetCount,
+                trainingAccuracy,
+                signalsUsed,
+                modelVersion,
+                serializedAdditionalRawData: null);
         }
     }
 }

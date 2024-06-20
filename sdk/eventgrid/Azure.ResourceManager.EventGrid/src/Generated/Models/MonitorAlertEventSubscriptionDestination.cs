@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorAlertEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="severity">
         /// The severity that will be attached to every Alert fired through this event subscription.
         /// This field must be provided.
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The list of ARM Ids of Action Groups that will be triggered on every Alert fired through this event subscription.
         /// Each resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Insights/actionGroups/{ActionGroupName}.
         /// </param>
-        internal MonitorAlertEventSubscriptionDestination(EndpointType endpointType, MonitorAlertSeverity? severity, string description, IList<ResourceIdentifier> actionGroups) : base(endpointType)
+        internal MonitorAlertEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitorAlertSeverity? severity, string description, IList<ResourceIdentifier> actionGroups) : base(endpointType, serializedAdditionalRawData)
         {
             Severity = severity;
             Description = description;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -63,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory
             PublicNetworkAccess = publicNetworkAccess;
             ETag = eTag;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/> for deserialization. </summary>
+        internal DataFactoryData()
+        {
         }
 
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>

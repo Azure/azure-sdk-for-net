@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/fb1e2c65b2dd52ebb18bb835a3d0f0289875858e/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e7e476ba9cd5dcaacb4b344a0ca9677ba731686b/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -24,6 +24,12 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+# this is temporary, to be removed when we find the owner of this feature
+operation-groups-to-omit:
+- JobPrivateEndpoints
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -341,8 +347,12 @@ rename-mapping:
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
   FailoverGroupUpdate.properties.databases: FailoverDatabases
+  Server.properties.minimalTlsVersion: minTlsVersion
+  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
+  MinimalTlsVersion: SqlMinimalTlsVersion
+  BackupStorageAccessTier: SqlBackupStorageAccessTier
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 prompted-enum-values:

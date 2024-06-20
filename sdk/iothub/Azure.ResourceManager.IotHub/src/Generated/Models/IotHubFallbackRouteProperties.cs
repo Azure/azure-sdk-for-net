@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of the fallback route. IoT Hub uses these properties when it routes messages to the fallback endpoint. </summary>
     public partial class IotHubFallbackRouteProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotHubFallbackRouteProperties"/>. </summary>
         /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
         /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
@@ -35,13 +66,20 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="condition"> The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>
         /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
         /// <param name="isEnabled"> Used to specify whether the fallback route is enabled. </param>
-        internal IotHubFallbackRouteProperties(string name, IotHubRoutingSource source, string condition, IList<string> endpointNames, bool isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubFallbackRouteProperties(string name, IotHubRoutingSource source, string condition, IList<string> endpointNames, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Source = source;
             Condition = condition;
             EndpointNames = endpointNames;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubFallbackRouteProperties"/> for deserialization. </summary>
+        internal IotHubFallbackRouteProperties()
+        {
         }
 
         /// <summary> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </summary>

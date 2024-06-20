@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> NetworkConfiguration specifies the Kubernetes cluster network related configuration. </summary>
     public partial class KubernetesClusterNetworkConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/>. </summary>
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>
         /// <param name="cniNetworkId"> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="dnsServiceIP"> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
-        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIP, IList<string> podCidrs, IList<string> serviceCidrs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIP, IList<string> podCidrs, IList<string> serviceCidrs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AttachedNetworkConfiguration = attachedNetworkConfiguration;
             BgpServiceLoadBalancerConfiguration = bgpServiceLoadBalancerConfiguration;
@@ -47,6 +80,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             DnsServiceIP = dnsServiceIP;
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/> for deserialization. </summary>
+        internal KubernetesClusterNetworkConfiguration()
+        {
         }
 
         /// <summary> The configuration of networks being attached to the cluster for use by the workloads that run on this Kubernetes cluster. </summary>

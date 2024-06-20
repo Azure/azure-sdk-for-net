@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Configure your SQL virtual machine to be able to connect to the Azure Key Vault service. </summary>
     public partial class SqlVmKeyVaultCredentialSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SqlVmKeyVaultCredentialSettings"/>. </summary>
         public SqlVmKeyVaultCredentialSettings()
         {
@@ -23,13 +56,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="azureKeyVaultUri"> Azure Key Vault url. </param>
         /// <param name="servicePrincipalName"> Service principal name to access key vault. </param>
         /// <param name="servicePrincipalSecret"> Service principal name secret to access key vault. </param>
-        internal SqlVmKeyVaultCredentialSettings(bool? isEnabled, string credentialName, Uri azureKeyVaultUri, string servicePrincipalName, string servicePrincipalSecret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmKeyVaultCredentialSettings(bool? isEnabled, string credentialName, Uri azureKeyVaultUri, string servicePrincipalName, string servicePrincipalSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             CredentialName = credentialName;
             AzureKeyVaultUri = azureKeyVaultUri;
             ServicePrincipalName = servicePrincipalName;
             ServicePrincipalSecret = servicePrincipalSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable key vault credential setting. </summary>

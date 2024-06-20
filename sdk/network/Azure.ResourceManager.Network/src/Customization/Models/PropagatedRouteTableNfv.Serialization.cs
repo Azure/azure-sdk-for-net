@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> labels = default;
-            Optional<IList<RoutingConfigurationNfvSubResource>> ids = default;
+            IList<string> labels = default;
+            IList<RoutingConfigurationNfvSubResource> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labels"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PropagatedRouteTableNfv(Optional.ToList(labels), Optional.ToList(ids));
+            return new PropagatedRouteTableNfv(labels ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<RoutingConfigurationNfvSubResource>());
         }
 
         BinaryData IPersistableModel<PropagatedRouteTableNfv>.Write(ModelReaderWriterOptions options)

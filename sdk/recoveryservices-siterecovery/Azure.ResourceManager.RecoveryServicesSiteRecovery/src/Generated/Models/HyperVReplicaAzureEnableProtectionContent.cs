@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVHostVmId"> The Hyper-V host VM Id. </param>
         /// <param name="vmName"> The VM Name. </param>
         /// <param name="osType"> The OS type associated with VM. </param>
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
         /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal HyperVReplicaAzureEnableProtectionContent(string instanceType, string hyperVHostVmId, string vmName, string osType, string vhdId, ResourceIdentifier targetStorageAccountId, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, string useManagedDisks, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string targetVmSize, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisksForReplication, SiteRecoveryDiskAccountType? diskType, IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType)
+        internal HyperVReplicaAzureEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hyperVHostVmId, string vmName, string osType, string vhdId, ResourceIdentifier targetStorageAccountId, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, string useManagedDisks, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string targetVmSize, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisksForReplication, SiteRecoveryDiskAccountType? diskType, IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
         {
             HyperVHostVmId = hyperVHostVmId;
             VmName = vmName;

@@ -58,8 +58,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> the name to check for availability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> fully qualified resource type which includes provider namespace. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

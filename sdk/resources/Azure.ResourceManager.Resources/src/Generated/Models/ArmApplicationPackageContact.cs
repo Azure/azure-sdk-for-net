@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The application package contact information. </summary>
     public partial class ArmApplicationPackageContact
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageContact"/>. </summary>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
@@ -30,18 +62,28 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
-        internal ArmApplicationPackageContact(string contactName, string email, string phone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationPackageContact(string contactName, string email, string phone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Email = email;
             Phone = phone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageContact"/> for deserialization. </summary>
+        internal ArmApplicationPackageContact()
+        {
         }
 
         /// <summary> The contact name. </summary>
+        [WirePath("contactName")]
         public string ContactName { get; }
         /// <summary> The contact email. </summary>
+        [WirePath("email")]
         public string Email { get; }
         /// <summary> The contact phone number. </summary>
+        [WirePath("phone")]
         public string Phone { get; }
     }
 }

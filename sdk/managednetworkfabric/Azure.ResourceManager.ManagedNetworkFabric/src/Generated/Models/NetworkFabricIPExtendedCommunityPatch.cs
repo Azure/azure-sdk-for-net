@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -21,9 +21,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, string annotation) : base(tags)
+        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, string annotation) : base(tags, serializedAdditionalRawData)
         {
             IPExtendedCommunityRules = ipExtendedCommunityRules;
             Annotation = annotation;

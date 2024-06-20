@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Storage properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerStorage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         public PostgreSqlFlexibleServerStorage()
         {
@@ -20,21 +55,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
         /// <param name="tier"> Name of storage tier for IOPS. </param>
         /// <param name="iops"> Storage tier IOPS quantity. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
             Tier = tier;
             Iops = iops;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
         /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+        [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
         /// <summary> Name of storage tier for IOPS. </summary>
+        [WirePath("tier")]
         public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
         /// <summary> Storage tier IOPS quantity. </summary>
+        [WirePath("iops")]
         public int? Iops { get; }
     }
 }

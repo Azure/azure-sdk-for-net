@@ -213,9 +213,17 @@ function DeployStressPackage(
     $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
     if (!$Template) {
-        Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
-        kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
-        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+        Write-Host "Checking for namespace $($pkg.Namespace)"
+        kubectl get namespace $pkg.Namespace
+        if ($LASTEXITCODE) {
+            Write-Host "Creating namespace $($pkg.Namespace) ..."
+            kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+            if ($LASTEXITCODE) {exit $LASTEXITCODE}
+            # Give a few seconds for stress watcher to initialize the federated identity credential
+            # and create the service account before we reference it
+            Write-Host "Waiting 15 seconds for namespace federated credentials to be created and synced"
+            Start-Sleep 15
+        }
         Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
         $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
         if ($LASTEXITCODE) {exit $LASTEXITCODE}
@@ -321,7 +329,18 @@ function DeployStressPackage(
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
     $subCommandFlag = $Template ? "--debug" : "--install"
-    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $subCommandFlag, "--values", $generatedConfigPath, "--set", "stress-test-addons.env=$environment"
+    $helmCommandArg = @(
+        "helm", $subCommand, $releaseName, $pkg.Directory,
+        "-n", $pkg.Namespace,
+        $subCommandFlag,
+        "--values", $generatedConfigPath,
+        "--set", "stress-test-addons.env=$environment"
+    )
+
+    $gitCommit = git -C $pkg.Directory rev-parse HEAD 2>&1
+    if (!$LASTEXITCODE) {
+        $helmCommandArg += "--set", "GitCommit=$gitCommit"
+    }
 
     if ($LockDeletionForDays) {
         $date = (Get-Date).AddDays($LockDeletionForDays).ToUniversalTime()

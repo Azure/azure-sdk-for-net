@@ -8,6 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "ProtocolSettings");
-            if (Optional.IsDefined(Smb))
+            if (Common.Optional.IsDefined(Smb))
             {
                 writer.WriteObjectValue(Smb, "SMB");
             }

@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<ExhaustiveKnnParameters> exhaustiveKnnParameters = default;
+            ExhaustiveKnnParameters exhaustiveKnnParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExhaustiveKnnAlgorithmConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

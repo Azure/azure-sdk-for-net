@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -32,7 +30,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HDInsightApplicationData(id, name, resourceType, systemData, etag, tags, properties);
+            return new HDInsightApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                tags,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationProperties"/>. </summary>
@@ -59,7 +65,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             errors ??= new List<ResponseError>();
             privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
 
-            return new HDInsightApplicationProperties(computeRoles != null ? new ComputeProfile(computeRoles?.ToList()) : null, installScriptActions?.ToList(), uninstallScriptActions?.ToList(), httpsEndpoints?.ToList(), sshEndpoints?.ToList(), provisioningState, applicationType, applicationState, errors?.ToList(), createdOn, marketplaceIdentifier, privateLinkConfigurations?.ToList());
+            return new HDInsightApplicationProperties(
+                computeRoles != null ? new ComputeProfile(computeRoles?.ToList(), serializedAdditionalRawData: null) : null,
+                installScriptActions?.ToList(),
+                uninstallScriptActions?.ToList(),
+                httpsEndpoints?.ToList(),
+                sshEndpoints?.ToList(),
+                provisioningState,
+                applicationType,
+                applicationState,
+                errors?.ToList(),
+                createdOn,
+                marketplaceIdentifier,
+                privateLinkConfigurations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterDataDiskGroup"/>. </summary>
@@ -69,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightClusterDataDiskGroup"/> instance for mocking. </returns>
         public static HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = null, string storageAccountType = null, int? diskSizeInGB = null)
         {
-            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB);
+            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RuntimeScriptAction"/>. </summary>
@@ -83,7 +102,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             roles ??= new List<string>();
 
-            return new RuntimeScriptAction(name, uri, parameters, roles?.ToList(), applicationName);
+            return new RuntimeScriptAction(
+                name,
+                uri,
+                parameters,
+                roles?.ToList(),
+                applicationName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationHttpsEndpoint"/>. </summary>
@@ -99,7 +124,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             accessModes ??= new List<string>();
 
-            return new HDInsightApplicationHttpsEndpoint(accessModes?.ToList(), endpointLocation, destinationPort, publicPort, privateIPAddress, subDomainSuffix, disableGatewayAuth);
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes?.ToList(),
+                endpointLocation,
+                destinationPort,
+                publicPort,
+                privateIPAddress,
+                subDomainSuffix,
+                disableGatewayAuth,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightPrivateLinkConfiguration"/>. </summary>
@@ -114,7 +147,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             ipConfigurations ??= new List<HDInsightIPConfiguration>();
 
-            return new HDInsightPrivateLinkConfiguration(id, name, resourceType, groupId, provisioningState, ipConfigurations?.ToList());
+            return new HDInsightPrivateLinkConfiguration(
+                id,
+                name,
+                resourceType,
+                groupId,
+                provisioningState,
+                ipConfigurations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightIPConfiguration"/>. </summary>
@@ -129,7 +169,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightIPConfiguration"/> instance for mocking. </returns>
         public static HDInsightIPConfiguration HDInsightIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, bool? isPrimary = null, IPAddress privateIPAddress = null, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null)
         {
-            return new HDInsightIPConfiguration(id, name, resourceType, provisioningState, isPrimary, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null);
+            return new HDInsightIPConfiguration(
+                id,
+                name,
+                resourceType,
+                provisioningState,
+                isPrimary,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightAsyncOperationResult"/>. </summary>
@@ -138,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
         public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = null, ResponseError error = null)
         {
-            return new HDInsightAsyncOperationResult(status, error);
+            return new HDInsightAsyncOperationResult(status, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightClusterData"/>. </summary>
@@ -158,7 +207,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new HDInsightClusterData(id, name, resourceType, systemData, tags, location, etag, zones?.ToList(), properties, identity);
+            return new HDInsightClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                zones?.ToList(),
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterProperties"/>. </summary>
@@ -196,7 +256,32 @@ namespace Azure.ResourceManager.HDInsight.Models
             privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
             privateEndpointConnections ??= new List<HDInsightPrivateEndpointConnectionData>();
 
-            return new HDInsightClusterProperties(clusterVersion, clusterHdpVersion, osType, tier, clusterId, clusterDefinition, kafkaRestProperties, securityProfile, computeRoles != null ? new ComputeProfile(computeRoles?.ToList()) : null, provisioningState, createdOn, clusterState, quotaInfoCoresUsed != null ? new QuotaInfo(quotaInfoCoresUsed) : null, errors?.ToList(), connectivityEndpoints?.ToList(), diskEncryptionProperties, isEncryptionInTransitEnabled != null ? new EncryptionInTransitProperties(isEncryptionInTransitEnabled) : null, storageAccounts != null ? new StorageProfile(storageAccounts?.ToList()) : null, minSupportedTlsVersion, excludedServicesConfig, networkProperties, computeIsolationProperties, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList());
+            return new HDInsightClusterProperties(
+                clusterVersion,
+                clusterHdpVersion,
+                osType,
+                tier,
+                clusterId,
+                clusterDefinition,
+                kafkaRestProperties,
+                securityProfile,
+                computeRoles != null ? new ComputeProfile(computeRoles?.ToList(), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                createdOn,
+                clusterState,
+                quotaInfoCoresUsed != null ? new QuotaInfo(quotaInfoCoresUsed, serializedAdditionalRawData: null) : null,
+                errors?.ToList(),
+                connectivityEndpoints?.ToList(),
+                diskEncryptionProperties,
+                isEncryptionInTransitEnabled != null ? new EncryptionInTransitProperties(isEncryptionInTransitEnabled, serializedAdditionalRawData: null) : null,
+                storageAccounts != null ? new StorageProfile(storageAccounts?.ToList(), serializedAdditionalRawData: null) : null,
+                minSupportedTlsVersion,
+                excludedServicesConfig,
+                networkProperties,
+                computeIsolationProperties,
+                privateLinkConfigurations?.ToList(),
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/>. </summary>
@@ -211,7 +296,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, HDInsightPrivateLinkServiceConnectionState connectionState = null, string linkIdentifier = null, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new HDInsightPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, linkIdentifier, provisioningState);
+            return new HDInsightPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                linkIdentifier,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterConfigurations"/>. </summary>
@@ -221,7 +315,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             configurations ??= new Dictionary<string, IDictionary<string, string>>();
 
-            return new HDInsightClusterConfigurations(configurations);
+            return new HDInsightClusterConfigurations(configurations, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterExtensionStatus"/>. </summary>
@@ -230,7 +324,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightClusterExtensionStatus"/> instance for mocking. </returns>
         public static HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null)
         {
-            return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId);
+            return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightAzureMonitorExtensionStatus"/>. </summary>
@@ -240,7 +334,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightAzureMonitorExtensionStatus"/> instance for mocking. </returns>
         public static HDInsightAzureMonitorExtensionStatus HDInsightAzureMonitorExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = null)
         {
-            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations);
+            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightCapabilitiesResult"/>. </summary>
@@ -255,7 +349,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             regions ??= new Dictionary<string, RegionsCapability>();
             features ??= new List<string>();
 
-            return new HDInsightCapabilitiesResult(versions, regions, features?.ToList(), quota);
+            return new HDInsightCapabilitiesResult(versions, regions, features?.ToList(), quota, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionsCapability"/>. </summary>
@@ -265,7 +359,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             available ??= new List<HDInsightVersionSpec>();
 
-            return new HDInsightVersionsCapability(available?.ToList());
+            return new HDInsightVersionsCapability(available?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionSpec"/>. </summary>
@@ -278,7 +372,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             componentVersions ??= new Dictionary<string, string>();
 
-            return new HDInsightVersionSpec(friendlyName, displayName, isDefault, componentVersions);
+            return new HDInsightVersionSpec(friendlyName, displayName, isDefault, componentVersions, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegionsCapability"/>. </summary>
@@ -288,7 +382,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             available ??= new List<string>();
 
-            return new RegionsCapability(available?.ToList());
+            return new RegionsCapability(available?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaCapability"/>. </summary>
@@ -300,7 +394,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             regionalQuotas ??= new List<RegionalQuotaCapability>();
 
-            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas?.ToList());
+            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegionalQuotaCapability"/>. </summary>
@@ -310,7 +404,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.RegionalQuotaCapability"/> instance for mocking. </returns>
         public static RegionalQuotaCapability RegionalQuotaCapability(AzureLocation? region = null, long? coresUsed = null, long? coresAvailable = null)
         {
-            return new RegionalQuotaCapability(region, coresUsed, coresAvailable);
+            return new RegionalQuotaCapability(region, coresUsed, coresAvailable, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightUsage"/>. </summary>
@@ -321,7 +415,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightUsage"/> instance for mocking. </returns>
         public static HDInsightUsage HDInsightUsage(string unit = null, long? currentValue = null, long? limit = null, HDInsightLocalizedName name = null)
         {
-            return new HDInsightUsage(unit, currentValue, limit, name);
+            return new HDInsightUsage(unit, currentValue, limit, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightLocalizedName"/>. </summary>
@@ -330,7 +424,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightLocalizedName"/> instance for mocking. </returns>
         public static HDInsightLocalizedName HDInsightLocalizedName(string value = null, string localizedValue = null)
         {
-            return new HDInsightLocalizedName(value, localizedValue);
+            return new HDInsightLocalizedName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightBillingSpecsListResult"/>. </summary>
@@ -348,7 +442,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             vmSizeProperties ??= new List<HDInsightVmSizeProperty>();
             billingResources ??= new List<HDInsightBillingResources>();
 
-            return new HDInsightBillingSpecsListResult(vmSizes?.ToList(), vmSizesWithEncryptionAtHost?.ToList(), vmSizeFilters?.ToList(), vmSizeProperties?.ToList(), billingResources?.ToList());
+            return new HDInsightBillingSpecsListResult(
+                vmSizes?.ToList(),
+                vmSizesWithEncryptionAtHost?.ToList(),
+                vmSizeFilters?.ToList(),
+                vmSizeProperties?.ToList(),
+                billingResources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightVmSizeCompatibilityFilterV2"/>. </summary>
@@ -371,7 +471,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             osType ??= new List<HDInsightOSType>();
             vmSizes ??= new List<string>();
 
-            return new HDInsightVmSizeCompatibilityFilterV2(filterMode, regions?.ToList(), clusterFlavors?.ToList(), nodeTypes?.ToList(), clusterVersions?.ToList(), osType?.ToList(), vmSizes?.ToList(), espApplied, isComputeIsolationSupported);
+            return new HDInsightVmSizeCompatibilityFilterV2(
+                filterMode,
+                regions?.ToList(),
+                clusterFlavors?.ToList(),
+                nodeTypes?.ToList(),
+                clusterVersions?.ToList(),
+                osType?.ToList(),
+                vmSizes?.ToList(),
+                espApplied,
+                isComputeIsolationSupported,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightVmSizeProperty"/>. </summary>
@@ -388,7 +498,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightVmSizeProperty"/> instance for mocking. </returns>
         public static HDInsightVmSizeProperty HDInsightVmSizeProperty(string name = null, int? cores = null, string dataDiskStorageTier = null, string label = null, long? maxDataDiskCount = null, long? memoryInMB = null, bool? isSupportedByVirtualMachines = null, bool? isSupportedByWebWorkerRoles = null, long? virtualMachineResourceDiskSizeInMB = null, long? webWorkerResourceDiskSizeInMB = null)
         {
-            return new HDInsightVmSizeProperty(name, cores, dataDiskStorageTier, label, maxDataDiskCount, memoryInMB, isSupportedByVirtualMachines, isSupportedByWebWorkerRoles, virtualMachineResourceDiskSizeInMB, webWorkerResourceDiskSizeInMB);
+            return new HDInsightVmSizeProperty(
+                name,
+                cores,
+                dataDiskStorageTier,
+                label,
+                maxDataDiskCount,
+                memoryInMB,
+                isSupportedByVirtualMachines,
+                isSupportedByWebWorkerRoles,
+                virtualMachineResourceDiskSizeInMB,
+                webWorkerResourceDiskSizeInMB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightBillingResources"/>. </summary>
@@ -401,7 +522,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             billingMeters ??= new List<HDInsightBillingMeters>();
             diskBillingMeters ??= new List<HDInsightDiskBillingMeters>();
 
-            return new HDInsightBillingResources(region, billingMeters?.ToList(), diskBillingMeters?.ToList());
+            return new HDInsightBillingResources(region, billingMeters?.ToList(), diskBillingMeters?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightBillingMeters"/>. </summary>
@@ -411,7 +532,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightBillingMeters"/> instance for mocking. </returns>
         public static HDInsightBillingMeters HDInsightBillingMeters(string meterParameter = null, string meter = null, string unit = null)
         {
-            return new HDInsightBillingMeters(meterParameter, meter, unit);
+            return new HDInsightBillingMeters(meterParameter, meter, unit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightDiskBillingMeters"/>. </summary>
@@ -421,7 +542,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightDiskBillingMeters"/> instance for mocking. </returns>
         public static HDInsightDiskBillingMeters HDInsightDiskBillingMeters(string diskRpMeter = null, string sku = null, HDInsightTier? tier = null)
         {
-            return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier);
+            return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightNameAvailabilityResult"/>. </summary>
@@ -431,7 +552,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightNameAvailabilityResult"/> instance for mocking. </returns>
         public static HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new HDInsightNameAvailabilityResult(isNameAvailable, reason, message);
+            return new HDInsightNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterCreationValidateResult"/>. </summary>
@@ -446,7 +567,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             validationWarnings ??= new List<HDInsightClusterValidationErrorInfo>();
             aaddsResourcesDetails ??= new List<HDInsightClusterAaddsDetail>();
 
-            return new HDInsightClusterCreationValidateResult(validationErrors?.ToList(), validationWarnings?.ToList(), estimatedCreationDuration, aaddsResourcesDetails?.ToList());
+            return new HDInsightClusterCreationValidateResult(validationErrors?.ToList(), validationWarnings?.ToList(), estimatedCreationDuration, aaddsResourcesDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterValidationErrorInfo"/>. </summary>
@@ -459,7 +580,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             messageArguments ??= new List<string>();
 
-            return new HDInsightClusterValidationErrorInfo(code, message, errorResource, messageArguments?.ToList());
+            return new HDInsightClusterValidationErrorInfo(code, message, errorResource, messageArguments?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterAaddsDetail"/>. </summary>
@@ -473,7 +594,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightClusterAaddsDetail"/> instance for mocking. </returns>
         public static HDInsightClusterAaddsDetail HDInsightClusterAaddsDetail(string domainName = null, bool? isInitialSyncComplete = null, bool? isLdapsEnabled = null, string ldapsPublicCertificateInBase64 = null, ResourceIdentifier resourceId = null, ResourceIdentifier subnetId = null, Guid? tenantId = null)
         {
-            return new HDInsightClusterAaddsDetail(domainName, isInitialSyncComplete, isLdapsEnabled, ldapsPublicCertificateInBase64, resourceId, subnetId, tenantId);
+            return new HDInsightClusterAaddsDetail(
+                domainName,
+                isInitialSyncComplete,
+                isLdapsEnabled,
+                ldapsPublicCertificateInBase64,
+                resourceId,
+                subnetId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightPrivateLinkResourceData"/>. </summary>
@@ -490,7 +619,26 @@ namespace Azure.ResourceManager.HDInsight.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new HDInsightPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new HDInsightPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteScriptActionContent"/>. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        /// <returns> A new <see cref="Models.ExecuteScriptActionContent"/> instance for mocking. </returns>
+        public static ExecuteScriptActionContent ExecuteScriptActionContent(IEnumerable<RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = default)
+        {
+            scriptActions ??= new List<RuntimeScriptAction>();
+
+            return new ExecuteScriptActionContent(scriptActions?.ToList(), persistOnSuccess, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RuntimeScriptActionDetail"/>. </summary>
@@ -512,7 +660,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             roles ??= new List<string>();
             executionSummary ??= new List<ScriptActionExecutionSummary>();
 
-            return new RuntimeScriptActionDetail(name, uri, parameters, roles?.ToList(), applicationName, scriptExecutionId, startOn, endOn, status, operation, executionSummary?.ToList(), debugInformation);
+            return new RuntimeScriptActionDetail(
+                name,
+                uri,
+                parameters,
+                roles?.ToList(),
+                applicationName,
+                serializedAdditionalRawData: null,
+                scriptExecutionId,
+                startOn,
+                endOn,
+                status,
+                operation,
+                executionSummary?.ToList(),
+                debugInformation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScriptActionExecutionSummary"/>. </summary>
@@ -521,7 +682,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.ScriptActionExecutionSummary"/> instance for mocking. </returns>
         public static ScriptActionExecutionSummary ScriptActionExecutionSummary(string status = null, int? instanceCount = null)
         {
-            return new ScriptActionExecutionSummary(status, instanceCount);
+            return new ScriptActionExecutionSummary(status, instanceCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterHostInfo"/>. </summary>
@@ -531,7 +692,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightClusterHostInfo"/> instance for mocking. </returns>
         public static HDInsightClusterHostInfo HDInsightClusterHostInfo(string name = null, string fqdn = null, Uri effectiveDiskEncryptionKeyUri = null)
         {
-            return new HDInsightClusterHostInfo(name, fqdn, effectiveDiskEncryptionKeyUri);
+            return new HDInsightClusterHostInfo(name, fqdn, effectiveDiskEncryptionKeyUri, serializedAdditionalRawData: null);
         }
     }
 }

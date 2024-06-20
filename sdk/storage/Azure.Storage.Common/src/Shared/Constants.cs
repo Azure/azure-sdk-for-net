@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2024-02-04";
+        public const string DefaultSasVersion = "2024-08-04";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -123,7 +123,11 @@ namespace Azure.Storage
         public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
         public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
 
+        public const string DisableExpectContinueHeaderSwitchName = "Azure.Storage.DisableExpectContinueHeader";
+        public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
+
         public const string DefaultScope = "/.default";
+        public const string EnUsCulture = "en-US";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -193,6 +197,7 @@ namespace Azure.Storage
             public const string LeaseId = "x-ms-lease-id";
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
+            public const string CopySourceErrorCode = "x-ms-copy-source-error-code";
         }
 
         internal static class ErrorCodes
@@ -391,6 +396,8 @@ namespace Azure.Storage
             public const string GroupHeaderName = "x-ms-group";
 
             public const string PermissionsHeaderName = "x-ms-permissions";
+
+            public const string AclHeaderName = "x-ms-acl";
         }
 
         /// <summary>

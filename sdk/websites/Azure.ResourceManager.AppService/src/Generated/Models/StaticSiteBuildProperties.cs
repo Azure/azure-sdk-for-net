@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Build properties for the static site. </summary>
     public partial class StaticSiteBuildProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildProperties"/>. </summary>
         public StaticSiteBuildProperties()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="apiBuildCommand"> A custom command to run during deployment of the Azure Functions API application. </param>
         /// <param name="skipGithubActionWorkflowGeneration"> Skip Github Action workflow generation. </param>
         /// <param name="githubActionSecretNameOverride"> Github Action secret name override. </param>
-        internal StaticSiteBuildProperties(string appLocation, string apiLocation, string appArtifactLocation, string outputLocation, string appBuildCommand, string apiBuildCommand, bool? skipGithubActionWorkflowGeneration, string githubActionSecretNameOverride)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteBuildProperties(string appLocation, string apiLocation, string appArtifactLocation, string outputLocation, string appBuildCommand, string apiBuildCommand, bool? skipGithubActionWorkflowGeneration, string githubActionSecretNameOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             ApiLocation = apiLocation;
@@ -34,23 +70,32 @@ namespace Azure.ResourceManager.AppService.Models
             ApiBuildCommand = apiBuildCommand;
             SkipGithubActionWorkflowGeneration = skipGithubActionWorkflowGeneration;
             GithubActionSecretNameOverride = githubActionSecretNameOverride;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The path to the app code within the repository. </summary>
+        [WirePath("appLocation")]
         public string AppLocation { get; set; }
         /// <summary> The path to the api code within the repository. </summary>
+        [WirePath("apiLocation")]
         public string ApiLocation { get; set; }
         /// <summary> Deprecated: The path of the app artifacts after building (deprecated in favor of OutputLocation). </summary>
+        [WirePath("appArtifactLocation")]
         public string AppArtifactLocation { get; set; }
         /// <summary> The output path of the app after building. </summary>
+        [WirePath("outputLocation")]
         public string OutputLocation { get; set; }
         /// <summary> A custom command to run during deployment of the static content application. </summary>
+        [WirePath("appBuildCommand")]
         public string AppBuildCommand { get; set; }
         /// <summary> A custom command to run during deployment of the Azure Functions API application. </summary>
+        [WirePath("apiBuildCommand")]
         public string ApiBuildCommand { get; set; }
         /// <summary> Skip Github Action workflow generation. </summary>
+        [WirePath("skipGithubActionWorkflowGeneration")]
         public bool? SkipGithubActionWorkflowGeneration { get; set; }
         /// <summary> Github Action secret name override. </summary>
+        [WirePath("githubActionSecretNameOverride")]
         public string GithubActionSecretNameOverride { get; set; }
     }
 }

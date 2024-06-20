@@ -12,33 +12,33 @@ namespace Azure.Core.Expressions.DataFactory
     public partial class DataFactoryLinkedServiceReference
     {
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
-        /// <param name="referenceType"> Linked service reference type. </param>
+        /// <param name="referenceKind"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         [InitializationConstructor]
-        public DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string referenceName)
+        public DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind referenceKind, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            ReferenceType = referenceType;
+            ReferenceKind = referenceKind;
             ReferenceName = referenceName;
             Parameters = new ChangeTrackingDictionary<string, BinaryData?>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
-        /// <param name="referenceType"> Linked service reference type. </param>
+        /// <param name="referenceKind"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
         [SerializationConstructor]
-        internal DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string? referenceName, IDictionary<string, BinaryData?> parameters)
+        internal DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind referenceKind, string? referenceName, IDictionary<string, BinaryData?> parameters)
         {
-            ReferenceType = referenceType;
+            ReferenceKind = referenceKind;
             ReferenceName = referenceName;
             Parameters = parameters;
         }
 
         /// <summary> Linked service reference type. </summary>
-        public DataFactoryLinkedServiceReferenceType ReferenceType { get; set; }
+        public DataFactoryLinkedServiceReferenceKind ReferenceKind { get; set; }
         /// <summary> Reference LinkedService name. </summary>
         public string? ReferenceName { get; set; }
         /// <summary>

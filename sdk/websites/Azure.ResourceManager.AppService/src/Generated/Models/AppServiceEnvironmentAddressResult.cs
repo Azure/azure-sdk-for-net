@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -15,6 +16,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
     public partial class AppServiceEnvironmentAddressResult : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentAddressResult"/>. </summary>
         public AppServiceEnvironmentAddressResult()
         {
@@ -32,24 +65,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServiceIPAddress = serviceIPAddress;
             InternalIPAddress = internalIPAddress;
             OutboundIPAddresses = outboundIPAddresses;
             VirtualIPMappings = virtualIPMappings;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Main public virtual IP. </summary>
+        [WirePath("properties.serviceIpAddress")]
         public IPAddress ServiceIPAddress { get; set; }
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
+        [WirePath("properties.internalIpAddress")]
         public IPAddress InternalIPAddress { get; set; }
         /// <summary> IP addresses appearing on outbound connections. </summary>
+        [WirePath("properties.outboundIpAddresses")]
         public IList<IPAddress> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
+        [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VirtualIPMappings { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

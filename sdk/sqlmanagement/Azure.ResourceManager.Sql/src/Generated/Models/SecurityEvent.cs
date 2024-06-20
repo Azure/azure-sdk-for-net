@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,6 +16,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A security event. </summary>
     public partial class SecurityEvent : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityEvent"/>. </summary>
         public SecurityEvent()
         {
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="applicationName"> The application used to execute the statement. </param>
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
-        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EventOn = eventOn;
             SecurityEventType = securityEventType;
@@ -45,25 +79,35 @@ namespace Azure.ResourceManager.Sql.Models
             ApplicationName = applicationName;
             PrincipalName = principalName;
             SecurityEventSqlInjectionAdditionalProperties = securityEventSqlInjectionAdditionalProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time when the security event occurred. </summary>
+        [WirePath("properties.eventTime")]
         public DateTimeOffset? EventOn { get; }
         /// <summary> The type of the security event. </summary>
+        [WirePath("properties.securityEventType")]
         public SecurityEventType? SecurityEventType { get; }
         /// <summary> The subscription name. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription { get; }
         /// <summary> The server name. </summary>
+        [WirePath("properties.server")]
         public string Server { get; }
         /// <summary> The database name. </summary>
+        [WirePath("properties.database")]
         public string Database { get; }
         /// <summary> The IP address of the client who executed the statement. </summary>
+        [WirePath("properties.clientIp")]
         public IPAddress ClientIP { get; }
         /// <summary> The application used to execute the statement. </summary>
+        [WirePath("properties.applicationName")]
         public string ApplicationName { get; }
         /// <summary> The principal user who executed the statement. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName { get; }
         /// <summary> The sql injection additional properties, populated only if the type of the security event is sql injection. </summary>
+        [WirePath("properties.securityEventSqlInjectionAdditionalProperties")]
         public SecurityEventSqlInjectionAdditionalProperties SecurityEventSqlInjectionAdditionalProperties { get; }
     }
 }

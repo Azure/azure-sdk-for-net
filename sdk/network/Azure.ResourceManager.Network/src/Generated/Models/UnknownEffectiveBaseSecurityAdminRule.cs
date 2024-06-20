@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The UnknownEffectiveBaseSecurityAdminRule. </summary>
+    /// <summary> Unknown version of EffectiveBaseSecurityAdminRule. </summary>
     internal partial class UnknownEffectiveBaseSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEffectiveBaseSecurityAdminRule"/>. </summary>

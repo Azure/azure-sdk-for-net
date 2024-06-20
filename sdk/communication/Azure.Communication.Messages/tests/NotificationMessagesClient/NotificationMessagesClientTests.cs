@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
@@ -21,12 +20,36 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public void Constructor_InvalidParamsThrows()
+        public void Constructor_InvalidConnectionString_ShouldThrow()
         {
             Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(null));
             Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient(" "));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
+            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
             Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
+        }
+
+        [Test]
+        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            Uri endpoint = null;
+            AzureKeyCredential credential = new AzureKeyCredential("ZHVtbXlhY2Nlc3NrZXk=");
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
+        }
+
+        [Test]
+        public void CreateClient_InvalidCredential_ShouldThrow()
+        {
+            // Arrange
+            var validEndpoint = new Uri("https://contoso.azure.com/");
+
+            // Act and Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
         }
 
         [Test]
@@ -36,8 +59,8 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient(202, SendMessageApiResponsePayload);
 
             //act
-            SendMessageOptions sendMessageOptions = new SendMessageOptions("testChannelRegistrationId", new List<string> { "+1(123)456-7890" }, "testMessage");
-            SendMessageResult sendMessageResult = await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
+            TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
+            SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
             //assert
             Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
@@ -53,7 +76,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient();
 
             //act & assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendMessageAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendAsync((NotificationContent)null));
         }
 
         [Test]
@@ -65,8 +88,8 @@ namespace Azure.Communication.Messages.Tests
             try
             {
                 //act
-                SendMessageOptions sendMessageOptions = new SendMessageOptions("invalidChannelRegistrationId", new List<string> { "+1(123)456-7890" }, "testMessage");
-                await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
+                TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
+                await notificationMessagesClient.SendAsync(content);
             }
             catch (RequestFailedException requestFailedException)
             {
@@ -75,7 +98,7 @@ namespace Azure.Communication.Messages.Tests
             }
         }
 
-        private NotificationMessagesClient CreateMockNotificationMessagesClient(int responseCode = 202, string responseContent = null)
+        private static NotificationMessagesClient CreateMockNotificationMessagesClient(int responseCode = 202, string responseContent = null)
         {
             var mockResponse = new MockResponse(responseCode);
             if (responseContent != null)

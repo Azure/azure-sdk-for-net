@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment tier. </summary>
     public partial class CommitmentTier
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CommitmentTier"/>. </summary>
         internal CommitmentTier()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="maxCount"> Commitment period commitment max count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
         /// <param name="cost"> Cognitive Services account commitment cost. </param>
-        internal CommitmentTier(string kind, string skuName, ServiceAccountHostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentTier(string kind, string skuName, ServiceAccountHostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             SkuName = skuName;
@@ -34,23 +70,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             MaxCount = maxCount;
             Quota = quota;
             Cost = cost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
         /// <summary> Account hosting model. </summary>
+        [WirePath("hostingModel")]
         public ServiceAccountHostingModel? HostingModel { get; }
         /// <summary> Commitment plan type. </summary>
+        [WirePath("planType")]
         public string PlanType { get; }
         /// <summary> Commitment period commitment tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> Commitment period commitment max count. </summary>
+        [WirePath("maxCount")]
         public int? MaxCount { get; }
         /// <summary> Cognitive Services account commitment quota. </summary>
+        [WirePath("quota")]
         public CommitmentQuota Quota { get; }
         /// <summary> Cognitive Services account commitment cost. </summary>
+        [WirePath("cost")]
         public CommitmentCost Cost { get; }
     }
 }

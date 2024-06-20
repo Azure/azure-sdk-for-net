@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="RuleEmailAction"/>. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sendToServiceOwners"> Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated. </param>
         /// <param name="customEmails"> the list of administrator's custom email addresses to notify of the activation of the alert. </param>
-        internal RuleEmailAction(string odataType, bool? sendToServiceOwners, IList<string> customEmails) : base(odataType)
+        internal RuleEmailAction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? sendToServiceOwners, IList<string> customEmails) : base(odataType, serializedAdditionalRawData)
         {
             SendToServiceOwners = sendToServiceOwners;
             CustomEmails = customEmails;

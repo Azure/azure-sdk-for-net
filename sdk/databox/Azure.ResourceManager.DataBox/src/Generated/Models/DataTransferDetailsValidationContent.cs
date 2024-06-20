@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,17 +27,23 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="DataTransferDetailsValidationContent"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
         /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
-        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType) : base(validationType)
+        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType) : base(validationType, serializedAdditionalRawData)
         {
             DataExportDetails = dataExportDetails;
             DataImportDetails = dataImportDetails;
             DeviceType = deviceType;
             TransferType = transferType;
             ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferDetailsValidationContent"/> for deserialization. </summary>
+        internal DataTransferDetailsValidationContent()
+        {
         }
 
         /// <summary> List of DataTransfer details to be used to export data from azure. </summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Summarization of patches available for installation on the machine by classification. </summary>
     public partial class AvailablePatchCountByClassification
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AvailablePatchCountByClassification"/>. </summary>
         internal AvailablePatchCountByClassification()
         {
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tools"> Number of tools patches available for installation. </param>
         /// <param name="updates"> Number of updates category patches available for installation. </param>
         /// <param name="other"> Number of other patches available for installation. </param>
-        internal AvailablePatchCountByClassification(int? security, int? critical, int? definition, int? updateRollup, int? featurePack, int? servicePack, int? tools, int? updates, int? other)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailablePatchCountByClassification(int? security, int? critical, int? definition, int? updateRollup, int? featurePack, int? servicePack, int? tools, int? updates, int? other, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Security = security;
             Critical = critical;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Tools = tools;
             Updates = updates;
             Other = other;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of security patches available for installation. </summary>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The UnknownRecoveryPointModelCustomProperties. </summary>
+    /// <summary> Unknown version of RecoveryPointModelCustomProperties. </summary>
     internal partial class UnknownRecoveryPointModelCustomProperties : RecoveryPointModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecoveryPointModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal UnknownRecoveryPointModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryPointModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryPointModelCustomProperties"/> for deserialization. </summary>
+        internal UnknownRecoveryPointModelCustomProperties()
+        {
         }
     }
 }

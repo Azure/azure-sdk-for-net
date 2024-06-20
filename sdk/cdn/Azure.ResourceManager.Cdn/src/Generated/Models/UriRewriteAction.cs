@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="UriRewriteAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
-        internal UriRewriteAction(DeliveryRuleActionType name, UriRewriteActionProperties properties) : base(name)
+        internal UriRewriteAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRewriteActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriRewriteAction"/> for deserialization. </summary>
+        internal UriRewriteAction()
+        {
         }
 
         /// <summary> Defines the parameters for the action. </summary>

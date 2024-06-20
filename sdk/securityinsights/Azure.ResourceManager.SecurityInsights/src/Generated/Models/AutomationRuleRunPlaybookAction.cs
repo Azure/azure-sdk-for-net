@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes an automation rule action to run a playbook. </summary>
@@ -20,11 +23,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionConfiguration"></param>
-        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType)
+        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType, serializedAdditionalRawData)
         {
             ActionConfiguration = actionConfiguration;
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/> for deserialization. </summary>
+        internal AutomationRuleRunPlaybookAction()
+        {
         }
 
         /// <summary> Gets or sets the action configuration. </summary>

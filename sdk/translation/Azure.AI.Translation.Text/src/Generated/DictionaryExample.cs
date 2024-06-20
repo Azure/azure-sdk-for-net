@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example. </summary>
     public partial class DictionaryExample
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DictionaryExample"/>. </summary>
         /// <param name="sourcePrefix">
         /// The string to concatenate before the value of sourceTerm to form a complete example.
@@ -48,6 +80,42 @@ namespace Azure.AI.Translation.Text
             TargetPrefix = targetPrefix;
             TargetTerm = targetTerm;
             TargetSuffix = targetSuffix;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryExample"/>. </summary>
+        /// <param name="sourcePrefix">
+        /// The string to concatenate before the value of sourceTerm to form a complete example.
+        /// Do not add a space character, since it is already there when it should be.
+        /// This value may be an empty string.
+        /// </param>
+        /// <param name="sourceTerm">
+        /// A string equal to the actual term looked up. The string is added with sourcePrefix
+        /// and sourceSuffix to form the complete example. Its value is separated so it can be
+        /// marked in a user interface, e.g., by bolding it.
+        /// </param>
+        /// <param name="sourceSuffix">
+        /// The string to concatenate after the value of sourceTerm to form a complete example.
+        /// Do not add a space character, since it is already there when it should be.
+        /// This value may be an empty string.
+        /// </param>
+        /// <param name="targetPrefix"> A string similar to sourcePrefix but for the target. </param>
+        /// <param name="targetTerm"> A string similar to sourceTerm but for the target. </param>
+        /// <param name="targetSuffix"> A string similar to sourceSuffix but for the target. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryExample(string sourcePrefix, string sourceTerm, string sourceSuffix, string targetPrefix, string targetTerm, string targetSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourcePrefix = sourcePrefix;
+            SourceTerm = sourceTerm;
+            SourceSuffix = sourceSuffix;
+            TargetPrefix = targetPrefix;
+            TargetTerm = targetTerm;
+            TargetSuffix = targetSuffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryExample"/> for deserialization. </summary>
+        internal DictionaryExample()
+        {
         }
 
         /// <summary>

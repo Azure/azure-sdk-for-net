@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -66,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            AmqpMessageBody body = null;
+            AmqpMessageBody body;
             if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
                 body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
@@ -115,9 +116,13 @@ namespace Azure.Messaging.ServiceBus
             // copy message annotations except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.MessageAnnotations)
             {
-                if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName ||
+                if (kvp.Key == AmqpMessageConstants.LockedUntilName ||
+                    kvp.Key == AmqpMessageConstants.SequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName ||
+                    kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.ScheduledEnqueueTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.MessageStateName ||
                     kvp.Key == AmqpMessageConstants.PartitionIdName)
                 {
                     continue;
@@ -136,7 +141,9 @@ namespace Azure.Messaging.ServiceBus
             // copy application properties except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.ApplicationProperties)
             {
-                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader)
+                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader
+                    || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader
+                    || kvp.Key == MessagingClientDiagnostics.DiagnosticIdAttribute)
                 {
                     continue;
                 }
@@ -454,6 +461,15 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         /// <exception cref="System.Runtime.Serialization.SerializationException">
         ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   <para>Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when a value of type <see cref="T:byte[]"/> or
+        ///   <see cref="T:ArraySegment{byte}"/> is used as a property.  The <see cref="ServiceBusException.Reason" /> will be set to
+        ///   <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.</para>
+        ///
+        ///   <para>This is due to a known bug in the Service Bus service, where an application property encoded as binary cannot be
+        ///   handled by the service and is incorrectly rejected for being too large.  A fix is planned, but the time line is
+        ///   currently unknown.  The recommended workaround is to encode the binary data as a Base64 string.</para>
         /// </exception>
         public IDictionary<string, object> ApplicationProperties
         {

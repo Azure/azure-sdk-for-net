@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

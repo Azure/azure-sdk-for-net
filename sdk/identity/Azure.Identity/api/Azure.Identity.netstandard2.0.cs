@@ -78,6 +78,20 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    public partial class AzurePipelinesCredential : Azure.Core.TokenCredential
+    {
+        protected AzurePipelinesCredential() { }
+        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, Azure.Identity.AzurePipelinesCredentialOptions options = null) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class AzurePipelinesCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzurePipelinesCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+    }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
         public AzurePowerShellCredential() { }
@@ -101,6 +115,7 @@ namespace Azure.Identity
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
+        protected ChainedTokenCredential() { }
         public ChainedTokenCredential(params Azure.Core.TokenCredential[] sources) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -118,6 +133,7 @@ namespace Azure.Identity
         public ClientAssertionCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
@@ -165,6 +181,7 @@ namespace Azure.Identity
     }
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
+        protected DefaultAzureCredential() { }
         public DefaultAzureCredential(Azure.Identity.DefaultAzureCredentialOptions options) { }
         public DefaultAzureCredential(bool includeInteractiveCredentials = false) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -269,8 +286,10 @@ namespace Azure.Identity
         public InteractiveBrowserCredential(string clientId) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
+        public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.Core.AccessToken GetToken(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -303,6 +322,8 @@ namespace Azure.Identity
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<string> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options) { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, string userAssertion) { }

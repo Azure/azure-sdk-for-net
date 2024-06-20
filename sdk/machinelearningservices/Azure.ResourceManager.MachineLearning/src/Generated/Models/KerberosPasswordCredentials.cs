@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -35,17 +35,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="KerberosPasswordCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secrets"> [Required] Kerberos password secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
         /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
         /// <param name="kerberosRealm"> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
-        internal KerberosPasswordCredentials(CredentialsType credentialsType, KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) : base(credentialsType)
+        internal KerberosPasswordCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) : base(credentialsType, serializedAdditionalRawData)
         {
             Secrets = secrets;
             KerberosKdcAddress = kerberosKdcAddress;
             KerberosPrincipal = kerberosPrincipal;
             KerberosRealm = kerberosRealm;
             CredentialsType = credentialsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KerberosPasswordCredentials"/> for deserialization. </summary>
+        internal KerberosPasswordCredentials()
+        {
         }
 
         /// <summary> [Required] Kerberos password secrets. </summary>

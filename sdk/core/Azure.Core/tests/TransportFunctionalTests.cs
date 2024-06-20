@@ -987,7 +987,14 @@ namespace Azure.Core.Tests
                 var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
-                Response response = await ExecuteRequest(request, transport);
+                HttpMessage messsage = new(request, ResponseClassifier.Shared);
+
+                // This test is explicitly testing the behavior of a response that
+                // holds a live network stream, so we set BufferResponse to false.
+                messsage.BufferResponse = false;
+
+                await ProcessAsync(messsage, transport);
+                Response response = messsage.Response;
 
                 tcs.SetResult(null);
 

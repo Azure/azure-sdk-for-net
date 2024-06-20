@@ -16,7 +16,7 @@ namespace Azure.Communication.Rooms.Tests
         private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
-        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d*";
+        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d+";
 
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -26,10 +26,10 @@ namespace Azure.Communication.Rooms.Tests
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..appId");
             JsonPathSanitizers.Add("$..userId");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx, SanitizeValue));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "/rooms/Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { Value = "/rooms/Sanitized" });
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             return authMethod switch
             {
@@ -53,7 +53,7 @@ namespace Azure.Communication.Rooms.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
@@ -69,7 +69,7 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationRoomsEndpoint,
@@ -84,7 +84,7 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationRoomsEndpoint,

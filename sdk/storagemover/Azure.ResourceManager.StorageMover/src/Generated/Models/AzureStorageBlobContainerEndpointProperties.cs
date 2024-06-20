@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -31,13 +31,19 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, provisioningState)
+        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureStorageBlobContainerEndpointProperties"/> for deserialization. </summary>
+        internal AzureStorageBlobContainerEndpointProperties()
+        {
         }
 
         /// <summary> The Azure Resource ID of the storage account that is the target destination. </summary>

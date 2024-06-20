@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Supported auto pause delay time range. </summary>
     public partial class AutoPauseDelayTimeRange
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutoPauseDelayTimeRange"/>. </summary>
         internal AutoPauseDelayTimeRange()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="default"> Default value is no value is provided. </param>
         /// <param name="unit"> Unit of time that delay is expressed in. </param>
         /// <param name="doNotPauseValue"> Value that is used to not pause (infinite delay before pause). </param>
-        internal AutoPauseDelayTimeRange(int? minValue, int? maxValue, int? stepSize, int? @default, PauseDelayTimeUnit? unit, int? doNotPauseValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoPauseDelayTimeRange(int? minValue, int? maxValue, int? stepSize, int? @default, PauseDelayTimeUnit? unit, int? doNotPauseValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinValue = minValue;
             MaxValue = maxValue;
@@ -30,19 +66,26 @@ namespace Azure.ResourceManager.Sql.Models
             Default = @default;
             Unit = unit;
             DoNotPauseValue = doNotPauseValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum value. </summary>
+        [WirePath("minValue")]
         public int? MinValue { get; }
         /// <summary> Maximum value. </summary>
+        [WirePath("maxValue")]
         public int? MaxValue { get; }
         /// <summary> Step value for discrete values between the minimum value and the maximum value. </summary>
+        [WirePath("stepSize")]
         public int? StepSize { get; }
         /// <summary> Default value is no value is provided. </summary>
+        [WirePath("default")]
         public int? Default { get; }
         /// <summary> Unit of time that delay is expressed in. </summary>
+        [WirePath("unit")]
         public PauseDelayTimeUnit? Unit { get; }
         /// <summary> Value that is used to not pause (infinite delay before pause). </summary>
+        [WirePath("doNotPauseValue")]
         public int? DoNotPauseValue { get; }
     }
 }

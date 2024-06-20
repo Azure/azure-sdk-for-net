@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The MultivariateBatchDetectionStatus. </summary>
     public readonly partial struct MultivariateBatchDetectionStatus : IEquatable<MultivariateBatchDetectionStatus>
     {
         private readonly string _value;

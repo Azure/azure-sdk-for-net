@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Virtual network subnet usage data. </summary>
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult()
         {
@@ -23,18 +56,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="delegatedSubnetsUsage"></param>
         /// <param name="location"> location of the delegated subnet usage. </param>
         /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>
-        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage, AzureLocation? location, string subscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage, AzureLocation? location, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DelegatedSubnetsUsage = delegatedSubnetsUsage;
             Location = location;
             SubscriptionId = subscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the delegated subnets usage. </summary>
+        [WirePath("delegatedSubnetsUsage")]
         public IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
         /// <summary> location of the delegated subnet usage. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> subscriptionId of the delegated subnet usage. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

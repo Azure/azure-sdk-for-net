@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrafficManager.Mocking;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -290,7 +288,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

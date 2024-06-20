@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Network access control rules for the endpoints. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointNetworkAcls"/>. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
-        internal DataCollectionEndpointNetworkAcls(MonitorPublicNetworkAccess? publicNetworkAccess) : base(publicNetworkAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointNetworkAcls(MonitorPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(publicNetworkAccess, serializedAdditionalRawData)
         {
         }
     }

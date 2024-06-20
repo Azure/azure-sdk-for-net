@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     [PersistableModelProxy(typeof(UnknownAction))]
     public partial class AlertProcessingRuleAction : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertProcessingRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleAction DeserializeAlertProcessingRuleAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element);
-                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element);
+                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element, options);
+                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element, options);
                 }
             }
-            return UnknownAction.DeserializeUnknownAction(element);
+            return UnknownAction.DeserializeUnknownAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleAction>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

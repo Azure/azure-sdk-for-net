@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Email configuration model properties. </summary>
     public partial class DataReplicationEmailConfigurationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationProperties"/>. </summary>
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         public DataReplicationEmailConfigurationProperties(bool sendToOwners)
@@ -25,11 +57,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> Gets or sets the custom email address for sending emails. </param>
         /// <param name="locale"> Gets or sets the locale for the email notification. </param>
-        internal DataReplicationEmailConfigurationProperties(bool sendToOwners, IList<string> customEmailAddresses, string locale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationEmailConfigurationProperties(bool sendToOwners, IList<string> customEmailAddresses, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SendToOwners = sendToOwners;
             CustomEmailAddresses = customEmailAddresses;
             Locale = locale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationProperties"/> for deserialization. </summary>
+        internal DataReplicationEmailConfigurationProperties()
+        {
         }
 
         /// <summary> Gets or sets a value indicating whether to send email to subscription administrator. </summary>

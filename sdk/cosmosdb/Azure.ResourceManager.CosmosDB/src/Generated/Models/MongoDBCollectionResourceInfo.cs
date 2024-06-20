@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB MongoDB collection resource object. </summary>
     public partial class MongoDBCollectionResourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
@@ -33,7 +64,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CollectionName = collectionName;
             ShardKey = shardKey;
@@ -41,19 +73,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AnalyticalStorageTtl = analyticalStorageTtl;
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionResourceInfo"/> for deserialization. </summary>
+        internal MongoDBCollectionResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB MongoDB collection. </summary>
+        [WirePath("id")]
         public string CollectionName { get; set; }
         /// <summary> A key-value pair of shard keys to be applied for the request. </summary>
+        [WirePath("shardKey")]
         public IDictionary<string, string> ShardKey { get; }
         /// <summary> List of index keys. </summary>
+        [WirePath("indexes")]
         public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public int? AnalyticalStorageTtl { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public ResourceRestoreParameters RestoreParameters { get; set; }
         /// <summary> Enum to indicate the mode of resource creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The Capacity Reservation properties. </summary>
     public partial class OperationalInsightsCapacityReservationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
         public OperationalInsightsCapacityReservationProperties()
         {
@@ -20,15 +53,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
         /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
         /// <param name="minCapacity"> Minimum CapacityReservation value in GB. </param>
-        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastSkuUpdatedOn = lastSkuUpdatedOn;
             MinCapacity = minCapacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The last time Sku was updated. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
         /// <summary> Minimum CapacityReservation value in GB. </summary>
+        [WirePath("minCapacity")]
         public long? MinCapacity { get; }
     }
 }

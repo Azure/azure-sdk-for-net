@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
-            Optional<int> group = default;
+            string pattern = default;
+            string flags = default;
+            int? group = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Optional.ToNullable(group));
+            return new PatternTokenizer(odataType, name, pattern, flags, group);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PatternTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePatternTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
@@ -16,6 +17,38 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// </summary>
     public partial class SpringBootAppInstancesItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SpringBootAppInstancesItem"/>. </summary>
         /// <param name="machineArmId">
         /// The machine ARM resource Id of this app instance
@@ -42,11 +75,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The jvm heap memory allocated of this app instance
         /// Serialized Name: SpringbootappsPropertiesInstancesItem.jvmMemoryInMB
         /// </param>
-        internal SpringBootAppInstancesItem(ResourceIdentifier machineArmId, int? instanceCount, int? jvmMemoryInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpringBootAppInstancesItem(ResourceIdentifier machineArmId, int? instanceCount, int? jvmMemoryInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MachineArmId = machineArmId;
             InstanceCount = instanceCount;
             JvmMemoryInMB = jvmMemoryInMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpringBootAppInstancesItem"/> for deserialization. </summary>
+        internal SpringBootAppInstancesItem()
+        {
         }
 
         /// <summary>

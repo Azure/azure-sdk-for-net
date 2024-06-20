@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
+            ApplicationGatewaySslProtocol? minProtocolVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslPredefinedPolicy(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
+            return new ApplicationGatewaySslPredefinedPolicy(id, name, type, serializedAdditionalRawData, cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(), minProtocolVersion);
         }
     }
 }

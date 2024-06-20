@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class DicomServiceData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DicomServiceData(AzureLocation location) : base(location)
@@ -42,9 +73,12 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="eventState"> DICOM Service event support status. </param>
         /// <param name="encryption"> The encryption settings of the DICOM service. </param>
+        /// <param name="storageConfiguration"> The configuration of external storage account. </param>
+        /// <param name="isDataPartitionsEnabled"> If data partitions is enabled or not. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, HealthcareApisServiceStorageConfiguration storageConfiguration, bool? isDataPartitionsEnabled, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -54,8 +88,16 @@ namespace Azure.ResourceManager.HealthcareApis
             PublicNetworkAccess = publicNetworkAccess;
             EventState = eventState;
             Encryption = encryption;
+            StorageConfiguration = storageConfiguration;
+            IsDataPartitionsEnabled = isDataPartitionsEnabled;
             Identity = identity;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/> for deserialization. </summary>
+        internal DicomServiceData()
+        {
         }
 
         /// <summary> The provisioning state. </summary>
@@ -86,6 +128,10 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
+        /// <summary> The configuration of external storage account. </summary>
+        public HealthcareApisServiceStorageConfiguration StorageConfiguration { get; set; }
+        /// <summary> If data partitions is enabled or not. </summary>
+        public bool? IsDataPartitionsEnabled { get; set; }
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>

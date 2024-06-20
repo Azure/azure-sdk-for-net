@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Encoding;
@@ -187,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute));
 
                 // delivery annotations only apply to a single hop so they are cleared
                 Assert.AreEqual(0, rawSend.DeliveryAnnotations.Count);
@@ -313,6 +315,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
 
@@ -331,7 +334,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual((string)received.ApplicationProperties["testProp"], (string)sentMessage.ApplicationProperties["testProp"]);
                     Assert.AreEqual(received.ReplyTo, sentMessage.ReplyTo);
                     Assert.AreEqual(received.ReplyToSessionId, sentMessage.ReplyToSessionId);
-                    Assert.AreEqual(received.ScheduledEnqueueTime.UtcDateTime.Second, sentMessage.ScheduledEnqueueTime.UtcDateTime.Second);
                     Assert.AreEqual(received.SessionId, sentMessage.SessionId);
                     Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
                     Assert.AreEqual(received.To, sentMessage.To);

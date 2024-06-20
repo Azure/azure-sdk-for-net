@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -38,6 +37,11 @@ namespace Azure.ResourceManager.Cdn.Models
             GroupBy = new ChangeTrackingList<LogMetricsGroupBy>();
             Continents = new ChangeTrackingList<string>();
             CountryOrRegions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The metrics. </summary>

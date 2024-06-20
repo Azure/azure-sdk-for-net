@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -17,6 +17,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to update.
@@ -43,11 +75,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: UpdateFirewallRuleWithAccountParameters.properties.endIpAddress
         /// </param>
-        internal FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/> for deserialization. </summary>
+        internal FirewallRuleForDataLakeAnalyticsAccountUpdateContent()
+        {
         }
 
         /// <summary>

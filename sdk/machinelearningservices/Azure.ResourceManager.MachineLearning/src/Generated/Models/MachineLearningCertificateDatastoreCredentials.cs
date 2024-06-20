@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -33,13 +33,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorityUri"> Authority URL used for authentication. </param>
         /// <param name="clientId"> [Required] Service principal client ID. </param>
         /// <param name="resourceUri"> Resource the service principal has access to. </param>
         /// <param name="secrets"> [Required] Service principal secrets. </param>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
         /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        internal MachineLearningCertificateDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType)
+        internal MachineLearningCertificateDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri authorityUri, Guid clientId, Uri resourceUri, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType, serializedAdditionalRawData)
         {
             AuthorityUri = authorityUri;
             ClientId = clientId;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TenantId = tenantId;
             Thumbprint = thumbprint;
             CredentialsType = credentialsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/> for deserialization. </summary>
+        internal MachineLearningCertificateDatastoreCredentials()
+        {
         }
 
         /// <summary> Authority URL used for authentication. </summary>

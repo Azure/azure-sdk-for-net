@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Definition for App Seen. </summary>
     public partial class AppSeenInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
         /// <param name="title"> title. </param>
         /// <param name="category"> category. </param>
@@ -39,6 +71,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Tag = tag;
             Technology = technology;
             StandardPorts = standardPorts;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
+        /// <param name="title"> title. </param>
+        /// <param name="category"> category. </param>
+        /// <param name="subCategory"> subCategory. </param>
+        /// <param name="risk"> risk. </param>
+        /// <param name="tag"> tag. </param>
+        /// <param name="technology"> technology. </param>
+        /// <param name="standardPorts"> standardPorts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Title = title;
+            Category = category;
+            SubCategory = subCategory;
+            Risk = risk;
+            Tag = tag;
+            Technology = technology;
+            StandardPorts = standardPorts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/> for deserialization. </summary>
+        internal AppSeenInfo()
+        {
         }
 
         /// <summary> title. </summary>

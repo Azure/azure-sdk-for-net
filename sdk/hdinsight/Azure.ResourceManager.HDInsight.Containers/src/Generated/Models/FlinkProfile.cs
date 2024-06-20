@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The Flink cluster profile. </summary>
     public partial class FlinkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FlinkProfile"/>. </summary>
         /// <param name="storage"> The storage profile. </param>
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>
@@ -36,7 +68,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="historyServer"> History Server container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
         /// <param name="catalogOptions"> Flink cluster catalog options. </param>
-        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceRequirement jobManager, ComputeResourceRequirement historyServer, ComputeResourceRequirement taskManager, FlinkCatalogOptions catalogOptions)
+        /// <param name="deploymentMode"> A string property that indicates the deployment mode of Flink cluster. It can have one of the following enum values =&gt; Application, Session. Default value is Session. </param>
+        /// <param name="jobSpec"> Job specifications for flink clusters in application deployment mode. The specification is immutable even if job properties are changed by calling the RunJob API, please use the ListJob API to get the latest job information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceRequirement jobManager, ComputeResourceRequirement historyServer, ComputeResourceRequirement taskManager, FlinkCatalogOptions catalogOptions, DeploymentMode? deploymentMode, FlinkJobProfile jobSpec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Storage = storage;
             NumReplicas = numReplicas;
@@ -44,6 +79,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             HistoryServer = historyServer;
             TaskManager = taskManager;
             CatalogOptions = catalogOptions;
+            DeploymentMode = deploymentMode;
+            JobSpec = jobSpec;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/> for deserialization. </summary>
+        internal FlinkProfile()
+        {
         }
 
         /// <summary> The storage profile. </summary>
@@ -69,5 +112,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 CatalogOptions.Hive = value;
             }
         }
+
+        /// <summary> A string property that indicates the deployment mode of Flink cluster. It can have one of the following enum values =&gt; Application, Session. Default value is Session. </summary>
+        public DeploymentMode? DeploymentMode { get; set; }
+        /// <summary> Job specifications for flink clusters in application deployment mode. The specification is immutable even if job properties are changed by calling the RunJob API, please use the ListJob API to get the latest job information. </summary>
+        public FlinkJobProfile JobSpec { get; set; }
     }
 }

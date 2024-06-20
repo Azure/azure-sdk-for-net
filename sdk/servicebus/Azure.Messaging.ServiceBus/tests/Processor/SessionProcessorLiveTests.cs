@@ -2228,6 +2228,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanUpdateMaxCallsPerSessionConcurrencyWithSessionIdsSet()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+                int stopCount = 100;
+                string sessionId = "sessionId";
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, sessionId));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1,
+                    SessionIds = { sessionId }
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == stopCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (count == 5)
+                    {
+                        processor.UpdateConcurrency(10, 20);
+                        Assert.AreEqual(10, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                    }
+
+                    if (count == 100)
+                    {
+                        // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
+                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         public async Task CanUpdateSessionPrefetchCount()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
@@ -2676,6 +2735,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await Task.Delay(lockDuration.Add(lockDuration));
                 Assert.IsFalse(sessionLockLostEventRaised);
                 await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task SessionOrderingIsGuaranteedProcessor(bool prefetch, bool useSpecificSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                long lastSequenceNumber = 0;
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1, PrefetchCount = prefetch ? 5 : 0
+                };
+                if (useSpecificSession)
+                {
+                    options.SessionIds.Add("session");
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                var sender = client.CreateSender(scope.QueueName);
+
+                CancellationTokenSource cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(60));
+                await processor.StartProcessingAsync();
+                await SendMessagesAsync();
+
+                await processor.StopProcessingAsync();
+
+                async Task SendMessagesAsync()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    }
+                }
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    Assert.That(
+                        args.Message.SequenceNumber,
+                        Is.EqualTo(lastSequenceNumber + 1),
+                        $"Last sequence number: {lastSequenceNumber}, current sequence number: {args.Message.SequenceNumber}");
+
+                    lastSequenceNumber = args.Message.SequenceNumber;
+                    return Task.CompletedTask;
+                }
             }
         }
 

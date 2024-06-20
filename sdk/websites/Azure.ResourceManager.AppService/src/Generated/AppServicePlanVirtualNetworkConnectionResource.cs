@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -267,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(e), _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -296,7 +294,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServiceVirtualNetworkRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(e), _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>

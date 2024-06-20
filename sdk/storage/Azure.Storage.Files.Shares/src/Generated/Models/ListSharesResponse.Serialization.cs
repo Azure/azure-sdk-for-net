@@ -49,7 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 shareItems = array;
             }
-            return new ListSharesResponse(serviceEndpoint, prefix, marker, maxResults, shareItems, nextMarker);
+            return new ListSharesResponse(
+                serviceEndpoint,
+                prefix,
+                marker,
+                maxResults,
+                shareItems,
+                nextMarker);
         }
     }
 }

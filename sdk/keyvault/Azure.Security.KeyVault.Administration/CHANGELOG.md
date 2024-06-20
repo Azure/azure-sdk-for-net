@@ -1,6 +1,6 @@
 # Release History
 
-## 4.4.0-beta.3 (Unreleased)
+## 4.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.4.0 (2024-02-14)
+
+Changes from both the last release and the last beta include:
+
+### Features Added
+
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+
+### Breaking Changes
+
+- `KeyVaultBackupOperation`, `KeyVaultRestoreOperation`, and `KeyVaultSelectiveKeyRestoreOperation` now throw a `RequestFailedException` with a different error message - but a raw `Response` with more details - when the service returns an error response. ([#41855](https://github.com/Azure/azure-sdk-for-net/issues/41855))
+
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
+### Other Changes
+
+- The default service version is now "7.5".
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 4.4.0-beta.2 (2023-11-13)
 

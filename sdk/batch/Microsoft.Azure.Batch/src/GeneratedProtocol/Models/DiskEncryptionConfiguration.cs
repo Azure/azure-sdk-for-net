@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// <summary>
     /// The disk encryption configuration applied on compute nodes in the pool.
     /// Disk encryption configuration is not supported on Linux pool created
-    /// with Shared Image Gallery Image.
+    /// with Azure Compute Gallery Image.
     /// </summary>
     public partial class DiskEncryptionConfiguration
     {

@@ -11,10 +11,11 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_05_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
     public partial class VectorSearchUsingVectorizableTextQuery : SearchTestBase
     {
         public VectorSearchUsingVectorizableTextQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -263,7 +264,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
             string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
-            string modelName = "text-embedding-ada-002";
+            string deploymentId = "text-embedding-ada-002";
             int modelDimensions = 1536;
 
             string indexName = "hotel";
@@ -302,7 +303,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                             {
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                                DeploymentId = modelName,
+                                DeploymentId = deploymentId,
+                                ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                             }
                         }
                     }

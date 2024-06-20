@@ -18,6 +18,8 @@ namespace Azure.Communication.JobRouter
         {
             /// <summary> Service version "2023-11-01". </summary>
             V2023_11_01 = 1,
+            /// <summary> Service version "2024-01-18-preview". </summary>
+            V2024_01_18_Preview = 2,
         }
 
         internal string Version { get; }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -20,8 +22,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of <see cref="ExternalInstallationSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="centralServerVmId"> The resource ID of the virtual machine containing the central server instance. </param>
-        internal ExternalInstallationSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, ResourceIdentifier centralServerVmId) : base(softwareInstallationType)
+        internal ExternalInstallationSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier centralServerVmId) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             CentralServerVmId = centralServerVmId;
             SoftwareInstallationType = softwareInstallationType;

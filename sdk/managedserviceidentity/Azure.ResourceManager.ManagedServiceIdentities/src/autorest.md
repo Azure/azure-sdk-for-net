@@ -18,6 +18,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

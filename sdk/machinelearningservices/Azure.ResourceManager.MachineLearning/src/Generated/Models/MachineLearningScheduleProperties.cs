@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -52,13 +52,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
-        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags)
+        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags, serializedAdditionalRawData)
         {
             Action = action;
             DisplayName = displayName;
             IsEnabled = isEnabled;
             ProvisioningState = provisioningState;
             Trigger = trigger;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/> for deserialization. </summary>
+        internal MachineLearningScheduleProperties()
+        {
         }
 
         /// <summary>

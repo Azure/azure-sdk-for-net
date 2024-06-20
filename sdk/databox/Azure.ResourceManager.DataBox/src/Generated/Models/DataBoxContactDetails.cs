@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Contact Details. </summary>
     public partial class DataBoxContactDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
@@ -39,7 +70,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="mobile"> Mobile number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
         /// <param name="notificationPreference"> Notification preference for a job stage. </param>
-        internal DataBoxContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IList<NotificationPreference> notificationPreference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IList<NotificationPreference> notificationPreference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Phone = phone;
@@ -47,6 +79,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Mobile = mobile;
             EmailList = emailList;
             NotificationPreference = notificationPreference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/> for deserialization. </summary>
+        internal DataBoxContactDetails()
+        {
         }
 
         /// <summary> Contact name of the person. </summary>

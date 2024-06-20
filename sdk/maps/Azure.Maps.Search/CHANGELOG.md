@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2024-05-07)
+
+### Bugs Fixed
+
+- Making the properties nullable as they are not required in the REST API response for search address.
+- Correct spelling of the Neighborhood property.
+
 
 ## 1.0.0-beta.4 (2023-07-13)
 

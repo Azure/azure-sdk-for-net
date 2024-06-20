@@ -20,5 +20,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         [JsonPropertyName("offset")]
         public ulong Offset { get; set; }
+
+        /// <summary>
+        /// Duration in ticks. 1 tick = 100 nanoseconds.
+        /// </summary>
+        [JsonPropertyName("duration")]
+        public ulong Duration { get; set; }
     }
 }

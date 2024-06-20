@@ -442,7 +442,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClientOptions>()))
+                    It.IsAny<ServiceBusClientOptions>(),
+                    It.IsAny<bool>()))
                 .Returns(mockTransportClient.Object);
 
             var processor = new ServiceBusProcessor(

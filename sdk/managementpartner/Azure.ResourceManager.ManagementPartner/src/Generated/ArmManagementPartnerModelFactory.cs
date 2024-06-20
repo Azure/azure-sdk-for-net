@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.ManagementPartner;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementPartner.Models
@@ -32,7 +31,21 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         /// <returns> A new <see cref="ManagementPartner.PartnerResponseData"/> instance for mocking. </returns>
         public static PartnerResponseData PartnerResponseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? etag = null, string partnerId = null, string partnerName = null, Guid? tenantId = null, string objectId = null, int? version = null, DateTimeOffset? updatedOn = null, DateTimeOffset? createdOn = null, ManagementPartnerState? state = null)
         {
-            return new PartnerResponseData(id, name, resourceType, systemData, etag, partnerId, partnerName, tenantId, objectId, version, updatedOn, createdOn, state);
+            return new PartnerResponseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                partnerId,
+                partnerName,
+                tenantId,
+                objectId,
+                version,
+                updatedOn,
+                createdOn,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationResponse"/>. </summary>
@@ -42,7 +55,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         /// <returns> A new <see cref="Models.OperationResponse"/> instance for mocking. </returns>
         public static OperationResponse OperationResponse(string name = null, OperationDisplay display = null, string origin = null)
         {
-            return new OperationResponse(name, display, origin);
+            return new OperationResponse(name, display, origin, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationDisplay"/>. </summary>
@@ -53,7 +66,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
         public static OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
         {
-            return new OperationDisplay(provider, resource, operation, description);
+            return new OperationDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
         }
     }
 }

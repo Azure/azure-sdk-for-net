@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         public ArcConfiguration()
         {
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="artifactStorageAccessMode"></param>
         /// <param name="frontEndServiceConfiguration"></param>
         /// <param name="kubeConfig"></param>
-        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -32,21 +68,28 @@ namespace Azure.ResourceManager.AppService.Models
             ArtifactStorageAccessMode = artifactStorageAccessMode;
             FrontEndServiceConfiguration = frontEndServiceConfiguration;
             KubeConfig = kubeConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the artifacts storage type. </summary>
+        [WirePath("artifactsStorageType")]
         public ArtifactStorageType? ArtifactsStorageType { get; set; }
         /// <summary> Gets or sets the artifact storage class name. </summary>
+        [WirePath("artifactStorageClassName")]
         public string ArtifactStorageClassName { get; set; }
         /// <summary> Gets or sets the artifact storage mount path. </summary>
+        [WirePath("artifactStorageMountPath")]
         public string ArtifactStorageMountPath { get; set; }
         /// <summary> Gets or sets the artifact storage node name. </summary>
+        [WirePath("artifactStorageNodeName")]
         public string ArtifactStorageNodeName { get; set; }
         /// <summary> Gets or sets the artifact storage access mode. </summary>
+        [WirePath("artifactStorageAccessMode")]
         public string ArtifactStorageAccessMode { get; set; }
         /// <summary> Gets or sets the front end service configuration. </summary>
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
         /// <summary> Gets or sets the front end service kind. </summary>
+        [WirePath("frontEndServiceConfiguration.kind")]
         public FrontEndServiceType? FrontEndServiceKind
         {
             get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
@@ -59,6 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the kube config. </summary>
+        [WirePath("kubeConfig")]
         public string KubeConfig { get; set; }
     }
 }

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
-require: https://github.com/Azure/azure-rest-api-specs/blob/13aec7f115c01ba6986ebf32488537392c0df6f5/specification/maintenance/resource-manager/readme.md
-#tag: package-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/741b0c8c71d90525a92bc4f2e45cb189c3affccd/specification/maintenance/resource-manager/readme.md
+#package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,8 +18,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -52,6 +53,7 @@ rename-mapping:
   InputWindowsParameters: MaintenanceWindowsPatchSettings
   InputWindowsParameters.excludeKbsRequiringReboot: IsExcludeKbsRebootRequired
   InputLinuxParameters: MaintenanceLinuxPatchSettings
+  ScheduledEventApproveResponse: ScheduledEventApproveResult
 
 prepend-rp-prefix:
   - ApplyUpdate
@@ -59,7 +61,7 @@ prepend-rp-prefix:
   - RebootOptions
   - Update
   - UpdateStatus
-  
+
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent
   ApplyUpdates_CreateOrUpdateParent: CreateOrUpdateApplyUpdateByParent
@@ -124,7 +126,7 @@ directive:
     transform: >
       $.MaintenanceWindow.properties.duration['x-ms-format'] = 'duration-constant';
 
-  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed. 
+  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed.
   - from: Maintenance.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}']
     transform: >

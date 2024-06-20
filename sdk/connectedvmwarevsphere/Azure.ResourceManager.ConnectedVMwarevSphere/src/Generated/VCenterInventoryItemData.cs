@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
@@ -17,6 +19,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VCenterInventoryItemData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VCenterInventoryItemData"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         public VCenterInventoryItemData(VCenterInventoryType inventoryType)
@@ -35,7 +69,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="moRefId"> Gets or sets the MoRef (Managed Object Reference) ID for the inventory item. </param>
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VCenterInventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, VCenterInventoryType inventoryType, string managedResourceId, string moRefId, string moName, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VCenterInventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, VCenterInventoryType inventoryType, string managedResourceId, string moRefId, string moName, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             InventoryType = inventoryType;
@@ -43,6 +78,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MoRefId = moRefId;
             MoName = moName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VCenterInventoryItemData"/> for deserialization. </summary>
+        internal VCenterInventoryItemData()
+        {
         }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>

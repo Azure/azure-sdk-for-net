@@ -511,7 +511,11 @@ namespace Azure.Core.Amqp.Shared
                     break;
 
                 case AmqpType.Uri:
-                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, ((Uri)propertyValue).AbsoluteUri);
+                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, propertyValue switch
+                    {
+                        Uri uriValue when uriValue.IsAbsoluteUri => uriValue.AbsoluteUri,
+                        _ => propertyValue.ToString()
+                    });
                     break;
 
                 case AmqpType.DateTimeOffset:
@@ -522,8 +526,12 @@ namespace Azure.Core.Amqp.Shared
                     amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.TimeSpan, ((TimeSpan)propertyValue).Ticks);
                     break;
 
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is byte[] byteArray:
+                case AmqpType.Unknown when propertyValue is byte[] byteArray:
                     amqpPropertyValue = new ArraySegment<byte>(byteArray);
+                    break;
+
+                case AmqpType.Unknown when propertyValue is ArraySegment<byte> byteSegment:
+                    amqpPropertyValue = byteSegment;
                     break;
 
                 case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
@@ -811,12 +819,11 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns>The typed value of the symbol, if it belongs to the well-known set; otherwise, <c>null</c>.</returns>
         ///
-        private static object? TranslateSymbol(AmqpSymbol symbol,
-                                              object value)
+        private static object? TranslateSymbol(AmqpSymbol symbol, object value)
         {
             if (symbol.Equals(AmqpMessageConstants.Uri))
             {
-                return new Uri((string)value);
+                return new Uri((string)value, UriKind.RelativeOrAbsolute);
             }
 
             if (symbol.Equals(AmqpMessageConstants.TimeSpan))

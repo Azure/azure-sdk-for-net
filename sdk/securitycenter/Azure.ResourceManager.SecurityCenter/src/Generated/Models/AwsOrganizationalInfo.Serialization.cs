@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownAwsOrganizationalData))]
     public partial class AwsOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<AwsOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AwsOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsOrganizationalInfo DeserializeAwsOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element);
-                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element);
+                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
+                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element, options);
                 }
             }
-            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element);
+            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element, options);
         }
 
         BinaryData IPersistableModel<AwsOrganizationalInfo>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAwsOrganizationalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

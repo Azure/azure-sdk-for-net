@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -44,7 +43,28 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             availableRegions ??= new List<AzureLocation>();
 
-            return new LabVirtualMachineImageData(id, name, resourceType, systemData, enabledState, provisioningState, displayName, description, iconUri, author, osType, plan, termsStatus, offer, publisher, sku, version, sharedGalleryId, availableRegions?.ToList(), osState);
+            return new LabVirtualMachineImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                enabledState,
+                provisioningState,
+                displayName,
+                description,
+                iconUri,
+                author,
+                osType,
+                plan,
+                termsStatus,
+                offer,
+                publisher,
+                sku,
+                version,
+                sharedGalleryId,
+                availableRegions?.ToList(),
+                osState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LabServices.LabPlanData"/>. </summary>
@@ -69,7 +89,23 @@ namespace Azure.ResourceManager.LabServices.Models
             tags ??= new Dictionary<string, string>();
             allowedRegions ??= new List<AzureLocation>();
 
-            return new LabPlanData(id, name, resourceType, systemData, tags, location, identity, defaultConnectionProfile, defaultAutoShutdownProfile, defaultNetworkSubnetId != null ? new LabPlanNetworkProfile(defaultNetworkSubnetId) : null, allowedRegions?.ToList(), sharedGalleryId, supportInfo, linkedLmsInstance, provisioningState);
+            return new LabPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkSubnetId != null ? new LabPlanNetworkProfile(defaultNetworkSubnetId, serializedAdditionalRawData: null) : null,
+                allowedRegions?.ToList(),
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LabServices.LabData"/>. </summary>
@@ -95,7 +131,25 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LabData(id, name, resourceType, systemData, tags, location, autoShutdownProfile, connectionProfile, virtualMachineProfile, securityProfile, rosterProfile, labPlanId, title, description, provisioningState, networkProfile, state);
+            return new LabData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description,
+                provisioningState,
+                networkProfile,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineProfile"/>. </summary>
@@ -111,7 +165,17 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabVirtualMachineProfile"/> instance for mocking. </returns>
         public static LabVirtualMachineProfile LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption = default, LabVirtualMachineImageReference imageReference = null, LabVirtualMachineImageOSType? osType = null, LabServicesSku sku = null, LabServicesEnableState? additionalCapabilitiesInstallGpuDrivers = null, TimeSpan usageQuota = default, LabServicesEnableState? useSharedPassword = null, LabVirtualMachineCredential adminUser = null, LabVirtualMachineCredential nonAdminUser = null)
         {
-            return new LabVirtualMachineProfile(createOption, imageReference, osType, sku, additionalCapabilitiesInstallGpuDrivers != null ? new LabVirtualMachineAdditionalCapability(additionalCapabilitiesInstallGpuDrivers) : null, usageQuota, useSharedPassword, adminUser, nonAdminUser);
+            return new LabVirtualMachineProfile(
+                createOption,
+                imageReference,
+                osType,
+                sku,
+                additionalCapabilitiesInstallGpuDrivers != null ? new LabVirtualMachineAdditionalCapability(additionalCapabilitiesInstallGpuDrivers, serializedAdditionalRawData: null) : null,
+                usageQuota,
+                useSharedPassword,
+                adminUser,
+                nonAdminUser,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineImageReference"/>. </summary>
@@ -124,7 +188,14 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabVirtualMachineImageReference"/> instance for mocking. </returns>
         public static LabVirtualMachineImageReference LabVirtualMachineImageReference(ResourceIdentifier id = null, string offer = null, string publisher = null, string sku = null, string version = null, string exactVersion = null)
         {
-            return new LabVirtualMachineImageReference(id, offer, publisher, sku, version, exactVersion);
+            return new LabVirtualMachineImageReference(
+                id,
+                offer,
+                publisher,
+                sku,
+                version,
+                exactVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabSecurityProfile"/>. </summary>
@@ -133,7 +204,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabSecurityProfile"/> instance for mocking. </returns>
         public static LabSecurityProfile LabSecurityProfile(string registrationCode = null, LabServicesEnableState? openAccess = null)
         {
-            return new LabSecurityProfile(registrationCode, openAccess);
+            return new LabSecurityProfile(registrationCode, openAccess, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LabServices.LabServicesScheduleData"/>. </summary>
@@ -150,7 +221,18 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="LabServices.LabServicesScheduleData"/> instance for mocking. </returns>
         public static LabServicesScheduleData LabServicesScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? stopOn = null, LabServicesRecurrencePattern recurrencePattern = null, string timeZoneId = null, BinaryData notes = null, LabServicesProvisioningState? provisioningState = null)
         {
-            return new LabServicesScheduleData(id, name, resourceType, systemData, startOn, stopOn, recurrencePattern, timeZoneId, notes, provisioningState);
+            return new LabServicesScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                stopOn,
+                recurrencePattern,
+                timeZoneId,
+                notes,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSku"/>. </summary>
@@ -172,7 +254,18 @@ namespace Azure.ResourceManager.LabServices.Models
             costs ??= new List<AvailableLabServicesSkuCost>();
             restrictions ??= new List<AvailableLabServicesSkuRestrictions>();
 
-            return new AvailableLabServicesSku(resourceType, name, tier, size, family, capacity, capabilities?.ToList(), locations?.ToList(), costs?.ToList(), restrictions?.ToList());
+            return new AvailableLabServicesSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                capabilities?.ToList(),
+                locations?.ToList(),
+                costs?.ToList(),
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCapacity"/>. </summary>
@@ -183,7 +276,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.AvailableLabServicesSkuCapacity"/> instance for mocking. </returns>
         public static AvailableLabServicesSkuCapacity AvailableLabServicesSkuCapacity(long? @default = null, long? minimum = null, long? maximum = null, LabServicesSkuCapacityScaleType? scaleType = null)
         {
-            return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType);
+            return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCapability"/>. </summary>
@@ -192,7 +285,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.AvailableLabServicesSkuCapability"/> instance for mocking. </returns>
         public static AvailableLabServicesSkuCapability AvailableLabServicesSkuCapability(string name = null, string value = null)
         {
-            return new AvailableLabServicesSkuCapability(name, value);
+            return new AvailableLabServicesSkuCapability(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCost"/>. </summary>
@@ -202,7 +295,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.AvailableLabServicesSkuCost"/> instance for mocking. </returns>
         public static AvailableLabServicesSkuCost AvailableLabServicesSkuCost(string meterId = null, float? quantity = null, string extendedUnit = null)
         {
-            return new AvailableLabServicesSkuCost(meterId, quantity, extendedUnit);
+            return new AvailableLabServicesSkuCost(meterId, quantity, extendedUnit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuRestrictions"/>. </summary>
@@ -214,7 +307,7 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             values ??= new List<string>();
 
-            return new AvailableLabServicesSkuRestrictions(labServicesSkuRestrictionType, values?.ToList(), reasonCode);
+            return new AvailableLabServicesSkuRestrictions(labServicesSkuRestrictionType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabServicesUsage"/>. </summary>
@@ -226,7 +319,13 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabServicesUsage"/> instance for mocking. </returns>
         public static LabServicesUsage LabServicesUsage(long? currentValue = null, long? limit = null, LabServicesUsageUnit? unit = null, LabServicesUsageName name = null, ResourceIdentifier id = null)
         {
-            return new LabServicesUsage(currentValue, limit, unit, name, id);
+            return new LabServicesUsage(
+                currentValue,
+                limit,
+                unit,
+                name,
+                id,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabServicesUsageName"/>. </summary>
@@ -238,7 +337,7 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             skuInstances ??= new List<string>();
 
-            return new LabServicesUsageName(localizedValue, skuInstances?.ToList(), value);
+            return new LabServicesUsageName(localizedValue, skuInstances?.ToList(), value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LabServices.LabUserData"/>. </summary>
@@ -257,7 +356,20 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="LabServices.LabUserData"/> instance for mocking. </returns>
         public static LabUserData LabUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeSpan? additionalUsageQuota = null, LabServicesProvisioningState? provisioningState = null, string displayName = null, string email = null, LabUserRegistrationState? registrationState = null, LabUserInvitationState? invitationState = null, DateTimeOffset? invitationSentOn = null, TimeSpan? totalUsage = null)
         {
-            return new LabUserData(id, name, resourceType, systemData, additionalUsageQuota, provisioningState, displayName, email, registrationState, invitationState, invitationSentOn, totalUsage);
+            return new LabUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalUsageQuota,
+                provisioningState,
+                displayName,
+                email,
+                registrationState,
+                invitationState,
+                invitationSentOn,
+                totalUsage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LabServices.LabVirtualMachineData"/>. </summary>
@@ -273,7 +385,17 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="LabServices.LabVirtualMachineData"/> instance for mocking. </returns>
         public static LabVirtualMachineData LabVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabServicesProvisioningState? provisioningState = null, LabVirtualMachineState? state = null, LabVirtualMachineConnectionProfile connectionProfile = null, string claimedByUserId = null, LabVirtualMachineType? vmType = null)
         {
-            return new LabVirtualMachineData(id, name, resourceType, systemData, provisioningState, state, connectionProfile, claimedByUserId, vmType);
+            return new LabVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                state,
+                connectionProfile,
+                claimedByUserId,
+                vmType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineConnectionProfile"/>. </summary>
@@ -287,7 +409,15 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabVirtualMachineConnectionProfile"/> instance for mocking. </returns>
         public static LabVirtualMachineConnectionProfile LabVirtualMachineConnectionProfile(IPAddress privateIPAddress = null, string sshAuthority = null, Uri sshInBrowserUri = null, string rdpAuthority = null, Uri rdpInBrowserUri = null, string adminUsername = null, string nonAdminUsername = null)
         {
-            return new LabVirtualMachineConnectionProfile(privateIPAddress, sshAuthority, sshInBrowserUri, rdpAuthority, rdpInBrowserUri, adminUsername, nonAdminUsername);
+            return new LabVirtualMachineConnectionProfile(
+                privateIPAddress,
+                sshAuthority,
+                sshInBrowserUri,
+                rdpAuthority,
+                rdpInBrowserUri,
+                adminUsername,
+                nonAdminUsername,
+                serializedAdditionalRawData: null);
         }
     }
 }

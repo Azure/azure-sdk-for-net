@@ -546,7 +546,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
@@ -603,7 +603,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);

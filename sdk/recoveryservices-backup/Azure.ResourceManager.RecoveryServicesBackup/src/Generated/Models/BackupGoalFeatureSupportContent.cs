@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure backup goal feature specific request. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupGoalFeatureSupportContent"/>. </summary>
         /// <param name="featureType"> backup support feature type. </param>
-        internal BackupGoalFeatureSupportContent(string featureType) : base(featureType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGoalFeatureSupportContent(string featureType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(featureType, serializedAdditionalRawData)
         {
             FeatureType = featureType ?? "AzureBackupGoals";
         }

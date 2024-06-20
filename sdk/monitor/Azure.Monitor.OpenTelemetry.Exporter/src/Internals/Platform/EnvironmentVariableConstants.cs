@@ -65,5 +65,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// When set to true, exporter will emit resources as metric telemetry.
         /// </summary>
         public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";
+
+        /// <summary>
+        /// By default, OpenTelemetry.Instrumenation.AspNetCore v1.8.1 will redact query strings values from URLs.
+        /// This environment variable can be set to true to disable this behavior.
+        /// </summary>
+        /// <remarks>
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/CHANGELOG.md#181"/>.
+        /// </remarks>
+        public const string ASPNETCORE_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION";
+
+        /// <summary>
+        /// By default, OpenTelemetry.Instrumenation.Http v1.8.1 will redact query string values from URLs.
+        /// This environment variable can be set to true to disable this behavior.
+        /// </summary>
+        /// <remarks>
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/CHANGELOG.md#181"/>.
+        /// </remarks>
+        public const string HTTPCLIENT_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION";
     }
 }

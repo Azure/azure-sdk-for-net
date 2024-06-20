@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -58,13 +57,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyLogDetails"> Copy progress per disk. </param>
         /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
         /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
-        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
+        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.DataBox.Models
             DisksAndSizeDetails = disksAndSizeDetails;
             Passkey = passkey;
             JobDetailsType = jobDetailsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskJobDetails"/> for deserialization. </summary>
+        internal DataBoxDiskJobDetails()
+        {
         }
 
         /// <summary> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </summary>

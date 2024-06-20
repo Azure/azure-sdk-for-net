@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformBindingProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBindingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBindingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBindingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,22 +116,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBindingProperties DeserializeAppPlatformBindingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> key = default;
-            Optional<IDictionary<string, BinaryData>> bindingParameters = default;
-            Optional<string> generatedProperties = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
+            string resourceName = default;
+            string resourceType = default;
+            ResourceIdentifier resourceId = default;
+            string key = default;
+            IDictionary<string, BinaryData> bindingParameters = default;
+            string generatedProperties = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -204,11 +204,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformBindingProperties(
+                resourceName,
+                resourceType,
+                resourceId,
+                key,
+                bindingParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                generatedProperties,
+                createdAt,
+                updatedAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBindingProperties>.Write(ModelReaderWriterOptions options)
@@ -220,7 +229,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformBindingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

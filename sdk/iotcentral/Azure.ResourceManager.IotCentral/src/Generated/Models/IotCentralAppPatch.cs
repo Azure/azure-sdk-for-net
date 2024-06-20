@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral.Models
@@ -16,6 +14,38 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> The description of the IoT Central application. </summary>
     public partial class IotCentralAppPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotCentralAppPatch"/>. </summary>
         public IotCentralAppPatch()
         {
@@ -36,7 +66,8 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <param name="publicNetworkAccess"> Whether requests from the public network are allowed. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
-        internal IotCentralAppPatch(IDictionary<string, string> tags, IotCentralAppSkuInfo sku, ManagedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppPatch(IDictionary<string, string> tags, IotCentralAppSkuInfo sku, ManagedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;
@@ -50,6 +81,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleSets = networkRuleSets;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Instance tags. </summary>

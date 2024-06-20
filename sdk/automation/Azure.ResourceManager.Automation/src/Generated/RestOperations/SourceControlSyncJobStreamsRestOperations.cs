@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -35,6 +34,29 @@ namespace Azure.ResourceManager.Automation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySyncJobRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySyncJobRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
@@ -132,6 +154,26 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
         {
             var message = _pipeline.CreateMessage();
@@ -224,6 +266,14 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySyncJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySyncJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)

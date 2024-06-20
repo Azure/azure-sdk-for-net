@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -21,9 +21,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, string annotation, IList<IPPrefixRule> ipPrefixRules) : base(tags)
+        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, IList<IPPrefixRule> ipPrefixRules) : base(tags, serializedAdditionalRawData)
         {
             Annotation = annotation;
             IPPrefixRules = ipPrefixRules;

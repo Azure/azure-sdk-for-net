@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="MediaJobInputClip"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="files"> List of files. Required for JobInputHttp. Maximum of 4000 characters each. Query strings will not be returned in service responses to prevent sensitive data exposure. </param>
         /// <param name="start">
         /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaJobInputDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FromAllInputFile"/>, <see cref="FromEachInputFile"/> and <see cref="MediaJobInputFile"/>.
         /// </param>
-        internal MediaJobInputClip(string odataType, IList<string> files, ClipTime start, ClipTime end, string label, IList<MediaJobInputDefinition> inputDefinitions) : base(odataType)
+        internal MediaJobInputClip(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> files, ClipTime start, ClipTime end, string label, IList<MediaJobInputDefinition> inputDefinitions) : base(odataType, serializedAdditionalRawData)
         {
             Files = files;
             Start = start;

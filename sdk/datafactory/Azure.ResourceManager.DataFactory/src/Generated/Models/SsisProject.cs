@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,11 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderId"> Folder id which contains project. </param>
         /// <param name="version"> Project version. </param>
         /// <param name="environmentRefs"> Environment reference in project. </param>
         /// <param name="parameters"> Parameters in project. </param>
-        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description)
+        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             FolderId = folderId;
             Version = version;

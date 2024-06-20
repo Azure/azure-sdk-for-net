@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ComplianceReportItem : IUtf8JsonSerializable, IJsonModel<ComplianceReportItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceReportItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceReportItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComplianceReportItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,27 +123,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<string> controlId = default;
-            Optional<string> controlName = default;
-            Optional<ControlType> controlType = default;
-            Optional<ComplianceState> complianceState = default;
-            Optional<string> policyId = default;
-            Optional<string> policyDisplayName = default;
-            Optional<string> policyDescription = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceId = default;
-            Optional<string> statusChangeDate = default;
+            string categoryName = default;
+            string controlId = default;
+            string controlName = default;
+            ControlType? controlType = default;
+            ComplianceState? complianceState = default;
+            string policyId = default;
+            string policyDisplayName = default;
+            string policyDescription = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string resourceType = default;
+            string resourceId = default;
+            string statusChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categoryName"u8))
@@ -221,11 +221,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ComplianceReportItem(
+                categoryName,
+                controlId,
+                controlName,
+                controlType,
+                complianceState,
+                policyId,
+                policyDisplayName,
+                policyDescription,
+                subscriptionId,
+                resourceGroup,
+                resourceType,
+                resourceId,
+                statusChangeDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)
@@ -237,7 +251,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +267,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeComplianceReportItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support reading '{options.Format}' format.");
             }
         }
 

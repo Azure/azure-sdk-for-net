@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The alias pattern phrase. </summary>
+        [WirePath("phrase")]
         public string Phrase { get; }
         /// <summary> The alias pattern variable. </summary>
+        [WirePath("variable")]
         public string Variable { get; }
         /// <summary> The type of alias pattern. </summary>
+        [WirePath("type")]
         public ResourceTypeAliasPatternType? PatternType { get; }
     }
 }

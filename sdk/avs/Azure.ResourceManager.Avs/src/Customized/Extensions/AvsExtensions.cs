@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
             return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
             return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);

@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
             }
             string label = default;
             IList<string> phrases = default;
-            Optional<DtmfTone> tone = default;
+            DtmfTone? tone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -69,7 +69,23 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognitionChoice(label, phrases, Optional.ToNullable(tone));
+            return new RecognitionChoice(label, phrases, tone);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecognitionChoice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecognitionChoice(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

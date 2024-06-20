@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> status = default;
-            Optional<LogsBatchQueryResult> body = default;
-            Optional<IReadOnlyDictionary<string, string>> headers = default;
+            string id = default;
+            int? status = default;
+            LogsBatchQueryResult body = default;
+            IReadOnlyDictionary<string, string> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +62,15 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
+            return new BatchQueryResponse(id, status, body, headers ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BatchQueryResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchQueryResponse(document.RootElement);
         }
     }
 }

@@ -5,9 +5,7 @@ using System;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary>
-    /// The visual features requested: tags, objects, caption, denseCaptions, read, smartCrops, people.
-    /// </summary>
+    /// <inheritdoc cref="VisualFeaturesImpl"/>
     [Flags]
     public enum VisualFeatures
     {
@@ -15,19 +13,19 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// No visual features are selected.
         /// </summary>
         None = 0,
-        /// <summary> Tags. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.Tags"/>
         Tags = 1,
-        /// <summary> Caption. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.Caption"/>
         Caption = 2,
-        /// <summary> DenseCaptions. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.DenseCaptions"/>
         DenseCaptions = 4,
-        /// <summary> Objects. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.Objects"/>
         Objects = 8,
-        /// <summary> Read. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.Read"/>
         Read = 16,
-        /// <summary> SmartCrops. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.SmartCrops"/>
         SmartCrops = 32,
-        /// <summary> People. </summary>
+        /// <inheritdoc cref="VisualFeaturesImpl.People"/>
         People = 64
     }
 }

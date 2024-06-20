@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The TypedErrorInfo. </summary>
     public partial class TypedErrorInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
@@ -26,10 +58,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <param name="info"> Any object. </param>
-        internal TypedErrorInfo(string typedErrorInfoType, BinaryData info)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypedErrorInfo(string typedErrorInfoType, BinaryData info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TypedErrorInfoType = typedErrorInfoType;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/> for deserialization. </summary>
+        internal TypedErrorInfo()
+        {
         }
 
         /// <summary> Gets or sets the typed error info type. </summary>

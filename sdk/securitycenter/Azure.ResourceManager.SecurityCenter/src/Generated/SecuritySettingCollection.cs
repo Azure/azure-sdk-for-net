@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securitySettingSettingsRestClient.UpdateAsync(Id.SubscriptionId, settingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securitySettingSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, settingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +137,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securitySettingSettingsRestClient.Update(Id.SubscriptionId, settingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securitySettingSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, settingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceMetrics"/>. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
-        internal MonitorWorkspaceMetrics(string prometheusQueryEndpoint, string internalId) : base(prometheusQueryEndpoint, internalId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWorkspaceMetrics(string prometheusQueryEndpoint, string internalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(prometheusQueryEndpoint, internalId, serializedAdditionalRawData)
         {
         }
     }

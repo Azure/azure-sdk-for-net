@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -40,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "AzureMariaDBTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMariaDBTableDataset"/> for deserialization. </summary>
+        internal AzureMariaDBTableDataset()
+        {
         }
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>

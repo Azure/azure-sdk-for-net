@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -358,7 +356,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -396,7 +394,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -434,7 +432,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -476,7 +474,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -518,7 +516,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -560,7 +558,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -602,7 +600,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -620,7 +618,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -632,7 +630,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -650,7 +648,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +660,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -700,7 +698,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

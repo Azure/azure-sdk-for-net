@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -32,15 +33,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
-        internal InMageRcmFabricCreationContent(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base(instanceType)
+        internal InMageRcmFabricCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base(instanceType, serializedAdditionalRawData)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
             SourceAgentIdentity = sourceAgentIdentity;
             InstanceType = instanceType ?? "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/> for deserialization. </summary>
+        internal InMageRcmFabricCreationContent()
+        {
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>

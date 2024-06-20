@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Container extended information. </summary>
     public partial class GenericContainerExtendedInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GenericContainerExtendedInfo"/>. </summary>
         public GenericContainerExtendedInfo()
         {
@@ -23,11 +55,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="rawCertData"> Public key of container cert. </param>
         /// <param name="containerIdentityInfo"> Container identity information. </param>
         /// <param name="serviceEndpoints"> Azure Backup Service Endpoints for the container. </param>
-        internal GenericContainerExtendedInfo(string rawCertData, ContainerIdentityInfo containerIdentityInfo, IDictionary<string, string> serviceEndpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenericContainerExtendedInfo(string rawCertData, ContainerIdentityInfo containerIdentityInfo, IDictionary<string, string> serviceEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RawCertData = rawCertData;
             ContainerIdentityInfo = containerIdentityInfo;
             ServiceEndpoints = serviceEndpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public key of container cert. </summary>

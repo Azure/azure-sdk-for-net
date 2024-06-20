@@ -37,6 +37,12 @@ In order to interact with Azure Image Analysis, you'll need to create an instanc
 class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
 along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
+```C# Snippet:ImageAnalysisUsing
+using Azure;
+using Azure.AI.Vision.ImageAnalysis;
+using System;
+using System.IO;
+```
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
 string key = Environment.GetEnvironmentVariable("VISION_KEY");
@@ -46,6 +52,21 @@ ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new Azur
 ```
 
 Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
+
+#### Create ImageAnalysisClient with a Microsoft Entra ID Credential
+
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
+or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+```C# Snippet:ImageAnalysisEntraIDAuth
+string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
+
+ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
+```
 
 ## Key concepts
 
@@ -233,3 +254,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
 [vision_studio]: https://aka.ms/vision-studio/image-analysis
 [imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
+[azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet

@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Specialized;
@@ -16,6 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares.Tests;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -88,8 +90,41 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClient(new BlockBlobClient(sourceUri, GetBlobOptions()));
         }
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(BlockBlobClient objectClient)
-            => new BlockBlobStorageResource(objectClient);
+        protected override StorageResourceItem GetDestinationStorageResourceItem(
+            BlockBlobClient objectClient,
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
+        {
+            BlockBlobStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    AccessTier = AccessTier.Cool,
+                    ContentDisposition = new("attachment"),
+                    ContentLanguage = new("en-US"),
+                    CacheControl = new("no-cache")
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true)
+                };
+            }
+            return new BlockBlobStorageResource(objectClient, options);
+        }
 
         protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await SourceClientBuilder.GetTestShareAsync(service, containerName);
@@ -170,6 +205,48 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        protected override Task VerifyPropertiesCopyAsync(
+            DataTransfer transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            ShareFileClient sourceClient,
+            BlockBlobClient destinationClient)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_DefaultProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_PreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NoPreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NewProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
         }
     }
 }

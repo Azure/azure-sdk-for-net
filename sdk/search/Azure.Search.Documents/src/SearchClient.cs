@@ -21,6 +21,9 @@ namespace Azure.Search.Documents
     /// </summary>
     public class SearchClient
     {
+        private readonly HttpPipeline _pipeline;
+        private string _serviceName;
+
         /// <summary>
         /// Gets the URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
@@ -30,12 +33,6 @@ namespace Azure.Search.Documents
         /// URI with "{Endpoint}/indexes/{IndexName}" if needed.
         /// </remarks>
         public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// The name of the Search Service, lazily obtained from the
-        /// <see cref="Endpoint"/>.
-        /// </summary>
-        private string _serviceName;
 
         /// <summary>
         /// Gets the name of the Search Service.
@@ -55,10 +52,9 @@ namespace Azure.Search.Documents
         internal ObjectSerializer Serializer { get; }
 
         /// <summary>
-        /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
-        /// requests to the Search Service.
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
         /// </summary>
-        private HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
@@ -202,12 +198,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(credential);
+            _pipeline = options.Build(credential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
                 null,
@@ -261,12 +257,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(tokenCredential);
+            _pipeline = options.Build(tokenCredential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
                 null,
@@ -321,12 +317,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = serializer;
             ClientDiagnostics = diagnostics;
-            Pipeline = pipeline;
+            _pipeline = pipeline;
             Version = version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 IndexName,
                 null,
@@ -341,7 +337,7 @@ namespace Azure.Search.Documents
             new SearchIndexClient(
                 Endpoint,
                 Serializer,
-                Pipeline,
+                _pipeline,
                 ClientDiagnostics,
                 Version);
         #endregion ctors
@@ -688,11 +684,11 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
@@ -977,11 +973,11 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateSearchPostRequest(options);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
@@ -1146,11 +1142,11 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateSuggestPostRequest(options);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
@@ -1414,7 +1410,7 @@ namespace Azure.Search.Documents
             try
             {
                 // Create the message
-                using HttpMessage message = Pipeline.CreateMessage();
+                using HttpMessage message = _pipeline.CreateMessage();
                 {
                     Request request = message.Request;
                     request.Method = RequestMethod.Post;
@@ -1442,11 +1438,11 @@ namespace Azure.Search.Documents
                 // Send the request
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
 
                 // Parse the response

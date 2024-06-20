@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationRunbookCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationRunbookCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRunbookCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRunbookCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationRunbookCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue(Draft);
+                writer.WriteObjectValue(Draft, options);
             }
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue(PublishContentLink);
+                writer.WriteObjectValue(PublishContentLink, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationRunbookCreateOrUpdateContent DeserializeAutomationRunbookCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
             AutomationRunbookType runbookType = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<string> description = default;
-            Optional<int> logActivityTrace = default;
+            AutomationRunbookDraft draft = default;
+            AutomationContentLink publishContentLink = default;
+            string description = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publishContentLink"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -231,11 +231,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), runbookType, draft.Value, publishContentLink.Value, description.Value, Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationRunbookCreateOrUpdateContent(
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                logVerbose,
+                logProgress,
+                runbookType,
+                draft,
+                publishContentLink,
+                description,
+                logActivityTrace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -247,7 +258,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +274,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationRunbookCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ShortCode>> shortCodes = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ShortCode> shortCodes = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shortCodes"u8))
@@ -43,7 +42,15 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ShortCodes(Optional.ToList(shortCodes), nextLink.Value);
+            return new ShortCodes(shortCodes ?? new ChangeTrackingList<ShortCode>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ShortCodes FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShortCodes(document.RootElement);
         }
     }
 }

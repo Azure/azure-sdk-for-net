@@ -1,0 +1,22 @@
+{
+  "Name": "ManagedDisk",
+  "ProtocolName": "Models.ManagedDisk",
+  "SummaryComment": "The managed disk object.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.StorageAccountType?",
+        "Name": "StorageAccountType",
+        "SummaryComment": "The Azure Storage account name.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": false
+      },
+      "Value": {
+        "Type": "Models.StorageAccountType?",
+        "Name": "StorageAccountType"
+      }
+    }
+  ]
+}

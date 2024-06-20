@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class KubeletConfig : IUtf8JsonSerializable, IJsonModel<KubeletConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeletConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeletConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubeletConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,25 +118,25 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static KubeletConfig DeserializeKubeletConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> cpuManagerPolicy = default;
-            Optional<bool> cpuCfsQuota = default;
-            Optional<string> cpuCfsQuotaPeriod = default;
-            Optional<int> imageGcHighThreshold = default;
-            Optional<int> imageGcLowThreshold = default;
-            Optional<string> topologyManagerPolicy = default;
-            Optional<IList<string>> allowedUnsafeSysctls = default;
-            Optional<bool> failSwapOn = default;
-            Optional<int> containerLogMaxSizeMB = default;
-            Optional<int> containerLogMaxFiles = default;
-            Optional<int> podMaxPids = default;
+            string cpuManagerPolicy = default;
+            bool? cpuCfsQuota = default;
+            string cpuCfsQuotaPeriod = default;
+            int? imageGcHighThreshold = default;
+            int? imageGcLowThreshold = default;
+            string topologyManagerPolicy = default;
+            IList<string> allowedUnsafeSysctls = default;
+            bool? failSwapOn = default;
+            int? containerLogMaxSizeMB = default;
+            int? containerLogMaxFiles = default;
+            int? podMaxPids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuManagerPolicy"u8))
@@ -233,11 +233,23 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeletConfig(cpuManagerPolicy.Value, Optional.ToNullable(cpuCfsQuota), cpuCfsQuotaPeriod.Value, Optional.ToNullable(imageGcHighThreshold), Optional.ToNullable(imageGcLowThreshold), topologyManagerPolicy.Value, Optional.ToList(allowedUnsafeSysctls), Optional.ToNullable(failSwapOn), Optional.ToNullable(containerLogMaxSizeMB), Optional.ToNullable(containerLogMaxFiles), Optional.ToNullable(podMaxPids), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubeletConfig(
+                cpuManagerPolicy,
+                cpuCfsQuota,
+                cpuCfsQuotaPeriod,
+                imageGcHighThreshold,
+                imageGcLowThreshold,
+                topologyManagerPolicy,
+                allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
+                failSwapOn,
+                containerLogMaxSizeMB,
+                containerLogMaxFiles,
+                podMaxPids,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options)
@@ -249,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +277,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeKubeletConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

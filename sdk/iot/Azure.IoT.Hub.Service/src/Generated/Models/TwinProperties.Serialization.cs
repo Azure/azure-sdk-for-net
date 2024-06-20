@@ -28,7 +28,7 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -44,7 +44,7 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -57,8 +57,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> desired = default;
-            Optional<IDictionary<string, object>> reported = default;
+            IDictionary<string, object> desired = default;
+            IDictionary<string, object> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"u8))
@@ -104,7 +104,23 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinProperties(Optional.ToDictionary(desired), Optional.ToDictionary(reported));
+            return new TwinProperties(desired ?? new ChangeTrackingDictionary<string, object>(), reported ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TwinProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTwinProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportRecordContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportRecordContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequestReportRecordContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(BackendResponseCode))
             {
                 writer.WritePropertyName("backendResponseCode"u8);
-                writer.WriteStringValue(BackendResponseCode);
+                SerializeBackendResponseCodeValue(writer, options);
             }
             if (Optional.IsDefined(ResponseCode))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,32 +149,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> apiId = default;
-            Optional<string> operationId = default;
-            Optional<string> productId = default;
-            Optional<string> userId = default;
-            Optional<RequestMethod> method = default;
-            Optional<Uri> uri = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> backendResponseCode = default;
-            Optional<int> responseCode = default;
-            Optional<int> responseSize = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> cache = default;
-            Optional<double> apiTime = default;
-            Optional<double> serviceTime = default;
-            Optional<string> apiRegion = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<string> requestId = default;
-            Optional<int> requestSize = default;
+            string apiId = default;
+            string operationId = default;
+            string productId = default;
+            string userId = default;
+            RequestMethod? method = default;
+            Uri uri = default;
+            IPAddress ipAddress = default;
+            string backendResponseCode = default;
+            int? responseCode = default;
+            int? responseSize = default;
+            DateTimeOffset? timestamp = default;
+            string cache = default;
+            double? apiTime = default;
+            double? serviceTime = default;
+            string apiRegion = default;
+            ResourceIdentifier subscriptionId = default;
+            string requestId = default;
+            int? requestSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("backendResponseCode"u8))
                 {
-                    backendResponseCode = property.Value.GetString();
+                    DeserializeBackendResponseCodeValue(property, ref backendResponseCode);
                     continue;
                 }
                 if (property.NameEquals("responseCode"u8))
@@ -309,11 +309,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequestReportRecordContract(
+                apiId,
+                operationId,
+                productId,
+                userId,
+                method,
+                uri,
+                ipAddress,
+                backendResponseCode,
+                responseCode,
+                responseSize,
+                timestamp,
+                cache,
+                apiTime,
+                serviceTime,
+                apiRegion,
+                subscriptionId,
+                requestId,
+                requestSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options)
@@ -325,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +360,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeRequestReportRecordContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchMountConfiguration : IUtf8JsonSerializable, IJsonModel<BatchMountConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchMountConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchMountConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchMountConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue(BlobFileSystemConfiguration);
+                writer.WriteObjectValue(BlobFileSystemConfiguration, options);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue(NfsMountConfiguration);
+                writer.WriteObjectValue(NfsMountConfiguration, options);
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue(CifsMountConfiguration);
+                writer.WriteObjectValue(CifsMountConfiguration, options);
             }
             if (Optional.IsDefined(FileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue(FileShareConfiguration);
+                writer.WriteObjectValue(FileShareConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchMountConfiguration DeserializeBatchMountConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BatchBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
-            Optional<BatchNfsMountConfiguration> nfsMountConfiguration = default;
-            Optional<BatchCifsMountConfiguration> cifsMountConfiguration = default;
-            Optional<BatchFileShareConfiguration> azureFileShareConfiguration = default;
+            BatchBlobFileSystemConfiguration azureBlobFileSystemConfiguration = default;
+            BatchNfsMountConfiguration nfsMountConfiguration = default;
+            BatchCifsMountConfiguration cifsMountConfiguration = default;
+            BatchFileShareConfiguration azureFileShareConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobFileSystemConfiguration"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value);
+                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsMountConfiguration"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value);
+                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cifsMountConfiguration"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value);
+                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureFileShareConfiguration"u8))
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value);
+                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchMountConfiguration(azureBlobFileSystemConfiguration.Value, nfsMountConfiguration.Value, cifsMountConfiguration.Value, azureFileShareConfiguration.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchMountConfiguration(azureBlobFileSystemConfiguration, nfsMountConfiguration, cifsMountConfiguration, azureFileShareConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchMountConfiguration>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchMountConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

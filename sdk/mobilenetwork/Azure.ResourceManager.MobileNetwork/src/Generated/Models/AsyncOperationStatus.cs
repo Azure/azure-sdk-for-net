@@ -6,14 +6,45 @@
 #nullable disable
 
 using System;
-using Azure;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> The current status of an async operation. </summary>
     public partial class AsyncOperationStatus
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/>. </summary>
         /// <param name="status"> The operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
@@ -34,7 +65,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="percentComplete"> Percentage of the operation that is complete. </param>
         /// <param name="properties"> Properties returned by the resource provider on a successful operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        internal AsyncOperationStatus(string id, string name, string status, string resourceId, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, BinaryData properties, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AsyncOperationStatus(string id, string name, string status, string resourceId, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, BinaryData properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -45,6 +77,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             PercentComplete = percentComplete;
             Properties = properties;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/> for deserialization. </summary>
+        internal AsyncOperationStatus()
+        {
         }
 
         /// <summary> Fully qualified ID for the async operation. </summary>

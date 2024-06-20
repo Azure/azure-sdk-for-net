@@ -16,6 +16,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 # mgmt-debug:
 #   show-serialized-names: true
 
@@ -161,6 +163,9 @@ override-operation-name:
   WorkspacePurge_Purge: Purge
   DeletedWorkspaces_List: GetDeletedWorkspaces
   DeletedWorkspaces_ListByResourceGroup: GetDeletedWorkspaces
+
+operations-to-skip-lro-api-version-override:
+- Clusters_CreateOrUpdate
 
 directive:
   - remove-operation: OperationStatuses_Get

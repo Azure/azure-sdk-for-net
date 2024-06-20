@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of <see cref="JpgImage"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>
         /// <param name="stretchMode"> The resizing mode - how the input video will be resized to fit the desired output resolution(s). Default is AutoSize. </param>
         /// <param name="syncMode"> The Video Sync Mode. </param>
@@ -36,11 +36,16 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="range"> The position relative to transform preset start time in the input video at which to stop generating thumbnails. The value can be in ISO 8601 format (For example, PT5M30S to stop at 5 minutes and 30 seconds from start time), or a frame count (For example, 300 to stop at the 300th frame from the frame at start time. If this value is 1, it means only producing one thumbnail at start time), or a relative value to the stream duration (For example, 50% to stop at half of stream duration from start time). The default value is 100%, which means to stop at the end of the stream. </param>
         /// <param name="layers"> A collection of output JPEG image layers to be produced by the encoder. </param>
         /// <param name="spriteColumn"> Sets the number of columns used in thumbnail sprite image.  The number of rows are automatically calculated and a VTT file is generated with the coordinate mappings for each thumbnail in the sprite. Note: this value should be a positive integer and a proper value is recommended so that the output image resolution will not go beyond JPEG maximum pixel resolution limit 65535x65535. </param>
-        internal JpgImage(string odataType, string label, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode, string start, string step, string range, IList<JpgLayer> layers, int? spriteColumn) : base(odataType, label, keyFrameInterval, stretchMode, syncMode, start, step, range)
+        internal JpgImage(string odataType, string label, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode, string start, string step, string range, IList<JpgLayer> layers, int? spriteColumn) : base(odataType, label, serializedAdditionalRawData, keyFrameInterval, stretchMode, syncMode, start, step, range)
         {
             Layers = layers;
             SpriteColumn = spriteColumn;
             OdataType = odataType ?? "#Microsoft.Media.JpgImage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JpgImage"/> for deserialization. </summary>
+        internal JpgImage()
+        {
         }
 
         /// <summary> A collection of output JPEG image layers to be produced by the encoder. </summary>

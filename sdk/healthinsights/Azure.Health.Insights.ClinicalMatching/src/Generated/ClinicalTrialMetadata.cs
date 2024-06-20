@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> Trial data which is of interest to the potential participant. </summary>
     public partial class ClinicalTrialMetadata
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/>. </summary>
         /// <param name="conditions"> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
@@ -40,7 +71,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="sponsors"> Sponsors/collaborators involved with the trial. </param>
         /// <param name="contacts"> Contact details of the trial administrators, for patients that want to participate in the trial. </param>
         /// <param name="facilities"> Research facilities where the clinical trial is conducted. </param>
-        internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Phases = phases;
             StudyType = studyType;
@@ -49,6 +81,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             Sponsors = sponsors;
             Contacts = contacts;
             Facilities = facilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/> for deserialization. </summary>
+        internal ClinicalTrialMetadata()
+        {
         }
 
         /// <summary>

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
 
             GuestConfigurationNavigation guestConfigurationNavigation = new(GuestConfigurationManagementUtilities.DefaultKind, GuestConfigurationManagementUtilities.DefaultAssignmentName,
             GuestConfigurationManagementUtilities.DefaultAssignmentVersion, null, null, GuestConfigurationManagementUtilities.DefaultAssignmentType,
-            null, GuestConfigurationManagementUtilities.Builtin, configurationParameterList, configurationParameterList, null);
+            null, GuestConfigurationManagementUtilities.Builtin, configurationParameterList, configurationParameterList, null, null);
 
             return new GuestConfigurationAssignmentProperties()
             {

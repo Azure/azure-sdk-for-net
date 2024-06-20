@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
@@ -94,5 +96,67 @@ namespace Azure.AI.DocumentIntelligence.Samples
             }
             #endregion
         }
+
+        [RecordedTest]
+        public async Task GetWordsSnippet()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            #region Snippet:Migration_DocumentIntelligenceGetWordsUsage
+#if SNIPPET
+            Uri uriSource = new Uri("<uriSource>");
+#else
+            Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
+#endif
+
+            var content = new AnalyzeDocumentContent()
+            {
+                UrlSource = uriSource
+            };
+
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+            AnalyzeResult result = operation.Value;
+
+            DocumentPage firstPage = result.Pages[0];
+
+            foreach (DocumentLine line in firstPage.Lines)
+            {
+                IReadOnlyList<DocumentWord> words = GetWords(line, firstPage);
+
+                Console.WriteLine(line.Content);
+                Console.WriteLine("The line above contains the following words:");
+
+                foreach (DocumentWord word in words)
+                {
+                    Console.WriteLine($"  {word.Content}");
+                }
+            }
+            #endregion
+        }
+
+        #region Snippet:Migration_DocumentIntelligenceGetWords
+        private IReadOnlyList<DocumentWord> GetWords(DocumentLine line, DocumentPage containingPage)
+        {
+            var words = new List<DocumentWord>();
+
+            foreach (DocumentWord word in containingPage.Words)
+            {
+                DocumentSpan wordSpan = word.Span;
+
+                foreach (DocumentSpan lineSpan in line.Spans)
+                {
+                    if (wordSpan.Offset >= lineSpan.Offset
+                        && wordSpan.Offset + wordSpan.Length <= lineSpan.Offset + lineSpan.Length)
+                    {
+                        words.Add(word);
+                    }
+                }
+            }
+
+            return words;
+        }
+        #endregion
     }
 }

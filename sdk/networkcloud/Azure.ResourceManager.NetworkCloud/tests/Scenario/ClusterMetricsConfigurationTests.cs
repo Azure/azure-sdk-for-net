@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task ClusterMetricsConfiguration()
         {
             // retrieve a parent cluster

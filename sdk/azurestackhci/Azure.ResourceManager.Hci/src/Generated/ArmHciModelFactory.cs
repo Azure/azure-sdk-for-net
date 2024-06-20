@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -41,7 +39,24 @@ namespace Azure.ResourceManager.Hci.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GalleryImageData(id, name, resourceType, systemData, tags, location, extendedLocation, containerId, imagePath, osType, cloudInitDataSource, hyperVGeneration, identifier, version, provisioningState, status);
+            return new GalleryImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                containerId,
+                imagePath,
+                osType,
+                cloudInitDataSource,
+                hyperVGeneration,
+                identifier,
+                version,
+                provisioningState,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageStatus"/>. </summary>
@@ -53,7 +68,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.GalleryImageStatus"/> instance for mocking. </returns>
         public static GalleryImageStatus GalleryImageStatus(string errorCode = null, string errorMessage = null, GalleryImageStatusProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
         {
-            return new GalleryImageStatus(errorCode, errorMessage, provisioningStatus, downloadSizeInMB != null ? new GalleryImageStatusDownloadStatus(downloadSizeInMB) : null, progressPercentage);
+            return new GalleryImageStatus(
+                errorCode,
+                errorMessage,
+                provisioningStatus,
+                downloadSizeInMB != null ? new GalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData: null) : null,
+                progressPercentage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageStatusProvisioningStatus"/>. </summary>
@@ -62,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.GalleryImageStatusProvisioningStatus"/> instance for mocking. </returns>
         public static GalleryImageStatusProvisioningStatus GalleryImageStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new GalleryImageStatusProvisioningStatus(operationId, status);
+            return new GalleryImageStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.LogicalNetworkData"/>. </summary>
@@ -85,7 +106,20 @@ namespace Azure.ResourceManager.Hci.Models
             dhcpOptionsDnsServers ??= new List<string>();
             subnets ??= new List<Subnet>();
 
-            return new LogicalNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, dhcpOptionsDnsServers != null ? new LogicalNetworkPropertiesDhcpOptions(dhcpOptionsDnsServers?.ToList()) : null, subnets?.ToList(), provisioningState, vmSwitchName, status);
+            return new LogicalNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                dhcpOptionsDnsServers != null ? new LogicalNetworkPropertiesDhcpOptions(dhcpOptionsDnsServers?.ToList(), serializedAdditionalRawData: null) : null,
+                subnets?.ToList(),
+                provisioningState,
+                vmSwitchName,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteTable"/>. </summary>
@@ -98,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             routes ??= new List<Route>();
 
-            return new RouteTable(etag, name, routeTableType, routes?.ToList());
+            return new RouteTable(etag, name, routeTableType, routes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IPPoolInfo"/>. </summary>
@@ -107,7 +141,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.IPPoolInfo"/> instance for mocking. </returns>
         public static IPPoolInfo IPPoolInfo(string used = null, string available = null)
         {
-            return new IPPoolInfo(used, available);
+            return new IPPoolInfo(used, available, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicalNetworkStatus"/>. </summary>
@@ -117,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.LogicalNetworkStatus"/> instance for mocking. </returns>
         public static LogicalNetworkStatus LogicalNetworkStatus(string errorCode = null, string errorMessage = null, LogicalNetworkStatusProvisioningStatus provisioningStatus = null)
         {
-            return new LogicalNetworkStatus(errorCode, errorMessage, provisioningStatus);
+            return new LogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicalNetworkStatusProvisioningStatus"/>. </summary>
@@ -126,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.LogicalNetworkStatusProvisioningStatus"/> instance for mocking. </returns>
         public static LogicalNetworkStatusProvisioningStatus LogicalNetworkStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new LogicalNetworkStatusProvisioningStatus(operationId, status);
+            return new LogicalNetworkStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.MarketplaceGalleryImageData"/>. </summary>
@@ -150,7 +184,23 @@ namespace Azure.ResourceManager.Hci.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MarketplaceGalleryImageData(id, name, resourceType, systemData, tags, location, extendedLocation, containerId, osType, cloudInitDataSource, hyperVGeneration, identifier, version, provisioningState, status);
+            return new MarketplaceGalleryImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                containerId,
+                osType,
+                cloudInitDataSource,
+                hyperVGeneration,
+                identifier,
+                version,
+                provisioningState,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceGalleryImageStatus"/>. </summary>
@@ -162,7 +212,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.MarketplaceGalleryImageStatus"/> instance for mocking. </returns>
         public static MarketplaceGalleryImageStatus MarketplaceGalleryImageStatus(string errorCode = null, string errorMessage = null, MarketplaceGalleryImageStatusProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
         {
-            return new MarketplaceGalleryImageStatus(errorCode, errorMessage, provisioningStatus, downloadSizeInMB != null ? new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB) : null, progressPercentage);
+            return new MarketplaceGalleryImageStatus(
+                errorCode,
+                errorMessage,
+                provisioningStatus,
+                downloadSizeInMB != null ? new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData: null) : null,
+                progressPercentage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceGalleryImageStatusProvisioningStatus"/>. </summary>
@@ -171,7 +227,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.MarketplaceGalleryImageStatusProvisioningStatus"/> instance for mocking. </returns>
         public static MarketplaceGalleryImageStatusProvisioningStatus MarketplaceGalleryImageStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new MarketplaceGalleryImageStatusProvisioningStatus(operationId, status);
+            return new MarketplaceGalleryImageStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.NetworkInterfaceData"/>. </summary>
@@ -194,7 +250,20 @@ namespace Azure.ResourceManager.Hci.Models
             ipConfigurations ??= new List<IPConfiguration>();
             dnsServers ??= new List<string>();
 
-            return new NetworkInterfaceData(id, name, resourceType, systemData, tags, location, extendedLocation, ipConfigurations?.ToList(), macAddress, dnsServers != null ? new InterfaceDnsSettings(dnsServers?.ToList()) : null, provisioningState, status);
+            return new NetworkInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                ipConfigurations?.ToList(),
+                macAddress,
+                dnsServers != null ? new InterfaceDnsSettings(dnsServers?.ToList(), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IPConfigurationProperties"/>. </summary>
@@ -205,7 +274,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.IPConfigurationProperties"/> instance for mocking. </returns>
         public static IPConfigurationProperties IPConfigurationProperties(string gateway = null, string prefixLength = null, string privateIPAddress = null, ResourceIdentifier subnetId = null)
         {
-            return new IPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null);
+            return new IPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkInterfaceStatus"/>. </summary>
@@ -215,7 +284,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.NetworkInterfaceStatus"/> instance for mocking. </returns>
         public static NetworkInterfaceStatus NetworkInterfaceStatus(string errorCode = null, string errorMessage = null, NetworkInterfaceStatusProvisioningStatus provisioningStatus = null)
         {
-            return new NetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus);
+            return new NetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkInterfaceStatusProvisioningStatus"/>. </summary>
@@ -224,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.NetworkInterfaceStatusProvisioningStatus"/> instance for mocking. </returns>
         public static NetworkInterfaceStatusProvisioningStatus NetworkInterfaceStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new NetworkInterfaceStatusProvisioningStatus(operationId, status);
+            return new NetworkInterfaceStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.StorageContainerData"/>. </summary>
@@ -243,7 +312,18 @@ namespace Azure.ResourceManager.Hci.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageContainerData(id, name, resourceType, systemData, tags, location, extendedLocation, path, provisioningState, status);
+            return new StorageContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                path,
+                provisioningState,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageContainerStatus"/>. </summary>
@@ -255,7 +335,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.StorageContainerStatus"/> instance for mocking. </returns>
         public static StorageContainerStatus StorageContainerStatus(string errorCode = null, string errorMessage = null, long? availableSizeMB = null, long? containerSizeMB = null, StorageContainerStatusProvisioningStatus provisioningStatus = null)
         {
-            return new StorageContainerStatus(errorCode, errorMessage, availableSizeMB, containerSizeMB, provisioningStatus);
+            return new StorageContainerStatus(
+                errorCode,
+                errorMessage,
+                availableSizeMB,
+                containerSizeMB,
+                provisioningStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageContainerStatusProvisioningStatus"/>. </summary>
@@ -264,7 +350,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.StorageContainerStatusProvisioningStatus"/> instance for mocking. </returns>
         public static StorageContainerStatusProvisioningStatus StorageContainerStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new StorageContainerStatusProvisioningStatus(operationId, status);
+            return new StorageContainerStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.VirtualHardDiskData"/>. </summary>
@@ -290,7 +376,25 @@ namespace Azure.ResourceManager.Hci.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new VirtualHardDiskData(id, name, resourceType, systemData, tags, location, extendedLocation, blockSizeBytes, diskSizeGB, @dynamic, logicalSectorBytes, physicalSectorBytes, hyperVGeneration, diskFileFormat, provisioningState, containerId, status);
+            return new VirtualHardDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                blockSizeBytes,
+                diskSizeGB,
+                @dynamic,
+                logicalSectorBytes,
+                physicalSectorBytes,
+                hyperVGeneration,
+                diskFileFormat,
+                provisioningState,
+                containerId,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualHardDiskStatus"/>. </summary>
@@ -300,7 +404,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.VirtualHardDiskStatus"/> instance for mocking. </returns>
         public static VirtualHardDiskStatus VirtualHardDiskStatus(string errorCode = null, string errorMessage = null, VirtualHardDiskStatusProvisioningStatus provisioningStatus = null)
         {
-            return new VirtualHardDiskStatus(errorCode, errorMessage, provisioningStatus);
+            return new VirtualHardDiskStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualHardDiskStatusProvisioningStatus"/>. </summary>
@@ -309,7 +413,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.VirtualHardDiskStatusProvisioningStatus"/> instance for mocking. </returns>
         public static VirtualHardDiskStatusProvisioningStatus VirtualHardDiskStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new VirtualHardDiskStatusProvisioningStatus(operationId, status);
+            return new VirtualHardDiskStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.VirtualMachineInstanceData"/>. </summary>
@@ -336,7 +440,26 @@ namespace Azure.ResourceManager.Hci.Models
         {
             networkInterfaces ??= new List<WritableSubResource>();
 
-            return new VirtualMachineInstanceData(id, name, resourceType, systemData, extendedLocation, identity, hardwareProfile, networkInterfaces != null ? new VirtualMachineInstancePropertiesNetworkProfile(networkInterfaces?.ToList()) : null, osProfile, securityProfile, storageProfile, httpProxyConfig, provisioningState, instanceViewVmAgent != null ? new VirtualMachineInstanceView(instanceViewVmAgent) : null, status, guestAgentInstallStatus, vmId, resourceUid);
+            return new VirtualMachineInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                extendedLocation,
+                identity,
+                hardwareProfile,
+                networkInterfaces != null ? new VirtualMachineInstancePropertiesNetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
+                osProfile,
+                securityProfile,
+                storageProfile,
+                httpProxyConfig,
+                provisioningState,
+                instanceViewVmAgent != null ? new VirtualMachineInstanceView(instanceViewVmAgent, serializedAdditionalRawData: null) : null,
+                status,
+                guestAgentInstallStatus,
+                vmId,
+                resourceUid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineConfigAgentInstanceView"/>. </summary>
@@ -347,7 +470,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             statuses ??= new List<InstanceViewStatus>();
 
-            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion, statuses?.ToList());
+            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion, statuses?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InstanceViewStatus"/>. </summary>
@@ -359,7 +482,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.InstanceViewStatus"/> instance for mocking. </returns>
         public static InstanceViewStatus InstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
-            return new InstanceViewStatus(code, level, displayStatus, message, time);
+            return new InstanceViewStatus(
+                code,
+                level,
+                displayStatus,
+                message,
+                time,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInstanceStatus"/>. </summary>
@@ -370,7 +499,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.VirtualMachineInstanceStatus"/> instance for mocking. </returns>
         public static VirtualMachineInstanceStatus VirtualMachineInstanceStatus(string errorCode = null, string errorMessage = null, PowerStateEnum? powerState = null, VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = null)
         {
-            return new VirtualMachineInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus);
+            return new VirtualMachineInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInstanceStatusProvisioningStatus"/>. </summary>
@@ -379,7 +508,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.VirtualMachineInstanceStatusProvisioningStatus"/> instance for mocking. </returns>
         public static VirtualMachineInstanceStatusProvisioningStatus VirtualMachineInstanceStatusProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
         {
-            return new VirtualMachineInstanceStatusProvisioningStatus(operationId, status);
+            return new VirtualMachineInstanceStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestAgentInstallStatus"/>. </summary>
@@ -393,7 +522,13 @@ namespace Azure.ResourceManager.Hci.Models
         {
             errorDetails ??= new List<ResponseError>();
 
-            return new GuestAgentInstallStatus(vmUuid, status, lastStatusChange, agentVersion, errorDetails?.ToList());
+            return new GuestAgentInstallStatus(
+                vmUuid,
+                status,
+                lastStatusChange,
+                agentVersion,
+                errorDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HybridIdentityMetadataData"/>. </summary>
@@ -408,7 +543,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Hci.HybridIdentityMetadataData"/> instance for mocking. </returns>
         public static HybridIdentityMetadataData HybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, string provisioningState = null)
         {
-            return new HybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, identity, provisioningState);
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceUid,
+                publicKey,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.GuestAgentData"/>. </summary>
@@ -423,7 +567,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Hci.GuestAgentData"/> instance for mocking. </returns>
         public static GuestAgentData GuestAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GuestCredential credentials = null, ProvisioningAction? provisioningAction = null, string status = null, string provisioningState = null)
         {
-            return new GuestAgentData(id, name, resourceType, systemData, credentials, provisioningAction, status, provisioningState);
+            return new GuestAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                credentials,
+                provisioningAction,
+                status,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
@@ -445,7 +598,21 @@ namespace Azure.ResourceManager.Hci.Models
         {
             perNodeDetails ??= new List<PerNodeArcState>();
 
-            return new ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails?.ToList(), connectivityProperties);
+            return new ArcSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                arcInstanceResourceGroup,
+                arcApplicationClientId,
+                arcApplicationTenantId,
+                arcServicePrincipalObjectId,
+                arcApplicationObjectId,
+                aggregateState,
+                perNodeDetails?.ToList(),
+                connectivityProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeArcState"/>. </summary>
@@ -455,7 +622,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.PerNodeArcState"/> instance for mocking. </returns>
         public static PerNodeArcState PerNodeArcState(string name = null, string arcInstance = null, NodeArcState? state = null)
         {
-            return new PerNodeArcState(name, arcInstance, state);
+            return new PerNodeArcState(name, arcInstance, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArcPasswordCredential"/>. </summary>
@@ -466,7 +633,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ArcPasswordCredential"/> instance for mocking. </returns>
         public static ArcPasswordCredential ArcPasswordCredential(string secretText = null, string keyId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
-            return new ArcPasswordCredential(secretText, keyId, startOn, endOn);
+            return new ArcPasswordCredential(secretText, keyId, startOn, endOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArcIdentityResult"/>. </summary>
@@ -477,7 +644,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ArcIdentityResult"/> instance for mocking. </returns>
         public static ArcIdentityResult ArcIdentityResult(Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null)
         {
-            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId);
+            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>
@@ -515,7 +682,36 @@ namespace Azure.ResourceManager.Hci.Models
             tags ??= new Dictionary<string, string>();
             userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
-            return new HciClusterData(id, name, resourceType, systemData, tags, location, provisioningState, status, cloudId, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, desiredProperties, reportedProperties, trialDaysRemaining, billingModel, registrationTimestamp, lastSyncTimestamp, lastBillingTimestamp, serviceEndpoint, resourceProviderObjectId, principalId, tenantId, typeIdentityType, userAssignedIdentities);
+            return new HciClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                status,
+                cloudId,
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                aadApplicationObjectId,
+                aadServicePrincipalObjectId,
+                softwareAssuranceProperties,
+                desiredProperties,
+                reportedProperties,
+                trialDaysRemaining,
+                billingModel,
+                registrationTimestamp,
+                lastSyncTimestamp,
+                lastBillingTimestamp,
+                serviceEndpoint,
+                resourceProviderObjectId,
+                principalId,
+                tenantId,
+                typeIdentityType,
+                userAssignedIdentities,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SoftwareAssuranceProperties"/>. </summary>
@@ -525,7 +721,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.SoftwareAssuranceProperties"/> instance for mocking. </returns>
         public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = null, SoftwareAssuranceIntent? softwareAssuranceIntent = null, DateTimeOffset? lastUpdated = null)
         {
-            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
@@ -543,7 +739,16 @@ namespace Azure.ResourceManager.Hci.Models
             nodes ??= new List<HciClusterNode>();
             supportedCapabilities ??= new List<string>();
 
-            return new HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes?.ToList(), lastUpdatedOn, imdsAttestation, diagnosticLevel, supportedCapabilities?.ToList());
+            return new HciClusterReportedProperties(
+                clusterName,
+                clusterId,
+                clusterVersion,
+                nodes?.ToList(),
+                lastUpdatedOn,
+                imdsAttestation,
+                diagnosticLevel,
+                supportedCapabilities?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterNode"/>. </summary>
@@ -564,7 +769,51 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciClusterNode"/> instance for mocking. </returns>
         public static HciClusterNode HciClusterNode(string name = null, float? id = null, WindowsServerSubscription? windowsServerSubscription = null, ClusterNodeType? nodeType = null, string ehcResourceId = null, string manufacturer = null, string model = null, string osName = null, string osVersion = null, string osDisplayVersion = null, string serialNumber = null, float? coreCount = null, float? memoryInGiB = null, DateTimeOffset? lastLicensingTimestamp = null)
         {
-            return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp);
+            return new HciClusterNode(
+                name,
+                id,
+                windowsServerSubscription,
+                nodeType,
+                ehcResourceId,
+                manufacturer,
+                model,
+                osName,
+                osVersion,
+                osDisplayVersion,
+                serialNumber,
+                coreCount,
+                memoryInGiB,
+                lastLicensingTimestamp,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, HciClusterDesiredProperties desiredProperties = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? managedServiceIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new HciClusterPatch(
+                tags,
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                desiredProperties,
+                principalId,
+                tenantId,
+                managedServiceIdentityType,
+                userAssignedIdentities,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterIdentityResult"/>. </summary>
@@ -575,7 +824,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciClusterIdentityResult"/> instance for mocking. </returns>
         public static HciClusterIdentityResult HciClusterIdentityResult(Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadServicePrincipalObjectId = null, Guid? aadApplicationObjectId = null)
         {
-            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId);
+            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.ArcExtensionData"/>. </summary>
@@ -599,7 +848,23 @@ namespace Azure.ResourceManager.Hci.Models
         {
             perNodeExtensionDetails ??= new List<PerNodeExtensionState>();
 
-            return new ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails?.ToList(), forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
+            return new ArcExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                aggregateState,
+                perNodeExtensionDetails?.ToList(),
+                forceUpdateTag,
+                publisher,
+                arcExtensionType,
+                typeHandlerVersion,
+                shouldAutoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                enableAutomaticUpgrade,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
@@ -611,7 +876,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
         public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, HciExtensionInstanceView instanceView = null)
         {
-            return new PerNodeExtensionState(name, extension, typeHandlerVersion, state, instanceView);
+            return new PerNodeExtensionState(
+                name,
+                extension,
+                typeHandlerVersion,
+                state,
+                instanceView,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciExtensionInstanceView"/>. </summary>
@@ -622,7 +893,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
         public static HciExtensionInstanceView HciExtensionInstanceView(string name = null, string extensionInstanceViewType = null, string typeHandlerVersion = null, ExtensionInstanceViewStatus status = null)
         {
-            return new HciExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status);
+            return new HciExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtensionInstanceViewStatus"/>. </summary>
@@ -634,7 +905,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ExtensionInstanceViewStatus"/> instance for mocking. </returns>
         public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
-            return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time);
+            return new ExtensionInstanceViewStatus(
+                code,
+                level,
+                displayStatus,
+                message,
+                time,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.OfferData"/>. </summary>
@@ -652,7 +929,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
             skuMappings ??= new List<HciSkuMappings>();
 
-            return new OfferData(id, name, resourceType, systemData, provisioningState, publisherId, content, contentVersion, skuMappings?.ToList());
+            return new OfferData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                publisherId,
+                content,
+                contentVersion,
+                skuMappings?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.PublisherData"/>. </summary>
@@ -664,7 +951,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Hci.PublisherData"/> instance for mocking. </returns>
         public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null)
         {
-            return new PublisherData(id, name, resourceType, systemData, provisioningState);
+            return new PublisherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciSkuData"/>. </summary>
@@ -683,7 +976,18 @@ namespace Azure.ResourceManager.Hci.Models
         {
             skuMappings ??= new List<HciSkuMappings>();
 
-            return new HciSkuData(id, name, resourceType, systemData, provisioningState, publisherId, offerId, content, contentVersion, skuMappings?.ToList());
+            return new HciSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                publisherId,
+                offerId,
+                content,
+                contentVersion,
+                skuMappings?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateRunData"/>. </summary>
@@ -710,7 +1014,26 @@ namespace Azure.ResourceManager.Hci.Models
         {
             steps ??= new List<HciUpdateStep>();
 
-            return new UpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startTimeUtc, endTimeUtc, lastUpdatedTimeUtc, steps?.ToList());
+            return new UpdateRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                provisioningState,
+                timeStarted,
+                lastUpdatedOn,
+                duration,
+                state,
+                namePropertiesProgressName,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
+                steps?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateSummaryData"/>. </summary>
@@ -736,7 +1059,24 @@ namespace Azure.ResourceManager.Hci.Models
             packageVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
 
-            return new UpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, hardwareModel, packageVersions?.ToList(), currentVersion, lastUpdated, lastChecked, healthState, healthCheckResult?.ToList(), healthCheckOn, state);
+            return new UpdateSummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                provisioningState,
+                oemFamily,
+                hardwareModel,
+                packageVersions?.ToList(),
+                currentVersion,
+                lastUpdated,
+                lastChecked,
+                healthState,
+                healthCheckResult?.ToList(),
+                healthCheckOn,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateData"/>. </summary>
@@ -773,7 +1113,34 @@ namespace Azure.ResourceManager.Hci.Models
             componentVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
 
-            return new UpdateData(id, name, resourceType, systemData, location, provisioningState, installedOn, description, state, prerequisites?.ToList(), componentVersions?.ToList(), rebootRequired, healthState, healthCheckResult?.ToList(), healthCheckOn, packagePath, packageSizeInMb, displayName, version, publisher, releaseLink, availabilityType, packageType, additionalProperties, progressPercentage, notifyMessage);
+            return new UpdateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                provisioningState,
+                installedOn,
+                description,
+                state,
+                prerequisites?.ToList(),
+                componentVersions?.ToList(),
+                rebootRequired,
+                healthState,
+                healthCheckResult?.ToList(),
+                healthCheckOn,
+                packagePath,
+                packageSizeInMb,
+                displayName,
+                version,
+                publisher,
+                releaseLink,
+                availabilityType,
+                packageType,
+                additionalProperties,
+                progressPercentage,
+                notifyMessage,
+                serializedAdditionalRawData: null);
         }
     }
 }

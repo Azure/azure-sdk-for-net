@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionsDiagnostic : IUtf8JsonSerializable
+    public partial class SolutionsDiagnostic : IUtf8JsonSerializable, IJsonModel<SolutionsDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SolutionsDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
             {
@@ -36,6 +46,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
+            if (Optional.IsDefined(EstimatedCompletionTime))
+            {
+                writer.WritePropertyName("estimatedCompletionTime"u8);
+                writer.WriteStringValue(EstimatedCompletionTime);
+            }
             if (Optional.IsCollectionDefined(RequiredParameters))
             {
                 writer.WritePropertyName("requiredParameters"u8);
@@ -52,25 +67,57 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SolutionsDiagnostic DeserializeSolutionsDiagnostic(JsonElement element)
+        SolutionsDiagnostic IJsonModel<SolutionsDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSolutionsDiagnostic(document.RootElement, options);
+        }
+
+        internal static SolutionsDiagnostic DeserializeSolutionsDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> replacementKey = default;
-            Optional<IList<string>> requiredParameters = default;
-            Optional<IList<SelfHelpDiagnosticInsight>> insights = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            string statusDetails = default;
+            string replacementKey = default;
+            string estimatedCompletionTime = default;
+            IReadOnlyList<string> requiredParameters = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -97,6 +144,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     replacementKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("estimatedCompletionTime"u8))
+                {
+                    estimatedCompletionTime = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("requiredParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,13 +172,57 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SolutionsDiagnostic(solutionId.Value, Optional.ToNullable(status), statusDetails.Value, replacementKey.Value, Optional.ToList(requiredParameters), Optional.ToList(insights));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SolutionsDiagnostic(
+                solutionId,
+                status,
+                statusDetails,
+                replacementKey,
+                estimatedCompletionTime,
+                requiredParameters ?? new ChangeTrackingList<string>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SolutionsDiagnostic IPersistableModel<SolutionsDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSolutionsDiagnostic(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SolutionsDiagnostic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

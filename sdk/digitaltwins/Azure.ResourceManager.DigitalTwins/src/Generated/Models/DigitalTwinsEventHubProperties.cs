@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -26,11 +27,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionStringPrimaryKey"> PrimaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol 'sb://'. </param>
         /// <param name="entityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
-        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData)
         {
             ConnectionStringPrimaryKey = connectionStringPrimaryKey;
             ConnectionStringSecondaryKey = connectionStringSecondaryKey;

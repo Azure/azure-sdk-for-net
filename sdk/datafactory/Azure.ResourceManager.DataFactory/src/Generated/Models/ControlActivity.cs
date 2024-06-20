@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal ControlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Container";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/> for deserialization. </summary>
+        internal ControlActivity()
+        {
         }
     }
 }

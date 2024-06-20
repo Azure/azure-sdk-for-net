@@ -18,6 +18,38 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class DeletedAppConfigurationStoreData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeletedAppConfigurationStoreData"/>. </summary>
         internal DeletedAppConfigurationStoreData()
         {
@@ -35,7 +67,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="isPurgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
-        internal DeletedAppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
@@ -43,19 +76,26 @@ namespace Azure.ResourceManager.AppConfiguration
             ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
             IsPurgeProtectionEnabled = isPurgeProtectionEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the original configuration store. </summary>
+        [WirePath("properties.configurationStoreId")]
         public ResourceIdentifier ConfigurationStoreId { get; }
         /// <summary> The location of the original configuration store. </summary>
+        [WirePath("properties.location")]
         public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The scheduled purged date. </summary>
+        [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Tags of the original configuration store. </summary>
+        [WirePath("properties.tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Purge protection status of the original configuration store. </summary>
+        [WirePath("properties.purgeProtectionEnabled")]
         public bool? IsPurgeProtectionEnabled { get; }
     }
 }

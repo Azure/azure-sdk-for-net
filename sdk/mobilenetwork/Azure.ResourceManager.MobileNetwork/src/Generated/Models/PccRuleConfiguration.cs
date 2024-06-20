@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Data flow policy rule configuration. </summary>
     public partial class PccRuleConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PccRuleConfiguration"/>. </summary>
         /// <param name="ruleName"> The name of the rule. This must be unique within the parent service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="rulePrecedence"> A precedence value that is used to decide between data flow policy rules when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all data flow policy rules configured in the mobile network. </param>
@@ -36,13 +67,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="ruleQosPolicy"> The QoS policy to use for packets matching this rule. If this field is null then the parent service will define the QoS settings. </param>
         /// <param name="trafficControl"> Determines whether flows that match this data flow policy rule are permitted. </param>
         /// <param name="serviceDataFlowTemplates"> The set of data flow templates to use for this data flow policy rule. </param>
-        internal PccRuleConfiguration(string ruleName, int rulePrecedence, PccRuleQosPolicy ruleQosPolicy, MobileNetworkTrafficControlPermission? trafficControl, IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PccRuleConfiguration(string ruleName, int rulePrecedence, PccRuleQosPolicy ruleQosPolicy, MobileNetworkTrafficControlPermission? trafficControl, IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleName = ruleName;
             RulePrecedence = rulePrecedence;
             RuleQosPolicy = ruleQosPolicy;
             TrafficControl = trafficControl;
             ServiceDataFlowTemplates = serviceDataFlowTemplates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PccRuleConfiguration"/> for deserialization. </summary>
+        internal PccRuleConfiguration()
+        {
         }
 
         /// <summary> The name of the rule. This must be unique within the parent service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </summary>

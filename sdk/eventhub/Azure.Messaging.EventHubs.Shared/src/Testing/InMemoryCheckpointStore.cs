@@ -193,9 +193,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = data.EventHubName,
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
-                    StartingPosition = EventPosition.FromOffset(data.StartingPosition.Offset.Value, false),
+                    StartingPosition = EventPosition.FromSequenceNumber(data.StartingPosition.SequenceNumber, false),
                     ClientIdentifier = data.ClientIdentifier,
-                    LastModified = DateTimeOffset.Parse(data.LastModified)
+                    LastModified = (DateTimeOffset.TryParse(data.LastModified, out var lastModified) ? lastModified : default)
                 };
 
             lock (_checkpointLock)
@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -230,13 +230,13 @@ namespace Azure.Messaging.EventHubs.Tests
                                                    string consumerGroup,
                                                    string partitionId,
                                                    string clientIdentifier,
-                                                   CheckpointPosition checkpointStartingPosition,
+                                                   CheckpointPosition startingPosition,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {
                 var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
-                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, checkpointStartingPosition, DateTimeOffset.Now.ToString());
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, startingPosition, DateTimeOffset.Now.ToString());
 
                 Log($"Checkpoint with partition id = '{partitionId}' updated successfully by {clientIdentifier}.");
             }

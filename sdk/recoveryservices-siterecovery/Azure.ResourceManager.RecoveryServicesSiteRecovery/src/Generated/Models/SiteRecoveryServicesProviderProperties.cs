@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery services provider properties. </summary>
     public partial class SiteRecoveryServicesProviderProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         internal SiteRecoveryServicesProviderProperties()
         {
@@ -42,7 +73,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
         /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
         /// <param name="providerVersionDetails"> The provider version details. </param>
-        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -64,6 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceAccessIdentityDetails = resourceAccessIdentityDetails;
             DataPlaneAuthenticationIdentityDetails = dataPlaneAuthenticationIdentityDetails;
             ProviderVersionDetails = providerVersionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the site. </summary>

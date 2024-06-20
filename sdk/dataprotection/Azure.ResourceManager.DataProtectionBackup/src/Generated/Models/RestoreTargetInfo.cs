@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSourceInfo"> Information of target DS. </param>
         /// <param name="dataSourceSetInfo"> Information of target DS Set. </param>
         /// <param name="dataSourceAuthCredentials">
@@ -36,12 +38,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
-        internal RestoreTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, DataProtectionBackupAuthCredentials dataSourceAuthCredentials) : base(objectType, recoverySetting, restoreLocation)
+        internal RestoreTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, DataProtectionBackupAuthCredentials dataSourceAuthCredentials) : base(objectType, recoverySetting, restoreLocation, serializedAdditionalRawData)
         {
             DataSourceInfo = dataSourceInfo;
             DataSourceSetInfo = dataSourceSetInfo;
             DataSourceAuthCredentials = dataSourceAuthCredentials;
             ObjectType = objectType ?? "RestoreTargetInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfo"/> for deserialization. </summary>
+        internal RestoreTargetInfo()
+        {
         }
 
         /// <summary> Information of target DS. </summary>

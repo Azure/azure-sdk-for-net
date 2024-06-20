@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -30,6 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
         /// <param name="consumerGroup"> The iot hub consumer group. </param>
         /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;

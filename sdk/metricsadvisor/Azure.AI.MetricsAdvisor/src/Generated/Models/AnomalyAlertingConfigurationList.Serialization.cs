@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AnomalyAlertConfiguration>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AnomalyAlertConfiguration> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +42,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertingConfigurationList(Optional.ToList(value), nextLink.Value);
+            return new AnomalyAlertingConfigurationList(value ?? new ChangeTrackingList<AnomalyAlertConfiguration>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyAlertingConfigurationList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyAlertingConfigurationList(document.RootElement);
         }
     }
 }

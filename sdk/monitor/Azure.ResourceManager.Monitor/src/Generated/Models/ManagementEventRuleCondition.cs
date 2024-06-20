@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A management event rule condition. </summary>
@@ -23,8 +26,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="aggregation"> How the data that is collected should be combined over time and when the alert is activated. Note that for management event alerts aggregation is optional – if it is not provided then any event will cause the alert to activate. </param>
-        internal ManagementEventRuleCondition(string odataType, RuleDataSource dataSource, ManagementEventAggregationCondition aggregation) : base(odataType, dataSource)
+        internal ManagementEventRuleCondition(string odataType, RuleDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagementEventAggregationCondition aggregation) : base(odataType, dataSource, serializedAdditionalRawData)
         {
             Aggregation = aggregation;
             OdataType = odataType ?? "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition";

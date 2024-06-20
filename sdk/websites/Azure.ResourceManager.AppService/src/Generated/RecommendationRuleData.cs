@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
         public RecommendationRuleData()
         {
@@ -47,7 +79,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -63,38 +96,53 @@ namespace Azure.ResourceManager.AppService
             BladeName = bladeName;
             ForwardLink = forwardLink;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("properties.recommendationName")]
         public string RecommendationName { get; set; }
         /// <summary> UI friendly name of the rule. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Localized name of the rule (Good for UI). </summary>
+        [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
+        [WirePath("properties.recommendationId")]
         public Guid? RecommendationId { get; set; }
         /// <summary> Localized detailed description of the rule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Name of action that is recommended by this rule in string. </summary>
+        [WirePath("properties.actionName")]
         public string ActionName { get; set; }
         /// <summary> Level of impact indicating how critical this rule is. </summary>
+        [WirePath("properties.level")]
         public NotificationLevel? Level { get; set; }
         /// <summary> List of available channels that this rule applies. </summary>
+        [WirePath("properties.channels")]
         public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
+        [WirePath("properties.categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("properties.isDynamic")]
         public bool? IsDynamic { get; set; }
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.extensionName")]
         public string ExtensionName { get; set; }
         /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.bladeName")]
         public string BladeName { get; set; }
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.forwardLink")]
         public string ForwardLink { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

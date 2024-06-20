@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -24,6 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="loginName"> Login name. </param>
         /// <param name="state"> Current state of login. </param>
         /// <param name="stage"> Current stage of login. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Login migration end time. </param>
         /// <param name="message"> Login migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Login migration errors and warnings per login. </param>
-        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, string loginName, MigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string loginName, MigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             LoginName = loginName;
             State = state;

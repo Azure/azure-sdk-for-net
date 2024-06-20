@@ -17,8 +17,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 # 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
@@ -34,7 +35,7 @@ rename-mapping:
   BareMetalMachine.properties.clusterId: -|arm-id
   BareMetalMachine.properties.rackId: -|arm-id
   BareMetalMachine.properties.oamIpv4Address: -|ip-address
-  BareMetalMachineConfigurationData: BareMetalMachineConfiguration 
+  BareMetalMachineConfigurationData: BareMetalMachineConfiguration
   BareMetalMachineKeySet.properties.expiration: ExpireOn
   BareMetalMachineKeySet.properties.jumpHostsAllowed: -|ip-address
   BareMetalMachineKeySet.properties.lastValidation: LastValidatedOn

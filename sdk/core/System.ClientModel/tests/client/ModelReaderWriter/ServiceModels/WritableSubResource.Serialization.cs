@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -40,11 +41,11 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
-            string id = default;
+            string? id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -77,7 +78,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             {
                 reader.Read();
                 if (reader.TokenType != JsonTokenType.Null)
-                    properties.Id = reader.GetString();
+                {
+                    properties.Id = reader.GetString()!;
+                }
                 return;
             }
             reader.Skip();

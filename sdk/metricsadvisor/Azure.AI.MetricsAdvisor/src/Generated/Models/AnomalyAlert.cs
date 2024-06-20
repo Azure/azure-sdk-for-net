@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
         /// <param name="lastModified"> modified time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdOn, DateTimeOffset lastModified)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
             Timestamp = timestamp;
             CreatedOn = createdOn;

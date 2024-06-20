@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a active directory administrator. </summary>
     public partial class ServerExternalAdministrator
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServerExternalAdministrator"/>. </summary>
         public ServerExternalAdministrator()
         {
@@ -24,7 +57,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
-        internal ServerExternalAdministrator(SqlAdministratorType? administratorType, SqlServerPrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerExternalAdministrator(SqlAdministratorType? administratorType, SqlServerPrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdministratorType = administratorType;
             PrincipalType = principalType;
@@ -32,19 +66,26 @@ namespace Azure.ResourceManager.Sql.Models
             Sid = sid;
             TenantId = tenantId;
             IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the sever administrator. </summary>
+        [WirePath("administratorType")]
         public SqlAdministratorType? AdministratorType { get; set; }
         /// <summary> Principal Type of the sever administrator. </summary>
+        [WirePath("principalType")]
         public SqlServerPrincipalType? PrincipalType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
+        [WirePath("login")]
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>
+        [WirePath("sid")]
         public Guid? Sid { get; set; }
         /// <summary> Tenant ID of the administrator. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
+        [WirePath("azureADOnlyAuthentication")]
         public bool? IsAzureADOnlyAuthenticationEnabled { get; set; }
     }
 }

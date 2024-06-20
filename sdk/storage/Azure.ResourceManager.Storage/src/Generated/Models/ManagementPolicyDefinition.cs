@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> An object that defines the Lifecycle rule. Each definition is made up with a filters set and an actions set. </summary>
     public partial class ManagementPolicyDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyDefinition"/>. </summary>
         /// <param name="actions"> An object that defines the action set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
@@ -26,15 +58,24 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyDefinition"/>. </summary>
         /// <param name="actions"> An object that defines the action set. </param>
         /// <param name="filters"> An object that defines the filter set. </param>
-        internal ManagementPolicyDefinition(ManagementPolicyAction actions, ManagementPolicyFilter filters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyDefinition(ManagementPolicyAction actions, ManagementPolicyFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Actions = actions;
             Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyDefinition"/> for deserialization. </summary>
+        internal ManagementPolicyDefinition()
+        {
         }
 
         /// <summary> An object that defines the action set. </summary>
+        [WirePath("actions")]
         public ManagementPolicyAction Actions { get; set; }
         /// <summary> An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public ManagementPolicyFilter Filters { get; set; }
     }
 }

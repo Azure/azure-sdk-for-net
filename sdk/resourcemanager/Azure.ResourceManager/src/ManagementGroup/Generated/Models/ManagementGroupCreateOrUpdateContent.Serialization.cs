@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ManagementGroupCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementGroupCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue(Details, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Children)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static ManagementGroupCreateOrUpdateContent DeserializeManagementGroupCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ResourceType> type = default;
-            Optional<string> name = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<CreateManagementGroupDetails> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
+            string id = default;
+            ResourceType? type = default;
+            string name = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            CreateManagementGroupDetails details = default;
+            IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             {
                                 continue;
                             }
-                            details = CreateManagementGroupDetails.DeserializeCreateManagementGroupDetails(property0.Value);
+                            details = CreateManagementGroupDetails.DeserializeCreateManagementGroupDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             List<ManagementGroupChildOptions> array = new List<ManagementGroupChildOptions>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item));
+                                array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item, options));
                             }
                             children = array;
                             continue;
@@ -208,11 +208,19 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupCreateOrUpdateContent(id.Value, Optional.ToNullable(type), name.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagementGroupCreateOrUpdateContent(
+                id,
+                type,
+                name,
+                tenantId,
+                displayName,
+                details,
+                children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -224,7 +232,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +248,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeManagementGroupCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

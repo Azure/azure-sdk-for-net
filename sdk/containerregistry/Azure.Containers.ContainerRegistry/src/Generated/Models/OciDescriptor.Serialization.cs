@@ -68,11 +68,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
-            Optional<OciAnnotations> annotations = default;
+            string mediaType = default;
+            long? size = default;
+            string digest = default;
+            IList<Uri> urls = default;
+            OciAnnotations annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -126,7 +126,23 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType, size, digest, urls ?? new ChangeTrackingList<Uri>(), annotations);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OciDescriptor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOciDescriptor(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

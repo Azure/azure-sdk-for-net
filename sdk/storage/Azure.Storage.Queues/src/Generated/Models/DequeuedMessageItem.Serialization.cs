@@ -50,7 +50,14 @@ namespace Azure.Storage.Queues.Models
             {
                 messageText = (string)messageTextElement;
             }
-            return new DequeuedMessageItem(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, dequeueCount, messageText);
+            return new DequeuedMessageItem(
+                messageId,
+                insertionTime,
+                expirationTime,
+                popReceipt,
+                timeNextVisible,
+                dequeueCount,
+                messageText);
         }
     }
 }

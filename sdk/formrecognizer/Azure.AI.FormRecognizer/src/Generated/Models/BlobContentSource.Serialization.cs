@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             Uri containerUrl = default;
-            Optional<string> prefix = default;
+            string prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerUrl"u8))
@@ -47,7 +47,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new BlobContentSource(containerUrl, prefix.Value);
+            return new BlobContentSource(containerUrl, prefix);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BlobContentSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBlobContentSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

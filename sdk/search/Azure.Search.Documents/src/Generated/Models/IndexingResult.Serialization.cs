@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string key = default;
-            Optional<string> errorMessage = default;
+            string errorMessage = default;
             bool status = default;
             int statusCode = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +44,15 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new IndexingResult(key, errorMessage.Value, status, statusCode);
+            return new IndexingResult(key, errorMessage, status, statusCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingResult(document.RootElement);
         }
     }
 }

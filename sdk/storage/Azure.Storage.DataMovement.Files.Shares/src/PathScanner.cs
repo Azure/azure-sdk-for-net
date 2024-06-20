@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 

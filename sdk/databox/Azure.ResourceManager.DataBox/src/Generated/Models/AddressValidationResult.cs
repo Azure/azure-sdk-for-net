@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -24,9 +23,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error)
+        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error, serializedAdditionalRawData)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;

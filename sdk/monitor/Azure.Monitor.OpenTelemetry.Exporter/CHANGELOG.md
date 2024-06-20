@@ -1,5 +1,78 @@
 # Release History
 
+## 1.4.0-beta.1 (2024-06-11)
+
+### Features Added
+
+* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extension.
+  ([#44617](https://github.com/Azure/azure-sdk-for-net/pull/44617))
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  (This feature was originally introduced in 1.3.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
+
+* Update OpenTelemetry dependencies
+  ([#44522](https://github.com/Azure/azure-sdk-for-net/pull/44522))
+  - OpenTelemetry 1.9.0-rc.1
+
+## 1.3.0 (2024-06-07)
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be internal.
+  This will be changed back to public in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
+
+## 1.3.0-beta.2 (2024-05-08)
+
+### Features Added
+
+* All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
+  This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
+  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+* Turned off internal spans and logs in exporter HTTP pipeline
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
+
+### Bugs Fixed
+* The success or failure of an incoming HTTP request is now determined by the status code only when the Activity Status is `Unset`
+  ([#43594](https://github.com/Azure/azure-sdk-for-net/pull/43594), based on [#41993](https://github.com/Azure/azure-sdk-for-net/issues/41993))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#43688](https://github.com/Azure/azure-sdk-for-net/pull/43688))
+  - OpenTelemetry 1.8.1
+
+## 1.3.0-beta.1 (2024-02-08)
+
+### Bugs Fixed
+
+* Fixed an issue where `_OTELRESOURCE_` metrics were emitted with duplicated
+  timestamps. This fix ensures accurate and distinct timestamping for all
+  `_OTELRESOURCE_` metrics.
+  ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
+
+* Fixed an issue where tags associated with Exceptions were not being included.
+  Now, tags linked to an `ActivityEvent` following the [otel convention for storing exception](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md) are correctly exported as Custom Properties.
+  ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  ([#41553](https://github.com/Azure/azure-sdk-for-net/pull/41553))
+
+## 1.2.0 (2024-01-24)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+
 ## 1.1.0 (2023-11-29)
 
 ### Features Added

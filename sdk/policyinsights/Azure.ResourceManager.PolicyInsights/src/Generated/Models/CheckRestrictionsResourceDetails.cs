@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
@@ -27,11 +59,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <param name="apiVersion"> The api-version of the resource content. </param>
         /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
-        internal CheckRestrictionsResourceDetails(BinaryData resourceContent, string apiVersion, string scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckRestrictionsResourceDetails(BinaryData resourceContent, string apiVersion, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceContent = resourceContent;
             ApiVersion = apiVersion;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/> for deserialization. </summary>
+        internal CheckRestrictionsResourceDetails()
+        {
         }
 
         /// <summary>

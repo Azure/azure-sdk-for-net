@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveNetworkSecurityRule : IUtf8JsonSerializable, IJsonModel<EffectiveNetworkSecurityRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveNetworkSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,29 +163,29 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveNetworkSecurityRule DeserializeEffectiveNetworkSecurityRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EffectiveSecurityRuleProtocol> protocol = default;
-            Optional<string> sourcePortRange = default;
-            Optional<string> destinationPortRange = default;
-            Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Optional<IReadOnlyList<string>> destinationPortRanges = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<string> destinationAddressPrefix = default;
-            Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
-            Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
-            Optional<SecurityRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityRuleDirection> direction = default;
+            string name = default;
+            EffectiveSecurityRuleProtocol? protocol = default;
+            string sourcePortRange = default;
+            string destinationPortRange = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
+            string sourceAddressPrefix = default;
+            string destinationAddressPrefix = default;
+            IReadOnlyList<string> sourceAddressPrefixes = default;
+            IReadOnlyList<string> destinationAddressPrefixes = default;
+            IReadOnlyList<string> expandedSourceAddressPrefix = default;
+            IReadOnlyList<string> expandedDestinationAddressPrefix = default;
+            SecurityRuleAccess? access = default;
+            int? priority = default;
+            SecurityRuleDirection? direction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -335,11 +335,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EffectiveNetworkSecurityRule(
+                name,
+                protocol,
+                sourcePortRange,
+                destinationPortRange,
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix,
+                destinationAddressPrefix,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                expandedSourceAddressPrefix ?? new ChangeTrackingList<string>(),
+                expandedDestinationAddressPrefix ?? new ChangeTrackingList<string>(),
+                access,
+                priority,
+                direction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)
@@ -351,7 +367,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +383,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveNetworkSecurityRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support reading '{options.Format}' format.");
             }
         }
 

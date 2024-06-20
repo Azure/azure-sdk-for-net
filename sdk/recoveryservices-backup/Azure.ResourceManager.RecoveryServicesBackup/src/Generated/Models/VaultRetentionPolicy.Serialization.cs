@@ -5,36 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VaultRetentionPolicy : IUtf8JsonSerializable
+    public partial class VaultRetentionPolicy : IUtf8JsonSerializable, IJsonModel<VaultRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VaultRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("vaultRetention"u8);
-            writer.WriteObjectValue(VaultRetention);
+            writer.WriteObjectValue(VaultRetention, options);
             writer.WritePropertyName("snapshotRetentionInDays"u8);
             writer.WriteNumberValue(SnapshotRetentionInDays);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VaultRetentionPolicy DeserializeVaultRetentionPolicy(JsonElement element)
+        VaultRetentionPolicy IJsonModel<VaultRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultRetentionPolicy(document.RootElement, options);
+        }
+
+        internal static VaultRetentionPolicy DeserializeVaultRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BackupRetentionPolicy vaultRetention = default;
             int snapshotRetentionInDays = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultRetention"u8))
                 {
-                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRetentionInDays"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     snapshotRetentionInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VaultRetentionPolicy(vaultRetention, snapshotRetentionInDays);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VaultRetentionPolicy(vaultRetention, snapshotRetentionInDays, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VaultRetentionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VaultRetentionPolicy IPersistableModel<VaultRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVaultRetentionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VaultRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

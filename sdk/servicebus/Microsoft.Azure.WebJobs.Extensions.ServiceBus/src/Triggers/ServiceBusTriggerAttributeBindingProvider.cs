@@ -87,12 +87,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             (factoryContext, singleDispatch) =>
             {
                 var autoCompleteMessagesOptionEvaluatedValue = GetAutoCompleteMessagesOptionToUse(attribute, factoryContext.Descriptor.ShortName);
+                var maxMessageBatchSizeOptionEvaluatedValue = GetMaxMessageBatchSizeOptionToUse(attribute, factoryContext.Descriptor.ShortName);
                 IListener listener = new ServiceBusListener(
                     factoryContext.Descriptor.Id,
                     serviceBusEntityType,
                     entityPath,
                     attribute.IsSessionsEnabled,
                     autoCompleteMessagesOptionEvaluatedValue,
+                    maxMessageBatchSizeOptionEvaluatedValue,
                     factoryContext.Executor,
                     _options,
                     attribute.Connection,
@@ -128,6 +130,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             }
 
             return _options.AutoCompleteMessages;
+        }
+
+        /// <summary>
+        /// Gets 'MaxMessageBatchSize' option value, either from the trigger attribute if it is set or from host options.
+        /// </summary>
+        /// <param name="attribute">The trigger attribute.</param>
+        /// <param name="functionName">The function name.</param>
+        private int GetMaxMessageBatchSizeOptionToUse(ServiceBusTriggerAttribute attribute, string functionName)
+        {
+            if (attribute.IsMaxMessageBatchSizeOptionSet)
+            {
+                _logger.LogInformation($"The 'MaxMessageBatchSize' option has been overriden to '{attribute.MaxMessageBatchSize}' value for '{functionName}' function.");
+
+                return attribute.MaxMessageBatchSize;
+            }
+
+            return _options.MaxMessageBatchSize;
         }
     }
 }

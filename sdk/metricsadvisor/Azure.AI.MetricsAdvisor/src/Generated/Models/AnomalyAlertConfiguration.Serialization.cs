@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in MetricAlertConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MetricAlertConfiguration>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -61,11 +61,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> anomalyAlertingConfigurationId = default;
+            string anomalyAlertingConfigurationId = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
-            Optional<IList<string>> splitAlertByDimensions = default;
+            string description = default;
+            MetricAlertConfigurationsOperator? crossMetricsOperator = default;
+            IList<string> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,30 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(
+                anomalyAlertingConfigurationId,
+                name,
+                description,
+                crossMetricsOperator,
+                splitAlertByDimensions ?? new ChangeTrackingList<string>(),
+                hookIds,
+                metricAlertingConfigurations);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyAlertConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyAlertConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

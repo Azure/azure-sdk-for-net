@@ -31,9 +31,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="imageReference">The reference to the Azure Virtual
         /// Machine's Marketplace Image.</param>
-        public VirtualMachineInfo(ImageReference imageReference = default(ImageReference))
+        /// <param name="scaleSetVmResourceId">The resource ID of the Compute
+        /// Node's current Virtual Machine Scale Set VM. Only defined if the
+        /// Batch Account was created with its poolAllocationMode property set
+        /// to 'UserSubscription'.</param>
+        public VirtualMachineInfo(ImageReference imageReference = default(ImageReference), string scaleSetVmResourceId = default(string))
         {
             ImageReference = imageReference;
+            ScaleSetVmResourceId = scaleSetVmResourceId;
             CustomInit();
         }
 
@@ -48,6 +53,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the Compute Node's current Virtual
+        /// Machine Scale Set VM. Only defined if the Batch Account was created
+        /// with its poolAllocationMode property set to 'UserSubscription'.
+        /// </summary>
+        [JsonProperty(PropertyName = "scaleSetVmResourceId")]
+        public string ScaleSetVmResourceId { get; set; }
 
     }
 }

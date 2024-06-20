@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> StorageApplianceConfigurationData represents configuration for the storage application. </summary>
     public partial class StorageApplianceConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/>. </summary>
         /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
@@ -33,12 +65,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
         /// <param name="storageApplianceName"> The user-provided name for the storage appliance that will be created from this specification. </param>
-        internal StorageApplianceConfiguration(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber, string storageApplianceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageApplianceConfiguration(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber, string storageApplianceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminCredentials = adminCredentials;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
             StorageApplianceName = storageApplianceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/> for deserialization. </summary>
+        internal StorageApplianceConfiguration()
+        {
         }
 
         /// <summary> The credentials of the administrative interface on this storage appliance. </summary>

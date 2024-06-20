@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: StorageCache
 namespace: Azure.ResourceManager.StorageCache
-require: https://github.com/Azure/azure-rest-api-specs/blob/6c157d49894462320db6603bb8e7b3077861b2d7/specification/storagecache/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cb1185d9961b7dabe002fdb4c3a28c07d130e47e/specification/storagecache/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address
@@ -72,7 +73,10 @@ rename-mapping:
   Nfs3Target.verificationTimer: VerificationDelayInSeconds
   Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
   BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
-  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds  
+  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds
+
+prepend-rp-prefix:
+  - ImportJob
 
 format-by-name-rules:
   'tenantId': 'uuid'

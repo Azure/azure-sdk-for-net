@@ -21,10 +21,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static InstancesBatchResponse DeserializeInstancesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<InstancesOperationResult>> @get = default;
-            Optional<IReadOnlyList<InstancesOperationResult>> put = default;
-            Optional<IReadOnlyList<InstancesOperationResult>> update = default;
-            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            IReadOnlyList<InstancesOperationResult> @get = default;
+            IReadOnlyList<InstancesOperationResult> put = default;
+            IReadOnlyList<InstancesOperationResult> update = default;
+            IReadOnlyList<TimeSeriesOperationError> delete = default;
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -88,7 +88,11 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstancesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(update), Optional.ToList(delete));
+            return new InstancesBatchResponse(
+                @get ?? new ChangeTrackingList<InstancesOperationResult>(),
+                put ?? new ChangeTrackingList<InstancesOperationResult>(),
+                update ?? new ChangeTrackingList<InstancesOperationResult>(),
+                delete ?? new ChangeTrackingList<TimeSeriesOperationError>());
         }
     }
 }

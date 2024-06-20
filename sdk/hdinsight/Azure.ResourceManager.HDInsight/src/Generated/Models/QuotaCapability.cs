@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The regional quota capability. </summary>
     public partial class QuotaCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QuotaCapability"/>. </summary>
         internal QuotaCapability()
         {
@@ -23,11 +55,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="coresUsed"> The number of cores used in the subscription. </param>
         /// <param name="maxCoresAllowed"> The number of cores that the subscription allowed. </param>
         /// <param name="regionalQuotas"> The list of region quota capabilities. </param>
-        internal QuotaCapability(long? coresUsed, long? maxCoresAllowed, IReadOnlyList<RegionalQuotaCapability> regionalQuotas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCapability(long? coresUsed, long? maxCoresAllowed, IReadOnlyList<RegionalQuotaCapability> regionalQuotas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CoresUsed = coresUsed;
             MaxCoresAllowed = maxCoresAllowed;
             RegionalQuotas = regionalQuotas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of cores used in the subscription. </summary>

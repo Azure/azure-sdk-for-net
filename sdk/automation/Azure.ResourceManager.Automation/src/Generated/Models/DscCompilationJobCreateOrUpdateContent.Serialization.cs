@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class DscCompilationJobCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DscCompilationJobCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscCompilationJobCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscCompilationJobCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DscCompilationJobCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            writer.WriteObjectValue(Configuration, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,20 +100,20 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DscCompilationJobCreateOrUpdateContent DeserializeDscCompilationJobCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             DscConfigurationAssociationProperty configuration = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            IDictionary<string, string> parameters = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("configuration"u8))
                         {
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -186,11 +186,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscCompilationJobCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), configuration, Optional.ToDictionary(parameters), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DscCompilationJobCreateOrUpdateContent(
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                configuration,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                incrementNodeConfigurationBuild,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscCompilationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +225,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscCompilationJobCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscCompilationJobCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

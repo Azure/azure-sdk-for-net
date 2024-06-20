@@ -10,6 +10,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
@@ -23,6 +24,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     public class TracesTests
     {
         internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        internal readonly Dictionary<string, object> testResourceAttributes = new()
+        {
+            { "service.instance.id", "testInstance" },
+            { "service.name", "testName" },
+            { "service.namespace", "testNamespace" },
+            { "service.version", "testVersion" },
+        };
 
         public TracesTests(ITestOutputHelper output)
         {
@@ -42,6 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var activitySource = new ActivitySource(activitySourceName);
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
@@ -90,6 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var activitySource = new ActivitySource(activitySourceName);
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
@@ -137,6 +148,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var activitySource = new ActivitySource(activitySourceName);
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
@@ -159,7 +171,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex);
+                    activity?.RecordException(ex, new TagList
+                    {
+                        { "someKey", "someValue" },
+                    });
                 }
             }
 
@@ -187,7 +202,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedExceptionMessage: "Test exception",
                 expectedExceptionTypeName: "System.Exception",
                 expectedTraceId: traceId,
-                expectedSpanId: spanId);
+                expectedSpanId: spanId,
+                expectedProperties: new Dictionary<string, string> { { "someKey", "someValue" } },
+                additionalChecks: data =>
+                {
+                    Assert.False(data.Properties.ContainsKey("exception.type"));
+                    Assert.False(data.Properties.ContainsKey("exception.message"));
+                    Assert.False(data.Properties.ContainsKey("exception.stacktrace"));
+                });
         }
 
         [Theory]
@@ -210,6 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             List<TelemetryItem>? logTelemetryItems = null;
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> activityTelemetryItems)
                 .Build();
@@ -220,6 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
                         options.AddAzureMonitorLogExporterForTest(out logTelemetryItems);
                     });
             });
@@ -286,6 +310,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var activitySource = new ActivitySource(activitySourceName);
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();

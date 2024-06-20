@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Addon type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subscriptionId"> Arc resource subscription Id. </param>
         /// <param name="resourceGroupName"> Arc resource group name. </param>
         /// <param name="resourceName"> Arc resource Name. </param>
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="hostPlatform"> Host OS supported by the Arc addon. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="provisioningState"> Addon Provisioning State. </param>
-        internal EdgeArcAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        internal EdgeArcAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -59,6 +60,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             HostPlatformType = hostPlatformType;
             ProvisioningState = provisioningState;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeArcAddon"/> for deserialization. </summary>
+        internal EdgeArcAddon()
+        {
         }
 
         /// <summary> Arc resource subscription Id. </summary>

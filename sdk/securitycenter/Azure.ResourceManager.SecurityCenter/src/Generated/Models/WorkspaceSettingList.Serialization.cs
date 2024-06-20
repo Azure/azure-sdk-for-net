@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class WorkspaceSettingList : IUtf8JsonSerializable, IJsonModel<WorkspaceSettingList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceSettingList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceSettingList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkspaceSettingList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSettingList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSettingList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,16 +70,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static WorkspaceSettingList DeserializeWorkspaceSettingList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SecurityWorkspaceSettingData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityWorkspaceSettingData> array = new List<SecurityWorkspaceSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(item));
+                        array.Add(SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,11 +99,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceSettingList(value, nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkspaceSettingList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceSettingList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeWorkspaceSettingList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSettingList)} does not support reading '{options.Format}' format.");
             }
         }
 

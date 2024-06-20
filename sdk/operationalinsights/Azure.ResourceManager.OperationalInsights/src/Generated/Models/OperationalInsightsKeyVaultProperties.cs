@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The key vault properties. </summary>
     public partial class OperationalInsightsKeyVaultProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsKeyVaultProperties"/>. </summary>
         public OperationalInsightsKeyVaultProperties()
         {
@@ -22,21 +55,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="keyName"> The name of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyVersion"> The version of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyRsaSize"> Selected key minimum required size. </param>
-        internal OperationalInsightsKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVersion, int? keyRsaSize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVersion, int? keyRsaSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyRsaSize = keyRsaSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Key Vault uri which holds they key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
         /// <summary> The name of the key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
         /// <summary> The version of the key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
         /// <summary> Selected key minimum required size. </summary>
+        [WirePath("keyRsaSize")]
         public int? KeyRsaSize { get; set; }
     }
 }

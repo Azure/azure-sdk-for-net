@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityCenterPublisherInfo : IUtf8JsonSerializable, IJsonModel<SecurityCenterPublisherInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterPublisherInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterPublisherInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCenterPublisherInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterPublisherInfo DeserializeSecurityCenterPublisherInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> publisherName = default;
-            Optional<string> productName = default;
-            Optional<string> binaryName = default;
-            Optional<string> version = default;
+            string publisherName = default;
+            string productName = default;
+            string binaryName = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherName"u8))
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterPublisherInfo(publisherName.Value, productName.Value, binaryName.Value, version.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityCenterPublisherInfo(publisherName, productName, binaryName, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterPublisherInfo>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterPublisherInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

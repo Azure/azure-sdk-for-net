@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -33,10 +34,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
-        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, MigrationStatusDetails migrationStatusDetails, BackupConfiguration backupConfiguration, OfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError)
+        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrationStatusDetails migrationStatusDetails, BackupConfiguration backupConfiguration, OfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData)
         {
             MigrationStatusDetails = migrationStatusDetails;
             BackupConfiguration = backupConfiguration;

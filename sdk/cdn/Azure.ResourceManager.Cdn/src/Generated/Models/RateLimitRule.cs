@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,12 +36,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
         /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
-        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action)
+        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action, serializedAdditionalRawData)
         {
             RateLimitThreshold = rateLimitThreshold;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RateLimitRule"/> for deserialization. </summary>
+        internal RateLimitRule()
+        {
         }
 
         /// <summary> Defines rate limit threshold. </summary>

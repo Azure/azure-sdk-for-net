@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -36,5 +38,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// previousSnapshot is the older of the two.
         /// </summary>
         public string PreviousSnapshot { get; set; }
+
+        /// <summary>
+        /// This header is allowed only when PreviousSnapshot query parameter is set.
+        /// Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed.
+        /// If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response.
+        /// The default value is false.
+        /// </summary>
+        public bool? IncludeRenames { get; set; }
     }
 }

@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task Clusters()
         {
             var clusterName = Recording.GenerateAssetName("cluster");
             NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
 
             // Create
-            var createCreds = new AdministrativeCredentials("password","username");
+            var createCreds = new AdministrativeCredentials("password","username", null);
             NetworkCloudClusterData data = new NetworkCloudClusterData
             (
                 new AzureLocation(TestEnvironment.Location),

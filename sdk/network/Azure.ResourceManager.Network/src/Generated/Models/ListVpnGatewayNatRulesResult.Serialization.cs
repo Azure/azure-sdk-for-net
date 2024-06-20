@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     internal partial class ListVpnGatewayNatRulesResult : IUtf8JsonSerializable, IJsonModel<ListVpnGatewayNatRulesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListVpnGatewayNatRulesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListVpnGatewayNatRulesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListVpnGatewayNatRulesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ListVpnGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListVpnGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ListVpnGatewayNatRulesResult DeserializeListVpnGatewayNatRulesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnGatewayNatRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VpnGatewayNatRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnGatewayNatRuleData> array = new List<VpnGatewayNatRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item));
+                        array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVpnGatewayNatRulesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ListVpnGatewayNatRulesResult(value ?? new ChangeTrackingList<VpnGatewayNatRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVpnGatewayNatRulesResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeListVpnGatewayNatRulesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListVpnGatewayNatRulesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

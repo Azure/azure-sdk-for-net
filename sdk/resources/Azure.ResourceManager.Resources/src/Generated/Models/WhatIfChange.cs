@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about a single resource change predicted by What-If operation. </summary>
     public partial class WhatIfChange
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
@@ -34,7 +65,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
-        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ChangeType = changeType;
@@ -42,13 +74,22 @@ namespace Azure.ResourceManager.Resources.Models
             Before = before;
             After = after;
             Delta = delta;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WhatIfChange"/> for deserialization. </summary>
+        internal WhatIfChange()
+        {
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; }
         /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
+        [WirePath("changeType")]
         public WhatIfChangeType ChangeType { get; }
         /// <summary> The explanation about why the resource is unsupported by What-If. </summary>
+        [WirePath("unsupportedReason")]
         public string UnsupportedReason { get; }
         /// <summary>
         /// The snapshot of the resource before the deployment is executed.
@@ -80,6 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("before")]
         public BinaryData Before { get; }
         /// <summary>
         /// The predicted snapshot of the resource after the deployment is executed.
@@ -111,8 +153,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("after")]
         public BinaryData After { get; }
         /// <summary> The predicted changes to resource properties. </summary>
+        [WirePath("delta")]
         public IReadOnlyList<WhatIfPropertyChange> Delta { get; }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy based on slack criteria, and a frequency and delay interval for evaluation. </summary>
@@ -20,9 +23,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="slackAmount"> Absolute distance allowed from the best performing run. </param>
         /// <param name="slackFactor"> Ratio of the allowed distance from the best performing run. </param>
-        internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType)
+        internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData)
         {
             SlackAmount = slackAmount;
             SlackFactor = slackFactor;

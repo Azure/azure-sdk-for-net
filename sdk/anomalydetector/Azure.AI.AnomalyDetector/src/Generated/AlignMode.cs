@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The AlignMode. </summary>
     public readonly partial struct AlignMode : IEquatable<AlignMode>
     {
         private readonly string _value;

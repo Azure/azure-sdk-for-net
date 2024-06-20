@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayHttpListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayHttpListener>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayHttpListener>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayHttpListener>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomErrorConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,29 +147,29 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<WritableSubResource> frontendPort = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> hostName = default;
-            Optional<WritableSubResource> sslCertificate = default;
-            Optional<WritableSubResource> sslProfile = default;
-            Optional<bool> requireServerNameIndication = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<IList<string>> hostNames = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            WritableSubResource frontendPort = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string hostName = default;
+            WritableSubResource sslCertificate = default;
+            WritableSubResource sslProfile = default;
+            bool? requireServerNameIndication = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
+            WritableSubResource firewallPolicy = default;
+            IList<string> hostNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
+                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item, options));
                             }
                             customErrorConfigurations = array;
                             continue;
@@ -324,11 +323,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayHttpListener(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                frontendPort,
+                protocol,
+                hostName,
+                sslCertificate,
+                sslProfile,
+                requireServerNameIndication,
+                provisioningState,
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                firewallPolicy,
+                hostNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayHttpListener>.Write(ModelReaderWriterOptions options)
@@ -340,7 +355,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +371,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayHttpListener(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support reading '{options.Format}' format.");
             }
         }
 

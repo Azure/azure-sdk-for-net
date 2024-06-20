@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,15 +28,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
-        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences) : base(validationType)
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences) : base(validationType, serializedAdditionalRawData)
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
             TransportPreferences = transportPreferences;
             ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/> for deserialization. </summary>
+        internal DataBoxValidateAddressContent()
+        {
         }
 
         /// <summary> Shipping address of the customer. </summary>

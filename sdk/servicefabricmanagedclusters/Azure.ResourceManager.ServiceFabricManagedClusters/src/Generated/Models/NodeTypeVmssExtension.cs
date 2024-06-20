@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies set of extensions that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVmssExtension
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
@@ -32,6 +63,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             VmssExtensionPropertiesType = vmssExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
+            SetupOrder = new ChangeTrackingList<VmssExtensionSetupOrder>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
@@ -46,7 +78,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled)
+        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IList<VmssExtensionSetupOrder> setupOrder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Publisher = publisher;
@@ -59,6 +93,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = provisionAfterExtensions;
             ProvisioningState = provisioningState;
             IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
+            SetupOrder = setupOrder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/> for deserialization. </summary>
+        internal NodeTypeVmssExtension()
+        {
         }
 
         /// <summary> The name of the extension. </summary>
@@ -141,5 +182,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string ProvisioningState { get; }
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
         public bool? IsAutomaticUpgradeEnabled { get; set; }
+        /// <summary> Indicates the setup order for the extension. </summary>
+        public IList<VmssExtensionSetupOrder> SetupOrder { get; }
     }
 }

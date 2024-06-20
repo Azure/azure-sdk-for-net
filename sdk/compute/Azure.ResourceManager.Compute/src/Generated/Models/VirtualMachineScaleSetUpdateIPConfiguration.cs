@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfiguration"/>. </summary>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="subnet"> The subnet. </param>
         /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
-        internal VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id)
+        internal VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id, serializedAdditionalRawData)
         {
             Name = name;
             Subnet = subnet;

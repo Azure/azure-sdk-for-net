@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the session cookie's expiration. </summary>
     public partial class WebAppCookieExpiration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WebAppCookieExpiration"/>. </summary>
         public WebAppCookieExpiration()
         {
@@ -18,15 +53,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WebAppCookieExpiration"/>. </summary>
         /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
-        internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Convention = convention;
             TimeToExpiration = timeToExpiration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The convention used when determining the session cookie's expiration. </summary>
+        [WirePath("convention")]
         public CookieExpirationConvention? Convention { get; set; }
         /// <summary> The time after the request is made when the session cookie should expire. </summary>
+        [WirePath("timeToExpiration")]
         public string TimeToExpiration { get; set; }
     }
 }

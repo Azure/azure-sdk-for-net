@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A CosmosDB Mongo API data source/sink. </summary>
-    public partial class CosmosMongoDataTransferDataSourceSink : DataTransferDataSourceSink
+    public partial class CosmosMongoDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
@@ -29,22 +29,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="remoteAccountName"></param>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
-        /// <param name="remoteAccountName"></param>
-        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string collectionName, string remoteAccountName) : base(component)
+        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string databaseName, string collectionName) : base(component, serializedAdditionalRawData, remoteAccountName)
         {
             DatabaseName = databaseName;
             CollectionName = collectionName;
-            RemoteAccountName = remoteAccountName;
             Component = component;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosMongoDataTransferDataSourceSink()
+        {
+        }
+
         /// <summary> Gets or sets the database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the collection name. </summary>
+        [WirePath("collectionName")]
         public string CollectionName { get; set; }
-        /// <summary> Gets or sets the remote account name. </summary>
-        public string RemoteAccountName { get; set; }
     }
 }

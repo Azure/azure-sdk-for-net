@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -35,15 +34,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preprocessingComponentId"> The ARM resource ID of the component resource used to preprocess the data. </param>
         /// <param name="windowEnd"> [Required] The end date of the data window. </param>
         /// <param name="windowStart"> [Required] The start date of the data window. </param>
-        internal StaticInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, string preprocessingComponentId, DateTimeOffset windowEnd, DateTimeOffset windowStart) : base(columns, dataContext, inputDataType, jobInputType, uri)
+        internal StaticInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData, string preprocessingComponentId, DateTimeOffset windowEnd, DateTimeOffset windowStart) : base(columns, dataContext, inputDataType, jobInputType, uri, serializedAdditionalRawData)
         {
             PreprocessingComponentId = preprocessingComponentId;
             WindowEnd = windowEnd;
             WindowStart = windowStart;
             InputDataType = inputDataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticInputData"/> for deserialization. </summary>
+        internal StaticInputData()
+        {
         }
 
         /// <summary> The ARM resource ID of the component resource used to preprocess the data. </summary>

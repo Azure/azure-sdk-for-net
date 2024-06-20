@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Describes an available Cognitive Services Model SKU. </summary>
     public partial class CognitiveServicesModelSku
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelSku"/>. </summary>
         public CognitiveServicesModelSku()
         {
@@ -26,24 +57,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
-        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             UsageName = usageName;
             DeprecationOn = deprecationOn;
             Capacity = capacity;
             RateLimits = rateLimits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the model SKU. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The usage name of the model SKU. </summary>
+        [WirePath("usageName")]
         public string UsageName { get; set; }
         /// <summary> The datetime of deprecation of the model SKU. </summary>
+        [WirePath("deprecationDate")]
         public DateTimeOffset? DeprecationOn { get; set; }
         /// <summary> The capacity configuration. </summary>
+        [WirePath("capacity")]
         public CognitiveServicesCapacityConfig Capacity { get; set; }
         /// <summary> The list of rateLimit. </summary>
+        [WirePath("rateLimits")]
         public IReadOnlyList<ServiceAccountCallRateLimit> RateLimits { get; }
     }
 }

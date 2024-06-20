@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Diagnostic Metric information. </summary>
     public partial class DiagnosticMetricSet
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         public DiagnosticMetricSet()
         {
@@ -27,7 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
-        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Unit = unit;
@@ -35,19 +67,26 @@ namespace Azure.ResourceManager.AppService.Models
             EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the metric. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Metric's unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; set; }
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; set; }
         /// <summary> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </summary>
+        [WirePath("values")]
         public IList<DiagnosticMetricSample> Values { get; }
     }
 }

@@ -229,6 +229,12 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             _options = options?.Clone() ?? new ServiceBusClientOptions();
             Identifier = string.IsNullOrEmpty(_options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace) : _options.Identifier;
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,

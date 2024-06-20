@@ -220,11 +220,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 logger.LogWarning(new Exception("Test Exception"), "Test Exception");
             }
 
-            var logResource = new AzureMonitorResource()
-            {
-                RoleName = "roleName",
-                RoleInstance = "roleInstance"
-            };
+            var logResource = new AzureMonitorResource(
+                roleName: "testRoleName",
+                roleInstance: "testRoleInstance",
+                serviceVersion: null,
+                monitorBaseData: null);
             var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);

@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
             string sshKeyStr = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCAcY5kdMcyDHffly4RlpAy4WrBvnMEJ45v5AGCQZm0Vv1R5KYYG4+28E+csSdP8GNnxuJWegyqYS9XV0oWxCdN2Wtaqz9QJ2DcFG3panfNn+kWXZtqvf8/lXPEFpX9gmNvAsJYRHBzNnw9/YTbpeHAoQcQniVy616nsxpVyzQVMU2c6SQDapvdot5t9gey9YPhCYxVFZPWmyNL9lSkOAnkGBzDUIr2ne62MGHoyobkPyzPcGIPVV5bDZY2Afw6FvhC+aEZ4k4XRWAOrgRhJyZJe0loC9fc1zpB0LpRA3zaMf+u8hCmnJ8J61xFP4XaG5RJhWOq7syNkc5di3osiuv";
             var publicKeys = new List<LinuxSshPublicKey>();
-            publicKeys.Add(new LinuxSshPublicKey(sshKeyStr));
-            var sshPublicKeys = new LinuxSshConfiguration(publicKeys);
-            var linuxProfile = new LinuxProfileProperties(sshPublicKeys);
+            publicKeys.Add(new LinuxSshPublicKey(sshKeyStr, null));
+            var sshPublicKeys = new LinuxSshConfiguration(publicKeys, null);
+            var linuxProfile = new LinuxProfileProperties(sshPublicKeys, null);
 
             var agentPool = new HybridContainerServiceNamedAgentPoolProfile();
             agentPool.Name = "testnodepool";
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             var clusterVmAccessProfile = new ClusterVmAccessProfile();
 
             var cloudProviderProfile = new ProvisionedClusterCloudProviderProfile();
-            cloudProviderProfile.InfraNetworkProfile = new ProvisionedClusterInfraNetworkProfile(new List<ResourceIdentifier>());
+            cloudProviderProfile.InfraNetworkProfile = new ProvisionedClusterInfraNetworkProfile(new List<ResourceIdentifier>(), null);
             cloudProviderProfile.InfraNetworkProfile.VnetSubnetIds.Add(vnet.Value.Data.Id);
 
-            clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, storageProfile, clusterVmAccessProfile, agentPoolProfiles, cloudProviderProfile, null, null, null, null);
+            clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, storageProfile, clusterVmAccessProfile, agentPoolProfiles, cloudProviderProfile, null, null, null, null, null);
 
             var cluster = clusterClient.CreateOrUpdate(WaitUntil.Completed, clusterData);
             Assert.AreEqual(cluster.Value.Data.Properties.ProvisioningState, HybridContainerServiceResourceProvisioningState.Succeeded);

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +17,14 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class AzureRoleDefinition : IUtf8JsonSerializable, IJsonModel<AzureRoleDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureRoleDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureRoleDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureRoleDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureRoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureRoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,19 +95,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzureRoleDefinition DeserializeAzureRoleDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> isServiceRole = default;
-            Optional<IReadOnlyList<Permission>> permissions = default;
-            Optional<IReadOnlyList<string>> scopes = default;
+            string id = default;
+            string name = default;
+            bool? isServiceRole = default;
+            IReadOnlyList<Permission> permissions = default;
+            IReadOnlyList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<Permission> array = new List<Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        array.Add(Permission.DeserializePermission(item, options));
                     }
                     permissions = array;
                     continue;
@@ -157,11 +159,153 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureRoleDefinition(
+                id,
+                name,
+                isServiceRole,
+                permissions ?? new ChangeTrackingList<Permission>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsServiceRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isServiceRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsServiceRole))
+                {
+                    builder.Append("  isServiceRole: ");
+                    var boolValue = IsServiceRole.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  permissions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Permissions))
+                {
+                    if (Permissions.Any())
+                    {
+                        builder.Append("  permissions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Permissions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  permissions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Scopes))
+                {
+                    if (Scopes.Any())
+                    {
+                        builder.Append("  scopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Scopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AzureRoleDefinition>.Write(ModelReaderWriterOptions options)
@@ -172,8 +316,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +335,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeAzureRoleDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureRoleDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
 
-            Optional<Uri> resourceUri = default;
+            Uri resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RoutingConfigurationNfvSubResource(resourceUri.Value);
+            return new RoutingConfigurationNfvSubResource(resourceUri);
         }
 
         BinaryData IPersistableModel<RoutingConfigurationNfvSubResource>.Write(ModelReaderWriterOptions options)

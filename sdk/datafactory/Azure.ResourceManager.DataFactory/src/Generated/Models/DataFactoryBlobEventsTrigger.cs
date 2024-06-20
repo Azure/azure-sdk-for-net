@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -49,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Events = events;
             Scope = scope;
             TriggerType = triggerType ?? "BlobEventsTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventsTrigger"/> for deserialization. </summary>
+        internal DataFactoryBlobEventsTrigger()
+        {
         }
 
         /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>

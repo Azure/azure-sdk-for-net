@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseCmdkeySetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
         /// <param name="password">
@@ -43,12 +44,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
-        internal SynapseCmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, SynapseSecretBase password) : base(customSetupBaseType)
+        internal SynapseCmdkeySetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData targetName, BinaryData userName, SynapseSecretBase password) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             TargetName = targetName;
             UserName = userName;
             Password = password;
             CustomSetupBaseType = customSetupBaseType ?? "CmdkeySetup";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseCmdkeySetup"/> for deserialization. </summary>
+        internal SynapseCmdkeySetup()
+        {
         }
 
         /// <summary>

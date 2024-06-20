@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -21,9 +22,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, NetworkTapEncapsulationType? encapsulationType, NetworkFabricPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition)
+        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkTapEncapsulationType? encapsulationType, NetworkFabricPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
         {
             EncapsulationType = encapsulationType;
             PortCondition = portCondition;

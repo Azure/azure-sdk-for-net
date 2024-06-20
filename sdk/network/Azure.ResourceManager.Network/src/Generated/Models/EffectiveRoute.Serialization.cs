@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveRoute : IUtf8JsonSerializable, IJsonModel<EffectiveRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,21 +103,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveRoute DeserializeEffectiveRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> disableBgpRoutePropagation = default;
-            Optional<EffectiveRouteSource> source = default;
-            Optional<EffectiveRouteState> state = default;
-            Optional<IReadOnlyList<string>> addressPrefix = default;
-            Optional<IReadOnlyList<string>> nextHopIPAddress = default;
-            Optional<RouteNextHopType> nextHopType = default;
+            string name = default;
+            bool? disableBgpRoutePropagation = default;
+            EffectiveRouteSource? source = default;
+            EffectiveRouteState? state = default;
+            IReadOnlyList<string> addressPrefix = default;
+            IReadOnlyList<string> nextHopIPAddress = default;
+            RouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -191,11 +191,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EffectiveRoute(
+                name,
+                disableBgpRoutePropagation,
+                source,
+                state,
+                addressPrefix ?? new ChangeTrackingList<string>(),
+                nextHopIPAddress ?? new ChangeTrackingList<string>(),
+                nextHopType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRoute>.Write(ModelReaderWriterOptions options)
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

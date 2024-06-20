@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,8 +24,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customLocationReference"> The reference to the custom location. </param>
-        internal AzureOperatorNexusClusterNfviDetails(string name, NfviType nfviType, WritableSubResource customLocationReference) : base(name, nfviType)
+        internal AzureOperatorNexusClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource customLocationReference) : base(name, nfviType, serializedAdditionalRawData)
         {
             CustomLocationReference = customLocationReference;
             NfviType = nfviType;

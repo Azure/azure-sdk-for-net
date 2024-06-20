@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
         /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
-        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = RetryOptions.DefaultMaxRetries, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();

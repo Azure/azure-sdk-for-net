@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmFriendlyName"> The VM Name. </param>
         /// <param name="masterTargetId"> The Master Target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="datastoreName"> The target datastore name. </param>
         /// <param name="diskExclusionContent"> The enable disk exclusion input. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
-        internal InMageEnableProtectionContent(string instanceType, string vmFriendlyName, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, string datastoreName, InMageDiskExclusionContent diskExclusionContent, IList<string> disksToInclude) : base(instanceType)
+        internal InMageEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmFriendlyName, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, string datastoreName, InMageDiskExclusionContent diskExclusionContent, IList<string> disksToInclude) : base(instanceType, serializedAdditionalRawData)
         {
             VmFriendlyName = vmFriendlyName;
             MasterTargetId = masterTargetId;
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskExclusionContent = diskExclusionContent;
             DisksToInclude = disksToInclude;
             InstanceType = instanceType ?? "InMage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/> for deserialization. </summary>
+        internal InMageEnableProtectionContent()
+        {
         }
 
         /// <summary> The VM Name. </summary>

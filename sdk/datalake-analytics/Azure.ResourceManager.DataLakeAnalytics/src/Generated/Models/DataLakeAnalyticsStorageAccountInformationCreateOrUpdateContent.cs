@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -16,6 +16,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent"/>. </summary>
         /// <param name="accessKey">
         /// The access key associated with this Azure Storage account that will be used to connect to it.
@@ -38,10 +70,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The optional suffix for the storage account.
         /// Serialized Name: AddStorageAccountParameters.properties.suffix
         /// </param>
-        internal DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent(string accessKey, string suffix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent(string accessKey, string suffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessKey = accessKey;
             Suffix = suffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent()
+        {
         }
 
         /// <summary>

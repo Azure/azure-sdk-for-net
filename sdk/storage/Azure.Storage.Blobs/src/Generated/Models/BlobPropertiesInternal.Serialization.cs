@@ -215,7 +215,47 @@ namespace Azure.Storage.Blobs.Models
             {
                 legalHold = (bool?)legalHoldElement;
             }
-            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, blobType, leaseStatus, leaseState, leaseDuration, copyId, copyStatus, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTier, accessTierInferred, archiveStatus, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, rehydratePriority, lastAccessedOn, immutabilityPolicyExpiresOn, immutabilityPolicyMode, legalHold);
+            return new BlobPropertiesInternal(
+                creationTime,
+                lastModified,
+                etag,
+                contentLength,
+                contentType,
+                contentEncoding,
+                contentLanguage,
+                contentMD5,
+                contentDisposition,
+                cacheControl,
+                blobSequenceNumber,
+                blobType,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                copyId,
+                copyStatus,
+                copySource,
+                copyProgress,
+                copyCompletionTime,
+                copyStatusDescription,
+                serverEncrypted,
+                incrementalCopy,
+                destinationSnapshot,
+                deletedTime,
+                remainingRetentionDays,
+                accessTier,
+                accessTierInferred,
+                archiveStatus,
+                customerProvidedKeySha256,
+                encryptionScope,
+                accessTierChangeTime,
+                tagCount,
+                expiresOn,
+                isSealed,
+                rehydratePriority,
+                lastAccessedOn,
+                immutabilityPolicyExpiresOn,
+                immutabilityPolicyMode,
+                legalHold);
         }
     }
 }

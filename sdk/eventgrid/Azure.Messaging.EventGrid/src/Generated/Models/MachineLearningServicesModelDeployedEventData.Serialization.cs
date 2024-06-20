@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<string> serviceComputeType = default;
-            Optional<string> modelIds = default;
-            Optional<object> serviceTags = default;
-            Optional<object> serviceProperties = default;
+            string serviceName = default;
+            string serviceComputeType = default;
+            string modelIds = default;
+            object serviceTags = default;
+            object serviceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -62,7 +61,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesModelDeployedEventData(serviceName.Value, serviceComputeType.Value, modelIds.Value, serviceTags.Value, serviceProperties.Value);
+            return new MachineLearningServicesModelDeployedEventData(serviceName, serviceComputeType, modelIds, serviceTags, serviceProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesModelDeployedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement);
         }
 
         internal partial class MachineLearningServicesModelDeployedEventDataConverter : JsonConverter<MachineLearningServicesModelDeployedEventData>
@@ -71,6 +78,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesModelDeployedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

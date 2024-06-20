@@ -1,0 +1,50 @@
+{
+  "Name": "UpgradePolicy",
+  "ProtocolName": "Models.UpgradePolicy",
+  "SummaryComment": "Describes an upgrade policy - automatic, manual, or rolling.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.UpgradeMode",
+        "Name": "Mode",
+        "SummaryComment": "Specifies the mode of an upgrade to virtual machines in the scale set.<br /><br /> Possible values are:<br /><br /> **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.<br /><br /> **Automatic** - All virtual machines in the scale set are automatically updated at the same time.<br /><br /> **Rolling** - Scale set performs updates in batches with an optional pause time in between.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": {
+        "Type": "Models.UpgradeMode",
+        "Name": "Mode"
+      }
+    },
+    {
+      "Key": {
+        "Type": "AutomaticOSUpgradePolicy",
+        "Name": "AutomaticOSUpgradePolicy",
+        "SummaryComment": "Configuration parameters used for performing automatic OS Upgrade.",
+        "RemarksComment": "The configuration parameters used for performing automatic OS upgrade.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.AutomaticOSUpgradePolicy",
+        "Name": "AutomaticOSUpgradePolicy"
+      }
+    },
+    {
+      "Key": {
+        "Type": "RollingUpgradePolicy",
+        "Name": "RollingUpgradePolicy",
+        "SummaryComment": "The configuration parameters used while performing a rolling upgrade.",
+        "RemarksComment": "This property is only supported on Pools with the virtualMachineConfiguration property.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.RollingUpgradePolicy",
+        "Name": "RollingUpgradePolicy"
+      }
+    }
+  ]
+}

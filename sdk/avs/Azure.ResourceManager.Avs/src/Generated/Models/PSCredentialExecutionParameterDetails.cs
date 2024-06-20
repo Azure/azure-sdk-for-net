@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,13 +26,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> username for login. </param>
         /// <param name="password"> password for login. </param>
-        internal PSCredentialExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, string username, string password) : base(name, parameterType)
+        internal PSCredentialExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string password) : base(name, parameterType, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             ParameterType = parameterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/> for deserialization. </summary>
+        internal PSCredentialExecutionParameterDetails()
+        {
         }
 
         /// <summary> username for login. </summary>

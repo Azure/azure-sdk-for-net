@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxHeavyAccountCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
-        internal DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, string accountName, IReadOnlyList<string> copyLogLink, IReadOnlyList<string> copyVerboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountName, IReadOnlyList<string> copyLogLink, IReadOnlyList<string> copyVerboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;

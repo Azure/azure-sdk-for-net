@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The SKU (tier) of a workspace. </summary>
     public partial class OperationalInsightsWorkspaceSku
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         public OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name)
@@ -23,18 +56,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
         /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
-        internal OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel, DateTimeOffset? lastSkuUpdatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel, DateTimeOffset? lastSkuUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             CapacityReservationLevel = capacityReservationLevel;
             LastSkuUpdatedOn = lastSkuUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSku"/> for deserialization. </summary>
+        internal OperationalInsightsWorkspaceSku()
+        {
         }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public OperationalInsightsWorkspaceSkuName Name { get; set; }
         /// <summary> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </summary>
+        [WirePath("capacityReservationLevel")]
         public OperationalInsightsWorkspaceCapacityReservationLevel? CapacityReservationLevel { get; set; }
         /// <summary> The last time when the sku was updated. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
     }
 }

@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The AS2 agreement protocol settings. </summary>
     public partial class AS2ProtocolSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AS2ProtocolSettings"/>. </summary>
         /// <param name="messageConnectionSettings"> The message connection settings. </param>
         /// <param name="acknowledgementConnectionSettings"> The acknowledgement connection settings. </param>
@@ -39,6 +71,32 @@ namespace Azure.ResourceManager.Logic.Models
             ValidationSettings = validationSettings;
             EnvelopeSettings = envelopeSettings;
             ErrorSettings = errorSettings;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2ProtocolSettings"/>. </summary>
+        /// <param name="messageConnectionSettings"> The message connection settings. </param>
+        /// <param name="acknowledgementConnectionSettings"> The acknowledgement connection settings. </param>
+        /// <param name="mdnSettings"> The MDN settings. </param>
+        /// <param name="securitySettings"> The security settings. </param>
+        /// <param name="validationSettings"> The validation settings. </param>
+        /// <param name="envelopeSettings"> The envelope settings. </param>
+        /// <param name="errorSettings"> The error settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2ProtocolSettings(AS2MessageConnectionSettings messageConnectionSettings, AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings, AS2MdnSettings mdnSettings, AS2SecuritySettings securitySettings, AS2ValidationSettings validationSettings, AS2EnvelopeSettings envelopeSettings, AS2ErrorSettings errorSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageConnectionSettings = messageConnectionSettings;
+            AcknowledgementConnectionSettings = acknowledgementConnectionSettings;
+            MdnSettings = mdnSettings;
+            SecuritySettings = securitySettings;
+            ValidationSettings = validationSettings;
+            EnvelopeSettings = envelopeSettings;
+            ErrorSettings = errorSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2ProtocolSettings"/> for deserialization. </summary>
+        internal AS2ProtocolSettings()
+        {
         }
 
         /// <summary> The message connection settings. </summary>

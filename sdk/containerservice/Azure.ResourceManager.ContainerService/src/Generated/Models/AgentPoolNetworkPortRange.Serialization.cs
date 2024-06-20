@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable, IJsonModel<AgentPoolNetworkPortRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolNetworkPortRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolNetworkPortRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentPoolNetworkPortRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkPortRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> portStart = default;
-            Optional<int> portEnd = default;
-            Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            int? portStart = default;
+            int? portEnd = default;
+            AgentPoolNetworkPortProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portStart"u8))
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgentPoolNetworkPortRange(portStart, portEnd, protocol, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolNetworkPortRange>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeAgentPoolNetworkPortRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkPortRange)} does not support reading '{options.Format}' format.");
             }
         }
 

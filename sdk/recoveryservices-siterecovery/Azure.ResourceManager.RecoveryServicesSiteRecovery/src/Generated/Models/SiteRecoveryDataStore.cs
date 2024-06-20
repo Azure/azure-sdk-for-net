@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The datastore details of the MT. </summary>
     public partial class SiteRecoveryDataStore
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryDataStore"/>. </summary>
         internal SiteRecoveryDataStore()
         {
@@ -23,13 +56,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="capacity"> The capacity of data store in GBs. </param>
         /// <param name="freeSpace"> The free space of data store in GBs. </param>
         /// <param name="dataStoreType"> The type of data store. </param>
-        internal SiteRecoveryDataStore(string symbolicName, Guid? uuid, string capacity, string freeSpace, string dataStoreType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDataStore(string symbolicName, Guid? uuid, string capacity, string freeSpace, string dataStoreType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SymbolicName = symbolicName;
             Uuid = uuid;
             Capacity = capacity;
             FreeSpace = freeSpace;
             DataStoreType = dataStoreType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The symbolic name of data store. </summary>

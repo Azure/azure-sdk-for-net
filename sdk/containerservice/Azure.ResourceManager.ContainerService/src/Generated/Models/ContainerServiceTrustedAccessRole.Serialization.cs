@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceTrustedAccessRole : IUtf8JsonSerializable, IJsonModel<ContainerServiceTrustedAccessRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceTrustedAccessRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceTrustedAccessRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceTrustedAccessRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceTrustedAccessRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceTrustedAccessRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTrustedAccessRole DeserializeContainerServiceTrustedAccessRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> sourceResourceType = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ContainerServiceTrustedAccessRoleRule>> rules = default;
+            string sourceResourceType = default;
+            string name = default;
+            IReadOnlyList<ContainerServiceTrustedAccessRoleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceType"u8))
@@ -110,18 +110,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceTrustedAccessRoleRule> array = new List<ContainerServiceTrustedAccessRoleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceTrustedAccessRoleRule.DeserializeContainerServiceTrustedAccessRoleRule(item));
+                        array.Add(ContainerServiceTrustedAccessRoleRule.DeserializeContainerServiceTrustedAccessRoleRule(item, options));
                     }
                     rules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRole(sourceResourceType.Value, name.Value, Optional.ToList(rules), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServiceTrustedAccessRole(sourceResourceType, name, rules ?? new ChangeTrackingList<ContainerServiceTrustedAccessRoleRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRole>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceTrustedAccessRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRole)} does not support reading '{options.Format}' format.");
             }
         }
 

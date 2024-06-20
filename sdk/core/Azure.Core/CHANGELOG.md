@@ -1,6 +1,6 @@
 # Release History
 
-## 1.38.0-beta.1 (Unreleased)
+## 1.41.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.40.0 (2024-06-06)
+
+### Features Added
+
+- Added `RefreshOn` property to `AccessToken` and updated `BearerTokenAuthenticationPolicy` to refresh long-lived credentials according to this value ([#43836](https://github.com/Azure/azure-sdk-for-net/issues/43836)).
+
+### Bugs Fixed
+
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters ([#44386](https://github.com/Azure/azure-sdk-for-net/pull/44386)).
+- Fixed case where Operation.Id was not being set for incomplete long-running operations ([#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098)).
+
+### Other Changes
+
+- Improved memory performance for HTTP message sanitization ([#43818](https://github.com/Azure/azure-sdk-for-net/pull/43818)).
+- Added `DynamicallyAccessedMembers` attribute to type parameter in `Operation<T>.Rehydrate` method ([#44208](https://github.com/Azure/azure-sdk-for-net/pull/44208)).
+
+## 1.39.0 (2024-04-18)
+
+### Features Added
+
+- Add `Operation.Rehydrate` and `Operation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- `RequestFailedException` will not include the response content or headers in the message when the `IsError` property of the response is `false`.
+
+## 1.38.0 (2024-02-26)
+
+### Features Added
+
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
+### Other Changes
+
+- Additional Azure data centers are now included in `AzureLocation`.  The following were added:
+  - China East 3
+  - China North 3
+  - Israel Central
+  - Italy North
+  - Poland Central
+  - Sweden South
 
 ## 1.37.0 (2024-01-11)
 

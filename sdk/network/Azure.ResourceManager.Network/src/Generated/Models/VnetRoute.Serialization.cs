@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VnetRoute : IUtf8JsonSerializable, IJsonModel<VnetRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VnetRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VnetRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VnetRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VnetRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VnetRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig);
+                writer.WriteObjectValue(StaticRoutesConfig, options);
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VnetRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VnetRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VnetRoute DeserializeVnetRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<StaticRoutesConfig> staticRoutesConfig = default;
-            Optional<IList<StaticRoute>> staticRoutes = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
+            StaticRoutesConfig staticRoutesConfig = default;
+            IList<StaticRoute> staticRoutes = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("staticRoutesConfig"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value);
+                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("staticRoutes"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        array.Add(StaticRoute.DeserializeStaticRoute(item, options));
                     }
                     staticRoutes = array;
                     continue;
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VnetRoute(staticRoutesConfig.Value, Optional.ToList(staticRoutes), Optional.ToList(bgpConnections), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VnetRoute(staticRoutesConfig, staticRoutes ?? new ChangeTrackingList<StaticRoute>(), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VnetRoute>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VnetRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VnetRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVnetRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VnetRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VnetRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

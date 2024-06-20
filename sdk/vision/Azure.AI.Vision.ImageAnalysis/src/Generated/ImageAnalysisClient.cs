@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -21,6 +20,8 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -53,6 +54,17 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
+        /// <param name="endpoint">
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
+        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options)
@@ -68,18 +80,38 @@ namespace Azure.AI.Vision.ImageAnalysis
             _apiVersion = options.Version;
         }
 
+        /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
+        /// <param name="endpoint">
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
+        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ImageAnalysisClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="visualFeatures">
         /// A list of visual features to analyze.
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -100,15 +132,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromBufferAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageData"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(imageData, nameof(imageData));
 
+            using RequestContent content = imageData;
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent;
-            Response response = await AnalyzeFromBufferAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
+            Response response = await AnalyzeFromImageDataAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -118,12 +150,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -144,15 +175,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromBuffer(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageData"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(imageData, nameof(imageData));
 
+            using RequestContent content = imageData;
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent;
-            Response response = AnalyzeFromBuffer(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+            Response response = AnalyzeFromImageData(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -166,7 +197,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromBufferAsync(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromImageDataAsync(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -181,7 +212,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -205,16 +235,16 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromBufferAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromBuffer");
+            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromBufferRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -234,7 +264,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromBuffer(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromImageData(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -249,7 +279,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -273,16 +302,16 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromBuffer(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromBuffer");
+            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromBufferRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -298,12 +327,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUrl"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -324,14 +352,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageUrl"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
+            using RequestContent content = imageUrl.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent.ToRequestContent();
             Response response = await AnalyzeFromUrlAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -342,12 +370,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUrl"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -368,14 +395,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageUrl"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
+            using RequestContent content = imageUrl.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent.ToRequestContent();
             Response response = AnalyzeFromUrl(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -405,7 +432,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -473,7 +499,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
         /// </param>
         /// <param name="genderNeutralCaption">
         /// Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.
@@ -516,7 +541,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
-        internal HttpMessage CreateAnalyzeFromBufferRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromImageDataRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -525,7 +550,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
@@ -538,7 +563,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
             }
-            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }
@@ -562,7 +587,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
@@ -575,7 +600,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
             }
-            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }

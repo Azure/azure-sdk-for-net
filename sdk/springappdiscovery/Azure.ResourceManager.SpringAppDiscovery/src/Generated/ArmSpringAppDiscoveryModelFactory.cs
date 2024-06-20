@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -36,7 +35,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootSiteData(id, name, resourceType, systemData, tags, location, properties, extendedLocation);
+            return new SpringBootSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SpringBootSitePatch"/>. </summary>
@@ -55,7 +63,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootSitePatch(id, name, resourceType, systemData, tags, location, properties);
+            return new SpringBootSitePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringBootServerData"/>. </summary>
@@ -76,7 +92,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootServerData(id, name, resourceType, systemData, tags, properties);
+            return new SpringBootServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SpringBootServerPatch"/>. </summary>
@@ -97,7 +120,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootServerPatch(id, name, resourceType, systemData, tags, properties);
+            return new SpringBootServerPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringBootAppData"/>. </summary>
@@ -118,7 +148,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootAppData(id, name, resourceType, systemData, properties, tags);
+            return new SpringBootAppData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SpringBootAppPatch"/>. </summary>
@@ -139,7 +176,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootAppPatch(id, name, resourceType, systemData, properties, tags);
+            return new SpringBootAppPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringBootSiteSummaryData"/>. </summary>
@@ -160,7 +204,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootSiteSummaryData(id, name, resourceType, systemData, properties, tags);
+            return new SpringBootSiteSummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringBootSiteErrorSummaryData"/>. </summary>
@@ -181,7 +232,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpringBootSiteErrorSummaryData(id, name, resourceType, systemData, properties, tags);
+            return new SpringBootSiteErrorSummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -37,6 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Path = path;
             EnableCompression = enableCompression;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/> for deserialization. </summary>
+        internal StagingSettings()
+        {
         }
 
         /// <summary> Staging linked service reference. </summary>

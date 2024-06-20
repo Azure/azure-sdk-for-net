@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownDataFlow. </summary>
+    /// <summary> Unknown version of DataFlow. </summary>
     internal partial class UnknownDataFlow : DataFlow
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/>. </summary>

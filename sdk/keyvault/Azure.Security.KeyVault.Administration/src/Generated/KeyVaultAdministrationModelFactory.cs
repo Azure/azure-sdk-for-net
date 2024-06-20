@@ -28,7 +28,15 @@ namespace Azure.Security.KeyVault.Administration
             permissions ??= new List<KeyVaultPermission>();
             assignableScopes ??= new List<KeyVaultRoleScope>();
 
-            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList());
+            return new KeyVaultRoleDefinition(
+                id,
+                name,
+                type,
+                roleName,
+                description,
+                roleType,
+                permissions?.ToList(),
+                assignableScopes?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignment"/>. </summary>

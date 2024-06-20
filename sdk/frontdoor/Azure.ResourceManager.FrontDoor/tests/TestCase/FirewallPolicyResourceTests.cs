@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         }
 
         [TestCase]
-        [Ignore("Object reference not set to an instance of an object")]
         public async Task FrontDoorResourceApiTests()
         {
             //1.Get

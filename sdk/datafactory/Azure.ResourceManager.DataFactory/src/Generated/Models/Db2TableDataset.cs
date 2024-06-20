@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -44,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "Db2Table";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/> for deserialization. </summary>
+        internal Db2TableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

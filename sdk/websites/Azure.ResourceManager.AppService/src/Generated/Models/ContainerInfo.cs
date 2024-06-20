@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
         public ContainerInfo()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <param name="eth0"></param>
-        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentTimeStamp = currentTimeStamp;
             PreviousTimeStamp = previousTimeStamp;
@@ -36,23 +70,32 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Id = id;
             Eth0 = eth0;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the current time stamp. </summary>
+        [WirePath("currentTimeStamp")]
         public DateTimeOffset? CurrentTimeStamp { get; set; }
         /// <summary> Gets or sets the previous time stamp. </summary>
+        [WirePath("previousTimeStamp")]
         public DateTimeOffset? PreviousTimeStamp { get; set; }
         /// <summary> Gets or sets the current cpu stats. </summary>
+        [WirePath("currentCpuStats")]
         public ContainerCpuStatistics CurrentCpuStats { get; set; }
         /// <summary> Gets or sets the previous cpu stats. </summary>
+        [WirePath("previousCpuStats")]
         public ContainerCpuStatistics PreviousCpuStats { get; set; }
         /// <summary> Gets or sets the memory stats. </summary>
+        [WirePath("memoryStats")]
         public ContainerMemoryStatistics MemoryStats { get; set; }
         /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Gets or sets the id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Gets or sets the eth 0. </summary>
+        [WirePath("eth0")]
         public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
     }
 }

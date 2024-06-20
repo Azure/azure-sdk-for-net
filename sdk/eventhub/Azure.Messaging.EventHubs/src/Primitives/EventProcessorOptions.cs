@@ -241,6 +241,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <value>If not specified, a random unique identifier will be generated.</value>
         ///
+        /// <remarks>
+        ///   It is recommended that you set a stable unique identifier for processor instances, as this allows
+        ///   the processor to recover partition ownership when an application or host instance is restarted.  It
+        ///   also aids readability in Azure SDK logs and allows for more easily correlating logs to a specific
+        ///   processor instance.
+        /// </remarks>
+        ///
         public string Identifier { get; set; }
 
         /// <summary>

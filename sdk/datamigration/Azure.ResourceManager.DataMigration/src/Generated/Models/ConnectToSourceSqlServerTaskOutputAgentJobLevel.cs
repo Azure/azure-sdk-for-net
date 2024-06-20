@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -24,6 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Agent Job name. </param>
         /// <param name="jobCategory"> The type of Agent Job. </param>
         /// <param name="isEnabled"> The state of the original Agent Job. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastExecutedOn"> UTC Date and time when the Agent Job was last executed. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="migrationEligibility"> Information about eligibility of agent job for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<ReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType)
+        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<ReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             JobCategory = jobCategory;

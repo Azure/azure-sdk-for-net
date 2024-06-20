@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -25,13 +25,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="stepType"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageNames"> The fully qualified image names including the repository and tag. </param>
         /// <param name="isPushEnabled"> The value of this property indicates whether the image built should be pushed to the registry or not. </param>
         /// <param name="noCache"> The value of this property indicates whether the image cache is enabled or not. </param>
         /// <param name="dockerFilePath"> The Docker file path relative to the source context. </param>
         /// <param name="arguments"> The collection of override arguments to be used when executing this build step. </param>
         /// <param name="target"> The name of the target build stage for the docker build. </param>
-        internal ContainerRegistryDockerBuildStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, IList<ContainerRegistryRunArgument> arguments, string target) : base(stepType, contextPath, contextAccessToken)
+        internal ContainerRegistryDockerBuildStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, IList<ContainerRegistryRunArgument> arguments, string target) : base(stepType, contextPath, contextAccessToken, serializedAdditionalRawData)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;

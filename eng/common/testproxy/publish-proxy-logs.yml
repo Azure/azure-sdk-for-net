@@ -3,16 +3,17 @@ parameters:
 
 steps:
   - pwsh: |
-      Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy.log" -Destination "${{ parameters.rootFolder }}/proxy.log"
+      New-Item -ItemType Directory -Force "${{ parameters.rootFolder }}/proxy-logs"
+      Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy.log" -Destination "${{ parameters.rootFolder }}/proxy-logs/proxy.log"
     displayName: Copy Log File
     condition: succeededOrFailed()
 
   - template: ../pipelines/templates/steps/publish-artifact.yml
     parameters:
       ArtifactName: "$(System.StageName)-$(System.JobName)-$(System.JobAttempt)-proxy-logs"
-      ArtifactPath: "${{ parameters.rootFolder }}/proxy.log"
+      ArtifactPath: "${{ parameters.rootFolder }}/proxy-logs"
 
   - pwsh: |
-      Remove-Item -Force ${{ parameters.rootFolder }}/proxy.log
+      Remove-Item -Force ${{ parameters.rootFolder }}/proxy-logs/proxy.log
     displayName: Cleanup Copied Log File
     condition: succeededOrFailed()

@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetwork;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -34,7 +32,18 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, etag, scope, connectivity);
+            return new ManagedNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                etag,
+                scope,
+                connectivity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectivityCollection"/>. </summary>
@@ -46,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             groups ??= new List<ManagedNetworkGroupData>();
             peerings ??= new List<ManagedNetworkPeeringPolicyData>();
 
-            return new ConnectivityCollection(groups?.ToList(), peerings?.ToList());
+            return new ConnectivityCollection(groups?.ToList(), peerings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetwork.ManagedNetworkGroupData"/>. </summary>
@@ -70,7 +79,20 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             virtualNetworks ??= new List<WritableSubResource>();
             subnets ??= new List<WritableSubResource>();
 
-            return new ManagedNetworkGroupData(id, name, resourceType, systemData, kind, provisioningState, etag, managementGroups?.ToList(), subscriptions?.ToList(), virtualNetworks?.ToList(), subnets?.ToList(), location);
+            return new ManagedNetworkGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                provisioningState,
+                etag,
+                managementGroups?.ToList(),
+                subscriptions?.ToList(),
+                virtualNetworks?.ToList(),
+                subnets?.ToList(),
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProperties"/>. </summary>
@@ -79,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <returns> A new <see cref="Models.ResourceProperties"/> instance for mocking. </returns>
         public static ResourceProperties ResourceProperties(ProvisioningState? provisioningState = null, ETag? etag = null)
         {
-            return new ResourceProperties(provisioningState, etag);
+            return new ResourceProperties(provisioningState, etag, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetwork.ManagedNetworkPeeringPolicyData"/>. </summary>
@@ -92,7 +114,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <returns> A new <see cref="ManagedNetwork.ManagedNetworkPeeringPolicyData"/> instance for mocking. </returns>
         public static ManagedNetworkPeeringPolicyData ManagedNetworkPeeringPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedNetworkPeeringPolicyProperties properties = null, AzureLocation? location = null)
         {
-            return new ManagedNetworkPeeringPolicyData(id, name, resourceType, systemData, properties, location);
+            return new ManagedNetworkPeeringPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedNetworkPeeringPolicyProperties"/>. </summary>
@@ -108,7 +137,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             spokes ??= new List<WritableSubResource>();
             mesh ??= new List<WritableSubResource>();
 
-            return new ManagedNetworkPeeringPolicyProperties(provisioningState, etag, connectivityType, hubId != null ? ResourceManagerModelFactory.WritableSubResource(hubId) : null, spokes?.ToList(), mesh?.ToList());
+            return new ManagedNetworkPeeringPolicyProperties(
+                provisioningState,
+                etag,
+                serializedAdditionalRawData: null,
+                connectivityType,
+                hubId != null ? ResourceManagerModelFactory.WritableSubResource(hubId) : null,
+                spokes?.ToList(),
+                mesh?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetwork.ScopeAssignmentData"/>. </summary>
@@ -123,7 +159,16 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <returns> A new <see cref="ManagedNetwork.ScopeAssignmentData"/> instance for mocking. </returns>
         public static ScopeAssignmentData ScopeAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, ETag? etag = null, string assignedManagedNetwork = null, AzureLocation? location = null)
         {
-            return new ScopeAssignmentData(id, name, resourceType, systemData, provisioningState, etag, assignedManagedNetwork, location);
+            return new ScopeAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                etag,
+                assignedManagedNetwork,
+                location,
+                serializedAdditionalRawData: null);
         }
     }
 }

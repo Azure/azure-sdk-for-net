@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Optional<long?> maxAgeInSeconds = default;
+            long? maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -69,7 +69,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
+            return new CorsOptions(allowedOrigins, maxAgeInSeconds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CorsOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCorsOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

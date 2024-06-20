@@ -3,6 +3,7 @@ trigger: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
+    SDKType: client
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
@@ -10,13 +11,15 @@ extends:
     CloudConfig:
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        ServiceConnection: azure-sdk-tests
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
     Clouds: Preview
     SupportedClouds: Preview, PrivatePreview
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
-      - Pool=(.*)-general/$1-storage
+      - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
+      - Pool=.*WINDOWSPOOL.*/azsdk-pool-mms-win-2022-general
     ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
       MatrixConfigs:
         - Name: Storage_all_versions

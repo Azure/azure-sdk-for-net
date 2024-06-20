@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate create order limit for current subscription. </summary>
@@ -20,11 +23,17 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
-        internal CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator validationType, DataBoxSkuName deviceType) : base(validationType)
+        internal CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxSkuName deviceType) : base(validationType, serializedAdditionalRawData)
         {
             DeviceType = deviceType;
             ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationContent"/> for deserialization. </summary>
+        internal CreateOrderLimitForSubscriptionValidationContent()
+        {
         }
 
         /// <summary> Device type to be used for the job. </summary>

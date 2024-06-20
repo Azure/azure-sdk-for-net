@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm source agent upgrade blocking error details. </summary>
     public partial class InMageRcmAgentUpgradeBlockingErrorDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InMageRcmAgentUpgradeBlockingErrorDetails"/>. </summary>
         internal InMageRcmAgentUpgradeBlockingErrorDetails()
         {
@@ -27,7 +59,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recommendedAction"> The recommended action. </param>
         /// <param name="errorMessageParameters"> The error message parameters. </param>
         /// <param name="errorTags"> The error tags. </param>
-        internal InMageRcmAgentUpgradeBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmAgentUpgradeBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -35,6 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecommendedAction = recommendedAction;
             ErrorMessageParameters = errorMessageParameters;
             ErrorTags = errorTags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error code. </summary>

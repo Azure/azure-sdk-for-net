@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchResourceFile : IUtf8JsonSerializable, IJsonModel<BatchResourceFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResourceFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResourceFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchResourceFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> autoStorageContainerName = default;
-            Optional<Uri> storageContainerUrl = default;
-            Optional<Uri> httpUrl = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> filePath = default;
-            Optional<string> fileMode = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string autoStorageContainerName = default;
+            Uri storageContainerUrl = default;
+            Uri httpUrl = default;
+            string blobPrefix = default;
+            string filePath = default;
+            string fileMode = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoStorageContainerName"u8))
@@ -154,16 +154,24 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchResourceFile(autoStorageContainerName.Value, storageContainerUrl.Value, httpUrl.Value, blobPrefix.Value, filePath.Value, fileMode.Value, identityReference.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchResourceFile(
+                autoStorageContainerName,
+                storageContainerUrl,
+                httpUrl,
+                blobPrefix,
+                filePath,
+                fileMode,
+                identityReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options)
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchResourceFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support reading '{options.Format}' format.");
             }
         }
 

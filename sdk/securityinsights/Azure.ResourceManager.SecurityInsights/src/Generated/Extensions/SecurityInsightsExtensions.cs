@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Mocking;
 
 namespace Azure.ResourceManager.SecurityInsights

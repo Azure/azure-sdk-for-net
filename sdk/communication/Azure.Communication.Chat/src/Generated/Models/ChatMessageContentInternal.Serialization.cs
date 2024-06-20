@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -20,11 +18,11 @@ namespace Azure.Communication.Chat
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<string> topic = default;
-            Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
-            Optional<IReadOnlyList<ChatAttachmentInternal>> attachments = default;
-            Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
+            string message = default;
+            string topic = default;
+            IReadOnlyList<ChatParticipantInternal> participants = default;
+            IReadOnlyList<ChatAttachmentInternal> attachments = default;
+            CommunicationIdentifierModel initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -75,7 +73,15 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), Optional.ToList(attachments), initiatorCommunicationIdentifier.Value);
+            return new ChatMessageContentInternal(message, topic, participants ?? new ChangeTrackingList<ChatParticipantInternal>(), attachments ?? new ChangeTrackingList<ChatAttachmentInternal>(), initiatorCommunicationIdentifier);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageContentInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatMessageContentInternal(document.RootElement);
         }
     }
 }

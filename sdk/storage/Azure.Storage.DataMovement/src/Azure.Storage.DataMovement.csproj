@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared\Storage" />
@@ -39,5 +38,7 @@
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
 </Project>

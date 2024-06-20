@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -38,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal SapBWCubeDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DatasetType = datasetType ?? "SapBwCube";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapBWCubeDataset"/> for deserialization. </summary>
+        internal SapBWCubeDataset()
+        {
         }
     }
 }

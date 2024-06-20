@@ -145,6 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public const string AttributeAzureNameSpace = "az.namespace";
 
+        // Exceptions v1.24.0 https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/exceptions/exceptions-spans.md
         public const string AttributeExceptionEventName = "exception";
         public const string AttributeExceptionType = "exception.type";
         public const string AttributeExceptionMessage = "exception.message";

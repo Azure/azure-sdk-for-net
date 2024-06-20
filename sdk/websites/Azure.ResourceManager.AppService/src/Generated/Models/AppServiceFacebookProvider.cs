@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -12,6 +13,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the Facebook provider. </summary>
     public partial class AppServiceFacebookProvider
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceFacebookProvider"/>. </summary>
         public AppServiceFacebookProvider()
         {
@@ -22,23 +55,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
         /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        internal AppServiceFacebookProvider(bool? isEnabled, AppRegistration registration, string graphApiVersion, LoginScopes login)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceFacebookProvider(bool? isEnabled, AppRegistration registration, string graphApiVersion, LoginScopes login, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             GraphApiVersion = graphApiVersion;
             Login = login;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the app registration for the Facebook provider. </summary>
+        [WirePath("registration")]
         public AppRegistration Registration { get; set; }
         /// <summary> The version of the Facebook api to be used while logging in. </summary>
+        [WirePath("graphApiVersion")]
         public string GraphApiVersion { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>
         internal LoginScopes Login { get; set; }
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("login.scopes")]
         public IList<string> LoginScopes
         {
             get

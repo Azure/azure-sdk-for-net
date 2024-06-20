@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.GeoJson;
-using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -25,6 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"></param>
         /// <param name="recoveryPointDataStoresDetails"></param>
         /// <param name="recoverOn"></param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType)
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExpireOn = expireOn;
             RecoveryPointState = recoveryPointState;
             ObjectType = objectType ?? "AzureBackupDiscreteRecoveryPoint";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties()
+        {
         }
 
         /// <summary> Gets or sets the friendly name. </summary>

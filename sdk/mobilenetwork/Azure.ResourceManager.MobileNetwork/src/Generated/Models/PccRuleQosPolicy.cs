@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -27,10 +27,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="preemptionCapability"> QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
         /// <param name="preemptionVulnerability"> QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
         /// <param name="maximumBitRate"> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="guaranteedBitRate"> The guaranteed bit rate (GBR) for all service data flows that use this data flow policy rule. This is an optional setting. If you do not provide a value, there will be no GBR set for the data flow policy rule that uses this QoS definition. </param>
-        internal PccRuleQosPolicy(int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, Ambr maximumBitRate, Ambr guaranteedBitRate) : base(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate)
+        internal PccRuleQosPolicy(int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, Ambr maximumBitRate, IDictionary<string, BinaryData> serializedAdditionalRawData, Ambr guaranteedBitRate) : base(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate, serializedAdditionalRawData)
         {
             GuaranteedBitRate = guaranteedBitRate;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PccRuleQosPolicy"/> for deserialization. </summary>
+        internal PccRuleQosPolicy()
+        {
         }
 
         /// <summary> The guaranteed bit rate (GBR) for all service data flows that use this data flow policy rule. This is an optional setting. If you do not provide a value, there will be no GBR set for the data flow policy rule that uses this QoS definition. </summary>

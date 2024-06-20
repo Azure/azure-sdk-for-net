@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Package store for the SSIS integration runtime. </summary>
     public partial class DataFactoryPackageStore
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/>. </summary>
         /// <param name="name"> The name of the package store. </param>
         /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
@@ -24,6 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Name = name;
             PackageStoreLinkedService = packageStoreLinkedService;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/>. </summary>
+        /// <param name="name"> The name of the package store. </param>
+        /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPackageStore(string name, EntityReference packageStoreLinkedService, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            PackageStoreLinkedService = packageStoreLinkedService;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/> for deserialization. </summary>
+        internal DataFactoryPackageStore()
+        {
         }
 
         /// <summary> The name of the package store. </summary>

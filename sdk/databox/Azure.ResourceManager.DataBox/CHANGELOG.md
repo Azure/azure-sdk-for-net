@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -31,7 +33,7 @@
 ### Other Changes
 
 - Added `ReverseShippingDetails` property tp `DataBoxBasicJobDetails`
-- Added `DataBoxDiskGranularCopyLogDetails` property to `DataBoxDiskCopyProgress` 
+- Added `DataBoxDiskGranularCopyLogDetails` property to `DataBoxDiskCopyProgress`
 - Added `SerialNumberCustomerResolutionMap` property to `MitigateJobContent` which replaces `CustomerResolutionCode`
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.

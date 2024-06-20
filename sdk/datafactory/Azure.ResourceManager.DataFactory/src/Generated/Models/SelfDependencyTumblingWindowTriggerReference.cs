@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,13 +26,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SelfDependencyTumblingWindowTriggerReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
-        internal SelfDependencyTumblingWindowTriggerReference(string dependencyReferenceType, string offset, string size) : base(dependencyReferenceType)
+        internal SelfDependencyTumblingWindowTriggerReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string offset, string size) : base(dependencyReferenceType, serializedAdditionalRawData)
         {
             Offset = offset;
             Size = size;
             DependencyReferenceType = dependencyReferenceType ?? "SelfDependencyTumblingWindowTriggerReference";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelfDependencyTumblingWindowTriggerReference"/> for deserialization. </summary>
+        internal SelfDependencyTumblingWindowTriggerReference()
+        {
         }
 
         /// <summary> Timespan applied to the start time of a tumbling window when evaluating dependency. </summary>

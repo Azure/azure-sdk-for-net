@@ -10,6 +10,9 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 #elif LIVE_METRICS_EXPORTER
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 #endif
 using OpenTelemetry;
 
@@ -62,6 +65,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #elif LIVE_METRICS_EXPORTER
                     LiveMetricsExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+#elif ASP_NET_CORE_DISTRO
+                    AzureMonitorAspNetCoreEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #endif
                     return shortVersion.Substring(0, 20);
                 }
@@ -74,6 +79,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 AzureMonitorExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
 #elif LIVE_METRICS_EXPORTER
                 LiveMetricsExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
 #endif
                 return null;
             }
@@ -88,8 +95,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
 #if AZURE_MONITOR_EXPORTER
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
-#elif LIVE_METRICS_EXPORTER
-                string? extensionVersion = GetVersion(typeof(LiveMetricsExtractionProcessor));
+#elif (LIVE_METRICS_EXPORTER || ASP_NET_CORE_DISTRO)
+                string? extensionVersion = GetVersion(typeof(LiveMetricsActivityProcessor));
 #endif
 
                 if (IsDistro)
@@ -105,6 +112,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 AzureMonitorExporterEventSource.Log.SdkVersionCreateFailed(ex);
 #elif LIVE_METRICS_EXPORTER
                 LiveMetricsExporterEventSource.Log.SdkVersionCreateFailed(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.SdkVersionCreateFailed(ex);
 #endif
                 return null;
             }

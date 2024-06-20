@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The type of the secret resource. </summary>
-    internal readonly partial struct SecretType : IEquatable<SecretType>
+    public readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
 

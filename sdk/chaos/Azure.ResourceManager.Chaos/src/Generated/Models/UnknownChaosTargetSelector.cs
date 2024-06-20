@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosTargetSelector. </summary>
+    /// <summary> Unknown version of ChaosTargetSelector. </summary>
     internal partial class UnknownChaosTargetSelector : ChaosTargetSelector
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetSelector"/>. </summary>

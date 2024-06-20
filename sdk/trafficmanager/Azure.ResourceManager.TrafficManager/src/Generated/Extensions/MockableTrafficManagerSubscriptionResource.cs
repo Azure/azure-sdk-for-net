@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
@@ -61,7 +58,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -103,7 +100,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

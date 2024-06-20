@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -25,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorId>", content);
@@ -40,7 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorId>", content);
@@ -55,7 +53,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -118,7 +116,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -181,7 +179,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>", null);
 
@@ -195,7 +193,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>", null);
 
@@ -209,7 +207,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>", null);
 
@@ -243,7 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>", null);
 
@@ -277,7 +275,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.Delete("<sensorPartnerId>", "<sensorId>");
 
@@ -290,7 +288,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>");
 
@@ -303,7 +301,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.Delete("<sensorPartnerId>", "<sensorId>");
 
@@ -316,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>");
 
@@ -329,7 +327,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>", null);
 
@@ -343,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>", null);
 
@@ -357,7 +355,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>", null);
 
@@ -372,7 +370,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>", null);
 
@@ -387,7 +385,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -405,7 +403,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -423,7 +421,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -442,7 +440,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -461,7 +459,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             foreach (BinaryData item in client.GetSensors("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -476,7 +474,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             await foreach (BinaryData item in client.GetSensorsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -491,7 +489,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             foreach (BinaryData item in client.GetSensors("<sensorPartnerId>", new string[] { "<sensorDataModelIds>" }, new string[] { "<sensorMappingIds>" }, new string[] { "<deviceIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -526,7 +524,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient(apiVersion: "2022-11-01-preview");
+            Sensors client = new FarmBeatsClient(endpoint, credential).GetSensorsClient();
 
             await foreach (BinaryData item in client.GetSensorsAsync("<sensorPartnerId>", new string[] { "<sensorDataModelIds>" }, new string[] { "<sensorMappingIds>" }, new string[] { "<deviceIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

@@ -13,7 +13,7 @@
 
   <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
   <ItemGroup Condition="'$(IsSamplesProject)' != 'true'">
-    <PackageReference Update="Azure.Identity" Version="1.7.0" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.1" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
   </ItemGroup>

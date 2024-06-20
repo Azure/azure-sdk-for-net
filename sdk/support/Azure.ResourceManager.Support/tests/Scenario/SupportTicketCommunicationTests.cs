@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Support.Tests
             var assetName = Recording.GenerateAssetName("test");
             var communicationName = $"dotnet_sdk_test_new_communication_name_{assetName}";
             var resource = SupportTicketCommunicationResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketName, communicationName);
-            var communicationData = new SupportTicketCommunicationData(resource, communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow);
+            var communicationData = new SupportTicketCommunicationData(resource, communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow, null);
             await _supportTicketCommunicationCollection.CreateOrUpdateAsync(WaitUntil.Completed, communicationName, communicationData);
             var supportTicketFileWorkspace = await _supportTicketCommunicationCollection.GetAsync(communicationName);
             ValidateSupportTicketCommunicationData(supportTicketFileWorkspace.Value.Data, communicationName);

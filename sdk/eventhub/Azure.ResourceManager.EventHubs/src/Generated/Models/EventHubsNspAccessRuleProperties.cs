@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties of Access Rule. </summary>
     public partial class EventHubsNspAccessRuleProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleProperties"/>. </summary>
         internal EventHubsNspAccessRuleProperties()
         {
@@ -29,24 +61,31 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
-        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
             Subscriptions = subscriptions;
             NetworkSecurityPerimeters = networkSecurityPerimeters;
             FullyQualifiedDomainNames = fullyQualifiedDomainNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Direction of Access Rule. </summary>
+        [WirePath("direction")]
         public EventHubsNspAccessRuleDirection? Direction { get; }
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> Subscriptions for inbound rules. </summary>
+        [WirePath("subscriptions")]
         public IReadOnlyList<SubResource> Subscriptions { get; }
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IReadOnlyList<EventHubsNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
         /// <summary> FQDN for outbound rules. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
     }
 }

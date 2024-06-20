@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Text;
@@ -73,6 +74,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded. Scopes: {1} ParentRequestId: {2} ExpiresOn: {3}")]
         public void GetTokenSucceeded(string method, string scopes, string parentRequestId, string expiresOn)
         {
@@ -88,6 +90,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(GetTokenFailedEvent, Level = EventLevel.Informational, Message = "{0} was unable to retrieve an access token. Scopes: {1} ParentRequestId: {2} Exception: {3}")]
         public void GetTokenFailed(string method, string scopes, string parentRequestId, string exception)
         {
@@ -308,6 +311,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(AuthenticatedAccountDetailsEvent, Level = EventLevel.Informational, Message = AuthenticatedAccountDetailsMessage)]
         public void AuthenticatedAccountDetails(string clientId, string tenantId, string upn, string objectId)
         {

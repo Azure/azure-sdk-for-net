@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="stepType"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
         /// <param name="valuesFilePath"> The values/parameters file path relative to the source context. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        internal ContainerRegistryFileTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken)
+        internal ContainerRegistryFileTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken, serializedAdditionalRawData)
         {
             TaskFilePath = taskFilePath;
             ValuesFilePath = valuesFilePath;

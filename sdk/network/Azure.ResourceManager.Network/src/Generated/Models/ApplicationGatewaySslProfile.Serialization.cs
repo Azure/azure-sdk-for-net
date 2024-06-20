@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewaySslProfile : IUtf8JsonSerializable, IJsonModel<ApplicationGatewaySslProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewaySslProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,12 +62,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
-                writer.WriteObjectValue(SslPolicy);
+                writer.WriteObjectValue(SslPolicy, options);
             }
             if (Optional.IsDefined(ClientAuthConfiguration))
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
-                writer.WriteObjectValue(ClientAuthConfiguration);
+                writer.WriteObjectValue(ClientAuthConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,22 +107,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySslProfile DeserializeApplicationGatewaySslProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<WritableSubResource>> trustedClientCertificates = default;
-            Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
-            Optional<ApplicationGatewayClientAuthConfiguration> clientAuthConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<WritableSubResource> trustedClientCertificates = default;
+            ApplicationGatewaySslPolicy sslPolicy = default;
+            ApplicationGatewayClientAuthConfiguration clientAuthConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value);
+                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientAuthConfiguration"u8))
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value);
+                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -213,11 +212,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewaySslProfile(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                trustedClientCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                sslPolicy,
+                clientAuthConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslProfile>.Write(ModelReaderWriterOptions options)
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewaySslProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

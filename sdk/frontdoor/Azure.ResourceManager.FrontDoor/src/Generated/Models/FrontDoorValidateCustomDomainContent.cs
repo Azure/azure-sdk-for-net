@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Input of the custom domain to be validated for DNS mapping. </summary>
     public partial class FrontDoorValidateCustomDomainContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/>. </summary>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
@@ -21,6 +53,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostName = hostName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/>. </summary>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorValidateCustomDomainContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HostName = hostName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/> for deserialization. </summary>
+        internal FrontDoorValidateCustomDomainContent()
+        {
         }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>

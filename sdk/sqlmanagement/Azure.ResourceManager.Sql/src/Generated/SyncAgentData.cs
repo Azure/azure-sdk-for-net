@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncAgentData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SyncAgentData"/>. </summary>
         public SyncAgentData()
         {
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
         /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
-        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SyncDatabaseId = syncDatabaseId;
             LastAliveOn = lastAliveOn;
@@ -42,19 +76,26 @@ namespace Azure.ResourceManager.Sql
             IsUpToDate = isUpToDate;
             ExpireOn = expireOn;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>
+        [WirePath("properties.syncDatabaseId")]
         public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> Last alive time of the sync agent. </summary>
+        [WirePath("properties.lastAliveTime")]
         public DateTimeOffset? LastAliveOn { get; }
         /// <summary> State of the sync agent. </summary>
+        [WirePath("properties.state")]
         public SyncAgentState? State { get; }
         /// <summary> If the sync agent version is up to date. </summary>
+        [WirePath("properties.isUpToDate")]
         public bool? IsUpToDate { get; }
         /// <summary> Expiration time of the sync agent version. </summary>
+        [WirePath("properties.expiryTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Version of the sync agent. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
     }
 }

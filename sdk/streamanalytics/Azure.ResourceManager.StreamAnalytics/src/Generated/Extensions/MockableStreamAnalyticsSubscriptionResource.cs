@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics.Mocking
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(e), SubscriptionsClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +161,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(e), SubscriptionsClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>

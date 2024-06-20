@@ -53,11 +53,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<char> delimiter = default;
-            Optional<char> replacement = default;
-            Optional<int> maxTokenLength = default;
-            Optional<bool> reverse = default;
-            Optional<int> skip = default;
+            char? delimiter = default;
+            char? replacement = default;
+            int? maxTokenLength = default;
+            bool? reverse = default;
+            int? skip = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,30 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizer(odataType, name, Optional.ToNullable(delimiter), Optional.ToNullable(replacement), Optional.ToNullable(maxTokenLength), Optional.ToNullable(reverse), Optional.ToNullable(skip));
+            return new PathHierarchyTokenizer(
+                odataType,
+                name,
+                delimiter,
+                replacement,
+                maxTokenLength,
+                reverse,
+                skip);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PathHierarchyTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePathHierarchyTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -16,13 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MySqlLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public MySqlLinkedService(DataFactoryElement<string> connectionString)
+        public MySqlLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             LinkedServiceType = "MySql";
         }
 
@@ -33,21 +27,49 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="driverVersion"> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </param>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="username"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </param>
+        /// <param name="useSystemTrustStore"> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MySqlLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecretReference password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MySqlLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
+            DriverVersion = driverVersion;
             ConnectionString = connectionString;
+            Server = server;
+            Port = port;
+            Username = username;
+            Database = database;
+            SslMode = sslMode;
+            UseSystemTrustStore = useSystemTrustStore;
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "MySql";
         }
 
+        /// <summary> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </summary>
+        public DataFactoryElement<string> DriverVersion { get; set; }
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public DataFactoryElement<string> Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public DataFactoryElement<int> Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public DataFactoryElement<string> Username { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public DataFactoryElement<string> Database { get; set; }
+        /// <summary> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </summary>
+        public DataFactoryElement<int> SslMode { get; set; }
+        /// <summary> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </summary>
+        public DataFactoryElement<int> UseSystemTrustStore { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactoryKeyVaultSecretReference Password { get; set; }
+        public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

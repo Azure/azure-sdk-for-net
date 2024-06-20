@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedPrivateEndpointModelData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedPrivateEndpointModelData(AzureLocation location) : base(location)
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="connectionState"> The state of managed private endpoint connection. </param>
         /// <param name="privateLinkServiceUri"> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </param>
         /// <param name="privateLinkServicePrivateIP"> The private IP of private endpoint after approval. This property is empty before connection is approved. </param>
-        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaProvisioningState? provisioningState, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, IList<string> groupIds, string requestMessage, ManagedPrivateEndpointConnectionState connectionState, Uri privateLinkServiceUri, string privateLinkServicePrivateIP) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaProvisioningState? provisioningState, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, IList<string> groupIds, string requestMessage, ManagedPrivateEndpointConnectionState connectionState, Uri privateLinkServiceUri, string privateLinkServicePrivateIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -51,6 +84,12 @@ namespace Azure.ResourceManager.Grafana
             ConnectionState = connectionState;
             PrivateLinkServiceUri = privateLinkServiceUri;
             PrivateLinkServicePrivateIP = privateLinkServicePrivateIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/> for deserialization. </summary>
+        internal ManagedPrivateEndpointModelData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

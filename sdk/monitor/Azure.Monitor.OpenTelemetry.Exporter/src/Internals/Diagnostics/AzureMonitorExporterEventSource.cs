@@ -282,15 +282,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [NonEvent]
-        public void ErrorAddingActivityTagsAsCustomProperties(Exception ex)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                ErrorAddingActivityTagsAsCustomProperties(ex.FlattenException().ToInvariantString());
-            }
-        }
-
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(25, Message = "Failed to transmit from storage due to an exception. AAD Enabled: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
         public void FailedToTransmitFromStorage(bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(25, isAadEnabled, instrumentationKey, exceptionMessage);
@@ -440,6 +431,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(42, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(42, errorMessage);
+
+        [NonEvent]
+        public void ErrorAddingActivityTagsAsCustomProperties(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorAddingActivityTagsAsCustomProperties(ex.FlattenException().ToInvariantString());
+            }
+        }
 
         [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
         public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);

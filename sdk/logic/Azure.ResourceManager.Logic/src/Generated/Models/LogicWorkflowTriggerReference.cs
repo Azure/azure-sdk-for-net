@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -21,9 +23,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="flowName"> The workflow name. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        internal LogicWorkflowTriggerReference(ResourceIdentifier id, string name, ResourceType? resourceType, string flowName, string triggerName) : base(id, name, resourceType)
+        internal LogicWorkflowTriggerReference(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string flowName, string triggerName) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             FlowName = flowName;
             TriggerName = triggerName;

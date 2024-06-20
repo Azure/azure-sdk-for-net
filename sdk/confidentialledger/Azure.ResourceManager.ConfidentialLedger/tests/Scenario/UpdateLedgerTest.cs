@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         [Test, Order(1)]
         [RecordedTest]
+        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestAddUserToLedger()
         {
             // Create Ledger
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         [Test, Order(2)]
         [RecordedTest]
+        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestRemoveUserFromLedger()
         {
             // Create Ledger
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals);
+                properties.ProvisioningState, null, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             IList<AadBasedSecurityPrincipal> securityPrincipals = new List<AadBasedSecurityPrincipal>();
             securityPrincipals.Add(new AadBasedSecurityPrincipal(new Guid(TestEnvironment.TestUserObjectId),
-                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor")));
+                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor"), null));
             return securityPrincipals;
         }
     }

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2024-02-12)
+
+### Bugs Fixed
+
+- Fix several issues related to ThreadPool starvation for synchronous scenarios
+
 ## 1.3.0 (2023-11-08)
 
 ### Acknowledgments

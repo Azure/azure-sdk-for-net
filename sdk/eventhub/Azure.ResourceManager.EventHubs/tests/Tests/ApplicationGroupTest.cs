@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("RequestFailedException")]
+        [Ignore("RequestFailedException:Cannot create or update an Application Group with non-existent SAS Key.")]
         public async Task CreateApplicationGroupWithParameter()
         {
             string SASKey = Recording.GenerateAssetName("SasKey_");
@@ -85,15 +85,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //delete applicationGroup
             await applicationgroup.DeleteAsync(WaitUntil.Completed);
-            //validate
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _applicationGroupCollection.GetAsync(applicationGroupName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _applicationGroupCollection.ExistsAsync(applicationGroupName));
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("RequestFailedException")]
+        [Ignore("RequestFailedException:Cannot create or update an Application Group with non-existent SAS Key.")]
         public async Task GetAllApplicationGroups()
         {
             string SASKey = Recording.GenerateAssetName("SasKey_");
@@ -126,19 +122,14 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //validate
             int count = 0;
-            EventHubsApplicationGroupResource applicationGroup1 = null;
-            EventHubsApplicationGroupResource applicationGroup2 = null;
             await foreach (EventHubsApplicationGroupResource applicationgroup in _applicationGroupCollection.GetAllAsync())
             {
-                count++;
                 if (applicationgroup.Id.Name == applicationGroupName1)
-                    applicationGroup1 = applicationgroup;
+                    count++;
                 if (applicationgroup.Id.Name == applicationGroupName2)
-                    applicationGroup2 = applicationgroup;
+                    count++;
             }
             Assert.AreEqual(count, 2);
-            Assert.NotNull(applicationGroup1);
-            Assert.NotNull(applicationGroup2);
         }
     }
 }

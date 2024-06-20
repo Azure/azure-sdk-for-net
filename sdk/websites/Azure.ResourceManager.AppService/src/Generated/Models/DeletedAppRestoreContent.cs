@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,6 +15,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreContent : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeletedAppRestoreContent"/>. </summary>
         public DeletedAppRestoreContent()
         {
@@ -34,30 +68,37 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DeletedAppRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAppRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;
             SnapshotTime = snapshotTime;
             UseDRSecondary = useDRSecondary;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
+        [WirePath("properties.deletedSiteId")]
         public ResourceIdentifier DeletedSiteId { get; set; }
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
+        [WirePath("properties.recoverConfiguration")]
         public bool? RecoverConfiguration { get; set; }
         /// <summary>
         /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </summary>
+        [WirePath("properties.snapshotTime")]
         public string SnapshotTime { get; set; }
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        [WirePath("properties.useDRSecondary")]
         public bool? UseDRSecondary { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

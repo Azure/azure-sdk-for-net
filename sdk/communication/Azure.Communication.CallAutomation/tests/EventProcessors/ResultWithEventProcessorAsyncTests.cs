@@ -58,20 +58,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
-            // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected("mismatchedOperationId", CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CreateCallFailed(new CreateCallFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
 
-            try
-            {
-                CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-                CancellationToken token = cts.Token;
-                _ = await response.Value.WaitForEventProcessorAsync(token);
-            }
-            catch (TimeoutException)
-            {
-                // success
-                return;
-            }
+            CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(CreateCallFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
         }
 
         [Test]
@@ -117,19 +114,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected("mismatchedOperationId", CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new AnswerFailed(new AnswerFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
 
-            try
-            {
-                CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-                CancellationToken token = cts.Token;
-                _ = await response.Value.WaitForEventProcessorAsync();
-            }
-            catch (TimeoutException)
-            {
-                // Success
-                return;
-            }
+            AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(AnswerFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
         }
 
         [Test]
@@ -525,7 +520,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };
@@ -563,7 +558,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };

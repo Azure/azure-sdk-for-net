@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the SQL Server resource settings. </summary>
@@ -20,7 +23,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
-        internal SqlServerResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName) : base(resourceType, targetResourceName, targetResourceGroupName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Microsoft.Sql/servers";
         }

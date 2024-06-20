@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP address range in the CIDR scheme. </summary>
     public partial class IPRange
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IPRange"/>. </summary>
         public IPRange()
         {
@@ -21,11 +55,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="name"> The friendly name for the IP address range. </param>
         /// <param name="address"> The IP address. </param>
         /// <param name="subnetPrefixLength"> The subnet mask prefix length (see CIDR notation). </param>
-        internal IPRange(string name, IPAddress address, int? subnetPrefixLength)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPRange(string name, IPAddress address, int? subnetPrefixLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Address = address;
             SubnetPrefixLength = subnetPrefixLength;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The friendly name for the IP address range. </summary>

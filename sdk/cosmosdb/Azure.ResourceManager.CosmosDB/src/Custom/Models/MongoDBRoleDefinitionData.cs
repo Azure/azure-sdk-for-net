@@ -10,14 +10,14 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    [CodeGenSerialization(nameof(RoleDefinitionType), DeserializationValueHook = nameof(ReadRoleDefinitionType))]
     public partial class MongoDBRoleDefinitionData
     {
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadRoleDefinitionType))]
         public MongoDBRoleDefinitionType? RoleDefinitionType { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadRoleDefinitionType(JsonProperty property, ref Optional<MongoDBRoleDefinitionType> type)
+        internal static void ReadRoleDefinitionType(JsonProperty property, ref MongoDBRoleDefinitionType? type)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

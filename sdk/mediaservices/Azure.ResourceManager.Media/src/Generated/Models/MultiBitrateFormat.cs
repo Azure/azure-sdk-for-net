@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -32,11 +31,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of <see cref="MultiBitrateFormat"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="filenamePattern"> The file naming pattern used for the creation of output files. The following macros are supported in the file name: {Basename} - An expansion macro that will use the name of the input video file. If the base name(the file suffix is not included) of the input video file is less than 32 characters long, the base name of input video files will be used. If the length of base name of the input video file exceeds 32 characters, the base name is truncated to the first 32 characters in total length. {Extension} - The appropriate extension for this format. {Label} - The label assigned to the codec/layer. {Index} - A unique index for thumbnails. Only applicable to thumbnails. {AudioStream} - string "Audio" plus audio stream number(start from 1). {Bitrate} - The audio/video bitrate in kbps. Not applicable to thumbnails. {Codec} - The type of the audio/video codec. {Resolution} - The video resolution. Any unsubstituted macros will be collapsed and removed from the filename. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputFiles"> The list of output files to produce.  Each entry in the list is a set of audio and video layer labels to be muxed together . </param>
-        internal MultiBitrateFormat(string odataType, string filenamePattern, IList<MediaOutputFile> outputFiles) : base(odataType, filenamePattern)
+        internal MultiBitrateFormat(string odataType, string filenamePattern, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MediaOutputFile> outputFiles) : base(odataType, filenamePattern, serializedAdditionalRawData)
         {
             OutputFiles = outputFiles;
             OdataType = odataType ?? "#Microsoft.Media.MultiBitrateFormat";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiBitrateFormat"/> for deserialization. </summary>
+        internal MultiBitrateFormat()
+        {
         }
 
         /// <summary> The list of output files to produce.  Each entry in the list is a set of audio and video layer labels to be muxed together . </summary>

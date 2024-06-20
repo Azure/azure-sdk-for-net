@@ -10,50 +10,33 @@ Param (
 )
 . "${PSScriptRoot}\..\scripts\common.ps1"
 
-# Given the github io blob storage url and language regex,
-# the helper function will return a list of artifact names.
-function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex, $blobArtifactsReplacement) {
+# Fetch a list of "artifacts" from blob storage corresponding to the given
+# language (-storagePrefix). Remove the prefix from the path names to arrive at
+# an "artifact" name.
+function Get-BlobStorage-Artifacts(
+  $blobDirectoryRegex,
+  $blobArtifactsReplacement,
+  $storageAccountName,
+  $storageContainerName,
+  $storagePrefix
+) {
     LogDebug "Reading artifact from storage blob ..."
-    $returnedArtifacts = @()
-    $pageToken = ""
-    Do {
-      $resp = ""
-      if (!$pageToken) {
-        # First page call.
-        $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrl
-      }
-      else {
-        # Next page call
-        $blobStorageUrlPageToken = $blobStorageUrl + "&marker=$pageToken"
-        $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrlPageToken
-      }
-      # Convert to xml documents.
-      $xmlDoc = [xml](removeBomFromString $resp)
-      foreach ($elem in $xmlDoc.EnumerationResults.Blobs.BlobPrefix) {
-        # What service return like "dotnet/Azure.AI.Anomalydetector/", needs to fetch out "Azure.AI.Anomalydetector"
-        $artifact = $elem.Name -replace $blobDirectoryRegex, $blobArtifactsReplacement
-        $returnedArtifacts += $artifact
-      }
-      # Fetch page token
-      $pageToken = $xmlDoc.EnumerationResults.NextMarker
-    } while ($pageToken)
-    return $returnedArtifacts
-  }
+    # "--only-show-errors" suppresses warnings about the fact that the az CLI is not authenticated
+    # "--query '[].name'" returns a list of only blob names
+    # "--num-results *" handles pagination so the caller does not have to
+    $artifacts = az storage blob list `
+        --account-name $storageAccountName `
+        --container-name $storageContainerName `
+        --prefix $storagePrefix `
+        --delimiter / `
+        --only-show-errors `
+        --query '[].name' `
+        --num-results * | ConvertFrom-Json
+    LogDebug "Number of artifacts found: $($artifacts.Length)"
 
-# The sequence of Bom bytes differs by different encoding.
-# The helper function here is only to strip the utf-8 encoding system as it is used by blob storage list api.
-# Return the original string if not in BOM utf-8 sequence.
-function RemoveBomFromString([string]$bomAwareString) {
-    if ($bomAwareString.length -le 3) {
-        return $bomAwareString
-    }
-    $bomPatternByteArray = [byte[]] (0xef, 0xbb, 0xbf)
-    # The default encoding for powershell is ISO-8859-1, so converting bytes with the encoding.
-    $bomAwareBytes = [Text.Encoding]::GetEncoding(28591).GetBytes($bomAwareString.Substring(0, 3))
-    if (@(Compare-Object $bomPatternByteArray $bomAwareBytes -SyncWindow 0).Length -eq 0) {
-        return $bomAwareString.Substring(3)
-    }
-    return $bomAwareString
+    # example: "python/azure-storage-blob" -> "azure-storage-blob"
+    $artifacts = $artifacts.ForEach({ $_ -replace $blobDirectoryRegex, $blobArtifactsReplacement })
+    return $artifacts
 }
 
 function Get-TocMapping {

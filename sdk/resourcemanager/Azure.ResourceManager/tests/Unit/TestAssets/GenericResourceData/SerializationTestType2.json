@@ -1,26 +1,24 @@
 ﻿{
-  "properties": {
     "plan": {
-      "name": "NameForPlan",
-      "publisher": "PublisherForPlan",
-      "product": "ProductForPlan",
-      "promotionCode": "PromotionCodeForPlan",
-      "version": "VersionForPlan"
+        "name": "NameForPlan",
+        "publisher": "PublisherForPlan",
+        "product": "ProductForPlan",
+        "promotionCode": "PromotionCodeForPlan",
+        "version": "VersionForPlan"
     },
     "kind": "KindForResource",
     "managedBy": "ManagedByForResource",
     "sku": {
-      "name": "NameForSku",
-      "tier": "Basic",
-      "size": "SizeForSku",
-      "family": "FamilyForSku",
-      "model": "ModelForSku",
-      "capacity": 15464547
+        "name": "NameForSku",
+        "tier": "Basic",
+        "size": "SizeForSku",
+        "family": "FamilyForSku",
+        "model": "ModelForSku",
+        "capacity": 15464547
     },
     "tags": {
-      "key1": "value1",
-      "key2": "value2"
+        "key1": "value1",
+        "key2": "value2"
     },
     "location": "eastus"
-  }
 }

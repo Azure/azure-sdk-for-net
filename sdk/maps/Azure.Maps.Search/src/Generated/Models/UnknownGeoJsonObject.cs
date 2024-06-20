@@ -7,7 +7,7 @@
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> The UnknownGeoJsonObject. </summary>
+    /// <summary> Unknown version of GeoJsonObject. </summary>
     internal partial class UnknownGeoJsonObject : GeoJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGeoJsonObject"/>. </summary>

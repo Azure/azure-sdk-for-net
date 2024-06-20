@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -46,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Items = items;
             Condition = condition;
             ActivityType = activityType ?? "Filter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/> for deserialization. </summary>
+        internal FilterActivity()
+        {
         }
 
         /// <summary> Input array on which filter should be applied. </summary>

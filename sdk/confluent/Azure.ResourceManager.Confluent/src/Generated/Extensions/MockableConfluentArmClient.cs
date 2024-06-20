@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Mocking
 {

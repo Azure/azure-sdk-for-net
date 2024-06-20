@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -21,6 +20,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackFqdnData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnData"/>. </summary>
         /// <param name="fqdnList"> fqdn list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
@@ -41,13 +72,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal LocalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             FqdnList = fqdnList;
             ETag = etag;
             AuditComment = auditComment;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnData"/> for deserialization. </summary>
+        internal LocalRulestackFqdnData()
+        {
         }
 
         /// <summary> fqdn object description. </summary>

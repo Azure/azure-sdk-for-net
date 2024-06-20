@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -52,8 +51,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -92,8 +97,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -295,8 +306,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReclassifyJobAsync(jobId, content, context).ConfigureAwait(false);
             return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
@@ -311,8 +322,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReclassifyJob(jobId, content, context);
             return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
@@ -327,8 +338,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelJobAsync(jobId, content, context).ConfigureAwait(false);
             return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
@@ -343,8 +354,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelJob(jobId, content, context);
             return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
@@ -361,8 +372,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CompleteJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
@@ -379,8 +390,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CompleteJob(jobId, assignmentId, content, context);
             return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
@@ -397,8 +408,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CloseJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
@@ -415,8 +426,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CloseJob(jobId, assignmentId, content, context);
             return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
@@ -539,8 +550,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UnassignJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(UnassignJobResult.FromResponse(response), response);
         }
@@ -557,8 +568,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UnassignJob(jobId, assignmentId, content, context);
             return Response.FromValue(UnassignJobResult.FromResponse(response), response);
         }
@@ -689,8 +700,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DeclineJobOfferAsync(workerId, offerId, content, context).ConfigureAwait(false);
             return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }
@@ -707,8 +718,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DeclineJobOffer(workerId, offerId, content, context);
             return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }
@@ -842,8 +853,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -882,8 +899,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -1089,7 +1112,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterJob.DeserializeRouterJob, ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -1106,7 +1129,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterJob.DeserializeRouterJob, ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1185,7 +1208,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterWorker.DeserializeRouterWorker, ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1200,7 +1223,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterWorker.DeserializeRouterWorker, ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         /// <summary>

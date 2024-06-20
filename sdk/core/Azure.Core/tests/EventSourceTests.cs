@@ -654,7 +654,12 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-            });
+            },
+            // These tests are essentially testing whether the logging policy works
+            // correctly when responses are buffered (memory stream) and unbuffered
+            // (non-seekable). In order to validate the intent of the test, we set
+            // message.BufferResponse accordingly here.
+            bufferResponse: isSeekable);
 
             var buffer = new byte[11];
 

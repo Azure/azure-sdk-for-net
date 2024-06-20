@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,9 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>
         /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
         /// <param name="startOn"> The time when the export was requested. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerName"> The container name to which the labels will be exported. </param>
         /// <param name="snapshotPath"> The output path where the labels will be exported. </param>
-        internal CocoExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn, string containerName, string snapshotPath) : base(endOn, exportedRowCount, format, labelingJobId, startOn)
+        internal CocoExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string containerName, string snapshotPath) : base(endOn, exportedRowCount, format, labelingJobId, startOn, serializedAdditionalRawData)
         {
             ContainerName = containerName;
             SnapshotPath = snapshotPath;

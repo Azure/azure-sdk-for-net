@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="MediaJobInputs"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputs">
         /// List of inputs to a Job.
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
+        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputs"/> and <see cref="MediaJobInputSequence"/>.
         /// </param>
-        internal MediaJobInputs(string odataType, IList<MediaJobInputBasicProperties> inputs) : base(odataType)
+        internal MediaJobInputs(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MediaJobInputBasicProperties> inputs) : base(odataType, serializedAdditionalRawData)
         {
             Inputs = inputs;
             OdataType = odataType ?? "#Microsoft.Media.JobInputs";
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// List of inputs to a Job.
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
+        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputs"/> and <see cref="MediaJobInputSequence"/>.
         /// </summary>
         public IList<MediaJobInputBasicProperties> Inputs { get; }
     }

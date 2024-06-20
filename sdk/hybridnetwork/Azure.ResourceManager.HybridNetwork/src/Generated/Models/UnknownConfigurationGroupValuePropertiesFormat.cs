@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownConfigurationGroupValuePropertiesFormat. </summary>
+    /// <summary> Unknown version of ConfigurationGroupValuePropertiesFormat. </summary>
     internal partial class UnknownConfigurationGroupValuePropertiesFormat : ConfigurationGroupValuePropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConfigurationGroupValuePropertiesFormat"/>. </summary>
@@ -22,9 +25,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
-        internal UnknownConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownConfigurationGroupValuePropertiesFormat"/> for deserialization. </summary>
+        internal UnknownConfigurationGroupValuePropertiesFormat()
+        {
         }
     }
 }

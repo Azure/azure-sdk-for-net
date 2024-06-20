@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -43,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             IndexName = indexName;
             DatasetType = datasetType ?? "AzureSearchIndex";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/> for deserialization. </summary>
+        internal AzureSearchIndexDataset()
+        {
         }
 
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,11 +23,17 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyId"> The content key ID. </param>
-        internal ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(string odataType, Guid? keyId) : base(odataType)
+        internal ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? keyId) : base(odataType, serializedAdditionalRawData)
         {
             KeyId = keyId;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/> for deserialization. </summary>
+        internal ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier()
+        {
         }
 
         /// <summary> The content key ID. </summary>

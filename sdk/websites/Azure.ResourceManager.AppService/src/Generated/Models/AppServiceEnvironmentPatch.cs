@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a app service environment. </summary>
     public partial class AppServiceEnvironmentPatch : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatch"/>. </summary>
         public AppServiceEnvironmentPatch()
         {
@@ -46,7 +79,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -65,44 +99,62 @@ namespace Azure.ResourceManager.AppService.Models
             DedicatedHostCount = dedicatedHostCount;
             IsZoneRedundant = isZoneRedundant;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Current status of the App Service Environment. </summary>
+        [WirePath("properties.status")]
         public HostingEnvironmentStatus? Status { get; }
         /// <summary> Description of the Virtual Network. </summary>
+        [WirePath("properties.virtualNetwork")]
         public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+        [WirePath("properties.internalLoadBalancingMode")]
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
         /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
+        [WirePath("properties.multiSize")]
         public string MultiSize { get; set; }
         /// <summary> Number of front-end instances. </summary>
+        [WirePath("properties.multiRoleCount")]
         public int? MultiRoleCount { get; }
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
+        [WirePath("properties.ipsslAddressCount")]
         public int? IPSslAddressCount { get; set; }
         /// <summary> DNS suffix of the App Service Environment. </summary>
+        [WirePath("properties.dnsSuffix")]
         public string DnsSuffix { get; set; }
         /// <summary> Maximum number of VMs in the App Service Environment. </summary>
+        [WirePath("properties.maximumNumberOfMachines")]
         public int? MaximumNumberOfMachines { get; }
         /// <summary> Scale factor for front-ends. </summary>
+        [WirePath("properties.frontEndScaleFactor")]
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
         /// </summary>
+        [WirePath("properties.suspended")]
         public bool? IsSuspended { get; }
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
+        [WirePath("properties.clusterSettings")]
         public IList<AppServiceNameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
+        [WirePath("properties.userWhitelistedIpRanges")]
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
+        [WirePath("properties.hasLinuxWorkers")]
         public bool? HasLinuxWorkers { get; }
         /// <summary> Dedicated Host Count. </summary>
+        [WirePath("properties.dedicatedHostCount")]
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

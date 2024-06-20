@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -16,7 +15,11 @@ namespace Azure.Communication.JobRouter
     public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
-        /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the queue selectors to be attached.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="queueSelectors"/> is null. </exception>
         internal ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<RouterQueueSelector> queueSelectors)
@@ -31,12 +34,22 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
-        /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the queue selectors to be attached.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
+        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind, serializedAdditionalRawData)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/> for deserialization. </summary>
+        internal ConditionalQueueSelectorAttachment()
+        {
         }
 
         /// <summary>

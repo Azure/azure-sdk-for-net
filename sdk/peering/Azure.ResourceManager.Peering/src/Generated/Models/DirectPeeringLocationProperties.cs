@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering location. </summary>
     public partial class DirectPeeringLocationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
         public DirectPeeringLocationProperties()
         {
@@ -23,10 +55,12 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
         /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
         /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
-        internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PeeringFacilities = peeringFacilities;
             BandwidthOffers = bandwidthOffers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of direct peering facilities at the peering location. </summary>

@@ -31,7 +31,16 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupData(id, name, resourceType, systemData, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                displayName,
+                details,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupInfo"/>. </summary>
@@ -49,7 +58,15 @@ namespace Azure.ResourceManager.Models
             managementGroupAncestors ??= new List<string>();
             managementGroupAncestorChain ??= new List<ManagementGroupPathElement>();
 
-            return new ManagementGroupInfo(version, updatedOn, updatedBy, parent, path?.ToList(), managementGroupAncestors?.ToList(), managementGroupAncestorChain?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementGroupInfo(
+                version,
+                updatedOn,
+                updatedBy,
+                parent,
+                path?.ToList(),
+                managementGroupAncestors?.ToList(),
+                managementGroupAncestorChain?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ParentManagementGroupInfo"/>. </summary>
@@ -82,7 +99,13 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupChildInfo(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementGroupChildInfo(
+                childType,
+                id,
+                name,
+                displayName,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupCreateOrUpdateContent"/>. </summary>
@@ -98,7 +121,15 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildOptions>();
 
-            return new ManagementGroupCreateOrUpdateContent(id, resourceType, name, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementGroupCreateOrUpdateContent(
+                id,
+                resourceType,
+                name,
+                tenantId,
+                displayName,
+                details,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.CreateManagementGroupDetails"/>. </summary>
@@ -133,7 +164,13 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildOptions>();
 
-            return new ManagementGroupChildOptions(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementGroupChildOptions(
+                childType,
+                id,
+                name,
+                displayName,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.DescendantData"/>. </summary>
@@ -146,7 +183,38 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.DescendantData"/> instance for mocking. </returns>
         public static DescendantData DescendantData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier parentId = null)
         {
-            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new DescendantData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.ManagementGroupSubscriptionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenant"> The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="parentId"> The ID of the parent management group. </param>
+        /// <param name="state"> The state of the subscription. </param>
+        /// <returns> A new <see cref="ManagementGroups.ManagementGroupSubscriptionData"/> instance for mocking. </returns>
+        public static ManagementGroupSubscriptionData ManagementGroupSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tenant = null, string displayName = null, ResourceIdentifier parentId = null, string state = null)
+        {
+            return new ManagementGroupSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenant,
+                displayName,
+                parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
@@ -180,7 +248,22 @@ namespace Azure.ResourceManager.Models
             parentDisplayNameChain ??= new List<string>();
             parentNameChain ??= new List<string>();
 
-            return new EntityData(id, name, resourceType, systemData, tenantId, displayName, parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null, permissions, inheritedPermissions, numberOfDescendants, numberOfChildren, numberOfChildGroups, parentDisplayNameChain?.ToList(), parentNameChain?.ToList(), serializedAdditionalRawData: null);
+            return new EntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                displayName,
+                parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null,
+                permissions,
+                inheritedPermissions,
+                numberOfDescendants,
+                numberOfChildren,
+                numberOfChildGroups,
+                parentDisplayNameChain?.ToList(),
+                parentNameChain?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

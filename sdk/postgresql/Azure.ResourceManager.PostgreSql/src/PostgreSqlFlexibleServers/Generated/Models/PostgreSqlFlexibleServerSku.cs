@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Sku information related properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerSku
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
@@ -25,9 +57,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Tier = tier;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
+        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
+        /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerSku()
+        {
+        }
+
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridNamespaceData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventGridNamespaceData(AzureLocation location) : base(location)
@@ -35,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace resource. </param>
         /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
@@ -52,7 +85,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
-        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NamespaceSku sku, ManagedServiceIdentity identity, IList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, NamespaceProvisioningState? provisioningState, TopicsConfiguration topicsConfiguration, TopicSpacesConfiguration topicSpacesConfiguration, bool? isZoneRedundant, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NamespaceSku sku, ManagedServiceIdentity identity, IList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, NamespaceProvisioningState? provisioningState, TopicsConfiguration topicsConfiguration, TopicSpacesConfiguration topicSpacesConfiguration, bool? isZoneRedundant, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -64,24 +98,24 @@ namespace Azure.ResourceManager.EventGrid
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/> for deserialization. </summary>
+        internal EventGridNamespaceData()
+        {
         }
 
         /// <summary> Represents available Sku pricing tiers. </summary>
         public NamespaceSku Sku { get; set; }
         /// <summary> Identity information for the Namespace resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the namespace resource. </summary>
         public NamespaceProvisioningState? ProvisioningState { get; }
         /// <summary> Topics configuration information for the namespace resource. </summary>
-        internal TopicsConfiguration TopicsConfiguration { get; set; }
-        /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>
-        public string TopicsHostname
-        {
-            get => TopicsConfiguration is null ? default : TopicsConfiguration.Hostname;
-        }
-
+        public TopicsConfiguration TopicsConfiguration { get; set; }
         /// <summary> Topic spaces configuration information for the namespace resource. </summary>
         public TopicSpacesConfiguration TopicSpacesConfiguration { get; set; }
         /// <summary>

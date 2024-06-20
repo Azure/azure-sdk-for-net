@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -35,12 +35,13 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSetId"> Unique id for identifying a data set resource. </param>
         /// <param name="kustoDatabaseResourceId"> Resource id of the kusto database. </param>
         /// <param name="location"> Location of the kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the kusto table data set. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing properties for kusto database. </param>
-        internal KustoTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoDatabaseResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData, kind)
+        internal KustoTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? dataSetId, ResourceIdentifier kustoDatabaseResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             KustoDatabaseResourceId = kustoDatabaseResourceId;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ProvisioningState = provisioningState;
             TableLevelSharingProperties = tableLevelSharingProperties;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoTableDataSet"/> for deserialization. </summary>
+        internal KustoTableDataSet()
+        {
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>

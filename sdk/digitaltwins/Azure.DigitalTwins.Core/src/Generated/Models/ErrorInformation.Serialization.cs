@@ -30,10 +30,10 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ErrorInformation>> details = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<ErrorInformation> details = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -70,7 +70,23 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new ErrorInformation(code.Value, message.Value, Optional.ToList(details), innererror.Value);
+            return new ErrorInformation(code, message, details ?? new ChangeTrackingList<ErrorInformation>(), innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorInformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorInformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AzureFirewallNatRule : IUtf8JsonSerializable, IJsonModel<AzureFirewallNatRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallNatRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallNatRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFirewallNatRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNatRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNatRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallNatRule DeserializeAzureFirewallNatRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;
-            Optional<string> translatedAddress = default;
-            Optional<string> translatedPort = default;
-            Optional<string> translatedFqdn = default;
-            Optional<IList<string>> sourceIPGroups = default;
+            string name = default;
+            string description = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<AzureFirewallNetworkRuleProtocol> protocols = default;
+            string translatedAddress = default;
+            string translatedPort = default;
+            string translatedFqdn = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -250,11 +250,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(protocols), translatedAddress.Value, translatedPort.Value, translatedFqdn.Value, Optional.ToList(sourceIPGroups), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureFirewallNatRule(
+                name,
+                description,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
+                translatedAddress,
+                translatedPort,
+                translatedFqdn,
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRule>.Write(ModelReaderWriterOptions options)
@@ -266,7 +277,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +293,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureFirewallNatRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNatRule)} does not support reading '{options.Format}' format.");
             }
         }
 

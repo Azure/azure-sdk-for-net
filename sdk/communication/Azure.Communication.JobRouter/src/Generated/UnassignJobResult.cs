@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Response payload after a job has been successfully unassigned. </summary>
     public partial class UnassignJobResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
@@ -23,6 +55,22 @@ namespace Azure.Communication.JobRouter
 
             JobId = jobId;
             UnassignmentCount = unassignmentCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
+        /// <param name="jobId"> Id of an unassigned job. </param>
+        /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnassignJobResult(string jobId, int unassignmentCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            JobId = jobId;
+            UnassignmentCount = unassignmentCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/> for deserialization. </summary>
+        internal UnassignJobResult()
+        {
         }
 
         /// <summary> Id of an unassigned job. </summary>

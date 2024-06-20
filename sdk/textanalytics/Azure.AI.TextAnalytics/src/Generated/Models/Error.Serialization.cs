@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -56,9 +56,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             ErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IList<Error>> details = default;
-            Optional<InnerErrorModel> innererror = default;
+            string target = default;
+            IList<Error> details = default;
+            InnerErrorModel innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,29 @@ namespace Azure.AI.TextAnalytics.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
+            return new Error(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<Error>(),
+                innererror,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Error FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeError(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

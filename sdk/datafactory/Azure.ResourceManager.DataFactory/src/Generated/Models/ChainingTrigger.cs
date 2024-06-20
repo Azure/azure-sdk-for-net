@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -47,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependsOn = dependsOn;
             RunDimension = runDimension;
             TriggerType = triggerType ?? "ChainingTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChainingTrigger"/> for deserialization. </summary>
+        internal ChainingTrigger()
+        {
         }
 
         /// <summary> Pipeline for which runs are created when all upstream pipelines complete successfully. </summary>

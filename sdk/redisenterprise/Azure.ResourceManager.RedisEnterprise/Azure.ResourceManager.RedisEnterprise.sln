@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{0AA2DD1B-A0D9-4A4B-8399-DE7A0999B541}") = "Azure.ResourceManager.RedisEnterprise", "src\Azure.ResourceManager.RedisEnterprise.csproj", "{A0A420A5-6ED3-4AE7-811E-BF77067C5A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RedisEnterprise", "src\Azure.ResourceManager.RedisEnterprise.csproj", "{A0A420A5-6ED3-4AE7-811E-BF77067C5A44}"
 EndProject
-Project("{0AA2DD1B-A0D9-4A4B-8399-DE7A0999B541}") = "Azure.ResourceManager.RedisEnterprise.Tests", "tests\Azure.ResourceManager.RedisEnterprise.Tests.csproj", "{D1F8549D-C92B-42F1-BE5E-1D5B482B147B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RedisEnterprise.Tests", "tests\Azure.ResourceManager.RedisEnterprise.Tests.csproj", "{D1F8549D-C92B-42F1-BE5E-1D5B482B147B}"
 EndProject
-Project("{0AA2DD1B-A0D9-4A4B-8399-DE7A0999B541}") = "Azure.ResourceManager.RedisEnterprise.Samples", "samples\Azure.ResourceManager.RedisEnterprise.Samples.csproj", "{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RedisEnterprise.Samples", "samples\Azure.ResourceManager.RedisEnterprise.Samples.csproj", "{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {87256EC8-7372-4B09-81B6-664DEB2B7064}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{D1F8549D-C92B-42F1-BE5E-1D5B482B147B}.Release|x64.Build.0 = Release|Any CPU
 		{D1F8549D-C92B-42F1-BE5E-1D5B482B147B}.Release|x86.ActiveCfg = Release|Any CPU
 		{D1F8549D-C92B-42F1-BE5E-1D5B482B147B}.Release|x86.Build.0 = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|x64.Build.0 = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Debug|x86.Build.0 = Debug|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|x64.ActiveCfg = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|x64.Build.0 = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|x86.ActiveCfg = Release|Any CPU
+		{7AAFB2FB-713C-4636-8BBA-38039BAC0DE2}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87256EC8-7372-4B09-81B6-664DEB2B7064}
 	EndGlobalSection
 EndGlobal

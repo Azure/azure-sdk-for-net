@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB client encryption key resource object. </summary>
     public partial class CosmosDBSqlClientEncryptionKeyResourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyResourceInfo"/>. </summary>
         public CosmosDBSqlClientEncryptionKeyResourceInfo()
         {
@@ -22,21 +55,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
-        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             EncryptionAlgorithm = encryptionAlgorithm;
             WrappedDataEncryptionKey = wrappedDataEncryptionKey;
             KeyWrapMetadata = keyWrapMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the ClientEncryptionKey. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </summary>
+        [WirePath("encryptionAlgorithm")]
         public string EncryptionAlgorithm { get; set; }
         /// <summary> Wrapped (encrypted) form of the key represented as a byte array. </summary>
+        [WirePath("wrappedDataEncryptionKey")]
         public byte[] WrappedDataEncryptionKey { get; set; }
         /// <summary> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </summary>
+        [WirePath("keyWrapMetadata")]
         public CosmosDBKeyWrapMetadata KeyWrapMetadata { get; set; }
     }
 }

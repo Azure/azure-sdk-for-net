@@ -40,8 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultConfiguration = default;
-            Optional<IList<SemanticConfiguration>> configurations = default;
+            string defaultConfiguration = default;
+            IList<SemanticConfiguration> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultConfiguration"u8))
@@ -64,7 +64,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSearch(defaultConfiguration.Value, Optional.ToList(configurations));
+            return new SemanticSearch(defaultConfiguration, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticSearch FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticSearch(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

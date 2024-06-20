@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The edition capability. </summary>
     public partial class EditionCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         internal EditionCapability()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
@@ -37,21 +70,29 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedStorageCapabilities = supportedStorageCapabilities;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported service objectives for the edition. </summary>
+        [WirePath("supportedServiceLevelObjectives")]
         public IReadOnlyList<ServiceObjectiveCapability> SupportedServiceLevelObjectives { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> The read scale capability for the edition. </summary>
+        [WirePath("readScale")]
         public ReadScaleCapability ReadScale { get; }
         /// <summary> The list of supported storage capabilities for this edition. </summary>
+        [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

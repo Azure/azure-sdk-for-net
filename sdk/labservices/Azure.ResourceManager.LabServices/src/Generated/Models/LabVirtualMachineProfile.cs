@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The base virtual machine configuration for a lab. </summary>
     public partial class LabVirtualMachineProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
@@ -43,7 +75,8 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="useSharedPassword"> Enabling this option will use the same password for all user VMs. </param>
         /// <param name="adminUser"> Credentials for the admin user on the VM. </param>
         /// <param name="nonAdminUser"> Credentials for the non-admin user on the VM, if one exists. </param>
-        internal LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption, LabVirtualMachineImageReference imageReference, LabVirtualMachineImageOSType? osType, LabServicesSku sku, LabVirtualMachineAdditionalCapability additionalCapabilities, TimeSpan usageQuota, LabServicesEnableState? useSharedPassword, LabVirtualMachineCredential adminUser, LabVirtualMachineCredential nonAdminUser)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption, LabVirtualMachineImageReference imageReference, LabVirtualMachineImageOSType? osType, LabServicesSku sku, LabVirtualMachineAdditionalCapability additionalCapabilities, TimeSpan usageQuota, LabServicesEnableState? useSharedPassword, LabVirtualMachineCredential adminUser, LabVirtualMachineCredential nonAdminUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateOption = createOption;
             ImageReference = imageReference;
@@ -54,6 +87,12 @@ namespace Azure.ResourceManager.LabServices.Models
             UseSharedPassword = useSharedPassword;
             AdminUser = adminUser;
             NonAdminUser = nonAdminUser;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/> for deserialization. </summary>
+        internal LabVirtualMachineProfile()
+        {
         }
 
         /// <summary> Indicates what lab virtual machines are created from. </summary>

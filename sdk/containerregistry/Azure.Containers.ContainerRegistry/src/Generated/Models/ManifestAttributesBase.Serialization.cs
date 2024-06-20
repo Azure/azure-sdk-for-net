@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -21,17 +20,17 @@ namespace Azure.Containers.ContainerRegistry
                 return null;
             }
             string digest = default;
-            Optional<long> imageSize = default;
+            long? imageSize = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<ArtifactArchitecture?> architecture = default;
-            Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<IReadOnlyList<string>> tags = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            ArtifactArchitecture? architecture = default;
+            ArtifactOperatingSystem? os = default;
+            IReadOnlyList<ArtifactManifestPlatform> references = default;
+            IReadOnlyList<string> tags = default;
+            bool? deleteEnabled = default;
+            bool? writeEnabled = default;
+            bool? listEnabled = default;
+            bool? readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -155,7 +154,27 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(
+                digest,
+                imageSize,
+                createdTime,
+                lastUpdateTime,
+                architecture,
+                os,
+                references ?? new ChangeTrackingList<ArtifactManifestPlatform>(),
+                tags ?? new ChangeTrackingList<string>(),
+                deleteEnabled,
+                writeEnabled,
+                listEnabled,
+                readEnabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManifestAttributesBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManifestAttributesBase(document.RootElement);
         }
     }
 }

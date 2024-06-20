@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -42,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "AmazonRdsForOracleTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForOracleTableDataset()
+        {
         }
 
         /// <summary> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>

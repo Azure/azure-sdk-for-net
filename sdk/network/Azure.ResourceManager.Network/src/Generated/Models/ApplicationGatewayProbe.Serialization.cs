@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue(Match);
+                writer.WriteObjectValue(Match, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,30 +141,30 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> host = default;
-            Optional<string> path = default;
-            Optional<int> interval = default;
-            Optional<int> timeout = default;
-            Optional<int> unhealthyThreshold = default;
-            Optional<bool> pickHostNameFromBackendHttpSettings = default;
-            Optional<bool> pickHostNameFromBackendSettings = default;
-            Optional<int> minServers = default;
-            Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> port = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string host = default;
+            string path = default;
+            int? interval = default;
+            int? timeout = default;
+            int? unhealthyThreshold = default;
+            bool? pickHostNameFromBackendHttpSettings = default;
+            bool? pickHostNameFromBackendSettings = default;
+            int? minServers = default;
+            ApplicationGatewayProbeHealthResponseMatch match = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value);
+                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -314,11 +313,28 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayProbe(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                protocol,
+                host,
+                path,
+                interval,
+                timeout,
+                unhealthyThreshold,
+                pickHostNameFromBackendHttpSettings,
+                pickHostNameFromBackendSettings,
+                minServers,
+                match,
+                provisioningState,
+                port);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayProbe>.Write(ModelReaderWriterOptions options)
@@ -330,7 +346,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +362,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support reading '{options.Format}' format.");
             }
         }
 

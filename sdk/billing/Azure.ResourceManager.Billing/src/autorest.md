@@ -20,6 +20,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-resource-name:
   /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}: BillingPaymentMethod

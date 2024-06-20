@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxTokenLength = default;
-            Optional<bool> isSearchTokenizer = default;
-            Optional<MicrosoftStemmingTokenizerLanguage> language = default;
+            int? maxTokenLength = default;
+            bool? isSearchTokenizer = default;
+            MicrosoftStemmingTokenizerLanguage? language = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageStemmingTokenizer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToNullable(isSearchTokenizer), Optional.ToNullable(language));
+            return new MicrosoftLanguageStemmingTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MicrosoftLanguageStemmingTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

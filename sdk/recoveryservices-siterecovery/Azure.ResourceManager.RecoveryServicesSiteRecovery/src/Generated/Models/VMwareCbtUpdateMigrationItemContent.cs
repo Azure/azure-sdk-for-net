@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetVmName"> The target VM name. </param>
         /// <param name="targetVmSize"> The target VM size. </param>
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetVmTags"> The target VM tags. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal VMwareCbtUpdateMigrationItemContent(string instanceType, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<VMwareCbtNicContent> vmNics, IList<VMwareCbtUpdateDiskContent> vmDisks, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType)
+        internal VMwareCbtUpdateMigrationItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<VMwareCbtNicContent> vmNics, IList<VMwareCbtUpdateDiskContent> vmDisks, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
         {
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;

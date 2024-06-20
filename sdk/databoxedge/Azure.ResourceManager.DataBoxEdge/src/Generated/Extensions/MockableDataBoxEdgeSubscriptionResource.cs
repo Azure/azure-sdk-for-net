@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Mocking
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(e), AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(e), AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="skills">
         /// A list of skills in the skillset.
         /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
+        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="OcrSkill"/> and <see cref="VisionVectorizeSkill"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
         public SearchIndexerSkillset(string name, IEnumerable<SearchIndexerSkill> skills)
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="skills">
         /// A list of skills in the skillset.
         /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
+        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="OcrSkill"/> and <see cref="VisionVectorizeSkill"/>.
         /// </param>
         /// <param name="cognitiveServicesAccount">
         /// Details about the Azure AI service to be used when running skills.

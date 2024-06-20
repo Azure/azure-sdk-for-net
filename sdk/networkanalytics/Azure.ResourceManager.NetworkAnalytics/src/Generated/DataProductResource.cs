@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -796,7 +794,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataProductDataType.DeserializeDataProductDataType(e), _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -822,7 +820,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataProductDataType.DeserializeDataProductDataType(e), _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

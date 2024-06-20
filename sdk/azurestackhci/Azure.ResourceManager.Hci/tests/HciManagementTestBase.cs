@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Tests
             int frequency = 5000;
             while (!success && elapsed < timeSpan.TotalMilliseconds)
             {
-                Thread.Sleep(frequency);
+                await Delay(frequency, null);
                 elapsed += frequency;
                 success = await task();
             }

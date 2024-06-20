@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Ray distribution configuration. </summary>
@@ -18,13 +21,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RayDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="address"> The address of Ray head node. </param>
         /// <param name="dashboardPort"> The port to bind the dashboard server to. </param>
         /// <param name="headNodeAdditionalArgs"> Additional arguments passed to ray start in head node. </param>
         /// <param name="includeDashboard"> Provide this argument to start the Ray dashboard GUI. </param>
         /// <param name="port"> The port of the head ray process. </param>
         /// <param name="workerNodeAdditionalArgs"> Additional arguments passed to ray start in worker node. </param>
-        internal RayDistributionConfiguration(DistributionType distributionType, string address, int? dashboardPort, string headNodeAdditionalArgs, bool? includeDashboard, int? port, string workerNodeAdditionalArgs) : base(distributionType)
+        internal RayDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, string address, int? dashboardPort, string headNodeAdditionalArgs, bool? includeDashboard, int? port, string workerNodeAdditionalArgs) : base(distributionType, serializedAdditionalRawData)
         {
             Address = address;
             DashboardPort = dashboardPort;

@@ -5,25 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedRestorableSqlContainerResourceInfo
+    public partial class ExtendedRestorableSqlContainerResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedRestorableSqlContainerResourceInfo>
     {
-        internal static ExtendedRestorableSqlContainerResourceInfo DeserializeExtendedRestorableSqlContainerResourceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedRestorableSqlContainerResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExtendedRestorableSqlContainerResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Rid))
+            {
+                writer.WritePropertyName("_rid"u8);
+                writer.WriteStringValue(Rid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            {
+                writer.WritePropertyName("operationType"u8);
+                writer.WriteStringValue(OperationType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
+            {
+                writer.WritePropertyName("canUndelete"u8);
+                writer.WriteStringValue(CanUndelete);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
+            {
+                writer.WritePropertyName("canUndeleteReason"u8);
+                writer.WriteStringValue(CanUndeleteReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            {
+                writer.WritePropertyName("eventTimestamp"u8);
+                writer.WriteStringValue(EventTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("ownerId"u8);
+                writer.WriteStringValue(ContainerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerId))
+            {
+                writer.WritePropertyName("ownerResourceId"u8);
+                writer.WriteStringValue(ContainerId);
+            }
+            if (Optional.IsDefined(Container))
+            {
+                writer.WritePropertyName("container"u8);
+                writer.WriteObjectValue(Container, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExtendedRestorableSqlContainerResourceInfo IJsonModel<ExtendedRestorableSqlContainerResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedRestorableSqlContainerResourceInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedRestorableSqlContainerResourceInfo DeserializeExtendedRestorableSqlContainerResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
-            Optional<RestorableSqlContainerPropertiesResourceContainer> container = default;
+            string rid = default;
+            CosmosDBOperationType? operationType = default;
+            string canUndelete = default;
+            string canUndeleteReason = default;
+            string eventTimestamp = default;
+            string ownerId = default;
+            string ownerResourceId = default;
+            RestorableSqlContainerPropertiesResourceContainer container = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -38,6 +129,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("canUndelete"u8))
+                {
+                    canUndelete = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("canUndeleteReason"u8))
+                {
+                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -61,11 +162,241 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    container = RestorableSqlContainerPropertiesResourceContainer.DeserializeRestorableSqlContainerPropertiesResourceContainer(property.Value);
+                    container = RestorableSqlContainerPropertiesResourceContainer.DeserializeRestorableSqlContainerPropertiesResourceContainer(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedRestorableSqlContainerResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, container.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExtendedRestorableSqlContainerResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                container,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  _rid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rid))
+                {
+                    builder.Append("  _rid: ");
+                    if (Rid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationType))
+                {
+                    builder.Append("  operationType: ");
+                    builder.AppendLine($"'{OperationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndelete), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  canUndelete: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanUndelete))
+                {
+                    builder.Append("  canUndelete: ");
+                    if (CanUndelete.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CanUndelete}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CanUndelete}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndeleteReason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  canUndeleteReason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanUndeleteReason))
+                {
+                    builder.Append("  canUndeleteReason: ");
+                    if (CanUndeleteReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CanUndeleteReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CanUndeleteReason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventTimestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventTimestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventTimestamp))
+                {
+                    builder.Append("  eventTimestamp: ");
+                    if (EventTimestamp.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EventTimestamp}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EventTimestamp}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ownerId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    builder.Append("  ownerId: ");
+                    if (ContainerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ownerResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerId))
+                {
+                    builder.Append("  ownerResourceId: ");
+                    if (ContainerId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Container), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  container: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Container))
+                {
+                    builder.Append("  container: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Container, options, 2, false, "  container: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExtendedRestorableSqlContainerResourceInfo IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtendedRestorableSqlContainerResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

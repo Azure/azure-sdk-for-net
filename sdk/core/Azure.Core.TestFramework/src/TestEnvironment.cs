@@ -184,12 +184,12 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
-        public string ClientId => GetRecordedVariable("CLIENT_ID");
+        public string ClientId => GetRecordedOptionalVariable("CLIENT_ID");
 
         /// <summary>
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
         /// </summary>
-        public string ClientSecret => GetVariable("CLIENT_SECRET");
+        public string ClientSecret => GetOptionalVariable("CLIENT_SECRET");
 
         public virtual TokenCredential Credential
         {
@@ -206,15 +206,33 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    _credential = new ClientSecretCredential(
-                        GetVariable("TENANT_ID"),
-                        GetVariable("CLIENT_ID"),
-                        GetVariable("CLIENT_SECRET"),
-                        new ClientSecretCredentialOptions()
+                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
+                    if (string.IsNullOrWhiteSpace(clientSecret))
+                    {
+                        _credential = new DefaultAzureCredential(
+                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
+                    }
+                    else
+                    {
+                        // If the recording is null but we are in Record Mode this means the Credential is being used
+                        // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
+                        // vars, but don't cache the credential so that subsequent usages of this property that are within a
+                        // test will store the variables in the recording. For example, in the ExtendResourceGroupExpirationAsync method.
+                        if (_recording == null)
                         {
-                             AuthorityHost = new Uri(AuthorityHostUrl)
+                            return new ClientSecretCredential(
+                                GetVariable("TENANT_ID"),
+                                GetVariable("CLIENT_ID"),
+                                clientSecret,
+                                new ClientSecretCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
                         }
-                    );
+
+                        _credential = new ClientSecretCredential(
+                            TenantId,
+                            ClientId,
+                            clientSecret,
+                            new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
+                    }
                 }
 
                 return _credential;
@@ -285,48 +303,24 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record)
-            {
-                return;
-            }
-
-            // determine whether it is even possible to talk to the management endpoint
             string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
-            if (resourceGroup == null)
-            {
-                return;
-            }
-
             string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
-            if (subscription == null)
+            string resourceManagerUrl = GetOptionalVariable("RESOURCE_MANAGER_URL");
+
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record)
+                || DisableBootstrapping
+                || string.IsNullOrEmpty(resourceGroup)
+                || string.IsNullOrEmpty(subscription)
+                || string.IsNullOrEmpty(resourceManagerUrl))
             {
                 return;
             }
 
-            string tenantId = GetOptionalVariable("TENANT_ID");
-            string clientId = GetOptionalVariable("CLIENT_ID");
-            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
-            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
-
-            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null || ResourceManagerUrl == null)
-            {
-                return;
-            }
-
-            // intentionally not using the Credential property as we don't want to throw if the env vars are not available, and we want to allow this to vary per environment.
-            var credential = new ClientSecretCredential(
-                    tenantId,
-                    clientId,
-                    clientSecret,
-                    new ClientSecretCredentialOptions()
-                    {
-                        AuthorityHost = new Uri(authorityHost)
-                    });
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com/.default"));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(Credential, "https://management.azure.com/.default"));
 
             // create the GET request for the resource group information
             Request request = pipeline.CreateRequest();
-            Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            Uri uri = new Uri($"{resourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 
@@ -551,7 +545,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        internal static string GetSourcePath(Assembly assembly)
+        public static string GetSourcePath(Assembly assembly)
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
@@ -635,6 +629,21 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
+        /// Determines if the bootstrapping prompt and automatic resource group expiration extension should be disabled.
+        /// </summary>
+        internal static bool DisableBootstrapping
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_BOOTSTRAPPING");
+
+                bool.TryParse(switchString, out bool disableBootstrapping);
+
+                return disableBootstrapping;
+            }
+        }
+
+        /// <summary>
         /// Determines whether to enable the test framework to proxy traffic through fiddler.
         /// </summary>
         internal static bool EnableFiddler
@@ -651,14 +660,14 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Determines whether to enable proxy logging beyond errors.
+        /// Determines whether to enable debug level proxy logging. Errors are logged by default.
         /// </summary>
-        internal static bool EnableProxyLogging
+        internal static bool EnableTestProxyDebugLogs
         {
             get
             {
-                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
-                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+                string switchString = TestContext.Parameters[nameof(EnableTestProxyDebugLogs)] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS");
 
                 bool.TryParse(switchString, out bool enableProxyLogging);
 
@@ -670,6 +679,10 @@ namespace Azure.Core.TestFramework
         {
             lock (s_syncLock)
             {
+                if (DisableBootstrapping)
+                {
+                    return;
+                }
                 try
                 {
                     if (!IsWindows ||

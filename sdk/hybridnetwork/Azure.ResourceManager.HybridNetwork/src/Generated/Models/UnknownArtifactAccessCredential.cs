@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownArtifactAccessCredential. </summary>
+    /// <summary> Unknown version of ArtifactAccessCredential. </summary>
     internal partial class UnknownArtifactAccessCredential : ArtifactAccessCredential
     {
         /// <summary> Initializes a new instance of <see cref="UnknownArtifactAccessCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
-        internal UnknownArtifactAccessCredential(CredentialType credentialType) : base(credentialType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownArtifactAccessCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialType, serializedAdditionalRawData)
         {
             CredentialType = credentialType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownArtifactAccessCredential"/> for deserialization. </summary>
+        internal UnknownArtifactAccessCredential()
+        {
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownStorageProperties. </summary>
+    /// <summary> Unknown version of StorageProperties. </summary>
     internal partial class UnknownStorageProperties : AppPlatformStorageProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageProperties"/>. </summary>

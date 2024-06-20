@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
     public partial class ContainerNetworkInterfaceStatistics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
         public ContainerNetworkInterfaceStatistics()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="txPackets"></param>
         /// <param name="txErrors"></param>
         /// <param name="txDropped"></param>
-        internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RxBytes = rxBytes;
             RxPackets = rxPackets;
@@ -34,23 +70,32 @@ namespace Azure.ResourceManager.AppService.Models
             TxPackets = txPackets;
             TxErrors = txErrors;
             TxDropped = txDropped;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the rx bytes. </summary>
+        [WirePath("rxBytes")]
         public long? RxBytes { get; set; }
         /// <summary> Gets or sets the rx packets. </summary>
+        [WirePath("rxPackets")]
         public long? RxPackets { get; set; }
         /// <summary> Gets or sets the rx errors. </summary>
+        [WirePath("rxErrors")]
         public long? RxErrors { get; set; }
         /// <summary> Gets or sets the rx dropped. </summary>
+        [WirePath("rxDropped")]
         public long? RxDropped { get; set; }
         /// <summary> Gets or sets the tx bytes. </summary>
+        [WirePath("txBytes")]
         public long? TxBytes { get; set; }
         /// <summary> Gets or sets the tx packets. </summary>
+        [WirePath("txPackets")]
         public long? TxPackets { get; set; }
         /// <summary> Gets or sets the tx errors. </summary>
+        [WirePath("txErrors")]
         public long? TxErrors { get; set; }
         /// <summary> Gets or sets the tx dropped. </summary>
+        [WirePath("txDropped")]
         public long? TxDropped { get; set; }
     }
 }

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownProtectionContainer. </summary>
+    /// <summary> Unknown version of ProtectionContainer. </summary>
     internal partial class UnknownProtectionContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainer"/>. </summary>
@@ -22,9 +25,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
         {
             ContainerType = containerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainer"/> for deserialization. </summary>
+        internal UnknownProtectionContainer()
+        {
         }
     }
 }

@@ -53,32 +53,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server);
+            writer.WriteObjectValue<object>(Server);
             writer.WritePropertyName("systemNumber"u8);
-            writer.WriteObjectValue(SystemNumber);
+            writer.WriteObjectValue<object>(SystemNumber);
             writer.WritePropertyName("clientId"u8);
-            writer.WriteObjectValue(ClientId);
+            writer.WriteObjectValue<object>(ClientId);
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                writer.WriteObjectValue(Language);
+                writer.WriteObjectValue<object>(Language);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                writer.WriteObjectValue(SystemId);
+                writer.WriteObjectValue<object>(SystemId);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
             if (Optional.IsDefined(Password))
             {
@@ -88,28 +88,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                writer.WriteObjectValue(MessageServer);
+                writer.WriteObjectValue<object>(MessageServer);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                writer.WriteObjectValue(MessageServerService);
+                writer.WriteObjectValue<object>(MessageServerService);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                writer.WriteObjectValue(LogonGroup);
+                writer.WriteObjectValue<object>(LogonGroup);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -121,21 +121,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object server = default;
             object systemNumber = default;
             object clientId = default;
-            Optional<object> language = default;
-            Optional<object> systemId = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> messageServer = default;
-            Optional<object> messageServerService = default;
-            Optional<object> logonGroup = default;
-            Optional<object> encryptedCredential = default;
+            object language = default;
+            object systemId = default;
+            object userName = default;
+            SecretBase password = default;
+            object messageServer = default;
+            object messageServerService = default;
+            object logonGroup = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, systemNumber, clientId, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapOpenHubLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                logonGroup,
+                encryptedCredential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOpenHubLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOpenHubLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SapOpenHubLinkedServiceConverter : JsonConverter<SapOpenHubLinkedService>
@@ -305,6 +338,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SapOpenHubLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

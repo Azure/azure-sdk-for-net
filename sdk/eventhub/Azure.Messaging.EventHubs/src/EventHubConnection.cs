@@ -262,12 +262,19 @@ namespace Azure.Messaging.EventHubs
                                   TokenCredential credential,
                                   EventHubConnectionOptions connectionOptions = default)
         {
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             connectionOptions = connectionOptions?.Clone() ?? new EventHubConnectionOptions();
             ValidateConnectionOptions(connectionOptions);
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             var tokenCredential = new EventHubTokenCredential(credential);
 
@@ -561,10 +568,20 @@ namespace Azure.Messaging.EventHubs
                                                                              string fullyQualifiedNamespace,
                                                                              string eventHubName)
         {
-            // If there is no namespace, there is no basis for a URL and the
+            // If there is no namespace or the namespace is not a valid host, there is no basis for a URL and the
             // resource is empty.
 
             if (string.IsNullOrEmpty(fullyQualifiedNamespace))
+            {
+                return string.Empty;
+            }
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            if (Uri.CheckHostName(fullyQualifiedNamespace) == UriHostNameType.Unknown)
             {
                 return string.Empty;
             }

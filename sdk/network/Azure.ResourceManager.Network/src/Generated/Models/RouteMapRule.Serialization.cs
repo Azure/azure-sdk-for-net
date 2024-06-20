@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class RouteMapRule : IUtf8JsonSerializable, IJsonModel<RouteMapRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteMapRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteMapRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteMapRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RouteMapRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteMapRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteMapRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchCriteria)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteMapRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteMapRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteMapRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RouteMapRule DeserializeRouteMapRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<RouteCriterion>> matchCriteria = default;
-            Optional<IList<RouteMapAction>> actions = default;
-            Optional<RouteMapNextStepBehavior> nextStepIfMatched = default;
+            string name = default;
+            IList<RouteCriterion> matchCriteria = default;
+            IList<RouteMapAction> actions = default;
+            RouteMapNextStepBehavior? nextStepIfMatched = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteCriterion> array = new List<RouteCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCriterion.DeserializeRouteCriterion(item));
+                        array.Add(RouteCriterion.DeserializeRouteCriterion(item, options));
                     }
                     matchCriteria = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapAction> array = new List<RouteMapAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapAction.DeserializeRouteMapAction(item));
+                        array.Add(RouteMapAction.DeserializeRouteMapAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapRule(name.Value, Optional.ToList(matchCriteria), Optional.ToList(actions), Optional.ToNullable(nextStepIfMatched), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RouteMapRule(name, matchCriteria ?? new ChangeTrackingList<RouteCriterion>(), actions ?? new ChangeTrackingList<RouteMapAction>(), nextStepIfMatched, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapRule>.Write(ModelReaderWriterOptions options)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteMapRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteMapRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRouteMapRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteMapRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteMapRule)} does not support reading '{options.Format}' format.");
             }
         }
 

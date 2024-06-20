@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -17,12 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="message"/> is null. </exception>
         internal EnrichmentStatus(DateTimeOffset timestamp, string status, string message)
         {
-            Argument.AssertNotNull(status, nameof(status));
-            Argument.AssertNotNull(message, nameof(message));
-
             Timestamp = timestamp;
             Status = status;
             Message = message;

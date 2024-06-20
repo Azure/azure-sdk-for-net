@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlAdvisorData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         public SqlAdvisorData()
         {
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </param>
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
-        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -48,23 +81,32 @@ namespace Azure.ResourceManager.Sql
             RecommendationsStatus = recommendationsStatus;
             LastCheckedOn = lastCheckedOn;
             RecommendedActions = recommendedActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </summary>
+        [WirePath("properties.advisorStatus")]
         public SqlAdvisorStatus? AdvisorStatus { get; }
         /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </summary>
+        [WirePath("properties.autoExecuteStatus")]
         public AutoExecuteStatus? AutoExecuteStatus { get; set; }
         /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </summary>
+        [WirePath("properties.autoExecuteStatusInheritedFrom")]
         public AutoExecuteStatusInheritedFrom? AutoExecuteStatusInheritedFrom { get; }
         /// <summary> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </summary>
+        [WirePath("properties.recommendationsStatus")]
         public string RecommendationsStatus { get; }
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
+        [WirePath("properties.lastChecked")]
         public DateTimeOffset? LastCheckedOn { get; }
         /// <summary> Gets the recommended actions for this advisor. </summary>
+        [WirePath("properties.recommendedActions")]
         public IReadOnlyList<RecommendedActionData> RecommendedActions { get; }
     }
 }

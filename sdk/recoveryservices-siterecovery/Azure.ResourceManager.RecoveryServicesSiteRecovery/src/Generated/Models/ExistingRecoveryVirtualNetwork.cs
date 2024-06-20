@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -26,13 +27,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <param name="recoverySubnetName"> The recovery subnet name. </param>
-        internal ExistingRecoveryVirtualNetwork(string resourceType, ResourceIdentifier recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType)
+        internal ExistingRecoveryVirtualNetwork(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType, serializedAdditionalRawData)
         {
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
             RecoverySubnetName = recoverySubnetName;
             ResourceType = resourceType ?? "Existing";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/> for deserialization. </summary>
+        internal ExistingRecoveryVirtualNetwork()
+        {
         }
 
         /// <summary> The recovery virtual network Id. Will throw error, if resource does not exist. </summary>

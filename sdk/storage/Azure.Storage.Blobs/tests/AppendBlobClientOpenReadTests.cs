@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests

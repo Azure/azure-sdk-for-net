@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -40,16 +39,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
         /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="qualifiedName"/> is null. </exception>
-        internal MongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IReadOnlyList<MongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
+        internal MongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<MongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
-
             Collections = collections;
             SupportsSharding = supportsSharding;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/> for deserialization. </summary>
+        internal MongoDBDatabaseInfo()
+        {
         }
 
         /// <summary> A list of supported collections in a MongoDB database. </summary>

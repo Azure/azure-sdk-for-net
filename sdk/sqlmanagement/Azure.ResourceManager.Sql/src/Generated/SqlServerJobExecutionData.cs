@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobExecutionData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
         public SqlServerJobExecutionData()
         {
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="currentAttemptStartOn"> Start time of the current attempt. </param>
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
-        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             JobVersion = jobVersion;
             StepName = stepName;
@@ -56,33 +90,47 @@ namespace Azure.ResourceManager.Sql
             CurrentAttemptStartOn = currentAttemptStartOn;
             LastMessage = lastMessage;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job version number. </summary>
+        [WirePath("properties.jobVersion")]
         public int? JobVersion { get; }
         /// <summary> The job step name. </summary>
+        [WirePath("properties.stepName")]
         public string StepName { get; }
         /// <summary> The job step id. </summary>
+        [WirePath("properties.stepId")]
         public int? StepId { get; }
         /// <summary> The unique identifier of the job execution. </summary>
+        [WirePath("properties.jobExecutionId")]
         public Guid? JobExecutionId { get; }
         /// <summary> The detailed state of the job execution. </summary>
+        [WirePath("properties.lifecycle")]
         public JobExecutionLifecycle? Lifecycle { get; }
         /// <summary> The ARM provisioning state of the job execution. </summary>
+        [WirePath("properties.provisioningState")]
         public JobExecutionProvisioningState? ProvisioningState { get; }
         /// <summary> The time that the job execution was created. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreateOn { get; }
         /// <summary> The time that the job execution started. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The time that the job execution completed. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Number of times the job execution has been attempted. </summary>
+        [WirePath("properties.currentAttempts")]
         public int? CurrentAttempts { get; set; }
         /// <summary> Start time of the current attempt. </summary>
+        [WirePath("properties.currentAttemptStartTime")]
         public DateTimeOffset? CurrentAttemptStartOn { get; }
         /// <summary> The last status or error message. </summary>
+        [WirePath("properties.lastMessage")]
         public string LastMessage { get; }
         /// <summary> The target that this execution is executed on. </summary>
+        [WirePath("properties.target")]
         public JobExecutionTarget Target { get; }
     }
 }

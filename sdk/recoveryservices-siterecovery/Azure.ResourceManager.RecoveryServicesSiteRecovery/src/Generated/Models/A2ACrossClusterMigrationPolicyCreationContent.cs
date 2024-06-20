@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> A2A Cross-Cluster Migration Policy creation input. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationPolicyCreationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        internal A2ACrossClusterMigrationPolicyCreationContent(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2ACrossClusterMigrationPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }

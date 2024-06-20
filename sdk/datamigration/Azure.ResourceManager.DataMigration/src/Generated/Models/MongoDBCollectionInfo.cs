@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> The name of the database containing the collection. </param>
         /// <param name="isCapped"> Whether the collection is a capped collection (i.e. whether it has a fixed size and acts like a circular buffer). </param>
         /// <param name="isSystemCollection"> Whether the collection is system collection. </param>
@@ -51,12 +52,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="shardKey"> The shard key on the collection, or null if the collection is not sharded. </param>
         /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <param name="viewOf"> The name of the collection that this is a view of, if IsView is true. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="qualifiedName"/> is null. </exception>
-        internal MongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, string databaseName, bool isCapped, bool isSystemCollection, bool isView, MongoDBShardKeyInfo shardKey, bool supportsSharding, string viewOf) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
+        internal MongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, bool isCapped, bool isSystemCollection, bool isView, MongoDBShardKeyInfo shardKey, bool supportsSharding, string viewOf) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
-
             DatabaseName = databaseName;
             IsCapped = isCapped;
             IsSystemCollection = isSystemCollection;
@@ -64,6 +61,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             ShardKey = shardKey;
             SupportsSharding = supportsSharding;
             ViewOf = viewOf;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionInfo"/> for deserialization. </summary>
+        internal MongoDBCollectionInfo()
+        {
         }
 
         /// <summary> The name of the database containing the collection. </summary>

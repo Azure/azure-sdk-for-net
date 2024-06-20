@@ -40,7 +40,7 @@ namespace Azure.Core.TestFramework
         private static readonly object _lock = new();
         private static TestProxy _shared;
         private readonly StringBuilder _output = new();
-        private static readonly bool s_enableProxyLogging;
+        private static readonly bool s_enableDebugProxyLogging;
 
         static TestProxy()
         {
@@ -59,7 +59,7 @@ namespace Azure.Core.TestFramework
             s_dotNetExe = Path.Combine(installDir, dotNetExeName);
 
             bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-            s_enableProxyLogging = TestEnvironment.EnableProxyLogging;
+            s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
         }
 
         private TestProxy(string proxyPath, bool debugMode = false)
@@ -70,7 +70,7 @@ namespace Azure.Core.TestFramework
 
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
-                $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
+                $"\"{proxyPath}\" start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
@@ -78,9 +78,9 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableProxyLogging ? "Debug" : "Error",
+                    ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
                     ["Logging__LogLevel__Default"] = "Error",
-                    ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableProxyLogging ? "Information" : "Error",
+                    ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
@@ -144,18 +144,9 @@ namespace Azure.Core.TestFramework
                 {
                     while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
                     {
-                        if (s_enableProxyLogging)
+                        lock (_output)
                         {
-                            lock (_output)
-                            {
-                                _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
-                            }
-                        }
-                        // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy, even
-                        // when we are not outputting logs. Otherwise, requests start timing out.
-                        else
-                        {
-                            _testProxyProcess.StandardOutput.ReadLine();
+                            _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
                         }
                     }
                 });
@@ -222,7 +213,7 @@ namespace Azure.Core.TestFramework
 
         public async Task CheckProxyOutputAsync()
         {
-            if (s_enableProxyLogging)
+            if (s_enableDebugProxyLogging)
             {
                 // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
                 await Task.Delay(20);

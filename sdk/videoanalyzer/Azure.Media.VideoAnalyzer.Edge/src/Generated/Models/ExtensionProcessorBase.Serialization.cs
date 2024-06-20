@@ -55,7 +55,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
             string name = default;
             IList<NodeInput> inputs = default;
@@ -101,7 +101,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ExtensionProcessorBase(type, name, inputs, endpoint, image, samplingOptions.Value);
+            return new ExtensionProcessorBase(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExtensionProcessorBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExtensionProcessorBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AgentRegistration : IUtf8JsonSerializable, IJsonModel<AgentRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentRegistration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentRegistration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentRegistration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentRegistration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys);
+                writer.WriteObjectValue(Keys, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentRegistration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AgentRegistration DeserializeAgentRegistration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> dscMetaConfiguration = default;
-            Optional<Uri> endpoint = default;
-            Optional<AgentRegistrationKeys> keys = default;
-            Optional<ResourceIdentifier> id = default;
+            string dscMetaConfiguration = default;
+            Uri endpoint = default;
+            AgentRegistrationKeys keys = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dscMetaConfiguration"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
+                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentRegistration(dscMetaConfiguration.Value, endpoint.Value, keys.Value, id.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgentRegistration(dscMetaConfiguration, endpoint, keys, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentRegistration>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAgentRegistration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -43,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -51,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -60,11 +59,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -78,11 +77,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -112,8 +111,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
@@ -139,8 +138,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = AnalyzeDocument(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
@@ -262,8 +261,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
@@ -283,8 +282,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = ClassifyDocument(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
@@ -403,11 +402,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            if (queryFields != null && !(queryFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }

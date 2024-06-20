@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _vgVnet = "vnetnortheurope-anf";
         private readonly ResourceIdentifier _proximityPlacementGroup = new ResourceIdentifier("/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_northeurope_ppg");
         //private readonly string _gENPOPDeploymentSpecID = "30542149-bfca-5618-1879-9863dc6767f1";
-        private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
+        //private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
         private ResourceGroupResource _volumeGroupResourceGroup;
         private NetAppAccountCollection _netAppAccountCollection { get => _volumeGroupResourceGroup.GetNetAppAccounts(); }
         private NetAppVolumeGroupCollection _volumeGroupCollection { get => _netAppAccount.GetNetAppVolumeGroups(); }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             logVolumeProperties.ThroughputMibps = 6;
             logVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
             logVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            logVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            logVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(logVolumeProperties);
 
             string dataVolumeName = $"{volumeGroupName}-data-1";
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             dataVolumeProperties.ThroughputMibps = 6;
             dataVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
             dataVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            dataVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            dataVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(dataVolumeProperties);
 
             string sharedVolumeName = $"{volumeGroupName}-shared-1";
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             sharedVolumeProperties.ThroughputMibps = 6;
             sharedVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
             sharedVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            sharedVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            sharedVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(sharedVolumeProperties);
 
             IList<NetAppVolumePlacementRule> globalPlacementRules = new List<NetAppVolumePlacementRule> { new NetAppVolumePlacementRule("key1", "value1") };
 
             NetAppVolumeGroupData volumeGroupDetailsData = new();
             volumeGroupDetailsData.Location = _volumeGroupLocation;
-            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, _sAPHANAOnGENPOPDeploymentSpecID, null);
+            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, null, serializedAdditionalRawData: null);
             volumeGroupDetailsData.Volumes.InitializeFrom(volumeGroupVolumeProperties);
 
             NetAppVolumeGroupResource volumeGroupDetails = (await volumeGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupDetailsData)).Value;

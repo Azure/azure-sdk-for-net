@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,9 +15,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
-        internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
-        internal ETag? _etagDownloadLock = default;
 
         internal ShareFileClient ShareFileClient { get; }
 
@@ -27,11 +25,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override string ResourceId => "ShareFile";
 
-        protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
         protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
-        protected override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ResourceLength;
 
         public ShareFileStorageResource(
             ShareFileClient fileClient,
@@ -45,23 +43,21 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources.
         /// </summary>
         /// <param name="fileClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
-        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="properties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="ShareFileStorageResourceOptions"/>.</param>
         internal ShareFileStorageResource(
             ShareFileClient fileClient,
-            long? length,
-            ETag? etagLock,
+            StorageResourceItemProperties properties,
             ShareFileStorageResourceOptions options = default)
             : this(fileClient, options)
         {
-            _length = length;
-            _etagDownloadLock = etagLock;
+            ResourceProperties = properties;
         }
 
         internal async Task CreateAsync(
             bool overwrite,
             long maxSize,
+            StorageResourceItemProperties properties,
             CancellationToken cancellationToken)
         {
             if (!overwrite)
@@ -75,18 +71,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
                 }
             }
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
+            IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties);
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
-                    httpHeaders: _options.HttpHeaders,
-                    metadata: _options.FileMetadata,
-                    smbProperties: _options.SmbProperties,
-                    filePermission: _options.FilePermissions,
-                    conditions: _options.DestinationConditions,
+                    httpHeaders: httpHeaders,
+                    metadata: metadata,
+                    smbProperties: smbProperties,
+                    filePermission: _options?.FilePermissions,
+                    conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         protected override Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -105,7 +105,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             if (range.Offset == 0)
             {
-                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                await CreateAsync(
+                    overwrite,
+                    completeLength,
+                    options?.SourceProperties,
+                    cancellationToken).ConfigureAwait(false);
                 if (range.Length == 0)
                 {
                     return;
@@ -116,7 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
-                options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
+                options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -135,7 +139,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Create the File beforehand if it hasn't been created
             if (position == 0)
             {
-                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                await CreateAsync(
+                    overwrite,
+                    completeLength,
+                    options?.SourceProperties,
+                    cancellationToken).ConfigureAwait(false);
                 if (completeLength == 0)
                 {
                     return;
@@ -146,7 +154,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             await ShareFileClient.UploadRangeAsync(
                 new HttpRange(position, streamLength),
                 stream,
-                _options.ToShareFileUploadRangeOptions(),
+                _options?.ToShareFileUploadRangeOptions(),
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -158,14 +166,18 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            await CreateAsync(
+                overwrite,
+                completeLength,
+                options?.SourceProperties,
+                cancellationToken).ConfigureAwait(false);
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
                     sourceUri: sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
-                    options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
+                    options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -181,15 +193,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
-                conditions: _options.SourceConditions,
+                conditions: _options?.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            // TODO: should we be grabbing the ETag here even though we can't apply it to the download.
-            //GrabEtag(response.GetRawResponse());
-            return response.Value.ToStorageResourceProperties();
+            if (ResourceProperties == default)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
+            return ResourceProperties;
         }
 
         protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
@@ -199,7 +213,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileDownloadInfo> response = await ShareFileClient.DownloadAsync(
-                _options.ToShareFileDownloadOptions(new HttpRange(position, length)),
+                _options?.ToShareFileDownloadOptions(new HttpRange(position, length)),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToStorageResourceReadStreamResult();
         }
@@ -211,7 +225,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null, null, null);
+            return new ShareFileDestinationCheckpointData(
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                fileAttributes: _options?.FileAttributes,
+                filePermissionKey: _options?.FilePermissionKey,
+                fileCreatedOn: _options?.FileCreatedOn,
+                fileLastWrittenOn: _options?.FileLastWrittenOn,
+                fileChangedOn: _options?.FileChangedOn,
+                fileMetadata: _options?.FileMetadata,
+                directoryMetadata: _options?.DirectoryMetadata);
         }
     }
 

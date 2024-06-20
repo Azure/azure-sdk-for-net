@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownInferencingServer. </summary>
+    /// <summary> Unknown version of InferencingServer. </summary>
     internal partial class UnknownInferencingServer : InferencingServer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
-        internal UnknownInferencingServer(InferencingServerType serverType) : base(serverType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInferencingServer(InferencingServerType serverType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(serverType, serializedAdditionalRawData)
         {
             ServerType = serverType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownInferencingServer"/> for deserialization. </summary>
+        internal UnknownInferencingServer()
+        {
         }
     }
 }

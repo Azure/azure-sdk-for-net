@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 ReadWriteEndpoint = instanceFailoverGroupReadWriteEndpoint,
                 ManagedInstancePairs =
                 {
-                    new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId),
+                    new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId, null),
                 },
             };
             var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(WaitUntil.Completed, instanceFailoverGroupName, data);

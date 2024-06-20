@@ -21,8 +21,16 @@ namespace Azure.Maps.Search.Models
         internal int ResultCount { get; }
 
         /// <summary> Public GeoBias of type GeoPosition from Azure.Core.GeoJson. Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </summary>
-        public GeoPosition GeoBias {
-            get { return new GeoPosition((double) GeoBiasInternal.Lon, (double) GeoBiasInternal.Lat); }
+        public GeoPosition? GeoBias
+        {
+            get
+            {
+                if (GeoBiasInternal == null)
+                {
+                    return null;
+                }
+                return new GeoPosition((double)GeoBiasInternal.Lon, (double)GeoBiasInternal.Lat);
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseSecureString"/>. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> Value of secure string. </param>
-        internal SynapseSecureString(string secretBaseType, string value) : base(secretBaseType)
+        internal SynapseSecureString(string secretBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(secretBaseType, serializedAdditionalRawData)
         {
             Value = value;
             SecretBaseType = secretBaseType ?? "SecureString";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSecureString"/> for deserialization. </summary>
+        internal SynapseSecureString()
+        {
         }
 
         /// <summary> Value of secure string. </summary>

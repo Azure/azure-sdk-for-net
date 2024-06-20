@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to a cosmos DB sql container endpoint. </summary>
     public partial class RoutingCosmosDBSqlApiProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoutingCosmosDBSqlApiProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
@@ -46,7 +79,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
         /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
         /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
-        internal RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -61,6 +95,12 @@ namespace Azure.ResourceManager.IotHub.Models
             ContainerName = containerName;
             PartitionKeyName = partitionKeyName;
             PartitionKeyTemplate = partitionKeyTemplate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingCosmosDBSqlApiProperties"/> for deserialization. </summary>
+        internal RoutingCosmosDBSqlApiProperties()
+        {
         }
 
         /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </summary>

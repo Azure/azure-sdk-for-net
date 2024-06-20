@@ -73,14 +73,14 @@ namespace Azure.AI.Personalizer
             string rewardAggregation = default;
             float explorationPercentage = default;
             TimeSpan modelExportFrequency = default;
-            Optional<bool> logMirrorEnabled = default;
-            Optional<Uri> logMirrorSasUri = default;
+            bool? logMirrorEnabled = default;
+            Uri logMirrorSasUri = default;
             int logRetentionDays = default;
-            Optional<DateTimeOffset> lastConfigurationEditDate = default;
-            Optional<PersonalizerLearningMode> learningMode = default;
-            Optional<bool> isAutoOptimizationEnabled = default;
-            Optional<TimeSpan> autoOptimizationFrequency = default;
-            Optional<DateTimeOffset> autoOptimizationStartDate = default;
+            DateTimeOffset? lastConfigurationEditDate = default;
+            PersonalizerLearningMode? learningMode = default;
+            bool? isAutoOptimizationEnabled = default;
+            TimeSpan? autoOptimizationFrequency = default;
+            DateTimeOffset? autoOptimizationStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rewardWaitTime"))
@@ -184,7 +184,20 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerServiceProperties(rewardWaitTime, defaultReward, rewardAggregation, explorationPercentage, modelExportFrequency, Optional.ToNullable(logMirrorEnabled), logMirrorSasUri.Value, logRetentionDays, Optional.ToNullable(lastConfigurationEditDate), Optional.ToNullable(learningMode), Optional.ToNullable(isAutoOptimizationEnabled), Optional.ToNullable(autoOptimizationFrequency), Optional.ToNullable(autoOptimizationStartDate));
+            return new PersonalizerServiceProperties(
+                rewardWaitTime,
+                defaultReward,
+                rewardAggregation,
+                explorationPercentage,
+                modelExportFrequency,
+                logMirrorEnabled,
+                logMirrorSasUri,
+                logRetentionDays,
+                lastConfigurationEditDate,
+                learningMode,
+                isAutoOptimizationEnabled,
+                autoOptimizationFrequency,
+                autoOptimizationStartDate);
         }
     }
 }

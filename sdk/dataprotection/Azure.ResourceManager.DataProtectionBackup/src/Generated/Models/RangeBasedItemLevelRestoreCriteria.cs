@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Item Level target info for restore operation. </summary>
@@ -18,9 +21,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="RangeBasedItemLevelRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minMatchingValue"> minimum value for range prefix match. </param>
         /// <param name="maxMatchingValue"> maximum value for range prefix match. </param>
-        internal RangeBasedItemLevelRestoreCriteria(string objectType, string minMatchingValue, string maxMatchingValue) : base(objectType)
+        internal RangeBasedItemLevelRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string minMatchingValue, string maxMatchingValue) : base(objectType, serializedAdditionalRawData)
         {
             MinMatchingValue = minMatchingValue;
             MaxMatchingValue = maxMatchingValue;

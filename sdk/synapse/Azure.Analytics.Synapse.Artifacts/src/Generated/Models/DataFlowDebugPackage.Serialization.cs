@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -83,13 +83,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<DataFlowDebugResource> dataFlow = default;
-            Optional<IList<DataFlowDebugResource>> dataFlows = default;
-            Optional<IList<DatasetDebugResource>> datasets = default;
-            Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            string sessionId = default;
+            DataFlowDebugResource dataFlow = default;
+            IList<DataFlowDebugResource> dataFlows = default;
+            IList<DatasetDebugResource> datasets = default;
+            IList<LinkedServiceDebugResource> linkedServices = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFlowDebugPackage(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFlowDebugResource>(),
+                datasets ?? new ChangeTrackingList<DatasetDebugResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceDebugResource>(),
+                staging,
+                debugSettings,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowDebugPackage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowDebugPackage(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>
@@ -180,6 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataFlowDebugPackage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

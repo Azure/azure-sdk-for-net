@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -64,40 +63,58 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Specifies whether the rdb backup is enabled. </summary>
+        [WirePath("rdb-backup-enabled")]
         public bool? IsRdbBackupEnabled { get; set; }
         /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
+        [WirePath("rdb-backup-frequency")]
         public string RdbBackupFrequency { get; set; }
         /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
+        [WirePath("rdb-backup-max-snapshot-count")]
         public int? RdbBackupMaxSnapshotCount { get; set; }
         /// <summary> The storage account connection string for storing rdb file. </summary>
+        [WirePath("rdb-storage-connection-string")]
         public string RdbStorageConnectionString { get; set; }
         /// <summary> Specifies whether the aof backup is enabled. </summary>
+        [WirePath("aof-backup-enabled")]
         public bool? IsAofBackupEnabled { get; set; }
         /// <summary> First storage account connection string. </summary>
+        [WirePath("aof-storage-connection-string-0")]
         public string AofStorageConnectionString0 { get; set; }
         /// <summary> Second storage account connection string. </summary>
+        [WirePath("aof-storage-connection-string-1")]
         public string AofStorageConnectionString1 { get; set; }
         /// <summary> Value in megabytes reserved for fragmentation per shard. </summary>
+        [WirePath("maxfragmentationmemory-reserved")]
         public string MaxFragmentationMemoryReserved { get; set; }
         /// <summary> The eviction strategy used when your data won't fit within its memory limit. </summary>
+        [WirePath("maxmemory-policy")]
         public string MaxMemoryPolicy { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
+        [WirePath("maxmemory-reserved")]
         public string MaxMemoryReserved { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
+        [WirePath("maxmemory-delta")]
         public string MaxMemoryDelta { get; set; }
         /// <summary> The max clients config. </summary>
+        [WirePath("maxclients")]
         public string MaxClients { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        [WirePath("preferred-data-archive-auth-method")]
         public string PreferredDataArchiveAuthMethod { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        [WirePath("preferred-data-persistence-auth-method")]
         public string PreferredDataPersistenceAuthMethod { get; set; }
         /// <summary> Zonal Configuration. </summary>
+        [WirePath("zonal-configuration")]
         public string ZonalConfiguration { get; }
         /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </summary>
+        [WirePath("authnotrequired")]
         public string AuthNotRequired { get; set; }
         /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>
+        [WirePath("storage-subscription-id")]
         public string StorageSubscriptionId { get; set; }
         /// <summary> Specifies whether AAD based authentication has been enabled or disabled for the cache. </summary>
+        [WirePath("aad-enabled")]
         public string IsAadEnabled { get; set; }
         /// <summary>
         /// Additional Properties
@@ -129,6 +146,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

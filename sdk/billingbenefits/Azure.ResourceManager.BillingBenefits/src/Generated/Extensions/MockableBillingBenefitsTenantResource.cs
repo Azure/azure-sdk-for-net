@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
 
 namespace Azure.ResourceManager.BillingBenefits.Mocking
@@ -351,7 +348,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +378,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
         }
     }
 }

@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Edifact agreement protocol settings. </summary>
     public partial class EdifactProtocolSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The EDIFACT validation settings. </param>
         /// <param name="framingSettings"> The EDIFACT framing settings. </param>
@@ -59,7 +90,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="schemaReferences"> The EDIFACT schema references. </param>
         /// <param name="validationOverrides"> The EDIFACT validation override settings. </param>
         /// <param name="edifactDelimiterOverrides"> The EDIFACT delimiter override settings. </param>
-        internal EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactEnvelopeOverride> envelopeOverrides, IList<EdifactMessageIdentifier> messageFilterList, IList<EdifactSchemaReference> schemaReferences, IList<EdifactValidationOverride> validationOverrides, IList<EdifactDelimiterOverride> edifactDelimiterOverrides)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactEnvelopeOverride> envelopeOverrides, IList<EdifactMessageIdentifier> messageFilterList, IList<EdifactSchemaReference> schemaReferences, IList<EdifactValidationOverride> validationOverrides, IList<EdifactDelimiterOverride> edifactDelimiterOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;
@@ -72,6 +104,12 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaReferences = schemaReferences;
             ValidationOverrides = validationOverrides;
             EdifactDelimiterOverrides = edifactDelimiterOverrides;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/> for deserialization. </summary>
+        internal EdifactProtocolSettings()
+        {
         }
 
         /// <summary> The EDIFACT validation settings. </summary>

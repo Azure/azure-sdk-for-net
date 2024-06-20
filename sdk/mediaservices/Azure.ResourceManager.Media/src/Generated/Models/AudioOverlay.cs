@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -31,9 +31,15 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="fadeInDuration"> The duration over which the overlay fades in onto the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade in (same as PT0S). </param>
         /// <param name="fadeOutDuration"> The duration over which the overlay fades out of the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade out (same as PT0S). </param>
         /// <param name="audioGainLevel"> The gain level of audio in the overlay. The value should be in the range [0, 1.0]. The default is 1.0. </param>
-        internal AudioOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "#Microsoft.Media.AudioOverlay";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AudioOverlay"/> for deserialization. </summary>
+        internal AudioOverlay()
+        {
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -23,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             IReadOnlyList<HealthcareEntity> entities = default;
             IReadOnlyList<HealthcareRelation> relations = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            DocumentStatistics statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -71,7 +70,15 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new DocumentHealthcareEntities(id, entities, relations, warnings, statistics.Value);
+            return new DocumentHealthcareEntities(id, entities, relations, warnings, statistics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentHealthcareEntities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentHealthcareEntities(document.RootElement);
         }
     }
 }

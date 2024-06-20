@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -18,11 +17,11 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<int> deviceCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> succeededCount = default;
-            Optional<int> runningCount = default;
-            Optional<int> pendingCount = default;
+            int? deviceCount = default;
+            int? failedCount = default;
+            int? succeededCount = default;
+            int? runningCount = default;
+            int? pendingCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceCount"u8))
@@ -71,7 +70,15 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount));
+            return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceJobStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceJobStatistics(document.RootElement);
         }
     }
 }

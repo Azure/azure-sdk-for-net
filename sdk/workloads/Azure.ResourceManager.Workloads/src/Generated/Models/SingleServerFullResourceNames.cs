@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a single server SAP system. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of <see cref="SingleServerFullResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="virtualMachine"> The resource names object for virtual machine and related resources. </param>
-        internal SingleServerFullResourceNames(SapNamingPatternType namingPatternType, VirtualMachineResourceNames virtualMachine) : base(namingPatternType)
+        internal SingleServerFullResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> serializedAdditionalRawData, VirtualMachineResourceNames virtualMachine) : base(namingPatternType, serializedAdditionalRawData)
         {
             VirtualMachine = virtualMachine;
             NamingPatternType = namingPatternType;

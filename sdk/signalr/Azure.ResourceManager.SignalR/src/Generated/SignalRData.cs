@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SignalRData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SignalRData(AzureLocation location) : base(location)
@@ -75,7 +108,8 @@ namespace Azure.ResourceManager.SignalR
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </param>
-        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -99,33 +133,51 @@ namespace Azure.ResourceManager.SignalR
             PublicNetworkAccess = publicNetworkAccess;
             DisableLocalAuth = disableLocalAuth;
             DisableAadAuth = disableAadAuth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRData"/> for deserialization. </summary>
+        internal SignalRData()
+        {
         }
 
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public SignalRResourceSku Sku { get; set; }
         /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
+        [WirePath("kind")]
         public SignalRServiceKind? Kind { get; set; }
         /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>
+        [WirePath("properties.externalIP")]
         public string ExternalIP { get; }
         /// <summary> FQDN of the service instance. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
+        [WirePath("properties.publicPort")]
         public int? PublicPort { get; }
         /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
+        [WirePath("properties.serverPort")]
         public int? ServerPort { get; }
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> Private endpoint connections to the resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
+        [WirePath("properties.sharedPrivateLinkResources")]
         public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings for the resource. </summary>
         internal SignalRTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        [WirePath("properties.tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
             get => Tls is null ? default : Tls.IsClientCertEnabled;
@@ -138,6 +190,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Deprecated. </summary>
+        [WirePath("properties.hostNamePrefix")]
         public string HostNamePrefix { get; }
         /// <summary>
         /// List of the featureFlags.
@@ -147,12 +200,15 @@ namespace Azure.ResourceManager.SignalR
         /// When a featureFlag is not explicitly set, its globally default value will be used
         /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
+        [WirePath("properties.features")]
         public IList<SignalRFeature> Features { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+        [WirePath("properties.liveTraceConfiguration")]
         public SignalRLiveTraceConfiguration LiveTraceConfiguration { get; set; }
         /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
         internal SignalRResourceLogCategoryListResult ResourceLogConfiguration { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("properties.resourceLogConfiguration.categories")]
         public IList<SignalRResourceLogCategory> ResourceLogCategories
         {
             get
@@ -166,6 +222,7 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         internal SignalRCorsSettings Cors { get; set; }
         /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
+        [WirePath("properties.cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -179,6 +236,7 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
         internal ServerlessUpstreamSettings Upstream { get; set; }
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
+        [WirePath("properties.upstream.templates")]
         public IList<SignalRUpstreamTemplate> UpstreamTemplates
         {
             get
@@ -190,24 +248,28 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Network ACLs for the resource. </summary>
+        [WirePath("properties.networkACLs")]
         public SignalRNetworkAcls NetworkACLs { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
         /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
+        [WirePath("properties.disableAadAuth")]
         public bool? DisableAadAuth { get; set; }
     }
 }

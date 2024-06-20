@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Itsm receiver. </summary>
     public partial class MonitorItsmReceiver
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/>. </summary>
         /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="workspaceId"> OMS LA instance identifier. </param>
@@ -32,6 +65,28 @@ namespace Azure.ResourceManager.Monitor.Models
             ConnectionId = connectionId;
             TicketConfiguration = ticketConfiguration;
             Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/>. </summary>
+        /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="workspaceId"> OMS LA instance identifier. </param>
+        /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
+        /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
+        /// <param name="region"> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            WorkspaceId = workspaceId;
+            ConnectionId = connectionId;
+            TicketConfiguration = ticketConfiguration;
+            Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/> for deserialization. </summary>
+        internal MonitorItsmReceiver()
+        {
         }
 
         /// <summary> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </summary>

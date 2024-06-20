@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -839,7 +837,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual AsyncPageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -864,7 +862,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Pageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
     }
 }

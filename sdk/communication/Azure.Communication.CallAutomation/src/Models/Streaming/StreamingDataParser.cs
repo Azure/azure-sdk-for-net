@@ -71,6 +71,7 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.Format,
                         transcriptionDataInternal.Confidence,
                         transcriptionDataInternal.Offset,
+                        transcriptionDataInternal.Duration,
                         transcriptionDataInternal.Words,
                         transcriptionDataInternal.ParticipantRawID,
                         transcriptionDataInternal.ResultStatus

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="version"> The required version of Azure PowerShell to install. </param>
-        internal AzPowerShellSetup(string customSetupBaseType, string version) : base(customSetupBaseType)
+        internal AzPowerShellSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string version) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             Version = version;
             CustomSetupBaseType = customSetupBaseType ?? "AzPowerShellSetup";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/> for deserialization. </summary>
+        internal AzPowerShellSetup()
+        {
         }
 
         /// <summary> The required version of Azure PowerShell to install. </summary>

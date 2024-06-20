@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class PostgreSqlServerPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
         public PostgreSqlServerPatch()
         {
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="replicationRole"> The replication role of the server. </param>
-        internal PostgreSqlServerPatch(ManagedServiceIdentity identity, PostgreSqlSku sku, IDictionary<string, string> tags, PostgreSqlStorageProfile storageProfile, string administratorLoginPassword, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, string replicationRole)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerPatch(ManagedServiceIdentity identity, PostgreSqlSku sku, IDictionary<string, string> tags, PostgreSqlStorageProfile storageProfile, string administratorLoginPassword, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, string replicationRole, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;
@@ -43,27 +76,38 @@ namespace Azure.ResourceManager.PostgreSql.Models
             MinimalTlsVersion = minimalTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
             ReplicationRole = replicationRole;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Storage profile of a server. </summary>
+        [WirePath("properties.storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The version of a server. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlServerVersion? Version { get; set; }
         /// <summary> Enable ssl enforcement or not when connect to server. </summary>
+        [WirePath("properties.sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
+        [WirePath("properties.minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> The replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public string ReplicationRole { get; set; }
     }
 }

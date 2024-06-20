@@ -21,9 +21,9 @@ namespace Azure.Identity.Broker
         public bool? IsLegacyMsaPassthroughEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets whether proof of possession is required.
+        /// Gets or sets whether to authenticate with the default broker account instead of prompting the user with a login dialog.
         /// </summary>
-        public bool IsProofOfPossessionRequired { get; set; }
+        public bool UseDefaultBrokerAccount { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.

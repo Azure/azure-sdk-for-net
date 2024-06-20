@@ -19,7 +19,7 @@
 
   <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
   <ItemGroup Condition="'$(IsSample)' != 'true'">
-    <PackageReference Update="Azure.Identity" Version="1.4.0" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />

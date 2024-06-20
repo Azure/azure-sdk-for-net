@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -46,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Scripts = scripts;
             LogSettings = logSettings;
             ActivityType = activityType ?? "Script";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/> for deserialization. </summary>
+        internal DataFactoryScriptActivity()
+        {
         }
 
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>

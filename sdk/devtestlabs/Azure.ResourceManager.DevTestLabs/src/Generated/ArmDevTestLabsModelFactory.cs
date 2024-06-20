@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -56,7 +55,34 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             mandatoryArtifactsResourceIdsWindows ??= new List<string>();
             extendedProperties ??= new Dictionary<string, string>();
 
-            return new DevTestLabData(id, name, resourceType, systemData, tags, location, defaultStorageAccount, defaultPremiumStorageAccount, artifactsStorageAccount, premiumDataDiskStorageAccount, vaultName, labStorageType, mandatoryArtifactsResourceIdsLinux?.ToList(), mandatoryArtifactsResourceIdsWindows?.ToList(), createdOn, premiumDataDisks, environmentPermission, announcement, support, vmCreationResourceGroup, publicIPId, loadBalancerId, networkSecurityGroupId, extendedProperties, provisioningState, uniqueIdentifier);
+            return new DevTestLabData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                defaultStorageAccount,
+                defaultPremiumStorageAccount,
+                artifactsStorageAccount,
+                premiumDataDiskStorageAccount,
+                vaultName,
+                labStorageType,
+                mandatoryArtifactsResourceIdsLinux?.ToList(),
+                mandatoryArtifactsResourceIdsWindows?.ToList(),
+                createdOn,
+                premiumDataDisks,
+                environmentPermission,
+                announcement,
+                support,
+                vmCreationResourceGroup,
+                publicIPId,
+                loadBalancerId,
+                networkSecurityGroupId,
+                extendedProperties,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabAnnouncement"/>. </summary>
@@ -70,7 +96,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabAnnouncement"/> instance for mocking. </returns>
         public static DevTestLabAnnouncement DevTestLabAnnouncement(string title = null, string markdown = null, DevTestLabEnableStatus? enabled = null, DateTimeOffset? expireOn = null, bool? isExpired = null, string provisioningState = null, Guid? uniqueIdentifier = null)
         {
-            return new DevTestLabAnnouncement(title, markdown, enabled, expireOn, isExpired, provisioningState, uniqueIdentifier);
+            return new DevTestLabAnnouncement(
+                title,
+                markdown,
+                enabled,
+                expireOn,
+                isExpired,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabScheduleData"/>. </summary>
@@ -96,7 +130,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabScheduleData(id, name, resourceType, systemData, tags, location, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, createdOn, targetResourceId, provisioningState, uniqueIdentifier);
+            return new DevTestLabScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
+                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
+                timeZoneId,
+                notificationSettings,
+                createdOn,
+                targetResourceId,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactSourceData"/>. </summary>
@@ -122,7 +174,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabArtifactSourceData(id, name, resourceType, systemData, tags, location, displayName, uri, sourceType, folderPath, armTemplateFolderPath, branchRef, securityToken, status, createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabArtifactSourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                displayName,
+                uri,
+                sourceType,
+                folderPath,
+                armTemplateFolderPath,
+                branchRef,
+                securityToken,
+                status,
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArmTemplateData"/>. </summary>
@@ -146,7 +216,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
             parametersValueFilesInfo ??= new List<DevTestLabParametersValueFileInfo>();
 
-            return new DevTestLabArmTemplateData(id, name, resourceType, systemData, tags, location, displayName, description, publisher, icon, contents, createdOn, parametersValueFilesInfo?.ToList(), isEnabled);
+            return new DevTestLabArmTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                displayName,
+                description,
+                publisher,
+                icon,
+                contents,
+                createdOn,
+                parametersValueFilesInfo?.ToList(),
+                isEnabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabParametersValueFileInfo"/>. </summary>
@@ -155,7 +240,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabParametersValueFileInfo"/> instance for mocking. </returns>
         public static DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, BinaryData parametersValueInfo = null)
         {
-            return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo);
+            return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactData"/>. </summary>
@@ -178,7 +263,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabArtifactData(id, name, resourceType, systemData, tags, location, title, description, publisher, filePath, icon, targetOSType, parameters, createdOn);
+            return new DevTestLabArtifactData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                title,
+                description,
+                publisher,
+                filePath,
+                icon,
+                targetOSType,
+                parameters,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabArmTemplateInfo"/>. </summary>
@@ -187,7 +287,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateInfo"/> instance for mocking. </returns>
         public static DevTestLabArmTemplateInfo DevTestLabArmTemplateInfo(BinaryData template = null, BinaryData parameters = null)
         {
-            return new DevTestLabArmTemplateInfo(template, parameters);
+            return new DevTestLabArmTemplateInfo(template, parameters, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCostData"/>. </summary>
@@ -214,7 +314,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             labCostDetails ??= new List<DevTestLabCostDetails>();
             resourceCosts ??= new List<DevTestLabResourceCost>();
 
-            return new DevTestLabCostData(id, name, resourceType, systemData, tags, location, targetCost, estimatedLabCost != null ? new LabCostSummaryProperties(estimatedLabCost) : null, labCostDetails?.ToList(), resourceCosts?.ToList(), currencyCode, startOn, endOn, createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabCostData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                targetCost,
+                estimatedLabCost != null ? new LabCostSummaryProperties(estimatedLabCost, serializedAdditionalRawData: null) : null,
+                labCostDetails?.ToList(),
+                resourceCosts?.ToList(),
+                currencyCode,
+                startOn,
+                endOn,
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabCostDetails"/>. </summary>
@@ -224,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabCostDetails"/> instance for mocking. </returns>
         public static DevTestLabCostDetails DevTestLabCostDetails(DateTimeOffset? @on = null, double? cost = null, DevTestLabCostType? costType = null)
         {
-            return new DevTestLabCostDetails(@on, cost, costType);
+            return new DevTestLabCostDetails(@on, cost, costType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabResourceCost"/>. </summary>
@@ -240,7 +357,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabResourceCost"/> instance for mocking. </returns>
         public static DevTestLabResourceCost DevTestLabResourceCost(string resourceName = null, string resourceUniqueId = null, double? resourceCost = null, string resourceType = null, string resourceOwner = null, string resourcePricingTier = null, string resourceStatus = null, string resourceId = null, string externalResourceId = null)
         {
-            return new DevTestLabResourceCost(resourceName, resourceUniqueId, resourceCost, resourceType, resourceOwner, resourcePricingTier, resourceStatus, resourceId, externalResourceId);
+            return new DevTestLabResourceCost(
+                resourceName,
+                resourceUniqueId,
+                resourceCost,
+                resourceType,
+                resourceOwner,
+                resourcePricingTier,
+                resourceStatus,
+                resourceId,
+                externalResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCustomImageData"/>. </summary>
@@ -268,7 +395,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
             dataDiskStorageInfo ??= new List<DevTestLabDataDiskStorageTypeInfo>();
 
-            return new DevTestLabCustomImageData(id, name, resourceType, systemData, tags, location, vm, vhd, description, author, createdOn, managedImageId, managedSnapshotId, dataDiskStorageInfo?.ToList(), customImagePlan, isPlanAuthorized, provisioningState, uniqueIdentifier);
+            return new DevTestLabCustomImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                vm,
+                vhd,
+                description,
+                author,
+                createdOn,
+                managedImageId,
+                managedSnapshotId,
+                dataDiskStorageInfo?.ToList(),
+                customImagePlan,
+                isPlanAuthorized,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabFormulaData"/>. </summary>
@@ -291,7 +437,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabFormulaData(id, name, resourceType, systemData, tags, location, description, author, osType, createdOn, formulaContent, labVmId != null ? new FormulaPropertiesFromVm(labVmId) : null, provisioningState, uniqueIdentifier);
+            return new DevTestLabFormulaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                author,
+                osType,
+                createdOn,
+                formulaContent,
+                labVmId != null ? new FormulaPropertiesFromVm(labVmId, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
@@ -311,7 +472,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabScheduleCreationParameter(name, location, tags, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, targetResourceId);
+            return new DevTestLabScheduleCreationParameter(
+                name,
+                location,
+                tags,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
+                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGalleryImage"/>. </summary>
@@ -334,7 +507,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabGalleryImage(id, name, resourceType, systemData, tags, location, author, createdOn, description, imageReference, icon, isEnabled, planId, isPlanAuthorized);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                author,
+                createdOn,
+                description,
+                imageReference,
+                icon,
+                isEnabled,
+                planId,
+                isPlanAuthorized,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabNotificationChannelData"/>. </summary>
@@ -358,7 +546,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
             events ??= new List<DevTestLabNotificationChannelEvent>();
 
-            return new DevTestLabNotificationChannelData(id, name, resourceType, systemData, tags, location, webHookUri, emailRecipient, notificationLocale, description, events?.ToList(), createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabNotificationChannelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                webHookUri,
+                emailRecipient,
+                notificationLocale,
+                description,
+                events?.ToList(),
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabEvaluatePoliciesResult"/>. </summary>
@@ -368,7 +571,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             results ??= new List<DevTestLabPolicySetResult>();
 
-            return new DevTestLabEvaluatePoliciesResult(results?.ToList());
+            return new DevTestLabEvaluatePoliciesResult(results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicySetResult"/>. </summary>
@@ -379,7 +582,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             policyViolations ??= new List<DevTestLabPolicyViolation>();
 
-            return new DevTestLabPolicySetResult(hasError, policyViolations?.ToList());
+            return new DevTestLabPolicySetResult(hasError, policyViolations?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicyViolation"/>. </summary>
@@ -388,7 +591,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabPolicyViolation"/> instance for mocking. </returns>
         public static DevTestLabPolicyViolation DevTestLabPolicyViolation(string code = null, string message = null)
         {
-            return new DevTestLabPolicyViolation(code, message);
+            return new DevTestLabPolicyViolation(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabPolicyData"/>. </summary>
@@ -412,7 +615,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabPolicyData(id, name, resourceType, systemData, tags, location, description, status, factName, factData, threshold, evaluatorType, createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                status,
+                factName,
+                factData,
+                threshold,
+                evaluatorType,
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceRunnerData"/>. </summary>
@@ -428,7 +647,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabServiceRunnerData(id, name, resourceType, systemData, tags, location, identity);
+            return new DevTestLabServiceRunnerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabUserData"/>. </summary>
@@ -448,7 +675,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabUserData(id, name, resourceType, systemData, tags, location, identity, secretStore, createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                secretStore,
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabDiskData"/>. </summary>
@@ -474,7 +713,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabDiskData(id, name, resourceType, systemData, tags, location, diskType, diskSizeGiB, leasedByLabVmId, diskBlobName, diskUri, storageAccountId, createdOn, hostCaching, managedDiskId, provisioningState, uniqueIdentifier);
+            return new DevTestLabDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                diskType,
+                diskSizeGiB,
+                leasedByLabVmId,
+                diskBlobName,
+                diskUri,
+                storageAccountId,
+                createdOn,
+                hostCaching,
+                managedDiskId,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabEnvironmentData"/>. </summary>
@@ -495,7 +752,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabEnvironmentData(id, name, resourceType, systemData, tags, location, deploymentProperties, armTemplateDisplayName, resourceGroupId, createdByUser, provisioningState, uniqueIdentifier);
+            return new DevTestLabEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                deploymentProperties,
+                armTemplateDisplayName,
+                resourceGroupId,
+                createdByUser,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabSecretData"/>. </summary>
@@ -513,7 +783,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabSecretData(id, name, resourceType, systemData, tags, location, value, provisioningState, uniqueIdentifier);
+            return new DevTestLabSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                value,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceFabricData"/>. </summary>
@@ -533,7 +813,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabServiceFabricData(id, name, resourceType, systemData, tags, location, externalServiceFabricId, environmentId, applicableSchedule, provisioningState, uniqueIdentifier);
+            return new DevTestLabServiceFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                externalServiceFabricId,
+                environmentId,
+                applicableSchedule,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabApplicableSchedule"/>. </summary>
@@ -550,7 +842,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabApplicableSchedule(id, name, resourceType, systemData, tags, location, labVmsShutdown, labVmsStartup);
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                labVmsShutdown,
+                labVmsStartup,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVmData"/>. </summary>
@@ -603,7 +904,49 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             dataDiskParameters ??= new List<DevTestLabDataDiskProperties>();
             scheduleParameters ??= new List<DevTestLabScheduleCreationParameter>();
 
-            return new DevTestLabVmData(id, name, resourceType, systemData, tags, location, notes, ownerObjectId, ownerUserPrincipalName, createdByUserId, createdByUser, createdOn, computeId, customImageId, osType, size, userName, password, sshKey, isAuthenticationWithSshKey, fqdn, labSubnetName, labVirtualNetworkId, disallowPublicIPAddress, artifacts?.ToList(), artifactDeploymentStatus, galleryImageReference, planId, computeVm, networkInterface, applicableSchedule, expireOn, allowClaim, storageType, vmCreationSource, environmentId, dataDiskParameters?.ToList(), scheduleParameters?.ToList(), lastKnownPowerState, provisioningState, uniqueIdentifier);
+            return new DevTestLabVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                notes,
+                ownerObjectId,
+                ownerUserPrincipalName,
+                createdByUserId,
+                createdByUser,
+                createdOn,
+                computeId,
+                customImageId,
+                osType,
+                size,
+                userName,
+                password,
+                sshKey,
+                isAuthenticationWithSshKey,
+                fqdn,
+                labSubnetName,
+                labVirtualNetworkId,
+                disallowPublicIPAddress,
+                artifacts?.ToList(),
+                artifactDeploymentStatus,
+                galleryImageReference,
+                planId,
+                computeVm,
+                networkInterface,
+                applicableSchedule,
+                expireOn,
+                allowClaim,
+                storageType,
+                vmCreationSource,
+                environmentId,
+                dataDiskParameters?.ToList(),
+                scheduleParameters?.ToList(),
+                lastKnownPowerState,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabArtifactDeploymentStatus"/>. </summary>
@@ -613,7 +956,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabArtifactDeploymentStatus"/> instance for mocking. </returns>
         public static DevTestLabArtifactDeploymentStatus DevTestLabArtifactDeploymentStatus(string deploymentStatus = null, int? artifactsApplied = null, int? totalArtifacts = null)
         {
-            return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts);
+            return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeVmProperties"/>. </summary>
@@ -631,7 +974,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             dataDiskIds ??= new List<string>();
             dataDisks ??= new List<ComputeDataDisk>();
 
-            return new ComputeVmProperties(statuses?.ToList(), osType, vmSize, networkInterfaceId, osDiskId, dataDiskIds?.ToList(), dataDisks?.ToList());
+            return new ComputeVmProperties(
+                statuses?.ToList(),
+                osType,
+                vmSize,
+                networkInterfaceId,
+                osDiskId,
+                dataDiskIds?.ToList(),
+                dataDisks?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeVmInstanceViewStatus"/>. </summary>
@@ -641,7 +992,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.ComputeVmInstanceViewStatus"/> instance for mocking. </returns>
         public static ComputeVmInstanceViewStatus ComputeVmInstanceViewStatus(string code = null, string displayStatus = null, string message = null)
         {
-            return new ComputeVmInstanceViewStatus(code, displayStatus, message);
+            return new ComputeVmInstanceViewStatus(code, displayStatus, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeDataDisk"/>. </summary>
@@ -652,7 +1003,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.ComputeDataDisk"/> instance for mocking. </returns>
         public static ComputeDataDisk ComputeDataDisk(string name = null, Uri diskUri = null, string managedDiskId = null, int? diskSizeGiB = null)
         {
-            return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB);
+            return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabRdpConnection"/>. </summary>
@@ -660,7 +1011,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabRdpConnection"/> instance for mocking. </returns>
         public static DevTestLabRdpConnection DevTestLabRdpConnection(string contents = null)
         {
-            return new DevTestLabRdpConnection(contents);
+            return new DevTestLabRdpConnection(contents, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVirtualNetworkData"/>. </summary>
@@ -686,7 +1037,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             externalSubnets ??= new List<DevTestLabExternalSubnet>();
             subnetOverrides ??= new List<DevTestLabSubnetOverride>();
 
-            return new DevTestLabVirtualNetworkData(id, name, resourceType, systemData, tags, location, allowedSubnets?.ToList(), description, externalProviderResourceId, externalSubnets?.ToList(), subnetOverrides?.ToList(), createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                allowedSubnets?.ToList(),
+                description,
+                externalProviderResourceId,
+                externalSubnets?.ToList(),
+                subnetOverrides?.ToList(),
+                createdOn,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabExternalSubnet"/>. </summary>
@@ -695,7 +1061,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabExternalSubnet"/> instance for mocking. </returns>
         public static DevTestLabExternalSubnet DevTestLabExternalSubnet(ResourceIdentifier id = null, string name = null)
         {
-            return new DevTestLabExternalSubnet(id, name);
+            return new DevTestLabExternalSubnet(id, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
@@ -703,7 +1069,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
         public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = null)
         {
-            return new DevTestLabGenerateUploadUriResult(uploadUri);
+            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData: null);
         }
     }
 }

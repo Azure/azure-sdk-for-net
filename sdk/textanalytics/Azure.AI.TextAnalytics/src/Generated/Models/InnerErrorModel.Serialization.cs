@@ -52,9 +52,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             InnerErrorCode code = default;
             string message = default;
-            Optional<IDictionary<string, string>> details = default;
-            Optional<string> target = default;
-            Optional<InnerErrorModel> innererror = default;
+            IDictionary<string, string> details = default;
+            string target = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,7 +96,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InnerErrorModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInnerErrorModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

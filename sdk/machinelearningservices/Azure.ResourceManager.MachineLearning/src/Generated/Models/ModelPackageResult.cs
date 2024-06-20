@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Package response returned after async package operation completes successfully. </summary>
     public partial class ModelPackageResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ModelPackageResult"/>. </summary>
         internal ModelPackageResult()
         {
@@ -41,7 +72,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelConfiguration"> Model configuration including the mount mode. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="targetEnvironmentId"> Asset ID of the target environment created by package operation. </param>
-        internal ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource, string buildId, PackageBuildState? buildState, IReadOnlyDictionary<string, string> environmentVariables, InferencingServer inferencingServer, IReadOnlyList<ModelPackageInput> inputs, Uri logUri, ModelConfiguration modelConfiguration, IReadOnlyDictionary<string, string> tags, string targetEnvironmentId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource, string buildId, PackageBuildState? buildState, IReadOnlyDictionary<string, string> environmentVariables, InferencingServer inferencingServer, IReadOnlyList<ModelPackageInput> inputs, Uri logUri, ModelConfiguration modelConfiguration, IReadOnlyDictionary<string, string> tags, string targetEnvironmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseEnvironmentSource = baseEnvironmentSource;
             BuildId = buildId;
@@ -53,6 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ModelConfiguration = modelConfiguration;
             Tags = tags;
             TargetEnvironmentId = targetEnvironmentId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
