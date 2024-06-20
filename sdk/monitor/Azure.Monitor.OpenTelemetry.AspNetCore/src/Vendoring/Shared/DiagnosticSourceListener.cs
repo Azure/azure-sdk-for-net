@@ -1,20 +1,24 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#nullable disable
+#nullable enable
 
+#pragma warning disable IDE0005 // Using directive is unnecessary.
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTelemetry.Internal;
+#pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace OpenTelemetry.Instrumentation;
 
-internal sealed class DiagnosticSourceListener : IObserver<KeyValuePair<string, object>>
+internal sealed class DiagnosticSourceListener : IObserver<KeyValuePair<string, object?>>
 {
     private readonly ListenerHandler handler;
 
-    private readonly Action<string, string, Exception> logUnknownException;
+    private readonly Action<string, string, Exception>? logUnknownException;
 
-    public DiagnosticSourceListener(ListenerHandler handler, Action<string, string, Exception> logUnknownException)
+    public DiagnosticSourceListener(ListenerHandler handler, Action<string, string, Exception>? logUnknownException)
     {
         Guard.ThrowIfNull(handler);
 
@@ -30,7 +34,7 @@ internal sealed class DiagnosticSourceListener : IObserver<KeyValuePair<string, 
     {
     }
 
-    public void OnNext(KeyValuePair<string, object> value)
+    public void OnNext(KeyValuePair<string, object?> value)
     {
         if (!this.handler.SupportsNullActivity && Activity.Current == null)
         {
@@ -43,7 +47,7 @@ internal sealed class DiagnosticSourceListener : IObserver<KeyValuePair<string, 
         }
         catch (Exception ex)
         {
-            this.logUnknownException?.Invoke(this.handler?.SourceName, value.Key, ex);
+            this.logUnknownException?.Invoke(this.handler.SourceName, value.Key, ex);
         }
     }
 }
