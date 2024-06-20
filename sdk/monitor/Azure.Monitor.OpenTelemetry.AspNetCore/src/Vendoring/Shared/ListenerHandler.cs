@@ -3,6 +3,8 @@
 
 using System.Diagnostics;
 
+#nullable enable
+
 namespace OpenTelemetry.Instrumentation;
 
 /// <summary>
@@ -14,7 +16,7 @@ internal abstract class ListenerHandler
     /// Initializes a new instance of the <see cref="ListenerHandler"/> class.
     /// </summary>
     /// <param name="sourceName">The name of the <see cref="ListenerHandler"/>.</param>
-    public ListenerHandler(string sourceName)
+    protected ListenerHandler(string sourceName)
     {
         this.SourceName = sourceName;
     }
@@ -34,7 +36,7 @@ internal abstract class ListenerHandler
     /// </summary>
     /// <param name="name">Custom name.</param>
     /// <param name="payload">An object that represent the value being passed as a payload for the event.</param>
-    public virtual void OnEventWritten(string name, object payload)
+    public virtual void OnEventWritten(string name, object? payload)
     {
     }
 }
