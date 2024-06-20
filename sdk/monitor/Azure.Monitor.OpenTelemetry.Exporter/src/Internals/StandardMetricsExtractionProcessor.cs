@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -63,11 +64,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private void ReportRequestDurationMetric(Activity activity)
         {
             string? statusCodeAttributeValue = null;
+            string? userAgent = null;
             foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
                 if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode || tag.Key == SemanticConventions.AttributeHttpStatusCode)
                 {
                     statusCodeAttributeValue = tag.Value?.ToString();
+                    break;
+                }
+                else if ( tag.Key == SemanticConventions.AttributeUserAgentOriginal)
+                {
+                    userAgent = tag.Value?.ToString();
                     break;
                 }
             }
@@ -79,6 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestSuccessKey, RequestData.IsSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsSyntheticKey, IsSyntheticRequest(userAgent) ? "True" : "False"));
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
@@ -131,6 +139,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
 
             activityTagsProcessor.Return();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsSyntheticRequest(string? userAgent)
+        {
+            // Example UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0"
+
+            if (!string.IsNullOrEmpty(userAgent))
+            {
+                foreach (ref readonly var syntheticUserAgent in StandardMetricConstants.SyntheticUserAgentValues)
+                {
+                    if (userAgent!.IndexOf(syntheticUserAgent, StringComparison.OrdinalIgnoreCase) != -1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         protected override void Dispose(bool disposing)

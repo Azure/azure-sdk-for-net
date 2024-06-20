@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class StandardMetricConstants
@@ -27,5 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal const string CloudRoleNameKey = "cloud/roleName";
         internal const string CloudRoleInstanceKey = "cloud/roleInstance";
         internal const string MetricIdKey = "_MS.MetricId";
+
+        internal static  ReadOnlySpan<string> SyntheticUserAgentValues => new string[] { "AlwaysOn", "AppInsights", "search", "spider", "crawl", "Bot", "Monitor", "Gomez", "Pingdom" };
     }
 }
