@@ -1,0 +1,6 @@
+options:
+  "@azure-tools/typespec-csharp":
+    package-dir: "Azure.SameBoundary.Input"
+    namespace: "Azure.SameBoundary.Input"
+    model-namespace: false
+    flavor: azure

@@ -1,0 +1,22 @@
+{
+    "requiredDictionaryDictionary": {
+        "key1": {
+            "a": {
+                "property": "newProperty"
+            }
+        }
+    },
+    "optionalDictionaryDictionary": {
+        "key1": {
+            "a": {
+                "property": null
+            }
+        }
+    },
+    "requiredArrayDictionary": {
+        "key1": [ { "property": "newProperty" } ]
+    },
+    "optionalArrayDictionary": {
+        "key1": [ {} ]
+    }
+}

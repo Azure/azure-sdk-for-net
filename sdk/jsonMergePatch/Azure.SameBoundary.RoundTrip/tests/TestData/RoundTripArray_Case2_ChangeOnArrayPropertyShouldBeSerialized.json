@@ -1,0 +1,49 @@
+{
+    "requiredStringArray": [ "string1", "string3", "string4" ],
+    "optionalStringArray": [ "a", "string2", "string3", "string4" ],
+    "requiredIntArray": [ 1, 2, 3 ],
+    "optionalIntArray": [ 1, 2, 3, 4, 1 ],
+    "requiredModelArray": [
+        { "property": "dummy1" },
+        { "property": "dummy3" },
+        { "property": "dummy4" }
+    ],
+    "optionalModelArray": [
+        { "property": "dummy1" },
+        { "property": "dummy2" },
+        { "property": "dummy3" },
+        { "property": "dummy4" },
+        {}
+    ],
+    "requiredArrayArray": [
+        [],
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "optionalArrayArray": [
+        null,
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "requiredDictionaryArray": [
+        {
+            "key1": { "property": "value1" },
+            "key2": { "property": "value2" }
+        }
+    ],
+    "optionalDictionaryArray": [
+        {},
+        {
+            "k1": { "property": "value1" },
+            "k2": { "property": "value2" }
+        }
+    ]
+}

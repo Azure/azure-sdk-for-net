@@ -1,0 +1,56 @@
+{
+    "requiredModelArray": [
+        { "property": "a" },
+        { "property": "dummy2" },
+        { "property": "dummy3" },
+        { "property": "dummy4" }
+    ],
+    "requiredArrayArray": [
+        [
+            { "property": "x" },
+            { "property": "y" },
+            { "property": "z" },
+            {}
+        ],
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "optionalArrayArray": [
+        [
+            { "property": "y" },
+            { "property": "z" }
+        ],
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "requiredDictionaryArray": [
+        {
+            "key1": { "property": "value1" },
+            "key2": { "property": "value2" },
+            "a": {}
+        },
+        {
+            "k1": { "property": "value1" },
+            "k2": { "property": "value2" }
+        }
+    ],
+    "optionalDictionaryArray": [
+        {
+            "key1": { "property": "value1" },
+            "key2": { "property": "value2" },
+            "a": {}
+        },
+        {
+            "k1": { "property": "value1" },
+            "k2": { "property": "value2" }
+        }
+    ]
+}

@@ -1,0 +1,859 @@
+{
+ "$id": "1",
+ "Name": "Payload.JsonMergePatch",
+ "Description": "Test for merge-patch+json content-type. It is to illustrate standalone model.",
+ "ApiVersions": [
+  "v1.1"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "Enum",
+   "Name": "Versions",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "v1_1",
+     "Value": "v1.1"
+    }
+   ],
+   "Namespace": "Payload.JsonMergePatch",
+   "Description": "",
+   "IsExtensible": false,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "4",
+   "Kind": "Model",
+   "Name": "RoundTripPrimitiveModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "5",
+     "Name": "requiredString",
+     "SerializedName": "requiredString",
+     "Description": "",
+     "Type": {
+      "$id": "6",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "7",
+     "Name": "optionalString",
+     "SerializedName": "optionalString",
+     "Description": "",
+     "Type": {
+      "$id": "8",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "9",
+     "Name": "requiredInt",
+     "SerializedName": "requiredInt",
+     "Description": "",
+     "Type": {
+      "$id": "10",
+      "Kind": "Primitive",
+      "Name": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "11",
+     "Name": "optionalInt",
+     "SerializedName": "optionalInt",
+     "Description": "",
+     "Type": {
+      "$id": "12",
+      "Kind": "Primitive",
+      "Name": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "13",
+   "Kind": "Model",
+   "Name": "RoundTripDictionaryModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "14",
+     "Name": "requiredStringDictionary",
+     "SerializedName": "requiredStringDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "15",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "16",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "17",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "18",
+     "Name": "optionalStringDictionary",
+     "SerializedName": "optionalStringDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "19",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "20",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "21",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "22",
+     "Name": "requiredIntDictionary",
+     "SerializedName": "requiredIntDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "23",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "24",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "25",
+       "Kind": "Primitive",
+       "Name": "Int32",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "26",
+     "Name": "optionalIntDictionary",
+     "SerializedName": "optionalIntDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "27",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "28",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "29",
+       "Kind": "Primitive",
+       "Name": "Int32",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "30",
+     "Name": "requiredModelDictionary",
+     "SerializedName": "requiredModelDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "31",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "32",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "33",
+       "Kind": "Model",
+       "Name": "RoundTripDummy",
+       "Namespace": "Payload.JsonMergePatch",
+       "Accessibility": "public",
+       "IsNullable": false,
+       "Usage": "RoundTrip",
+       "Properties": [
+        {
+         "$id": "34",
+         "Name": "property",
+         "SerializedName": "property",
+         "Description": "",
+         "Type": {
+          "$id": "35",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "36",
+     "Name": "optionalModelDictionary",
+     "SerializedName": "optionalModelDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "37",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "38",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$ref": "33"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "39",
+     "Name": "requiredDictionaryDictionary",
+     "SerializedName": "requiredDictionaryDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "40",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "41",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "42",
+       "Kind": "Dictionary",
+       "Name": "Dictionary",
+       "KeyType": {
+        "$id": "43",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "ValueType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "44",
+     "Name": "optionalDictionaryDictionary",
+     "SerializedName": "optionalDictionaryDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "45",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "46",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "47",
+       "Kind": "Dictionary",
+       "Name": "Dictionary",
+       "KeyType": {
+        "$id": "48",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "ValueType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "49",
+     "Name": "requiredArrayDictionary",
+     "SerializedName": "requiredArrayDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "50",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "51",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "52",
+       "Kind": "Array",
+       "Name": "Array",
+       "ElementType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "53",
+     "Name": "optionalArrayDictionary",
+     "SerializedName": "optionalArrayDictionary",
+     "Description": "",
+     "Type": {
+      "$id": "54",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "55",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "56",
+       "Kind": "Array",
+       "Name": "Array",
+       "ElementType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "33"
+  },
+  {
+   "$id": "57",
+   "Kind": "Model",
+   "Name": "RoundTripArrayModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "58",
+     "Name": "requiredStringArray",
+     "SerializedName": "requiredStringArray",
+     "Description": "",
+     "Type": {
+      "$id": "59",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "60",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "61",
+     "Name": "optionalStringArray",
+     "SerializedName": "optionalStringArray",
+     "Description": "",
+     "Type": {
+      "$id": "62",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "63",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "64",
+     "Name": "requiredIntArray",
+     "SerializedName": "requiredIntArray",
+     "Description": "",
+     "Type": {
+      "$id": "65",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "66",
+       "Kind": "Primitive",
+       "Name": "Int32",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "67",
+     "Name": "optionalIntArray",
+     "SerializedName": "optionalIntArray",
+     "Description": "",
+     "Type": {
+      "$id": "68",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "69",
+       "Kind": "Primitive",
+       "Name": "Int32",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "70",
+     "Name": "requiredModelArray",
+     "SerializedName": "requiredModelArray",
+     "Description": "",
+     "Type": {
+      "$id": "71",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "33"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "72",
+     "Name": "optionalModelArray",
+     "SerializedName": "optionalModelArray",
+     "Description": "",
+     "Type": {
+      "$id": "73",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "33"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "74",
+     "Name": "requiredArrayArray",
+     "SerializedName": "requiredArrayArray",
+     "Description": "",
+     "Type": {
+      "$id": "75",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "76",
+       "Kind": "Array",
+       "Name": "Array",
+       "ElementType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "77",
+     "Name": "optionalArrayArray",
+     "SerializedName": "optionalArrayArray",
+     "Description": "",
+     "Type": {
+      "$id": "78",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "79",
+       "Kind": "Array",
+       "Name": "Array",
+       "ElementType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "80",
+     "Name": "requiredDictionaryArray",
+     "SerializedName": "requiredDictionaryArray",
+     "Description": "",
+     "Type": {
+      "$id": "81",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "82",
+       "Kind": "Dictionary",
+       "Name": "Dictionary",
+       "KeyType": {
+        "$id": "83",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "ValueType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "84",
+     "Name": "optionalDictionaryArray",
+     "SerializedName": "optionalDictionaryArray",
+     "Description": "",
+     "Type": {
+      "$id": "85",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "86",
+       "Kind": "Dictionary",
+       "Name": "Dictionary",
+       "KeyType": {
+        "$id": "87",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "ValueType": {
+        "$ref": "33"
+       },
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "88",
+   "Kind": "Model",
+   "Name": "RoundTripBaseModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "89",
+     "Name": "baseProperty1",
+     "SerializedName": "baseProperty1",
+     "Description": "",
+     "Type": {
+      "$id": "90",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "91",
+     "Name": "baseProperty2",
+     "SerializedName": "baseProperty2",
+     "Description": "",
+     "Type": {
+      "$id": "92",
+      "Kind": "Primitive",
+      "Name": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "93",
+     "Name": "baseProperty3",
+     "SerializedName": "baseProperty3",
+     "Description": "",
+     "Type": {
+      "$id": "94",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "95",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "96",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "97",
+   "Kind": "Model",
+   "Name": "RoundTripInheritanceModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "BaseModel": {
+    "$ref": "88"
+   },
+   "Properties": [
+    {
+     "$id": "98",
+     "Name": "extendedProperty",
+     "SerializedName": "extendedProperty",
+     "Description": "",
+     "Type": {
+      "$id": "99",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "100",
+   "Kind": "Model",
+   "Name": "RoundTripAddAnotherLevelToInheritanceModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "BaseModel": {
+    "$ref": "97"
+   },
+   "Properties": [
+    {
+     "$id": "101",
+     "Name": "anotherLevelProperty",
+     "SerializedName": "anotherLevelProperty",
+     "Description": "",
+     "Type": {
+      "$id": "102",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "103",
+   "Kind": "Model",
+   "Name": "RoundTripNestedModel",
+   "Namespace": "Payload.JsonMergePatch",
+   "Accessibility": "public",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "104",
+     "Name": "requiredModel",
+     "SerializedName": "requiredModel",
+     "Description": "",
+     "Type": {
+      "$ref": "33"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "105",
+     "Name": "optionalModel",
+     "SerializedName": "optionalModel",
+     "Description": "",
+     "Type": {
+      "$ref": "33"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "106",
+   "Name": "JsonMergePatchClient",
+   "Description": "Test for merge-patch+json content-type. It is to illustrate standalone model.",
+   "Operations": [
+    {
+     "$id": "107",
+     "Name": "dummyOperation",
+     "ResourceName": "JsonMergePatch",
+     "Parameters": [
+      {
+       "$id": "108",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "109",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "110",
+        "Type": {
+         "$ref": "109"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "111",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "None",
+     "Uri": "",
+     "Path": "/",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "112"
+   },
+   "Creatable": true
+  }
+ ]
+}

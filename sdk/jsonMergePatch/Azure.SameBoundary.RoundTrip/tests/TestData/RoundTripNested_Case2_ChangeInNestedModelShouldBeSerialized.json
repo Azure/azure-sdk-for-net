@@ -1,0 +1,8 @@
+{
+    "requiredModel": {
+        "property": "b"
+    },
+    "optionalModel": {
+        "property": null
+    }
+}

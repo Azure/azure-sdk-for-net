@@ -1,0 +1,6 @@
+options:
+  "@azure-tools/typespec-csharp":
+    package-dir: "Azure.SameBoundary.RoundTrip"
+    namespace: "Azure.SameBoundary.RoundTrip"
+    model-namespace: false
+    flavor: azure
