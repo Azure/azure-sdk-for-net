@@ -154,7 +154,7 @@ namespace Batch.Samples.HelloWorld
                 }
 
                 Console.WriteLine("Waiting for all tasks to complete on job: {0} ...", jobId);
-                await waitForTasksToComplete(jobId);
+                await WaitForTasksToComplete(jobId);
 
                 var completedTasks = _batchClient.GetTasksAsync(jobId, filter: "state eq 'completed'");
                 await foreach (BatchTask t in completedTasks)
@@ -186,7 +186,7 @@ namespace Batch.Samples.HelloWorld
         /// <param name="jobId">The ID of the job to poll</param>
         /// <returns>A task that will complete when all Batch tasks have completed.</returns>
         /// <exception cref="TimeoutException">Thrown if all tasks haven't reached the completed state after a certain period of time</exception>
-        private async Task waitForTasksToComplete(String jobId)
+        private async Task WaitForTasksToComplete(String jobId)
         {
             // Note that this timeout should take into account the time it takes for the pool to scale up
             var timeoutAfter = DateTime.Now.AddMinutes(10);
