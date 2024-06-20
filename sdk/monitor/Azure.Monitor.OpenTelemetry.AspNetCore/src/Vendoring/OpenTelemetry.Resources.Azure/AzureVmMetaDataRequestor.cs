@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace OpenTelemetry.ResourceDetectors.Azure;
+namespace OpenTelemetry.Resources.Azure;
 
 internal static class AzureVmMetaDataRequestor
 {

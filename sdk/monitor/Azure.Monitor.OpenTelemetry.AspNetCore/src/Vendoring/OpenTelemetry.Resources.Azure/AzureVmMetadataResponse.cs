@@ -4,7 +4,7 @@
 using System.Text.Json.Serialization;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.ResourceDetectors.Azure;
+namespace OpenTelemetry.Resources.Azure;
 
 internal sealed class AzureVmMetadataResponse
 {
