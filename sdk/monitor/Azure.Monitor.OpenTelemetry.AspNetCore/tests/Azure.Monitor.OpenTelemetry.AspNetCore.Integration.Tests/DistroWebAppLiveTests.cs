@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .UseAzureMonitor(options =>
                 {
                     options.EnableLiveMetrics = false;
-                    options.ConnectionString = TestEnvironment.PrimaryConnectionString;
+                    options.ConnectionString = TestEnvironment.ConnectionString;
                 })
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(resourceAttributes));
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // QUERY:   | where TimeGenerated >= datetime({testStartTimeStamp})
 
             await QueryAndVerifyDependency(
-                workspaceId: TestEnvironment.PrimaryWorkspaceId,
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Dependency for invoking HttpClient, from testhost",
                 //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({ testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -149,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyRequest(
-                workspaceId: TestEnvironment.PrimaryWorkspaceId,
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "RequestTelemetry, from WebApp",
                 //query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -174,7 +174,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyMetric(
-                workspaceId: TestEnvironment.PrimaryWorkspaceId,
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Metric for outgoing request, from testhost",
                 //query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
@@ -197,7 +197,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyMetric(
-                workspaceId: TestEnvironment.PrimaryWorkspaceId,
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "Metric for incoming request, from WebApp",
                 //query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
@@ -219,7 +219,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             await QueryAndVerifyTrace(
-                workspaceId: TestEnvironment.PrimaryWorkspaceId,
+                workspaceId: TestEnvironment.WorkspaceId,
                 description: "ILogger LogInformation, from WebApp",
                 //query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
                 query: $"AppTraces | where Message == '{logMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",

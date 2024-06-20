@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/30a637d9-319d-4fe3-804e-ecbb8155b2df/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "182",
         "Content-Type": "application/json",
-        "traceparent": "00-aff11e13741cf2a39799fead92b7efd7-cd89282030dd8c38-00",
+        "traceparent": "00-ebadd59fa8cff099972170d9954a499b-bf3162e0baf38d6b-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -21,14 +21,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "32",
         "Connection": "keep-alive",
-        "Content-Length": "2486",
+        "Content-Length": "2487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jun 2024 20:04:53 GMT",
+        "Date": "Thu, 20 Jun 2024 21:00:44 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7b5b6f666d-vt72t",
+        "Via": "1.1 draft-oms-7b5b6f666d-xf9g8",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -203,22 +202,22 @@
             ],
             "rows": [
               [
-                "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-                "2024-06-20T20:00:10.6031574Z",
-                "22de8c88270603b0",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T20:47:58.9179045Z",
+                "cf5ef88d63a90006",
                 "localhost:9998",
                 "HTTP",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                71.997,
+                73.1815,
                 "<250ms",
                 "{\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "",
-                "995ab952d22d887275d6c9d48e6e297a",
-                "995ab952d22d887275d6c9d48e6e297a",
+                "d8f4564fc415061a77325dc1c2de207c",
+                "d8f4564fc415061a77325dc1c2de207c",
                 "",
                 "",
                 "",
@@ -235,15 +234,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "a622a94d-2525-4b9a-9f1e-e38712b04270",
-                "3091c77f-29fe-4928-88e2-9fdb69a76abd",
-                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240619-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppDependencies",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201257/providers/microsoft.insights/components/tce1de55cefebce65-ai-1"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -251,14 +250,14 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/30a637d9-319d-4fe3-804e-ecbb8155b2df/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "177",
         "Content-Type": "application/json",
-        "traceparent": "00-0adc949c8b9b101a03eca8a73eddec25-b3f77e3a2f036092-00",
+        "traceparent": "00-86a3f5215ccaa6fac3bcc7ce7a31a134-4bc5e5e69541f967-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -271,14 +270,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "29",
         "Connection": "keep-alive",
         "Content-Length": "2456",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jun 2024 20:04:54 GMT",
+        "Date": "Thu, 20 Jun 2024 21:00:45 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7b5b6f666d-x9thn",
+        "Via": "1.1 draft-oms-7b5b6f666d-4545h",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -453,22 +451,22 @@
             ],
             "rows": [
               [
-                "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-                "2024-06-20T20:00:10.6411137Z",
-                "c156729622afb901",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T20:47:58.9567259Z",
+                "dd9b38c830a5f5d7",
                 "",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                33.6173,
+                33.8978,
                 "<250ms",
-                "{\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                "{\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\",\"CustomProperty1\":\"Value1\"}",
                 null,
                 "GET /",
-                "995ab952d22d887275d6c9d48e6e297a",
+                "d8f4564fc415061a77325dc1c2de207c",
                 null,
-                "22de8c88270603b0",
+                "cf5ef88d63a90006",
                 "",
                 "",
                 "",
@@ -485,15 +483,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "a622a94d-2525-4b9a-9f1e-e38712b04270",
-                "3091c77f-29fe-4928-88e2-9fdb69a76abd",
-                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240619-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppRequests",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201257/providers/microsoft.insights/components/tce1de55cefebce65-ai-1"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -501,14 +499,14 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/30a637d9-319d-4fe3-804e-ecbb8155b2df/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/json",
-        "traceparent": "00-b58d5846d25d7f9f3a23ba44027a0718-e0e629e111a3c804-00",
+        "traceparent": "00-4a3939aed80fb462af358e30651eed39-fcd823626e88ee82-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -521,14 +519,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "29",
         "Connection": "keep-alive",
-        "Content-Length": "2106",
+        "Content-Length": "2109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jun 2024 20:04:54 GMT",
+        "Date": "Thu, 20 Jun 2024 21:00:45 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7b5b6f666d-rmbtw",
+        "Via": "1.1 draft-oms-7b5b6f666d-v6qll",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -671,13 +668,13 @@
             ],
             "rows": [
               [
-                "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-                "2024-06-20T20:00:10.8344455Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T20:47:59.1572006Z",
                 "http.client.request.duration",
                 1,
-                0.071997,
-                0.071997,
-                0.071997,
+                0.0731815,
+                0.0731815,
+                0.0731815,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\",\"server.address\":\"localhost\",\"server.port\":\"9998\"}",
                 "",
                 "",
@@ -698,12 +695,12 @@
                 "Washington",
                 "United States",
                 "Other",
-                "a622a94d-2525-4b9a-9f1e-e38712b04270",
-                "3091c77f-29fe-4928-88e2-9fdb69a76abd",
-                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240619-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240620-d",
                 "Azure",
                 "AppMetrics",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201257/providers/microsoft.insights/components/tce1de55cefebce65-ai-1"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -711,14 +708,14 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/30a637d9-319d-4fe3-804e-ecbb8155b2df/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "183",
         "Content-Type": "application/json",
-        "traceparent": "00-4425a1c5a79dc2a3d9384997e46ec0f9-b19709524e833cb0-00",
+        "traceparent": "00-e254065a98c8c99f5a01f8df515e4dbb-08e2d0a0dbf873ac-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -731,14 +728,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "29",
         "Connection": "keep-alive",
         "Content-Length": "2072",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jun 2024 20:04:54 GMT",
+        "Date": "Thu, 20 Jun 2024 21:00:47 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7b5b6f666d-9ctjb",
+        "Via": "1.1 draft-oms-7b5b6f666d-tshzn",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -881,13 +877,13 @@
             ],
             "rows": [
               [
-                "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-                "2024-06-20T20:00:10.8344074Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T20:47:59.1571309Z",
                 "http.server.request.duration",
                 1,
-                0.0336173,
-                0.0336173,
-                0.0336173,
+                0.0338978,
+                0.0338978,
+                0.0338978,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
                 "",
                 "",
@@ -908,12 +904,12 @@
                 "Washington",
                 "United States",
                 "Other",
-                "a622a94d-2525-4b9a-9f1e-e38712b04270",
-                "3091c77f-29fe-4928-88e2-9fdb69a76abd",
-                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240619-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240620-d",
                 "Azure",
                 "AppMetrics",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201257/providers/microsoft.insights/components/tce1de55cefebce65-ai-1"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -921,14 +917,14 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/30a637d9-319d-4fe3-804e-ecbb8155b2df/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "176",
         "Content-Type": "application/json",
-        "traceparent": "00-420faeb68f19f369a94a5496cbe2baa9-7feed053c334369a-00",
+        "traceparent": "00-8a50ce397f96ad98b14ad0cd086ee3ad-1e1e47add93fb426-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -941,14 +937,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "28",
         "Connection": "keep-alive",
         "Content-Length": "2023",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jun 2024 20:04:54 GMT",
+        "Date": "Thu, 20 Jun 2024 21:00:47 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7b5b6f666d-cmdb6",
+        "Via": "1.1 draft-oms-7b5b6f666d-8m77q",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1095,15 +1090,15 @@
             ],
             "rows": [
               [
-                "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-                "2024-06-20T20:00:10.6709854Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T20:47:58.9869624Z",
                 "Message via ILogger",
                 1,
                 null,
                 null,
                 "",
-                "995ab952d22d887275d6c9d48e6e297a",
-                "c156729622afb901",
+                "d8f4564fc415061a77325dc1c2de207c",
+                "dd9b38c830a5f5d7",
                 "",
                 "",
                 "",
@@ -1120,15 +1115,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "a622a94d-2525-4b9a-9f1e-e38712b04270",
-                "3091c77f-29fe-4928-88e2-9fdb69a76abd",
-                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240619-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0-rc.1:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppTraces",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201257/providers/microsoft.insights/components/tce1de55cefebce65-ai-1"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -1137,9 +1132,9 @@
     }
   ],
   "Variables": {
+    "CONNECTION_STRING": "InstrumentationKey=53e1f7f0-9975-4995-830a-414a26e9450a;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=a98f261a-124b-425a-931e-8dc00af2e65c",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "PRIMARY_CONNECTION_STRING": "InstrumentationKey=3091c77f-29fe-4928-88e2-9fdb69a76abd;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=a622a94d-2525-4b9a-9f1e-e38712b04270",
-    "PRIMARY_WORKSPACE_ID": "30a637d9-319d-4fe3-804e-ecbb8155b2df",
-    "RandomSeed": "1707322258"
+    "RandomSeed": "640430855",
+    "WORKSPACE_ID": "33d8a320-00c3-4ec8-a6a4-8692b07a6841"
   }
 }
