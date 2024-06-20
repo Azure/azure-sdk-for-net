@@ -5,11 +5,1912 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    public class Samples_ConfigurationClient
+    public partial class Samples_ConfigurationClient
     {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeys_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeys();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeys_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeysAsync();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeys_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeys(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeys_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeysAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeyValues_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeyValues();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeyValues_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeyValuesAsync();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeyValues_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeyValues(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeyValues_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeyValuesAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValue_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetKeyValue("<key>", null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValue_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetKeyValueAsync("<key>", null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValue_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.GetKeyValue("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValue_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.GetKeyValueAsync("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValue_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetKeyValue("<key>", "<label>", new KeyValueFields[] { KeyValueFields.Key }, "<syncToken>", "<acceptDatetime>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValue_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetKeyValueAsync("<key>", "<label>", new KeyValueFields[] { KeyValueFields.Key }, "<syncToken>", "<acceptDatetime>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValue_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.GetKeyValue("<key>", label: "<label>", select: new KeyValueFields[] { KeyValueFields.Key }, syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValue_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.GetKeyValueAsync("<key>", label: "<label>", select: new KeyValueFields[] { KeyValueFields.Key }, syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutKeyValue_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = null;
+            Response response = client.PutKeyValue("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutKeyValue_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = null;
+            Response response = await client.PutKeyValueAsync("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutKeyValue_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.PutKeyValue("<key>", new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutKeyValue_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.PutKeyValueAsync("<key>", new ContentType("application/vnd.microsoft.appconfig.kv+json"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutKeyValue_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                label = "<label>",
+                content_type = "<content_type>",
+                value = "<value>",
+                last_modified = "2022-05-10T18:57:31.2311892Z",
+                tags = new
+                {
+                    key = "<tags>",
+                },
+                locked = true,
+                etag = "<etag>",
+            });
+            Response response = client.PutKeyValue("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutKeyValue_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                label = "<label>",
+                content_type = "<content_type>",
+                value = "<value>",
+                last_modified = "2022-05-10T18:57:31.2311892Z",
+                tags = new
+                {
+                    key = "<tags>",
+                },
+                locked = true,
+                etag = "<etag>",
+            });
+            Response response = await client.PutKeyValueAsync("<key>", content, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutKeyValue_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            KeyValue entity = new KeyValue
+            {
+                Label = "<label>",
+                ContentType = "<content_type>",
+                Value = "<value>",
+                LastModified = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Tags =
+{
+["key"] = "<tags>"
+},
+                Locked = true,
+                Etag = "<etag>",
+            };
+            Response<KeyValue> response = client.PutKeyValue("<key>", entity: entity, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutKeyValue_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            KeyValue entity = new KeyValue
+            {
+                Label = "<label>",
+                ContentType = "<content_type>",
+                Value = "<value>",
+                LastModified = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Tags =
+{
+["key"] = "<tags>"
+},
+                Locked = true,
+                Etag = "<etag>",
+            };
+            Response<KeyValue> response = await client.PutKeyValueAsync("<key>", entity: entity, new ContentType("application/vnd.microsoft.appconfig.kv+json"), label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteKeyValue_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.DeleteKeyValue("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteKeyValue_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.DeleteKeyValueAsync("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteKeyValue_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.DeleteKeyValue("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteKeyValue_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.DeleteKeyValueAsync("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteKeyValue_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.DeleteKeyValue("<key>", "<label>", "<syncToken>", new ETag("<ifMatch>"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteKeyValue_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.DeleteKeyValueAsync("<key>", "<label>", "<syncToken>", new ETag("<ifMatch>"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteKeyValue_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.DeleteKeyValue("<key>", label: "<label>", syncToken: "<syncToken>", ifMatch: new ETag("<ifMatch>"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteKeyValue_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.DeleteKeyValueAsync("<key>", label: "<label>", syncToken: "<syncToken>", ifMatch: new ETag("<ifMatch>"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeyValue_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeyValue("<key>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeyValue_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeyValueAsync("<key>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckKeyValue_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckKeyValue("<key>", label: "<label>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckKeyValue_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckKeyValueAsync("<key>", label: "<label>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckSnapshots_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckSnapshots();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckSnapshots_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckSnapshotsAsync();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckSnapshots_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckSnapshots(syncToken: "<syncToken>", after: "<after>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckSnapshots_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckSnapshotsAsync(syncToken: "<syncToken>", after: "<after>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshot_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetSnapshot("<name>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshot_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetSnapshotAsync("<name>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshot_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<Snapshot> response = client.GetSnapshot("<name>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshot_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<Snapshot> response = await client.GetSnapshotAsync("<name>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshot_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetSnapshot("<name>", new SnapshotFields[] { SnapshotFields.Name }, "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshot_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetSnapshotAsync("<name>", new SnapshotFields[] { SnapshotFields.Name }, "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshot_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<Snapshot> response = client.GetSnapshot("<name>", select: new SnapshotFields[] { SnapshotFields.Name }, syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshot_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<Snapshot> response = await client.GetSnapshotAsync("<name>", select: new SnapshotFields[] { SnapshotFields.Name }, syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetOperationDetails_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetOperationDetails("<snapshot>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetOperationDetails_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetOperationDetailsAsync("<snapshot>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetOperationDetails_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<OperationDetails> response = client.GetOperationDetails("<snapshot>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetOperationDetails_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<OperationDetails> response = await client.GetOperationDetailsAsync("<snapshot>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetOperationDetails_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.GetOperationDetails("<snapshot>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetOperationDetails_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.GetOperationDetailsAsync("<snapshot>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetOperationDetails_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<OperationDetails> response = client.GetOperationDetails("<snapshot>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetOperationDetails_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<OperationDetails> response = await client.GetOperationDetailsAsync("<snapshot>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_UpdateSnapshot_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpdateSnapshot("<name>", content, new ContentType("application/merge-patch+json"));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_UpdateSnapshot_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateSnapshotAsync("<name>", content, new ContentType("application/merge-patch+json"));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_UpdateSnapshot_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                status = "provisioning",
+            });
+            Response response = client.UpdateSnapshot("<name>", content, new ContentType("application/merge-patch+json"), syncToken: "<syncToken>", matchConditions: null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_UpdateSnapshot_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                status = "provisioning",
+            });
+            Response response = await client.UpdateSnapshotAsync("<name>", content, new ContentType("application/merge-patch+json"), syncToken: "<syncToken>", matchConditions: null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckSnapshot_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckSnapshot("<name>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckSnapshot_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckSnapshotAsync("<name>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckSnapshot_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckSnapshot("<name>", syncToken: "<syncToken>", matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckSnapshot_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckSnapshotAsync("<name>", syncToken: "<syncToken>", matchConditions: null);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckLabels_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckLabels();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckLabels_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckLabelsAsync();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckLabels_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckLabels(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name });
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckLabels_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckLabelsAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name });
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutLock_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.PutLock("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutLock_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.PutLockAsync("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutLock_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.PutLock("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutLock_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.PutLockAsync("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutLock_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.PutLock("<key>", "<label>", "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutLock_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.PutLockAsync("<key>", "<label>", "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_PutLock_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.PutLock("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_PutLock_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.PutLockAsync("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteLock_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.DeleteLock("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteLock_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.DeleteLockAsync("<key>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteLock_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.DeleteLock("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteLock_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.DeleteLockAsync("<key>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteLock_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.DeleteLock("<key>", "<label>", "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteLock_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.DeleteLockAsync("<key>", "<label>", "<syncToken>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("content_type").ToString());
+            Console.WriteLine(result.GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("last_modified").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("locked").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_DeleteLock_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = client.DeleteLock("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_DeleteLock_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response<KeyValue> response = await client.DeleteLockAsync("<key>", label: "<label>", syncToken: "<syncToken>", matchConditions: null);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckRevisions_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckRevisions();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckRevisions_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckRevisionsAsync();
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CheckRevisions_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = client.CheckRevisions(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" });
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CheckRevisions_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Response response = await client.CheckRevisionsAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" });
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Key_GetKeys_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetKeys(null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Key_GetKeys_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetKeysAsync(null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Key_GetKeys_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Key item in client.GetKeys())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Key_GetKeys_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Key item in client.GetKeysAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Key_GetKeys_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetKeys("<name>", "<after>", "<syncToken>", "<acceptDatetime>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Key_GetKeys_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetKeysAsync("<name>", "<after>", "<syncToken>", "<acceptDatetime>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Key_GetKeys_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Key item in client.GetKeys(name: "<name>", after: "<after>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Key_GetKeys_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Key item in client.GetKeysAsync(name: "<name>", after: "<after>", syncToken: "<syncToken>", acceptDatetime: "<acceptDatetime>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValues_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetKeyValues(null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValues_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetKeyValuesAsync(null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValues_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (KeyValue item in client.GetKeyValues())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValues_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (KeyValue item in client.GetKeyValuesAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValues_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetKeyValues("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, "<snapshot>", new string[] { "<tags>" }, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("content_type").ToString());
+                Console.WriteLine(result.GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("last_modified").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("locked").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValues_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetKeyValuesAsync("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, "<snapshot>", new string[] { "<tags>" }, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("content_type").ToString());
+                Console.WriteLine(result.GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("last_modified").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("locked").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_KeyValue_GetKeyValues_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (KeyValue item in client.GetKeyValues(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_KeyValue_GetKeyValues_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (KeyValue item in client.GetKeyValuesAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, snapshot: "<snapshot>", tags: new string[] { "<tags>" }, matchConditions: null))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshots_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetSnapshots(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshots_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetSnapshotsAsync(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshots_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Snapshot item in client.GetSnapshots())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshots_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Snapshot item in client.GetSnapshotsAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshots_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetSnapshots("<name>", "<after>", new SnapshotFields[] { SnapshotFields.Name }, new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, "<syncToken>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+                Console.WriteLine(result.GetProperty("composition_type").ToString());
+                Console.WriteLine(result.GetProperty("created").ToString());
+                Console.WriteLine(result.GetProperty("expires").ToString());
+                Console.WriteLine(result.GetProperty("retention_period").ToString());
+                Console.WriteLine(result.GetProperty("size").ToString());
+                Console.WriteLine(result.GetProperty("items_count").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshots_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetSnapshotsAsync("<name>", "<after>", new SnapshotFields[] { SnapshotFields.Name }, new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, "<syncToken>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+                Console.WriteLine(result.GetProperty("composition_type").ToString());
+                Console.WriteLine(result.GetProperty("created").ToString());
+                Console.WriteLine(result.GetProperty("expires").ToString());
+                Console.WriteLine(result.GetProperty("retention_period").ToString());
+                Console.WriteLine(result.GetProperty("size").ToString());
+                Console.WriteLine(result.GetProperty("items_count").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Snapshot_GetSnapshots_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Snapshot item in client.GetSnapshots(name: "<name>", after: "<after>", select: new SnapshotFields[] { SnapshotFields.Name }, status: new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, syncToken: "<syncToken>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Snapshot_GetSnapshots_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Snapshot item in client.GetSnapshotsAsync(name: "<name>", after: "<after>", select: new SnapshotFields[] { SnapshotFields.Name }, status: new ConfigurationSnapshotStatus[] { ConfigurationSnapshotStatus.Provisioning }, syncToken: "<syncToken>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetLabels_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetLabels(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetLabels_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetLabelsAsync(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetLabels_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Label item in client.GetLabels())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetLabels_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Label item in client.GetLabelsAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetLabels_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetLabels("<name>", "<syncToken>", "<after>", "<acceptDatetime>", new LabelFields[] { LabelFields.Name }, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetLabels_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetLabelsAsync("<name>", "<syncToken>", "<after>", "<acceptDatetime>", new LabelFields[] { LabelFields.Name }, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetLabels_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (Label item in client.GetLabels(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name }))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetLabels_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (Label item in client.GetLabelsAsync(name: "<name>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new LabelFields[] { LabelFields.Name }))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetRevisions_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetRevisions(null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetRevisions_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetRevisionsAsync(null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetRevisions_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (KeyValue item in client.GetRevisions())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetRevisions_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (KeyValue item in client.GetRevisionsAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetRevisions_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (BinaryData item in client.GetRevisions("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, new string[] { "<tags>" }, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("content_type").ToString());
+                Console.WriteLine(result.GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("last_modified").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("locked").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetRevisions_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (BinaryData item in client.GetRevisionsAsync("<key>", "<label>", "<syncToken>", "<after>", "<acceptDatetime>", new KeyValueFields[] { KeyValueFields.Key }, new string[] { "<tags>" }, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("content_type").ToString());
+                Console.WriteLine(result.GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("last_modified").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("locked").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_GetRevisions_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            foreach (KeyValue item in client.GetRevisions(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" }))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_GetRevisions_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            await foreach (KeyValue item in client.GetRevisionsAsync(key: "<key>", label: "<label>", syncToken: "<syncToken>", after: "<after>", acceptDatetime: "<acceptDatetime>", select: new KeyValueFields[] { KeyValueFields.Key }, tags: new string[] { "<tags>" }))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CreateSnapshot_ShortVersion()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filters = new object[]
+            {
+new
+{
+key = "<key>",
+}
+            },
+            });
+            Operation<BinaryData> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CreateSnapshot_ShortVersion_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filters = new object[]
+            {
+new
+{
+key = "<key>",
+}
+            },
+            });
+            Operation<BinaryData> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CreateSnapshot_ShortVersion_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Snapshot entity = new Snapshot(new KeyValueFilter[]
+            {
+new KeyValueFilter("<key>")
+            });
+            Operation<Snapshot> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+            Snapshot responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CreateSnapshot_ShortVersion_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Snapshot entity = new Snapshot(new KeyValueFilter[]
+            {
+new KeyValueFilter("<key>")
+            });
+            Operation<Snapshot> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"));
+            Snapshot responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CreateSnapshot_AllParameters()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filters = new object[]
+            {
+new
+{
+key = "<key>",
+label = "<label>",
+tags = new object[]
+{
+"<tags>"
+},
+}
+            },
+                composition_type = "key",
+                retention_period = 1234L,
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CreateSnapshot_AllParameters_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filters = new object[]
+            {
+new
+{
+key = "<key>",
+label = "<label>",
+tags = new object[]
+{
+"<tags>"
+},
+}
+            },
+                composition_type = "key",
+                retention_period = 1234L,
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", content, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("filters")[0].GetProperty("tags")[0].ToString());
+            Console.WriteLine(result.GetProperty("composition_type").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("retention_period").ToString());
+            Console.WriteLine(result.GetProperty("size").ToString());
+            Console.WriteLine(result.GetProperty("items_count").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AzureAppConfiguration_CreateSnapshot_AllParameters_Convenience()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Snapshot entity = new Snapshot(new KeyValueFilter[]
+            {
+new KeyValueFilter("<key>")
+{
+Label = "<label>",
+Tags = {"<tags>"},
+}
+            })
+            {
+                CompositionType = CompositionType.Key,
+                RetentionPeriod = 1234L,
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<Snapshot> operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+            Snapshot responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AzureAppConfiguration_CreateSnapshot_AllParameters_Convenience_Async()
+        {
+            ConfigurationClient client = new ConfigurationClient(null);
+
+            Snapshot entity = new Snapshot(new KeyValueFilter[]
+            {
+new KeyValueFilter("<key>")
+{
+Label = "<label>",
+Tags = {"<tags>"},
+}
+            })
+            {
+                CompositionType = CompositionType.Key,
+                RetentionPeriod = 1234L,
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<Snapshot> operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", entity, new ContentType("application/vnd.microsoft.appconfig.snapshot+json"), syncToken: "<syncToken>");
+            Snapshot responseData = operation.Value;
+        }
     }
 }
