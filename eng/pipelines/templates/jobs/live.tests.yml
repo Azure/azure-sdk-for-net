@@ -194,6 +194,7 @@ jobs:
               exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 
