@@ -11,6 +11,7 @@
 
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" /> 
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\DistroWebAppLiveTests\" />
   </ItemGroup>
 
 </Project>

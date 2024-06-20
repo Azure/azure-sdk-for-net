@@ -484,7 +484,7 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft
+/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Event Grid %Functions
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
@@ -971,6 +971,12 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
+
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
 
@@ -988,9 +994,6 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
-
-# Reviewers to double check any API changes
-/sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

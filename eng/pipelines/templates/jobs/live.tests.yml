@@ -139,7 +139,7 @@ jobs:
                 ArmTemplateParameters: $(ArmTemplateParameters)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
@@ -152,7 +152,7 @@ jobs:
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-              SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -194,6 +194,7 @@ jobs:
               exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 
@@ -231,7 +232,7 @@ jobs:
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-                SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/remove-test-resources.yml
@@ -240,7 +241,7 @@ jobs:
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
-              SubscriptionConfigurationFilePath: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePath }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - task: PublishTestResults@2
         condition: always()
