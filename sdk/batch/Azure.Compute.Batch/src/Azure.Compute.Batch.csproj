@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.Compute.Batch client library for developing .NET applications with rich experience. This client library allows for the creation and management of Batch objects such as Pools, Jobs, and Tasks. For more information about Azure Batch, see https://learn.microsoft.com/azure/batch/batch-technical-overview </Description>
-    <AssemblyTitle>Azure SDK Code Generation Azure.Compute.Batch for Azure Data Plane</AssemblyTitle>
+    <Description>This is the Azure.Compute.Batch client library, enabling the creation and management of Batch objects such as Pools, Jobs, and Tasks. For more information about Azure Batch, see https://learn.microsoft.com/azure/batch/batch-technical-overview </Description>
+    <AssemblyTitle>The Azure Batch client library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Compute.Batch</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

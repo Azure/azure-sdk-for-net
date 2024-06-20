@@ -14,8 +14,6 @@ In order to create Batch Pool from the Azure.Managment.Batch library you will ne
 var credential = new DefaultAzureCredential();
 ArmClient _armClient = new ArmClient(credential);
 ```
-
-
 ### Pool Creation
 
 Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
@@ -54,6 +52,7 @@ BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().Creat
 ```
 
 ## Authenticating the Azure.Compute.Batch `BatchClient`
+
 Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` sdk.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
 
 ```C# Snippet:Batch_Sample01_CreateBatchClient
@@ -62,13 +61,15 @@ BatchClient _batchClient = new BatchClient(
 new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 ```
 
-### Job Creation
+### Job creation
 
 Before we can create Batch Tasks we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are a Id for job itself and the name of the pool that this job will run against. 
 ```C# Snippet:Batch_Sample01_CreateBatchJob
 await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
+
 ### Task Creation
+
 Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The basic elements needed are the name of the job the task will be assigned to, and id for the task itself, and a command to run.
 ```C# Snippet:Batch_Sample01_CreateBatchTask
 await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
