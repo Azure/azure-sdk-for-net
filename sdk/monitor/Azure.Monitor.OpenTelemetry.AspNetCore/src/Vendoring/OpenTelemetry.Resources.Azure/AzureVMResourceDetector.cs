@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 using System.Collections.Generic;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.ResourceDetectors.Azure;
+namespace OpenTelemetry.Resources.Azure;
 
 /// <summary>
 /// Resource detector for Azure VM environment.

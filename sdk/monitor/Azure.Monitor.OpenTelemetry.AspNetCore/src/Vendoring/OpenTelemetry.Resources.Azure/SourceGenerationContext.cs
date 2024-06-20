@@ -4,7 +4,7 @@
 #if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
 
-namespace OpenTelemetry.ResourceDetectors.Azure;
+namespace OpenTelemetry.Resources.Azure;
 
 /// <summary>
 /// "Source Generation" is feature added to System.Text.Json in .NET 6.0.
