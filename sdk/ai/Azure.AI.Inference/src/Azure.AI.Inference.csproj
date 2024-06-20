@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Inference client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Inference for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure Inference</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591;AZC0031</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
@@ -17,9 +18,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\" />
   </ItemGroup>
 
 </Project>
