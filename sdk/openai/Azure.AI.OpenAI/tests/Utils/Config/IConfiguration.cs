@@ -65,6 +65,19 @@ public static class ConfigurationExtensions
     }
 
     /// <summary>
+    /// Gets the configuration that was used when creating the client instance.
+    /// </summary>
+    /// <typeparam name="TExplicitClient">The type of the client.</typeparam>
+    /// <param name="client">The client instance.</param>
+    /// <returns>The configuration.</returns>
+    /// <exception cref="KeyNotFoundException">The client did not have a config associated with it.</exception>
+    public static IConfiguration GetConfigOrThrow<TExplicitClient>(this TExplicitClient client)
+    {
+        var instrumented = GetInstrumentedData(client);
+        return instrumented.Config ?? throw new ArgumentException("The client was instrumented with a null configuration");
+    }
+
+    /// <summary>
     /// Gets the deployment to use from the configuration, or throws if none was found.
     /// </summary>
     /// <param name="config">The config.</param>
@@ -88,6 +101,12 @@ public static class ConfigurationExtensions
     /// <exception cref="KeyNotFoundException">The client did not have a deployment configured.</exception>
     public static string DeploymentOrThrow<TExplicitClient>(this TExplicitClient client)
     {
+        var instrumented = GetInstrumentedData(client);
+        return instrumented.Config.DeploymentOrThrow(client!.GetType().Name);
+    }
+
+    private static AoaiTestBase<TExplicitClient>.AzureOpenAiInstrumented GetInstrumentedData<TExplicitClient>(TExplicitClient? client)
+    {
         if (client == null)
         {
             throw new ArgumentNullException(nameof(client));
@@ -105,6 +124,6 @@ public static class ConfigurationExtensions
             throw new ArgumentException($"The client was not properly instrumented ({client.GetType().Name})", nameof(client));
         }
 
-        return instrumented.Config.DeploymentOrThrow(client.GetType().Name);
+        return instrumented;
     }
 }
