@@ -61,7 +61,7 @@ BatchClient _batchClient = new BatchClient(
 new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 ```
 
-### Job Creation
+### Job creation
 
 Before we can create Batch Tasks we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are a Id for job itself and the name of the pool that this job will run against. 
 ```C# Snippet:Batch_Sample01_CreateBatchJob
