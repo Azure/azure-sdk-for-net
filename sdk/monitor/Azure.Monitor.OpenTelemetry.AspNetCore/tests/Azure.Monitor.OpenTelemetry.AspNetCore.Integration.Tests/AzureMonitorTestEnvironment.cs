@@ -15,9 +15,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         /// Connection String is used to connect to an Application Insights resource.
         /// This value comes from the ARM Template.
         /// </summary>
-        public string ConnectionString => GetRecordedVariable("CONNECTION_STRING");
+        public string PrimaryConnectionString => GetRecordedVariable("PRIMARY_CONNECTION_STRING");
 
-        public string WorkspaceId => GetRecordedVariable("WORKSPACE_ID");
+        public string PrimaryWorkspaceId => GetRecordedVariable("PRIMARY_WORKSPACE_ID");
 
         public string SecondaryConnectionString => GetRecordedVariable("SECONDARY_CONNECTION_STRING");
 

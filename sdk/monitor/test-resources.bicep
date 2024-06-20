@@ -279,8 +279,8 @@ resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@202
 // OUTPUT VALUES USED BY TEST ENVIRONMENT
 output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
 
-output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
-output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
+output PRIMARY_CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
+output PRIMARY_WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
 
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
