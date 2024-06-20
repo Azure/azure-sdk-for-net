@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using OpenAI.Assistants;
 using OpenAI.Audio;
@@ -26,6 +26,9 @@ using OpenAI.Images;
 using OpenAI.Models;
 using OpenAI.Tests;
 using OpenAI.VectorStores;
+using TokenCredential = Azure.Core.TokenCredential;
+using RetryOptions = Azure.Core.RetryOptions;
+using RetryMode = Azure.Core.RetryMode;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -43,7 +46,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     internal TestConfig TestConfig { get; }
     internal Assets Assets { get; }
 
-    protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Live)
+    protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null)
         : base(isAsync, mode)
     {
         TestConfig = new TestConfig(Mode);
@@ -53,6 +56,8 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             Assert.Inconclusive($"Tests are currently disabled via inconclusivity if both default and chat configuration settings are not available.");
         }
         Assets = new Assets(TestEnvironment);
+
+        TestDiagnostics = false;  // Disable additional fluff that is causing issues
     }
 
     /// <summary>
@@ -94,23 +99,39 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         // mock pipeline and we don't want those to go to the test proxy.
         if (options.Transport == null)
         {
-            // TODO FIXME Normally we would call the base class RecordedTestBase.InstrumentClientOptions. Unfortunately
-            //            this doesn't currently work since the test framework still relies on a version of Azure.Core
-            //            that has not been updated to use the new System.ClientModel types. Thus InstrumentClientOptions
-            //            expects a type that inherits from Azure.Core.ClientOptions, whereas we inherit from
-            //            System.ClientModel.Primitives.ClientPipelineOptions. For now we duplicate the code from
-            //            InstrumentClientOptions here, but this should be updated once Azure.Core has been updated
-            //if (Mode == RecordedTestMode.Playback)
-            //{
-            //    // Not making the timeout zero so retry code still goes async
-            //    options.Retry.Delay = TimeSpan.FromMilliseconds(10);
-            //    options.Retry.Mode = RetryMode.Fixed;
-            //}
-            //// No need to set the transport if we are in Live mode
-            //if (Mode != RecordedTestMode.Live)
-            //{
-            //    options.Transport = Recording.CreateTransport(options.Transport);
-            //}
+            // TODO FIXME update once test framework code is updated
+            /* NOTE:
+             * Normally we would call the base class RecordedTestBase.InstrumentClientOptions. Unfortunately this doesn't
+             * currently work since the test framework still relies on a version of Azure.Core that has not been updated
+             * to use the new System.ClientModel types. Thus InstrumentClientOptions expects a type that inherits from
+             * Azure.Core.ClientOptions, whereas we inherit from System.ClientModel.Primitives.ClientPipelineOptions. For
+             * now we duplicate the code from InstrumentClientOptions here
+            */
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // You guessed it: the constructor for RetryOptions is internal only. So plan B:
+                RetryOptions retryOpt = (RetryOptions)Activator.CreateInstance(typeof(RetryOptions), true)!;
+
+                // Not making the timeout zero so retry code still goes async
+                retryOpt.Delay = TimeSpan.FromMilliseconds(10);
+                retryOpt.Mode = RetryMode.Fixed;
+
+                options.RetryPolicy = new Utils.Pipeline.ClientRetryPolicyAdapter(retryOpt);
+            }
+
+            // No need to set the transport if we are in Live mode
+            if (Mode != RecordedTestMode.Live)
+            {
+                // Wait what's this? More private or internal only things I need access to?
+                var proxyAccess = Internals.ForField<RecordedTestBase, TestProxy>("_proxy");
+                var disableRecordingAccess = Internals.ForField<TestRecording, AsyncLocal<EntryRecordModel>>("_disableRecording");
+
+                options.Transport = new Utils.Pipeline.ProxyTransport(
+                    proxyAccess.Get(this),
+                    Recording,
+                    () => disableRecordingAccess.Get(Recording).Value);
+            }
         }
 
 

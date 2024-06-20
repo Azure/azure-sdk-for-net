@@ -46,7 +46,7 @@ internal class TestConfig
         _isPlayback = mode == RecordedTestMode.Playback;
         if (_isPlayback)
         {
-            string playbackConfigJson = Path.Combine(AssetsSubFolder, "default_" + AssetsJson);
+            string playbackConfigJson = Path.Combine(AssetsSubFolder, "playback_" + AssetsJson);
             _playbackConfig = ReadJsonConfig(playbackConfigJson);
             if (_playbackConfig == null)
             {
