@@ -57,6 +57,7 @@ jobs:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
+      SDKType: ${{ parameters.SDKType }}
 
     steps:
       - checkout: self
