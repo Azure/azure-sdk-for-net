@@ -5,29 +5,10 @@
 
 #nullable disable
 
-using Azure.Core.Extensions;
-using Azure.Messaging.EventGrid.SystemEvents;
-
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="SystemEventsClient"/> to client builder. </summary>
-    public static partial class MessagingEventGridSystemEventsClientBuilderExtensions
+    /// <summary> Extension methods to add  to client builder. </summary>
+    internal static partial class MessagingEventGridSystemEventsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="SystemEventsClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        public static IAzureClientBuilder<SystemEventsClient, SystemEventsClientOptions> AddSystemEventsClient<TBuilder>(this TBuilder builder)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<SystemEventsClient, SystemEventsClientOptions>((options) => new SystemEventsClient(options));
-        }
-
-        /// <summary> Registers a <see cref="SystemEventsClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<SystemEventsClient, SystemEventsClientOptions> AddSystemEventsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<SystemEventsClient, SystemEventsClientOptions>(configuration);
-        }
     }
 }
