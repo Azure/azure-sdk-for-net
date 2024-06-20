@@ -48,18 +48,18 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        //if (!_isLoggingEnabled)
-        //{
-        //    if (async)
-        //    {
-        //        await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-        //    }
-        //    else
-        //    {
-        //        ProcessNext(message, pipeline, currentIndex);
-        //    }
-        //    return;
-        //}
+        if (!_logger.IsEnabled(LogLevel.Warning))
+        {
+            if (async)
+            {
+                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline, currentIndex);
+            }
+            return;
+        }
 
         // Log the request
 
