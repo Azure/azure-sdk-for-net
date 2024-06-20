@@ -57,7 +57,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
         Assets = new Assets(TestEnvironment);
 
-        TestDiagnostics = false;  // Disable additional fluff that is causing issues
+        // Disable additional fluff that is causing issues
+        TestDiagnostics = false;
+
+        // Add sanitizers to prevent our keys from leaking into the recordings
+        JsonPathSanitizers.Add("*..key");
+        JsonPathSanitizers.Add("*..api_key");
     }
 
     /// <summary>
