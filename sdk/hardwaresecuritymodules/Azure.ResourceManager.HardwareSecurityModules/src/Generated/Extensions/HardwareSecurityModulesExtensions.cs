@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the dedicated HSM. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the dedicated HSM. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

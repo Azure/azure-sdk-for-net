@@ -38,25 +38,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BackupProperties))
-            {
-                writer.WritePropertyName("backupProperties"u8);
-                writer.WriteObjectValue(BackupProperties, options);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,9 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            CloudHsmClusterSku sku = default;
             ManagedServiceIdentity identity = default;
-            BackupProperties backupProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,15 +102,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -136,34 +112,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("backupProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value, options);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CloudHsmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, identity, backupProperties, serializedAdditionalRawData);
+            return new CloudHsmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterPatch>.Write(ModelReaderWriterOptions options)

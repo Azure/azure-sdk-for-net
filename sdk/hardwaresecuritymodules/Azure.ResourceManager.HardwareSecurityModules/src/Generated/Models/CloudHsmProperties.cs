@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
-        public CloudHsmProperties()
+        internal CloudHsmProperties()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> FQDN of the Cloud HSM. </summary>
-        public string Fqdn { get; set; }
+        public string Fqdn { get; }
         /// <summary> The Cloud HSM State. </summary>
-        public string State { get; set; }
+        public string State { get; }
         /// <summary> The Cloud HSM State message. </summary>
-        public string StateMessage { get; set; }
+        public string StateMessage { get; }
     }
 }

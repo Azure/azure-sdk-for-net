@@ -28,11 +28,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
+            writer.WritePropertyName("sku"u8);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -43,6 +40,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -76,34 +75,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
-            }
-            if (Optional.IsDefined(ManagementNetworkProfile))
-            {
-                writer.WritePropertyName("managementNetworkProfile"u8);
-                writer.WriteObjectValue(ManagementNetworkProfile, options);
-            }
-            if (Optional.IsDefined(StampId))
-            {
-                writer.WritePropertyName("stampId"u8);
-                writer.WriteStringValue(StampId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
-            {
-                writer.WritePropertyName("statusMessage"u8);
-                writer.WriteStringValue(StatusMessage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -144,27 +115,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
             HardwareSecurityModulesSku sku = default;
             IList<string> zones = default;
+            DedicatedHsmProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NetworkProfile networkProfile = default;
-            NetworkProfile managementNetworkProfile = default;
-            string stampId = default;
-            string statusMessage = default;
-            JsonWebKeyType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value, options);
                     continue;
                 }
@@ -180,6 +143,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = DedicatedHsmProperties.DeserializeDedicatedHsmProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -225,55 +193,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("networkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetworkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("stampId"u8))
-                        {
-                            stampId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("statusMessage"u8))
-                        {
-                            statusMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new JsonWebKeyType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -287,13 +206,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkProfile,
-                managementNetworkProfile,
-                stampId,
-                statusMessage,
-                provisioningState,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
+                properties,
                 serializedAdditionalRawData);
         }
 
