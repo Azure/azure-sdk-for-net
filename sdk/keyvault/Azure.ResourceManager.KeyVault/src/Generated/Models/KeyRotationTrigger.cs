@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The Action. </summary>
-    internal partial class Action
+    /// <summary> The KeyRotationTrigger. </summary>
+    public partial class KeyRotationTrigger
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,27 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
-        public Action()
+        /// <summary> Initializes a new instance of <see cref="KeyRotationTrigger"/>. </summary>
+        public KeyRotationTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
-        /// <param name="keyRotationPolicyActionType"> The type of action. </param>
+        /// <summary> Initializes a new instance of <see cref="KeyRotationTrigger"/>. </summary>
+        /// <param name="timeAfterCreate"> The time duration after key creation to rotate the key. It only applies to rotate. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </param>
+        /// <param name="timeBeforeExpiry"> The time duration before key expiring to rotate or notify. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Action(KeyRotationPolicyActionType? keyRotationPolicyActionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyRotationTrigger(string timeAfterCreate, string timeBeforeExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeyRotationPolicyActionType = keyRotationPolicyActionType;
+            TimeAfterCreate = timeAfterCreate;
+            TimeBeforeExpiry = timeBeforeExpiry;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of action. </summary>
-        [WirePath("type")]
-        public KeyRotationPolicyActionType? KeyRotationPolicyActionType { get; set; }
+        /// <summary> The time duration after key creation to rotate the key. It only applies to rotate. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </summary>
+        [WirePath("timeAfterCreate")]
+        public string TimeAfterCreate { get; set; }
+        /// <summary> The time duration before key expiring to rotate or notify. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </summary>
+        [WirePath("timeBeforeExpiry")]
+        public string TimeBeforeExpiry { get; set; }
     }
 }

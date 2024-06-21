@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="trigger"> The trigger of key rotation policy lifetimeAction. </param>
         /// <param name="action"> The action of key rotation policy lifetimeAction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LifetimeAction(Trigger trigger, Action action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LifetimeAction(KeyRotationTrigger trigger, KeyRotationAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Trigger = trigger;
             Action = action;
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> The trigger of key rotation policy lifetimeAction. </summary>
         [WirePath("trigger")]
-        public Trigger Trigger { get; set; }
+        public KeyRotationTrigger Trigger { get; set; }
         /// <summary> The action of key rotation policy lifetimeAction. </summary>
-        internal Action Action { get; set; }
+        internal KeyRotationAction Action { get; set; }
         /// <summary> The type of action. </summary>
         [WirePath("action.type")]
-        public KeyRotationPolicyActionType? KeyRotationPolicyActionType
+        public KeyRotationPolicyActionType? ActionType
         {
-            get => Action is null ? default : Action.KeyRotationPolicyActionType;
+            get => Action is null ? default : Action.ActionType;
             set
             {
                 if (Action is null)
-                    Action = new Action();
-                Action.KeyRotationPolicyActionType = value;
+                    Action = new KeyRotationAction();
+                Action.ActionType = value;
             }
         }
     }

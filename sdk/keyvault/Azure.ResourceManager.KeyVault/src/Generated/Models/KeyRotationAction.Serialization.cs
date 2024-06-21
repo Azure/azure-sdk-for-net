@@ -14,23 +14,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal partial class Action : IUtf8JsonSerializable, IJsonModel<Action>
+    internal partial class KeyRotationAction : IUtf8JsonSerializable, IJsonModel<KeyRotationAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Action>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyRotationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Action>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyRotationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Action>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Action)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyRotationAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyRotationPolicyActionType))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KeyRotationPolicyActionType.Value.ToSerialString());
+                writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        Action IJsonModel<Action>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyRotationAction IJsonModel<KeyRotationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Action>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Action)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyRotationAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAction(document.RootElement, options);
+            return DeserializeKeyRotationAction(document.RootElement, options);
         }
 
-        internal static Action DeserializeAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyRotationAction DeserializeKeyRotationAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Action(type, serializedAdditionalRawData);
+            return new KeyRotationAction(type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyRotationPolicyActionType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                if (Optional.IsDefined(KeyRotationPolicyActionType))
+                if (Optional.IsDefined(ActionType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{KeyRotationPolicyActionType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
                 }
             }
 
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Action>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyRotationAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Action>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -134,26 +134,26 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Action)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyRotationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Action IPersistableModel<Action>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyRotationAction IPersistableModel<KeyRotationAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Action>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAction(document.RootElement, options);
+                        return DeserializeKeyRotationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Action)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyRotationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Action>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyRotationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

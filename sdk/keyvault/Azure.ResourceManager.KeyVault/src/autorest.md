@@ -121,8 +121,8 @@ rename-mapping:
   CertificatePermissions: IdentityAccessCertificatePermission
   IPRule.value: AddressRange
   CheckNameAvailabilityResult: KeyVaultNameAvailabilityResult
-  Trigger: ValutTrigger
-  Action: ValutAction
+  Trigger: KeyRotationTrigger
+  Action: KeyRotationAction
 
 prompted-enum-values: Default
 

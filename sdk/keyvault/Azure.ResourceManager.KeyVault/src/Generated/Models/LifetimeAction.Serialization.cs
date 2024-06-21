@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Trigger trigger = default;
-            Action action = default;
+            KeyRotationTrigger trigger = default;
+            KeyRotationAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    trigger = Trigger.DeserializeTrigger(property.Value, options);
+                    trigger = KeyRotationTrigger.DeserializeKeyRotationTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    action = Action.DeserializeAction(property.Value, options);
+                    action = KeyRotationAction.DeserializeKeyRotationAction(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("KeyRotationPolicyActionType", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ActionType", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  action: ");

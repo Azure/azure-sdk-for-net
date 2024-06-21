@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The Trigger. </summary>
-    public partial class Trigger
+    /// <summary> The KeyRotationAction. </summary>
+    internal partial class KeyRotationAction
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,22 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
-        public Trigger()
+        /// <summary> Initializes a new instance of <see cref="KeyRotationAction"/>. </summary>
+        public KeyRotationAction()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
-        /// <param name="timeAfterCreate"> The time duration after key creation to rotate the key. It only applies to rotate. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </param>
-        /// <param name="timeBeforeExpiry"> The time duration before key expiring to rotate or notify. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </param>
+        /// <summary> Initializes a new instance of <see cref="KeyRotationAction"/>. </summary>
+        /// <param name="actionType"> The type of action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Trigger(string timeAfterCreate, string timeBeforeExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyRotationAction(KeyRotationPolicyActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TimeAfterCreate = timeAfterCreate;
-            TimeBeforeExpiry = timeBeforeExpiry;
+            ActionType = actionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time duration after key creation to rotate the key. It only applies to rotate. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </summary>
-        [WirePath("timeAfterCreate")]
-        public string TimeAfterCreate { get; set; }
-        /// <summary> The time duration before key expiring to rotate or notify. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'. </summary>
-        [WirePath("timeBeforeExpiry")]
-        public string TimeBeforeExpiry { get; set; }
+        /// <summary> The type of action. </summary>
+        [WirePath("type")]
+        public KeyRotationPolicyActionType? ActionType { get; set; }
     }
 }

@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class Trigger : IUtf8JsonSerializable, IJsonModel<Trigger>
+    public partial class KeyRotationTrigger : IUtf8JsonSerializable, IJsonModel<KeyRotationTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Trigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyRotationTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Trigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyRotationTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Trigger>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Trigger)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyRotationTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        Trigger IJsonModel<Trigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyRotationTrigger IJsonModel<KeyRotationTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Trigger>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Trigger)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyRotationTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrigger(document.RootElement, options);
+            return DeserializeKeyRotationTrigger(document.RootElement, options);
         }
 
-        internal static Trigger DeserializeTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyRotationTrigger DeserializeKeyRotationTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Trigger(timeAfterCreate, timeBeforeExpiry, serializedAdditionalRawData);
+            return new KeyRotationTrigger(timeAfterCreate, timeBeforeExpiry, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Trigger>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyRotationTrigger>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Trigger>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationTrigger>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -172,26 +172,26 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Trigger)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyRotationTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Trigger IPersistableModel<Trigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyRotationTrigger IPersistableModel<KeyRotationTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Trigger>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyRotationTrigger>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTrigger(document.RootElement, options);
+                        return DeserializeKeyRotationTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Trigger)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyRotationTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Trigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyRotationTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
