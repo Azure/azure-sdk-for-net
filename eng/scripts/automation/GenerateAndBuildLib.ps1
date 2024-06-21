@@ -768,7 +768,8 @@ function GeneratePackage()
             # Build the whole solution and generate artifacts if the project build successfully
             # Build the whole solution
             Write-Host "Start to build sdk solution: $projectFolder"
-            dotnet build $projectFolder /p:RunApiCompat=$false
+            $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
+            dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
                 Write-Error "Failed to build sdk solution. exit code: $?"
                 $result = "failed"
