@@ -9,8 +9,8 @@
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
      -->
     <NoWarn>
-      AZC0007;
       $(NoWarn);
+      AZC0007;
     </NoWarn>
   </PropertyGroup>
   
