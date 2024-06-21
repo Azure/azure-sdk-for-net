@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,6 +17,228 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.VaultKeyCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key. </param>
+        /// <param name="properties"> The properties of the key to be created. </param>
+        /// <returns> A new <see cref="Models.VaultKeyCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static VaultKeyCreateOrUpdateContent VaultKeyCreateOrUpdateContent(IDictionary<string, string> tags = null, KeyProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new VaultKeyCreateOrUpdateContent(tags, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KeyProperties"/>. </summary>
+        /// <param name="attributes"> The attributes of the key. </param>
+        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyOps"></param>
+        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
+        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
+        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
+        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
+        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <returns> A new <see cref="Models.KeyProperties"/> instance for mocking. </returns>
+        public static KeyProperties KeyProperties(KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null)
+        {
+            keyOps ??= new List<JsonWebKeyOperation>();
+
+            return new KeyProperties(
+                attributes,
+                kty,
+                keyOps?.ToList(),
+                keySize,
+                curveName,
+                keyUri,
+                keyUriWithVersion,
+                rotationPolicy,
+                releasePolicy,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KeyAttributes"/>. </summary>
+        /// <param name="enabled"> Determines whether or not the object is enabled. </param>
+        /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
+        /// <param name="exportable"> Indicates if the private key can be exported. </param>
+        /// <returns> A new <see cref="Models.KeyAttributes"/> instance for mocking. </returns>
+        public static KeyAttributes KeyAttributes(bool? enabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? exportable = null)
+        {
+            return new KeyAttributes(
+                enabled,
+                notBefore,
+                expires,
+                created,
+                updated,
+                recoveryLevel,
+                exportable,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KeyRotationPolicyAttributes"/>. </summary>
+        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="expiryTime"> The expiration time for the new key version. It should be in ISO8601 format. Eg: 'P90D', 'P1Y'. </param>
+        /// <returns> A new <see cref="Models.KeyRotationPolicyAttributes"/> instance for mocking. </returns>
+        public static KeyRotationPolicyAttributes KeyRotationPolicyAttributes(long? created = null, long? updated = null, string expiryTime = null)
+        {
+            return new KeyRotationPolicyAttributes(created, updated, expiryTime, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="attributes"> The attributes of the key. </param>
+        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyOps"></param>
+        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
+        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
+        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
+        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
+        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="location"> Azure location of the key vault resource. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
+        /// <returns> A new <see cref="KeyVault.KeyData"/> instance for mocking. </returns>
+        public static KeyData KeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            keyOps ??= new List<JsonWebKeyOperation>();
+            tags ??= new Dictionary<string, string>();
+
+            return new KeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                attributes,
+                kty,
+                keyOps?.ToList(),
+                keySize,
+                curveName,
+                keyUri,
+                keyUriWithVersion,
+                rotationPolicy,
+                releasePolicy,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHSMKeyCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key. </param>
+        /// <param name="properties"> The properties of the key to be created. </param>
+        /// <returns> A new <see cref="Models.ManagedHSMKeyCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ManagedHSMKeyCreateOrUpdateContent ManagedHSMKeyCreateOrUpdateContent(IDictionary<string, string> tags = null, ManagedHsmKeyProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedHSMKeyCreateOrUpdateContent(tags, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyProperties"/>. </summary>
+        /// <param name="attributes"> The attributes of the key. </param>
+        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyOps"></param>
+        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
+        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
+        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
+        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
+        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmKeyProperties"/> instance for mocking. </returns>
+        public static ManagedHsmKeyProperties ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null)
+        {
+            keyOps ??= new List<JsonWebKeyOperation>();
+
+            return new ManagedHsmKeyProperties(
+                attributes,
+                kty,
+                keyOps?.ToList(),
+                keySize,
+                curveName,
+                keyUri,
+                keyUriWithVersion,
+                rotationPolicy,
+                releasePolicy,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyAttributes"/>. </summary>
+        /// <param name="enabled"> Determines whether or not the object is enabled. </param>
+        /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
+        /// <param name="exportable"> Indicates if the private key can be exported. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmKeyAttributes"/> instance for mocking. </returns>
+        public static ManagedHsmKeyAttributes ManagedHsmKeyAttributes(bool? enabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? exportable = null)
+        {
+            return new ManagedHsmKeyAttributes(
+                enabled,
+                notBefore,
+                expires,
+                created,
+                updated,
+                recoveryLevel,
+                exportable,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyRotationPolicyAttributes"/>. </summary>
+        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
+        /// <param name="expiryTime"> The expiration time for the new key version. It should be in ISO8601 format. Eg: 'P90D', 'P1Y'. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmKeyRotationPolicyAttributes"/> instance for mocking. </returns>
+        public static ManagedHsmKeyRotationPolicyAttributes ManagedHsmKeyRotationPolicyAttributes(long? created = null, long? updated = null, string expiryTime = null)
+        {
+            return new ManagedHsmKeyRotationPolicyAttributes(created, updated, expiryTime, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmKeyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="attributes"> The attributes of the key. </param>
+        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyOps"></param>
+        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
+        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
+        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
+        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
+        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="KeyVault.ManagedHsmKeyData"/> instance for mocking. </returns>
+        public static ManagedHsmKeyData ManagedHsmKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            keyOps ??= new List<JsonWebKeyOperation>();
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedHsmKeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                attributes,
+                kty,
+                keyOps?.ToList(),
+                keySize,
+                curveName,
+                keyUri,
+                keyUriWithVersion,
+                rotationPolicy,
+                releasePolicy,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
@@ -265,8 +488,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null)
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -279,6 +503,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 properties,
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -373,8 +598,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null, ManagedHsmSku sku = null)
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -390,6 +616,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 privateLinkServiceConnectionState,
                 provisioningState,
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -444,8 +671,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null)
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
@@ -462,6 +690,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -562,6 +791,59 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 tags,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the managed HSM. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku)
+        {
+            return ManagedHsmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, sku: sku, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
+        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier privateEndpointId, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku)
+        {
+            return ManagedHsmPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, privateEndpointId: privateEndpointId, privateLinkServiceConnectionState: privateLinkServiceConnectionState, provisioningState: provisioningState, sku: sku, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="groupId"> Group identifier of private link resource. </param>
+        /// <param name="requiredMembers"> Required member names of private link resource. </param>
+        /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ManagedHsmSku sku)
+        {
+            return ManagedHsmPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames, sku: sku, identity: default);
         }
     }
 }
