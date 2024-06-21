@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("BlobStorage")]
-    internal partial class BlobStorageInternal
+    [CodeGenModel("StartMediaStreamingRequest")]
+    internal partial class StartMediaStreamingRequestInternal
     {
     }
 }
