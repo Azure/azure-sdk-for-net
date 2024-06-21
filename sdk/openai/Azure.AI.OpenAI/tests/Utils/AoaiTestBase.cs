@@ -150,8 +150,8 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             if (Mode != RecordedTestMode.Live)
             {
                 // Wait what's this? More private or internal only things I need access to?
-                var proxyAccess = Internals.ForField<RecordedTestBase, TestProxy>("_proxy");
-                var disableRecordingAccess = Internals.ForField<TestRecording, AsyncLocal<EntryRecordModel>>("_disableRecording");
+                var proxyAccess = NonPublic.FromField<RecordedTestBase, TestProxy>("_proxy");
+                var disableRecordingAccess = NonPublic.FromField<TestRecording, AsyncLocal<EntryRecordModel>>("_disableRecording");
 
                 options.Transport = new Utils.Pipeline.ProxyTransport(
                     proxyAccess.Get(this),

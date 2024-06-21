@@ -8,7 +8,7 @@ namespace Azure.AI.OpenAI.Tests.Utils;
 /// <summary>
 /// Helpers to make accessing the many internal or private members of the Azure test framework more streamlined
 /// </summary>
-public static class Internals
+public static class NonPublic
 {
     /// <summary>
     /// Creates an accessor for an internal, protected, or private property.
@@ -18,7 +18,7 @@ public static class Internals
     /// <param name="propertyName">The name of the property.</param>
     /// <returns>The property accessor.</returns>
     /// <exception cref="ArgumentException">If a property with that name and type could not be found.</exception>
-    public static Accessor<TObj, TProp> ForProperty<TObj, TProp>(string propertyName) where TObj : class
+    public static Accessor<TObj, TProp> FromProperty<TObj, TProp>(string propertyName) where TObj : class
     {
         PropertyInfo? prop = typeof(TObj).GetProperty(
             propertyName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
@@ -58,7 +58,7 @@ public static class Internals
     /// <param name="fieldName">The name of the field.</param>
     /// <returns>The filed accessor.</returns>
     /// <exception cref="ArgumentException">If a field with that name and type could not be found.</exception>
-    public static Accessor<TObj, TField> ForField<TObj, TField>(string fieldName) where TObj : class
+    public static Accessor<TObj, TField> FromField<TObj, TField>(string fieldName) where TObj : class
     {
         FieldInfo? field = typeof(TObj).GetField(
             fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);

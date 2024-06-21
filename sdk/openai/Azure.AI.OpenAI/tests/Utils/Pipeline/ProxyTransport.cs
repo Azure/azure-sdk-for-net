@@ -25,10 +25,10 @@ public class ProxyTransport : PipelineTransport
     private readonly string _proxyHost;
 
     // The common test code makes liberal use of internals in several places. That will not stop me... 
-    private readonly Internals.Accessor<TestRecording, bool> _recordingHasRequests =
-        Internals.ForProperty<TestRecording, bool>(nameof(TestRecording.HasRequests));
-    private readonly Internals.Accessor<TestRecording, TestRecordingMismatchException?> _recordingMismatch =
-        Internals.ForField<TestRecording, TestRecordingMismatchException?>("MismatchException");
+    private readonly NonPublic.Accessor<TestRecording, bool> _recordingHasRequests =
+        NonPublic.FromProperty<TestRecording, bool>(nameof(TestRecording.HasRequests));
+    private readonly NonPublic.Accessor<TestRecording, TestRecordingMismatchException?> _recordingMismatch =
+        NonPublic.FromField<TestRecording, TestRecordingMismatchException?>("MismatchException");
 
     public ProxyTransport(TestProxy proxy, TestRecording recording, Func<EntryRecordModel> filter)
     {
