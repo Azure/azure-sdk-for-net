@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(
+                CosmosDBTestUtilities.GenerateDatabaseAccountName(SessionRecording),
+                CosmosDBAccountKind.GlobalDocumentDB,
+                null)).Id;
+
             await StopSessionRecordingAsync();
         }
 
