@@ -270,6 +270,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel,
                 usageThreshold,
                 exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                null, //protocolTypes
                 throughputMibps,
                 snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(null, new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
                 isDefaultQuotaEnabled,

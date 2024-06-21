@@ -530,6 +530,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="serviceLevel"> The service level of the file system. </param>
         /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes. </param>
         /// <param name="exportRules"> Set of export policy rules. </param>
+        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
@@ -548,10 +549,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = null, long? usageThreshold = null, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, float? throughputMibps = null, NetAppVolumePatchDataProtection dataProtection = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = null, long? usageThreshold = null, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<string> protocolTypes = null, float? throughputMibps = null, NetAppVolumePatchDataProtection dataProtection = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
             tags ??= new Dictionary<string, string>();
             exportRules ??= new List<NetAppVolumeExportPolicyRule>();
+            protocolTypes ??= new List<string>();
 
             return new NetAppVolumePatch(
                 id,
@@ -563,6 +565,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel,
                 usageThreshold,
                 exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                protocolTypes?.ToList(),
                 throughputMibps,
                 dataProtection,
                 isDefaultQuotaEnabled,

@@ -277,33 +277,6 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateListByVaultRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/backupVaults/", false);
-            uri.AppendPath(backupVaultName, true);
-            uri.AppendPath("/backups", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
         /// <summary> List all backups Under a Backup Vault. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
