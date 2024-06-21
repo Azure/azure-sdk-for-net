@@ -21,9 +21,19 @@
   ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
 * Update OpenTelemetry dependencies.
-  ([#44522](https://github.com/Azure/azure-sdk-for-net/pull/44522))
-  - OpenTelemetry 1.9.0-rc.1
-  - OpenTelemetry.Extensions.Hosting 1.9.0-rc.1
+  ([#44650](https://github.com/Azure/azure-sdk-for-net/pull/44650))
+  - OpenTelemetry 1.9.0
+  - OpenTelemetry.Extensions.Hosting 1.9.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.9.0
+  - OpenTelemetry.Instrumentation.Http 1.9.0
+
+* Updated the code of vendored instrumentation library `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.9.0-beta.1](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Instrumentation.SqlClient-1.9.0-beta.1/src/OpenTelemetry.Instrumentation.SqlClient).
+  ([#44682](https://github.com/Azure/azure-sdk-for-net/pull/44682))
+
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.0.0-beta.8](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.0.0-beta.8/src/OpenTelemetry.Resources.Azure).
+  ([#44682](https://github.com/Azure/azure-sdk-for-net/pull/44682))
 
 ## 1.2.0 (2024-06-11)
 
