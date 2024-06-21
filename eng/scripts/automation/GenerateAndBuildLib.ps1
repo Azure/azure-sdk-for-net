@@ -782,8 +782,14 @@ function GeneratePackage()
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
+                # check the artifact in Debug folder
                 $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
                 $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+                if ($artifacts.count -le 0) {
+                    # check the artifact in Release folder
+                    $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+                    $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+                }
                 $apiViewArtifact = ""
                 if ( $artifacts.count -le 0) {
                     Write-Error "Failed to generate sdk artifact"
