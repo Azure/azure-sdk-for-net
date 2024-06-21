@@ -52,9 +52,13 @@ namespace Azure.ResourceManager.KeyVault
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmKeyData"/>. </summary>
-        internal ManagedHsmKeyData()
+        /// <param name="properties"> The properties of the key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        internal ManagedHsmKeyData(ManagedHsmKeyProperties properties)
         {
-            KeyOps = new ChangeTrackingList<JsonWebKeyOperation>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -63,59 +67,24 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="properties"> The properties of the key. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedHsmKeyAttributes attributes, JsonWebKeyType? kty, IReadOnlyList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, ManagedHsmRotationPolicy rotationPolicy, ManagedHsmKeyReleasePolicy releasePolicy, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedHsmKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedHsmKeyProperties properties, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Attributes = attributes;
-            Kty = kty;
-            KeyOps = keyOps;
-            KeySize = keySize;
-            CurveName = curveName;
-            KeyUri = keyUri;
-            KeyUriWithVersion = keyUriWithVersion;
-            RotationPolicy = rotationPolicy;
-            ReleasePolicy = releasePolicy;
+            Properties = properties;
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The attributes of the key. </summary>
-        [WirePath("properties.attributes")]
-        public ManagedHsmKeyAttributes Attributes { get; }
-        /// <summary> The type of the key. For valid values, see JsonWebKeyType. </summary>
-        [WirePath("properties.kty")]
-        public JsonWebKeyType? Kty { get; }
-        /// <summary> Gets the key ops. </summary>
-        [WirePath("properties.keyOps")]
-        public IReadOnlyList<JsonWebKeyOperation> KeyOps { get; }
-        /// <summary> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </summary>
-        [WirePath("properties.keySize")]
-        public int? KeySize { get; }
-        /// <summary> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </summary>
-        [WirePath("properties.curveName")]
-        public JsonWebKeyCurveName? CurveName { get; }
-        /// <summary> The URI to retrieve the current version of the key. </summary>
-        [WirePath("properties.keyUri")]
-        public Uri KeyUri { get; }
-        /// <summary> The URI to retrieve the specific version of the key. </summary>
-        [WirePath("properties.keyUriWithVersion")]
-        public string KeyUriWithVersion { get; }
-        /// <summary> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </summary>
-        [WirePath("properties.rotationPolicy")]
-        public ManagedHsmRotationPolicy RotationPolicy { get; }
-        /// <summary> Key release policy in response. It will be used for both output and input. Omitted if empty. </summary>
-        [WirePath("properties.release_policy")]
-        public ManagedHsmKeyReleasePolicy ReleasePolicy { get; }
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmKeyData"/> for deserialization. </summary>
+        internal ManagedHsmKeyData()
+        {
+        }
+
+        /// <summary> The properties of the key. </summary>
+        [WirePath("properties")]
+        public ManagedHsmKeyProperties Properties { get; }
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }

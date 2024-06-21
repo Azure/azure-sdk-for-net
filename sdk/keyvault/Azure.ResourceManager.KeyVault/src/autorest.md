@@ -154,6 +154,10 @@ directive:
       $.VaultProperties.properties.provisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
+  - from: keysManagedHsm.json
+    where: $.definitions
+    transform: >    
+      $.ManagedHsmKey.properties.properties['x-ms-client-flatten'] = false;
 ```
 
 ### Tag: package-2023-02

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -228,6 +230,172 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attributes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Attributes))
+                {
+                    builder.Append("  attributes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Attributes, options, 2, false, "  attributes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kty), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kty: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kty))
+                {
+                    builder.Append("  kty: ");
+                    builder.AppendLine($"'{Kty.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyOps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyOps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(KeyOps))
+                {
+                    if (KeyOps.Any())
+                    {
+                        builder.Append("  keyOps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in KeyOps)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keySize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeySize))
+                {
+                    builder.Append("  keySize: ");
+                    builder.AppendLine($"{KeySize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurveName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  curveName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurveName))
+                {
+                    builder.Append("  curveName: ");
+                    builder.AppendLine($"'{CurveName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyUri))
+                {
+                    builder.Append("  keyUri: ");
+                    builder.AppendLine($"'{KeyUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyUriWithVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyUriWithVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyUriWithVersion))
+                {
+                    builder.Append("  keyUriWithVersion: ");
+                    if (KeyUriWithVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyUriWithVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyUriWithVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RotationPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rotationPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RotationPolicy))
+                {
+                    builder.Append("  rotationPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RotationPolicy, options, 2, false, "  rotationPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReleasePolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  release_policy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReleasePolicy))
+                {
+                    builder.Append("  release_policy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReleasePolicy, options, 2, false, "  release_policy: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedHsmKeyProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +404,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedHsmKeyProperties)} does not support writing '{options.Format}' format.");
             }

@@ -205,20 +205,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
+        /// <param name="properties"> The properties of the key. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmKeyData"/> instance for mocking. </returns>
-        public static ManagedHsmKeyData ManagedHsmKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ManagedHsmKeyData ManagedHsmKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedHsmKeyProperties properties = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            keyOps ??= new List<JsonWebKeyOperation>();
             tags ??= new Dictionary<string, string>();
 
             return new ManagedHsmKeyData(
@@ -226,15 +217,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                attributes,
-                kty,
-                keyOps?.ToList(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
+                properties,
                 tags,
                 serializedAdditionalRawData: null);
         }

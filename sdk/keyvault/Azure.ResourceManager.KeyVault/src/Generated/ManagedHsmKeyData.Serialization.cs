@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,59 +63,6 @@ namespace Azure.ResourceManager.KeyVault
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Attributes))
-            {
-                writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes, options);
-            }
-            if (Optional.IsDefined(Kty))
-            {
-                writer.WritePropertyName("kty"u8);
-                writer.WriteStringValue(Kty.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(KeyOps))
-            {
-                writer.WritePropertyName("keyOps"u8);
-                writer.WriteStartArray();
-                foreach (var item in KeyOps)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(KeySize))
-            {
-                writer.WritePropertyName("keySize"u8);
-                writer.WriteNumberValue(KeySize.Value);
-            }
-            if (Optional.IsDefined(CurveName))
-            {
-                writer.WritePropertyName("curveName"u8);
-                writer.WriteStringValue(CurveName.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(KeyUri))
-            {
-                writer.WritePropertyName("keyUri"u8);
-                writer.WriteStringValue(KeyUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(KeyUriWithVersion))
-            {
-                writer.WritePropertyName("keyUriWithVersion"u8);
-                writer.WriteStringValue(KeyUriWithVersion);
-            }
-            if (Optional.IsDefined(RotationPolicy))
-            {
-                writer.WritePropertyName("rotationPolicy"u8);
-                writer.WriteObjectValue(RotationPolicy, options);
-            }
-            if (Optional.IsDefined(ReleasePolicy))
-            {
-                writer.WritePropertyName("release_policy"u8);
-                writer.WriteObjectValue(ReleasePolicy, options);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,24 +101,21 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
+            ManagedHsmKeyProperties properties = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ManagedHsmKeyAttributes attributes = default;
-            JsonWebKeyType? kty = default;
-            IReadOnlyList<JsonWebKeyOperation> keyOps = default;
-            int? keySize = default;
-            JsonWebKeyCurveName? curveName = default;
-            Uri keyUri = default;
-            string keyUriWithVersion = default;
-            ManagedHsmRotationPolicy rotationPolicy = default;
-            ManagedHsmKeyReleasePolicy releasePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = ManagedHsmKeyProperties.DeserializeManagedHsmKeyProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -208,100 +154,6 @@ namespace Azure.ResourceManager.KeyVault
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("attributes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            attributes = ManagedHsmKeyAttributes.DeserializeManagedHsmKeyAttributes(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("kty"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            kty = new JsonWebKeyType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("keyOps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<JsonWebKeyOperation> array = new List<JsonWebKeyOperation>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new JsonWebKeyOperation(item.GetString()));
-                            }
-                            keyOps = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("keySize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keySize = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("curveName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            curveName = new JsonWebKeyCurveName(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("keyUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("keyUriWithVersion"u8))
-                        {
-                            keyUriWithVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("rotationPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rotationPolicy = ManagedHsmRotationPolicy.DeserializeManagedHsmRotationPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("release_policy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            releasePolicy = ManagedHsmKeyReleasePolicy.DeserializeManagedHsmKeyReleasePolicy(property0.Value, options);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -313,15 +165,7 @@ namespace Azure.ResourceManager.KeyVault
                 name,
                 type,
                 systemData,
-                attributes,
-                kty,
-                keyOps ?? new ChangeTrackingList<JsonWebKeyOperation>(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
@@ -397,6 +241,21 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -427,160 +286,6 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
 
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    attributes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Attributes))
-                {
-                    builder.Append("    attributes: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Attributes, options, 4, false, "    attributes: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kty), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    kty: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kty))
-                {
-                    builder.Append("    kty: ");
-                    builder.AppendLine($"'{Kty.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyOps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keyOps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(KeyOps))
-                {
-                    if (KeyOps.Any())
-                    {
-                        builder.Append("    keyOps: ");
-                        builder.AppendLine("[");
-                        foreach (var item in KeyOps)
-                        {
-                            builder.AppendLine($"      '{item.ToString()}'");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keySize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeySize))
-                {
-                    builder.Append("    keySize: ");
-                    builder.AppendLine($"{KeySize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurveName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    curveName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurveName))
-                {
-                    builder.Append("    curveName: ");
-                    builder.AppendLine($"'{CurveName.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keyUri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyUri))
-                {
-                    builder.Append("    keyUri: ");
-                    builder.AppendLine($"'{KeyUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyUriWithVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keyUriWithVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyUriWithVersion))
-                {
-                    builder.Append("    keyUriWithVersion: ");
-                    if (KeyUriWithVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{KeyUriWithVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{KeyUriWithVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RotationPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    rotationPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RotationPolicy))
-                {
-                    builder.Append("    rotationPolicy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RotationPolicy, options, 4, false, "    rotationPolicy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReleasePolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    release_policy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReleasePolicy))
-                {
-                    builder.Append("    release_policy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ReleasePolicy, options, 4, false, "    release_policy: ");
-                }
-            }
-
-            builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
