@@ -12,7 +12,6 @@ using Azure.Core.Pipeline;
 using Moq;
 using NUnit.Framework;
 using Azure.Storage.Test;
-using System.CodeDom;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -26,7 +25,6 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
         private const string DefaultSourcePermissionKey = "anlfdjsgkljWLJITflo'fu903w8ueng";
-        private const string DefaultDestinationPermissionKey = "tw940udsfmklgopuw90raskop90rw8uJSIOPKl";
         public ServiceToServiceJobPartTests() { }
 
         private Mock<TransferJobInternal.QueueChunkTaskInternal> GetQueueChunkTask()
