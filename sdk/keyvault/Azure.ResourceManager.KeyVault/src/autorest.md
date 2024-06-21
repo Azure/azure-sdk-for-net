@@ -154,10 +154,11 @@ directive:
       $.VaultProperties.properties.provisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
+# Remove the flatten since it will cause Tag operation error
   - from: keysManagedHsm.json
     where: $.definitions
     transform: >    
-      $.ManagedHsmKey.properties.properties['x-ms-client-flatten'] = false;
+      delete $.ManagedHsmKey.properties.properties['x-ms-client-flatten']
 ```
 
 ### Tag: package-2023-02
