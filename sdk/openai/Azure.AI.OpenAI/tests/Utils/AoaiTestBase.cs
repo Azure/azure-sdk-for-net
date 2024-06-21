@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using OpenAI.Assistants;
 using OpenAI.Audio;
 using OpenAI.Batch;
@@ -26,15 +27,14 @@ using OpenAI.Images;
 using OpenAI.Models;
 using OpenAI.Tests;
 using OpenAI.VectorStores;
-using TokenCredential = Azure.Core.TokenCredential;
-using RetryOptions = Azure.Core.RetryOptions;
 using RetryMode = Azure.Core.RetryMode;
+using RetryOptions = Azure.Core.RetryOptions;
+using TokenCredential = Azure.Core.TokenCredential;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
-    private const string MASKED_SUBDOMAIN = "***";
     private const string HOST_SUBDOMAIN_MATCHER = @"(?<=.+://)([^\.]+)(?=[\./])";
 
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
@@ -47,6 +47,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 
     internal TestConfig TestConfig { get; }
     internal Assets Assets { get; }
+    internal DisableRecordingInterceptor RecordingDisabler { get; }
 
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null)
         : base(isAsync, mode)
@@ -63,19 +64,26 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         TestDiagnostics = false;
 
         // Add sanitizers to prevent resource names from leaking into recordings
-        UriRegexSanitizers.Add(new Core.TestFramework.Models.UriRegexSanitizer(HOST_SUBDOMAIN_MATCHER)
+        UriRegexSanitizers.Add(new UriRegexSanitizer(HOST_SUBDOMAIN_MATCHER));
+        BodyKeySanitizers.Add(new BodyKeySanitizer("*..endpoint")
         {
-            Value = MASKED_SUBDOMAIN
-        });
-        BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("*..endpoint")
-        {
-            Regex = HOST_SUBDOMAIN_MATCHER,
-            Value = MASKED_SUBDOMAIN
+            Regex = HOST_SUBDOMAIN_MATCHER
         });
 
         // Add sanitizers to prevent our keys from leaking into the recordings
         JsonPathSanitizers.Add("*..key");
         JsonPathSanitizers.Add("*..api_key");
+
+        // Multi-part form data gives the test-proxy that is used for recording and playback indigestion (it always thinks it needs
+        // to re-record the test on playback). So let's add an interceptor that will automatically disable body recording for specific
+        // client methods calls, and then re-enable it afterwards.
+        RecordingDisabler = new(() => Recording);
+        RecordingDisabler.DisableBodyRecordingFor<FileClient>(nameof(FileClient.UploadFileAsync));
+
+        // Some tests poll until a condition is met. However the code will inject a distinct client request ID into each request
+        // meaning each get call will be treated as different and all will be preserved rather than the last one. Let's ignore
+        // this header (but still validate requests have it)
+        IgnoredHeaders.Add("x-ms-client-request-id");
     }
 
     /// <summary>
@@ -152,7 +160,6 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             }
         }
 
-
         AzureOpenAIClient topLevelClient;
         if (tokenCredential != null)
         {
@@ -210,6 +217,60 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 
         throw new NotSupportedException("The client provided was not properly instrumented. Please make sure to get your test client " +
             "instances using the GetTestClient() methods");
+    }
+
+    /// <summary>
+    /// Disables the recording of request bodies for the specified method in the current client.
+    /// </summary>
+    /// <param name="methodName">The method name.</param>
+    public virtual void DisableRequestBodyRecording(string methodName)
+        => RecordingDisabler.DisableBodyRecordingFor<TClient>(methodName);
+
+    /// <summary>
+    /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
+    /// if the condition was not met.
+    /// </summary>
+    /// <typeparam name="T">The value in the <see cref="ClientResult{T}">.</typeparam>
+    /// <param name="initialValue">The initial value.</param>
+    /// <param name="getAsync">The asynchronous function to get the latest state of the value.</param>
+    /// <param name="stopCondition">When we should stop waiting.</param>
+    /// <param name="waitTimeBetweenRequests">(Optional) The amount of time to wait between retries. This will be ignored in playback
+    /// mode. Default is 2 seconds.</param>
+    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. The default is 2
+    /// minutes.</param>
+    /// <returns>The final state. This will return when the conditions have been met or we timed out.</returns>
+    protected virtual Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<ClientResult<T>>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
+        => WaitUntilReturnLast(initialValue, new Func<Task<T>>(async () => await getAsync().ConfigureAwait(false)), stopCondition, waitTimeBetweenRequests, maxWait);
+
+    /// <summary>
+    /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
+    /// if the condition was not met.
+    /// </summary>
+    /// <typeparam name="T">The return value.</typeparam>
+    /// <param name="initialValue">The initial value.</param>
+    /// <param name="getAsync">The asynchronous function to get the latest state of the value.</param>
+    /// <param name="stopCondition">When we should stop waiting.</param>
+    /// <param name="waitTimeBetweenRequests">(Optional) The amount of time to wait between retries. This will be ignored in playback
+    /// mode. Default is 2 seconds.</param>
+    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. The default is 2
+    /// minutes.</param>
+    /// <returns>The final state. This will return when the conditions have been met or we timed out.</returns>
+    protected virtual async Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<T>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
+    {
+        DateTimeOffset stopTime = DateTimeOffset.Now + (maxWait ?? TimeSpan.FromMinutes(2));
+
+        T result = initialValue;
+        while (!stopCondition(result) && DateTimeOffset.Now < stopTime)
+        {
+            TimeSpan delay = Mode == RecordedTestMode.Playback
+                ? TimeSpan.FromMilliseconds(10)
+                : waitTimeBetweenRequests ?? TimeSpan.FromSeconds(2);
+
+            await Task.Delay(delay).ConfigureAwait(false);
+            result = await getAsync().ConfigureAwait(false);
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -278,7 +339,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };
 
-        object instrumented = InstrumentClient(typeof(TExplicitClient), clientObject, null!);
+        object instrumented = InstrumentClient(typeof(TExplicitClient), clientObject, [RecordingDisabler]);
 
         // Keep track of the corresponding top level client and config
         _clientToTopLevel.Add(new AzureOpenAiInstrumented

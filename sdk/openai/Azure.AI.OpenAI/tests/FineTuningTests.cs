@@ -195,8 +195,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Category("LongRunning")]
-    // CAUTION: This test can take up 30 *minutes* to run in live mode
+    [Category("LongRunning")] // CAUTION: This test can take up 30 *minutes* to run in live mode
     public async Task CreateAndDeleteFineTuning()
     {
         var fineTuningFile = Assets.FineTuning;
@@ -232,8 +231,8 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Category("LongRunning")]
-    // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
+    [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
+    [LiveOnly(Reason = "Some clients are not correctly hooked up to the test proxy yet")]
     public async Task DeployAndChatWithModel()
     {
         AzureDeploymentClient deploymentClient = GetDeploymentModelClient();
@@ -325,23 +324,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             ?.GetValue<string>("fine_tuned_model");
         Assert.That(model, !(Is.Null.Or.Empty), "Failed to find the already fine tuned model to use");
         return model!;
-    }
-
-    private Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<ClientResult<T>>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
-        => WaitUntilReturnLast(initialValue, new Func<Task<T>>(async () => await getAsync().ConfigureAwait(false)), stopCondition, waitTimeBetweenRequests, maxWait);
-
-    private async Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<T>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
-    {
-        DateTimeOffset stopTime = DateTimeOffset.Now + (maxWait ?? TimeSpan.FromMinutes(2));
-
-        T result = initialValue;
-        while (!stopCondition(result) && DateTimeOffset.Now < stopTime)
-        {
-            await Task.Delay(waitTimeBetweenRequests ?? TimeSpan.FromSeconds(2)).ConfigureAwait(false);
-            result = result = await getAsync().ConfigureAwait(false);
-        }
-
-        return result;
     }
 
     private async Task<OpenAIFileInfo> UploadAndWaitForCompleteOrFail(FileClient fileClient, string path)

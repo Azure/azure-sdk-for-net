@@ -177,10 +177,10 @@ public class ProxyTransport : PipelineTransport
                 case EntryRecordModel.Record:
                     break;
                 case EntryRecordModel.RecordWithoutRequestBody:
-                    message.Request.Headers.Add("x-recording-skip", "request-body");
+                    message.Request.Headers.Set("x-recording-skip", "request-body");
                     break;
                 case EntryRecordModel.DoNotRecord:
-                    message.Request.Headers.Add("x-recording-skip", "request-response");
+                    message.Request.Headers.Set("x-recording-skip", "request-response");
                     break;
             }
         }

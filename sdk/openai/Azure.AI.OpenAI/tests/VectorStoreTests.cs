@@ -199,10 +199,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.InProgress));
         });
 
-        for (int i = 0; i < 10 && (await client.GetBatchFileJobAsync(batchJob)).Value.Status != VectorStoreBatchFileJobStatus.Completed; i++)
-        {
-            Thread.Sleep(500);
-        }
+        batchJob = await WaitUntilReturnLast(
+            batchJob,
+            () => client.GetBatchFileJobAsync(batchJob),
+            b => b.Status != VectorStoreBatchFileJobStatus.InProgress);
+        Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.Completed));
 
         AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
             c => c.GetFileAssociations(batchJob),
@@ -228,7 +229,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             ShouldOutputRequests = false,
             ShouldOutputResponses = false,
         });
-        FileClient client = InstrumentClient(azureClient.GetFileClient());
+        FileClient client = GetTestClient<FileClient>(azureClient, config);
 
         List<OpenAIFileInfo> files = [];
         for (int i = 0; i < count; i++)
