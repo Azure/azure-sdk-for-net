@@ -118,7 +118,7 @@ rename-mapping:
   ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IpTag: ManagedClusterIPTag
+  IPTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection

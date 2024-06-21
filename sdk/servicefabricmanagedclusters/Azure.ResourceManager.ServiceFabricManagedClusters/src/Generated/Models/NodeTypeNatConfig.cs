@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> IPTag associated with the object. </summary>
-    public partial class ManagedClusterIPTag
+    /// <summary> Provides information about NAT configuration on the default public Load Balancer for the node type. </summary>
+    public partial class NodeTypeNatConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
-        /// <param name="ipTagType"> The IP tag type. </param>
-        /// <param name="tag"> The value of the IP tag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
-        public ManagedClusterIPTag(string ipTagType, string tag)
+        /// <summary> Initializes a new instance of <see cref="NodeTypeNatConfig"/>. </summary>
+        public NodeTypeNatConfig()
         {
-            Argument.AssertNotNull(ipTagType, nameof(ipTagType));
-            Argument.AssertNotNull(tag, nameof(tag));
-
-            IPTagType = ipTagType;
-            Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
-        /// <param name="ipTagType"> The IP tag type. </param>
-        /// <param name="tag"> The value of the IP tag. </param>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeNatConfig"/>. </summary>
+        /// <param name="backendPort"> The internal port for the NAT configuration. </param>
+        /// <param name="frontendPortRangeStart"> The port range start for the external endpoint. </param>
+        /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NodeTypeNatConfig(int? backendPort, int? frontendPortRangeStart, int? frontendPortRangeEnd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IPTagType = ipTagType;
-            Tag = tag;
+            BackendPort = backendPort;
+            FrontendPortRangeStart = frontendPortRangeStart;
+            FrontendPortRangeEnd = frontendPortRangeEnd;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/> for deserialization. </summary>
-        internal ManagedClusterIPTag()
-        {
-        }
-
-        /// <summary> The IP tag type. </summary>
-        public string IPTagType { get; set; }
-        /// <summary> The value of the IP tag. </summary>
-        public string Tag { get; set; }
+        /// <summary> The internal port for the NAT configuration. </summary>
+        public int? BackendPort { get; set; }
+        /// <summary> The port range start for the external endpoint. </summary>
+        public int? FrontendPortRangeStart { get; set; }
+        /// <summary> The port range end for the external endpoint. </summary>
+        public int? FrontendPortRangeEnd { get; set; }
     }
 }

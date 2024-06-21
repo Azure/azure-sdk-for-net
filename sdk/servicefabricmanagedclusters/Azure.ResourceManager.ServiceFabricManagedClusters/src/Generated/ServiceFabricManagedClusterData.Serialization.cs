@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
             bool? enableIPv6 = default;
             string subnetId = default;
-            IList<ManagedClusterIPTag> ipTags = default;
+            IList<ServiceFabricManagedClusterIPTag> ipTags = default;
             IPAddress ipv6Address = default;
             bool? enableServicePublicIP = default;
             IList<ManagedClusterSubnet> auxiliarySubnets = default;
@@ -732,10 +732,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            List<ManagedClusterIPTag> array = new List<ManagedClusterIPTag>();
+                            List<ServiceFabricManagedClusterIPTag> array = new List<ServiceFabricManagedClusterIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item, options));
+                                array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 applicationTypeVersionsCleanupPolicy,
                 enableIPv6,
                 subnetId,
-                ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>(),
+                ipTags ?? new ChangeTrackingList<ServiceFabricManagedClusterIPTag>(),
                 ipv6Address,
                 enableServicePublicIP,
                 auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>(),
