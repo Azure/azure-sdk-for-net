@@ -156,7 +156,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         FineTuningJob job = ValidateAndParse<FineTuningJob>(result);
         Assert.That(job.ID, !(Is.Null.Or.Empty));
 
-        using RunOnScopeExit _ = new(async () =>
+        await using RunOnScopeExit _ = new(async () =>
         {
             bool deleted = await DeleteJobAndVerifyAsync(client, job.ID);
             Assert.True(deleted, "Failed to delete fine tuning job: {0}", job.ID);
@@ -237,7 +237,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     {
         AzureDeploymentClient deploymentClient = GetDeploymentModelClient();
         string? deploymentName = null;
-        using RunOnScopeExit _ = new(async () =>
+        await using RunOnScopeExit _ = new(async () =>
         {
             if (deploymentName != null)
             {
