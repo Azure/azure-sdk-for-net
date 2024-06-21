@@ -10,13 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class BlobStorageInternal : IUtf8JsonSerializable
+    internal partial class RecordingStorageInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("containerUri"u8);
-            writer.WriteStringValue(ContainerUri);
+            writer.WritePropertyName("recordingStorageKind"u8);
+            writer.WriteStringValue(RecordingStorageKind.ToString());
+            if (Optional.IsDefined(RecordingDestinationContainerUrl))
+            {
+                writer.WritePropertyName("recordingDestinationContainerUrl"u8);
+                writer.WriteStringValue(RecordingDestinationContainerUrl.AbsoluteUri);
+            }
             writer.WriteEndObject();
         }
 
