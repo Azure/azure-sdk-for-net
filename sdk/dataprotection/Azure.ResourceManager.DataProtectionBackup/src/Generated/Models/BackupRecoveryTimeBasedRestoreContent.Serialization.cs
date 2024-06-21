@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
@@ -87,6 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
             ResourceIdentifier sourceResourceId = default;
+            IList<string> resourceGuardOperationRequests = default;
             DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -121,6 +132,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (property.NameEquals("identityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -141,6 +166,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 identityDetails,
                 serializedAdditionalRawData,
                 recoveryPointTime);
