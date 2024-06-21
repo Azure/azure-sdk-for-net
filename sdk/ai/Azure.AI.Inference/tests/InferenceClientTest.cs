@@ -4,14 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Inference.Tests
@@ -27,19 +21,34 @@ namespace Azure.AI.Inference.Tests
         [RecordedTest]
         public async Task TestOperation()
         {
-            var endpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
             // var client = CreateClient(endpoint, credential);
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, new ChatCompletionsClientOptions());
 
-            var response = await client.CompleteAsync(messages: new List<ChatRequestMessage>
+            var requestOptions = new ChatCompletionsOptions()
             {
-                new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage(BinaryData.FromObjectAsJson("How many feet are in a mile?"))
-            });
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("How many feet are in a mile?"),
+                },
+            };
 
-            Assert.False(String.IsNullOrEmpty(response?.Value?.Choices?.First()?.Message?.Content));
+            Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
         }
 
         #region Helpers

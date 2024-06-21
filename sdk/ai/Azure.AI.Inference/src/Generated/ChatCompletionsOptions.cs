@@ -11,8 +11,12 @@ using System.Linq;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> The CompleteRequest. </summary>
-    internal partial class CompleteRequest
+    /// <summary>
+    /// The configuration information for a chat completions request.
+    /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+    /// provided prompt data.
+    /// </summary>
+    public partial class ChatCompletionsOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +50,7 @@ namespace Azure.AI.Inference
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CompleteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -56,7 +60,7 @@ namespace Azure.AI.Inference
         /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public CompleteRequest(IEnumerable<ChatRequestMessage> messages)
+        public ChatCompletionsOptions(IEnumerable<ChatRequestMessage> messages)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
@@ -65,7 +69,7 @@ namespace Azure.AI.Inference
             Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CompleteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -120,7 +124,7 @@ namespace Azure.AI.Inference
         /// same seed and parameters should return the same result. Determinism is not guaranteed."
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompleteRequest(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice, long? seed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice, long? seed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             FrequencyPenalty = frequencyPenalty;
@@ -135,11 +139,6 @@ namespace Azure.AI.Inference
             ToolChoice = toolChoice;
             Seed = seed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CompleteRequest"/> for deserialization. </summary>
-        internal CompleteRequest()
-        {
         }
 
         /// <summary>
