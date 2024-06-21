@@ -14,7 +14,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-netapp-2023-07-01' to 'package-netapp-2023-11-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md
+- Upgraded api-version tag from 'package-netapp-2023-07-01' to 'package-netapp-2023-11-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c54a97d08c5afd7dc04f87a5df65d9dc84c96159/specification/netapp/resource-manager/readme.md
 
 ### Other Changes
 
