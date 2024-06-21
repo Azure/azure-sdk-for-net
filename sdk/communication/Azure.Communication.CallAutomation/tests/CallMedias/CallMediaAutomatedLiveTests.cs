@@ -350,6 +350,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until backend fix")]
         [RecordedTest]
         public async Task AnswerCallWithMediaStreamingUnmixedTest()
         {
