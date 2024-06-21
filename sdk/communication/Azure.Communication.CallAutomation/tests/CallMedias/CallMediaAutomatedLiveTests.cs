@@ -170,12 +170,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // Assert the participant hold
                     await callConnection.GetCallMedia().HoldAsync(target).ConfigureAwait(false);
+                    await Task.Delay(1000);
                     var participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
                     Assert.IsNotNull(participantResult);
                     Assert.IsTrue(participantResult.Value.IsOnHold);
 
                     // Assert the participant unhold
                     await callConnection.GetCallMedia().UnholdAsync(target).ConfigureAwait(false);
+
+                    await Task.Delay(1000);
+
                     participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
                     Assert.IsNotNull(participantResult);
                     Assert.IsFalse(participantResult.Value.IsOnHold);
@@ -411,6 +415,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
         [RecordedTest]
         public async Task CreateCallAndTranscriptionTest()
         {
@@ -474,6 +479,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
         [RecordedTest]
         public async Task AnswerCallAndTranscriptionTest()
         {
