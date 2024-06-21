@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
     {
         [CodeGenMember("Coordinates")]
         internal IList<double> _Coordinates { get; }
-        /// <summary> The coordinates of the location that you want to reverse geocode. Example: [lon,lat]. </summary>
+        /// <summary> The coordinates of the location that you want to reverse geocode. Example: <c>GeoPosition(longitude, latitude)</c>. </summary>
         public GeoPosition Coordinates { get; set; }
 
         /// <summary>

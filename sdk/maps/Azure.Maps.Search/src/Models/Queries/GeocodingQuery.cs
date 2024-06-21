@@ -24,7 +24,7 @@ namespace Azure.Maps.Search.Models.Queries
         /// <summary>The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address. If query is given, should not use this parameter.</summary>
         public string CountryRegion { get; set; }
 
-        /// <summary>A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query. Example: lon1,lat1,lon2,lat2. </summary>
+        /// <summary>A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query. Example: GeoBoundingBox(west, south, east, north). </summary>
         public GeoBoundingBox BoundingBox { get; set; }
 
         /// <summary>The country subdivision portion of an address, such as WA. If query is given, should not use this parameter.</summary>
