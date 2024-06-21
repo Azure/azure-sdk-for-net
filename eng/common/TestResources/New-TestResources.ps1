@@ -80,6 +80,11 @@ param (
     [ValidateNotNull()]
     [hashtable] $EnvironmentVariables = @{},
 
+    # List of CIDR ranges to add to specific resource firewalls, e.g. @(10.100.0.0/16, 10.200.0.0/16)
+    [Parameter()]
+    [ValidateCount(0,399)]
+    [array] $AllowIpRanges = @(),
+
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
 
@@ -863,16 +868,16 @@ try {
                     if ($CI -and $poolSubnet) {
                         Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $poolSubnet"
                         Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $poolSubnet }
-                    } elseif ($CI -and $env:Pool -eq 'Azure Pipelines') {
-                        Write-Host "Enabling access to '$($account.Name)' from client IP"
-                        $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
-                        Write-Host "bebroder -- $($clientIp -split '\.' -join ' ')"
-                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
-                        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange @{ Action = "allow"; IPAddressOrRange = "13.105.0.0/16" } | Out-Null }
+                    } elseif ($AllowIpRanges) {
+                        Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
+                        $ipRanges = $AllowIpRanges | ForEach-Object {
+                            @{ Action = 'allow'; IPAddressOrRange = $_ }
+                        }
+                        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
                     } elseif (!$CI) {
                         Write-Host "Enabling access to '$($account.Name)' from client IP"
                         $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
-                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+                        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule @{ Action = 'allow'; IPAddressOrRange = $clientIp } | Out-Null }
                     }
                 }
             }
@@ -1061,6 +1066,10 @@ Optional key-value pairs of parameters to pass to the ARM template(s).
 
 .PARAMETER EnvironmentVariables
 Optional key-value pairs of parameters to set as environment variables to the shell.
+
+.PARAMETER AllowIpRanges
+Optional array of CIDR ranges to add to the network firewall for resource types like storage.
+When running locally, if this parameter is not set then the client's IP will be queried and added to the firewall instead.
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous
