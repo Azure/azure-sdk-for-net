@@ -284,7 +284,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
                     || d.Properties.ProvisioningState == "Canceled";
             },
             TimeSpan.FromSeconds(15),
-            TimeSpan.FromMinutes(20));
+            TimeSpan.FromMinutes(30));
 
         Assert.That(deployment.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
 
