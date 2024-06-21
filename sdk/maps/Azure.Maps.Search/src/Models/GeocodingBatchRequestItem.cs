@@ -24,13 +24,13 @@ namespace Azure.Maps.Search.Models
         /// <summary>
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. For more information, see Location and Area Types. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
-        /// Example: [lon1, lat1, lon2, lat2]
+        /// Example: <c>GeoBoundingBox(west, south, east, north)</c>
         /// </summary>
         public GeoBoundingBox BoundingBox { get; set; }
 
         [CodeGenMember("Coordinates")]
         internal IList<double> _Coordinates { get; }
-        /// <summary> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: [lon, lat]. </summary>
+        /// <summary> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: <c>GeoPosition(longitude, latitude)</c>. </summary>
         public GeoPosition Coordinates { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

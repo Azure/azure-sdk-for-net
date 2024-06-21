@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -156,7 +157,11 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = coordinates = new[]
+                    {
+                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    };
                 }
 
                 return await RestClient.GetGeocodingAsync(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken).ConfigureAwait(false);
@@ -194,7 +199,11 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = coordinates = new[]
+                    {
+                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    };
                 }
 
                 return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken);
@@ -266,7 +275,11 @@ namespace Azure.Maps.Search
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = coordinates = new[]
+                    {
+                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    };
                 }
                 return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
             }
@@ -470,6 +483,7 @@ namespace Azure.Maps.Search
 
             return new ReverseGeocodingBatchRequestBody(items);
         }
+
         private static GeocodingBatchRequestBody geocodingQueriesToGecodingBatchRequestBody(IEnumerable<GeocodingQuery> queries)
         {
             IList<GeocodingBatchRequestItem> items = new ChangeTrackingList<GeocodingBatchRequestItem>();
