@@ -33,36 +33,38 @@ internal partial class AzureFileClient : FileClient
     { }
 
     /// <inheritdoc />
-    public override ClientResult<OpenAIFileInfo> UploadFile(Stream file, string filename, FileUploadPurpose purpose)
+    public override ClientResult<OpenAIFileInfo> UploadFile(Stream file, string filename, FileUploadPurpose purpose, CancellationToken cancellationToken = default)
     {
-        // need to set the content type for fine tuning file uploads in Azure OpenAI
         if (purpose != FileUploadPurpose.FineTune)
         {
-            return base.UploadFile(file, filename, purpose);
+            return base.UploadFile(file, filename, purpose, cancellationToken);
         }
 
+        // need to set the content type for fine tuning file uploads in Azure OpenAI
         Argument.AssertNotNull(file, "file");
         Argument.AssertNotNullOrEmpty(filename, "filename");
 
         using MultipartFormDataBinaryContent content = CreateMultiPartContentWithMimeType(file, filename, purpose);
-        ClientResult clientResult = UploadFile(content, content.ContentType);
+        ClientResult clientResult = UploadFile(content, content.ContentType, new() { CancellationToken = cancellationToken });
         return ClientResult.FromValue(OpenAIFileInfo.FromResponse(clientResult.GetRawResponse()), clientResult.GetRawResponse());
     }
 
     /// <inheritdoc />
-    public override async Task<ClientResult<OpenAIFileInfo>> UploadFileAsync(Stream file, string filename, FileUploadPurpose purpose)
+    public override async Task<ClientResult<OpenAIFileInfo>> UploadFileAsync(Stream file, string filename, FileUploadPurpose purpose, CancellationToken cancellationToken = default)
     {
         if (purpose != FileUploadPurpose.FineTune)
         {
-            return await base.UploadFileAsync(file, filename, purpose)
+            return await base.UploadFileAsync(file, filename, purpose, cancellationToken)
                 .ConfigureAwait(false);
         }
 
+        // need to set the content type for fine tuning file uploads in Azure OpenAI
         Argument.AssertNotNull(file, "file");
         Argument.AssertNotNullOrEmpty(filename, "filename");
 
         using MultipartFormDataBinaryContent content = CreateMultiPartContentWithMimeType(file, filename, purpose);
-        ClientResult result = await UploadFileAsync(content, content.ContentType).ConfigureAwait(continueOnCapturedContext: false);
+        ClientResult result = await UploadFileAsync(content, content.ContentType, new() { CancellationToken = cancellationToken })
+            .ConfigureAwait(continueOnCapturedContext: false);
         return ClientResult.FromValue(OpenAIFileInfo.FromResponse(result.GetRawResponse()), result.GetRawResponse());
     }
 

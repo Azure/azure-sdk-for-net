@@ -37,7 +37,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="..\src\Polyfill\**\*.cs">
+    <Compile Include="..\src\Utility\Polyfill\**\*.cs">
       <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
     </Compile>
 </ItemGroup>

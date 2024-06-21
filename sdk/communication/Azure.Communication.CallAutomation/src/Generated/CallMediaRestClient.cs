@@ -998,5 +998,157 @@ namespace Azure.Communication.CallAutomation
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateStartMediaStreamingRequest(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startMediaStreaming", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(startMediaStreamingRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Starts media streaming in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
+        /// <remarks> Starts media streaming in the call. </remarks>
+        public async Task<Response> StartMediaStreamingAsync(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startMediaStreamingRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startMediaStreamingRequest));
+            }
+
+            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Starts media streaming in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
+        /// <remarks> Starts media streaming in the call. </remarks>
+        public Response StartMediaStreaming(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startMediaStreamingRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startMediaStreamingRequest));
+            }
+
+            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStopMediaStreamingRequest(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopMediaStreaming", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stopMediaStreamingRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Stops media streaming in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopMediaStreamingRequest"> stop media streaming request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
+        /// <remarks> Stops media streaming in the call. </remarks>
+        public async Task<Response> StopMediaStreamingAsync(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopMediaStreamingRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopMediaStreamingRequest));
+            }
+
+            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Stops media streaming in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopMediaStreamingRequest"> stop media streaming request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
+        /// <remarks> Stops media streaming in the call. </remarks>
+        public Response StopMediaStreaming(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopMediaStreamingRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopMediaStreamingRequest));
+            }
+
+            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }
