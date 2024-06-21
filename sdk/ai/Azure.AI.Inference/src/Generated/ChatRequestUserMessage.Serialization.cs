@@ -27,14 +27,7 @@ namespace Azure.AI.Inference
 
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Content);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Content))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            SerializeContent(writer, options);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,7 +68,7 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            BinaryData content = default;
+            string content = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +76,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("content"u8))
                 {
-                    content = BinaryData.FromString(property.Value.GetRawText());
+                    content = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("role"u8))
