@@ -836,97 +836,12 @@ function GeneratePackage()
             }
         }
     }
-    # if ( !$?) {
-    #     # Build the whole solution
-    #     Write-Host "Start to build sdk: $projectFolder"
-    #     dotnet build $projectFolder /p:RunApiCompat=$false
-    #     if ( !$? ) {
-    #         Write-Error "Failed to build sdk solution. exit code: $?"
-    #         $result = "failed"
-    #     }
-    #     # pack
-    #     Write-Host "Start to pack sdk"
-    #     dotnet pack $projectFolder /p:RunApiCompat=$false
-    #     if ( !$? ) {
-    #         Write-Error "Failed to packe sdk. exit code: $?"
-    #         $result = "failed"
-    #     } else {
-    #         # artifacts
-    #         Push-Location $sdkRootPath
-    #         $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
-    #         $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
-    #         $apiViewArtifact = ""
-    #         if ( $artifacts.count -le 0) {
-    #             Write-Error "Failed to generate sdk artifact"
-    #         } else {
-    #             $apiViewArtifact = $artifacts[0]
-    #         }
-    #         Pop-Location
-    #         $full = $null
-    #         if ($artifacts.count -gt 0) {
-    #             $fileName = Split-Path $artifacts[0] -Leaf
-    #             $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
-    #         }
-    #         $installInstructions = [PSCustomObject]@{
-    #             full = $full
-    #             lite = $full
-    #         }
-    #     }
-    #     # Generate APIs
-    #     Write-Host "Start to export api for $service"
-    #     & $sdkRootPath/eng/scripts/Export-API.ps1 $service
-    #     if ( !$? ) {
-    #         Write-Error "Failed to export api for sdk. exit code: $?"
-    #         $result = "failed"
-    #     }
-    #     # breaking change validation
-    #     Write-Host "Start to validate breaking change. srcPath:$srcPath"
-    #     $logFilePath = Join-Path "$srcPath" 'log.txt'
-    #     if (!(Test-Path $logFilePath)) {
-    #         New-Item $logFilePath
-    #     }
-    #     dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
-    #     if (!$LASTEXITCODE) {
-    #         $hasBreakingChange = $false
-    #     }
-    #     else {
-    #         $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-    #         $breakingChanges = $logFile -join ",`n"
-    #         $content = "Breaking Changes: $breakingChanges"
-    #         $hasBreakingChange = $true
-    #     }
-
-    #     if (Test-Path $logFilePath) {
-    #         Remove-Item $logFilePath
-    #     }
-    # }
 
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
     }
 
-    # # artifacts
-    # Push-Location $sdkRootPath
-    # $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
-    # $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
-    # $apiViewArtifact = ""
-    # if ( $artifacts.count -le 0) {
-    #     Write-Error "Failed to generate sdk artifact"
-    # } else {
-    #     $apiViewArtifact = $artifacts[0]
-    # }
-    # Pop-Location
-
-    # $full = $null
-    # if ($artifacts.count -gt 0) {
-    #     $fileName = Split-Path $artifacts[0] -Leaf
-    #     $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
-    # }
-    # $installInstructions = [PSCustomObject]@{
-    #     full = $full
-    #     lite = $full
-    # }
     $ciFilePath = "sdk/$service/ci.yml"
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
