@@ -113,9 +113,9 @@ if ($inputFileToGen) {
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
-        $processScript = Resolve-Path (Join-Path $sdkPath "eng/common/scripts" "TypeSpec-Project-Process.ps1")
         $sdkProjectFolders = Get-ChildItem -Path (Join-Path $sdkPath "sdk") -Depth 1 -Directory | Select-Object -ExpandProperty FullName
 
+        $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
         $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
         $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
         if (Test-Path -Path $sdkAutorestConfigFile) {
@@ -124,7 +124,7 @@ if ($relatedTypeSpecProjectFolder) {
         }
         # Invoke Process script. SkipSyncAndGenerate only when it's not a new SDK project
         # $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
-        $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
+        # $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
         # $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --output-dir $sdkProjectFolder"
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
         $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
@@ -138,12 +138,6 @@ if ($relatedTypeSpecProjectFolder) {
             path=@("");
           })
         } else {
-            # $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
-            # $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
-            # if (Test-Path -Path $sdkAutorestConfigFile) {
-            #     Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
-            #     Remove-Item -Path $sdkAutorestConfigFile
-            # }
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
             -projectFolder $sdkProjectFolder `

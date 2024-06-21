@@ -775,9 +775,9 @@ function GeneratePackage()
             }
             # pack
             Write-Host "Start to pack sdk"
-            dotnet pack $projectFolder /p:RunApiCompat=$false
+            dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Error "Failed to packe sdk. exit code: $?"
+                Write-Error "Failed to pack sdk. exit code: $?"
                 $result = "failed"
             } else {
                 # artifacts
