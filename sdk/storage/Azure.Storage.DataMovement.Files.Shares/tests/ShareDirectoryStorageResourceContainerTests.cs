@@ -20,19 +20,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     internal class ShareDirectoryStorageResourceContainerTests
     {
-        private async IAsyncEnumerable<(TDirectory Directory, TFile File)> ToAsyncEnumerable<TDirectory, TFile>(
-            IEnumerable<TDirectory> directories,
-            IEnumerable<TFile> files)
+        private async IAsyncEnumerable<StorageResource> ToAsyncEnumerable(
+            IEnumerable<StorageResource> resources)
         {
-            if (files.Count() != directories.Count())
-            {
-                throw new ArgumentException("Items and Directories should be the same amount");
-            }
-            for (int i = 0; i < files.Count(); i++)
+            for (int i = 0; i < resources.Count(); i++)
             {
                 // returning async enumerable must be an async method
                 // so we need something to await
-                yield return await Task.FromResult((directories.ElementAt(i), files.ElementAt(i)));
+                yield return await Task.FromResult(resources.ElementAt(i));
             }
         }
 
@@ -48,14 +43,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             List<Mock<ShareDirectoryClient>> expectedDirectories = Enumerable.Range(0, pathCount)
                 .Select(i => new Mock<ShareDirectoryClient>())
                 .ToList();
-
+            List<StorageResource> expectedResources = expectedFiles.Select(m => (StorageResource) new ShareFileStorageResource(m.Object)).ToList();
+            expectedResources.Concat(expectedDirectories.Select(m => (StorageResource) new ShareDirectoryStorageResourceContainer(m.Object, default)));
             // And a mock path scanner
             Mock<PathScanner> pathScanner = new();
-            pathScanner.Setup(p => p.ScanAsync(mainClient.Object, It.IsAny<CancellationToken>()))
-                .Returns<ShareDirectoryClient, CancellationToken>(
-                (dir, cancellationToken) => ToAsyncEnumerable(
-                    expectedDirectories.Select(m => m.Object),
-                    expectedFiles.Select(m => m.Object)));
+            pathScanner.Setup(p => p.ScanAsync(
+                mainClient.Object,
+                default,
+                default,
+                It.IsAny<ShareFileTraits>(),
+                It.IsAny<CancellationToken>()))
+                .Returns<ShareDirectoryClient, ShareClient, ShareFileStorageResourceOptions, ShareFileTraits, CancellationToken>(
+                (dir, shareclient, options, traits, cancellationToken) => ToAsyncEnumerable(expectedResources));
 
             // Setup StorageResourceContainer
             ShareDirectoryStorageResourceContainer resource = new(mainClient.Object, default)

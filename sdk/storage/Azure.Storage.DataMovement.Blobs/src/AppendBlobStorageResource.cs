@@ -321,5 +321,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 metadata:_options?.Metadata,
                 tags: default);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

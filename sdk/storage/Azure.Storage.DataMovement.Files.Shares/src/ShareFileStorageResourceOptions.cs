@@ -13,13 +13,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public class ShareFileStorageResourceOptions
     {
         /// <summary>
-        /// Optional. The file permission to set on the destination directory and/or file.
-        ///
-        /// Applies to copy and upload transfers.
-        /// </summary>
-        public DataTransferProperty<string> FilePermissions { get; set; }
-
-        /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
         /// Access conditions on the copying of data from this source storage resource share file.
         ///
@@ -101,8 +94,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// The key of the file permission.
+        ///
+        /// By default the permission key will not be preserved from the source Share to the destination Share.
         /// </summary>
-        public DataTransferProperty FilePermissionKey { get; set; }
+        public DataTransferProperty FilePermissions { get; set; }
+        internal string _destinationPermissionKey;
 
         /// <summary>
         /// The creation time of the file.
@@ -145,5 +141,37 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public DataTransferProperty<Metadata> FileMetadata { get; set; }
+
+        /// <summary>
+        /// Constructor for ShareFileStorageResourceOptions.
+        /// </summary>
+        public ShareFileStorageResourceOptions()
+        {
+        }
+
+        internal ShareFileStorageResourceOptions(string destinationPermissionKey)
+        {
+            _destinationPermissionKey = destinationPermissionKey;
+        }
+
+        internal ShareFileStorageResourceOptions(ShareFileStorageResourceOptions options, string destinationPermissionKey)
+        {
+            SourceConditions = options?.SourceConditions;
+            DestinationConditions = options?.DestinationConditions;
+            CacheControl = options?.CacheControl;
+            ContentDisposition = options?.ContentDisposition;
+            ContentEncoding = options?.ContentEncoding;
+            ContentLanguage = options?.ContentLanguage;
+            ContentType = options?.ContentType;
+            FileAttributes = options?.FileAttributes;
+            FilePermissions = options?.FilePermissions;
+            _destinationPermissionKey = options?._destinationPermissionKey;
+            FileCreatedOn = options?.FileCreatedOn;
+            FileLastWrittenOn = options?.FileLastWrittenOn;
+            FileChangedOn = options?.FileChangedOn;
+            DirectoryMetadata = options?.DirectoryMetadata;
+            FileMetadata = options?.FileMetadata;
+            _destinationPermissionKey = destinationPermissionKey;
+        }
     }
 }

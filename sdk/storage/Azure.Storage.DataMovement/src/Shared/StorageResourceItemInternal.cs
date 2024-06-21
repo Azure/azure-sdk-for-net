@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,5 +79,14 @@ namespace Azure.Storage.DataMovement
             long? length = null,
             CancellationToken cancellationToken = default)
             => ReadStreamAsync(position, length, cancellationToken);
+
+        internal StorageResourceItemProperties GetResourceProperties()
+            => ResourceProperties;
+
+        internal Task<string> GetPermissionsInternalAsync(StorageResourceItemProperties sourceProperties = default)
+            => GetPermissionsAsync(sourceProperties);
+
+        internal Task SetPermissionsInternalAsync(StorageResourceItem sourceResource, StorageResourceItemProperties sourceProperties)
+            => SetPermissionsAsync(sourceResource, sourceProperties);
     }
 }

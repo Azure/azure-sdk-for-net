@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Represents a property on the storage resource.
     /// </summary>
-    public abstract class DataTransferProperty
+    public class DataTransferProperty
     {
         internal bool _preserve;
 

@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Moq;
 using NUnit.Framework;
 using Azure.Storage.Test;
+using System.CodeDom;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -24,6 +25,8 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
+        private const string DefaultSourcePermissionKey = "anlfdjsgkljWLJITflo'fu903w8ueng";
+        private const string DefaultDestinationPermissionKey = "tw940udsfmklgopuw90raskop90rw8uJSIOPKl";
         public ServiceToServiceJobPartTests() { }
 
         private Mock<TransferJobInternal.QueueChunkTaskInternal> GetQueueChunkTask()
@@ -50,17 +53,16 @@ namespace Azure.Storage.DataMovement.Tests
         private StorageResourceItemProperties GetResourceProperties(int length)
         {
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
-                { "ContentType", DefaultContentType },
-                { "ContentEncoding", DefaultContentEncoding },
-                { "ContentLanguage", DefaultContentLanguage },
-                { "ContentDisposition", DefaultContentDisposition },
-                { "CacheControl", DefaultCacheControl },
-                { "Metadata", metadata },
-                { "Tags", tags }
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata },
+                { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultSourcePermissionKey }
             };
             return new(
                     resourceLength: length,
@@ -135,6 +137,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
             Mock<StorageResourceItem> mockDestination = GetStorageResourceItem();
+            mockDestination.Setup(r => r.SetPermissionsAsync(It.IsAny<StorageResourceItem>(), It.IsAny<StorageResourceItemProperties>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
@@ -170,6 +174,12 @@ namespace Azure.Storage.DataMovement.Tests
             await jobPart.ProcessPartToChunkAsync();
 
             // Verify
+            VerifyInvocation(
+                mockDestination,
+                resource => resource.SetPermissionsAsync(
+                    mockSource.Object,
+                    properties,
+                    It.IsAny<CancellationToken>()));
             VerifyInvocation(
                 mockDestination,
                 resource => resource.CopyFromUriAsync(
@@ -232,6 +242,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             await jobPart.ProcessPartToChunkAsync();
 
+            VerifyInvocation(
+                mockDestination,
+                resource => resource.SetPermissionsAsync(
+                    mockSource.Object,
+                    properties,
+                    It.IsAny<CancellationToken>()));
             VerifyInvocation(
                 mockDestination,
                 resource => resource.CopyBlockFromUriAsync(

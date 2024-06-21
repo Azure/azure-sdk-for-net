@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// The key of the file permission.
         /// </summary>
         public string FilePermissionKey;
-        private byte[] _filePermissionKeyBytes;
+        public byte[] _filePermissionKeyBytes;
 
         /// <summary>
         /// The creation time of the file. This is stored as a string with a
@@ -103,7 +103,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DataTransferProperty<string> contentDisposition,
             DataTransferProperty<string> cacheControl,
             DataTransferProperty<NtfsFileAttributes?> fileAttributes,
-            string filePermission,
             string filePermissionKey,
             DataTransferProperty<DateTimeOffset?> fileCreatedOn,
             DataTransferProperty<DateTimeOffset?> fileLastWrittenOn,
@@ -136,7 +135,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             PreserveFileAttributes = fileAttributes?.Preserve ?? true;
 
             FilePermissionKey = filePermissionKey;
-            _filePermissionKeyBytes = !string.IsNullOrEmpty(FilePermissionKey) ? Encoding.UTF8.GetBytes(filePermissionKey) : Array.Empty<byte>();
+            _filePermissionKeyBytes = !string.IsNullOrEmpty(filePermissionKey) ? Encoding.UTF8.GetBytes(filePermissionKey) : Array.Empty<byte>();
 
             FileCreatedOn = fileCreatedOn;
             PreserveFileCreatedOn = fileCreatedOn?.Preserve ?? true;
@@ -190,7 +189,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Variable length info
             if (!PreserveFileAttributes)
             {
-                writer.Write((int)FileAttributes.Value);
+                if (FileAttributes.Value == default)
+                {
+                    writer.Write((int)0);
+                }
+                else
+                {
+                    writer.Write((int)FileAttributes.Value);
+                }
             }
             writer.Write(_filePermissionKeyBytes);
             if (!PreserveFileCreatedOn)

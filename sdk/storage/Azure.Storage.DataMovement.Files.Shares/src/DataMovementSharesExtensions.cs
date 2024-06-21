@@ -52,6 +52,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         : default
                     : options?.FileMetadata?.Value;
 
+        public static string GetSourcePermissionKey(
+            this Dictionary<string, object> properties)
+            => properties?.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKey) == true
+                ? (string)permissionKey
+                : default;
+
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
             StorageResourceItemProperties properties)
@@ -62,7 +68,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         ? (NtfsFileAttributes?) fileAttributes
                         : default
                     : options?.FileAttributes?.Value,
-                FilePermissionKey = options?.FilePermissionKey,
+                FilePermissionKey = options?._destinationPermissionKey,
                 FileCreatedOn = (options?.FileCreatedOn?.Preserve ?? true)
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
                         ? (DateTimeOffset?) fileCreatedOn
@@ -76,13 +82,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         ? (DateTimeOffset?) fileChangedOn
                         : default
                     : options?.FileChangedOn?.Value,
-            };
-
-        internal static ShareFileUploadOptions ToShareFileUploadOptions(
-            this ShareFileStorageResourceOptions options)
-            => new()
-            {
-                Conditions = options?.DestinationConditions,
             };
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
@@ -129,7 +128,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             if (fileProperties.SmbProperties.FilePermissionKey != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.FilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
+                properties.Add(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
             }
             if (fileProperties.ContentType != default)
             {
@@ -228,6 +227,36 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     eTag: info.Details.ETag,
                     lastModifiedTime: info.Details.LastModified,
                     properties: properties));
+        }
+
+        internal static StorageResourceItemProperties ToResourceProperties(this ShareFileItem shareItem)
+        {
+            Dictionary<string, object> properties = new();
+            if (shareItem?.Properties?.CreatedOn != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.CreationTime, shareItem.Properties.CreatedOn);
+            }
+            if (shareItem?.Properties?.LastWrittenOn != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.LastWrittenOn, shareItem.Properties.LastWrittenOn);
+            }
+            if (shareItem?.Properties?.ChangedOn != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ChangedOnTime, shareItem.Properties.ChangedOn);
+            }
+            if (shareItem?.FileAttributes != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.FileAttributes, shareItem.FileAttributes);
+            }
+            if (shareItem?.PermissionKey != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, shareItem.PermissionKey);
+            }
+            return new StorageResourceItemProperties(
+                resourceLength: shareItem?.FileSize,
+                eTag: shareItem?.Properties?.ETag,
+                lastModifiedTime: shareItem?.Properties?.LastModified,
+                properties: properties);
         }
     }
 
