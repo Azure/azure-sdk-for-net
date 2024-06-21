@@ -253,7 +253,7 @@ ManagedClusterAddOnFeature.DnsService,ManagedClusterAddOnFeature.BackupRestoreSe
                 IsIPv6Enabled = true,
                 IPTags =
 {
-new ServiceFabricManagedClusterIPTag("FirstPartyUsage","SQL")
+new ManagedClusterIPTag("FirstPartyUsage","SQL")
 },
                 AuxiliarySubnets =
 {

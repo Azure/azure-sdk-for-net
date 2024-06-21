@@ -16,6 +16,8 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
 - https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
 
+tag: package-2024-04
+
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -118,7 +120,7 @@ rename-mapping:
   ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IPTag: ManagedClusterIPTag
+  IpTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection
@@ -181,7 +183,6 @@ rename-mapping:
   UpdateType: ServiceFabricManagedClusterUpdateType
   IpConfiguration: ServiceFabricManagedClusterIPConfiguration
   IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
-  IpTag: ServiceFabricManagedClusterIPTag
   ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
   ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
   ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn

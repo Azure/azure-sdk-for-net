@@ -393,7 +393,7 @@ PublicIPAddressConfiguration = new ServiceFabricManagedClusterPublicIPAddressCon
 {
 IPTags =
 {
-new ServiceFabricManagedClusterIPTag("RoutingPreference","Internet")
+new ManagedClusterIPTag("RoutingPreference","Internet")
 },
 PublicIPAddressVersion = ServiceFabricManagedClusterPublicIPAddressVersion.IPv4,
 },

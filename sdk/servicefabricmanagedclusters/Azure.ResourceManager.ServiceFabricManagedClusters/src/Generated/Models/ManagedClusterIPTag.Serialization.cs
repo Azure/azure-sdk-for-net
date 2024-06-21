@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ServiceFabricManagedClusterIPTag : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterIPTag>
+    public partial class ManagedClusterIPTag : IUtf8JsonSerializable, IJsonModel<ManagedClusterIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterIPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterIPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServiceFabricManagedClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        ServiceFabricManagedClusterIPTag IJsonModel<ServiceFabricManagedClusterIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterIPTag IJsonModel<ManagedClusterIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceFabricManagedClusterIPTag(document.RootElement, options);
+            return DeserializeManagedClusterIPTag(document.RootElement, options);
         }
 
-        internal static ServiceFabricManagedClusterIPTag DeserializeServiceFabricManagedClusterIPTag(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceFabricManagedClusterIPTag(ipTagType, tag, serializedAdditionalRawData);
+            return new ManagedClusterIPTag(ipTagType, tag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServiceFabricManagedClusterIPTag>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedClusterIPTag>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServiceFabricManagedClusterIPTag IPersistableModel<ServiceFabricManagedClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedClusterIPTag IPersistableModel<ManagedClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceFabricManagedClusterIPTag(document.RootElement, options);
+                        return DeserializeManagedClusterIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServiceFabricManagedClusterIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
