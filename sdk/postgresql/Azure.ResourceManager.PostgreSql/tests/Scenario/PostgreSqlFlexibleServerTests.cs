@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

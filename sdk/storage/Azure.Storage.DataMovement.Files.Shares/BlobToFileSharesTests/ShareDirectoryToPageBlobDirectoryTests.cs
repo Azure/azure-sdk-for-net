@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobContainerClient sourceContainerClient,
             string directoryPath,
             TransferPropertiesTestType propertiesTestType = default)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Page });
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Page) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {

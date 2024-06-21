@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ResourceProperties = properties;
         }
 
-        protected override StorageResourceItem GetStorageResourceReference(string path)
+        protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             List<string> pathSegments = path.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
             ShareDirectoryClient dir = ShareDirectoryClient;

@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task SetVpnclientIPsecParameters_SetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
-            // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

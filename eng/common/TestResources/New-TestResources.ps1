@@ -52,7 +52,7 @@ param (
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationOid,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Provisioner')]
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
@@ -105,6 +105,15 @@ param (
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
+
+$azsdkPipelineVnet = "/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/azsdk-pools/providers/Microsoft.Network/virtualNetworks/azsdk-pipeline-vnet-wus"
+$azsdkPipelineSubnets = @(
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-1804-general"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-general"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2204-general"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-general"),
+    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-general")
+)
 
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
@@ -743,12 +752,14 @@ try {
     if ($ProvisionerApplicationOid) {
         $templateParameters["provisionerApplicationOid"] = "$ProvisionerApplicationOid"
     }
-
     if ($TenantId) {
         $templateParameters.Add('tenantId', $TenantId)
     }
     if ($TestApplicationSecret -and $ServicePrincipalAuth) {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
+    }
+    if ($CI -and $Environment -eq 'AzureCloud') {
+        $templateParameters.Add('azsdkPipelineSubnetList', $azsdkPipelineSubnets)
     }
 
     $defaultCloudParameters = LoadCloudConfig $Environment
