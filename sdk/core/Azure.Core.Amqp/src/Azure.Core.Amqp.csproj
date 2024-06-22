@@ -7,13 +7,17 @@
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure AMQP</PackageTags>
     <Nullable>enable</Nullable>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <!-- The APIs of these packages are inbox on modern .NET -->
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 
   <ItemGroup>
