@@ -25,6 +25,7 @@ BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource(bat
 ```
 
 With the BatchAccountResource you can create a pool with the [batchAccount.GetBatchAccountPools().CreateOrUpdateAsync](https://learn.microsoft.com/dotnet/api/azure.resourcemanager.batch.batchaccountpoolcollection.createorupdateasync?view=azure-dotnet) command
+
 ```C# Snippet:Batch_Sample01_PoolCreation
 var poolName = "HelloWorldPool";
 var imageReference = new BatchImageReference()
