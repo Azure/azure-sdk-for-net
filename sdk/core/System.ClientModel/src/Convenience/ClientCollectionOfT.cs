@@ -8,12 +8,12 @@ using System.Collections.Generic;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a collection of results returned from a cloud service operation.
+/// Represents a collection of values returned from a cloud service operation.
 /// </summary>
-public abstract class ResultCollection<T> : ClientResult, IEnumerable<T>
+public abstract class ClientCollection<T> : ClientResult, IEnumerable<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="ResultCollection{T}"/>.
+    /// Create a new instance of <see cref="ClientCollection{T}"/>.
     /// </summary>
     /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
     /// <see cref="ClientResult"/> instance is created, it is expected that
@@ -24,17 +24,17 @@ public abstract class ResultCollection<T> : ClientResult, IEnumerable<T>
     /// is called. Such implementations will typically be returned from client
     /// convenience methods so that callers of the methods don't need to
     /// dispose the return value. </remarks>
-    protected internal ResultCollection() : base()
+    protected internal ClientCollection() : base()
     {
     }
 
     /// <summary>
-    /// Create a new instance of <see cref="ResultCollection{T}"/>.
+    /// Create a new instance of <see cref="ClientCollection{T}"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// items in the collection, or the first set of the items in the collection.
     /// </param>
-    protected internal ResultCollection(PipelineResponse response) : base(response)
+    protected internal ClientCollection(PipelineResponse response) : base(response)
     {
     }
 
@@ -42,4 +42,35 @@ public abstract class ResultCollection<T> : ClientResult, IEnumerable<T>
     public abstract IEnumerator<T> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public static ClientCollection<T> FromPage(ClientPage<T> page)
+    {
+        return new ClientPageable(page);
+    }
+
+    internal class ClientPageable : ClientCollection<T>
+    {
+        private readonly ClientPage<T> _page;
+
+        public ClientPageable(ClientPage<T> page) : base(page.GetRawResponse())
+        {
+            _page = page;
+        }
+
+        public override IEnumerator<T> GetEnumerator()
+        {
+            foreach (ClientPage<T> page in _page.ToPageCollection())
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return value;
+                }
+            }
+        }
+    }
 }
