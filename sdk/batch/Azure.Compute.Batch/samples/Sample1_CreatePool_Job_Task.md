@@ -14,6 +14,7 @@ In order to create Batch Pool from the Azure.Managment.Batch library you will ne
 var credential = new DefaultAzureCredential();
 ArmClient _armClient = new ArmClient(credential);
 ```
+
 ### Pool creation
 
 Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
