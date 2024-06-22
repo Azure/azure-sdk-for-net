@@ -8,7 +8,7 @@ Both the **Azure.Compute.Batch** and the ARM-based **Azure.ResourceManager.Batch
 
 ## Authenticating the Azure.ResourceManager `ArmClient`
 
-In order to create Batch Pool from the Azure.Managment.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+In order to create a Batch Pool from the Azure.Managment.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ```C# Snippet:Batch_Sample01_CreateBatchMgmtClient
 var credential = new DefaultAzureCredential();
