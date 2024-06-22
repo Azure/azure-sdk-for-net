@@ -81,6 +81,7 @@ Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The 
 await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
 ```
 
+
 ### Task results
 
 Onces the tasks are complete `GetTasksAsync` cand be used to retrieve the `BatchTask` instance and `GetTaskFileAsync` can be used to get the output files
