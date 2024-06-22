@@ -18,6 +18,10 @@ using DMBlob::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Shared;
 using NUnit.Framework;
+using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Test;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -36,6 +40,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         public const int MaxReliabilityRetries = 5;
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
+        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentLanguage = "en-US";
+        private const string _defaultContentDisposition = "inline";
+        private const string _defaultCacheControl = "no-cache";
+        private readonly Metadata _defaultMetadata = DataProvider.BuildMetadata();
         protected readonly object _serviceVersion;
 
         public ShareFileToAppendBlobTests(
@@ -220,46 +229,57 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClientOptions(options);
         }
 
-        protected override Task VerifyPropertiesCopyAsync(
+        protected override async Task VerifyPropertiesCopyAsync(
             DataTransfer transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
             AppendBlobClient destinationClient)
         {
-            throw new NotImplementedException();
-        }
+            // Verify completion
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_DefaultProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+            if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
+            {
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_PreserveProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.IsNull(destinationProperties.ContentDisposition);
+                Assert.IsNull(destinationProperties.ContentLanguage);
+                Assert.IsNull(destinationProperties.CacheControl);
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_NoPreserveProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+                GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+                Assert.IsEmpty(destinationTags.Tags);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
+            {
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_NewProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
+                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+            }
+            else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
+                    //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+            }
         }
     }
 }
