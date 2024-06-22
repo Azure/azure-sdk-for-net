@@ -18,6 +18,7 @@ ArmClient _armClient = new ArmClient(credential);
 ### Pool creation
 
 Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
+
 ```C# Snippet:Batch_Sample01_GetBatchMgmtAccount
 var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
 BatchAccountResource batchAccount = await _armClient.GetBatchAccountResource(batchAccountIdentifier).GetAsync();
