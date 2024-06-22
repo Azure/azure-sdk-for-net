@@ -421,7 +421,7 @@ await foreach (BatchTask t in completedTasks)
 ```
 ## Troubleshooting
 
-[Troubleshooting](https://learn.microsoft.com/troubleshoot/azure/hpc/batch/welcome-hpc-batch) common batch issues.
+Please see [Troubleshooting common batch issues](https://learn.microsoft.com/troubleshoot/azure/hpc/batch/welcome-hpc-batch).
 
 ## Next steps
 
