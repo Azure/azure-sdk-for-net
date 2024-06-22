@@ -8,7 +8,7 @@ Both the **Azure.Compute.Batch** and the ARM-based **Azure.ResourceManager.Batch
 
 ## Authenticating the Azure.ResourceManager `ArmClient`
 
-In order to create a Batch Pool from the Azure.Managment.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+In order to create a Batch Pool from the Azure.ResourceManager.Batch library you will need to instantiate an Armclient. To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ```C# Snippet:Batch_Sample01_CreateBatchMgmtClient
 var credential = new DefaultAzureCredential();
@@ -17,7 +17,7 @@ ArmClient _armClient = new ArmClient(credential);
 
 ### Pool creation
 
-Batch operations in the **Azure.Management.Batch** sdk are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
+Batch operations in the **Azure.Management.Batch** libraries are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
 
 ```C# Snippet:Batch_Sample01_GetBatchMgmtAccount
 var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
@@ -77,6 +77,7 @@ Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The 
 ```C# Snippet:Batch_Sample01_CreateBatchTask
 await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
 ```
+
 ### Task results
 
 Onces the tasks are complete `GetTasksAsync` cand be used to retrieve the `BatchTask` object and `GetTaskFileAsync` can be used to get the output files
