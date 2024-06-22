@@ -4,7 +4,7 @@ This sample demonstrates how to create a pool, job, and tasks for a Batch accoun
 
 ## Special note for Batch pools
 
-Both the **Azure.Compute.Batch** and the ARM based **Azure.Management.Batch** sdk's support the creating and managing of Batch Pools with the only difference being that **Azure.Management.Batch** supports creating [Batch Pools with Managed Idenities](https://learn.microsoft.com/azure/batch/managed-identity-pools), for this reason creating pools via **Azure.Management.Batch** is considered a best practice.  This example will use **Azure.Management.Batch** for pool creation and thus will need to create an ArmClient to do so.
+Both the **Azure.Compute.Batch** and the ARM-based **Azure.ResourceManager.Batch** libraries support the creating and managing of Batch Pools with the only difference being that **Azure.Management.Batch** supports creating [Batch Pools with Managed Identities](https://learn.microsoft.com/azure/batch/managed-identity-pools), for this reason creating pools via **Azure.ResourceManager.Batch** is considered a best practice.  This example will use **Azure.ResourceManager.Batch** for pool creation and thus will need to create an `ArmClient` to do so.
 
 ## Authenticating the Azure.ResourceManager `ArmClient`
 
