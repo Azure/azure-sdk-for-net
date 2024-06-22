@@ -53,7 +53,7 @@ BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().Creat
 
 ## Authenticating the Azure.Compute.Batch `BatchClient`
 
-Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` sdk.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
+Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` library.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
 
 ```C# Snippet:Batch_Sample01_CreateBatchClient
 var credential = new DefaultAzureCredential();
