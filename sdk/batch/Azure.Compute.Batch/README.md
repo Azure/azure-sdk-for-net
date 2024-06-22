@@ -117,7 +117,7 @@ The following section provides several code snippets using the `_batchClient` cr
 
 In an Azure Batch workflow, a compute node (or node) is a virtual machine that processes a portion of your application's workload. A pool is a collection of these nodes for your application to runs on. For more information see [Nodes and pools in Azure Batch](https://learn.microsoft.com/azure/batch/nodes-and-pools).
 
-Use the `CreatePool` method with a `BatchPoolCreateContent` object to create a `BatchPool`. 
+Use the `CreatePool` method with a `BatchPoolCreateContent` instance to create a `BatchPool`. 
 
 ```C# Snippet:Batch_Readme_PoolCreation
 string poolID = "HelloWorldPool";
@@ -195,7 +195,7 @@ A job is a collection of tasks. It manages how computation is performed by its t
 
 A job specifies the pool in which the work is to be run. You can create a new pool for each job, or use one pool for many jobs. You can create a pool for each job that is associated with a job schedule, or one pool for all jobs that are associated with a job schedule. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
-Use the `CreateJob` method with a `BatchJobCreateContent` object to create a `BatchJob`. 
+Use the `CreateJob` method with a `BatchJobCreateContent` instance to create a `BatchJob`. 
 
 ```C# Snippet:Batch_Readme_JobCreation
 _batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
@@ -224,7 +224,7 @@ foreach (BatchJob item in _batchClient.GetJobs())
 ### Create a task
 A task is a unit of computation that is associated with a job. It runs on a node. Tasks are assigned to a node for execution, or are queued until a node becomes free. Put simply, a task runs one or more programs or scripts on a compute node to perform the work you need done. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
-Use the `CreateTask` method with a `BatchTaskCreateContent` object to create a `BatchTask`. 
+Use the `CreateTask` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
 
 ```C# Snippet:Batch_Readme_TaskCreation
 _batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
@@ -271,7 +271,7 @@ foreach (BatchTask t in completedTasks)
 
 In an Azure Batch workflow, a compute node (or node) is a virtual machine that processes a portion of your application's workload. A pool is a collection of these nodes for your application to runs on. For more information see [Nodes and pools in Azure Batch](https://learn.microsoft.com/azure/batch/nodes-and-pools).
 
-Use the `CreatePoolAsync` method with a `BatchPoolCreateContent` object to create a `BatchPool`. 
+Use the `CreatePoolAsync` method with a `BatchPoolCreateContent` instance to create a `BatchPool`. 
 
 ```C# Snippet:Batch_Readme_PoolCreationAsync
 string poolID = "HelloWorldPool";
@@ -349,7 +349,7 @@ A job is a collection of tasks. It manages how computation is performed by its t
 
 A job specifies the pool in which the work is to be run. You can create a new pool for each job, or use one pool for many jobs. You can create a pool for each job that is associated with a job schedule, or one pool for all jobs that are associated with a job schedule. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
-Use the `CreateJoAsync` method with a `BatchJobCreateContent` object to create a `BatchJob`. 
+Use the `CreateJoAsync` method with a `BatchJobCreateContent` instance to create a `BatchJob`. 
 
 ```C# Snippet:Batch_Readme_JobCreationAsync
 await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
@@ -378,7 +378,7 @@ await foreach (BatchJob item in _batchClient.GetJobsAsync())
 ### Create a task asynchronously
 A task is a unit of computation that is associated with a job. It runs on a node. Tasks are assigned to a node for execution, or are queued until a node becomes free. Put simply, a task runs one or more programs or scripts on a compute node to perform the work you need done. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
-Use the `CreateTaskAsync` method with a `BatchTaskCreateContent` object to create a `BatchTask`. 
+Use the `CreateTaskAsync` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
 
 ```C# Snippet:Batch_Readme_TaskCreationAsync
 await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));

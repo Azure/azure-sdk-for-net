@@ -4,7 +4,7 @@ This sample demonstrates how to create a pool, job, and tasks for a Batch accoun
 
 ## Special note for Batch pools
 
-Both the **Azure.Compute.Batch** and the ARM-based **Azure.ResourceManager.Batch** libraries support the creating and managing of Batch Pools with the only difference being that **Azure.Management.Batch** supports creating [Batch Pools with Managed Identities](https://learn.microsoft.com/azure/batch/managed-identity-pools), for this reason creating pools via **Azure.ResourceManager.Batch** is considered a best practice.  This example will use **Azure.ResourceManager.Batch** for pool creation and thus will need to create an `ArmClient` to do so.
+Both the **Azure.Compute.Batch** and the ARM-based **Azure.ResourceManager.Batch** libraries support the creating and managing of Batch Pools with the only difference being that **Azure.ResourceManager.Batch** supports creating [Batch Pools with Managed Identities](https://learn.microsoft.com/azure/batch/managed-identity-pools), for this reason creating pools via **Azure.ResourceManager.Batch** is considered a best practice.  This example will use **Azure.ResourceManager.Batch** for pool creation and thus will need to create an `ArmClient` to do so.
 
 ## Authenticating the Azure.ResourceManager `ArmClient`
 
@@ -17,7 +17,7 @@ ArmClient _armClient = new ArmClient(credential);
 
 ### Pool creation
 
-Batch operations in the **Azure.Management.Batch** libraries are preformed from a BatchAccountResource object, to get a BatchAccountResource object you can query the armclient for the resource id of your Batch account.
+Batch operations in the **Azure.Management.Batch** libraries are preformed from a BatchAccountResource instance, to get a BatchAccountResource instance you can query the armclient for the resource id of your Batch account.
 
 ```C# Snippet:Batch_Sample01_GetBatchMgmtAccount
 var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
@@ -36,26 +36,28 @@ var imageReference = new BatchImageReference()
 };
 string nodeAgentSku = "batch.node.ubuntu 22.04";
 
-BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(WaitUntil.Completed, poolName, new BatchAccountPoolData()
-{
-    VmSize = "Standard_DS1_v2",
-    DeploymentConfiguration = new BatchDeploymentConfiguration()
+ArmOperation<BatchAccountPoolResource> armOperation = await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(
+    WaitUntil.Completed, poolName, new BatchAccountPoolData()
     {
-        VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
-    },
-    ScaleSettings = new BatchAccountPoolScaleSettings()
-    {
-        FixedScale = new BatchAccountFixedScaleSettings()
+        VmSize = "Standard_DS1_v2",
+        DeploymentConfiguration = new BatchDeploymentConfiguration()
         {
-            TargetDedicatedNodes = 1
+            VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
+        },
+        ScaleSettings = new BatchAccountPoolScaleSettings()
+        {
+            FixedScale = new BatchAccountFixedScaleSettings()
+            {
+                TargetDedicatedNodes = 1
+            }
         }
-    }
-})).Value;
+    });
+BatchAccountPoolResource pool = armOperation.Value;
 ```
 
 ## Authenticating the Azure.Compute.Batch `BatchClient`
 
-Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` library.  A `BatchClient` object is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
+Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` library.  A `BatchClient` instance is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
 
 ```C# Snippet:Batch_Sample01_CreateBatchClient
 var credential = new DefaultAzureCredential();
@@ -80,7 +82,7 @@ await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId",
 
 ### Task results
 
-Onces the tasks are complete `GetTasksAsync` cand be used to retrieve the `BatchTask` object and `GetTaskFileAsync` can be used to get the output files
+Onces the tasks are complete `GetTasksAsync` cand be used to retrieve the `BatchTask` instance and `GetTaskFileAsync` can be used to get the output files
 
 ```C# Snippet:Batch_Sample01_GetTasks
 var completedTasks = _batchClient.GetTasksAsync("jobId", filter: "state eq 'completed'");

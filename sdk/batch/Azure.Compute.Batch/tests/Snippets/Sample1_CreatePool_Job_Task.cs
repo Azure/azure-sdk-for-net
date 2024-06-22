@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -84,21 +85,23 @@ namespace Azure.Compute.Batch.Tests.Snippets
             };
             string nodeAgentSku = "batch.node.ubuntu 22.04";
 
-            BatchAccountPoolResource pool = (await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(WaitUntil.Completed, poolName, new BatchAccountPoolData()
-            {
-                VmSize = "Standard_DS1_v2",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
+            ArmOperation<BatchAccountPoolResource> armOperation = await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(
+                WaitUntil.Completed, poolName, new BatchAccountPoolData()
                 {
-                    VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    FixedScale = new BatchAccountFixedScaleSettings()
+                    VmSize = "Standard_DS1_v2",
+                    DeploymentConfiguration = new BatchDeploymentConfiguration()
                     {
-                        TargetDedicatedNodes = 1
+                        VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
+                    },
+                    ScaleSettings = new BatchAccountPoolScaleSettings()
+                    {
+                        FixedScale = new BatchAccountFixedScaleSettings()
+                        {
+                            TargetDedicatedNodes = 1
+                        }
                     }
-                }
-            })).Value;
+                });
+            BatchAccountPoolResource pool = armOperation.Value;
             #endregion
         }
     }
