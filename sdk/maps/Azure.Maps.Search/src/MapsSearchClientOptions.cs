@@ -29,8 +29,11 @@ namespace Azure.Maps.Search
         /// <summary> The Azure Maps endpoint for requests. </summary>
         public Uri Endpoint { get; set; }
 
+        /// <summary> The langauge of search result returned by the requests. </summary>
+        public SearchLanguage SearchLanguage { get; set; }
+
         /// <summary> Initializes new instance of SearchClientOptions. </summary>
-        public MapsSearchClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        public MapsSearchClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null, SearchLanguage language = null) 
         {
             Version = version switch
             {
@@ -40,6 +43,7 @@ namespace Azure.Maps.Search
             };
 
             Endpoint = endpoint;
+            SearchLanguage = language;
         }
     }
 }

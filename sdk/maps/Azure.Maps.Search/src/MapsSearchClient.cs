@@ -50,7 +50,7 @@ namespace Azure.Maps.Search
             var options = new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, options.SearchLanguage.ToString());
         }
 
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
@@ -64,8 +64,9 @@ namespace Azure.Maps.Search
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
+            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage);
         }
 
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
@@ -97,8 +98,9 @@ namespace Azure.Maps.Search
             options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
+            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, null, clientId);
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage, clientId);
         }
 
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
@@ -128,8 +130,9 @@ namespace Azure.Maps.Search
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
+            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage);
         }
         /// <summary>
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.

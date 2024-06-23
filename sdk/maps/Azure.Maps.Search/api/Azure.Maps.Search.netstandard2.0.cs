@@ -22,13 +22,73 @@ namespace Azure.Maps.Search
     }
     public partial class MapsSearchClientOptions : Azure.Core.ClientOptions
     {
-        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V2_0, System.Uri endpoint = null) { }
+        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V2_0, System.Uri endpoint = null, Azure.Maps.Search.SearchLanguage language = null) { }
         public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Maps.Search.SearchLanguage SearchLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
             V2_0 = 2,
         }
+    }
+    public partial class SearchLanguage
+    {
+        public SearchLanguage(string value) { }
+        public static Azure.Maps.Search.SearchLanguage Afrikaans { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Arabic { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Basque { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Bulgarian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Catalan { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Croatian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Czech { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Danish { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage DutchNetherlands { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage EnglishAustralia { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage EnglishGreatBritain { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage EnglishNewZealand { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage EnglishUsa { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Estonian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Finnish { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage FrenchCanada { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage FrenchFrance { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Galician { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage German { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Greek { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Hebrew { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Hungarian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Indonesian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Italian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Kazakh { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Latvian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Lithuanian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Malay { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage NeutralGroundTruthLatin { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage NeutralGroundTruthLocal { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Norwegian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Polish { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage PortugueseBrazil { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage PortuguesePortugal { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Romanian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Russian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage SerbianCyrillic { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage SimplifiedChinese { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Slovak { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Slovenian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage SpanishLatinAmerica { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage SpanishSpain { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Swedish { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Thai { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage TraditionalChinese { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Turkish { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Ukrainian { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage Vietnamese { get { throw null; } }
+        public bool Equals(Azure.Maps.Search.SearchLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Maps.Search.SearchLanguage (string value) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Maps.Search.Models
