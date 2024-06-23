@@ -82,9 +82,6 @@ namespace Azure.Maps.Search
         public static Azure.Maps.Search.SearchLanguage Turkish { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Ukrainian { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Vietnamese { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.SearchLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Maps.Search.SearchLanguage (string value) { throw null; }
