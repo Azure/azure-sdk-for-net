@@ -123,7 +123,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(assistant.ResponseFormat, Is.EqualTo(AssistantResponseFormat.Text));
         AssistantThread thread = await client.CreateThreadAsync();
         Validate(thread);
-        ThreadMessage message = await client.CreateMessageAsync(thread, ["Write some JSON for me!"]);
+        ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Write some JSON for me!"]);
         Validate(message);
         ThreadRun run = await client.CreateRunAsync(thread, assistant, new()
         {
@@ -152,7 +152,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         ThreadCreationOptions thrdOpt = new()
         {
-            InitialMessages = { new(["What should I wear outside right now?"]), },
+            InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
         AsyncResultCollection<StreamingUpdate> asyncResults = SyncOrAsync(client,
             c => c.CreateThreadAndRunStreaming(assistant, thrdOpt),
@@ -206,7 +206,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         AssistantClient client = GetTestClient();
         AssistantThread thread = await client.CreateThreadAsync();
         Validate(thread);
-        ThreadMessage message = await client.CreateMessageAsync(thread, ["Hello, world!"]);
+        ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Hello, world!"]);
         Validate(message);
         Assert.That(message.CreatedAt, Is.GreaterThan(s_2024));
         Assert.That(message.Content?.Count, Is.EqualTo(1));
@@ -219,7 +219,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             Assert.That(deleted, Is.True);
         }
 
-        message = await client.CreateMessageAsync(thread, ["Goodbye, world!"], new MessageCreationOptions()
+        message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Goodbye, world!"], new MessageCreationOptions()
         {
             Metadata =
             {
@@ -265,8 +265,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         {
             InitialMessages =
             {
-                new(["Hello, world!"]),
-                new(
+                new ThreadInitializationMessage(MessageRole.User, ["Hello, world!"]),
+                new ThreadInitializationMessage(MessageRole.User,
                 [
                     "Can you describe this image for me?",
                     MessageContent.FromImageUrl(new Uri("https://test.openai.com/image.png"))
@@ -308,7 +308,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             c => c.GetRuns(thread.Id),
             c => c.GetRunsAsync(thread.Id));
         Assert.That(runPage.Count, Is.EqualTo(0));
-        ThreadMessage message = await client.CreateMessageAsync(thread.Id, ["Hello, assistant!"]);
+        ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Hello, assistant!"]);
         Validate(message);
         ThreadRun run = await client.CreateRunAsync(thread.Id, assistant.Id);
         Validate(run);
@@ -366,8 +366,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
-            InitialMessages = { new(["Please graph the equation y = 3x + 4"]), },
-        });
+            InitialMessages = { new(MessageRole.User, ["Please graph the equation y = 3x + 4"]), },
+        }); 
         Validate(thread);
 
         ThreadRun run = await client.CreateRunAsync(thread, assistant);
@@ -446,7 +446,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             assistant,
             new ThreadCreationOptions()
             {
-                InitialMessages = { new(["What should I eat on Thursday?"]) },
+                InitialMessages = { new(MessageRole.User, ["What should I eat on Thursday?"]) },
             },
             new RunCreationOptions()
             {
@@ -543,7 +543,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         // Create a thread with an override vector store
         AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
-            InitialMessages = { new(["Using the files you have available, what's Filip's favorite food?"]) },
+            InitialMessages = { new(MessageRole.User, ["Using the files you have available, what's Filip's favorite food?"]) },
             ToolResources = new()
             {
                 FileSearch = new()
@@ -614,7 +614,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
-            InitialMessages = { new(["Hello there, assistant! How are you today?"]), },
+            InitialMessages = { new(MessageRole.User, ["Hello there, assistant! How are you today?"]), },
         });
         Validate(thread);
 
