@@ -75,6 +75,15 @@ public class ClientLoggingPolicy : PipelinePolicy
             await LogRequestContent(_logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
         }
 
+        if (async)
+        {
+            await OnLoggingRequestAsync(message).ConfigureAwait(false);
+        }
+        else
+        {
+            OnLoggingRequest(message);
+        }
+
         var before = Stopwatch.GetTimestamp();
 
         try
@@ -91,6 +100,14 @@ public class ClientLoggingPolicy : PipelinePolicy
         catch (Exception ex)
         {
             ClientModelLogMessages.ExceptionResponse(_logger, requestId, ex.ToString());
+            if (async)
+            {
+                await OnLoggingExceptionResponseAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLoggingExceptionResponse(message);
+            }
             throw;
         }
 
@@ -114,7 +131,35 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             ClientModelLogMessages.ResponseDelay(_logger, responseId, elapsed);
         }
+
+        // On log response
     }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual void OnLoggingRequest(PipelineMessage message) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    protected virtual ValueTask OnLoggingRequestAsync(PipelineMessage message) => default;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual void OnLoggingExceptionResponse(PipelineMessage message) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    protected virtual ValueTask OnLoggingExceptionResponseAsync(PipelineMessage message) => default;
 
     internal string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
