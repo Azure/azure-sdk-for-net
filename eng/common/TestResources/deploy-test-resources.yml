@@ -68,6 +68,7 @@ steps:
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
             -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -CI `
             -Force `
             -Verbose | Out-Null
@@ -89,6 +90,7 @@ steps:
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `
           -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -ServicePrincipalAuth `
           -Force `

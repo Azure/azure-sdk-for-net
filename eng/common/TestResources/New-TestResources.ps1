@@ -83,6 +83,14 @@ param (
     # List of CIDR ranges to add to specific resource firewalls, e.g. @(10.100.0.0/16, 10.200.0.0/16)
     [Parameter()]
     [ValidateCount(0,399)]
+    [Validatescript({
+        foreach ($range in $PSItem) {
+            if ($range -like '*/31' -or $range -like '*/32') {
+                throw "Firewall IP Ranges cannot contain a /31 or /32 CIDR"
+            }
+        }
+        return $true
+    })]
     [array] $AllowIpRanges = @(),
 
     [Parameter()]
@@ -128,9 +136,9 @@ $azsdkPipelineSubnetMap = @{
 
 $poolSubnet = ''
 if ($env:Pool) {
-  $poolSubnet = $azsdkPipelineSubnetMap[$env:Pool]
+    $poolSubnet = $azsdkPipelineSubnetMap[$env:Pool]
 } else {
-  Write-Warning "Pool environment variable is not defined! Subnet allowlisting will not work and live test resources may be non-compliant."
+    Write-Warning "Pool environment variable is not defined! Subnet allowlisting will not work and live test resources may be non-compliant."
 }
 
 if (!$ServicePrincipalAuth) {
@@ -877,7 +885,7 @@ try {
                     } elseif (!$CI) {
                         Write-Host "Enabling access to '$($account.Name)' from client IP"
                         $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
-                        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule @{ Action = 'allow'; IPAddressOrRange = $clientIp } | Out-Null }
+                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
                     }
                 }
             }
