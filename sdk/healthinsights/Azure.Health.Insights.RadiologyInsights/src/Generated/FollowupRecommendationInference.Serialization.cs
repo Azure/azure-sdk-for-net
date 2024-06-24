@@ -26,10 +26,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EffectiveDateTime))
+            if (Optional.IsDefined(EffectiveAt))
             {
-                writer.WritePropertyName("effectiveDateTime"u8);
-                writer.WriteStringValue(EffectiveDateTime);
+                writer.WritePropertyName("effectiveAt"u8);
+                writer.WriteStringValue(EffectiveAt);
             }
             if (Optional.IsDefined(EffectivePeriod))
             {
@@ -106,23 +106,23 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            string effectiveDateTime = default;
+            string effectiveAt = default;
             FhirR4Period effectivePeriod = default;
-            IReadOnlyList<RecommendationFinding> findings = default;
+            IList<RecommendationFinding> findings = default;
             bool isConditional = default;
             bool isOption = default;
             bool isGuideline = default;
             bool isHedging = default;
             ProcedureRecommendation recommendedProcedure = default;
             RadiologyInsightsInferenceType kind = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectiveDateTime"u8))
+                if (property.NameEquals("effectiveAt"u8))
                 {
-                    effectiveDateTime = property.Value.GetString();
+                    effectiveAt = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("effectivePeriod"u8))
@@ -202,7 +202,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 kind,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
                 serializedAdditionalRawData,
-                effectiveDateTime,
+                effectiveAt,
                 effectivePeriod,
                 findings ?? new ChangeTrackingList<RecommendationFinding>(),
                 isConditional,

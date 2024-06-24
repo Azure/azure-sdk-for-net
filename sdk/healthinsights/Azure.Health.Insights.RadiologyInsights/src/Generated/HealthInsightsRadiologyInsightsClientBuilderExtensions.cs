@@ -27,6 +27,15 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="RadiologyInsightsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
+        public static IAzureClientBuilder<RadiologyInsightsClient, RadiologyInsightsClientOptions> AddRadiologyInsightsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<RadiologyInsightsClient, RadiologyInsightsClientOptions>((options, cred) => new RadiologyInsightsClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="RadiologyInsightsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
         public static IAzureClientBuilder<RadiologyInsightsClient, RadiologyInsightsClientOptions> AddRadiologyInsightsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>

@@ -1,115 +1,117 @@
 ﻿{
-    "configuration": {
-        "inferenceOptions": {
-            "followupRecommendationOptions": {
-                "includeRecommendationsWithNoSpecifiedModality": true,
-                "includeRecommendationsInReferences": true,
-                "provideFocusedSentenceEvidence": true
-            },
-            "findingOptions": {
-                "provideFocusedSentenceEvidence": true
-            }
-        },
-        "locale": "en-US",
-        "verbose": false,
-        "includeEvidence": true
-    },
-    "patients": [
-        {
-            "id": "98824209",
-            "info": {
-                "sex": "male",
-                "birthDate": "1980-12-26T00:00:00+00:00",
-                "clinicalInfo": [
-                    {
-                        "resourceType": "Observation",
-                        "status": "unknown",
-                        "code": {
-                            "coding": [
-                                {
-                                    "system": "http://www.nlm.nih.gov/research/umls",
-                                    "code": "C0006826",
-                                    "display": "MalignantNeoplasms"
-                                }
-                            ]
-                        },
-                        "valueBoolean": true
-                    },
-                    {
-                        "resourceType": "Observation",
-                        "status": "unknown",
-                        "code": {
-                            "coding": [
-                                {
-                                    "system": "http://www.nlm.nih.gov/research/umls",
-                                    "code": "C0018802",
-                                    "display": "MalignantNeoplasms"
-                                }
-                            ]
-                        },
-                        "valueBoolean": true
-                    }
-                ]
-            },
-            "encounters": [
-                {
-                    "id": "encounterid1",
-                    "period": {
-                        "start": "2022-12-26T00:00:00",
-                        "end": "2022-12-26T00:00:00"
-                    },
-                    "class": "inpatient"
+    "jobData": {
+        "configuration": {
+            "inferenceOptions": {
+                "followupRecommendationOptions": {
+                    "includeRecommendationsWithNoSpecifiedModality": true,
+                    "includeRecommendationsInReferences": true,
+                    "provideFocusedSentenceEvidence": true
+                },
+                "findingOptions": {
+                    "provideFocusedSentenceEvidence": true
                 }
-            ],
-            "patientDocuments": [
-                {
-                    "type": "note",
-                    "clinicalType": "radiologyReport",
-                    "id": "docid1",
-                    "language": "en",
-                    "createdDateTime": "2022-12-26T00:00:00+00:00",
-                    "authors": [
+            },
+            "locale": "en-US",
+            "verbose": false,
+            "includeEvidence": true
+        },
+        "patients": [
+            {
+                "id": "98824209",
+                "info": {
+                    "sex": "male",
+                    "birthDate": "1980-12-26T00:00:00+00:00",
+                    "clinicalInfo": [
                         {
-                            "id": "authorid1",
-                            "name": "authorname1"
-                        }
-                    ],
-                    "specialtyType": "radiology",
-                    "administrativeMetadata": {
-                        "orderedProcedures": [
-                            {
-                                "code": {
-                                    "coding": [
-                                        {
-                                            "system": "Http://hl7.org/fhir/ValueSet/cpt-all",
-                                            "code": "76700",
-                                            "display": "US ABDOMEN"
-                                        }
-                                    ]
-                                },
-                                "description": "order procedure description 1"
+                            "resourceType": "Observation",
+                            "status": "unknown",
+                            "code": {
+                                "coding": [
+                                    {
+                                        "system": "http://www.nlm.nih.gov/research/umls",
+                                        "code": "C0006826",
+                                        "display": "MalignantNeoplasms"
+                                    }
+                                ]
                             },
+                            "valueBoolean": true
+                        },
+                        {
+                            "resourceType": "Observation",
+                            "status": "unknown",
+                            "code": {
+                                "coding": [
+                                    {
+                                        "system": "http://www.nlm.nih.gov/research/umls",
+                                        "code": "C0018802",
+                                        "display": "MalignantNeoplasms"
+                                    }
+                                ]
+                            },
+                            "valueBoolean": true
+                        }
+                    ]
+                },
+                "encounters": [
+                    {
+                        "id": "encounterid1",
+                        "period": {
+                            "start": "2022-12-26T00:00:00",
+                            "end": "2022-12-26T00:00:00"
+                        },
+                        "class": "inpatient"
+                    }
+                ],
+                "patientDocuments": [
+                    {
+                        "type": "note",
+                        "clinicalType": "radiologyReport",
+                        "id": "docid1",
+                        "language": "en",
+                        "createdDateTime": "2022-12-26T00:00:00+00:00",
+                        "authors": [
                             {
-                                "code": {
-                                    "coding": [
-                                        {
-                                            "system": "Http://hl7.org/fhir/ValueSet/cpt-all",
-                                            "code": "76700",
-                                            "display": "US ABDOMEN"
-                                        }
-                                    ]
-                                },
-                                "description": "order procedure description 2"
+                                "id": "authorid1",
+                                "name": "authorname1"
                             }
                         ],
-                        "encounterId": "encounterid1"
-                    },
-                    "content": {
-                        "sourceType": "inline",
-                        "value": "Indication: Evaluate for potential osteomyelitis.\n\nCovid test date: heart failure.\n\nService date: June 21, 2020. Diabetes.\n\nPatient is a 20-year-old female.\n\nThe stable pelvic nodule measured 3.1 x 2.2 x 3.3 cm, previously 3 cm.\n\nTwo severe cysts measured 3.1 cm x 2.2 cm and 11 mm.\n\nA mild to moderate lesion around the stomach measures 2-3 cm.\n\nTumor is up to 3 cm.\n\nTumor is larger than 3 cm.\n\nTumor is up to 2 cm x 3 cm.\n\nHe had neck pain from August 1 to August 14.\n\nAdvanced liver cancer with metastasis.\n\nEctopic pregnancy.\n\nIncomplete spontaneous abortion on June 5 at 3 pm.\n\nThese findings were communicated to Dr. Jones on September 5 at 4 pm.\n\nThe findings were sent to JANE DOE.\n\nOn January 5, The findings were discussed with Dr. Smith at 3 pm.\n\nA follow-up scan of the injury of the right foot within 2 weeks is recommended.\n\nAn x-ray of the fracture of the right arm in January 2022 is advised.\n\nI recommend a follow-up of the cancer.\n\nFindings: The left foot looks normal.\n\nAn enlarged elbow wound.\n\nThere is approximately 50% stenosis of the post bulbar left ICA.\n\nAcute sepsis.\n\nBirads 2.\n\nA changing tumor.\n\nBoth the FDA and Society of Breast Imaging/American College of Radiology recommend mammography as the most effective screening method for detecting breast cancer in its early, most treatable stages."
+                        "specialtyType": "radiology",
+                        "administrativeMetadata": {
+                            "orderedProcedures": [
+                                {
+                                    "code": {
+                                        "coding": [
+                                            {
+                                                "system": "Http://hl7.org/fhir/ValueSet/cpt-all",
+                                                "code": "76700",
+                                                "display": "US ABDOMEN"
+                                            }
+                                        ]
+                                    },
+                                    "description": "order procedure description 1"
+                                },
+                                {
+                                    "code": {
+                                        "coding": [
+                                            {
+                                                "system": "Http://hl7.org/fhir/ValueSet/cpt-all",
+                                                "code": "76700",
+                                                "display": "US ABDOMEN"
+                                            }
+                                        ]
+                                    },
+                                    "description": "order procedure description 2"
+                                }
+                            ],
+                            "encounterId": "encounterid1"
+                        },
+                        "content": {
+                            "sourceType": "inline",
+                            "value": "Indication: Evaluate for potential osteomyelitis.\n\nCovid test date: heart failure.\n\nService date: June 21, 2020. Diabetes.\n\nPatient is a 20-year-old female.\n\nThe stable pelvic nodule measured 3.1 x 2.2 x 3.3 cm, previously 3 cm.\n\nTwo severe cysts measured 3.1 cm x 2.2 cm and 11 mm.\n\nA mild to moderate lesion around the stomach measures 2-3 cm.\n\nTumor is up to 3 cm.\n\nTumor is larger than 3 cm.\n\nTumor is up to 2 cm x 3 cm.\n\nHe had neck pain from August 1 to August 14.\n\nAdvanced liver cancer with metastasis.\n\nEctopic pregnancy.\n\nIncomplete spontaneous abortion on June 5 at 3 pm.\n\nThese findings were communicated to Dr. Jones on September 5 at 4 pm.\n\nThe findings were sent to JANE DOE.\n\nOn January 5, The findings were discussed with Dr. Smith at 3 pm.\n\nA follow-up scan of the injury of the right foot within 2 weeks is recommended.\n\nAn x-ray of the fracture of the right arm in January 2022 is advised.\n\nI recommend a follow-up of the cancer.\n\nFindings: The left foot looks normal.\n\nAn enlarged elbow wound.\n\nThere is approximately 50% stenosis of the post bulbar left ICA.\n\nAcute sepsis.\n\nBirads 2.\n\nA changing tumor.\n\nBoth the FDA and Society of Breast Imaging/American College of Radiology recommend mammography as the most effective screening method for detecting breast cancer in its early, most treatable stages."
+                        }
                     }
-                }
-            ]
-        }
-    ]
+                ]
+            }
+        ]
+    }
 }

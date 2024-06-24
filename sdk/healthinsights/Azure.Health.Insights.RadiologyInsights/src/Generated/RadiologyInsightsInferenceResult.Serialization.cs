@@ -73,7 +73,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IReadOnlyList<RadiologyInsightsPatientResult> patientResults = default;
+            IList<RadiologyInsightsPatientResult> patientResults = default;
             string modelVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

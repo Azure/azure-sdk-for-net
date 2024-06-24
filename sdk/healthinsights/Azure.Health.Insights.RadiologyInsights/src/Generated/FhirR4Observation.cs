@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="status"> registered | preliminary | final | amended +. </param>
         /// <param name="code"> Type of observation (code / type). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal FhirR4Observation(ObservationStatusCodeType status, FhirR4CodeableConcept code) : base("Observation")
+        public FhirR4Observation(ObservationStatusCodeType status, FhirR4CodeableConcept code) : base("Observation")
         {
             Argument.AssertNotNull(code, nameof(code));
 
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="hasMember"> Related resource that belongs to the Observation group. </param>
         /// <param name="derivedFrom"> Related measurements the observation is made from. </param>
         /// <param name="component"> Component results. </param>
-        internal FhirR4Observation(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IReadOnlyList<FhirR4Resource> contained, IReadOnlyList<FhirR4Extension> extension, IReadOnlyList<FhirR4Extension> modifierExtension, IReadOnlyList<FhirR4Identifier> identifier, ObservationStatusCodeType status, IReadOnlyList<FhirR4CodeableConcept> category, FhirR4CodeableConcept code, FhirR4Reference subject, FhirR4Reference encounter, string effectiveDateTime, FhirR4Period effectivePeriod, string effectiveInstant, string issued, FhirR4Quantity valueQuantity, FhirR4CodeableConcept valueCodeableConcept, string valueString, bool? valueBoolean, int? valueInteger, FhirR4Range valueRange, FhirR4Ratio valueRatio, FhirR4SampledData valueSampledData, TimeSpan? valueTime, string valueDateTime, FhirR4Period valuePeriod, FhirR4CodeableConcept dataAbsentReason, IReadOnlyList<FhirR4CodeableConcept> interpretation, IReadOnlyList<FhirR4Annotation> note, FhirR4CodeableConcept bodySite, FhirR4CodeableConcept method, IReadOnlyList<FhirR4ObservationReferenceRange> referenceRange, IReadOnlyList<FhirR4Reference> hasMember, IReadOnlyList<FhirR4Reference> derivedFrom, IReadOnlyList<FhirR4ObservationComponent> component) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
+        internal FhirR4Observation(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IList<FhirR4Resource> contained, IList<FhirR4Extension> extension, IList<FhirR4Extension> modifierExtension, IList<FhirR4Identifier> identifier, ObservationStatusCodeType status, IList<FhirR4CodeableConcept> category, FhirR4CodeableConcept code, FhirR4Reference subject, FhirR4Reference encounter, string effectiveDateTime, FhirR4Period effectivePeriod, string effectiveInstant, string issued, FhirR4Quantity valueQuantity, FhirR4CodeableConcept valueCodeableConcept, string valueString, bool? valueBoolean, int? valueInteger, FhirR4Range valueRange, FhirR4Ratio valueRatio, FhirR4SampledData valueSampledData, TimeSpan? valueTime, string valueDateTime, FhirR4Period valuePeriod, FhirR4CodeableConcept dataAbsentReason, IList<FhirR4CodeableConcept> interpretation, IList<FhirR4Annotation> note, FhirR4CodeableConcept bodySite, FhirR4CodeableConcept method, IList<FhirR4ObservationReferenceRange> referenceRange, IList<FhirR4Reference> hasMember, IList<FhirR4Reference> derivedFrom, IList<FhirR4ObservationComponent> component) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
         {
             Identifier = identifier;
             Status = status;
@@ -117,64 +117,64 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Business Identifier for observation. </summary>
-        public IReadOnlyList<FhirR4Identifier> Identifier { get; }
+        public IList<FhirR4Identifier> Identifier { get; }
         /// <summary> registered | preliminary | final | amended +. </summary>
-        public ObservationStatusCodeType Status { get; }
+        public ObservationStatusCodeType Status { get; set; }
         /// <summary> Classification of  type of observation. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> Category { get; }
+        public IList<FhirR4CodeableConcept> Category { get; }
         /// <summary> Type of observation (code / type). </summary>
-        public FhirR4CodeableConcept Code { get; }
+        public FhirR4CodeableConcept Code { get; set; }
         /// <summary> Who and/or what the observation is about. </summary>
-        public FhirR4Reference Subject { get; }
+        public FhirR4Reference Subject { get; set; }
         /// <summary> Healthcare event during which this observation is made. </summary>
-        public FhirR4Reference Encounter { get; }
+        public FhirR4Reference Encounter { get; set; }
         /// <summary> Clinically relevant time/time-period for observation. </summary>
-        public string EffectiveDateTime { get; }
+        public string EffectiveDateTime { get; set; }
         /// <summary> Clinically relevant time/time-period for observation. </summary>
-        public FhirR4Period EffectivePeriod { get; }
+        public FhirR4Period EffectivePeriod { get; set; }
         /// <summary> Clinically relevant time/time-period for observation. </summary>
-        public string EffectiveInstant { get; }
+        public string EffectiveInstant { get; set; }
         /// <summary> Date/Time this version was made available. </summary>
-        public string Issued { get; }
+        public string Issued { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4Quantity ValueQuantity { get; }
+        public FhirR4Quantity ValueQuantity { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4CodeableConcept ValueCodeableConcept { get; }
+        public FhirR4CodeableConcept ValueCodeableConcept { get; set; }
         /// <summary> Actual result. </summary>
-        public string ValueString { get; }
+        public string ValueString { get; set; }
         /// <summary> Actual result. </summary>
-        public bool? ValueBoolean { get; }
+        public bool? ValueBoolean { get; set; }
         /// <summary> Actual result. </summary>
-        public int? ValueInteger { get; }
+        public int? ValueInteger { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4Range ValueRange { get; }
+        public FhirR4Range ValueRange { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4Ratio ValueRatio { get; }
+        public FhirR4Ratio ValueRatio { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4SampledData ValueSampledData { get; }
+        public FhirR4SampledData ValueSampledData { get; set; }
         /// <summary> Actual result. </summary>
-        public TimeSpan? ValueTime { get; }
+        public TimeSpan? ValueTime { get; set; }
         /// <summary> Actual result. </summary>
-        public string ValueDateTime { get; }
+        public string ValueDateTime { get; set; }
         /// <summary> Actual result. </summary>
-        public FhirR4Period ValuePeriod { get; }
+        public FhirR4Period ValuePeriod { get; set; }
         /// <summary> Why the result is missing. </summary>
-        public FhirR4CodeableConcept DataAbsentReason { get; }
+        public FhirR4CodeableConcept DataAbsentReason { get; set; }
         /// <summary> High, low, normal, etc. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> Interpretation { get; }
+        public IList<FhirR4CodeableConcept> Interpretation { get; }
         /// <summary> Comments about the observation. </summary>
-        public IReadOnlyList<FhirR4Annotation> Note { get; }
+        public IList<FhirR4Annotation> Note { get; }
         /// <summary> Observed body part. </summary>
-        public FhirR4CodeableConcept BodySite { get; }
+        public FhirR4CodeableConcept BodySite { get; set; }
         /// <summary> How it was done. </summary>
-        public FhirR4CodeableConcept Method { get; }
+        public FhirR4CodeableConcept Method { get; set; }
         /// <summary> Provides guide for interpretation. </summary>
-        public IReadOnlyList<FhirR4ObservationReferenceRange> ReferenceRange { get; }
+        public IList<FhirR4ObservationReferenceRange> ReferenceRange { get; }
         /// <summary> Related resource that belongs to the Observation group. </summary>
-        public IReadOnlyList<FhirR4Reference> HasMember { get; }
+        public IList<FhirR4Reference> HasMember { get; }
         /// <summary> Related measurements the observation is made from. </summary>
-        public IReadOnlyList<FhirR4Reference> DerivedFrom { get; }
+        public IList<FhirR4Reference> DerivedFrom { get; }
         /// <summary> Component results. </summary>
-        public IReadOnlyList<FhirR4ObservationComponent> Component { get; }
+        public IList<FhirR4ObservationComponent> Component { get; }
     }
 }

@@ -95,11 +95,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IReadOnlyList<FhirR4CodeableConcept> procedureCodes = default;
-            IReadOnlyList<ImagingProcedure> imagingProcedures = default;
+            IList<FhirR4CodeableConcept> procedureCodes = default;
+            IList<ImagingProcedure> imagingProcedures = default;
             OrderedProcedure orderedProcedure = default;
             RadiologyInsightsInferenceType kind = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
