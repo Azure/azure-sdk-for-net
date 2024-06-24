@@ -4,10 +4,6 @@
 
 ### Features Added
 
-This is the first beta release.
-
-### General New Features
-
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
