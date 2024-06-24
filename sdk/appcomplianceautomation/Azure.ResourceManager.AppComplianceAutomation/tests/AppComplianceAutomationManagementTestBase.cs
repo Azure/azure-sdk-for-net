@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
     {
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
-        protected ReportResourceCollection ReportResources { get; private set; }
+        protected AppComplianceReportCollection ReportResources { get; private set; }
 
         protected AppComplianceAutomationManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
