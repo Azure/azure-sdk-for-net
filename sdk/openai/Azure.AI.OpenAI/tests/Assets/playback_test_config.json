@@ -1,10 +1,10 @@
 ﻿{
     "default": {
-        "endpoint": "https://not-a-real-resource.openai.azure.com/",
-        "key": "not-a-real-key",
+        "endpoint": "https://Sanitized.openai.azure.com/",
+        "key": "Sanitized",
         "deployment": "gpt-4-turbo",
-        "subscription_id": "not-a-real-subs",
-        "resource_group": "not-a-real-rg"
+        "subscription_id": "Sanitized",
+        "resource_group": "Sanitized"
     },
     "audio": {
         "deployment": "whisper"
@@ -20,9 +20,9 @@
         "deployment": "dall-e-3"
     },
     "search": {
-        "endpoint": "https://not-a-real-resource.search.windows.net",
-        "key": "not-a-real-key",
-        "index": "notarealindex"
+        "endpoint": "https://Sanitized.search.windows.net",
+        "key": "Sanitized",
+        "index": "openaiwikisearchindex"
     },
     "tts": {
         "deployment": "tts"

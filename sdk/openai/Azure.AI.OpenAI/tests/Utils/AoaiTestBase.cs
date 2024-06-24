@@ -236,8 +236,8 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     /// <param name="stopCondition">When we should stop waiting.</param>
     /// <param name="waitTimeBetweenRequests">(Optional) The amount of time to wait between retries. This will be ignored in playback
     /// mode. Default is 2 seconds.</param>
-    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. The default is 2
-    /// minutes.</param>
+    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. This will be ignored in
+    /// playback mode. The default is 2 minutes.</param>
     /// <returns>The final state. This will return when the conditions have been met or we timed out.</returns>
     protected virtual Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<ClientResult<T>>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
         => WaitUntilReturnLast(initialValue, new Func<Task<T>>(async () => await getAsync().ConfigureAwait(false)), stopCondition, waitTimeBetweenRequests, maxWait);
@@ -252,12 +252,16 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     /// <param name="stopCondition">When we should stop waiting.</param>
     /// <param name="waitTimeBetweenRequests">(Optional) The amount of time to wait between retries. This will be ignored in playback
     /// mode. Default is 2 seconds.</param>
-    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. The default is 2
-    /// minutes.</param>
+    /// <param name="maxWait">(Optional) The maximum amount of time to wait until the condition becomes true. This will be ignored in
+    /// playback mode. The default is 2 minutes.</param>
     /// <returns>The final state. This will return when the conditions have been met or we timed out.</returns>
     protected virtual async Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<T>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
     {
-        DateTimeOffset stopTime = DateTimeOffset.Now + (maxWait ?? TimeSpan.FromMinutes(2));
+        TimeSpan max = Mode == RecordedTestMode.Playback
+            ? TimeSpan.FromSeconds(30)
+            : maxWait ?? TimeSpan.FromMinutes(2);
+
+        DateTimeOffset stopTime = DateTimeOffset.Now + max;
 
         T result = initialValue;
         while (!stopCondition(result) && DateTimeOffset.Now < stopTime)
