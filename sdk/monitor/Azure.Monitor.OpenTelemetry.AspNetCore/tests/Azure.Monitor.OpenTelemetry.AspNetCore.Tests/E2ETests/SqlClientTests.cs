@@ -4,6 +4,8 @@
 // The following tests were originally copied from OpenTelemetry and modified for Azure Monitor.
 // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/Instrumentation.SqlClient-1.9.0-beta.1/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs
 
+#if !NETFRAMEWORK
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -57,7 +59,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             _fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
         }
 
-#if !NETFRAMEWORK
         [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError, false)]
@@ -143,9 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 telemetryItem: telemetryItem,
                 activity: activity);
         }
-#endif
 
-#if !NETFRAMEWORK
         [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders", true, false)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders", true, false, false)]
@@ -239,7 +238,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 telemetryItem: telemetryItem,
                 activity: activity);
         }
-#endif
 
         internal static void ActivityEnrichment(Activity activity, string method, object obj)
         {
@@ -329,3 +327,4 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         }
     }
 }
+#endif
