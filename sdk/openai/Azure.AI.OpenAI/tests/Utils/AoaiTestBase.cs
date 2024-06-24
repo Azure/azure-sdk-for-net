@@ -332,9 +332,6 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
                 break;
-            case nameof(ModelClient):
-                clientObject = topLevelClient.GetModelClient();
-                break;
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };

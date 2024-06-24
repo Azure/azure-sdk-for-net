@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -347,16 +346,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            FlowLogInformation flowLogInformation = new FlowLogInformation(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), true)
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-},
-                },
-            };
+            FlowLogInformation flowLogInformation = new FlowLogInformation(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), true);
             ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation);
             FlowLogInformation result = lro.Value;
 

@@ -342,7 +342,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     private static readonly string s_aoaiEndpointEnvironmentVariable = "AZURE_OPENAI_ENDPOINT";
     private static readonly string s_aoaiApiKeyEnvironmentVariable = "AZURE_OPENAI_API_KEY";
     private static readonly string s_userAgentHeaderKey = "User-Agent";
-
-    internal static PipelineMessageClassifier PipelineMessageClassifier { get; } =
-         PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+    private static PipelineMessageClassifier _pipelineMessageClassifier;
+    internal static PipelineMessageClassifier PipelineMessageClassifier
+        => _pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 }

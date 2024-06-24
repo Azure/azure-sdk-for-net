@@ -273,7 +273,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
                     || d.Properties.ProvisioningState == "Canceled";
             },
             TimeSpan.FromSeconds(15),
-            TimeSpan.FromMinutes(20));
+            TimeSpan.FromMinutes(30));
 
         Assert.That(deployment.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
 
@@ -407,17 +407,18 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         bool success = false;
         while (DateTimeOffset.Now < stopTime)
         {
-            bool deleted = await rawClient.DeleteJobSyncOrAsync(IsAsync, jobId).ConfigureAwait(false);
-            if (deleted)
+            ClientResult result = IsAsync
+                ? await rawClient.DeleteJobAsync(jobId, noThrow).ConfigureAwait(false)
+                : rawClient.DeleteJob(jobId, noThrow);
+            Assert.That(result, Is.Not.Null);
+
+            // verify the deletion actually succeeded
+            result = await client.GetJobAsync(jobId, noThrow).ConfigureAwait(false);
+            var rawResponse = result.GetRawResponse();
+            success = rawResponse.Status == 404;
+            if (success)
             {
-                // verify the deletion actually succeeded
-                ClientResult result = await client.GetJobAsync(jobId, noThrow).ConfigureAwait(false);
-                var rawResponse = result.GetRawResponse();
-                success = rawResponse.Status == 404;
-                if (success)
-                {
-                    break;
-                }
+                break;
             }
 
             await Task.Delay(sleepTime).ConfigureAwait(false);

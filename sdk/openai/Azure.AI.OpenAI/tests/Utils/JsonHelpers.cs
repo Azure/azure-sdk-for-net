@@ -31,7 +31,7 @@ internal static class JsonHelpers
         Converters =
         {
             new ModelReaderWriterConverter(),
-            new UnixDateTimeOffsetConverter()
+            new UnixDateTimeConverter()
         }
     };
 

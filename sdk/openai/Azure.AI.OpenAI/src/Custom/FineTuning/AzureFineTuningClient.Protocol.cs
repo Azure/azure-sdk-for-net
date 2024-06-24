@@ -1,19 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.FineTuning;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
+using OpenAI.FineTuning;
 
 namespace Azure.AI.OpenAI.FineTuning;
 
 internal partial class AzureFineTuningClient : FineTuningClient
 {
+    private readonly PipelineMessageClassifier DeleteJobClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+
     public override ClientResult CreateJob(BinaryContent content, RequestOptions options = null)
     {
         using PipelineMessage message = CreateCreateJobRequestMessage(content, options);
@@ -92,6 +90,21 @@ internal partial class AzureFineTuningClient : FineTuningClient
         return ClientResult.FromResponse(response);
     }
 
+    [Experimental("AOAI001")]
+    public virtual ClientResult DeleteJob(string jobId, RequestOptions options = null)
+    {
+        using PipelineMessage message = CreateDeleteJobRequestMessage(jobId, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [Experimental("AOAI001")]
+    public virtual async Task<ClientResult> DeleteJobAsync(string jobId, RequestOptions options = null)
+    {
+        using PipelineMessage message = CreateDeleteJobRequestMessage(jobId, options);
+        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+        return ClientResult.FromResponse(response);
+    }
+
     private PipelineMessage CreateCreateJobRequestMessage(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
@@ -144,6 +157,15 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithMethod("POST")
             .WithPath("fine_tuning", "jobs", jobId, "cancel")
             .WithAccept("application/json")
+            .WithOptions(options)
+            .Build();
+
+    private PipelineMessage CreateDeleteJobRequestMessage(string jobId, RequestOptions options)
+        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
+            .WithMethod("DELETE")
+            .WithPath("fine_tuning", "jobs", jobId)
+            .WithAccept("application/json")
+            .WithClassifier(DeleteJobClassifier)
             .WithOptions(options)
             .Build();
 }
