@@ -58,6 +58,17 @@ Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
 Console.WriteLine(results);
 ```
 
+## Get Polygon
+
+```C# Snippet:GetPolygon
+GetPolygonOptions options = new GetPolygonOptions()
+{
+    Coordinates = new GeoPosition(121.5, 25.0)
+};
+Response<Boundary> result = client.GetPolygon(options);
+Console.WriteLine(result);
+```
+
 ## Get Reverse Geocoding
 
 Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. You can use `GetReverseGeocoding` (or `GetReverseGeocodingAsync` for asynchronous call):

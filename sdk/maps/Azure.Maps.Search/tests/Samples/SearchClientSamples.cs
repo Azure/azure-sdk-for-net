@@ -17,6 +17,7 @@ using Azure.ResourceManager.Maps.Models;
 using NUnit.Framework;
 using Azure.Core.GeoJson;
 using Azure.Maps.Search.Models.Queries;
+using Azure.Maps.Search.Models.Options;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -116,6 +117,25 @@ namespace Azure.Maps.Search.Tests
                     };
             Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
             Console.WriteLine(results);
+            #endregion
+        }
+
+        [Test]
+        public void GetPolygon()
+        {
+            var clientOptions = new MapsSearchClientOptions()
+            {
+                Endpoint = TestEnvironment.Endpoint
+            };
+            var clientId = TestEnvironment.MapAccountClientId;
+            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetPolygon
+            GetPolygonOptions options = new GetPolygonOptions()
+            {
+                Coordinates = new GeoPosition(121.5, 25.0)
+            };
+            Response<Boundary> result = client.GetPolygon(options);
+            Console.WriteLine(result);
             #endregion
         }
 

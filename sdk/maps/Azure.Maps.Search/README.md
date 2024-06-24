@@ -168,6 +168,17 @@ Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
 Console.WriteLine(results);
 ```
 
+### Example Get Polygon
+
+```C# Snippet:GetPolygon
+GetPolygonOptions options = new GetPolygonOptions()
+{
+    Coordinates = new GeoPosition(121.5, 25.0)
+};
+Response<Boundary> result = client.GetPolygon(options);
+Console.WriteLine(result);
+```
+
 ### Example Get Reverse Geocoding
 
 ```C# Snippet:GetReverseGeocoding
