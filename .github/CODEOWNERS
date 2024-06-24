@@ -995,9 +995,6 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
-# Reviewers to double check any API changes
-/sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
-
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng

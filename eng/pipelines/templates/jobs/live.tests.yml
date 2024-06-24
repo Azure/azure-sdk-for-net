@@ -173,6 +173,10 @@ jobs:
             pwsh: true
             ScriptType: InlineScript
             Inline: >-
+              $account = (Get-AzContext).Account;
+              $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+              $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+
               dotnet test eng/service.proj
               --framework $(TestTargetFramework)
               --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
@@ -194,6 +198,7 @@ jobs:
               exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 
