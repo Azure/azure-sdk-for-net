@@ -601,16 +601,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informatica/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
