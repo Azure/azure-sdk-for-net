@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the OracleGIVersion data model.
     /// GiVersion resource definition
-    /// Serialized Name: GiVersion
     /// </summary>
     public partial class OracleGIVersionData : ResourceData
     {
@@ -62,30 +61,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: GiVersion.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleGIVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GiVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OracleGIVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OracleGIVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: GiVersion.properties
-        /// </summary>
-        internal GiVersionProperties Properties { get; set; }
-        /// <summary>
-        /// A valid Oracle Grid Infrastructure (GI) software version.
-        /// Serialized Name: GiVersionProperties.version
-        /// </summary>
-        public string GiVersion
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal OracleGIVersionProperties Properties { get; set; }
+        /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
+        public string OracleGIVersion
         {
             get => Properties is null ? default : Properties.Version;
-            set => Properties = new GiVersionProperties(value);
+            set => Properties = new OracleGIVersionProperties(value);
         }
     }
 }

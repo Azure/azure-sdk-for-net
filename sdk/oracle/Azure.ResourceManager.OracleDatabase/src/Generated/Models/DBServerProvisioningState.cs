@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// DbServerProvisioningState enum
-    /// Serialized Name: DbServerProvisioningState
-    /// </summary>
+    /// <summary> DbServerProvisioningState enum. </summary>
     public readonly partial struct DBServerProvisioningState : IEquatable<DBServerProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DeletedValue = "Deleted";
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
 
-        /// <summary>
-        /// Indicates that resource in Creating state
-        /// Serialized Name: DbServerProvisioningState.Creating
-        /// </summary>
+        /// <summary> Indicates that resource in Creating state. </summary>
         public static DBServerProvisioningState Creating { get; } = new DBServerProvisioningState(CreatingValue);
-        /// <summary>
-        /// Indicates that resource in Available state
-        /// Serialized Name: DbServerProvisioningState.Available
-        /// </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static DBServerProvisioningState Available { get; } = new DBServerProvisioningState(AvailableValue);
-        /// <summary>
-        /// Indicates that resource in Unavailable state
-        /// Serialized Name: DbServerProvisioningState.Unavailable
-        /// </summary>
+        /// <summary> Indicates that resource in Unavailable state. </summary>
         public static DBServerProvisioningState Unavailable { get; } = new DBServerProvisioningState(UnavailableValue);
-        /// <summary>
-        /// Indicates that resource in Deleting state
-        /// Serialized Name: DbServerProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Indicates that resource in Deleting state. </summary>
         public static DBServerProvisioningState Deleting { get; } = new DBServerProvisioningState(DeletingValue);
-        /// <summary>
-        /// Indicates that resource in Deleted state
-        /// Serialized Name: DbServerProvisioningState.Deleted
-        /// </summary>
+        /// <summary> Indicates that resource in Deleted state. </summary>
         public static DBServerProvisioningState Deleted { get; } = new DBServerProvisioningState(DeletedValue);
-        /// <summary>
-        /// Indicates that resource maintenance in progress state
-        /// Serialized Name: DbServerProvisioningState.MaintenanceInProgress
-        /// </summary>
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static DBServerProvisioningState MaintenanceInProgress { get; } = new DBServerProvisioningState(MaintenanceInProgressValue);
         /// <summary> Determines if two <see cref="DBServerProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DBServerProvisioningState left, DBServerProvisioningState right) => left.Equals(right);

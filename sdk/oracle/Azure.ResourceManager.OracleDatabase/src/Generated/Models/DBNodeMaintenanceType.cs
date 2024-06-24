@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The type of database node maintenance.
-    /// Serialized Name: DbNodeMaintenanceType
-    /// </summary>
+    /// <summary> The type of database node maintenance. </summary>
     public readonly partial struct DBNodeMaintenanceType : IEquatable<DBNodeMaintenanceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string VmdbRebootMigrationValue = "VmdbRebootMigration";
 
-        /// <summary>
-        /// VMDB reboot migration maintenance type
-        /// Serialized Name: DbNodeMaintenanceType.VmdbRebootMigration
-        /// </summary>
+        /// <summary> VMDB reboot migration maintenance type. </summary>
         public static DBNodeMaintenanceType VmdbRebootMigration { get; } = new DBNodeMaintenanceType(VmdbRebootMigrationValue);
         /// <summary> Determines if two <see cref="DBNodeMaintenanceType"/> values are the same. </summary>
         public static bool operator ==(DBNodeMaintenanceType left, DBNodeMaintenanceType right) => left.Equals(right);

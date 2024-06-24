@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The response of a SystemVersion list operation.
-    /// Serialized Name: SystemVersionListResult
-    /// </summary>
+    /// <summary> The response of a SystemVersion list operation. </summary>
     internal partial class SystemVersionListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SystemVersionListResult"/>. </summary>
-        /// <param name="value">
-        /// The SystemVersion items on this page
-        /// Serialized Name: SystemVersionListResult.value
-        /// </param>
+        /// <param name="value"> The SystemVersion items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SystemVersionListResult(IEnumerable<OracleSystemVersionData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemVersionListResult"/>. </summary>
-        /// <param name="value">
-        /// The SystemVersion items on this page
-        /// Serialized Name: SystemVersionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: SystemVersionListResult.nextLink
-        /// </param>
+        /// <param name="value"> The SystemVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SystemVersionListResult(IReadOnlyList<OracleSystemVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// The SystemVersion items on this page
-        /// Serialized Name: SystemVersionListResult.value
-        /// </summary>
+        /// <summary> The SystemVersion items on this page. </summary>
         public IReadOnlyList<OracleSystemVersionData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: SystemVersionListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

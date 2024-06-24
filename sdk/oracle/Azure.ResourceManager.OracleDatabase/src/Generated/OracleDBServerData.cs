@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the OracleDBServer data model.
     /// DbServer resource model
-    /// Serialized Name: DbServer
     /// </summary>
     public partial class OracleDBServerData : ResourceData
     {
@@ -62,21 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DbServer.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DBServerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OracleDBServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OracleDBServerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DbServer.properties
-        /// </summary>
-        public DBServerProperties Properties { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public OracleDBServerProperties Properties { get; set; }
     }
 }

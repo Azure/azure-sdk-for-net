@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleState"u8);
                 writer.WriteStringValue(LifecycleState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeAssigned))
+            if (options.Format != "W" && Optional.IsDefined(AssignedOn))
             {
                 writer.WritePropertyName("timeAssigned"u8);
-                writer.WriteStringValue(TimeAssigned.Value, "O");
+                writer.WriteStringValue(AssignedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string ipAddress = default;
-            string vmOcid = default;
-            string ocid = default;
+            ResourceIdentifier vmOcid = default;
+            ResourceIdentifier ocid = default;
             string domain = default;
             string lifecycleDetails = default;
-            AzureResourceProvisioningState? provisioningState = default;
+            OracleDatabaseProvisioningState? provisioningState = default;
             VirtualNetworkAddressLifecycleState? lifecycleState = default;
             DateTimeOffset? timeAssigned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,12 +123,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("vmOcid"u8))
                 {
-                    vmOcid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmOcid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("domain"u8))
@@ -147,7 +155,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleState"u8))

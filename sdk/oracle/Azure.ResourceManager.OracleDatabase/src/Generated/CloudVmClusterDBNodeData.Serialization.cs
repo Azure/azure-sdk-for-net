@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
-            DBNodeProperties properties = default;
+            CloudVmClusterDBNodeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    properties = DBNodeProperties.DeserializeDBNodeProperties(property.Value, options);
+                    properties = CloudVmClusterDBNodeProperties.DeserializeCloudVmClusterDBNodeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

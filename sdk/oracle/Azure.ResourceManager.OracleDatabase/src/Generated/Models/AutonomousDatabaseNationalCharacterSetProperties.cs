@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// AutonomousDatabaseNationalCharacterSet resource model
-    /// Serialized Name: AutonomousDatabaseNationalCharacterSetProperties
-    /// </summary>
+    /// <summary> AutonomousDatabaseNationalCharacterSet resource model. </summary>
     internal partial class AutonomousDatabaseNationalCharacterSetProperties
     {
         /// <summary>
@@ -49,20 +46,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetProperties"/>. </summary>
-        /// <param name="characterSet">
-        /// The Oracle Autonomous Database supported national character sets.
-        /// Serialized Name: AutonomousDatabaseNationalCharacterSetProperties.characterSet
-        /// </param>
+        /// <param name="characterSet"> The Oracle Autonomous Database supported national character sets. </param>
         public AutonomousDatabaseNationalCharacterSetProperties(string characterSet)
         {
             CharacterSet = characterSet;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetProperties"/>. </summary>
-        /// <param name="characterSet">
-        /// The Oracle Autonomous Database supported national character sets.
-        /// Serialized Name: AutonomousDatabaseNationalCharacterSetProperties.characterSet
-        /// </param>
+        /// <param name="characterSet"> The Oracle Autonomous Database supported national character sets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseNationalCharacterSetProperties(string characterSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,10 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// The Oracle Autonomous Database supported national character sets.
-        /// Serialized Name: AutonomousDatabaseNationalCharacterSetProperties.characterSet
-        /// </summary>
+        /// <summary> The Oracle Autonomous Database supported national character sets. </summary>
         public string CharacterSet { get; }
     }
 }

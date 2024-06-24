@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// DbServer Patching Properties
-    /// Serialized Name: DbServerPatchingDetails
-    /// </summary>
+    /// <summary> DbServer Patching Properties. </summary>
     public partial class DBServerPatchingDetails
     {
         /// <summary>
@@ -54,51 +51,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DBServerPatchingDetails"/>. </summary>
-        /// <param name="estimatedPatchDuration">
-        /// Estimated Patch Duration
-        /// Serialized Name: DbServerPatchingDetails.estimatedPatchDuration
-        /// </param>
-        /// <param name="patchingStatus">
-        /// Patching Status
-        /// Serialized Name: DbServerPatchingDetails.patchingStatus
-        /// </param>
-        /// <param name="timePatchingEnded">
-        /// Time Patching Ended
-        /// Serialized Name: DbServerPatchingDetails.timePatchingEnded
-        /// </param>
-        /// <param name="timePatchingStarted">
-        /// Time Patching Started
-        /// Serialized Name: DbServerPatchingDetails.timePatchingStarted
-        /// </param>
+        /// <param name="estimatedPatchDuration"> Estimated Patch Duration. </param>
+        /// <param name="patchingStatus"> Patching Status. </param>
+        /// <param name="patchingEndedOn"> Time Patching Ended. </param>
+        /// <param name="patchingStartedOn"> Time Patching Started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBServerPatchingDetails(int? estimatedPatchDuration, DBServerPatchingStatus? patchingStatus, DateTimeOffset? timePatchingEnded, DateTimeOffset? timePatchingStarted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DBServerPatchingDetails(int? estimatedPatchDuration, DBServerPatchingStatus? patchingStatus, DateTimeOffset? patchingEndedOn, DateTimeOffset? patchingStartedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EstimatedPatchDuration = estimatedPatchDuration;
             PatchingStatus = patchingStatus;
-            TimePatchingEnded = timePatchingEnded;
-            TimePatchingStarted = timePatchingStarted;
+            PatchingEndedOn = patchingEndedOn;
+            PatchingStartedOn = patchingStartedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Estimated Patch Duration
-        /// Serialized Name: DbServerPatchingDetails.estimatedPatchDuration
-        /// </summary>
+        /// <summary> Estimated Patch Duration. </summary>
         public int? EstimatedPatchDuration { get; }
-        /// <summary>
-        /// Patching Status
-        /// Serialized Name: DbServerPatchingDetails.patchingStatus
-        /// </summary>
+        /// <summary> Patching Status. </summary>
         public DBServerPatchingStatus? PatchingStatus { get; }
-        /// <summary>
-        /// Time Patching Ended
-        /// Serialized Name: DbServerPatchingDetails.timePatchingEnded
-        /// </summary>
-        public DateTimeOffset? TimePatchingEnded { get; }
-        /// <summary>
-        /// Time Patching Started
-        /// Serialized Name: DbServerPatchingDetails.timePatchingStarted
-        /// </summary>
-        public DateTimeOffset? TimePatchingStarted { get; }
+        /// <summary> Time Patching Ended. </summary>
+        public DateTimeOffset? PatchingEndedOn { get; }
+        /// <summary> Time Patching Started. </summary>
+        public DateTimeOffset? PatchingStartedOn { get; }
     }
 }

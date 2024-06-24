@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
-            DnsPrivateZoneProperties properties = default;
+            OracleDnsPrivateZoneProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    properties = DnsPrivateZoneProperties.DeserializeDnsPrivateZoneProperties(property.Value, options);
+                    properties = OracleDnsPrivateZoneProperties.DeserializeOracleDnsPrivateZoneProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

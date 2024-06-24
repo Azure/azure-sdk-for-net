@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
-            DBSystemShapeProperties properties = default;
+            OracleDBSystemShapeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    properties = DBSystemShapeProperties.DeserializeDBSystemShapeProperties(property.Value, options);
+                    properties = OracleDBSystemShapeProperties.DeserializeOracleDBSystemShapeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

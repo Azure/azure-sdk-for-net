@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the AutonomousDBVersion data model.
     /// AutonomousDbVersion resource definition
-    /// Serialized Name: AutonomousDbVersion
     /// </summary>
     public partial class AutonomousDBVersionData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDbVersion.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDBVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDBVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDbVersion.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public AutonomousDBVersionProperties Properties { get; set; }
     }
 }

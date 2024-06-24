@@ -507,19 +507,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.AddVms");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterRestClient.AddVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudVmClusterRestClient.AddVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -553,19 +553,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.AddVms");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterRestClient.AddVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudVmClusterRestClient.AddVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -598,16 +598,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PrivateIPAddressProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateIPAddressProperties> GetPrivateIPAddressesAsync(PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -631,16 +631,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateIPAddressProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateIPAddressProperties> GetPrivateIPAddresses(PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -665,19 +665,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.RemoveVms");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterRestClient.RemoveVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudVmClusterRestClient.RemoveVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -711,19 +711,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.RemoveVms");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterRestClient.RemoveVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudVmClusterRestClient.RemoveVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

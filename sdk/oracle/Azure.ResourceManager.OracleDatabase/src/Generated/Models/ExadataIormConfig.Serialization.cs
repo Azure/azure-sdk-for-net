@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IReadOnlyList<DBIormConfig> dbPlans = default;
             string lifecycleDetails = default;
             IormLifecycleState? lifecycleState = default;
-            Objective? objective = default;
+            IormObjective? objective = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    objective = new Objective(property.Value.GetString());
+                    objective = new IormObjective(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

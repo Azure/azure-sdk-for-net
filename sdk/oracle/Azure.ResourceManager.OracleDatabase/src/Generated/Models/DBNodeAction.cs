@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// DbNode action object
-    /// Serialized Name: DbNodeAction
-    /// </summary>
+    /// <summary> DbNode action object. </summary>
     public partial class DBNodeAction
     {
         /// <summary>
@@ -49,22 +46,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DBNodeAction"/>. </summary>
-        /// <param name="action">
-        /// Db action
-        /// Serialized Name: DbNodeAction.action
-        /// </param>
-        public DBNodeAction(DBNodeActionEnum action)
+        /// <param name="action"> Db action. </param>
+        public DBNodeAction(DBNodeActionType action)
         {
             Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="DBNodeAction"/>. </summary>
-        /// <param name="action">
-        /// Db action
-        /// Serialized Name: DbNodeAction.action
-        /// </param>
+        /// <param name="action"> Db action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBNodeAction(DBNodeActionEnum action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DBNodeAction(DBNodeActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,10 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// Db action
-        /// Serialized Name: DbNodeAction.action
-        /// </summary>
-        public DBNodeActionEnum Action { get; }
+        /// <summary> Db action. </summary>
+        public DBNodeActionType Action { get; }
     }
 }

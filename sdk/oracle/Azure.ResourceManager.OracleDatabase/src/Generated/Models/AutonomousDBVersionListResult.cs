@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The response of a AutonomousDbVersion list operation.
-    /// Serialized Name: AutonomousDbVersionListResult
-    /// </summary>
+    /// <summary> The response of a AutonomousDbVersion list operation. </summary>
     internal partial class AutonomousDBVersionListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionListResult"/>. </summary>
-        /// <param name="value">
-        /// The AutonomousDbVersion items on this page
-        /// Serialized Name: AutonomousDbVersionListResult.value
-        /// </param>
+        /// <param name="value"> The AutonomousDbVersion items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutonomousDBVersionListResult(IEnumerable<AutonomousDBVersionData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionListResult"/>. </summary>
-        /// <param name="value">
-        /// The AutonomousDbVersion items on this page
-        /// Serialized Name: AutonomousDbVersionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: AutonomousDbVersionListResult.nextLink
-        /// </param>
+        /// <param name="value"> The AutonomousDbVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDBVersionListResult(IReadOnlyList<AutonomousDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// The AutonomousDbVersion items on this page
-        /// Serialized Name: AutonomousDbVersionListResult.value
-        /// </summary>
+        /// <summary> The AutonomousDbVersion items on this page. </summary>
         public IReadOnlyList<AutonomousDBVersionData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: AutonomousDbVersionListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterDBNodeResource cloudVmClusterDBNode = client.GetCloudVmClusterDBNodeResource(cloudVmClusterDBNodeResourceId);
 
             // invoke the operation
-            DBNodeAction body = new DBNodeAction(DBNodeActionEnum.Start);
+            DBNodeAction body = new DBNodeAction(DBNodeActionType.Start);
             ArmOperation<CloudVmClusterDBNodeResource> lro = await cloudVmClusterDBNode.ActionAsync(WaitUntil.Completed, body);
             CloudVmClusterDBNodeResource result = lro.Value;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterDBNodeResource cloudVmClusterDBNode = client.GetCloudVmClusterDBNodeResource(cloudVmClusterDBNodeResourceId);
 
             // invoke the operation
-            DBNodeAction body = new DBNodeAction(DBNodeActionEnum.Start);
+            DBNodeAction body = new DBNodeAction(DBNodeActionType.Start);
             ArmOperation<CloudVmClusterDBNodeResource> lro = await cloudVmClusterDBNode.ActionAsync(WaitUntil.Completed, body);
             CloudVmClusterDBNodeResource result = lro.Value;
 

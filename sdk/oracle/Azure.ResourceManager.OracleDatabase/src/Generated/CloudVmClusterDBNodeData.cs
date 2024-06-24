@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the CloudVmClusterDBNode data model.
     /// The DbNode resource belonging to vmCluster
-    /// Serialized Name: DbNode
     /// </summary>
     public partial class CloudVmClusterDBNodeData : ResourceData
     {
@@ -62,21 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DbNode.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterDBNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DBNodeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CloudVmClusterDBNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudVmClusterDBNodeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DbNode.properties
-        /// </summary>
-        public DBNodeProperties Properties { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public CloudVmClusterDBNodeProperties Properties { get; set; }
     }
 }

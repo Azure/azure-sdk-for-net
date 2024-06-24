@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// virtualNetworkAddress resource properties
-    /// Serialized Name: VirtualNetworkAddressProperties
-    /// </summary>
+    /// <summary> virtualNetworkAddress resource properties. </summary>
     public partial class CloudVmClusterVirtualNetworkAddressProperties
     {
         /// <summary>
@@ -54,40 +52,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterVirtualNetworkAddressProperties"/>. </summary>
-        /// <param name="ipAddress">
-        /// Virtual network Address address.
-        /// Serialized Name: VirtualNetworkAddressProperties.ipAddress
-        /// </param>
-        /// <param name="vmOcid">
-        /// Virtual Machine OCID.
-        /// Serialized Name: VirtualNetworkAddressProperties.vmOcid
-        /// </param>
-        /// <param name="ocid">
-        /// Application VIP OCID.
-        /// Serialized Name: VirtualNetworkAddressProperties.ocid
-        /// </param>
-        /// <param name="domain">
-        /// Virtual network address fully qualified domain name.
-        /// Serialized Name: VirtualNetworkAddressProperties.domain
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state of the application virtual IP (VIP) address.
-        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleDetails
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure resource provisioning state.
-        /// Serialized Name: VirtualNetworkAddressProperties.provisioningState
-        /// </param>
-        /// <param name="lifecycleState">
-        /// virtual network address lifecycle state.
-        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleState
-        /// </param>
-        /// <param name="timeAssigned">
-        /// The date and time when the create operation for the application virtual IP (VIP) address completed.
-        /// Serialized Name: VirtualNetworkAddressProperties.timeAssigned
-        /// </param>
+        /// <param name="ipAddress"> Virtual network Address address. </param>
+        /// <param name="vmOcid"> Virtual Machine OCID. </param>
+        /// <param name="ocid"> Application VIP OCID. </param>
+        /// <param name="domain"> Virtual network address fully qualified domain name. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </param>
+        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="lifecycleState"> virtual network address lifecycle state. </param>
+        /// <param name="assignedOn"> The date and time when the create operation for the application virtual IP (VIP) address completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterVirtualNetworkAddressProperties(string ipAddress, string vmOcid, string ocid, string domain, string lifecycleDetails, AzureResourceProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? timeAssigned, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterVirtualNetworkAddressProperties(string ipAddress, ResourceIdentifier vmOcid, ResourceIdentifier ocid, string domain, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? assignedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
             VmOcid = vmOcid;
@@ -96,49 +70,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             LifecycleDetails = lifecycleDetails;
             ProvisioningState = provisioningState;
             LifecycleState = lifecycleState;
-            TimeAssigned = timeAssigned;
+            AssignedOn = assignedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Virtual network Address address.
-        /// Serialized Name: VirtualNetworkAddressProperties.ipAddress
-        /// </summary>
+        /// <summary> Virtual network Address address. </summary>
         public string IPAddress { get; set; }
-        /// <summary>
-        /// Virtual Machine OCID.
-        /// Serialized Name: VirtualNetworkAddressProperties.vmOcid
-        /// </summary>
-        public string VmOcid { get; set; }
-        /// <summary>
-        /// Application VIP OCID.
-        /// Serialized Name: VirtualNetworkAddressProperties.ocid
-        /// </summary>
-        public string Ocid { get; }
-        /// <summary>
-        /// Virtual network address fully qualified domain name.
-        /// Serialized Name: VirtualNetworkAddressProperties.domain
-        /// </summary>
+        /// <summary> Virtual Machine OCID. </summary>
+        public ResourceIdentifier VmOcid { get; set; }
+        /// <summary> Application VIP OCID. </summary>
+        public ResourceIdentifier Ocid { get; }
+        /// <summary> Virtual network address fully qualified domain name. </summary>
         public string Domain { get; }
-        /// <summary>
-        /// Additional information about the current lifecycle state of the application virtual IP (VIP) address.
-        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleDetails
-        /// </summary>
+        /// <summary> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// Azure resource provisioning state.
-        /// Serialized Name: VirtualNetworkAddressProperties.provisioningState
-        /// </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// virtual network address lifecycle state.
-        /// Serialized Name: VirtualNetworkAddressProperties.lifecycleState
-        /// </summary>
+        /// <summary> Azure resource provisioning state. </summary>
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
+        /// <summary> virtual network address lifecycle state. </summary>
         public VirtualNetworkAddressLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// The date and time when the create operation for the application virtual IP (VIP) address completed.
-        /// Serialized Name: VirtualNetworkAddressProperties.timeAssigned
-        /// </summary>
-        public DateTimeOffset? TimeAssigned { get; }
+        /// <summary> The date and time when the create operation for the application virtual IP (VIP) address completed. </summary>
+        public DateTimeOffset? AssignedOn { get; }
     }
 }

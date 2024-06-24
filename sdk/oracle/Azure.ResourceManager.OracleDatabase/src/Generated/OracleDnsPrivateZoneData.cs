@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the OracleDnsPrivateZone data model.
     /// DnsPrivateZone resource definition
-    /// Serialized Name: DnsPrivateZone
     /// </summary>
     public partial class OracleDnsPrivateZoneData : ResourceData
     {
@@ -62,21 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DnsPrivateZone.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDnsPrivateZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsPrivateZoneProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OracleDnsPrivateZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OracleDnsPrivateZoneProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: DnsPrivateZone.properties
-        /// </summary>
-        public DnsPrivateZoneProperties Properties { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public OracleDnsPrivateZoneProperties Properties { get; set; }
     }
 }

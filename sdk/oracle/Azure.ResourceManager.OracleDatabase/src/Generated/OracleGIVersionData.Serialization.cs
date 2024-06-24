@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
-            GiVersionProperties properties = default;
+            OracleGIVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    properties = GiVersionProperties.DeserializeGiVersionProperties(property.Value, options);
+                    properties = OracleGIVersionProperties.DeserializeOracleGIVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

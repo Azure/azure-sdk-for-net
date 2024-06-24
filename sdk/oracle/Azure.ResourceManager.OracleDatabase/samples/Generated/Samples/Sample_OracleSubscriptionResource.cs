@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            ArmOperation<ActivationLinks> lro = await oracleSubscription.GetActivationLinksAsync(WaitUntil.Completed);
-            ActivationLinks result = lro.Value;
+            ArmOperation<CloudAccountActivationLinks> lro = await oracleSubscription.GetActivationLinksAsync(WaitUntil.Completed);
+            CloudAccountActivationLinks result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

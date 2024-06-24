@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string version = default;
-            WorkloadType? dbWorkload = default;
+            AutonomousDatabaseWorkloadType? dbWorkload = default;
             bool? isDefaultForFree = default;
             bool? isDefaultForPaid = default;
             bool? isFreeTierEnabled = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dbWorkload = new WorkloadType(property.Value.GetString());
+                    dbWorkload = new AutonomousDatabaseWorkloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isDefaultForFree"u8))

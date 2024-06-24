@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                 Properties = new CloudVmClusterVirtualNetworkAddressProperties()
                 {
                     IPAddress = "192.168.0.1",
-                    VmOcid = "ocid1..aaaa",
+                    VmOcid = new ResourceIdentifier("ocid1..aaaa"),
                 },
             };
             ArmOperation<CloudVmClusterVirtualNetworkAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualnetworkaddressname, data);
