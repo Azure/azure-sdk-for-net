@@ -294,10 +294,11 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         "AZURE_SERVICE_DIRECTORY" = $serviceName.ToUpperInvariant();
     }
 
+    $deploymentOutputs["${serviceDirectoryPrefix}TENANT_ID"] = $azContext.Tenant.Id;
+    $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_ID"] = $TestApplicationId;
+    
     if ($ServicePrincipalAuth) {
-        $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_ID"] = $TestApplicationId;
         $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_SECRET"] = $TestApplicationSecret;
-        $deploymentOutputs["${serviceDirectoryPrefix}TENANT_ID"] = $azContext.Tenant.Id;
     }
 
     MergeHashes $environmentVariables $(Get-Variable deploymentOutputs)

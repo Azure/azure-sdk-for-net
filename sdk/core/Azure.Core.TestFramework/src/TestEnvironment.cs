@@ -241,8 +241,7 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        _credential = new DefaultAzureCredential(
-                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
+                        throw new InvalidOperationException("Environment auth not configured properly");
                     }
                 }
 
