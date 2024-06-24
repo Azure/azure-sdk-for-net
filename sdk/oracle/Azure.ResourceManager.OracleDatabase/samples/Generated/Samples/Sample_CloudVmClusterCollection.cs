@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             }, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1"), "19.0.0.0", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"), "cluster 1")
                 {
                     DataStorageSizeInTbs = 1000,
-                    DbNodeStorageSizeInGbs = 1000,
+                    DBNodeStorageSizeInGbs = 1000,
                     MemorySizeInGbs = 1000,
                     TimeZone = "UTC",
                     Domain = "domain1",
@@ -217,7 +217,7 @@ DestinationPortRange = new PortRange(1520,1522),
                         IsHealthMonitoringEnabled = false,
                         IsIncidentLogsEnabled = false,
                     },
-                    DbServers =
+                    DBServers =
 {
 "ocid1..aaaa"
 },

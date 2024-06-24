@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database.
         /// Serialized Name: ConnectionUrlType.machineLearningNotebookUrl
         /// </param>
-        /// <param name="mongoDbUri">
+        /// <param name="mongoDBUri">
         /// The URL of the MongoDB API for the Autonomous Database.
         /// Serialized Name: ConnectionUrlType.mongoDbUrl
         /// </param>
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: ConnectionUrlType.sqlDevWebUrl
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionUrlType(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDbUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionUrlType(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDBUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApexUri = apexUri;
             DatabaseTransformsUri = databaseTransformsUri;
             GraphStudioUri = graphStudioUri;
             MachineLearningNotebookUri = machineLearningNotebookUri;
-            MongoDbUri = mongoDbUri;
+            MongoDBUri = mongoDBUri;
             OrdsUri = ordsUri;
             SqlDevWebUri = sqlDevWebUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The URL of the MongoDB API for the Autonomous Database.
         /// Serialized Name: ConnectionUrlType.mongoDbUrl
         /// </summary>
-        public Uri MongoDbUri { get; }
+        public Uri MongoDBUri { get; }
         /// <summary>
         /// The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database.
         /// Serialized Name: ConnectionUrlType.ordsUrl

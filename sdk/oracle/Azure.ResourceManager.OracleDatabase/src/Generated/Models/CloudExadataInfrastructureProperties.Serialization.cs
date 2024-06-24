@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxMemoryInGbs"u8);
                 writer.WriteNumberValue(MaxMemoryInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(MaxDBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("maxDbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(MaxDbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(MaxDBNodeStorageSizeInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DataStorageSizeInTbs))
             {
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxDataStorageInTbs"u8);
                 writer.WriteNumberValue(MaxDataStorageInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(DBServerVersion))
             {
                 writer.WritePropertyName("dbServerVersion"u8);
-                writer.WriteStringValue(DbServerVersion);
+                writer.WriteStringValue(DBServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageServerVersion))
             {
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
                 writer.WriteStringValue(NextMaintenanceRunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyDbServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
             {
                 writer.WritePropertyName("monthlyDbServerVersion"u8);
-                writer.WriteStringValue(MonthlyDbServerVersion);
+                writer.WriteStringValue(MonthlyDBServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyStorageServerVersion))
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? memorySizeInGbs = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
-            int? maxDbNodeStorageSizeInGbs = default;
+            int? maxDBNodeStorageSizeInGbs = default;
             double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             string lastMaintenanceRunId = default;
             string nextMaintenanceRunId = default;
-            string monthlyDbServerVersion = default;
+            string monthlyDBServerVersion = default;
             string monthlyStorageServerVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maxDbNodeStorageSizeInGbs = property.Value.GetInt32();
+                    maxDBNodeStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("monthlyDbServerVersion"u8))
                 {
-                    monthlyDbServerVersion = property.Value.GetString();
+                    monthlyDBServerVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("monthlyStorageServerVersion"u8))
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 memorySizeInGbs,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                maxDbNodeStorageSizeInGbs,
+                maxDBNodeStorageSizeInGbs,
                 dataStorageSizeInTbs,
                 maxDataStorageInTbs,
                 dbServerVersion,
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 lastMaintenanceRunId,
                 nextMaintenanceRunId,
-                monthlyDbServerVersion,
+                monthlyDBServerVersion,
                 monthlyStorageServerVersion,
                 serializedAdditionalRawData);
         }

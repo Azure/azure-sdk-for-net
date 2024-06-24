@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DbVersion))
+            if (Optional.IsDefined(DBVersion))
             {
                 writer.WritePropertyName("dbVersion"u8);
-                writer.WriteStringValue(DbVersion);
+                writer.WriteStringValue(DBVersion);
             }
-            if (Optional.IsDefined(DbWorkload))
+            if (Optional.IsDefined(DBWorkload))
             {
                 writer.WritePropertyName("dbWorkload"u8);
-                writer.WriteStringValue(DbWorkload.Value.ToString());
+                writer.WriteStringValue(DBWorkload.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -137,20 +137,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("isAutoScalingForStorageEnabled"u8);
                 writer.WriteBooleanValue(IsAutoScalingForStorageEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PeerDbIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PeerDBIds))
             {
                 writer.WritePropertyName("peerDbIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in PeerDbIds)
+                foreach (var item in PeerDBIds)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerDbId))
+            if (Optional.IsDefined(PeerDBId))
             {
                 writer.WritePropertyName("peerDbId"u8);
-                writer.WriteStringValue(PeerDbId);
+                writer.WriteStringValue(PeerDBId);
             }
             if (Optional.IsDefined(IsLocalDataGuardEnabled))
             {
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("localDisasterRecoveryType"u8);
                 writer.WriteStringValue(LocalDisasterRecoveryType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalStandbyDb))
+            if (options.Format != "W" && Optional.IsDefined(LocalStandbyDB))
             {
                 writer.WritePropertyName("localStandbyDb"u8);
-                writer.WriteObjectValue(LocalStandbyDb, options);
+                writer.WriteObjectValue(LocalStandbyDB, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FailedDataRecoveryInSeconds))
             {
@@ -523,12 +523,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            IReadOnlyList<string> peerDbIds = default;
-            string peerDbId = default;
+            IReadOnlyList<string> peerDBIds = default;
+            string peerDBId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isRemoteDataGuardEnabled = default;
             DisasterRecoveryType? localDisasterRecoveryType = default;
-            AutonomousDatabaseStandbySummary localStandbyDb = default;
+            AutonomousDatabaseStandbySummary localStandbyDB = default;
             int? failedDataRecoveryInSeconds = default;
             bool? isMtlsConnectionRequired = default;
             bool? isPreviewVersionWithServiceTermsAccepted = default;
@@ -778,12 +778,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         array.Add(item.GetString());
                     }
-                    peerDbIds = array;
+                    peerDBIds = array;
                     continue;
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDbId = property.Value.GetString();
+                    peerDBId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    localStandbyDb = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
+                    localStandbyDB = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failedDataRecoveryInSeconds"u8))
@@ -1294,12 +1294,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDbIds ?? new ChangeTrackingList<string>(),
-                peerDbId,
+                peerDBIds ?? new ChangeTrackingList<string>(),
+                peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
                 localDisasterRecoveryType,
-                localStandbyDb,
+                localStandbyDB,
                 failedDataRecoveryInSeconds,
                 isMtlsConnectionRequired,
                 isPreviewVersionWithServiceTermsAccepted,

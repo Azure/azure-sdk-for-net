@@ -128,41 +128,41 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutonomousDbVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutonomousDbVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutonomousDbVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutonomousDBVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutonomousDBVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutonomousDBVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetAutonomousDbVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetAutonomousDBVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutonomousDbVersionResource"/> object. </returns>
-        public static AutonomousDbVersionResource GetAutonomousDbVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutonomousDBVersionResource"/> object. </returns>
+        public static AutonomousDBVersionResource GetAutonomousDBVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableOracleDatabaseArmClient(client).GetAutonomousDbVersionResource(id);
+            return GetMockableOracleDatabaseArmClient(client).GetAutonomousDBVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DbSystemShapeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DbSystemShapeResource.CreateResourceIdentifier" /> to create a <see cref="DbSystemShapeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DBSystemShapeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DBSystemShapeResource.CreateResourceIdentifier" /> to create a <see cref="DBSystemShapeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDbSystemShapeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDBSystemShapeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DbSystemShapeResource"/> object. </returns>
-        public static DbSystemShapeResource GetDbSystemShapeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DBSystemShapeResource"/> object. </returns>
+        public static DBSystemShapeResource GetDBSystemShapeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableOracleDatabaseArmClient(client).GetDbSystemShapeResource(id);
+            return GetMockableOracleDatabaseArmClient(client).GetDBSystemShapeResource(id);
         }
 
         /// <summary>
@@ -280,41 +280,41 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DbServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DbServerResource.CreateResourceIdentifier" /> to create a <see cref="DbServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DBServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DBServerResource.CreateResourceIdentifier" /> to create a <see cref="DBServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDbServerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDBServerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DbServerResource"/> object. </returns>
-        public static DbServerResource GetDbServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DBServerResource"/> object. </returns>
+        public static DBServerResource GetDBServerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableOracleDatabaseArmClient(client).GetDbServerResource(id);
+            return GetMockableOracleDatabaseArmClient(client).GetDBServerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DbNodeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DbNodeResource.CreateResourceIdentifier" /> to create a <see cref="DbNodeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DBNodeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DBNodeResource.CreateResourceIdentifier" /> to create a <see cref="DBNodeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDbNodeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDBNodeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DbNodeResource"/> object. </returns>
-        public static DbNodeResource GetDbNodeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DBNodeResource"/> object. </returns>
+        public static DBNodeResource GetDBNodeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableOracleDatabaseArmClient(client).GetDbNodeResource(id);
+            return GetMockableOracleDatabaseArmClient(client).GetDBNodeResource(id);
         }
 
         /// <summary>
@@ -808,21 +808,21 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Gets a collection of AutonomousDbVersionResources in the SubscriptionResource.
+        /// Gets a collection of AutonomousDBVersionResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDbVersions(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDBVersions(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of AutonomousDbVersionResources and their operations over a AutonomousDbVersionResource. </returns>
-        public static AutonomousDbVersionCollection GetAutonomousDbVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of AutonomousDBVersionResources and their operations over a AutonomousDBVersionResource. </returns>
+        public static AutonomousDBVersionCollection GetAutonomousDBVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDbVersions(location);
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDBVersions(location);
         }
 
         /// <summary>
@@ -842,12 +842,12 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutonomousDbVersionResource"/></description>
+        /// <description><see cref="AutonomousDBVersionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDbVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDBVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -857,11 +857,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="autonomousdbversionsname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AutonomousDbVersionResource>> GetAutonomousDbVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutonomousDBVersionResource>> GetAutonomousDBVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDbVersionAsync(location, autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDBVersionAsync(location, autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -881,12 +881,12 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutonomousDbVersionResource"/></description>
+        /// <description><see cref="AutonomousDBVersionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDbVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetAutonomousDBVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -896,29 +896,29 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="autonomousdbversionsname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<AutonomousDbVersionResource> GetAutonomousDbVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
+        public static Response<AutonomousDBVersionResource> GetAutonomousDBVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDbVersion(location, autonomousdbversionsname, cancellationToken);
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetAutonomousDBVersion(location, autonomousdbversionsname, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DbSystemShapeResources in the SubscriptionResource.
+        /// Gets a collection of DBSystemShapeResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDbSystemShapes(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDBSystemShapes(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of DbSystemShapeResources and their operations over a DbSystemShapeResource. </returns>
-        public static DbSystemShapeCollection GetDbSystemShapes(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of DBSystemShapeResources and their operations over a DBSystemShapeResource. </returns>
+        public static DBSystemShapeCollection GetDBSystemShapes(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDbSystemShapes(location);
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDBSystemShapes(location);
         }
 
         /// <summary>
@@ -938,12 +938,12 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbSystemShapeResource"/></description>
+        /// <description><see cref="DBSystemShapeResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDbSystemShapeAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDBSystemShapeAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -953,11 +953,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="dbsystemshapename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbsystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DbSystemShapeResource>> GetDbSystemShapeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
+        public static async Task<Response<DBSystemShapeResource>> GetDBSystemShapeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDbSystemShapeAsync(location, dbsystemshapename, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDBSystemShapeAsync(location, dbsystemshapename, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -977,12 +977,12 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbSystemShapeResource"/></description>
+        /// <description><see cref="DBSystemShapeResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDbSystemShape(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDBSystemShape(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -992,11 +992,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="dbsystemshapename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbsystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DbSystemShapeResource> GetDbSystemShape(this SubscriptionResource subscriptionResource, AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
+        public static Response<DBSystemShapeResource> GetDBSystemShape(this SubscriptionResource subscriptionResource, AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDbSystemShape(location, dbsystemshapename, cancellationToken);
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDBSystemShape(location, dbsystemshapename, cancellationToken);
         }
 
         /// <summary>

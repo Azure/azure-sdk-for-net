@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
 
             // invoke the operation
-            AddRemoveDbNode body = new AddRemoveDbNode(new string[]
+            AddRemoveDBNode body = new AddRemoveDBNode(new string[]
             {
 "ocid1..aaaa","ocid1..aaaaaa"
             });
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
 
             // invoke the operation
-            AddRemoveDbNode body = new AddRemoveDbNode(new string[]
+            AddRemoveDBNode body = new AddRemoveDBNode(new string[]
             {
 "ocid1..aaaa"
             });

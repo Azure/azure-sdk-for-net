@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetAutonomousDatabaseNationalCharacterSets(location).Get(adbsncharsetname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutonomousDbVersionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of AutonomousDBVersionResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of AutonomousDbVersionResources and their operations over a AutonomousDbVersionResource. </returns>
-        public virtual AutonomousDbVersionCollection GetAutonomousDbVersions(AzureLocation location)
+        /// <returns> An object representing collection of AutonomousDBVersionResources and their operations over a AutonomousDBVersionResource. </returns>
+        public virtual AutonomousDBVersionCollection GetAutonomousDBVersions(AzureLocation location)
         {
-            return new AutonomousDbVersionCollection(Client, Id, location);
+            return new AutonomousDBVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutonomousDbVersionResource"/></description>
+        /// <description><see cref="AutonomousDBVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AutonomousDbVersionResource>> GetAutonomousDbVersionAsync(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutonomousDBVersionResource>> GetAutonomousDBVersionAsync(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
-            return await GetAutonomousDbVersions(location).GetAsync(autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
+            return await GetAutonomousDBVersions(location).GetAsync(autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutonomousDbVersionResource"/></description>
+        /// <description><see cref="AutonomousDBVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,49 +260,17 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AutonomousDbVersionResource> GetAutonomousDbVersion(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
+        public virtual Response<AutonomousDBVersionResource> GetAutonomousDBVersion(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
-            return GetAutonomousDbVersions(location).Get(autonomousdbversionsname, cancellationToken);
+            return GetAutonomousDBVersions(location).Get(autonomousdbversionsname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DbSystemShapeResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of DBSystemShapeResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of DbSystemShapeResources and their operations over a DbSystemShapeResource. </returns>
-        public virtual DbSystemShapeCollection GetDbSystemShapes(AzureLocation location)
+        /// <returns> An object representing collection of DBSystemShapeResources and their operations over a DBSystemShapeResource. </returns>
+        public virtual DBSystemShapeCollection GetDBSystemShapes(AzureLocation location)
         {
-            return new DbSystemShapeCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Get a DbSystemShape
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbSystemShapes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DbSystemShapeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbsystemshapename"> DbSystemShape name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbsystemshapename"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dbsystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DbSystemShapeResource>> GetDbSystemShapeAsync(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
-        {
-            return await GetDbSystemShapes(location).GetAsync(dbsystemshapename, cancellationToken).ConfigureAwait(false);
+            return new DBSystemShapeCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -322,7 +290,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbSystemShapeResource"/></description>
+        /// <description><see cref="DBSystemShapeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,9 +300,41 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dbsystemshapename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbsystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DbSystemShapeResource> GetDbSystemShape(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DBSystemShapeResource>> GetDBSystemShapeAsync(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
         {
-            return GetDbSystemShapes(location).Get(dbsystemshapename, cancellationToken);
+            return await GetDBSystemShapes(location).GetAsync(dbsystemshapename, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DbSystemShape
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbSystemShapes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DBSystemShapeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="dbsystemshapename"> DbSystemShape name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbsystemshapename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbsystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DBSystemShapeResource> GetDBSystemShape(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
+        {
+            return GetDBSystemShapes(location).Get(dbsystemshapename, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsPrivateViewResources in the SubscriptionResource. </summary>

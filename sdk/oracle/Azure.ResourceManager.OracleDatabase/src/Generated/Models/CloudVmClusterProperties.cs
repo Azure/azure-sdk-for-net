@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             NsgCidrs = new ChangeTrackingList<NsgCidr>();
             DisplayName = displayName;
             ComputeNodes = new ChangeTrackingList<string>();
-            DbServers = new ChangeTrackingList<string>();
+            DBServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             NodeCount = nodeCount;
             StorageSizeInGbs = storageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             TimeCreated = timeCreated;
             LifecycleDetails = lifecycleDetails;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeNodes = computeNodes;
             IormConfigCache = iormConfigCache;
             LastUpdateHistoryEntryId = lastUpdateHistoryEntryId;
-            DbServers = dbServers;
+            DBServers = dbServers;
             CompartmentId = compartmentId;
             SubnetOcid = subnetOcid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The local node storage to be allocated in GBs.
         /// Serialized Name: CloudVmClusterProperties.dbNodeStorageSizeInGbs
         /// </summary>
-        public int? DbNodeStorageSizeInGbs { get; set; }
+        public int? DBNodeStorageSizeInGbs { get; set; }
         /// <summary>
         /// The memory to be allocated in GBs.
         /// Serialized Name: CloudVmClusterProperties.memorySizeInGbs
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The list of DB servers.
         /// Serialized Name: CloudVmClusterProperties.dbServers
         /// </summary>
-        public IList<string> DbServers { get; }
+        public IList<string> DBServers { get; }
         /// <summary>
         /// Cluster compartmentId
         /// Serialized Name: CloudVmClusterProperties.compartmentId

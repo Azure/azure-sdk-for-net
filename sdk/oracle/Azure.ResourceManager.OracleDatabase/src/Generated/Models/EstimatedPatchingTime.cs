@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EstimatedPatchingTime"/>. </summary>
-        /// <param name="estimatedDbServerPatchingTime">
+        /// <param name="estimatedDBServerPatchingTime">
         /// The estimated time required in minutes for database server patching.
         /// Serialized Name: EstimatedPatchingTime.estimatedDbServerPatchingTime
         /// </param>
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: EstimatedPatchingTime.totalEstimatedPatchingTime
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EstimatedPatchingTime(int? estimatedDbServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EstimatedPatchingTime(int? estimatedDBServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EstimatedDbServerPatchingTime = estimatedDbServerPatchingTime;
+            EstimatedDBServerPatchingTime = estimatedDBServerPatchingTime;
             EstimatedNetworkSwitchesPatchingTime = estimatedNetworkSwitchesPatchingTime;
             EstimatedStorageServerPatchingTime = estimatedStorageServerPatchingTime;
             TotalEstimatedPatchingTime = totalEstimatedPatchingTime;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The estimated time required in minutes for database server patching.
         /// Serialized Name: EstimatedPatchingTime.estimatedDbServerPatchingTime
         /// </summary>
-        public int? EstimatedDbServerPatchingTime { get; }
+        public int? EstimatedDBServerPatchingTime { get; }
         /// <summary>
         /// The estimated time required in minutes for network switch patching.
         /// Serialized Name: EstimatedPatchingTime.estimatedNetworkSwitchesPatchingTime

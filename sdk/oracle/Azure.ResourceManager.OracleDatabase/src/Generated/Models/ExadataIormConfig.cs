@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="ExadataIormConfig"/>. </summary>
         internal ExadataIormConfig()
         {
-            DbPlans = new ChangeTrackingList<DbIormConfig>();
+            DBPlans = new ChangeTrackingList<DBIormConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExadataIormConfig"/>. </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: ExadataIormConfig.objective
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadataIormConfig(IReadOnlyList<DbIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, Objective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadataIormConfig(IReadOnlyList<DBIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, Objective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DbPlans = dbPlans;
+            DBPlans = dbPlans;
             LifecycleDetails = lifecycleDetails;
             LifecycleState = lifecycleState;
             Objective = objective;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// An array of IORM settings for all the database in the Exadata DB system.
         /// Serialized Name: ExadataIormConfig.dbPlans
         /// </summary>
-        public IReadOnlyList<DbIormConfig> DbPlans { get; }
+        public IReadOnlyList<DBIormConfig> DBPlans { get; }
         /// <summary>
         /// Additional information about the current lifecycleState.
         /// Serialized Name: ExadataIormConfig.lifecycleDetails

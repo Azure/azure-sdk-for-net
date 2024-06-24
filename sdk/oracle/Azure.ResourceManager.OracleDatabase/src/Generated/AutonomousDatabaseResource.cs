@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> FailoverAsync(WaitUntil waitUntil, PeerDbDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> FailoverAsync(WaitUntil waitUntil, PeerDBDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual ArmOperation<AutonomousDatabaseResource> Failover(WaitUntil waitUntil, PeerDbDetails details, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutonomousDatabaseResource> Failover(WaitUntil waitUntil, PeerDBDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> SwitchoverAsync(WaitUntil waitUntil, PeerDbDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> SwitchoverAsync(WaitUntil waitUntil, PeerDBDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual ArmOperation<AutonomousDatabaseResource> Switchover(WaitUntil waitUntil, PeerDbDetails details, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutonomousDatabaseResource> Switchover(WaitUntil waitUntil, PeerDBDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 

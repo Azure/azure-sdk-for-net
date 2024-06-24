@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("machineLearningNotebookUrl"u8);
                 writer.WriteStringValue(MachineLearningNotebookUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MongoDbUri))
+            if (Optional.IsDefined(MongoDBUri))
             {
                 writer.WritePropertyName("mongoDbUrl"u8);
-                writer.WriteStringValue(MongoDbUri.AbsoluteUri);
+                writer.WriteStringValue(MongoDBUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OrdsUri))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri databaseTransformsUrl = default;
             Uri graphStudioUrl = default;
             Uri machineLearningNotebookUrl = default;
-            Uri mongoDbUrl = default;
+            Uri mongoDBUrl = default;
             Uri ordsUrl = default;
             Uri sqlDevWebUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    mongoDbUrl = new Uri(property.Value.GetString());
+                    mongoDBUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ordsUrl"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseTransformsUrl,
                 graphStudioUrl,
                 machineLearningNotebookUrl,
-                mongoDbUrl,
+                mongoDBUrl,
                 ordsUrl,
                 sqlDevWebUrl,
                 serializedAdditionalRawData);

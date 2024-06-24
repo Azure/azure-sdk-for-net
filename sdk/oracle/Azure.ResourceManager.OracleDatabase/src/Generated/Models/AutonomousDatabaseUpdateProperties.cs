@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Indicates if auto scaling is enabled for the Autonomous Database storage.
         /// Serialized Name: AutonomousDatabaseUpdateProperties.isAutoScalingForStorageEnabled
         /// </param>
-        /// <param name="peerDbId">
+        /// <param name="peerDBId">
         /// The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
         /// Serialized Name: AutonomousDatabaseUpdateProperties.peerDbId
         /// </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: AutonomousDatabaseUpdateProperties.whitelistedIps
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<CustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDbId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, LicenseModel? licenseModel, ScheduledOperationsTypeUpdate scheduledOperations, DatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, OpenModeType? openMode, PermissionLevelType? permissionLevel, RoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<CustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDBId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, LicenseModel? licenseModel, ScheduledOperationsTypeUpdate scheduledOperations, DatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, OpenModeType? openMode, PermissionLevelType? permissionLevel, RoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             AutonomousMaintenanceScheduleType = autonomousMaintenanceScheduleType;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DisplayName = displayName;
             IsAutoScalingEnabled = isAutoScalingEnabled;
             IsAutoScalingForStorageEnabled = isAutoScalingForStorageEnabled;
-            PeerDbId = peerDbId;
+            PeerDBId = peerDBId;
             IsLocalDataGuardEnabled = isLocalDataGuardEnabled;
             IsMtlsConnectionRequired = isMtlsConnectionRequired;
             LicenseModel = licenseModel;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
         /// Serialized Name: AutonomousDatabaseUpdateProperties.peerDbId
         /// </summary>
-        public string PeerDbId { get; set; }
+        public string PeerDBId { get; set; }
         /// <summary>
         /// Indicates whether the Autonomous Database has local or called in-region Data Guard enabled.
         /// Serialized Name: AutonomousDatabaseUpdateProperties.isLocalDataGuardEnabled

@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateAddVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal RequestUriBuilder CreateAddVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateAddVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal HttpMessage CreateAddVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AddVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public async Task<Response> AddVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AddVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public Response AddVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateRemoveVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal RequestUriBuilder CreateRemoveVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateRemoveVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal HttpMessage CreateRemoveVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RemoveVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RemoveVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public Response RemoveVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             AutonomousDatabaseOcid = autonomousDatabaseOcid;
             DatabaseSizeInTbs = databaseSizeInTbs;
-            DbVersion = dbVersion;
+            DBVersion = dbVersion;
             DisplayName = displayName;
             Ocid = ocid;
             IsAutomatic = isAutomatic;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// A valid Oracle Database version for Autonomous Database.
         /// Serialized Name: AutonomousDatabaseBackupProperties.dbVersion
         /// </summary>
-        public string DbVersion { get; }
+        public string DBVersion { get; }
         /// <summary>
         /// The user-friendly name for the backup. The name does not have to be unique.
         /// Serialized Name: AutonomousDatabaseBackupProperties.displayName

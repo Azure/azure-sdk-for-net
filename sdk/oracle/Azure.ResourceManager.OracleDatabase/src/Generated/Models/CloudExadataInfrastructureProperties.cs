@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The local node storage to be allocated in GBs.
         /// Serialized Name: CloudExadataInfrastructureProperties.dbNodeStorageSizeInGbs
         /// </param>
-        /// <param name="maxDbNodeStorageSizeInGbs">
+        /// <param name="maxDBNodeStorageSizeInGbs">
         /// The total local node storage available in GBs.
         /// Serialized Name: CloudExadataInfrastructureProperties.maxDbNodeStorageSizeInGbs
         /// </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The OCID of the next maintenance run.
         /// Serialized Name: CloudExadataInfrastructureProperties.nextMaintenanceRunId
         /// </param>
-        /// <param name="monthlyDbServerVersion">
+        /// <param name="monthlyDBServerVersion">
         /// Monthly Db Server version
         /// Serialized Name: CloudExadataInfrastructureProperties.monthlyDbServerVersion
         /// </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: CloudExadataInfrastructureProperties.monthlyStorageServerVersion
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDBServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ComputeCount = computeCount;
@@ -214,18 +214,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MaxCpuCount = maxCpuCount;
             MemorySizeInGbs = memorySizeInGbs;
             MaxMemoryInGbs = maxMemoryInGbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
-            MaxDbNodeStorageSizeInGbs = maxDbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            MaxDBNodeStorageSizeInGbs = maxDBNodeStorageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             MaxDataStorageInTbs = maxDataStorageInTbs;
-            DbServerVersion = dbServerVersion;
+            DBServerVersion = dbServerVersion;
             StorageServerVersion = storageServerVersion;
             ActivatedStorageCount = activatedStorageCount;
             AdditionalStorageCount = additionalStorageCount;
             DisplayName = displayName;
             LastMaintenanceRunId = lastMaintenanceRunId;
             NextMaintenanceRunId = nextMaintenanceRunId;
-            MonthlyDbServerVersion = monthlyDbServerVersion;
+            MonthlyDBServerVersion = monthlyDBServerVersion;
             MonthlyStorageServerVersion = monthlyStorageServerVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The local node storage to be allocated in GBs.
         /// Serialized Name: CloudExadataInfrastructureProperties.dbNodeStorageSizeInGbs
         /// </summary>
-        public int? DbNodeStorageSizeInGbs { get; }
+        public int? DBNodeStorageSizeInGbs { get; }
         /// <summary>
         /// The total local node storage available in GBs.
         /// Serialized Name: CloudExadataInfrastructureProperties.maxDbNodeStorageSizeInGbs
         /// </summary>
-        public int? MaxDbNodeStorageSizeInGbs { get; }
+        public int? MaxDBNodeStorageSizeInGbs { get; }
         /// <summary>
         /// The quantity of data in the database, in terabytes.
         /// Serialized Name: CloudExadataInfrastructureProperties.dataStorageSizeInTbs
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The software version of the database servers (dom0) in the Exadata infrastructure.
         /// Serialized Name: CloudExadataInfrastructureProperties.dbServerVersion
         /// </summary>
-        public string DbServerVersion { get; }
+        public string DBServerVersion { get; }
         /// <summary>
         /// The software version of the storage servers (cells) in the Exadata infrastructure.
         /// Serialized Name: CloudExadataInfrastructureProperties.storageServerVersion
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Monthly Db Server version
         /// Serialized Name: CloudExadataInfrastructureProperties.monthlyDbServerVersion
         /// </summary>
-        public string MonthlyDbServerVersion { get; }
+        public string MonthlyDBServerVersion { get; }
         /// <summary>
         /// Monthly Storage Server version
         /// Serialized Name: CloudExadataInfrastructureProperties.monthlyStorageServerVersion

@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DbNodeResources in the CloudVmCluster. </summary>
-        /// <returns> An object representing collection of DbNodeResources and their operations over a DbNodeResource. </returns>
-        public virtual DbNodeCollection GetDbNodes()
+        /// <summary> Gets a collection of DBNodeResources in the CloudVmCluster. </summary>
+        /// <returns> An object representing collection of DBNodeResources and their operations over a DBNodeResource. </returns>
+        public virtual DBNodeCollection GetDBNodes()
         {
-            return GetCachedClient(client => new DbNodeCollection(client, Id));
+            return GetCachedClient(client => new DBNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbNodeResource"/></description>
+        /// <description><see cref="DBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DbNodeResource>> GetDbNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DBNodeResource>> GetDBNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
         {
-            return await GetDbNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
+            return await GetDBNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbNodeResource"/></description>
+        /// <description><see cref="DBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DbNodeResource> GetDbNode(string dbnodeocid, CancellationToken cancellationToken = default)
+        public virtual Response<DBNodeResource> GetDBNode(string dbnodeocid, CancellationToken cancellationToken = default)
         {
-            return GetDbNodes().Get(dbnodeocid, cancellationToken);
+            return GetDBNodes().Get(dbnodeocid, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkAddressResources in the CloudVmCluster. </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, AddRemoveDBNode body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

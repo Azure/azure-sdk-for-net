@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("databaseSizeInTbs"u8);
                 writer.WriteNumberValue(DatabaseSizeInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbVersion))
+            if (options.Format != "W" && Optional.IsDefined(DBVersion))
             {
                 writer.WritePropertyName("dbVersion"u8);
-                writer.WriteStringValue(DbVersion);
+                writer.WriteStringValue(DBVersion);
             }
             if (Optional.IsDefined(DisplayName))
             {

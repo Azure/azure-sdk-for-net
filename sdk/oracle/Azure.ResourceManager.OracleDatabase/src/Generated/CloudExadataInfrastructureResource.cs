@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DbServerResources in the CloudExadataInfrastructure. </summary>
-        /// <returns> An object representing collection of DbServerResources and their operations over a DbServerResource. </returns>
-        public virtual DbServerCollection GetDbServers()
+        /// <summary> Gets a collection of DBServerResources in the CloudExadataInfrastructure. </summary>
+        /// <returns> An object representing collection of DBServerResources and their operations over a DBServerResource. </returns>
+        public virtual DBServerCollection GetDBServers()
         {
-            return GetCachedClient(client => new DbServerCollection(client, Id));
+            return GetCachedClient(client => new DBServerCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbServerResource"/></description>
+        /// <description><see cref="DBServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DbServerResource>> GetDbServerAsync(string dbserverocid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DBServerResource>> GetDBServerAsync(string dbserverocid, CancellationToken cancellationToken = default)
         {
-            return await GetDbServers().GetAsync(dbserverocid, cancellationToken).ConfigureAwait(false);
+            return await GetDBServers().GetAsync(dbserverocid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbServerResource"/></description>
+        /// <description><see cref="DBServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DbServerResource> GetDbServer(string dbserverocid, CancellationToken cancellationToken = default)
+        public virtual Response<DBServerResource> GetDBServer(string dbserverocid, CancellationToken cancellationToken = default)
         {
-            return GetDbServers().Get(dbserverocid, cancellationToken);
+            return GetDBServers().Get(dbserverocid, cancellationToken);
         }
 
         /// <summary>

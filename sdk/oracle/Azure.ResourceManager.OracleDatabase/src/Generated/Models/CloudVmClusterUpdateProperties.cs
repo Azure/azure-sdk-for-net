@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             StorageSizeInGbs = storageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             CpuCoreCount = cpuCoreCount;
             OcpuCount = ocpuCount;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The local node storage to be allocated in GBs.
         /// Serialized Name: CloudVmClusterUpdateProperties.dbNodeStorageSizeInGbs
         /// </summary>
-        public int? DbNodeStorageSizeInGbs { get; set; }
+        public int? DBNodeStorageSizeInGbs { get; set; }
         /// <summary>
         /// The memory to be allocated in GBs.
         /// Serialized Name: CloudVmClusterUpdateProperties.memorySizeInGbs

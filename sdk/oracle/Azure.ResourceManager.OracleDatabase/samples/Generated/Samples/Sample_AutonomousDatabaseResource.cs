@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails()
+            PeerDBDetails details = new PeerDBDetails()
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
             ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.FailoverAsync(WaitUntil.Completed, details);
             AutonomousDatabaseResource result = lro.Value;
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails()
+            PeerDBDetails details = new PeerDBDetails()
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
             ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.FailoverAsync(WaitUntil.Completed, details);
             AutonomousDatabaseResource result = lro.Value;
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails()
+            PeerDBDetails details = new PeerDBDetails()
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
             ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.SwitchoverAsync(WaitUntil.Completed, details);
             AutonomousDatabaseResource result = lro.Value;
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails()
+            PeerDBDetails details = new PeerDBDetails()
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
             ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.SwitchoverAsync(WaitUntil.Completed, details);
             AutonomousDatabaseResource result = lro.Value;
