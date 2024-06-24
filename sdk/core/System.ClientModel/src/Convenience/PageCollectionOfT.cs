@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 // This type is a client that defines a collection of elements and can
 // make service requests to retrieve specific pages
-public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>, IEnumerable<ClientResult>
+public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
 {
     // Note - assumes we don't make a request initially, so don't call
     // response constructor
@@ -25,7 +25,7 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>, IEnumerabl
 
     public IEnumerable<T> ToValueCollection()
     {
-        foreach (ClientPage<T> page in (IEnumerable<ClientPage<T>>)this)
+        foreach (ClientPage<T> page in this)
         {
             foreach (T value in page.Values)
             {
@@ -44,15 +44,6 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>, IEnumerabl
         while (page.NextPageToken != null)
         {
             page = GetPage(page.NextPageToken);
-            yield return page;
-        }
-    }
-
-    // TODO: is this the best way to implement?
-    IEnumerator<ClientResult> IEnumerable<ClientResult>.GetEnumerator()
-    {
-        foreach (ClientPage<T> page in (IEnumerable<ClientPage<T>>)this)
-        {
             yield return page;
         }
     }

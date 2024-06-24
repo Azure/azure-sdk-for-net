@@ -65,13 +65,12 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>, System.Collections.IEnumerable
+    public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
         public abstract System.BinaryData FirstPageToken { get; }
         public abstract System.ClientModel.ClientPage<T> GetPage(System.BinaryData pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
         System.Collections.Generic.IEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>.GetEnumerator() { throw null; }
-        System.Collections.Generic.IEnumerator<System.ClientModel.ClientResult> System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public System.Collections.Generic.IEnumerable<T> ToValueCollection() { throw null; }
     }
