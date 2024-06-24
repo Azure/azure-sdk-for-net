@@ -13,4 +13,4 @@ description: Samples for the Azure.Maps.Search client library.
 
 For different APIs, please refer the following samples:
 
-* [Search Geocoding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/MapsSearchSamples.md)
+* [Geocoding and Reverse Geocoding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/MapsSearchSamples.md)
