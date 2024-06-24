@@ -115,6 +115,8 @@ jobs:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
           EnvVars: ${{ parameters.EnvVars }}
+          SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths}}
+
       - pwsh: |
           $project = "${{ parameters.Project }}"
           $directory = "${{ parameters.ServiceDirectory }}"
