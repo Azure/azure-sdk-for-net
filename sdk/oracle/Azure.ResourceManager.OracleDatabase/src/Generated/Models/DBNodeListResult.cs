@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbNodeListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DBNodeListResult(IEnumerable<DBNodeData> value)
+        internal DBNodeListResult(IEnumerable<CloudVmClusterDBNodeData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbNodeListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBNodeListResult(IReadOnlyList<DBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DBNodeListResult(IReadOnlyList<CloudVmClusterDBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The DbNode items on this page
         /// Serialized Name: DbNodeListResult.value
         /// </summary>
-        public IReadOnlyList<DBNodeData> Value { get; }
+        public IReadOnlyList<CloudVmClusterDBNodeData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: DbNodeListResult.nextLink

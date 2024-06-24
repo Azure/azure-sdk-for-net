@@ -24,6 +24,15 @@ mgmt-debug:
 
 rename-mapping:
   DataCollectionOptions: DataCollectionConfig
+  DbNode: CloudVmClusterDBNode
+  DbServer: OracleDBServer
+  DbSystemShape: OracleDBSystemShape
+  DnsPrivateView: OracleDnsPrivateView
+  DnsPrivateZone: OracleDnsPrivateZone
+  GiVersion: OracleGIVersion
+  SystemVersion: OracleSystemVersion
+  VirtualNetworkAddress: CloudVmClusterVirtualNetworkAddress
+  VirtualNetworkAddressProperties: CloudVmClusterVirtualNetworkAddressProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'

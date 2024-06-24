@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbSystemShapeListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DBSystemShapeListResult(IEnumerable<DBSystemShapeData> value)
+        internal DBSystemShapeListResult(IEnumerable<OracleDBSystemShapeData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbSystemShapeListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBSystemShapeListResult(IReadOnlyList<DBSystemShapeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DBSystemShapeListResult(IReadOnlyList<OracleDBSystemShapeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The DbSystemShape items on this page
         /// Serialized Name: DbSystemShapeListResult.value
         /// </summary>
-        public IReadOnlyList<DBSystemShapeData> Value { get; }
+        public IReadOnlyList<OracleDBSystemShapeData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: DbSystemShapeListResult.nextLink

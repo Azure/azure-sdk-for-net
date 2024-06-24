@@ -107,63 +107,63 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DBSystemShapeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DBSystemShapeResource.CreateResourceIdentifier" /> to create a <see cref="DBSystemShapeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleDBSystemShapeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDBSystemShapeResource.CreateResourceIdentifier" /> to create an <see cref="OracleDBSystemShapeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DBSystemShapeResource"/> object. </returns>
-        public virtual DBSystemShapeResource GetDBSystemShapeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleDBSystemShapeResource"/> object. </returns>
+        public virtual OracleDBSystemShapeResource GetOracleDBSystemShapeResource(ResourceIdentifier id)
         {
-            DBSystemShapeResource.ValidateResourceId(id);
-            return new DBSystemShapeResource(Client, id);
+            OracleDBSystemShapeResource.ValidateResourceId(id);
+            return new OracleDBSystemShapeResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsPrivateViewResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsPrivateViewResource.CreateResourceIdentifier" /> to create a <see cref="DnsPrivateViewResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleDnsPrivateViewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDnsPrivateViewResource.CreateResourceIdentifier" /> to create an <see cref="OracleDnsPrivateViewResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsPrivateViewResource"/> object. </returns>
-        public virtual DnsPrivateViewResource GetDnsPrivateViewResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleDnsPrivateViewResource"/> object. </returns>
+        public virtual OracleDnsPrivateViewResource GetOracleDnsPrivateViewResource(ResourceIdentifier id)
         {
-            DnsPrivateViewResource.ValidateResourceId(id);
-            return new DnsPrivateViewResource(Client, id);
+            OracleDnsPrivateViewResource.ValidateResourceId(id);
+            return new OracleDnsPrivateViewResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsPrivateZoneResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsPrivateZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsPrivateZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleDnsPrivateZoneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDnsPrivateZoneResource.CreateResourceIdentifier" /> to create an <see cref="OracleDnsPrivateZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsPrivateZoneResource"/> object. </returns>
-        public virtual DnsPrivateZoneResource GetDnsPrivateZoneResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleDnsPrivateZoneResource"/> object. </returns>
+        public virtual OracleDnsPrivateZoneResource GetOracleDnsPrivateZoneResource(ResourceIdentifier id)
         {
-            DnsPrivateZoneResource.ValidateResourceId(id);
-            return new DnsPrivateZoneResource(Client, id);
+            OracleDnsPrivateZoneResource.ValidateResourceId(id);
+            return new OracleDnsPrivateZoneResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GiVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GiVersionResource.CreateResourceIdentifier" /> to create a <see cref="GiVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleGIVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleGIVersionResource.CreateResourceIdentifier" /> to create an <see cref="OracleGIVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GiVersionResource"/> object. </returns>
-        public virtual GiVersionResource GetGiVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleGIVersionResource"/> object. </returns>
+        public virtual OracleGIVersionResource GetOracleGIVersionResource(ResourceIdentifier id)
         {
-            GiVersionResource.ValidateResourceId(id);
-            return new GiVersionResource(Client, id);
+            OracleGIVersionResource.ValidateResourceId(id);
+            return new OracleGIVersionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SystemVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SystemVersionResource.CreateResourceIdentifier" /> to create a <see cref="SystemVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleSystemVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleSystemVersionResource.CreateResourceIdentifier" /> to create an <see cref="OracleSystemVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SystemVersionResource"/> object. </returns>
-        public virtual SystemVersionResource GetSystemVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleSystemVersionResource"/> object. </returns>
+        public virtual OracleSystemVersionResource GetOracleSystemVersionResource(ResourceIdentifier id)
         {
-            SystemVersionResource.ValidateResourceId(id);
-            return new SystemVersionResource(Client, id);
+            OracleSystemVersionResource.ValidateResourceId(id);
+            return new OracleSystemVersionResource(Client, id);
         }
 
         /// <summary>
@@ -191,39 +191,39 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DBServerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DBServerResource.CreateResourceIdentifier" /> to create a <see cref="DBServerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OracleDBServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDBServerResource.CreateResourceIdentifier" /> to create an <see cref="OracleDBServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DBServerResource"/> object. </returns>
-        public virtual DBServerResource GetDBServerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OracleDBServerResource"/> object. </returns>
+        public virtual OracleDBServerResource GetOracleDBServerResource(ResourceIdentifier id)
         {
-            DBServerResource.ValidateResourceId(id);
-            return new DBServerResource(Client, id);
+            OracleDBServerResource.ValidateResourceId(id);
+            return new OracleDBServerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DBNodeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DBNodeResource.CreateResourceIdentifier" /> to create a <see cref="DBNodeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CloudVmClusterDBNodeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudVmClusterDBNodeResource.CreateResourceIdentifier" /> to create a <see cref="CloudVmClusterDBNodeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DBNodeResource"/> object. </returns>
-        public virtual DBNodeResource GetDBNodeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudVmClusterDBNodeResource"/> object. </returns>
+        public virtual CloudVmClusterDBNodeResource GetCloudVmClusterDBNodeResource(ResourceIdentifier id)
         {
-            DBNodeResource.ValidateResourceId(id);
-            return new DBNodeResource(Client, id);
+            CloudVmClusterDBNodeResource.ValidateResourceId(id);
+            return new CloudVmClusterDBNodeResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkAddressResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkAddressResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudVmClusterVirtualNetworkAddressResource.CreateResourceIdentifier" /> to create a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkAddressResource"/> object. </returns>
-        public virtual VirtualNetworkAddressResource GetVirtualNetworkAddressResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> object. </returns>
+        public virtual CloudVmClusterVirtualNetworkAddressResource GetCloudVmClusterVirtualNetworkAddressResource(ResourceIdentifier id)
         {
-            VirtualNetworkAddressResource.ValidateResourceId(id);
-            return new VirtualNetworkAddressResource(Client, id);
+            CloudVmClusterVirtualNetworkAddressResource.ValidateResourceId(id);
+            return new CloudVmClusterVirtualNetworkAddressResource(Client, id);
         }
     }
 }

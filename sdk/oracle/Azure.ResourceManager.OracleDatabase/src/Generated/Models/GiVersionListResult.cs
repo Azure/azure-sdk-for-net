@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: GiVersionListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GiVersionListResult(IEnumerable<GiVersionData> value)
+        internal GiVersionListResult(IEnumerable<OracleGIVersionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: GiVersionListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GiVersionListResult(IReadOnlyList<GiVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GiVersionListResult(IReadOnlyList<OracleGIVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The GiVersion items on this page
         /// Serialized Name: GiVersionListResult.value
         /// </summary>
-        public IReadOnlyList<GiVersionData> Value { get; }
+        public IReadOnlyList<OracleGIVersionData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: GiVersionListResult.nextLink

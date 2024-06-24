@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DnsPrivateZoneListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DnsPrivateZoneListResult(IEnumerable<DnsPrivateZoneData> value)
+        internal DnsPrivateZoneListResult(IEnumerable<OracleDnsPrivateZoneData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DnsPrivateZoneListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsPrivateZoneListResult(IReadOnlyList<DnsPrivateZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsPrivateZoneListResult(IReadOnlyList<OracleDnsPrivateZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The DnsPrivateZone items on this page
         /// Serialized Name: DnsPrivateZoneListResult.value
         /// </summary>
-        public IReadOnlyList<DnsPrivateZoneData> Value { get; }
+        public IReadOnlyList<OracleDnsPrivateZoneData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: DnsPrivateZoneListResult.nextLink

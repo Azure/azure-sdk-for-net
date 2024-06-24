@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: VirtualNetworkAddressListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VirtualNetworkAddressListResult(IEnumerable<VirtualNetworkAddressData> value)
+        internal VirtualNetworkAddressListResult(IEnumerable<CloudVmClusterVirtualNetworkAddressData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: VirtualNetworkAddressListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAddressListResult(IReadOnlyList<VirtualNetworkAddressData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkAddressListResult(IReadOnlyList<CloudVmClusterVirtualNetworkAddressData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The VirtualNetworkAddress items on this page
         /// Serialized Name: VirtualNetworkAddressListResult.value
         /// </summary>
-        public IReadOnlyList<VirtualNetworkAddressData> Value { get; }
+        public IReadOnlyList<CloudVmClusterVirtualNetworkAddressData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: VirtualNetworkAddressListResult.nextLink

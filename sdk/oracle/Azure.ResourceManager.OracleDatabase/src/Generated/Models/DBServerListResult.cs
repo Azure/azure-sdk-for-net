@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbServerListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DBServerListResult(IEnumerable<DBServerData> value)
+        internal DBServerListResult(IEnumerable<OracleDBServerData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DbServerListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBServerListResult(IReadOnlyList<DBServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DBServerListResult(IReadOnlyList<OracleDBServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The DbServer items on this page
         /// Serialized Name: DbServerListResult.value
         /// </summary>
-        public IReadOnlyList<DBServerData> Value { get; }
+        public IReadOnlyList<OracleDBServerData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: DbServerListResult.nextLink

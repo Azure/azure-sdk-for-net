@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.DBSystemShapeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDBSystemShapeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1295,10 +1295,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: DbSystemShape.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.DBSystemShapeData"/> instance for mocking. </returns>
-        public static DBSystemShapeData DBSystemShapeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBSystemShapeProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleDBSystemShapeData"/> instance for mocking. </returns>
+        public static OracleDBSystemShapeData OracleDBSystemShapeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBSystemShapeProperties properties = null)
         {
-            return new DBSystemShapeData(
+            return new OracleDBSystemShapeData(
                 id,
                 name,
                 resourceType,
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.DnsPrivateViewData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDnsPrivateViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1424,10 +1424,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: DnsPrivateView.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.DnsPrivateViewData"/> instance for mocking. </returns>
-        public static DnsPrivateViewData DnsPrivateViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DnsPrivateViewProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateViewData"/> instance for mocking. </returns>
+        public static OracleDnsPrivateViewData OracleDnsPrivateViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DnsPrivateViewProperties properties = null)
         {
-            return new DnsPrivateViewData(
+            return new OracleDnsPrivateViewData(
                 id,
                 name,
                 resourceType,
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.DnsPrivateZoneData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDnsPrivateZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1493,10 +1493,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: DnsPrivateZone.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.DnsPrivateZoneData"/> instance for mocking. </returns>
-        public static DnsPrivateZoneData DnsPrivateZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DnsPrivateZoneProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateZoneData"/> instance for mocking. </returns>
+        public static OracleDnsPrivateZoneData OracleDnsPrivateZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DnsPrivateZoneProperties properties = null)
         {
-            return new DnsPrivateZoneData(
+            return new OracleDnsPrivateZoneData(
                 id,
                 name,
                 resourceType,
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.GiVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleGIVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1572,10 +1572,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: GiVersion.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.GiVersionData"/> instance for mocking. </returns>
-        public static GiVersionData GiVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string giVersion = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleGIVersionData"/> instance for mocking. </returns>
+        public static OracleGIVersionData OracleGIVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string giVersion = null)
         {
-            return new GiVersionData(
+            return new OracleGIVersionData(
                 id,
                 name,
                 resourceType,
@@ -1584,7 +1584,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.SystemVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleSystemVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1593,10 +1593,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: SystemVersion.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.SystemVersionData"/> instance for mocking. </returns>
-        public static SystemVersionData SystemVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string systemVersion = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleSystemVersionData"/> instance for mocking. </returns>
+        public static OracleSystemVersionData OracleSystemVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string systemVersion = null)
         {
-            return new SystemVersionData(
+            return new OracleSystemVersionData(
                 id,
                 name,
                 resourceType,
@@ -1911,7 +1911,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new AutonomousDatabaseWalletFile(walletFiles, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.DBServerData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDBServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1920,10 +1920,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: DbServer.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.DBServerData"/> instance for mocking. </returns>
-        public static DBServerData DBServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBServerProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.OracleDBServerData"/> instance for mocking. </returns>
+        public static OracleDBServerData OracleDBServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBServerProperties properties = null)
         {
-            return new DBServerData(
+            return new OracleDBServerData(
                 id,
                 name,
                 resourceType,
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new DBServerPatchingDetails(estimatedPatchDuration, patchingStatus, timePatchingEnded, timePatchingStarted, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.DBNodeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudVmClusterDBNodeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2077,10 +2077,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: DbNode.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.DBNodeData"/> instance for mocking. </returns>
-        public static DBNodeData DBNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBNodeProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterDBNodeData"/> instance for mocking. </returns>
+        public static CloudVmClusterDBNodeData CloudVmClusterDBNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DBNodeProperties properties = null)
         {
-            return new DBNodeData(
+            return new CloudVmClusterDBNodeData(
                 id,
                 name,
                 resourceType,
@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.VirtualNetworkAddressData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2254,10 +2254,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The resource-specific properties for this resource.
         /// Serialized Name: VirtualNetworkAddress.properties
         /// </param>
-        /// <returns> A new <see cref="OracleDatabase.VirtualNetworkAddressData"/> instance for mocking. </returns>
-        public static VirtualNetworkAddressData VirtualNetworkAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualNetworkAddressProperties properties = null)
+        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/> instance for mocking. </returns>
+        public static CloudVmClusterVirtualNetworkAddressData CloudVmClusterVirtualNetworkAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CloudVmClusterVirtualNetworkAddressProperties properties = null)
         {
-            return new VirtualNetworkAddressData(
+            return new CloudVmClusterVirtualNetworkAddressData(
                 id,
                 name,
                 resourceType,
@@ -2266,7 +2266,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkAddressProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterVirtualNetworkAddressProperties"/>. </summary>
         /// <param name="ipAddress">
         /// Virtual network Address address.
         /// Serialized Name: VirtualNetworkAddressProperties.ipAddress
@@ -2299,10 +2299,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The date and time when the create operation for the application virtual IP (VIP) address completed.
         /// Serialized Name: VirtualNetworkAddressProperties.timeAssigned
         /// </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkAddressProperties"/> instance for mocking. </returns>
-        public static VirtualNetworkAddressProperties VirtualNetworkAddressProperties(string ipAddress = null, string vmOcid = null, string ocid = null, string domain = null, string lifecycleDetails = null, AzureResourceProvisioningState? provisioningState = null, VirtualNetworkAddressLifecycleState? lifecycleState = null, DateTimeOffset? timeAssigned = null)
+        /// <returns> A new <see cref="Models.CloudVmClusterVirtualNetworkAddressProperties"/> instance for mocking. </returns>
+        public static CloudVmClusterVirtualNetworkAddressProperties CloudVmClusterVirtualNetworkAddressProperties(string ipAddress = null, string vmOcid = null, string ocid = null, string domain = null, string lifecycleDetails = null, AzureResourceProvisioningState? provisioningState = null, VirtualNetworkAddressLifecycleState? lifecycleState = null, DateTimeOffset? timeAssigned = null)
         {
-            return new VirtualNetworkAddressProperties(
+            return new CloudVmClusterVirtualNetworkAddressProperties(
                 ipAddress,
                 vmOcid,
                 ocid,

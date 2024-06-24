@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DnsPrivateViewListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DnsPrivateViewListResult(IEnumerable<DnsPrivateViewData> value)
+        internal DnsPrivateViewListResult(IEnumerable<OracleDnsPrivateViewData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// Serialized Name: DnsPrivateViewListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsPrivateViewListResult(IReadOnlyList<DnsPrivateViewData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsPrivateViewListResult(IReadOnlyList<OracleDnsPrivateViewData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// The DnsPrivateView items on this page
         /// Serialized Name: DnsPrivateViewListResult.value
         /// </summary>
-        public IReadOnlyList<DnsPrivateViewData> Value { get; }
+        public IReadOnlyList<OracleDnsPrivateViewData> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: DnsPrivateViewListResult.nextLink

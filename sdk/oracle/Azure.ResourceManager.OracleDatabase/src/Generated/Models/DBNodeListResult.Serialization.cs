@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<DBNodeData> value = default;
+            IReadOnlyList<CloudVmClusterDBNodeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DBNodeData> array = new List<DBNodeData>();
+                    List<CloudVmClusterDBNodeData> array = new List<CloudVmClusterDBNodeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DBNodeData.DeserializeDBNodeData(item, options));
+                        array.Add(CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(item, options));
                     }
                     value = array;
                     continue;
