@@ -25,6 +25,12 @@ The first step is to create an HTTP trigger function API using your IDE, install
 
 ---
 
+### Install the package
+
+After creating the project, you'll need to install the required NuGet packages and build the project *Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents* 
+
+---
+
 ### Add the snippet
 
 The function API is the source of extra claims for your token. For the purposes of this article, we're hardcoding the values for the sample app. In production, you can fetch information about the user from external data store.
