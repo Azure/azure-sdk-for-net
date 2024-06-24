@@ -29,10 +29,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         public const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
         public const string SqlMicrosoftBeforeExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandBefore";
-
         public const string SqlDataAfterExecuteCommand = "System.Data.SqlClient.WriteCommandAfter";
         public const string SqlMicrosoftAfterExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandAfter";
-
         public const string SqlDataWriteCommandError = "System.Data.SqlClient.WriteCommandError";
         public const string SqlMicrosoftWriteCommandError = "Microsoft.Data.SqlClient.WriteCommandError";
 
