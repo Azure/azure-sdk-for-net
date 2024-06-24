@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0 (2024-05-26)
+## 1.8.0 (2024-06-24)
 
 ### Features Added
 
