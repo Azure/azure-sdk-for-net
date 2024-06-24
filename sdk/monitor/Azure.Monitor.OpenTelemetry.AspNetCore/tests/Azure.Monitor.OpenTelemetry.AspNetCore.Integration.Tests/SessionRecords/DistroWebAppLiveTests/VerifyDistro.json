@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d49041ed-21aa-42c5-a6f3-6d60bb93d63c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "179",
+        "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-c4516adafd33bcee5da05c3bcb37dd40-938a217833252e6f-00",
+        "traceparent": "00-91e4d92f316e891834d49cbee90c5089-b23ab6cff2327111-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == 'DistroWebAppLiveTests' | top 1 by TimeGenerated",
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -22,12 +22,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "2423",
+        "Content-Length": "2509",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Jun 2024 21:44:57 GMT",
+        "Date": "Thu, 20 Jun 2024 23:40:34 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-84fccbf47-9zf5l",
+        "Via": "1.1 draft-oms-7b5b6f666d-cvqng",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -202,30 +202,30 @@
             ],
             "rows": [
               [
-                "d49041ed-21aa-42c5-a6f3-6d60bb93d63c",
-                "2024-06-07T21:44:23.1556457Z",
-                "2f64853161967288",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T23:38:07.6049141Z",
+                "ab1d314b41df92d4",
                 "localhost:9998",
                 "HTTP",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                81.8636,
+                3.2012,
                 "<250ms",
-                "{\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                "{\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "",
-                "2f5dc72a16261a3a9e74e74ca0f3b4bf",
-                "2f5dc72a16261a3a9e74e74ca0f3b4bf",
+                "49f75e59566d6ca854855deb28cdd910",
+                "49f75e59566d6ca854855deb28cdd910",
                 "",
                 "",
                 "",
+                "TestAuthenticatedUserId",
                 "",
-                "",
-                "",
-                "DistroWebAppLiveTests",
-                "af7c72ee-94a1-42f8-8306-395ce9147b22",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
                 "PC",
                 "Other",
                 "Windows 10",
@@ -234,15 +234,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "8df423be-a013-477c-88b9-8186722e3d49",
-                "7b1ad079-51c6-4824-91c1-9decb485ba64",
-                "dotnet7.0.20:otel1.8.1:ext1.3.0-beta.2-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppDependencies",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-tileemonitor/providers/microsoft.insights/components/t48da106dbe0b9268"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -250,20 +250,20 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d49041ed-21aa-42c5-a6f3-6d60bb93d63c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "174",
+        "Content-Length": "191",
         "Content-Type": "application/json",
-        "traceparent": "00-d90e7a2bf246528d5c75c004752cfefc-25dd917267728ea9-00",
+        "traceparent": "00-e7dec5e978db5cd85fe10225207ca53e-23628ed99ff50bbe-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppRequests | where Url == 'http://localhost:9998/' | where AppRoleName == 'DistroWebAppLiveTests' | top 1 by TimeGenerated",
+        "query": "AppRequests | where Url == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -271,12 +271,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "2392",
+        "Content-Length": "2478",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Jun 2024 21:44:58 GMT",
+        "Date": "Thu, 20 Jun 2024 23:40:35 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-84fccbf47-vv6qb",
+        "Via": "1.1 draft-oms-7b5b6f666d-hbzt8",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -451,30 +451,30 @@
             ],
             "rows": [
               [
-                "d49041ed-21aa-42c5-a6f3-6d60bb93d63c",
-                "2024-06-07T21:44:23.2035048Z",
-                "52f6536389172c57",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T23:38:07.6069422Z",
+                "f59fc5d195101154",
                 "",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                33.8512,
+                1.0316,
                 "<250ms",
-                "{\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                "{\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "GET /",
-                "2f5dc72a16261a3a9e74e74ca0f3b4bf",
+                "49f75e59566d6ca854855deb28cdd910",
                 null,
-                "2f64853161967288",
+                "ab1d314b41df92d4",
                 "",
                 "",
                 "",
+                "TestAuthenticatedUserId",
                 "",
-                "",
-                "",
-                "DistroWebAppLiveTests",
-                "af7c72ee-94a1-42f8-8306-395ce9147b22",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
                 "PC",
                 "Other",
                 "Windows 10",
@@ -483,15 +483,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "8df423be-a013-477c-88b9-8186722e3d49",
-                "7b1ad079-51c6-4824-91c1-9decb485ba64",
-                "dotnet7.0.20:otel1.8.1:ext1.3.0-beta.2-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppRequests",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-tileemonitor/providers/microsoft.insights/components/t48da106dbe0b9268"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -499,20 +499,20 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d49041ed-21aa-42c5-a6f3-6d60bb93d63c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "253",
+        "Content-Length": "270",
         "Content-Type": "application/json",
-        "traceparent": "00-cf77b2398e6b1a6ebf333d08dae5624f-5b6a30caa64b9b65-00",
+        "traceparent": "00-d004d3534c1f9572811a03f4136b0be4-13bc094187e356e6-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == 'DistroWebAppLiveTests' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+        "query": "AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -520,12 +520,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "2097",
+        "Content-Length": "2132",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Jun 2024 21:44:58 GMT",
+        "Date": "Thu, 20 Jun 2024 23:40:36 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-84fccbf47-9ff58",
+        "Via": "1.1 draft-oms-7b5b6f666d-2ndcs",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -668,13 +668,13 @@
             ],
             "rows": [
               [
-                "d49041ed-21aa-42c5-a6f3-6d60bb93d63c",
-                "2024-06-07T21:44:23.41758Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T23:38:07.7470491Z",
                 "http.client.request.duration",
                 1,
-                0.0818636,
-                0.0818636,
-                0.0818636,
+                0.0032012,
+                0.0032012,
+                0.0032012,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\"}",
                 "",
                 "",
@@ -684,9 +684,9 @@
                 "",
                 "",
                 "",
-                "",
-                "DistroWebAppLiveTests",
-                "af7c72ee-94a1-42f8-8306-395ce9147b22",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
                 "PC",
                 "Other",
                 "Windows 10",
@@ -695,12 +695,12 @@
                 "Washington",
                 "United States",
                 "Other",
-                "8df423be-a013-477c-88b9-8186722e3d49",
-                "7b1ad079-51c6-4824-91c1-9decb485ba64",
-                "dotnet7.0.20:otel1.8.1:ext1.3.0-beta.2-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0:ext1.4.0-alpha.20240620-d",
                 "Azure",
                 "AppMetrics",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-tileemonitor/providers/microsoft.insights/components/t48da106dbe0b9268"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -708,20 +708,20 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d49041ed-21aa-42c5-a6f3-6d60bb93d63c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "180",
+        "Content-Length": "197",
         "Content-Type": "application/json",
-        "traceparent": "00-154cc7d705defc8173d6ade388684c0e-58f18a6b885d49f9-00",
+        "traceparent": "00-97130055a95be55ee769ca1921b9fe80-bfa8201509ec52c9-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == 'DistroWebAppLiveTests' | top 1 by TimeGenerated",
+        "query": "AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -729,12 +729,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "2062",
+        "Content-Length": "2095",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Jun 2024 21:45:00 GMT",
+        "Date": "Thu, 20 Jun 2024 23:40:36 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-84fccbf47-z4b84",
+        "Via": "1.1 draft-oms-7b5b6f666d-2mmkv",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -877,13 +877,13 @@
             ],
             "rows": [
               [
-                "d49041ed-21aa-42c5-a6f3-6d60bb93d63c",
-                "2024-06-07T21:44:23.4175451Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T23:38:07.7470476Z",
                 "http.server.request.duration",
                 1,
-                0.0338512,
-                0.0338512,
-                0.0338512,
+                0.0010316,
+                0.0010316,
+                0.0010316,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
                 "",
                 "",
@@ -893,9 +893,9 @@
                 "",
                 "",
                 "",
-                "",
-                "DistroWebAppLiveTests",
-                "af7c72ee-94a1-42f8-8306-395ce9147b22",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
                 "PC",
                 "Other",
                 "Windows 10",
@@ -904,12 +904,12 @@
                 "Washington",
                 "United States",
                 "Other",
-                "8df423be-a013-477c-88b9-8186722e3d49",
-                "7b1ad079-51c6-4824-91c1-9decb485ba64",
-                "dotnet7.0.20:otel1.8.1:ext1.3.0-beta.2-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0:ext1.4.0-alpha.20240620-d",
                 "Azure",
                 "AppMetrics",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-tileemonitor/providers/microsoft.insights/components/t48da106dbe0b9268"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -917,20 +917,20 @@
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d49041ed-21aa-42c5-a6f3-6d60bb93d63c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "173",
+        "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-9759964878634526a529cfa2071f06c9-0d03ec30c641be54-00",
+        "traceparent": "00-4616a7a123b4b8c65808030089bff917-46e2955ad7d2c952-00",
         "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppTraces | where Message == 'Message via ILogger' | where AppRoleName == 'DistroWebAppLiveTests' | top 1 by TimeGenerated",
+        "query": "AppTraces | where Message == 'Message via ILogger' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -938,12 +938,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "1989",
+        "Content-Length": "2046",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Jun 2024 21:45:01 GMT",
+        "Date": "Thu, 20 Jun 2024 23:40:37 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-84fccbf47-q7zwk",
+        "Via": "1.1 draft-oms-7b5b6f666d-dm6qg",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1090,23 +1090,23 @@
             ],
             "rows": [
               [
-                "d49041ed-21aa-42c5-a6f3-6d60bb93d63c",
-                "2024-06-07T21:44:23.2335203Z",
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2024-06-20T23:38:07.6078709Z",
                 "Message via ILogger",
                 1,
                 null,
                 null,
                 "",
-                "2f5dc72a16261a3a9e74e74ca0f3b4bf",
-                "52f6536389172c57",
+                "49f75e59566d6ca854855deb28cdd910",
+                "f59fc5d195101154",
                 "",
                 "",
                 "",
                 "",
                 "",
-                "",
-                "DistroWebAppLiveTests",
-                "tilee-devbox",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
                 "PC",
                 "Other",
                 "Windows 10",
@@ -1115,15 +1115,15 @@
                 "Washington",
                 "United States",
                 "Other",
-                "8df423be-a013-477c-88b9-8186722e3d49",
-                "7b1ad079-51c6-4824-91c1-9decb485ba64",
-                "dotnet7.0.20:otel1.8.1:ext1.3.0-beta.2-d",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet7.0.20:otel1.9.0:ext1.4.0-alpha.20240620-d",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppTraces",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-tileemonitor/providers/microsoft.insights/components/t48da106dbe0b9268"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
               ]
             ]
           }
@@ -1132,9 +1132,9 @@
     }
   ],
   "Variables": {
-    "CONNECTION_STRING": "InstrumentationKey=7b1ad079-51c6-4824-91c1-9decb485ba64;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=8df423be-a013-477c-88b9-8186722e3d49",
+    "CONNECTION_STRING": "InstrumentationKey=53e1f7f0-9975-4995-830a-414a26e9450a;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=a98f261a-124b-425a-931e-8dc00af2e65c",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1564761728",
-    "WORKSPACE_ID": "d49041ed-21aa-42c5-a6f3-6d60bb93d63c"
+    "RandomSeed": "189119610",
+    "WORKSPACE_ID": "33d8a320-00c3-4ec8-a6a4-8692b07a6841"
   }
 }

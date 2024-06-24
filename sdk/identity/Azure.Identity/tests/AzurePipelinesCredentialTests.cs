@@ -120,6 +120,47 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [Test]
+        [TestCase(200)]
+        [TestCase(400)]
+        public void AzurePipelineCredentialReturnsNonJsonErrorInformation(int responseStatusCode)
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "SYSTEM_OIDCREQUESTURI", "https://mockCollectionUri" },
+            }))
+            {
+                var systemAccessToken = "mytoken";
+                var tenantId = "myTenantId";
+                var clientId = "myClientId";
+                var serviceConnectionId = "myConnectionId";
+
+                var mockTransport = new MockTransport(req =>
+                {
+                    if (req.Uri.Host == "mockcollectionuri")
+                    {
+                        return new MockResponse(responseStatusCode).WithContent($"< not json, but an error >");
+                    }
+                    return new MockResponse(200).WithContent(
+                            $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}");
+                });
+
+                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
+                var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
+
+                if (responseStatusCode == 200)
+                {
+                    Assert.That(ex.Message, Does.Not.Contain("< not json, but an error >"));
+                }
+                else
+                {
+                    Assert.That(ex.Message, Does.Contain("< not json, but an error >"));
+                }
+            }
+        }
+
         public class MockCredential : TokenCredential
         {
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)

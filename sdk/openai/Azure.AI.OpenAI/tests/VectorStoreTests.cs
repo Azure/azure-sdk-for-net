@@ -43,7 +43,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 
         IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(5);
 
-        vectorStore = await client.CreateVectorStoreAsync(new()
+        vectorStore = await client.CreateVectorStoreAsync(new VectorStoreCreationOptions()
         {
             FileIds = { testFiles[0].Id },
             Name = "test vector store",
@@ -84,7 +84,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         deleted = await client.DeleteVectorStoreAsync(vectorStore.Id);
         Assert.That(deleted, Is.True);
 
-        vectorStore = await client.CreateVectorStoreAsync(new()
+        vectorStore = await client.CreateVectorStoreAsync(new VectorStoreCreationOptions()
         {
             FileIds = testFiles.Select(file => file.Id).ToList()
         });
