@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -637,6 +638,22 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties: properties);
         }
 
+        private static string ConvertContentPropertyObjectToString(object contentPropertyValue)
+        {
+            if (contentPropertyValue is string)
+            {
+                return Convert.ToString(contentPropertyValue);
+            }
+            else if (contentPropertyValue is string[])
+            {
+                return string.Join(",", (string[])contentPropertyValue);
+            }
+            else
+            {
+                throw Errors.UnexpectedPropertyType(DataMovementConstants.ResourceProperties.ContentType, DataMovementConstants.StringTypeStr, DataMovementConstants.StringArrayTypeStr);
+            }
+        }
+
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
@@ -644,27 +661,27 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 ContentType = (options?.ContentType?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
-                        ? (string) contentType
+                        ? (contentType is string) ? Convert.ToString(contentType) : throw Errors.UnexpectedPropertyType(DataMovementConstants.ResourceProperties.ContentType, DataMovementConstants.StringTypeStr)
                         : default
                     : options?.ContentType?.Value,
                 ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
-                        ? (string) contentEncoding
+                        ? ConvertContentPropertyObjectToString(contentEncoding)
                         : default
                     : options?.ContentEncoding?.Value,
                 ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
-                        ? (string) contentLanguage
+                        ? ConvertContentPropertyObjectToString(contentLanguage)
                         : default
                     : options?.ContentLanguage?.Value,
                 ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
-                        ? (string) contentDisposition
+                        ? (contentDisposition is string) ? Convert.ToString(contentDisposition) : throw Errors.UnexpectedPropertyType(DataMovementConstants.ResourceProperties.ContentType, DataMovementConstants.StringTypeStr)
                         : default
                     : options?.ContentDisposition?.Value,
                 CacheControl = (options?.CacheControl?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
-                        ? (string) cacheControl
+                        ? (cacheControl is string) ? Convert.ToString(cacheControl) : throw Errors.UnexpectedPropertyType(DataMovementConstants.ResourceProperties.ContentType, DataMovementConstants.StringTypeStr, cacheControl.GetType().ToString())
                         : default
                     : options?.CacheControl?.Value,
             };

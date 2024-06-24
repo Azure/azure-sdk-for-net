@@ -40,10 +40,16 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         private const string _defaultContentType = "text/plain";
-        private const string _defaultContentLanguage = "en-US";
+        private readonly string[] _defaultContentLanguage = new[] { "en-US", "en-CA" };
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
+        private const string _defaultPermissions = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+        private const NtfsFileAttributes _defaultFileAttributes = NtfsFileAttributes.None;
+        private const NtfsFileAttributes _defaultDirectoryAttributes = NtfsFileAttributes.Directory;
         private readonly Metadata _defaultMetadata = DataProvider.BuildMetadata();
+        private readonly DateTimeOffset _defaultFileCreatedOn = new DateTimeOffset(2024, 4, 1, 9, 5, 55, default);
+        private readonly DateTimeOffset _defaultFileLastWrittenOn = new DateTimeOffset(2024, 4, 1, 12, 16, 6, default);
+        private readonly DateTimeOffset _defaultFileChangedOn = new DateTimeOffset(2024, 4, 1, 13, 30, 3, default);
         protected readonly object _serviceVersion;
 
         public ShareFileToBlockBlobTests(
@@ -105,30 +111,32 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlockBlobStorageResourceOptions options = default;
             if (type == TransferPropertiesTestType.NewProperties)
             {
-                options = new BlockBlobStorageResourceOptions
+                options = new()
                 {
-                    AccessTier = AccessTier.Cool,
                     ContentDisposition = new("attachment"),
                     ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache")
+                    CacheControl = new("no-cache"),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
-                options = new BlockBlobStorageResourceOptions
+                options = new()
                 {
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
-                    CacheControl = new(false)
+                    CacheControl = new(false),
+                    Metadata = new(false),
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
             {
-                options = new BlockBlobStorageResourceOptions
+                options = new()
                 {
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
-                    CacheControl = new(true)
+                    CacheControl = new(true),
+                    Metadata = new(true),
                 };
             }
             return new BlockBlobStorageResource(objectClient, options);
@@ -143,7 +151,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             ShareClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -153,7 +162,31 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
                 }
-                await fileClient.CreateAsync(objectLength.Value);
+                ShareFileHttpHeaders httpHeaders = default;
+                Metadata metadata = default;
+                FileSmbProperties smbProperties = default;
+                if (propertiesTestType != TransferPropertiesTestType.NewProperties)
+                {
+                    httpHeaders = new ShareFileHttpHeaders()
+                    {
+                        ContentLanguage = _defaultContentLanguage,
+                        ContentDisposition = _defaultContentDisposition,
+                        CacheControl = _defaultCacheControl
+                    };
+                    metadata = _defaultMetadata;
+                    smbProperties = new FileSmbProperties()
+                    {
+                        FileAttributes = _defaultFileAttributes,
+                        FileCreatedOn = _defaultFileCreatedOn,
+                        FileChangedOn = _defaultFileChangedOn,
+                        FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    };
+                }
+                await fileClient.CreateAsync(
+                    maxSize: objectLength.Value,
+                    httpHeaders: httpHeaders,
+                    metadata: metadata,
+                    smbProperties: smbProperties);
 
                 if (contents != default)
                 {
@@ -262,7 +295,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(string.Join(",", sourceProperties.ContentLanguage), destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
             }
