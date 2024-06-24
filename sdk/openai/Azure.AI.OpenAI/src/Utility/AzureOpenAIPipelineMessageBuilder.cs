@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI;
-using OpenAI;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
