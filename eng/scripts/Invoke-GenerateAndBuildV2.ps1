@@ -120,8 +120,16 @@ if ($relatedTypeSpecProjectFolder) {
             Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
             Remove-Item -Path $sdkAutorestConfigFile
         }
+        $serviceType = "data-plane"
+        $packageName = Split-Path $sdkProjectFolder -Leaf
+        if ($packageName.StartsWith("Azure.ResourceManager.")) {
+            $serviceType = "resource-manager"
+        }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
-        $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        if ($swaggerDir) {
+            $tspclientCommand += " --local-spec-repo $typespecFolder"
+        }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
@@ -138,7 +146,7 @@ if ($relatedTypeSpecProjectFolder) {
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
-            -serviceType "data-plane" `
+            -serviceType $serviceType `
             -skipGenerate `
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
