@@ -203,6 +203,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="JobDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobDetectorResource"/> object. </returns>
+        public virtual JobDetectorResource GetJobDetectorResource(ResourceIdentifier id)
+        {
+            JobDetectorResource.ValidateResourceId(id);
+            return new JobDetectorResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -224,6 +236,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobDetectorPropertyResource"/> object. </returns>
+        public virtual JobDetectorPropertyResource GetJobDetectorPropertyResource(ResourceIdentifier id)
+        {
+            JobDetectorPropertyResource.ValidateResourceId(id);
+            return new JobDetectorPropertyResource(Client, id);
         }
 
         /// <summary>
