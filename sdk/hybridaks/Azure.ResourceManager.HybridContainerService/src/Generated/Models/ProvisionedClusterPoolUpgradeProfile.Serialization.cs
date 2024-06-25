@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             string kubernetesVersion = default;
-            HybridContainerServiceOSType? osType = default;
+            OSType? osType = default;
             IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("upgrades"u8))

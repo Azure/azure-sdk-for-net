@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             string vmSize = default;
             string kubernetesVersion = default;
             string name = default;
-            HybridContainerServiceOSType? osType = default;
+            OSType? osType = default;
             HybridContainerServiceOSSku? ossku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSKU"u8))

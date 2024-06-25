@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceListResult"/>. </summary>
         internal KeyVaultPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<KeyVaultKeyVaultPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateLinkResourceListResult(IReadOnlyList<KeyVaultPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultPrivateLinkResourceListResult(IReadOnlyList<KeyVaultKeyVaultPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Array of private link resources. </summary>
         [WirePath("value")]
-        public IReadOnlyList<KeyVaultPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<KeyVaultKeyVaultPrivateLinkResourceData> Value { get; }
     }
 }

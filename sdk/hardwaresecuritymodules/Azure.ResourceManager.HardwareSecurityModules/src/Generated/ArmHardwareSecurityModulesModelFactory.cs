@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             return new BackupProperties(azureStorageResourceUri, lastBackupOn, lastBackupStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HardwareSecurityModulesPrivateLinkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.HardwareSecurityModulesPrivateLinkData"/> instance for mocking. </returns>
-        public static HardwareSecurityModulesPrivateLinkData HardwareSecurityModulesPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData"/> instance for mocking. </returns>
+        public static HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new HardwareSecurityModulesPrivateLinkData(
+            return new HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData(
                 id,
                 name,
                 resourceType,

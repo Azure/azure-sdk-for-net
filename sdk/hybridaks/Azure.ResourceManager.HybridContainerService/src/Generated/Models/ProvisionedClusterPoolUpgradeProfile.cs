@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, HybridContainerServiceOSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, OSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         public string KubernetesVersion { get; }
         /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
-        public HybridContainerServiceOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> List of available kubernetes versions for upgrade. </summary>
         public IList<ProvisionedClusterPoolUpgradeProfileProperties> Upgrades { get; }
     }

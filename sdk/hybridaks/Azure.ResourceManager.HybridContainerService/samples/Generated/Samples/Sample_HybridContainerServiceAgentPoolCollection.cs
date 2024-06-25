@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             string agentPoolName = "testnodepool";
             HybridContainerServiceAgentPoolData data = new HybridContainerServiceAgentPoolData()
             {
-                OSType = HybridContainerServiceOSType.Linux,
+                OSType = OSType.Linux,
                 NodeLabels =
 {
 ["env"] = "dev",

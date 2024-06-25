@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             DateTimeOffset? lastModifiedDateTime = default;
             PatchOperationStartedBy? startedBy = default;
             PatchServiceUsed? patchServiceUsed = default;
-            HybridComputeOSType? osType = default;
+            OSType? osType = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    osType = new HybridComputeOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))

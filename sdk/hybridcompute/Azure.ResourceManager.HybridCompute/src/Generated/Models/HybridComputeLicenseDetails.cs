@@ -55,18 +55,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="state"> Describes the state of the license. </param>
         /// <param name="target"> Describes the license target server. </param>
         /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
-        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
+        /// <param name="coreType"> Describes the license core type (pCore or vCore). </param>
         /// <param name="processors"> Describes the number of processors. </param>
         /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
         /// <param name="immutableId"> Describes the immutable id. </param>
         /// <param name="volumeLicenseDetails"> A list of volume license details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLicenseDetails(HybridComputeLicenseState? state, HybridComputeLicenseTarget? target, HybridComputeLicenseEdition? edition, LicenseCoreType? licenseCoreType, int? processors, int? assignedLicenses, string immutableId, IList<VolumeLicenseDetails> volumeLicenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeLicenseDetails(HybridComputeLicenseState? state, HybridComputeLicenseTarget? target, HybridComputeLicenseEdition? edition, LicenseCoreType? coreType, int? processors, int? assignedLicenses, string immutableId, IList<VolumeLicenseDetails> volumeLicenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Target = target;
             Edition = edition;
-            LicenseCoreType = licenseCoreType;
+            CoreType = coreType;
             Processors = processors;
             AssignedLicenses = assignedLicenses;
             ImmutableId = immutableId;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Describes the edition of the license. The values are either Standard or Datacenter. </summary>
         public HybridComputeLicenseEdition? Edition { get; set; }
         /// <summary> Describes the license core type (pCore or vCore). </summary>
-        public LicenseCoreType? LicenseCoreType { get; set; }
+        public LicenseCoreType? CoreType { get; set; }
         /// <summary> Describes the number of processors. </summary>
         public int? Processors { get; set; }
         /// <summary> Describes the number of assigned licenses. </summary>

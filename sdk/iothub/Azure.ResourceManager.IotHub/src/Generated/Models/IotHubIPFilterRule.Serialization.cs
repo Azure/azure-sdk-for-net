@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string filterName = default;
-            IotHubIPFilterActionType action = default;
+            IPFilterActionType action = default;
             string ipMask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = property.Value.GetString().ToIotHubIPFilterActionType();
+                    action = property.Value.GetString().ToIPFilterActionType();
                     continue;
                 }
                 if (property.NameEquals("ipMask"u8))

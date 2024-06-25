@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
         /// <param name="status"> The observed status of the agent pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, int? count, string vmSize, string kubernetesVersion, HybridContainerServiceResourceProvisioningState? provisioningState, AgentPoolProvisioningStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HybridContainerServiceExtendedLocation extendedLocation, OSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, int? count, string vmSize, string kubernetesVersion, HybridContainerServiceResourceProvisioningState? provisioningState, AgentPoolProvisioningStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             ExtendedLocation = extendedLocation;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
-        public HybridContainerServiceOSType? OSType { get; set; }
+        public OSType? OSType { get; set; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
         public HybridContainerServiceOSSku? OSSku { get; set; }
         /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="ready"> Whether the kubernetes version image is ready or not. </param>
         /// <param name="errorMessage"> The error message for version not being ready. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersionReadiness(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, bool? ready, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KubernetesVersionReadiness(OSType? osType, HybridContainerServiceOSSku? osSku, bool? ready, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             OSSku = osSku;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
-        public HybridContainerServiceOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
         public HybridContainerServiceOSSku? OSSku { get; }
         /// <summary> Whether the kubernetes version image is ready or not. </summary>

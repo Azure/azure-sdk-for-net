@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the patch service used for the operation. </summary>
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
-        public HybridComputeOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ResponseError ErrorDetails { get; }
     }

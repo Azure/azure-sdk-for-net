@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultKeyVaultPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.KeyVaultKeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static KeyVaultKeyVaultPrivateLinkResourceData KeyVaultKeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultPrivateLinkResourceData(
+            return new KeyVaultKeyVaultPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,

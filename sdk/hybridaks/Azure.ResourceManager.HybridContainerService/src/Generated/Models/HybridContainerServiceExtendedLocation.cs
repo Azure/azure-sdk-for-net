@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="extendedLocationType"> The extended location type. Allowed value: 'CustomLocation'. </param>
         /// <param name="name"> ARM Id of the extended location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridContainerServiceExtendedLocation(HybridContainerServiceExtendedLocationType? extendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridContainerServiceExtendedLocation(ExtendedLocationType? extendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtendedLocationType = extendedLocationType;
             Name = name;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> The extended location type. Allowed value: 'CustomLocation'. </summary>
-        public HybridContainerServiceExtendedLocationType? ExtendedLocationType { get; set; }
+        public ExtendedLocationType? ExtendedLocationType { get; set; }
         /// <summary> ARM Id of the extended location. </summary>
         public string Name { get; set; }
     }

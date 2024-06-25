@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            HybridContainerServiceOSType? osType = default;
+            OSType? osType = default;
             HybridContainerServiceOSSku? osSku = default;
             bool? ready = default;
             string errorMessage = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSku"u8))

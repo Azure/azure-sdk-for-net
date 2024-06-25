@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="state"> Describes the state of the license. </param>
         /// <param name="target"> Describes the license target server. </param>
         /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
-        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
+        /// <param name="coreType"> Describes the license core type (pCore or vCore). </param>
         /// <param name="processors"> Describes the number of processors. </param>
         /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
         /// <param name="immutableId"> Describes the immutable id. </param>
         /// <param name="volumeLicenseDetails"> A list of volume license details. </param>
         /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
-        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null, IEnumerable<VolumeLicenseDetails> volumeLicenseDetails = null)
+        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? coreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null, IEnumerable<VolumeLicenseDetails> volumeLicenseDetails = null)
         {
             volumeLicenseDetails ??= new List<VolumeLicenseDetails>();
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 state,
                 target,
                 edition,
-                licenseCoreType,
+                coreType,
                 processors,
                 assignedLicenses,
                 immutableId,
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <returns> A new <see cref="Models.MachineAssessPatchesResult"/> instance for mocking. </returns>
-        public static MachineAssessPatchesResult MachineAssessPatchesResult(MachineOperationStatus? status = null, Guid? assessmentActivityId = null, bool? isRebootPending = null, AvailablePatchCountByClassification availablePatchCountByClassification = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, HybridComputeOSType? osType = null, ResponseError errorDetails = null)
+        public static MachineAssessPatchesResult MachineAssessPatchesResult(MachineOperationStatus? status = null, Guid? assessmentActivityId = null, bool? isRebootPending = null, AvailablePatchCountByClassification availablePatchCountByClassification = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
         {
             return new MachineAssessPatchesResult(
                 status,
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <returns> A new <see cref="Models.MachineInstallPatchesResult"/> instance for mocking. </returns>
-        public static MachineInstallPatchesResult MachineInstallPatchesResult(MachineOperationStatus? status = null, string installationActivityId = null, VmGuestPatchRebootStatus? rebootStatus = null, bool? maintenanceWindowExceeded = null, int? excludedPatchCount = null, int? notSelectedPatchCount = null, int? pendingPatchCount = null, int? installedPatchCount = null, int? failedPatchCount = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, HybridComputeOSType? osType = null, ResponseError errorDetails = null)
+        public static MachineInstallPatchesResult MachineInstallPatchesResult(MachineOperationStatus? status = null, string installationActivityId = null, VmGuestPatchRebootStatus? rebootStatus = null, bool? maintenanceWindowExceeded = null, int? excludedPatchCount = null, int? notSelectedPatchCount = null, int? pendingPatchCount = null, int? installedPatchCount = null, int? failedPatchCount = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
         {
             return new MachineInstallPatchesResult(
                 status,

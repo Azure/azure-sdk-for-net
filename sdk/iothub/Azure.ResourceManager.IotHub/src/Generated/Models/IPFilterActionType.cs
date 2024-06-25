@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The desired action for requests captured by this rule. </summary>
-    public enum IotHubIPFilterActionType
+    public enum IPFilterActionType
     {
         /// <summary> Accept. </summary>
         Accept,

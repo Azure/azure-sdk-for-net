@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsDefined(LicenseCoreType))
+            if (Optional.IsDefined(CoreType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(LicenseCoreType.Value.ToString());
+                writer.WriteStringValue(CoreType.Value.ToString());
             }
             if (Optional.IsDefined(Processors))
             {

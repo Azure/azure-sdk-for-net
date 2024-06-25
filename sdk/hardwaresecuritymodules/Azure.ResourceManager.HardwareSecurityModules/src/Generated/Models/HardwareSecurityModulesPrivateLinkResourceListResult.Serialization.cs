@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value = default;
+            IReadOnlyList<HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    List<HardwareSecurityModulesPrivateLinkData> array = new List<HardwareSecurityModulesPrivateLinkData>();
+                    List<HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData> array = new List<HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item, options));
+                        array.Add(HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesHardwareSecurityModulesPrivateLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>(), serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

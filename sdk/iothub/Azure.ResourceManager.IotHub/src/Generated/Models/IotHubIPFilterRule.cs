@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
-        public IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask)
+        public IotHubIPFilterRule(string filterName, IPFilterActionType action, string ipMask)
         {
             Argument.AssertNotNull(filterName, nameof(filterName));
             Argument.AssertNotNull(ipMask, nameof(ipMask));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubIPFilterRule(string filterName, IPFilterActionType action, string ipMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilterName = filterName;
             Action = action;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The name of the IP filter rule. </summary>
         public string FilterName { get; set; }
         /// <summary> The desired action for requests captured by this rule. </summary>
-        public IotHubIPFilterActionType Action { get; set; }
+        public IPFilterActionType Action { get; set; }
         /// <summary> A string that contains the IP address range in CIDR notation for the rule. </summary>
         public string IPMask { get; set; }
     }

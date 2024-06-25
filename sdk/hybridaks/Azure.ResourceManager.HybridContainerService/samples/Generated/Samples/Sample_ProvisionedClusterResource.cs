@@ -94,7 +94,7 @@ new HybridContainerServiceNamedAgentPoolProfile()
 Count = 1,
 VmSize = "Standard_A4_v2",
 Name = "default-nodepool-1",
-OSType = HybridContainerServiceOSType.Linux,
+OSType = OSType.Linux,
 NodeLabels =
 {
 ["env"] = "dev",
@@ -114,7 +114,7 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
                 },
                 ExtendedLocation = new HybridContainerServiceExtendedLocation()
                 {
-                    ExtendedLocationType = HybridContainerServiceExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
                     Name = "/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourcegroups/test-arcappliance-resgrp/providers/microsoft.extendedlocation/customlocations/testcustomlocation",
                 },
             };

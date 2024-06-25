@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridContainerService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            HybridContainerServiceOSType? osType = default;
+            OSType? osType = default;
             HybridContainerServiceOSSku? ossku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            osType = new HybridContainerServiceOSType(property0.Value.GetString());
+                            osType = new OSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osSKU"u8))

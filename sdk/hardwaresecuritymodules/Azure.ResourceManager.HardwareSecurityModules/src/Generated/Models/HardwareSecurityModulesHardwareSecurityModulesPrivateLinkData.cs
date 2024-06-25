@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class HardwareSecurityModulesPrivateLinkData : ResourceData
+    public partial class HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkData"/>. </summary>
-        internal HardwareSecurityModulesPrivateLinkData()
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData"/>. </summary>
+        internal HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareSecurityModulesPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HardwareSecurityModulesHardwareSecurityModulesPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

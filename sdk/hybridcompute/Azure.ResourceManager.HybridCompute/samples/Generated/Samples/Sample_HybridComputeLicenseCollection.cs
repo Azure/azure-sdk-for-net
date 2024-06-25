@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                     State = HybridComputeLicenseState.Activated,
                     Target = HybridComputeLicenseTarget.WindowsServer2012,
                     Edition = HybridComputeLicenseEdition.DataCenter,
-                    LicenseCoreType = LicenseCoreType.PCore,
+                    CoreType = LicenseCoreType.PCore,
                     Processors = 6,
                 },
             };
