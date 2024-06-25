@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             long? deviceLocalCapacity = default;
             string timeZone = default;
             string deviceHcsVersion = default;
-            IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes = default;
+            IReadOnlyList<RoleType> configuredRoleTypes = default;
             int? nodeCount = default;
             DataBoxEdgeResourceMoveDetails resourceMoveDetails = default;
             EdgeProfile edgeProfile = default;
@@ -409,10 +409,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            List<DataBoxEdgeRoleType> array = new List<DataBoxEdgeRoleType>();
+                            List<RoleType> array = new List<RoleType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DataBoxEdgeRoleType(item.GetString()));
+                                array.Add(new RoleType(item.GetString()));
                             }
                             configuredRoleTypes = array;
                             continue;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 deviceLocalCapacity,
                 timeZone,
                 deviceHcsVersion,
-                configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>(),
+                configuredRoleTypes ?? new ChangeTrackingList<RoleType>(),
                 nodeCount,
                 resourceMoveDetails,
                 edgeProfile,

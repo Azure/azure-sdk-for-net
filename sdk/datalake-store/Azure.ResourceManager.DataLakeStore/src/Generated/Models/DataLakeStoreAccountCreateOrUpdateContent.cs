@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="trustedIdProviderState"> The current state of the trusted identity provider feature for this Data Lake Store account. </param>
         /// <param name="newTier"> The commitment tier to use for next month. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules, IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs, IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules, IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Tags = tags;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
         public DataLakeStoreFirewallState? FirewallState { get; set; }
         /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
-        public DataLakeStoreFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
         public IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> TrustedIdProviders { get; }
         /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>

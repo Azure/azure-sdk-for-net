@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<CosmosDBBaseUsage> value = default;
+            IReadOnlyList<CosmosDBCosmosDBBaseUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CosmosDBBaseUsage> array = new List<CosmosDBBaseUsage>();
+                    List<CosmosDBCosmosDBBaseUsage> array = new List<CosmosDBCosmosDBBaseUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item, options));
+                        array.Add(CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBUsagesResult(value ?? new ChangeTrackingList<CosmosDBBaseUsage>(), serializedAdditionalRawData);
+            return new CosmosDBUsagesResult(value ?? new ChangeTrackingList<CosmosDBCosmosDBBaseUsage>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

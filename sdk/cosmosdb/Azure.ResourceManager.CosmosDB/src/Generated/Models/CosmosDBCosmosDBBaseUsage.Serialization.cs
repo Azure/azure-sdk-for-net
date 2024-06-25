@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBBaseUsage : IUtf8JsonSerializable, IJsonModel<CosmosDBBaseUsage>
+    public partial class CosmosDBCosmosDBBaseUsage : IUtf8JsonSerializable, IJsonModel<CosmosDBCosmosDBBaseUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBBaseUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBCosmosDBBaseUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CosmosDBBaseUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBCosmosDBBaseUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBCosmosDBBaseUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        CosmosDBBaseUsage IJsonModel<CosmosDBBaseUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBCosmosDBBaseUsage IJsonModel<CosmosDBCosmosDBBaseUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBCosmosDBBaseUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCosmosDBBaseUsage(document.RootElement, options);
+            return DeserializeCosmosDBCosmosDBBaseUsage(document.RootElement, options);
         }
 
-        internal static CosmosDBBaseUsage DeserializeCosmosDBBaseUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBCosmosDBBaseUsage DeserializeCosmosDBCosmosDBBaseUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBBaseUsage(
+            return new CosmosDBCosmosDBBaseUsage(
                 unit,
                 name,
                 quotaPeriod,
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CosmosDBBaseUsage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBCosmosDBBaseUsage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -264,26 +264,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBCosmosDBBaseUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CosmosDBBaseUsage IPersistableModel<CosmosDBBaseUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBCosmosDBBaseUsage IPersistableModel<CosmosDBCosmosDBBaseUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCosmosDBBaseUsage(document.RootElement, options);
+                        return DeserializeCosmosDBCosmosDBBaseUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBCosmosDBBaseUsage)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CosmosDBBaseUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBCosmosDBBaseUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

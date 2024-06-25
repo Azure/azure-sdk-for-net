@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, ComputeDeleteOption? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachinePublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, DeleteOption? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Sku = sku;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOption? DeleteOption { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
         /// <summary> The list of IP tags associated with the public IP address. </summary>

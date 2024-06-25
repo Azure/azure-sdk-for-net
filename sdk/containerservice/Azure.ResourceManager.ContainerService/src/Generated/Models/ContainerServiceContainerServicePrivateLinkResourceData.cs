@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class ContainerServicePrivateLinkResourceData
+    public partial class ContainerServiceContainerServicePrivateLinkResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
-        public ContainerServicePrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceContainerServicePrivateLinkResourceData"/>. </summary>
+        public ContainerServiceContainerServicePrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceContainerServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The ID of the private link resource. </param>
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="requiredMembers"> The RequiredMembers of the resource. </param>
         /// <param name="privateLinkServiceId"> The private link service ID of the resource, this field is exposed only to NRP internally. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;

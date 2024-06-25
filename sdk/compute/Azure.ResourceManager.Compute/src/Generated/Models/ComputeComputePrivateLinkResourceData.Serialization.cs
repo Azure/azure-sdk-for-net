@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ComputePrivateLinkResourceData>
+    public partial class ComputeComputePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ComputeComputePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeComputePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ComputePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeComputePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeComputePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        ComputePrivateLinkResourceData IJsonModel<ComputePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeComputePrivateLinkResourceData IJsonModel<ComputeComputePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeComputePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputePrivateLinkResourceData(document.RootElement, options);
+            return DeserializeComputeComputePrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static ComputePrivateLinkResourceData DeserializeComputePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeComputePrivateLinkResourceData DeserializeComputeComputePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputePrivateLinkResourceData(
+            return new ComputeComputePrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -214,35 +214,35 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeComputePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComputePrivateLinkResourceData IPersistableModel<ComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeComputePrivateLinkResourceData IPersistableModel<ComputeComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeComputePrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeComputeComputePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeComputePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComputePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeComputePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

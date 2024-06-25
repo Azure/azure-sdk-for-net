@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataLakeStore
             IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules = default;
             IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules = default;
             DataLakeStoreFirewallState? firewallState = default;
-            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            FirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
             IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders = default;
             DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
             DataLakeStoreCommitmentTierType? newTier = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             {
                                 continue;
                             }
-                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
+                            firewallAllowAzureIPs = property0.Value.GetString().ToFirewallAllowAzureIPsState();
                             continue;
                         }
                         if (property0.NameEquals("trustedIdProviders"u8))

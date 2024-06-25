@@ -209,7 +209,7 @@ KeyData = "aaaaaa",
 new VirtualMachineNetworkInterfaceReference()
 {
 Primary = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0/networkInterfaces/vmsstestnetconfig5415"),
 }
 },
@@ -219,7 +219,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 new VirtualMachineNetworkInterfaceConfiguration("aaaaaaaaaaa")
 {
 Primary = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 EnableAcceleratedNetworking = true,
 EnableFpga = true,
 EnableIPForwarding = true,
@@ -242,7 +242,7 @@ Name = ComputePublicIPAddressSkuName.Basic,
 Tier = ComputePublicIPAddressSkuTier.Regional,
 },
 IdleTimeoutInMinutes = 2,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 DnsSettings = new VirtualMachinePublicIPAddressDnsSettingsConfiguration("aaaaaaaaaaaaaaaaaaaaaaaaa"),
 IPTags =
 {
@@ -320,7 +320,7 @@ Tag = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
 },
 PublicIPPrefixId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 PublicIPAddressVersion = IPVersion.IPv4,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
 ApplicationGatewayBackendAddressPools =
@@ -354,7 +354,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 }
 },
 EnableIPForwarding = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 }
 },
                 BootDiagnostics = new BootDiagnostics()

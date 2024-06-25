@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role type. </summary>
-        internal DataBoxEdgeRoleType Kind { get; set; }
+        internal RoleType Kind { get; set; }
     }
 }

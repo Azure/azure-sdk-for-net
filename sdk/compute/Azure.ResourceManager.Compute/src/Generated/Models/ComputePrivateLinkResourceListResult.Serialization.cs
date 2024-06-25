@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IReadOnlyList<ComputePrivateLinkResourceData> value = default;
+            IReadOnlyList<ComputeComputePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputePrivateLinkResourceData> array = new List<ComputePrivateLinkResourceData>();
+                    List<ComputeComputePrivateLinkResourceData> array = new List<ComputeComputePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item, options));
+                        array.Add(ComputeComputePrivateLinkResourceData.DeserializeComputeComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<ComputePrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new ComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<ComputeComputePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The level code. </summary>
-    public enum ComputeStatusLevelType
+    public enum StatusLevelType
     {
         /// <summary> Info. </summary>
         Info,

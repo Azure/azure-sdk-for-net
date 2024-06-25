@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
             ContainerGroupIPAddress ipAddress = default;
-            ContainerInstanceOperatingSystemType osType = default;
+            OperatingSystemType osType = default;
             IList<ContainerVolume> volumes = default;
             ContainerGroupInstanceView instanceView = default;
             ContainerGroupDiagnostics diagnostics = default;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("osType"u8))
                         {
-                            osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
+                            osType = new OperatingSystemType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))

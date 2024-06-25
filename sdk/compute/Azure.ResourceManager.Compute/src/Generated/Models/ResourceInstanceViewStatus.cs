@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="time"> The time of the status. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceInstanceViewStatus(string code, string displayStatus, string message, DateTimeOffset? time, ComputeStatusLevelType? level, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceInstanceViewStatus(string code, string displayStatus, string message, DateTimeOffset? time, StatusLevelType? level, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             DisplayStatus = displayStatus;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The time of the status. </summary>
         public DateTimeOffset? Time { get; }
         /// <summary> The level code. </summary>
-        public ComputeStatusLevelType? Level { get; }
+        public StatusLevelType? Level { get; }
     }
 }

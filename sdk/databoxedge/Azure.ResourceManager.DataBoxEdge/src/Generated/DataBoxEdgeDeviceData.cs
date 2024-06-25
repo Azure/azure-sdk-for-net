@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="location"> The location. </param>
         public DataBoxEdgeDeviceData(AzureLocation location) : base(location)
         {
-            ConfiguredRoleTypes = new ChangeTrackingList<DataBoxEdgeRoleType>();
+            ConfiguredRoleTypes = new ChangeTrackingList<RoleType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
         /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<RoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> The device software version number of the device (eg: 1.2.18105.6). </summary>
         public string DeviceHcsVersion { get; }
         /// <summary> Type of compute roles configured. </summary>
-        public IReadOnlyList<DataBoxEdgeRoleType> ConfiguredRoleTypes { get; }
+        public IReadOnlyList<RoleType> ConfiguredRoleTypes { get; }
         /// <summary> The number of nodes in the cluster. </summary>
         public int? NodeCount { get; }
         /// <summary> The details of the move operation on this resource. </summary>

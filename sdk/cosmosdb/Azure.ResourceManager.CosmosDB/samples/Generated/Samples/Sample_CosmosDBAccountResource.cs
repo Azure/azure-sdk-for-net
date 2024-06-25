@@ -519,7 +519,7 @@ FailoverPriority = 1,
 
             // invoke the operation and iterate over the result
             string filter = "$filter=name.value eq 'Storage'";
-            await foreach (CosmosDBBaseUsage item in cosmosDBAccount.GetUsagesAsync(filter: filter))
+            await foreach (CosmosDBCosmosDBBaseUsage item in cosmosDBAccount.GetUsagesAsync(filter: filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -613,7 +613,7 @@ FailoverPriority = 1,
             // invoke the operation and iterate over the result
             string databaseRid = "databaseRid";
             string filter = "$filter=name.value eq 'Storage'";
-            await foreach (CosmosDBBaseUsage item in cosmosDBAccount.GetUsagesDatabasesAsync(databaseRid, filter: filter))
+            await foreach (CosmosDBCosmosDBBaseUsage item in cosmosDBAccount.GetUsagesDatabasesAsync(databaseRid, filter: filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -710,7 +710,7 @@ FailoverPriority = 1,
             string databaseRid = "databaseRid";
             string collectionRid = "collectionRid";
             string filter = "$filter=name.value eq 'Storage'";
-            await foreach (CosmosDBBaseUsage item in cosmosDBAccount.GetUsagesCollectionsAsync(databaseRid, collectionRid, filter: filter))
+            await foreach (CosmosDBCosmosDBBaseUsage item in cosmosDBAccount.GetUsagesCollectionsAsync(databaseRid, collectionRid, filter: filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

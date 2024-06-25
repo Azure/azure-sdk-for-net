@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             string displayStatus = default;
             string message = default;
             DateTimeOffset? time = default;
-            ComputeStatusLevelType? level = default;
+            StatusLevelType? level = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    level = property.Value.GetString().ToComputeStatusLevelType();
+                    level = property.Value.GetString().ToStatusLevelType();
                     continue;
                 }
                 if (options.Format != "W")

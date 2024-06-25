@@ -2685,7 +2685,7 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComputePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeComputePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2693,13 +2693,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource DNS zone name. </param>
-        /// <returns> A new <see cref="Models.ComputePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ComputePrivateLinkResourceData ComputePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.ComputeComputePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static ComputeComputePrivateLinkResourceData ComputeComputePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ComputePrivateLinkResourceData(
+            return new ComputeComputePrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -3948,7 +3948,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="time"> The time of the status. </param>
         /// <param name="level"> The level code. </param>
         /// <returns> A new <see cref="Models.ResourceInstanceViewStatus"/> instance for mocking. </returns>
-        public static ResourceInstanceViewStatus ResourceInstanceViewStatus(string code = null, string displayStatus = null, string message = null, DateTimeOffset? time = null, ComputeStatusLevelType? level = null)
+        public static ResourceInstanceViewStatus ResourceInstanceViewStatus(string code = null, string displayStatus = null, string message = null, DateTimeOffset? time = null, StatusLevelType? level = null)
         {
             return new ResourceInstanceViewStatus(
                 code,

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? primary, ComputeDeleteOption? deleteOption) : base(id, serializedAdditionalRawData)
+        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? primary, DeleteOption? deleteOption) : base(id, serializedAdditionalRawData)
         {
             Primary = primary;
             DeleteOption = deleteOption;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOption? DeleteOption { get; set; }
     }
 }

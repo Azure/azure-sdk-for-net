@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         public EdgeKubernetesRole()
         {
-            Kind = DataBoxEdgeRoleType.Kubernetes;
+            Kind = RoleType.Kubernetes;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string blobPathBeginsWith = default;
             string blobPathEndsWith = default;
             bool? ignoreEmptyBlobs = default;
-            IList<DataFactoryBlobEventType> events = default;
+            IList<BlobEventType> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("events"u8))
                         {
-                            List<DataFactoryBlobEventType> array = new List<DataFactoryBlobEventType>();
+                            List<BlobEventType> array = new List<BlobEventType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DataFactoryBlobEventType(item.GetString()));
+                                array.Add(new BlobEventType(item.GetString()));
                             }
                             events = array;
                             continue;

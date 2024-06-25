@@ -1198,7 +1198,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 IPConfigurations =
 {
 new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
@@ -1211,7 +1211,7 @@ Sku = new ComputePublicIPAddressSku()
 Name = ComputePublicIPAddressSkuName.Basic,
 Tier = ComputePublicIPAddressSkuTier.Global,
 },
-DeleteOption = ComputeDeleteOption.Detach,
+DeleteOption = DeleteOption.Detach,
 PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
 },
 }
@@ -1294,7 +1294,7 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
 new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 IPConfigurations =
 {
 new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
@@ -1307,7 +1307,7 @@ Sku = new ComputePublicIPAddressSku()
 Name = ComputePublicIPAddressSkuName.Basic,
 Tier = ComputePublicIPAddressSkuTier.Global,
 },
-DeleteOption = ComputeDeleteOption.Detach,
+DeleteOption = DeleteOption.Detach,
 DnsSettings = new VirtualMachinePublicIPAddressDnsSettingsConfiguration("aaaaa")
 {
 DomainNameLabelScope = DomainNameLabelScopeType.TenantReuse,

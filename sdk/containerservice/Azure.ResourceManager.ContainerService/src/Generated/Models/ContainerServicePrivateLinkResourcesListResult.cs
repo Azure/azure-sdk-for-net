@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourcesListResult"/>. </summary>
         internal ContainerServicePrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<ContainerServiceContainerServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourcesListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateLinkResourcesListResult(IReadOnlyList<ContainerServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServicePrivateLinkResourcesListResult(IReadOnlyList<ContainerServiceContainerServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<ContainerServicePrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<ContainerServiceContainerServicePrivateLinkResourceData> Value { get; }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Sku = sku;
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOption? DeleteOption { get; set; }
     }
 }

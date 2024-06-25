@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, DeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Primary = primary;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOption? DeleteOption { get; set; }
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
         /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>

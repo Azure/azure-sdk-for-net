@@ -2024,11 +2024,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBCosmosDBBaseUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2054,11 +2054,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBCosmosDBBaseUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2205,13 +2205,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesDatabasesAsync(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBCosmosDBBaseUsage> GetUsagesDatabasesAsync(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2236,13 +2236,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
-        /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetUsagesDatabases(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBCosmosDBBaseUsage> GetUsagesDatabases(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2396,14 +2396,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBCosmosDBBaseUsage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2429,14 +2429,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBCosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBCosmosDBBaseUsage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBCosmosDBBaseUsage.DeserializeCosmosDBCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>

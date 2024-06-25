@@ -597,16 +597,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 partitionKeyRangeId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBBaseUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBCosmosDBBaseUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
         /// <param name="limit"> Maximum value for this metric. </param>
         /// <param name="currentValue"> Current value for this metric. </param>
-        /// <returns> A new <see cref="Models.CosmosDBBaseUsage"/> instance for mocking. </returns>
-        public static CosmosDBBaseUsage CosmosDBBaseUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null)
+        /// <returns> A new <see cref="Models.CosmosDBCosmosDBBaseUsage"/> instance for mocking. </returns>
+        public static CosmosDBCosmosDBBaseUsage CosmosDBCosmosDBBaseUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null)
         {
-            return new CosmosDBBaseUsage(
+            return new CosmosDBCosmosDBBaseUsage(
                 unit,
                 name,
                 quotaPeriod,

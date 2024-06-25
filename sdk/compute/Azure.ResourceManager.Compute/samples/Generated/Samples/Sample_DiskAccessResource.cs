@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Samples
             DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ComputePrivateLinkResourceData item in diskAccess.GetPrivateLinkResourcesAsync())
+            await foreach (ComputeComputePrivateLinkResourceData item in diskAccess.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
