@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             bool recordException = false)
         {
             // SETUP MOCK TRANSMITTER TO CAPTURE AZURE MONITOR TELEMETRY
-            var testConnectionString = $"InstrumentationKey=unitTest-{nameof(SqlClientCallsAreCollectedSuccessfully)}";
+            var testConnectionString = $"InstrumentationKey=unitTest-{nameof(SqlClientErrorsAreCollectedSuccessfully)}";
             var telemetryItems = new List<TelemetryItem>();
             var mockTransmitter = new Exporter.Tests.CommonTestFramework.MockTransmitter(telemetryItems);
             Exporter.Internals.TransmitterFactory.Instance.Set(connectionString: testConnectionString, transmitter: mockTransmitter);
