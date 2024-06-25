@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description of the security user configuration. </param>
-        /// <param name="deleteExistingNSGs"> Flag if need to delete existing network security groups. </param>
+        /// <param name="deleteExistingNsg"> Flag if need to delete existing network security groups. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityUserConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DeleteExistingNSG? deleteExistingNSGs, NetworkProvisioningState? provisioningState, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityUserConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DeleteExistingNsg? deleteExistingNsg, NetworkProvisioningState? provisioningState, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
-            DeleteExistingNSGs = deleteExistingNSGs;
+            DeleteExistingNsg = deleteExistingNsg;
             ProvisioningState = provisioningState;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A description of the security user configuration. </summary>
         public string Description { get; set; }
         /// <summary> Flag if need to delete existing network security groups. </summary>
-        public DeleteExistingNSG? DeleteExistingNSGs { get; set; }
+        public DeleteExistingNsg? DeleteExistingNsg { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityUserConfigurationData data = new SecurityUserConfigurationData()
             {
                 Description = "A sample policy",
-                DeleteExistingNSGs = DeleteExistingNSG.True,
+                DeleteExistingNsg = DeleteExistingNsg.True,
             };
             ArmOperation<SecurityUserConfigurationResource> lro = await securityUserConfiguration.UpdateAsync(WaitUntil.Completed, data);
             SecurityUserConfigurationResource result = lro.Value;

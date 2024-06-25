@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BaseUserRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BaseUserRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseUserRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkBaseUserRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkBaseUserRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBaseUserRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetBaseUserRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkBaseUserRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BaseUserRuleResource"/> object. </returns>
-        public static BaseUserRuleResource GetBaseUserRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkBaseUserRuleResource"/> object. </returns>
+        public static NetworkBaseUserRuleResource GetNetworkBaseUserRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetBaseUserRuleResource(id);
+            return GetMockableNetworkArmClient(client).GetNetworkBaseUserRuleResource(id);
         }
 
         /// <summary>

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing the BaseUserRule data model.
+    /// A class representing the NetworkBaseUserRule data model.
     /// Network base rule.
-    /// Please note <see cref="BaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="UserRule"/> and <see cref="DefaultUserRule"/>.
+    /// Please note <see cref="NetworkBaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="NetworkSecurityUserRule"/> and <see cref="NetworkSecurityDefaultUserRule"/>.
     /// </summary>
-    public abstract partial class BaseUserRuleData : ResourceData
+    public abstract partial class NetworkBaseUserRuleData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BaseUserRuleData"/>. </summary>
-        protected BaseUserRuleData()
+        /// <summary> Initializes a new instance of <see cref="NetworkBaseUserRuleData"/>. </summary>
+        protected NetworkBaseUserRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseUserRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkBaseUserRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BaseUserRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkBaseUserRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;

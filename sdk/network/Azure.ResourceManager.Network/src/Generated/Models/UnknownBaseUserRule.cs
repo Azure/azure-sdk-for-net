@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Unknown version of BaseUserRule. </summary>
-    internal partial class UnknownBaseUserRule : BaseUserRuleData
+    internal partial class UnknownBaseUserRule : NetworkBaseUserRuleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseUserRule"/>. </summary>
         /// <param name="id"> The id. </param>

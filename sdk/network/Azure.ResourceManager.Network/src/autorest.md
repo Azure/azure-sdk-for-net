@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/19b66613827a0acf8fbbd0a4c2d9cbef9f2f5899/specification/network/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0ce2859b2f018adcea3d14346951ff4270dcff3d/specification/network/resource-manager/readme.md
 tag: package-2023-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -197,9 +197,16 @@ rename-mapping:
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  UserRule: NetworkSecurityUserRule
+  DefaultUserRule: NetworkSecurityDefaultUserRule
+  DeleteExistingNSGs: DeleteExistingNsg
+  SecurityUserConfiguration.properties.deleteExistingNSGs: DeleteExistingNsg
+
+prepend-rp-prefix:
+  - BaseUserRule
 
 keep-plural-resource-data:
-- PolicySignaturesOverridesForIdps
+  - PolicySignaturesOverridesForIdps
 
 models-to-treat-empty-string-as-null:
   - HopLink

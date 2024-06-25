@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownBaseUserRule : IUtf8JsonSerializable, IJsonModel<BaseUserRuleData>
+    internal partial class UnknownBaseUserRule : IUtf8JsonSerializable, IJsonModel<NetworkBaseUserRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseUserRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkBaseUserRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BaseUserRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkBaseUserRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkBaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseUserRuleData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkBaseUserRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        BaseUserRuleData IJsonModel<BaseUserRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkBaseUserRuleData IJsonModel<NetworkBaseUserRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkBaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseUserRuleData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkBaseUserRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseUserRuleData(document.RootElement, options);
+            return DeserializeNetworkBaseUserRuleData(document.RootElement, options);
         }
 
         internal static UnknownBaseUserRule DeserializeUnknownBaseUserRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -156,35 +156,35 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BaseUserRuleData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkBaseUserRuleData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkBaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaseUserRuleData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkBaseUserRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BaseUserRuleData IPersistableModel<BaseUserRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkBaseUserRuleData IPersistableModel<NetworkBaseUserRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkBaseUserRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBaseUserRuleData(document.RootElement, options);
+                        return DeserializeNetworkBaseUserRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseUserRuleData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkBaseUserRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BaseUserRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkBaseUserRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a BaseUserRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BaseUserRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBaseUserRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="UserRuleCollectionResource"/> using the GetBaseUserRule method.
+    /// A Class representing a NetworkBaseUserRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkBaseUserRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkBaseUserRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="UserRuleCollectionResource"/> using the GetNetworkBaseUserRule method.
     /// </summary>
-    public partial class BaseUserRuleResource : ArmResource
+    public partial class NetworkBaseUserRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BaseUserRuleResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetworkBaseUserRuleResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="networkManagerName"> The networkManagerName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Network
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _baseUserRuleUserRulesClientDiagnostics;
-        private readonly UserRulesRestOperations _baseUserRuleUserRulesRestClient;
-        private readonly BaseUserRuleData _data;
+        private readonly ClientDiagnostics _networkBaseUserRuleUserRulesClientDiagnostics;
+        private readonly UserRulesRestOperations _networkBaseUserRuleUserRulesRestClient;
+        private readonly NetworkBaseUserRuleData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules";
 
-        /// <summary> Initializes a new instance of the <see cref="BaseUserRuleResource"/> class for mocking. </summary>
-        protected BaseUserRuleResource()
+        /// <summary> Initializes a new instance of the <see cref="NetworkBaseUserRuleResource"/> class for mocking. </summary>
+        protected NetworkBaseUserRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseUserRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkBaseUserRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BaseUserRuleResource(ArmClient client, BaseUserRuleData data) : this(client, data.Id)
+        internal NetworkBaseUserRuleResource(ArmClient client, NetworkBaseUserRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseUserRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkBaseUserRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BaseUserRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkBaseUserRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _baseUserRuleUserRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string baseUserRuleUserRulesApiVersion);
-            _baseUserRuleUserRulesRestClient = new UserRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, baseUserRuleUserRulesApiVersion);
+            _networkBaseUserRuleUserRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string networkBaseUserRuleUserRulesApiVersion);
+            _networkBaseUserRuleUserRulesRestClient = new UserRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkBaseUserRuleUserRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BaseUserRuleData Data
+        public virtual NetworkBaseUserRuleData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BaseUserRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkBaseUserRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Get");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkBaseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BaseUserRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkBaseUserRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Get");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkBaseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Delete");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var uri = _baseUserRuleUserRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
+                var response = await _networkBaseUserRuleUserRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NetworkArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,12 +241,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Delete");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var uri = _baseUserRuleUserRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
+                var response = _networkBaseUserRuleUserRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NetworkArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,18 +285,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> The user rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BaseUserRuleResource>> UpdateAsync(WaitUntil waitUntil, BaseUserRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkBaseUserRuleResource>> UpdateAsync(WaitUntil waitUntil, NetworkBaseUserRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Update");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _baseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = await _networkBaseUserRuleUserRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<BaseUserRuleResource>(Response.FromValue(new BaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkBaseUserRuleResource>(Response.FromValue(new NetworkBaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,18 +333,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> The user rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BaseUserRuleResource> Update(WaitUntil waitUntil, BaseUserRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkBaseUserRuleResource> Update(WaitUntil waitUntil, NetworkBaseUserRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleResource.Update");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _baseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = _networkBaseUserRuleUserRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<BaseUserRuleResource>(Response.FromValue(new BaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkBaseUserRuleResource>(Response.FromValue(new NetworkBaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

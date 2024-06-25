@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network security default user rule. </summary>
-    public partial class DefaultUserRule : BaseUserRuleData
+    public partial class NetworkSecurityDefaultUserRule : NetworkBaseUserRuleData
     {
-        /// <summary> Initializes a new instance of <see cref="DefaultUserRule"/>. </summary>
-        public DefaultUserRule()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityDefaultUserRule"/>. </summary>
+        public NetworkSecurityDefaultUserRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
             Destinations = new ChangeTrackingList<AddressPrefixItem>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = UserRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefaultUserRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityDefaultUserRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPortRanges"> The destination port ranges. </param>
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        internal DefaultUserRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal NetworkSecurityDefaultUserRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Description = description;
             Flag = flag;

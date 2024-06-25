@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="UserRuleListResult"/>. </summary>
         internal UserRuleListResult()
         {
-            Value = new ChangeTrackingList<BaseUserRuleData>();
+            Value = new ChangeTrackingList<NetworkBaseUserRuleData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserRuleListResult"/>. </summary>
         /// <param name="value">
         /// A list of user rules
-        /// Please note <see cref="BaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UserRule"/> and <see cref="DefaultUserRule"/>.
+        /// Please note <see cref="NetworkBaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NetworkSecurityUserRule"/> and <see cref="NetworkSecurityDefaultUserRule"/>.
         /// </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserRuleListResult(IReadOnlyList<BaseUserRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserRuleListResult(IReadOnlyList<NetworkBaseUserRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary>
         /// A list of user rules
-        /// Please note <see cref="BaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UserRule"/> and <see cref="DefaultUserRule"/>.
+        /// Please note <see cref="NetworkBaseUserRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NetworkSecurityUserRule"/> and <see cref="NetworkSecurityDefaultUserRule"/>.
         /// </summary>
-        public IReadOnlyList<BaseUserRuleData> Value { get; }
+        public IReadOnlyList<NetworkBaseUserRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

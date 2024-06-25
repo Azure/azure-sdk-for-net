@@ -15,6 +15,115 @@ namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkPeeringCollection
     {
+        // Get V6 subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetV6SubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkV6SubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringResource result = await collection.GetAsync(virtualNetworkPeeringName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get V6 subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetV6SubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkV6SubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            bool result = await collection.ExistsAsync(virtualNetworkPeeringName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get V6 subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetV6SubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkV6SubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            NullableResponse<VirtualNetworkPeeringResource> response = await collection.GetIfExistsAsync(virtualNetworkPeeringName);
+            VirtualNetworkPeeringResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualNetworkPeeringData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get peering
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -233,6 +342,169 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
+        // Get subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetSubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkSubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringResource result = await collection.GetAsync(virtualNetworkPeeringName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetSubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkSubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            bool result = await collection.ExistsAsync(virtualNetworkPeeringName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetSubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkSubnetPeeringGet.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            NullableResponse<VirtualNetworkPeeringResource> response = await collection.GetIfExistsAsync(virtualNetworkPeeringName);
+            VirtualNetworkPeeringResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualNetworkPeeringData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Create V6 Subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateV6SubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkV6SubnetPeeringCreate.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            {
+                AllowVirtualNetworkAccess = true,
+                AllowForwardedTraffic = true,
+                AllowGatewayTransit = false,
+                UseRemoteGateways = false,
+                RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
+                AreCompleteVnetsPeered = false,
+                EnableOnlyIPv6Peering = true,
+                LocalSubnetNames =
+{
+"Subnet1","Subnet4"
+},
+                RemoteSubnetNames =
+{
+"Subnet2"
+},
+            };
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            VirtualNetworkPeeringResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Create peering
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -321,6 +593,60 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Create subnet peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateSubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkSubnetPeeringCreate.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            {
+                AllowVirtualNetworkAccess = true,
+                AllowForwardedTraffic = true,
+                AllowGatewayTransit = false,
+                UseRemoteGateways = false,
+                RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
+                AreCompleteVnetsPeered = false,
+                EnableOnlyIPv6Peering = false,
+                LocalSubnetNames =
+{
+"Subnet1","Subnet4"
+},
+                RemoteSubnetNames =
+{
+"Subnet2"
+},
+            };
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            VirtualNetworkPeeringResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Sync Peering
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -354,6 +680,100 @@ namespace Azure.ResourceManager.Network.Samples
                 AllowGatewayTransit = false,
                 UseRemoteGateways = false,
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
+            };
+            SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);
+            VirtualNetworkPeeringResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Sync V6 Subnet Peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_SyncV6SubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkV6SubnetPeeringSync.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            {
+                AllowVirtualNetworkAccess = true,
+                AllowForwardedTraffic = true,
+                AllowGatewayTransit = false,
+                UseRemoteGateways = false,
+                RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
+                AreCompleteVnetsPeered = false,
+                EnableOnlyIPv6Peering = true,
+            };
+            SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);
+            VirtualNetworkPeeringResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkPeeringData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Sync subnet Peering
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_SyncSubnetPeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VirtualNetworkSubnetPeeringSync.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // get the collection of this VirtualNetworkPeeringResource
+            VirtualNetworkPeeringCollection collection = virtualNetwork.GetVirtualNetworkPeerings();
+
+            // invoke the operation
+            string virtualNetworkPeeringName = "peer";
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            {
+                AllowVirtualNetworkAccess = true,
+                AllowForwardedTraffic = true,
+                AllowGatewayTransit = false,
+                UseRemoteGateways = false,
+                RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
+                AreCompleteVnetsPeered = false,
+                EnableOnlyIPv6Peering = false,
             };
             SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
             ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);

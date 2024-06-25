@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class UserRule : IUtf8JsonSerializable, IJsonModel<UserRule>
+    public partial class NetworkSecurityDefaultUserRule : IUtf8JsonSerializable, IJsonModel<NetworkSecurityDefaultUserRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityDefaultUserRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityDefaultUserRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityDefaultUserRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityDefaultUserRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,17 +56,22 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Flag))
+            {
+                writer.WritePropertyName("flag"u8);
+                writer.WriteStringValue(Flag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Direction))
+            if (options.Format != "W" && Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
@@ -135,19 +140,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        UserRule IJsonModel<UserRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityDefaultUserRule IJsonModel<NetworkSecurityDefaultUserRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityDefaultUserRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityDefaultUserRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserRule(document.RootElement, options);
+            return DeserializeNetworkSecurityDefaultUserRule(document.RootElement, options);
         }
 
-        internal static UserRule DeserializeUserRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityDefaultUserRule DeserializeNetworkSecurityDefaultUserRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -162,11 +167,12 @@ namespace Azure.ResourceManager.Network.Models
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
+            string flag = default;
             SecurityConfigurationRuleProtocol? protocol = default;
-            IList<AddressPrefixItem> sources = default;
-            IList<AddressPrefixItem> destinations = default;
-            IList<string> sourcePortRanges = default;
-            IList<string> destinationPortRanges = default;
+            IReadOnlyList<AddressPrefixItem> sources = default;
+            IReadOnlyList<AddressPrefixItem> destinations = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
             SecurityConfigurationRuleDirection? direction = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -223,6 +229,11 @@ namespace Azure.ResourceManager.Network.Models
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("flag"u8))
+                        {
+                            flag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -317,7 +328,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserRule(
+            return new NetworkSecurityDefaultUserRule(
                 id,
                 name,
                 type,
@@ -326,6 +337,7 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 serializedAdditionalRawData,
                 description,
+                flag,
                 protocol,
                 sources ?? new ChangeTrackingList<AddressPrefixItem>(),
                 destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
@@ -335,35 +347,35 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        BinaryData IPersistableModel<UserRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityDefaultUserRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityDefaultUserRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityDefaultUserRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserRule IPersistableModel<UserRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityDefaultUserRule IPersistableModel<NetworkSecurityDefaultUserRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityDefaultUserRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUserRule(document.RootElement, options);
+                        return DeserializeNetworkSecurityDefaultUserRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityDefaultUserRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityDefaultUserRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

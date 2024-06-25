@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description of the security user configuration. </param>
-        /// <param name="deleteExistingNSGs"> Flag if need to delete existing network security groups. </param>
+        /// <param name="deleteExistingNsg"> Flag if need to delete existing network security groups. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.SecurityUserConfigurationData"/> instance for mocking. </returns>
-        public static SecurityUserConfigurationData SecurityUserConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, DeleteExistingNSG? deleteExistingNSGs = null, NetworkProvisioningState? provisioningState = null, ETag? etag = null)
+        public static SecurityUserConfigurationData SecurityUserConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, DeleteExistingNsg? deleteExistingNsg = null, NetworkProvisioningState? provisioningState = null, ETag? etag = null)
         {
             return new SecurityUserConfigurationData(
                 id,
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 systemData,
                 description,
-                deleteExistingNSGs,
+                deleteExistingNsg,
                 provisioningState,
                 etag,
                 serializedAdditionalRawData: null);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.BaseUserRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkBaseUserRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.BaseUserRuleData"/> instance for mocking. </returns>
-        public static BaseUserRuleData BaseUserRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        /// <returns> A new <see cref="Network.NetworkBaseUserRuleData"/> instance for mocking. </returns>
+        public static NetworkBaseUserRuleData NetworkBaseUserRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new UnknownBaseUserRule(
                 id,
@@ -7879,7 +7879,7 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityUserRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -7893,15 +7893,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPortRanges"> The destination port ranges. </param>
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        /// <returns> A new <see cref="Models.UserRule"/> instance for mocking. </returns>
-        public static UserRule UserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.NetworkSecurityUserRule"/> instance for mocking. </returns>
+        public static NetworkSecurityUserRule NetworkSecurityUserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
         {
             sources ??= new List<AddressPrefixItem>();
             destinations ??= new List<AddressPrefixItem>();
             sourcePortRanges ??= new List<string>();
             destinationPortRanges ??= new List<string>();
 
-            return new UserRule(
+            return new NetworkSecurityUserRule(
                 id,
                 name,
                 resourceType,
@@ -7919,7 +7919,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DefaultUserRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityDefaultUserRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -7934,15 +7934,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPortRanges"> The destination port ranges. </param>
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        /// <returns> A new <see cref="Models.DefaultUserRule"/> instance for mocking. </returns>
-        public static DefaultUserRule DefaultUserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, string flag = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.NetworkSecurityDefaultUserRule"/> instance for mocking. </returns>
+        public static NetworkSecurityDefaultUserRule NetworkSecurityDefaultUserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, string flag = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
         {
             sources ??= new List<AddressPrefixItem>();
             destinations ??= new List<AddressPrefixItem>();
             sourcePortRanges ??= new List<string>();
             destinationPortRanges ??= new List<string>();
 
-            return new DefaultUserRule(
+            return new NetworkSecurityDefaultUserRule(
                 id,
                 name,
                 resourceType,

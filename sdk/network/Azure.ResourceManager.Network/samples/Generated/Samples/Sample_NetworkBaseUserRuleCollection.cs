@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_BaseUserRuleCollection
+    public partial class Sample_NetworkBaseUserRuleCollection
     {
         // List security user rules
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation and iterate over the result
-            await foreach (BaseUserRuleResource item in collection.GetAllAsync())
+            await foreach (NetworkBaseUserRuleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BaseUserRuleData resourceData = item.Data;
+                NetworkBaseUserRuleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultUserRule";
-            BaseUserRuleResource result = await collection.GetAsync(ruleName);
+            NetworkBaseUserRuleResource result = await collection.GetAsync(ruleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultUserRule";
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultUserRule";
-            NullableResponse<BaseUserRuleResource> response = await collection.GetIfExistsAsync(ruleName);
-            BaseUserRuleResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetworkBaseUserRuleResource> response = await collection.GetIfExistsAsync(ruleName);
+            NetworkBaseUserRuleResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BaseUserRuleData resourceData = result.Data;
+                NetworkBaseUserRuleData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -192,16 +192,16 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleUserRule";
-            BaseUserRuleResource result = await collection.GetAsync(ruleName);
+            NetworkBaseUserRuleResource result = await collection.GetAsync(ruleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleUserRule";
@@ -262,13 +262,13 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleUserRule";
-            NullableResponse<BaseUserRuleResource> response = await collection.GetIfExistsAsync(ruleName);
-            BaseUserRuleResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetworkBaseUserRuleResource> response = await collection.GetIfExistsAsync(ruleName);
+            NetworkBaseUserRuleResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BaseUserRuleData resourceData = result.Data;
+                NetworkBaseUserRuleData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -307,21 +307,21 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultUserRule";
-            BaseUserRuleData data = new DefaultUserRule()
+            NetworkBaseUserRuleData data = new NetworkSecurityDefaultUserRule()
             {
                 Flag = "AllowVnetInbound",
             };
-            ArmOperation<BaseUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
-            BaseUserRuleResource result = lro.Value;
+            ArmOperation<NetworkBaseUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            NetworkBaseUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -349,12 +349,12 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier userRuleCollectionResourceId = UserRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
             UserRuleCollectionResource userRuleCollection = client.GetUserRuleCollectionResource(userRuleCollectionResourceId);
 
-            // get the collection of this BaseUserRuleResource
-            BaseUserRuleCollection collection = userRuleCollection.GetBaseUserRules();
+            // get the collection of this NetworkBaseUserRuleResource
+            NetworkBaseUserRuleCollection collection = userRuleCollection.GetNetworkBaseUserRules();
 
             // invoke the operation
             string ruleName = "SampleUserRule";
-            BaseUserRuleData data = new UserRule()
+            NetworkBaseUserRuleData data = new NetworkSecurityUserRule()
             {
                 Description = "Sample User Rule",
                 Protocol = SecurityConfigurationRuleProtocol.Tcp,
@@ -384,12 +384,12 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
 },
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<BaseUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
-            BaseUserRuleResource result = lro.Value;
+            ArmOperation<NetworkBaseUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            NetworkBaseUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

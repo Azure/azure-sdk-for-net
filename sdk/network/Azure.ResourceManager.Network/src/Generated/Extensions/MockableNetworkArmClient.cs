@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BaseUserRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BaseUserRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseUserRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkBaseUserRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkBaseUserRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBaseUserRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BaseUserRuleResource"/> object. </returns>
-        public virtual BaseUserRuleResource GetBaseUserRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkBaseUserRuleResource"/> object. </returns>
+        public virtual NetworkBaseUserRuleResource GetNetworkBaseUserRuleResource(ResourceIdentifier id)
         {
-            BaseUserRuleResource.ValidateResourceId(id);
-            return new BaseUserRuleResource(Client, id);
+            NetworkBaseUserRuleResource.ValidateResourceId(id);
+            return new NetworkBaseUserRuleResource(Client, id);
         }
 
         /// <summary>

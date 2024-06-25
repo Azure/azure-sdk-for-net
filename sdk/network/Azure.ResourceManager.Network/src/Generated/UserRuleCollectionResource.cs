@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BaseUserRuleResources in the UserRuleCollection. </summary>
-        /// <returns> An object representing collection of BaseUserRuleResources and their operations over a BaseUserRuleResource. </returns>
-        public virtual BaseUserRuleCollection GetBaseUserRules()
+        /// <summary> Gets a collection of NetworkBaseUserRuleResources in the UserRuleCollection. </summary>
+        /// <returns> An object representing collection of NetworkBaseUserRuleResources and their operations over a NetworkBaseUserRuleResource. </returns>
+        public virtual NetworkBaseUserRuleCollection GetNetworkBaseUserRules()
         {
-            return GetCachedClient(client => new BaseUserRuleCollection(client, Id));
+            return GetCachedClient(client => new NetworkBaseUserRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BaseUserRuleResource>> GetBaseUserRuleAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkBaseUserRuleResource>> GetNetworkBaseUserRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetBaseUserRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkBaseUserRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BaseUserRuleResource> GetBaseUserRule(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkBaseUserRuleResource> GetNetworkBaseUserRule(string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetBaseUserRules().Get(ruleName, cancellationToken);
+            return GetNetworkBaseUserRules().Get(ruleName, cancellationToken);
         }
 
         /// <summary>

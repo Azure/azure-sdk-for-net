@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BaseUserRuleResource"/> and their operations.
-    /// Each <see cref="BaseUserRuleResource"/> in the collection will belong to the same instance of <see cref="UserRuleCollectionResource"/>.
-    /// To get a <see cref="BaseUserRuleCollection"/> instance call the GetBaseUserRules method from an instance of <see cref="UserRuleCollectionResource"/>.
+    /// A class representing a collection of <see cref="NetworkBaseUserRuleResource"/> and their operations.
+    /// Each <see cref="NetworkBaseUserRuleResource"/> in the collection will belong to the same instance of <see cref="UserRuleCollectionResource"/>.
+    /// To get a <see cref="NetworkBaseUserRuleCollection"/> instance call the GetNetworkBaseUserRules method from an instance of <see cref="UserRuleCollectionResource"/>.
     /// </summary>
-    public partial class BaseUserRuleCollection : ArmCollection, IEnumerable<BaseUserRuleResource>, IAsyncEnumerable<BaseUserRuleResource>
+    public partial class NetworkBaseUserRuleCollection : ArmCollection, IEnumerable<NetworkBaseUserRuleResource>, IAsyncEnumerable<NetworkBaseUserRuleResource>
     {
-        private readonly ClientDiagnostics _baseUserRuleUserRulesClientDiagnostics;
-        private readonly UserRulesRestOperations _baseUserRuleUserRulesRestClient;
+        private readonly ClientDiagnostics _networkBaseUserRuleUserRulesClientDiagnostics;
+        private readonly UserRulesRestOperations _networkBaseUserRuleUserRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BaseUserRuleCollection"/> class for mocking. </summary>
-        protected BaseUserRuleCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkBaseUserRuleCollection"/> class for mocking. </summary>
+        protected NetworkBaseUserRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseUserRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkBaseUserRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BaseUserRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkBaseUserRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _baseUserRuleUserRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BaseUserRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BaseUserRuleResource.ResourceType, out string baseUserRuleUserRulesApiVersion);
-            _baseUserRuleUserRulesRestClient = new UserRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, baseUserRuleUserRulesApiVersion);
+            _networkBaseUserRuleUserRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkBaseUserRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkBaseUserRuleResource.ResourceType, out string networkBaseUserRuleUserRulesApiVersion);
+            _networkBaseUserRuleUserRulesRestClient = new UserRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkBaseUserRuleUserRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BaseUserRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, BaseUserRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkBaseUserRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, NetworkBaseUserRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.CreateOrUpdate");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _baseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data);
+                var response = await _networkBaseUserRuleUserRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<BaseUserRuleResource>(Response.FromValue(new BaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkBaseUserRuleResource>(Response.FromValue(new NetworkBaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BaseUserRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, BaseUserRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkBaseUserRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, NetworkBaseUserRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.CreateOrUpdate");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken);
-                var uri = _baseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data);
+                var response = _networkBaseUserRuleUserRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken);
+                var uri = _networkBaseUserRuleUserRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<BaseUserRuleResource>(Response.FromValue(new BaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkBaseUserRuleResource>(Response.FromValue(new NetworkBaseUserRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual async Task<Response<BaseUserRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkBaseUserRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.Get");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkBaseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<BaseUserRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkBaseUserRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.Get");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
+                var response = _networkBaseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,19 +260,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseUserRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BaseUserRuleResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkBaseUserRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkBaseUserRuleResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _baseUserRuleUserRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _baseUserRuleUserRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BaseUserRuleResource(Client, BaseUserRuleData.DeserializeBaseUserRuleData(e)), _baseUserRuleUserRulesClientDiagnostics, Pipeline, "BaseUserRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkBaseUserRuleUserRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkBaseUserRuleUserRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkBaseUserRuleResource(Client, NetworkBaseUserRuleData.DeserializeNetworkBaseUserRuleData(e)), _networkBaseUserRuleUserRulesClientDiagnostics, Pipeline, "NetworkBaseUserRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -292,19 +292,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseUserRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BaseUserRuleResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkBaseUserRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkBaseUserRuleResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _baseUserRuleUserRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _baseUserRuleUserRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BaseUserRuleResource(Client, BaseUserRuleData.DeserializeBaseUserRuleData(e)), _baseUserRuleUserRulesClientDiagnostics, Pipeline, "BaseUserRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkBaseUserRuleUserRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkBaseUserRuleUserRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkBaseUserRuleResource(Client, NetworkBaseUserRuleData.DeserializeNetworkBaseUserRuleData(e)), _networkBaseUserRuleUserRulesClientDiagnostics, Pipeline, "NetworkBaseUserRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.Exists");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkBaseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.Exists");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
+                var response = _networkBaseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,18 +418,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual async Task<NullableResponse<BaseUserRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkBaseUserRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.GetIfExists");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _baseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkBaseUserRuleUserRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<BaseUserRuleResource>(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkBaseUserRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BaseUserRuleResource"/></description>
+        /// <description><see cref="NetworkBaseUserRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,18 +463,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual NullableResponse<BaseUserRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkBaseUserRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _baseUserRuleUserRulesClientDiagnostics.CreateScope("BaseUserRuleCollection.GetIfExists");
+            using var scope = _networkBaseUserRuleUserRulesClientDiagnostics.CreateScope("NetworkBaseUserRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _baseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
+                var response = _networkBaseUserRuleUserRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<BaseUserRuleResource>(response.GetRawResponse());
-                return Response.FromValue(new BaseUserRuleResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkBaseUserRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkBaseUserRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<BaseUserRuleResource> IEnumerable<BaseUserRuleResource>.GetEnumerator()
+        IEnumerator<NetworkBaseUserRuleResource> IEnumerable<NetworkBaseUserRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BaseUserRuleResource> IAsyncEnumerable<BaseUserRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkBaseUserRuleResource> IAsyncEnumerable<NetworkBaseUserRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

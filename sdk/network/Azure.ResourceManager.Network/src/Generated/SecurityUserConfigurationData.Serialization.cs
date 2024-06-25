@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DeleteExistingNSGs))
+            if (Optional.IsDefined(DeleteExistingNsg))
             {
                 writer.WritePropertyName("deleteExistingNSGs"u8);
-                writer.WriteStringValue(DeleteExistingNSGs.Value.ToString());
+                writer.WriteStringValue(DeleteExistingNsg.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
-            DeleteExistingNSG? deleteExistingNSGs = default;
+            DeleteExistingNsg? deleteExistingNSGs = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            deleteExistingNSGs = new DeleteExistingNSG(property0.Value.GetString());
+                            deleteExistingNSGs = new DeleteExistingNsg(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

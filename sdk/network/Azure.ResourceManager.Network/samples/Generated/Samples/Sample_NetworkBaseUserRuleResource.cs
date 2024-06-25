@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_BaseUserRuleResource
+    public partial class Sample_NetworkBaseUserRuleResource
     {
         // Gets a default user rule
         [NUnit.Framework.Test]
@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BaseUserRuleResource created on azure
-            // for more information of creating BaseUserRuleResource, please refer to the document of BaseUserRuleResource
+            // this example assumes you already have this NetworkBaseUserRuleResource created on azure
+            // for more information of creating NetworkBaseUserRuleResource, please refer to the document of NetworkBaseUserRuleResource
             string subscriptionId = "subId";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
             string ruleName = "SampleDefaultUserRule";
-            ResourceIdentifier baseUserRuleResourceId = BaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
-            BaseUserRuleResource baseUserRule = client.GetBaseUserRuleResource(baseUserRuleResourceId);
+            ResourceIdentifier networkBaseUserRuleResourceId = NetworkBaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
+            NetworkBaseUserRuleResource networkBaseUserRule = client.GetNetworkBaseUserRuleResource(networkBaseUserRuleResourceId);
 
             // invoke the operation
-            BaseUserRuleResource result = await baseUserRule.GetAsync();
+            NetworkBaseUserRuleResource result = await networkBaseUserRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -62,23 +62,23 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BaseUserRuleResource created on azure
-            // for more information of creating BaseUserRuleResource, please refer to the document of BaseUserRuleResource
+            // this example assumes you already have this NetworkBaseUserRuleResource created on azure
+            // for more information of creating NetworkBaseUserRuleResource, please refer to the document of NetworkBaseUserRuleResource
             string subscriptionId = "subId";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
             string ruleName = "SampleUserRule";
-            ResourceIdentifier baseUserRuleResourceId = BaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
-            BaseUserRuleResource baseUserRule = client.GetBaseUserRuleResource(baseUserRuleResourceId);
+            ResourceIdentifier networkBaseUserRuleResourceId = NetworkBaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
+            NetworkBaseUserRuleResource networkBaseUserRule = client.GetNetworkBaseUserRuleResource(networkBaseUserRuleResourceId);
 
             // invoke the operation
-            BaseUserRuleResource result = await baseUserRule.GetAsync();
+            NetworkBaseUserRuleResource result = await networkBaseUserRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -96,28 +96,28 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BaseUserRuleResource created on azure
-            // for more information of creating BaseUserRuleResource, please refer to the document of BaseUserRuleResource
+            // this example assumes you already have this NetworkBaseUserRuleResource created on azure
+            // for more information of creating NetworkBaseUserRuleResource, please refer to the document of NetworkBaseUserRuleResource
             string subscriptionId = "subId";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
             string ruleName = "SampleDefaultUserRule";
-            ResourceIdentifier baseUserRuleResourceId = BaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
-            BaseUserRuleResource baseUserRule = client.GetBaseUserRuleResource(baseUserRuleResourceId);
+            ResourceIdentifier networkBaseUserRuleResourceId = NetworkBaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
+            NetworkBaseUserRuleResource networkBaseUserRule = client.GetNetworkBaseUserRuleResource(networkBaseUserRuleResourceId);
 
             // invoke the operation
-            BaseUserRuleData data = new DefaultUserRule()
+            NetworkBaseUserRuleData data = new NetworkSecurityDefaultUserRule()
             {
                 Flag = "AllowVnetInbound",
             };
-            ArmOperation<BaseUserRuleResource> lro = await baseUserRule.UpdateAsync(WaitUntil.Completed, data);
-            BaseUserRuleResource result = lro.Value;
+            ArmOperation<NetworkBaseUserRuleResource> lro = await networkBaseUserRule.UpdateAsync(WaitUntil.Completed, data);
+            NetworkBaseUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -135,19 +135,19 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BaseUserRuleResource created on azure
-            // for more information of creating BaseUserRuleResource, please refer to the document of BaseUserRuleResource
+            // this example assumes you already have this NetworkBaseUserRuleResource created on azure
+            // for more information of creating NetworkBaseUserRuleResource, please refer to the document of NetworkBaseUserRuleResource
             string subscriptionId = "subId";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
             string ruleName = "SampleUserRule";
-            ResourceIdentifier baseUserRuleResourceId = BaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
-            BaseUserRuleResource baseUserRule = client.GetBaseUserRuleResource(baseUserRuleResourceId);
+            ResourceIdentifier networkBaseUserRuleResourceId = NetworkBaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
+            NetworkBaseUserRuleResource networkBaseUserRule = client.GetNetworkBaseUserRuleResource(networkBaseUserRuleResourceId);
 
             // invoke the operation
-            BaseUserRuleData data = new UserRule()
+            NetworkBaseUserRuleData data = new NetworkSecurityUserRule()
             {
                 Description = "Sample User Rule",
                 Protocol = SecurityConfigurationRuleProtocol.Tcp,
@@ -177,12 +177,12 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
 },
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<BaseUserRuleResource> lro = await baseUserRule.UpdateAsync(WaitUntil.Completed, data);
-            BaseUserRuleResource result = lro.Value;
+            ArmOperation<NetworkBaseUserRuleResource> lro = await networkBaseUserRule.UpdateAsync(WaitUntil.Completed, data);
+            NetworkBaseUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BaseUserRuleData resourceData = result.Data;
+            NetworkBaseUserRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -200,19 +200,19 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BaseUserRuleResource created on azure
-            // for more information of creating BaseUserRuleResource, please refer to the document of BaseUserRuleResource
+            // this example assumes you already have this NetworkBaseUserRuleResource created on azure
+            // for more information of creating NetworkBaseUserRuleResource, please refer to the document of NetworkBaseUserRuleResource
             string subscriptionId = "subId";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
             string ruleName = "SampleUserRule";
-            ResourceIdentifier baseUserRuleResourceId = BaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
-            BaseUserRuleResource baseUserRule = client.GetBaseUserRuleResource(baseUserRuleResourceId);
+            ResourceIdentifier networkBaseUserRuleResourceId = NetworkBaseUserRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
+            NetworkBaseUserRuleResource networkBaseUserRule = client.GetNetworkBaseUserRuleResource(networkBaseUserRuleResourceId);
 
             // invoke the operation
-            await baseUserRule.DeleteAsync(WaitUntil.Completed);
+            await networkBaseUserRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
