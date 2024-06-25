@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             await DeleteExadataInfrastructureScenario(_exaInfraResource);
         }
 
-        private async Task<List<string>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource) {
-            List<string> dbServerOcids = new();
-            DbServerCollection dbServerCollection = exaInfraResource.GetDbServers();
-            AsyncPageable<DbServerResource> dbServers = dbServerCollection.GetAllAsync();
-            await foreach (DbServerResource dbServer in dbServers) {
+        private async Task<List<ResourceIdentifier>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource) {
+            List<ResourceIdentifier> dbServerOcids = new();
+            OracleDBServerCollection dbServerCollection = exaInfraResource.GetOracleDBServers();
+            AsyncPageable<OracleDBServerResource> dbServers = dbServerCollection.GetAllAsync();
+            await foreach (OracleDBServerResource dbServer in dbServers) {
                 dbServerOcids.Add(dbServer.Data.Properties.Ocid);
             }
             return dbServerOcids;
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private async Task<CloudVmClusterData> GetDefaultVmClusterData() {
             CloudVmClusterProperties vmClusterProperties = GetDefaultVmClusterProperties();
 
-            List<string> dbServerOcids = await GetDbServerOcids(_exaInfraResource);
+            List<ResourceIdentifier> dbServerOcids = await GetDbServerOcids(_exaInfraResource);
             // A minimum of 2 database servers is required.
             if (dbServerOcids[0] != null) {
-                vmClusterProperties.DbServers.Add(dbServerOcids[0]);
+                vmClusterProperties.DBServers.Add(dbServerOcids[0]);
             }
             if (dbServerOcids[1] != null) {
-                vmClusterProperties.DbServers.Add(dbServerOcids[1]);
+                vmClusterProperties.DBServers.Add(dbServerOcids[1]);
             }
 
             return new CloudVmClusterData(_location) {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             string displayName = _vmClusterName;
 
             return new CloudVmClusterProperties(hostName, cpuCoreCount, cloudExadataInfrastructureId, sshPublicKeys, vnetId, giVersion, subnetId, displayName) {
-                LicenseModel = LicenseModel.LicenseIncluded,
+                LicenseModel = OracleLicenseModel.LicenseIncluded,
                 ClusterName = "TestVmClust",
                 MemorySizeInGbs = 90,
-                DbNodeStorageSizeInGbs = 180,
+                DBNodeStorageSizeInGbs = 180,
                 DataStorageSizeInTbs = 2.0,
                 DataStoragePercentage = 80,
                 IsLocalBackupEnabled = false,

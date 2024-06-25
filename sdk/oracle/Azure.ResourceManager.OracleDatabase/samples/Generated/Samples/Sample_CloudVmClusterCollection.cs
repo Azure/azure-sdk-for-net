@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             }, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1"), "19.0.0.0", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"), "cluster 1")
                 {
                     DataStorageSizeInTbs = 1000,
-                    DbNodeStorageSizeInGbs = 1000,
+                    DBNodeStorageSizeInGbs = 1000,
                     MemorySizeInGbs = 1000,
                     TimeZone = "UTC",
                     Domain = "domain1",
@@ -200,26 +200,26 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     DataStoragePercentage = 100,
                     IsLocalBackupEnabled = false,
                     IsSparseDiskgroupEnabled = false,
-                    LicenseModel = LicenseModel.LicenseIncluded,
+                    LicenseModel = OracleLicenseModel.LicenseIncluded,
                     ScanListenerPortTcp = 1050,
                     ScanListenerPortTcpSsl = 1025,
                     BackupSubnetCidr = "172.17.5.0/24",
                     NsgCidrs =
 {
-new NsgCidr("10.0.0.0/16")
+new CloudVmClusterNsgCidr("10.0.0.0/16")
 {
-DestinationPortRange = new PortRange(1520,1522),
-},new NsgCidr("10.10.0.0/24")
+DestinationPortRange = new CloudVmClusterPortRange(1520,1522),
+},new CloudVmClusterNsgCidr("10.10.0.0/24")
 },
-                    DataCollectionOptions = new DataCollectionConfig()
+                    DataCollectionOptions = new DiagnosticCollectionConfig()
                     {
                         IsDiagnosticsEventsEnabled = false,
                         IsHealthMonitoringEnabled = false,
                         IsIncidentLogsEnabled = false,
                     },
-                    DbServers =
+                    DBServers =
 {
-"ocid1..aaaa"
+new ResourceIdentifier("ocid1..aaaa")
 },
                 },
                 Tags =

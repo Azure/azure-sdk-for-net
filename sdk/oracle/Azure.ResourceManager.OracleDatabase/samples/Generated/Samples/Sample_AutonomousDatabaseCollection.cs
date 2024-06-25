@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
-                    DbVersion = "18.4.0.0",
+                    DBVersion = "18.4.0.0",
                     DisplayName = "example_autonomous_databasedb1",
                     NcharacterSet = "AL16UTF16",
                     SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
@@ -346,12 +346,12 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string autonomousdatabasename = "databasedb1";
             AutonomousDatabaseData data = new AutonomousDatabaseData(new AzureLocation("eastus"))
             {
-                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), CloneType.Full)
+                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), AutonomousDatabaseCloneType.Full)
                 {
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
                     DisplayName = "example_autonomous_databasedb1_clone",
                     NcharacterSet = "AL16UTF16",
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
-                    DbVersion = "18.4.0.0",
+                    DBVersion = "18.4.0.0",
                     DisplayName = "example_autonomous_databasedb1",
                     NcharacterSet = "AL16UTF16",
                     SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string autonomousdatabasename = "databasedb1";
             AutonomousDatabaseData data = new AutonomousDatabaseData(new AzureLocation("eastus"))
             {
-                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), CloneType.Full)
+                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), AutonomousDatabaseCloneType.Full)
                 {
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
                     DisplayName = "example_autonomous_databasedb1_clone",
                     NcharacterSet = "AL16UTF16",
