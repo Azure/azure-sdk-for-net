@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A class representing a collection of <see cref="PostgreSqlMigrationResource"/> and their operations.
-    /// Each <see cref="PostgreSqlMigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
-    /// To get a <see cref="PostgreSqlMigrationCollection"/> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// Each <see cref="PostgreSqlMigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlMigrationCollection"/> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlMigrationCollection : ArmCollection, IEnumerable<PostgreSqlMigrationResource>, IAsyncEnumerable<PostgreSqlMigrationResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

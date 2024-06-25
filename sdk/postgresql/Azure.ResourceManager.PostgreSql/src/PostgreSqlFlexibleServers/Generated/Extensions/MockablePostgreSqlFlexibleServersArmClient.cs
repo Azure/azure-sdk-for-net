@@ -59,51 +59,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerConfigurationResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerConfigurationResource GetPostgreSqlFlexibleServerConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerConfigurationResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerConfigurationResource(Client, id);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerDatabaseResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerDatabaseResource GetPostgreSqlFlexibleServerDatabaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerDatabaseResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerDatabaseResource(Client, id);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerFirewallRuleResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerFirewallRuleResource GetPostgreSqlFlexibleServerFirewallRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerFirewallRuleResource(Client, id);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerResource(Client, id);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(Client, id);
         }
 
         /// <summary>

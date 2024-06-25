@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerLogFileListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerLogFileListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServerLogFileListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerLogFileListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerLogFileListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServerLogFileListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerLogFileListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerLogFileListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServerLogFileListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerLogFileListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerLogFileListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServerLogFileListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

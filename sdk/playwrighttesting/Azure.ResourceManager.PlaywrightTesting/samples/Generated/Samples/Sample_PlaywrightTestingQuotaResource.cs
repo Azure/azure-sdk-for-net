@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // for more information of creating PlaywrightTestingQuotaResource, please refer to the document of PlaywrightTestingQuotaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            QuotaName name = QuotaName.ScalableExecution;
             ResourceIdentifier playwrightTestingQuotaResourceId = PlaywrightTestingQuotaResource.CreateResourceIdentifier(subscriptionId, location, name);
             PlaywrightTestingQuotaResource playwrightTestingQuota = client.GetPlaywrightTestingQuotaResource(playwrightTestingQuotaResourceId);
 

@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuotaAsync(AzureLocation,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuotaAsync(AzureLocation,QuotaName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public static async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuota(AzureLocation,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuota(AzureLocation,QuotaName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public static Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

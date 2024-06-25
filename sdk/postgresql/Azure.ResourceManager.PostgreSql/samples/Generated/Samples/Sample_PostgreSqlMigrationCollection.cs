@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation
             string migrationName = "testmigration";
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation
             string migrationName = "testmigration";
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation
             string migrationName = "testmigration";
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation
             string migrationName = "testmigration";
@@ -191,16 +191,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation
             string migrationName = "testmigration";
@@ -234,16 +234,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlMigrations();
 
             // invoke the operation and iterate over the result
             PostgreSqlMigrationListFilter? migrationListFilter = PostgreSqlMigrationListFilter.All;

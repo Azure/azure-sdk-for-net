@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerAadAdministratorResource
-            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
+            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
 
             // invoke the operation
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerAadAdministratorResource
-            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
+            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
 
             // invoke the operation
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -107,16 +107,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerAadAdministratorResource
-            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
+            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
 
             // invoke the operation
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerAadAdministratorResource
-            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
+            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
 
             // invoke the operation
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -181,16 +181,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerAadAdministratorResource
-            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
+            MySqlFlexibleServerAadAdministratorCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerAadAdministrators();
 
             // invoke the operation and iterate over the result
             await foreach (MySqlFlexibleServerAadAdministratorResource item in collection.GetAllAsync())

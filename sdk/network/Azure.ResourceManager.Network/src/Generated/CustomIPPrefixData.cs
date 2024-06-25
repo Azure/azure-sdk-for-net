@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the CustomIPPrefix data model.
     /// Custom IP prefix resource.
     /// </summary>
-    public partial class CustomIPPrefixData : NetworkTrackedResourceData
+    public partial class CustomIPPrefixData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
         public CustomIPPrefixData()

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationListResult"/>. </summary>
         internal MySqlFlexibleServerConfigurationListResult()
         {
-            Values = new ChangeTrackingList<MySqlFlexibleServerConfigurationData>();
+            Values = new ChangeTrackingList<MySqlFlexibleServersMySqlFlexibleServerConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationListResult"/>. </summary>
         /// <param name="values"> The list of server configurations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerConfigurationListResult(IReadOnlyList<MySqlFlexibleServerConfigurationData> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerConfigurationListResult(IReadOnlyList<MySqlFlexibleServersMySqlFlexibleServerConfigurationData> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
+        public IReadOnlyList<MySqlFlexibleServersMySqlFlexibleServerConfigurationData> Values { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

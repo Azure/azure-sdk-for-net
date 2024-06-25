@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableMySqlFlexibleServersSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _mySqlFlexibleServerServersClientDiagnostics;
-        private ServersRestOperations _mySqlFlexibleServerServersRestClient;
+        private ClientDiagnostics _mySqlFlexibleServersMySqlFlexibleServerServersClientDiagnostics;
+        private ServersRestOperations _mySqlFlexibleServersMySqlFlexibleServerServersRestClient;
         private ClientDiagnostics _locationBasedCapabilitiesClientDiagnostics;
         private LocationBasedCapabilitiesRestOperations _locationBasedCapabilitiesRestClient;
         private ClientDiagnostics _checkVirtualNetworkSubnetUsageClientDiagnostics;
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
         }
 
-        private ClientDiagnostics MySqlFlexibleServerServersClientDiagnostics => _mySqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations MySqlFlexibleServerServersRestClient => _mySqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MySqlFlexibleServerResource.ResourceType));
+        private ClientDiagnostics MySqlFlexibleServersMySqlFlexibleServerServersClientDiagnostics => _mySqlFlexibleServersMySqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServersMySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations MySqlFlexibleServersMySqlFlexibleServerServersRestClient => _mySqlFlexibleServersMySqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MySqlFlexibleServersMySqlFlexibleServerResource.ResourceType));
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationBasedCapabilitiesRestOperations LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckVirtualNetworkSubnetUsageClientDiagnostics => _checkVirtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServerResource> GetMySqlFlexibleServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServersMySqlFlexibleServerResource> GetMySqlFlexibleServersMySqlFlexibleServersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServersMySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServersMySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServersMySqlFlexibleServerResource(Client, MySqlFlexibleServersMySqlFlexibleServerData.DeserializeMySqlFlexibleServersMySqlFlexibleServerData(e)), MySqlFlexibleServersMySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServersMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServerResource> GetMySqlFlexibleServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServersMySqlFlexibleServerResource> GetMySqlFlexibleServersMySqlFlexibleServers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServersMySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServersMySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServersMySqlFlexibleServerResource(Client, MySqlFlexibleServersMySqlFlexibleServerData.DeserializeMySqlFlexibleServersMySqlFlexibleServerData(e)), MySqlFlexibleServersMySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServersMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

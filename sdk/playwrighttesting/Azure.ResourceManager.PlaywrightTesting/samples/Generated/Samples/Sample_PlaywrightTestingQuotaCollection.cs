@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            QuotaName name = QuotaName.ScalableExecution;
             PlaywrightTestingQuotaResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            QuotaName name = QuotaName.ScalableExecution;
             bool result = await collection.ExistsAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            QuotaName name = QuotaName.ScalableExecution;
             NullableResponse<PlaywrightTestingQuotaResource> response = await collection.GetIfExistsAsync(name);
             PlaywrightTestingQuotaResource result = response.HasValue ? response.Value : null;
 

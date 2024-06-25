@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// A Class representing a MySqlFlexibleServerBackupV2 along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerBackupV2Resource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerBackupV2Resource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerBackupV2 method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerBackupV2 method.
     /// </summary>
     public partial class MySqlFlexibleServerBackupV2Resource : ArmResource
     {

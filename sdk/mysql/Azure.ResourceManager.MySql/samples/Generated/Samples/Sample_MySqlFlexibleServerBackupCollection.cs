@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerBackupResource
-            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerBackups();
+            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerBackups();
 
             // invoke the operation
             string backupName = "mybackup";
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerBackupResource
-            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerBackups();
+            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerBackups();
 
             // invoke the operation
             string backupName = "daily_20210615T160516";
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerBackupResource
-            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerBackups();
+            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerBackups();
 
             // invoke the operation
             string backupName = "daily_20210615T160516";
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerBackupResource
-            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerBackups();
+            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerBackups();
 
             // invoke the operation
             string backupName = "daily_20210615T160516";
@@ -172,16 +172,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerBackupResource
-            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerBackups();
+            MySqlFlexibleServerBackupCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerBackups();
 
             // invoke the operation and iterate over the result
             await foreach (MySqlFlexibleServerBackupResource item in collection.GetAllAsync())

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MySqlFlexibleServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MySqlFlexibleServerResources and their operations over a MySqlFlexibleServerResource. </returns>
-        public virtual MySqlFlexibleServerCollection GetMySqlFlexibleServers()
+        /// <summary> Gets a collection of MySqlFlexibleServersMySqlFlexibleServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServersMySqlFlexibleServerResources and their operations over a MySqlFlexibleServersMySqlFlexibleServerResource. </returns>
+        public virtual MySqlFlexibleServersMySqlFlexibleServerCollection GetMySqlFlexibleServersMySqlFlexibleServers()
         {
-            return GetCachedClient(client => new MySqlFlexibleServerCollection(client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServersMySqlFlexibleServerCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MySqlFlexibleServerResource>> GetMySqlFlexibleServerAsync(string serverName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServersMySqlFlexibleServerResource>> GetMySqlFlexibleServersMySqlFlexibleServerAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            return await GetMySqlFlexibleServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetMySqlFlexibleServersMySqlFlexibleServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MySqlFlexibleServerResource> GetMySqlFlexibleServer(string serverName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServersMySqlFlexibleServerResource> GetMySqlFlexibleServersMySqlFlexibleServer(string serverName, CancellationToken cancellationToken = default)
         {
-            return GetMySqlFlexibleServers().Get(serverName, cancellationToken);
+            return GetMySqlFlexibleServersMySqlFlexibleServers().Get(serverName, cancellationToken);
         }
     }
 }

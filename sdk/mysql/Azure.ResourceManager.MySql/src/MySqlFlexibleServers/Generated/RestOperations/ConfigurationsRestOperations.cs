@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serverName, string configurationName, MySqlFlexibleServersMySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MySqlFlexibleServerConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServersMySqlFlexibleServerConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MySqlFlexibleServerConfigurationData value = default;
+                        MySqlFlexibleServersMySqlFlexibleServerConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(document.RootElement);
+                        value = MySqlFlexibleServersMySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServersMySqlFlexibleServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MySqlFlexibleServerConfigurationData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersMySqlFlexibleServerConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MySqlFlexibleServerConfigurationData> Get(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServersMySqlFlexibleServerConfigurationData> Get(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -328,13 +328,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MySqlFlexibleServerConfigurationData value = default;
+                        MySqlFlexibleServersMySqlFlexibleServerConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(document.RootElement);
+                        value = MySqlFlexibleServersMySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServersMySqlFlexibleServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MySqlFlexibleServerConfigurationData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersMySqlFlexibleServerConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

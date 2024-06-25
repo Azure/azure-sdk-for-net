@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetAsync(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Get");
             scope.Start();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlaywrightTestingQuotaResource> Get(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> Get(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Get");
             scope.Start();
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Exists");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Exists");
             scope.Start();
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<PlaywrightTestingQuotaResource>> GetIfExistsAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlaywrightTestingQuotaResource>> GetIfExistsAsync(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.GetIfExists");
             scope.Start();
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<PlaywrightTestingQuotaResource> GetIfExists(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlaywrightTestingQuotaResource> GetIfExists(QuotaName name, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.GetIfExists");
             scope.Start();

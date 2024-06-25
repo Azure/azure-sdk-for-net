@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MySqlFlexibleServerConfigurationData> value = default;
+            IReadOnlyList<MySqlFlexibleServersMySqlFlexibleServerConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServerConfigurationData> array = new List<MySqlFlexibleServerConfigurationData>();
+                    List<MySqlFlexibleServersMySqlFlexibleServerConfigurationData> array = new List<MySqlFlexibleServersMySqlFlexibleServerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(item, options));
+                        array.Add(MySqlFlexibleServersMySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServersMySqlFlexibleServerConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MySqlFlexibleServerConfigurationListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationData>(), nextLink, serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationListResult(value ?? new ChangeTrackingList<MySqlFlexibleServersMySqlFlexibleServerConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationListResult>.Write(ModelReaderWriterOptions options)

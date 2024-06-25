@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the FlowLog data model.
     /// A flow log resource.
     /// </summary>
-    public partial class FlowLogData : NetworkTrackedResourceData
+    public partial class FlowLogData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FlowLogData"/>. </summary>
         public FlowLogData()

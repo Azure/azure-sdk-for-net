@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _checkNameAvailabilityWithLocationClientDiagnostics;
         private CheckNameAvailabilityWithLocationRestOperations _checkNameAvailabilityWithLocationRestClient;
-        private ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
-        private ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
+        private ClientDiagnostics _postgreSqlFlexibleServersPostgreSqlFlexibleServerServersClientDiagnostics;
+        private ServersRestOperations _postgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient;
         private ClientDiagnostics _virtualNetworkSubnetUsageClientDiagnostics;
         private VirtualNetworkSubnetUsageRestOperations _virtualNetworkSubnetUsageRestClient;
 
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckNameAvailabilityWithLocationClientDiagnostics => _checkNameAvailabilityWithLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CheckNameAvailabilityWithLocationRestOperations CheckNameAvailabilityWithLocationRestClient => _checkNameAvailabilityWithLocationRestClient ??= new CheckNameAvailabilityWithLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations PostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServerResource.ResourceType));
+        private ClientDiagnostics PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServersPostgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.ResourceType));
         private ClientDiagnostics VirtualNetworkSubnetUsageClientDiagnostics => _virtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualNetworkSubnetUsageRestOperations VirtualNetworkSubnetUsageRestClient => _virtualNetworkSubnetUsageRestClient ??= new VirtualNetworkSubnetUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -283,17 +283,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServersPostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -313,17 +313,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServersPostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServersPostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
         {
             return await GetAllPlaywrightTestingQuota(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
         {
             return GetAllPlaywrightTestingQuota(location).Get(name, cancellationToken);
         }

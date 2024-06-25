@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// A Class representing a MySqlFlexibleServerMaintenance along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerMaintenanceResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerMaintenanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerMaintenance method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerMaintenance method.
     /// </summary>
     public partial class MySqlFlexibleServerMaintenanceResource : ArmResource
     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// A Class representing a PostgreSqlLtrServerBackupOperation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlLtrServerBackupOperationResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlLtrServerBackupOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlLtrServerBackupOperation method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/> using the GetPostgreSqlLtrServerBackupOperation method.
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationResource : ArmResource
     {

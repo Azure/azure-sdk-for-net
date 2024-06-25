@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="isConfigPendingRestart"> Configuration is pending restart or not. </param>
         /// <param name="unit"> Configuration unit. </param>
         /// <param name="documentationLink"> Configuration documentation link. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
         {
-            return new PostgreSqlFlexibleServerConfigurationData(
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="charset"> The charset of the database. </param>
         /// <param name="collation"> The collation of the database. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
-            return new PostgreSqlFlexibleServerDatabaseData(
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerDatabaseData(
                 id,
                 name,
                 resourceType,
@@ -343,17 +343,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerFirewallRuleData PostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new PostgreSqlFlexibleServerFirewallRuleData(
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -391,12 +391,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="replicaCapacity"> Replicas allowed for a server. </param>
         /// <param name="createMode"> The mode to create a new PostgreSQL server. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServerSku sku = null, PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerBackupProperties backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServerCreateMode? createMode = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPostgreSqlFlexibleServerData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPostgreSqlFlexibleServerData PostgreSqlFlexibleServersPostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServersPostgreSqlFlexibleServerSku sku = null, PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerBackupProperties backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServerCreateMode? createMode = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PostgreSqlFlexibleServerData(
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerData(
                 id,
                 name,
                 resourceType,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLogFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -603,10 +603,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sizeInKb"> The size in kb of the logFile. </param>
         /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
         {
-            return new PostgreSqlFlexibleServerLogFile(
+            return new PostgreSqlFlexibleServersPostgreSqlFlexibleServerLogFile(
                 id,
                 name,
                 resourceType,
