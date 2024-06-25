@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="osSku"> Gets os sku. </param>
         /// <param name="osVersion"> Gets os version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfileForVmInstance(string adminPassword, string computerName, ScVmmOSType? osType, string osSku, string osVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSProfileForVmInstance(string adminPassword, string computerName, OSType? osType, string osSku, string osVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             ComputerName = computerName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <summary> Gets or sets computer name. </summary>
         public string ComputerName { get; set; }
         /// <summary> Gets the type of the os. </summary>
-        public ScVmmOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets os sku. </summary>
         public string OSSku { get; }
         /// <summary> Gets os version. </summary>

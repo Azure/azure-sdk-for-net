@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="disks"> Gets the disks of the template. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, ScVmmOSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, int? generation, IReadOnlyList<ScVmmNetworkInterface> networkInterfaces, IReadOnlyList<ScVmmVirtualDisk> disks, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, OSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, int? generation, IReadOnlyList<ScVmmNetworkInterface> networkInterfaces, IReadOnlyList<ScVmmVirtualDisk> disks, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
         public ResourceIdentifier VmmServerId { get; set; }
         /// <summary> Gets the type of the os. </summary>
-        public ScVmmOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets os name. </summary>
         public string OSName { get; }
         /// <summary> Gets computer name. </summary>

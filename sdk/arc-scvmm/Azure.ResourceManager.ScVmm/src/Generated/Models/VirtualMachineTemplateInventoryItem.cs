@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
         /// <param name="osType"> Gets the type of the os. </param>
         /// <param name="osName"> Gets os name. </param>
-        internal VirtualMachineTemplateInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, int? cpuCount, int? memoryMB, ScVmmOSType? osType, string osName) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
+        internal VirtualMachineTemplateInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, int? cpuCount, int? memoryMB, OSType? osType, string osName) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             CpuCount = cpuCount;
             MemoryMB = memoryMB;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <summary> MemoryMB is the desired size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; }
         /// <summary> Gets the type of the os. </summary>
-        public ScVmmOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets os name. </summary>
         public string OSName { get; }
     }

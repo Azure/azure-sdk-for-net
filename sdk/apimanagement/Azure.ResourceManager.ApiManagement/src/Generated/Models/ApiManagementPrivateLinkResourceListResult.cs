@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
         internal ApiManagementPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<ApiManagementApiManagementPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementApiManagementPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<ApiManagementPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<ApiManagementApiManagementPrivateLinkResourceData> Value { get; }
     }
 }

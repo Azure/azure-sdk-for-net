@@ -1545,11 +1545,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementPrivateLinkResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementPrivateLinkResources and their operations over a ApiManagementPrivateLinkResource. </returns>
-        public virtual ApiManagementPrivateLinkResourceCollection GetApiManagementPrivateLinkResources()
+        /// <summary> Gets a collection of ApiManagementApiManagementPrivateLinkResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementApiManagementPrivateLinkResources and their operations over a ApiManagementApiManagementPrivateLinkResource. </returns>
+        public virtual ApiManagementApiManagementPrivateLinkResourceCollection GetApiManagementApiManagementPrivateLinkResources()
         {
-            return GetCachedClient(client => new ApiManagementPrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementApiManagementPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPrivateLinkResource"/></description>
+        /// <description><see cref="ApiManagementApiManagementPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1578,9 +1578,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkResourceAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementApiManagementPrivateLinkResource>> GetApiManagementApiManagementPrivateLinkResourceAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementPrivateLinkResources().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementApiManagementPrivateLinkResources().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPrivateLinkResource"/></description>
+        /// <description><see cref="ApiManagementApiManagementPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1609,9 +1609,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementPrivateLinkResource> GetApiManagementPrivateLinkResource(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementApiManagementPrivateLinkResource> GetApiManagementApiManagementPrivateLinkResource(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
+            return GetApiManagementApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementProductResources in the ApiManagementService. </summary>

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="disks"> Gets the disks of the template. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/> instance for mocking. </returns>
-        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, ResourceIdentifier vmmServerId = null, ScVmmOSType? osType = null, string osName = null, string computerName = null, int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, IsCustomizable? isCustomizable = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, IsHighlyAvailable? isHighlyAvailable = null, int? generation = null, IEnumerable<ScVmmNetworkInterface> networkInterfaces = null, IEnumerable<ScVmmVirtualDisk> disks = null, ScVmmProvisioningState? provisioningState = null)
+        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, ResourceIdentifier vmmServerId = null, OSType? osType = null, string osName = null, string computerName = null, int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, IsCustomizable? isCustomizable = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, IsHighlyAvailable? isHighlyAvailable = null, int? generation = null, IEnumerable<ScVmmNetworkInterface> networkInterfaces = null, IEnumerable<ScVmmVirtualDisk> disks = null, ScVmmProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             networkInterfaces ??= new List<ScVmmNetworkInterface>();
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="osSku"> Gets os sku. </param>
         /// <param name="osVersion"> Gets os version. </param>
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
-        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = null, string computerName = null, ScVmmOSType? osType = null, string osSku = null, string osVersion = null)
+        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = null, string computerName = null, OSType? osType = null, string osSku = null, string osVersion = null)
         {
             return new OSProfileForVmInstance(
                 adminPassword,
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="osType"> Gets the type of the os. </param>
         /// <param name="osName"> Gets os name. </param>
         /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
-        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, int? cpuCount = null, int? memoryMB = null, ScVmmOSType? osType = null, string osName = null)
+        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, int? cpuCount = null, int? memoryMB = null, OSType? osType = null, string osName = null)
         {
             return new VirtualMachineTemplateInventoryItem(
                 ScVmmInventoryType.VirtualMachineTemplate,
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="biosGuid"> Gets the bios guid. </param>
         /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
-        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, ScVmmOSType? osType = null, string osName = null, string osVersion = null, string powerState = null, IEnumerable<string> ipAddresses = null, ScVmmInventoryItemDetails cloud = null, string biosGuid = null, ResourceIdentifier managedMachineResourceId = null)
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, OSType? osType = null, string osName = null, string osVersion = null, string powerState = null, IEnumerable<string> ipAddresses = null, ScVmmInventoryItemDetails cloud = null, string biosGuid = null, ResourceIdentifier managedMachineResourceId = null)
         {
             ipAddresses ??= new List<string>();
 

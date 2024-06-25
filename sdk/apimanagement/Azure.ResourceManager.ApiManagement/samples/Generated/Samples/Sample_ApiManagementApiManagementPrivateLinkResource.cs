@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ApiManagementPrivateLinkResource
+    public partial class Sample_ApiManagementApiManagementPrivateLinkResource
     {
         // ApiManagementGetPrivateLinkGroupResource
         [NUnit.Framework.Test]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementPrivateLinkResource created on azure
-            // for more information of creating ApiManagementPrivateLinkResource, please refer to the document of ApiManagementPrivateLinkResource
+            // this example assumes you already have this ApiManagementApiManagementPrivateLinkResource created on azure
+            // for more information of creating ApiManagementApiManagementPrivateLinkResource, please refer to the document of ApiManagementApiManagementPrivateLinkResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string privateLinkSubResourceName = "privateLinkSubResourceName";
-            ResourceIdentifier apiManagementPrivateLinkResourceId = ApiManagementPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, privateLinkSubResourceName);
-            ApiManagementPrivateLinkResource apiManagementPrivateLinkResource = client.GetApiManagementPrivateLinkResource(apiManagementPrivateLinkResourceId);
+            ResourceIdentifier apiManagementApiManagementPrivateLinkResourceId = ApiManagementApiManagementPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, privateLinkSubResourceName);
+            ApiManagementApiManagementPrivateLinkResource apiManagementApiManagementPrivateLinkResource = client.GetApiManagementApiManagementPrivateLinkResource(apiManagementApiManagementPrivateLinkResourceId);
 
             // invoke the operation
-            ApiManagementPrivateLinkResource result = await apiManagementPrivateLinkResource.GetAsync();
+            ApiManagementApiManagementPrivateLinkResource result = await apiManagementApiManagementPrivateLinkResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementPrivateLinkResourceData resourceData = result.Data;
+            ApiManagementApiManagementPrivateLinkResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

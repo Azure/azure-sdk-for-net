@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             {
                 return null;
             }
-            ScVmmOSType? osType = default;
+            OSType? osType = default;
             string osName = default;
             string osVersion = default;
             string powerState = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    osType = new ScVmmOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osName"u8))

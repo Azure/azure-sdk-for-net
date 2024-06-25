@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ApiManagementPrivateLinkResourceCollection
+    public partial class Sample_ApiManagementApiManagementPrivateLinkResourceCollection
     {
         // ApiManagementListPrivateLinkGroupResources
         [NUnit.Framework.Test]
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ApiManagementPrivateLinkResource
-            ApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementPrivateLinkResources();
+            // get the collection of this ApiManagementApiManagementPrivateLinkResource
+            ApiManagementApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementApiManagementPrivateLinkResources();
 
             // invoke the operation and iterate over the result
-            await foreach (ApiManagementPrivateLinkResource item in collection.GetAllAsync())
+            await foreach (ApiManagementApiManagementPrivateLinkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementPrivateLinkResourceData resourceData = item.Data;
+                ApiManagementApiManagementPrivateLinkResourceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ApiManagementPrivateLinkResource
-            ApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementPrivateLinkResources();
+            // get the collection of this ApiManagementApiManagementPrivateLinkResource
+            ApiManagementApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementApiManagementPrivateLinkResources();
 
             // invoke the operation
             string privateLinkSubResourceName = "privateLinkSubResourceName";
-            ApiManagementPrivateLinkResource result = await collection.GetAsync(privateLinkSubResourceName);
+            ApiManagementApiManagementPrivateLinkResource result = await collection.GetAsync(privateLinkSubResourceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementPrivateLinkResourceData resourceData = result.Data;
+            ApiManagementApiManagementPrivateLinkResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ApiManagementPrivateLinkResource
-            ApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementPrivateLinkResources();
+            // get the collection of this ApiManagementApiManagementPrivateLinkResource
+            ApiManagementApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementApiManagementPrivateLinkResources();
 
             // invoke the operation
             string privateLinkSubResourceName = "privateLinkSubResourceName";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ApiManagementPrivateLinkResource
-            ApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementPrivateLinkResources();
+            // get the collection of this ApiManagementApiManagementPrivateLinkResource
+            ApiManagementApiManagementPrivateLinkResourceCollection collection = apiManagementService.GetApiManagementApiManagementPrivateLinkResources();
 
             // invoke the operation
             string privateLinkSubResourceName = "privateLinkSubResourceName";
-            NullableResponse<ApiManagementPrivateLinkResource> response = await collection.GetIfExistsAsync(privateLinkSubResourceName);
-            ApiManagementPrivateLinkResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiManagementApiManagementPrivateLinkResource> response = await collection.GetIfExistsAsync(privateLinkSubResourceName);
+            ApiManagementApiManagementPrivateLinkResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementPrivateLinkResourceData resourceData = result.Data;
+                ApiManagementApiManagementPrivateLinkResourceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

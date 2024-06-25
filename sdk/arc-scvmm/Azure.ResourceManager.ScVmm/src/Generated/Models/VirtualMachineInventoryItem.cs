@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="cloud"> Cloud inventory resource details where the VM is present. </param>
         /// <param name="biosGuid"> Gets the bios guid. </param>
         /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        internal VirtualMachineInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ScVmmOSType? osType, string osName, string osVersion, string powerState, IList<string> ipAddresses, ScVmmInventoryItemDetails cloud, string biosGuid, ResourceIdentifier managedMachineResourceId) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
+        internal VirtualMachineInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, OSType? osType, string osName, string osVersion, string powerState, IList<string> ipAddresses, ScVmmInventoryItemDetails cloud, string biosGuid, ResourceIdentifier managedMachineResourceId) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             OSType = osType;
             OSName = osName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         }
 
         /// <summary> Gets the type of the os. </summary>
-        public ScVmmOSType? OSType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets os name. </summary>
         public string OSName { get; }
         /// <summary> Gets os version. </summary>
