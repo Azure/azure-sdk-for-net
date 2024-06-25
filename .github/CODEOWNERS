@@ -930,7 +930,7 @@
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
-# ServiceOwners:                                                   @arm-sdk-owners
+# ServiceOwners:                                                   @Azure/arm-sdk-owners
 
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
