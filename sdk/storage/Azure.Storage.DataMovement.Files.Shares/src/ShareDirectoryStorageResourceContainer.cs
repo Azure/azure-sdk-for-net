@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Set the ShareFileTraits to send when listing.
             ShareFileTraits traits = ShareFileTraits.Attributes;
-            if (ResourceOptions?.FilePermissions?.Preserve ?? true)
+            if (ResourceOptions?.FilePermissions?.Preserve ?? false)
             {
                 traits |= ShareFileTraits.PermissionKey;
             }
