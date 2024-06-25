@@ -35,8 +35,6 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
-    private const string HOST_SUBDOMAIN_MATCHER = @"(?<=.+://)([^\.]+)(?=[\./])";
-
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
 #if NETFRAMEWORK
@@ -53,21 +51,20 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         : base(isAsync, mode)
     {
         TestConfig = new TestConfig(Mode);
-        if (TestConfig.GetConfig<ChatClient>()?.Endpoint is null)
-        {
-            // TODO: as a temporary CI exclusion, make forced live tests inconclusive. Remove this for development and as soon as recording support is available.
-            Assert.Inconclusive($"Tests are currently disabled via inconclusivity if both default and chat configuration settings are not available.");
-        }
         Assets = new Assets(TestEnvironment);
 
         // Disable additional fluff that is causing issues
         TestDiagnostics = false;
 
         // Add sanitizers to prevent resource names from leaking into recordings
-        UriRegexSanitizers.Add(new UriRegexSanitizer(HOST_SUBDOMAIN_MATCHER));
+        UriRegexSanitizers.Add(new UriRegexSanitizer(SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN)
+        {
+            Value = SanitizedJsonConfig.MASK_STRING
+        });
         BodyKeySanitizers.Add(new BodyKeySanitizer("*..endpoint")
         {
-            Regex = HOST_SUBDOMAIN_MATCHER
+            Regex = SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN,
+            Value = SanitizedJsonConfig.MASK_STRING
         });
 
         // Add sanitizers to prevent our keys from leaking into the recordings
@@ -486,6 +483,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         _vectorStoreFileAssociationsToRemove.Clear();
         _vectorStoreIdsToDelete.Clear();
         _fileIdsToDelete.Clear();
+
+        // If we are in recording mode, update the recorded playback configuration as well
+        if (Mode == RecordedTestMode.Record)
+        {
+            TestConfig.SavePlaybackConfig();
+        }
     }
     
     protected static void ValidateClientResult(ClientResult result)

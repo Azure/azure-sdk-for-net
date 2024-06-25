@@ -10,29 +10,28 @@ using System.Linq;
 namespace Azure.AI.OpenAI.Tests.Utils.Config;
 
 /// <summary>
-/// Represents a flattened configuration that reads from one or more configurations in order.
+/// Represents a flattened configuration that reads from one or more configurations in order. It will also
+/// record the values read from each configuration.
 /// </summary>
 public class FlattenedConfig : IConfiguration
 {
-    private IReadOnlyList<IConfiguration?> _configs;
+    private IReadOnlyList<INamedConfiguration?> _configs;
+    private IDictionary<string, SanitizedJsonConfig>? _recordedConfig;
 
     /// <summary>
     /// Creates a new instance.
     /// </summary>
     /// <param name="configs">The configurations to read from in order.</param>
-    /// <exception cref="ArgumentNullException">The configs passed was null</exception>
-    public FlattenedConfig(params IConfiguration?[] configs)
+    /// <param name="recordedConfig">Where to store the recorded configuration.</param>
+    /// <exception cref="ArgumentNullException">The configs passed was null.</exception>
+    public FlattenedConfig(INamedConfiguration?[] configs, IDictionary<string, SanitizedJsonConfig> recordedConfig)
     {
         _configs = configs ?? throw new ArgumentNullException(nameof(configs));
-        Endpoint = _configs
-            .Select(config => config?.Endpoint)
-            .FirstOrDefault(endpoint => endpoint != null);
-        Key = _configs
-            .Select(config => config?.Key)
-            .FirstOrDefault(key => key != null);
-        Deployment = _configs
-            .Select(config => config?.Deployment)
-            .FirstOrDefault(deployment => deployment != null);
+        _recordedConfig = recordedConfig ?? throw new ArgumentNullException(nameof(recordedConfig));
+
+        Endpoint = GetAndRecordProperty(c => c.Endpoint, (c, v) => c.Endpoint = v);
+        Key = GetAndRecordProperty(c => c.Key, (c, v) => c.Key = v);
+        Deployment = GetAndRecordProperty(c => c.Deployment, (c, v) => c.Deployment = v);
     }
 
     /// <inheritdoc />
@@ -43,8 +42,39 @@ public class FlattenedConfig : IConfiguration
     public string? Deployment { get; }
 
     /// <inheritdoc />
-    public TVal? GetValue<TVal>(string key) => _configs
-        .Where(config => config != null)
-        .Select(config => config!.GetValue<TVal>(key))
-        .FirstOrDefault(value => value != null);
+    public TVal? GetValue<TVal>(string key)
+    {
+        TVal? value = default;
+        INamedConfiguration? selected = _configs
+            .Where(config => config != null)
+            .FirstOrDefault(config => (value = config!.GetValue<TVal>(key)) != null);
+
+        if (_recordedConfig != null && selected != null && value != null)
+        {
+            string configName = selected.Name ?? JsonConfig.DEFAULT_CONFIG_NAME;
+            SanitizedJsonConfig recorded = _recordedConfig.GetOrAdd(configName, _ => new SanitizedJsonConfig());
+            recorded.SetValue(key, value);
+        }
+
+        return value;
+    }
+
+    private TVal? GetAndRecordProperty<TVal>(Func<IConfiguration, TVal?> getter, Action<SanitizedJsonConfig, TVal> setter)
+    {
+        TVal? value = default;
+        INamedConfiguration? selected = _configs
+            .Where(config => config != null)
+            .FirstOrDefault(config => (value = getter(config!)) != null);
+
+        if (_recordedConfig != null && selected != null && value != null)
+        {
+            string configName = selected.Name ?? JsonConfig.DEFAULT_CONFIG_NAME;
+            SanitizedJsonConfig recorded = _recordedConfig.GetOrAdd(configName, _ => new SanitizedJsonConfig());
+            setter(recorded, value);
+        }
+
+        return value;
+    }
+
+
 }
