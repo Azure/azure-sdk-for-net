@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The weekly recurrence of the schedule. </summary>
-    public partial class WeeklyRecurrence : Recurrence
+    public partial class ScheduleWeeklyRecurrence : ScheduleRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleWeeklyRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/>, <paramref name="endTime"/> or <paramref name="days"/> is null. </exception>
-        public WeeklyRecurrence(Time startTime, Time endTime, IEnumerable<DayOfWeek> days) : base(startTime, endTime)
+        public ScheduleWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IEnumerable<ScheduleDayOfWeek> days) : base(startTime, endTime)
         {
             Argument.AssertNotNull(startTime, nameof(startTime));
             Argument.AssertNotNull(endTime, nameof(endTime));
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.StorageMover.Models
             Days = days.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleWeeklyRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
-        internal WeeklyRecurrence(Time startTime, Time endTime, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DayOfWeek> days) : base(startTime, endTime, serializedAdditionalRawData)
+        internal ScheduleWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ScheduleDayOfWeek> days) : base(startTime, endTime, serializedAdditionalRawData)
         {
             Days = days;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/> for deserialization. </summary>
-        internal WeeklyRecurrence()
+        /// <summary> Initializes a new instance of <see cref="ScheduleWeeklyRecurrence"/> for deserialization. </summary>
+        internal ScheduleWeeklyRecurrence()
         {
         }
 
         /// <summary> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </summary>
-        public IList<DayOfWeek> Days { get; }
+        public IList<ScheduleDayOfWeek> Days { get; }
     }
 }

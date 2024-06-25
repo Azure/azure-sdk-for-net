@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             }
             Assert.GreaterOrEqual(counter, 1);
 
-            List<DayOfWeek> days = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday};
-            UploadLimitWeeklyRecurrence uploadLimitWeeklyRecurrence = new UploadLimitWeeklyRecurrence(new Time(1), new Time(2), days, 100);
+            List<ScheduleDayOfWeek> days = new List<ScheduleDayOfWeek> { ScheduleDayOfWeek.Monday, ScheduleDayOfWeek.Tuesday};
+            UploadLimitWeeklyRecurrence uploadLimitWeeklyRecurrence = new UploadLimitWeeklyRecurrence(new ScheduleTime(1), new ScheduleTime(2), days, 100);
             UploadLimitSchedule uploadLimitSchedule = new UploadLimitSchedule();
             uploadLimitSchedule.WeeklyRecurrences.Add(uploadLimitWeeklyRecurrence);
 

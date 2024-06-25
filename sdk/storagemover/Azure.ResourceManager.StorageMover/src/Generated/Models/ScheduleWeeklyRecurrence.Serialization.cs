@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class WeeklyRecurrence : IUtf8JsonSerializable, IJsonModel<WeeklyRecurrence>
+    public partial class ScheduleWeeklyRecurrence : IUtf8JsonSerializable, IJsonModel<ScheduleWeeklyRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeeklyRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleWeeklyRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<WeeklyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduleWeeklyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRecurrence)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleWeeklyRecurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        WeeklyRecurrence IJsonModel<WeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduleWeeklyRecurrence IJsonModel<ScheduleWeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRecurrence)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleWeeklyRecurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWeeklyRecurrence(document.RootElement, options);
+            return DeserializeScheduleWeeklyRecurrence(document.RootElement, options);
         }
 
-        internal static WeeklyRecurrence DeserializeWeeklyRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduleWeeklyRecurrence DeserializeScheduleWeeklyRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,31 +75,31 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            IList<DayOfWeek> days = default;
-            Time startTime = default;
-            Time endTime = default;
+            IList<ScheduleDayOfWeek> days = default;
+            ScheduleTime startTime = default;
+            ScheduleTime endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("days"u8))
                 {
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<ScheduleDayOfWeek> array = new List<ScheduleDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToScheduleDayOfWeek());
                     }
                     days = array;
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = Time.DeserializeTime(property.Value, options);
+                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = Time.DeserializeTime(property.Value, options);
+                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,38 +108,38 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WeeklyRecurrence(startTime, endTime, serializedAdditionalRawData, days);
+            return new ScheduleWeeklyRecurrence(startTime, endTime, serializedAdditionalRawData, days);
         }
 
-        BinaryData IPersistableModel<WeeklyRecurrence>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduleWeeklyRecurrence>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRecurrence)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleWeeklyRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
-        WeeklyRecurrence IPersistableModel<WeeklyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduleWeeklyRecurrence IPersistableModel<ScheduleWeeklyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWeeklyRecurrence(document.RootElement, options);
+                        return DeserializeScheduleWeeklyRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRecurrence)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleWeeklyRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<WeeklyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduleWeeklyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             int limitInMbps = default;
-            IList<DayOfWeek> days = default;
-            Time startTime = default;
-            Time endTime = default;
+            IList<ScheduleDayOfWeek> days = default;
+            ScheduleTime startTime = default;
+            ScheduleTime endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (property.NameEquals("days"u8))
                 {
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<ScheduleDayOfWeek> array = new List<ScheduleDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToScheduleDayOfWeek());
                     }
                     days = array;
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = Time.DeserializeTime(property.Value, options);
+                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = Time.DeserializeTime(property.Value, options);
+                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

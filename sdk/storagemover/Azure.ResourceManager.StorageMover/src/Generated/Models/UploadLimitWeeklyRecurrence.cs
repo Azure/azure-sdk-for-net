@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The weekly recurrence of the WAN-link upload limit schedule. The start time must be earlier in the day than the end time. The recurrence must not span across multiple days. </summary>
-    public partial class UploadLimitWeeklyRecurrence : WeeklyRecurrence
+    public partial class UploadLimitWeeklyRecurrence : ScheduleWeeklyRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="UploadLimitWeeklyRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
         /// <param name="limitInMbps"> The WAN-link upload bandwidth (maximum data transfer rate) in megabits per second. Value of 0 indicates no throughput is allowed and any running migration job is effectively paused for the duration of this recurrence. Only data plane operations are governed by this limit. Control plane operations ensure seamless functionality. The agent may exceed this limit with control messages, if necessary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/>, <paramref name="endTime"/> or <paramref name="days"/> is null. </exception>
-        public UploadLimitWeeklyRecurrence(Time startTime, Time endTime, IEnumerable<DayOfWeek> days, int limitInMbps) : base(startTime, endTime, days)
+        public UploadLimitWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IEnumerable<ScheduleDayOfWeek> days, int limitInMbps) : base(startTime, endTime, days)
         {
             Argument.AssertNotNull(startTime, nameof(startTime));
             Argument.AssertNotNull(endTime, nameof(endTime));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
         /// <param name="limitInMbps"> The WAN-link upload bandwidth (maximum data transfer rate) in megabits per second. Value of 0 indicates no throughput is allowed and any running migration job is effectively paused for the duration of this recurrence. Only data plane operations are governed by this limit. Control plane operations ensure seamless functionality. The agent may exceed this limit with control messages, if necessary. </param>
-        internal UploadLimitWeeklyRecurrence(Time startTime, Time endTime, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DayOfWeek> days, int limitInMbps) : base(startTime, endTime, serializedAdditionalRawData, days)
+        internal UploadLimitWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ScheduleDayOfWeek> days, int limitInMbps) : base(startTime, endTime, serializedAdditionalRawData, days)
         {
             LimitInMbps = limitInMbps;
         }

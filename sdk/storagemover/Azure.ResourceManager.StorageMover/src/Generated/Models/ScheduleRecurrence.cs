@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The schedule recurrence. </summary>
-    public partial class Recurrence
+    public partial class ScheduleRecurrence
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Recurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
-        public Recurrence(Time startTime, Time endTime)
+        public ScheduleRecurrence(ScheduleTime startTime, ScheduleTime endTime)
         {
             Argument.AssertNotNull(startTime, nameof(startTime));
             Argument.AssertNotNull(endTime, nameof(endTime));
@@ -58,25 +58,25 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndTime = endTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Recurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Recurrence(Time startTime, Time endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduleRecurrence(ScheduleTime startTime, ScheduleTime endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             EndTime = endTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Recurrence"/> for deserialization. </summary>
-        internal Recurrence()
+        /// <summary> Initializes a new instance of <see cref="ScheduleRecurrence"/> for deserialization. </summary>
+        internal ScheduleRecurrence()
         {
         }
 
         /// <summary> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </summary>
-        public Time StartTime { get; set; }
+        public ScheduleTime StartTime { get; set; }
         /// <summary> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </summary>
-        public Time EndTime { get; set; }
+        public ScheduleTime EndTime { get; set; }
     }
 }

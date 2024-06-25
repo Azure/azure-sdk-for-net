@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class Recurrence : IUtf8JsonSerializable, IJsonModel<Recurrence>
+    public partial class ScheduleRecurrence : IUtf8JsonSerializable, IJsonModel<ScheduleRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Recurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Recurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduleRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Recurrence)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleRecurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        Recurrence IJsonModel<Recurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduleRecurrence IJsonModel<ScheduleRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Recurrence)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleRecurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecurrence(document.RootElement, options);
+            return DeserializeScheduleRecurrence(document.RootElement, options);
         }
 
-        internal static Recurrence DeserializeRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduleRecurrence DeserializeScheduleRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Time startTime = default;
-            Time endTime = default;
+            ScheduleTime startTime = default;
+            ScheduleTime endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = Time.DeserializeTime(property.Value, options);
+                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = Time.DeserializeTime(property.Value, options);
+                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Recurrence(startTime, endTime, serializedAdditionalRawData);
+            return new ScheduleRecurrence(startTime, endTime, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Recurrence>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduleRecurrence>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Recurrence)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Recurrence IPersistableModel<Recurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduleRecurrence IPersistableModel<ScheduleRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRecurrence(document.RootElement, options);
+                        return DeserializeScheduleRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Recurrence)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Recurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduleRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,14 +16,6 @@ modelerfour:
 use-model-reader-writer: true
 
 rename-mapping:
-  Agent: StorageMoverAgent
-  Endpoint: StorageMoverEndpoint
-  Project: StorageMoverProject
-  AgentPropertiesErrorDetails: StorageMoverAgentPropertiesErrorDetails
-  AgentStatus: StorageMoverAgentStatus
-  CopyMode: StorageMoverCopyMode
-  ProvisioningState: StorageMoverProvisioningState
-  Credentials : StorageMoverCredentials
   JobDefinition.properties.agentResourceId: -|arm-id
   JobDefinition.properties.latestJobRunResourceId: -|arm-id
   JobDefinition.properties.targetResourceId: -|arm-id
@@ -33,6 +25,21 @@ rename-mapping:
   JobRun.properties.targetResourceId: -|arm-id
   JobRunResourceId.jobRunResourceId: -|arm-id
   AzureStorageBlobContainerEndpointProperties.storageAccountResourceId: -|string
+  WeeklyRecurrence: ScheduleWeeklyRecurrence
+  Recurrence: ScheduleRecurrence
+  Time: ScheduleTime
+  Minute: ScheduleMinute
+  DayOfWeek: ScheduleDayOfWeek
+
+prepend-rp-prefix:
+  - Agent
+  - Endpoint
+  - Project
+  - AgentPropertiesErrorDetails
+  - AgentStatus
+  - CopyMode
+  - ProvisioningState
+  - Credentials
 
 format-by-name-rules:
   'tenantId': 'uuid'

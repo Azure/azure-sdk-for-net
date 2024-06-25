@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The day of week. </summary>
-    public enum DayOfWeek
+    public enum ScheduleDayOfWeek
     {
         /// <summary> Monday. </summary>
         Monday,

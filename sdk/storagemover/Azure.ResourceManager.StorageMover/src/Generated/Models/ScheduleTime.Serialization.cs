@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class Time : IUtf8JsonSerializable, IJsonModel<Time>
+    public partial class ScheduleTime : IUtf8JsonSerializable, IJsonModel<ScheduleTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Time>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleTime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Time>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduleTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Time>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Time)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleTime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        Time IJsonModel<Time>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduleTime IJsonModel<ScheduleTime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Time>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Time)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleTime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTime(document.RootElement, options);
+            return DeserializeScheduleTime(document.RootElement, options);
         }
 
-        internal static Time DeserializeTime(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduleTime DeserializeScheduleTime(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             int hour = default;
-            Minute? minute = default;
+            ScheduleMinute? minute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    minute = new Minute(property.Value.GetInt32());
+                    minute = new ScheduleMinute(property.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Time(hour, minute, serializedAdditionalRawData);
+            return new ScheduleTime(hour, minute, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Time>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduleTime>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Time>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTime>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Time)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleTime)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Time IPersistableModel<Time>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduleTime IPersistableModel<ScheduleTime>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Time>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTime>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTime(document.RootElement, options);
+                        return DeserializeScheduleTime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Time)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleTime)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Time>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduleTime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

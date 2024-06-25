@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The time of day. </summary>
-    public partial class Time
+    public partial class ScheduleTime
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,32 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Time"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTime"/>. </summary>
         /// <param name="hour"> The hour element of the time. Allowed values range from 0 (start of the selected day) to 24 (end of the selected day). Hour value 24 cannot be combined with any other minute value but 0. </param>
-        public Time(int hour)
+        public ScheduleTime(int hour)
         {
             Hour = hour;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Time"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTime"/>. </summary>
         /// <param name="hour"> The hour element of the time. Allowed values range from 0 (start of the selected day) to 24 (end of the selected day). Hour value 24 cannot be combined with any other minute value but 0. </param>
         /// <param name="minute"> The minute element of the time. Allowed values are 0 and 30. If not specified, its value defaults to 0. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Time(int hour, Minute? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduleTime(int hour, ScheduleMinute? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hour = hour;
             Minute = minute;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Time"/> for deserialization. </summary>
-        internal Time()
+        /// <summary> Initializes a new instance of <see cref="ScheduleTime"/> for deserialization. </summary>
+        internal ScheduleTime()
         {
         }
 
         /// <summary> The hour element of the time. Allowed values range from 0 (start of the selected day) to 24 (end of the selected day). Hour value 24 cannot be combined with any other minute value but 0. </summary>
         public int Hour { get; set; }
         /// <summary> The minute element of the time. Allowed values are 0 and 30. If not specified, its value defaults to 0. </summary>
-        public Minute? Minute { get; set; }
+        public ScheduleMinute? Minute { get; set; }
     }
 }
