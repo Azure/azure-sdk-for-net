@@ -10,7 +10,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a collection of results returned from a cloud service operation.
 /// </summary>
-public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<T>
+public abstract class AsyncResultCollection<T> : IAsyncEnumerable<ClientResult<T>>
 {
     /// <summary>
     /// Create a new instance of <see cref="AsyncResultCollection{T}"/>.
@@ -28,16 +28,16 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
-    /// <summary>
-    /// Create a new instance of <see cref="AsyncResultCollection{T}"/>.
-    /// </summary>
-    /// <param name="response">The <see cref="PipelineResponse"/> holding the
-    /// items in the collection, or the first set of the items in the collection.
-    /// </param>
-    protected internal AsyncResultCollection(PipelineResponse response) : base(response)
-    {
-    }
+    ///// <summary>
+    ///// Create a new instance of <see cref="AsyncResultCollection{T}"/>.
+    ///// </summary>
+    ///// <param name="response">The <see cref="PipelineResponse"/> holding the
+    ///// items in the collection, or the first set of the items in the collection.
+    ///// </param>
+    //protected internal AsyncResultCollection(PipelineResponse response) : base(response)
+    //{
+    //}
 
     /// <inheritdoc/>
-    public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+    public abstract IAsyncEnumerator<ClientResult<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }
