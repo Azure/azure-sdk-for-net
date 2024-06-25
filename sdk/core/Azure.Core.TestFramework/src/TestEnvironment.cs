@@ -207,7 +207,7 @@ namespace Azure.Core.TestFramework
                 else
                 {
                     var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSTOKEN");
+                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSOTOKEN");
                     if (!string.IsNullOrWhiteSpace(clientSecret))
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used
@@ -241,7 +241,8 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        throw new InvalidOperationException("Environment auth not configured properly");
+                        _credential = new DefaultAzureCredential(
+                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                 }
 
