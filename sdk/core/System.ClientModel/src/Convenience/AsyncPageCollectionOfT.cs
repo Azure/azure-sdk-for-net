@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>, IAsyncEnumerable<ClientResult>
+public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
 {
     protected AsyncPageCollection() : base()
     {
@@ -27,7 +27,7 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>, 
     // TODO: Add "from page"?
     public async IAsyncEnumerable<T> ToValueCollectionAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await foreach (ClientPage<T> page in ((IAsyncEnumerable<ClientPage<T>>)this).ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ClientPage<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page.Values)
             {
@@ -48,15 +48,6 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>, 
         while (page.NextPageToken != null)
         {
             page = await GetPageAsync(page.NextPageToken, options).ConfigureAwait(false);
-            yield return page;
-        }
-    }
-
-    // TODO: is this the best way to implement?
-    async IAsyncEnumerator<ClientResult> IAsyncEnumerable<ClientResult>.GetAsyncEnumerator(CancellationToken cancellationToken)
-    {
-        await foreach (ClientPage<T> page in ((IAsyncEnumerable<ClientPage<T>>)this).ConfigureAwait(false).WithCancellation(cancellationToken))
-        {
             yield return page;
         }
     }
