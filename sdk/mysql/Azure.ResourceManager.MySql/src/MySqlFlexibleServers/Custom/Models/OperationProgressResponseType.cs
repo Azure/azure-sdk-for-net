@@ -25,13 +25,29 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 throw new ArgumentNullException(nameof(operationProgressResponseType));
             }
-
-            if (operationProgressResponseType.ObjectType == "Unknown")
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            long? DatasourceSizeInBytes = null;
+            long? DataTransferredInBytes = null;
+            string BackupMetadata = null;
+            foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
             {
-                operationProgressResponseType.ObjectType = MySqlFlexibleServerOperationType.BackupAndExportResponse;
+                switch (item.Key)
+                {
+                    case "datasourceSizeInBytes":
+                        DatasourceSizeInBytes = item.Value.ToObjectFromJson<long>();
+                        break;
+                    case "dataTransferredInBytes":
+                        DataTransferredInBytes = item.Value.ToObjectFromJson<long>();
+                        break;
+                    case "backupMetadata":
+                        BackupMetadata = item.Value.ToObjectFromJson<string>();
+                        break;
+                    default:
+                        serializedAdditionalRawData.Add(item.Key, item.Value);
+                        break;
+                }
             }
-
-            return (BackupAndExportResponseType)operationProgressResponseType;
+            return new BackupAndExportResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, DatasourceSizeInBytes, DataTransferredInBytes, BackupMetadata);
         }
 
         /// <summary>
@@ -45,13 +61,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 throw new ArgumentNullException(nameof(operationProgressResponseType));
             }
-
-            if (operationProgressResponseType.ObjectType == "Unknown")
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            DateTimeOffset? estimatedCompletionOn = null;
+            foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
             {
-                operationProgressResponseType.ObjectType = MySqlFlexibleServerOperationType.ImportFromStorageResponse;
+                switch (item.Key)
+                {
+                    case "estimatedCompletionTime":
+                        estimatedCompletionOn = item.Value.ToObjectFromJson<DateTimeOffset>();
+                        break;
+                    default:
+                        serializedAdditionalRawData.Add(item.Key, item.Value);
+                        break;
+                }
             }
-
-            return (ImportFromStorageResponseType)operationProgressResponseType;
+            return new ImportFromStorageResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, estimatedCompletionOn);
         }
     }
 }
