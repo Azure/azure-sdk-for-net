@@ -23,16 +23,8 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
 
     public abstract ClientPage<T> GetPage(BinaryData pageToken, RequestOptions? options = default);
 
-    public IEnumerable<T> ToValueCollection()
-    {
-        foreach (ClientPage<T> page in this)
-        {
-            foreach (T value in page.Values)
-            {
-                yield return value;
-            }
-        }
-    }
+    public ClientValueCollection<T> ToValueCollection()
+        => new PagedValueCollection(this);
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<ClientPage<T>>)this).GetEnumerator();
 
@@ -45,6 +37,29 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
         {
             page = GetPage(page.NextPageToken);
             yield return page;
+        }
+    }
+
+    private class PagedValueCollection : ClientValueCollection<T>
+    {
+        private readonly PageCollection<T> _pages;
+
+        public PagedValueCollection(PageCollection<T> pages)
+        {
+            _pages = pages;
+        }
+
+        public override IEnumerator<T> GetEnumerator()
+        {
+            foreach (ClientPage<T> page in _pages)
+            {
+                foreach (T value in page.Values)
+                {
+                    SetRawResponse(page.GetRawResponse());
+
+                    yield return value;
+                }
+            }
         }
     }
 }

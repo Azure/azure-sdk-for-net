@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,17 +23,8 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
 
     public abstract Task<ClientPage<T>> GetPageAsync(BinaryData pageToken, RequestOptions? options = default);
 
-    // TODO: Add "from page"?
-    public async IAsyncEnumerable<T> ToValueCollectionAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        await foreach (ClientPage<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
-        {
-            foreach (T value in page.Values)
-            {
-                yield return value;
-            }
-        }
-    }
+    public AsyncClientValueCollection<T> ToValueCollectionAsync(CancellationToken cancellationToken = default)
+        => new AsyncPagedValueCollection(this);
 
     async IAsyncEnumerator<ClientPage<T>> IAsyncEnumerable<ClientPage<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
@@ -49,6 +39,29 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
         {
             page = await GetPageAsync(page.NextPageToken, options).ConfigureAwait(false);
             yield return page;
+        }
+    }
+
+    private class AsyncPagedValueCollection : AsyncClientValueCollection<T>
+    {
+        private readonly AsyncPageCollection<T> _pages;
+
+        public AsyncPagedValueCollection(AsyncPageCollection<T> pages)
+        {
+            _pages = pages;
+        }
+
+        public async override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            await foreach (ClientPage<T> page in _pages.ConfigureAwait(false).WithCancellation(cancellationToken))
+            {
+                foreach (T value in page.Values)
+                {
+                    SetRawResponse(page.GetRawResponse());
+
+                    yield return value;
+                }
+            }
         }
     }
 }
