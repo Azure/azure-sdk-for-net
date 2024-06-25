@@ -301,7 +301,7 @@ namespace Azure.AI.Translation.Document
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
-            request.Headers.Add("content-type", contentType);
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }
