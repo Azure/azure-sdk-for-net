@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(operation, nameof(operation));
             Response response = await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ModelReaderWriter.Read<OperationProgressResult>(response.Content), response);
+            OperationProgressResult result = OperationProgressResult.ToBackupAndExportResponse(ModelReaderWriter.Read<OperationProgressResult>(response.Content));
+            return Response.FromValue(result, response);
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(operation, nameof(operation));
             Response response = operation.UpdateStatus(cancellationToken);
-            return Response.FromValue(ModelReaderWriter.Read<OperationProgressResult>(response.Content), response);
+            OperationProgressResult result = OperationProgressResult.ToBackupAndExportResponse(ModelReaderWriter.Read<OperationProgressResult>(response.Content));
+            return Response.FromValue(result, response);
         }
     }
 }

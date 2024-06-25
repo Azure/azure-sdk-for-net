@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MySql.Tests
                 var statusResult = await lroBackupAndExport.GetDetailedStatusAsync().ConfigureAwait(false);
                 if (statusResult.Value.PercentComplete is not null)
                     Assert.IsTrue(statusResult.Value.PercentComplete >= 0);
-                BackupAndExportResponseType data = OperationProgressResponseType.ToBackupAndExportResponseType(statusResult.Value.Properties);
+                BackupAndExportResponseType data = (BackupAndExportResponseType)statusResult.Value.Properties;
                 Assert.IsTrue(data.DatasourceSizeInBytes >= 0);
                 Assert.IsTrue(data.DataTransferredInBytes >= 0);
                 Assert.IsTrue(data.DataTransferredInBytes <= data.DatasourceSizeInBytes);

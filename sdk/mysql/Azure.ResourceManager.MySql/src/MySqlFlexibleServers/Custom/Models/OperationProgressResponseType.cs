@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// Converts the OperationProgressResponseType to BackupAndExportResponseType.
         /// <returns> An instance of BackupAndExportResponseType. </returns>
         /// </summary>
-        public static BackupAndExportResponseType ToBackupAndExportResponseType(OperationProgressResponseType operationProgressResponseType)
+        internal static BackupAndExportResponseType ToBackupAndExportResponseType(OperationProgressResponseType operationProgressResponseType)
         {
             if (operationProgressResponseType == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="operationProgressResponseType"> Instance of OperationProgressResponseType. </param>
         /// <returns> An instance of ImportFromStorageResponseType. </returns>
         /// </summary>
-        public static ImportFromStorageResponseType ToImportFromStorageResponseType(OperationProgressResponseType operationProgressResponseType)
+        internal static ImportFromStorageResponseType ToImportFromStorageResponseType(OperationProgressResponseType operationProgressResponseType)
         {
             if (operationProgressResponseType == null)
             {
