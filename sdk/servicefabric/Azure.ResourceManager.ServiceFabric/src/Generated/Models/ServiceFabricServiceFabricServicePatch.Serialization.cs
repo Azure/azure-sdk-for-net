@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricServiceData : IUtf8JsonSerializable, IJsonModel<ServiceFabricServiceData>
+    public partial class ServiceFabricServiceFabricServicePatch : IUtf8JsonSerializable, IJsonModel<ServiceFabricServiceFabricServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricServiceFabricServicePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServiceFabricServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricServiceFabricServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceFabricServicePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,35 +107,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
             if (Optional.IsDefined(ServiceKind))
             {
                 writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceTypeName))
-            {
-                writer.WritePropertyName("serviceTypeName"u8);
-                writer.WriteStringValue(ServiceTypeName);
-            }
-            if (Optional.IsDefined(PartitionDescription))
-            {
-                writer.WritePropertyName("partitionDescription"u8);
-                writer.WriteObjectValue(PartitionDescription, options);
-            }
-            if (Optional.IsDefined(ServicePackageActivationMode))
-            {
-                writer.WritePropertyName("servicePackageActivationMode"u8);
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceDnsName))
-            {
-                writer.WritePropertyName("serviceDnsName"u8);
-                writer.WriteStringValue(ServiceDnsName);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -157,19 +131,19 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteEndObject();
         }
 
-        ServiceFabricServiceData IJsonModel<ServiceFabricServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceFabricServiceFabricServicePatch IJsonModel<ServiceFabricServiceFabricServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceFabricServicePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceFabricServiceData(document.RootElement, options);
+            return DeserializeServiceFabricServiceFabricServicePatch(document.RootElement, options);
         }
 
-        internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceFabricServiceFabricServicePatch DeserializeServiceFabricServiceFabricServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -189,12 +163,7 @@ namespace Azure.ResourceManager.ServiceFabric
             IList<ServiceLoadMetricDescription> serviceLoadMetrics = default;
             IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default;
             ApplicationMoveCost? defaultMoveCost = default;
-            string provisioningState = default;
             ApplicationServiceKind? serviceKind = default;
-            string serviceTypeName = default;
-            PartitionSchemeDescription partitionDescription = default;
-            ArmServicePackageActivationMode? servicePackageActivationMode = default;
-            string serviceDnsName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -316,11 +285,6 @@ namespace Azure.ResourceManager.ServiceFabric
                             defaultMoveCost = new ApplicationMoveCost(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("serviceKind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -328,34 +292,6 @@ namespace Azure.ResourceManager.ServiceFabric
                                 continue;
                             }
                             serviceKind = new ApplicationServiceKind(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceTypeName"u8))
-                        {
-                            serviceTypeName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("partitionDescription"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            partitionDescription = PartitionSchemeDescription.DeserializePartitionSchemeDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePackageActivationMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            servicePackageActivationMode = new ArmServicePackageActivationMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceDnsName"u8))
-                        {
-                            serviceDnsName = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -367,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceFabricServiceData(
+            return new ServiceFabricServiceFabricServicePatch(
                 id,
                 name,
                 type,
@@ -379,45 +315,40 @@ namespace Azure.ResourceManager.ServiceFabric
                 serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(),
                 defaultMoveCost,
-                provisioningState,
                 serviceKind,
-                serviceTypeName,
-                partitionDescription,
-                servicePackageActivationMode,
-                serviceDnsName,
                 etag,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServiceFabricServiceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceFabricServiceFabricServicePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceFabricServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServiceFabricServiceData IPersistableModel<ServiceFabricServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceFabricServiceFabricServicePatch IPersistableModel<ServiceFabricServiceFabricServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceFabricServiceData(document.RootElement, options);
+                        return DeserializeServiceFabricServiceFabricServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceFabricServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServiceFabricServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricServiceFabricServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

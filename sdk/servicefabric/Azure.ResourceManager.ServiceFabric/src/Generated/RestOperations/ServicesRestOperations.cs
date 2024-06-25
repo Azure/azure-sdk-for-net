@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceFabricServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricServiceFabricServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ServiceFabricServiceData value = default;
+                        ServiceFabricServiceFabricServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceFabricServiceData.DeserializeServiceFabricServiceData(document.RootElement);
+                        value = ServiceFabricServiceFabricServiceData.DeserializeServiceFabricServiceFabricServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceFabricServiceData)null, message.Response);
+                    return Response.FromValue((ServiceFabricServiceFabricServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceFabricServiceData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricServiceFabricServiceData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ServiceFabricServiceData value = default;
+                        ServiceFabricServiceFabricServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceFabricServiceData.DeserializeServiceFabricServiceData(document.RootElement);
+                        value = ServiceFabricServiceFabricServiceData.DeserializeServiceFabricServiceFabricServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceFabricServiceData)null, message.Response);
+                    return Response.FromValue((ServiceFabricServiceFabricServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServiceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServicePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServicePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServicePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServicePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServicePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServicePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceFabricServiceFabricServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

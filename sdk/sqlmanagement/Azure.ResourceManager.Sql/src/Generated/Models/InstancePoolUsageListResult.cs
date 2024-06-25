@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="InstancePoolUsageListResult"/>. </summary>
         internal InstancePoolUsageListResult()
         {
-            Value = new ChangeTrackingList<InstancePoolUsage>();
+            Value = new ChangeTrackingList<SqlInstancePoolUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InstancePoolUsageListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolUsageListResult(IReadOnlyList<InstancePoolUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstancePoolUsageListResult(IReadOnlyList<SqlInstancePoolUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<InstancePoolUsage> Value { get; }
+        public IReadOnlyList<SqlInstancePoolUsage> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

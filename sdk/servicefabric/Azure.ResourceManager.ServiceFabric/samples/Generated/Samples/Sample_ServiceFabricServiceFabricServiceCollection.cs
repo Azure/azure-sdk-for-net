@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
-    public partial class Sample_ServiceFabricServiceCollection
+    public partial class Sample_ServiceFabricServiceFabricServiceCollection
     {
         // Get a service
         [NUnit.Framework.Test]
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricServiceResource result = await collection.GetAsync(serviceName);
+            ServiceFabricServiceFabricServiceResource result = await collection.GetAsync(serviceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
+            ServiceFabricServiceFabricServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation
             string serviceName = "myService";
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation
             string serviceName = "myService";
-            NullableResponse<ServiceFabricServiceResource> response = await collection.GetIfExistsAsync(serviceName);
-            ServiceFabricServiceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ServiceFabricServiceFabricServiceResource> response = await collection.GetIfExistsAsync(serviceName);
+            ServiceFabricServiceFabricServiceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServiceFabricServiceData resourceData = result.Data;
+                ServiceFabricServiceFabricServiceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricServiceData data = new ServiceFabricServiceData(new AzureLocation("placeholder"))
+            ServiceFabricServiceFabricServiceData data = new ServiceFabricServiceFabricServiceData(new AzureLocation("placeholder"))
             {
                 PlacementConstraints = "NodeType==frontend",
                 CorrelationScheme =
@@ -180,12 +180,12 @@ Weight = ServiceLoadMetricWeight.Low,
 {
 },
             };
-            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
-            ServiceFabricServiceResource result = lro.Value;
+            ArmOperation<ServiceFabricServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ServiceFabricServiceFabricServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
+            ServiceFabricServiceFabricServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -212,12 +212,12 @@ Weight = ServiceLoadMetricWeight.Low,
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricServiceData data = new ServiceFabricServiceData(new AzureLocation("placeholder"))
+            ServiceFabricServiceFabricServiceData data = new ServiceFabricServiceFabricServiceData(new AzureLocation("placeholder"))
             {
                 ServiceTypeName = "myServiceType",
                 PartitionDescription = new SingletonPartitionSchemeDescription(),
@@ -225,12 +225,12 @@ Weight = ServiceLoadMetricWeight.Low,
 {
 },
             };
-            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
-            ServiceFabricServiceResource result = lro.Value;
+            ArmOperation<ServiceFabricServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ServiceFabricServiceFabricServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
+            ServiceFabricServiceFabricServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -257,15 +257,15 @@ Weight = ServiceLoadMetricWeight.Low,
             ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
             ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
 
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+            // get the collection of this ServiceFabricServiceFabricServiceResource
+            ServiceFabricServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServiceFabricServices();
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceFabricServiceResource item in collection.GetAllAsync())
+            await foreach (ServiceFabricServiceFabricServiceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServiceFabricServiceData resourceData = item.Data;
+                ServiceFabricServiceFabricServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

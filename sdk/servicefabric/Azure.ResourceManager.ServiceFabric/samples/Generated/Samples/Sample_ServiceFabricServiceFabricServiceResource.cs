@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
-    public partial class Sample_ServiceFabricServiceResource
+    public partial class Sample_ServiceFabricServiceFabricServiceResource
     {
         // Get a service
         [NUnit.Framework.Test]
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceFabricServiceResource created on azure
-            // for more information of creating ServiceFabricServiceResource, please refer to the document of ServiceFabricServiceResource
+            // this example assumes you already have this ServiceFabricServiceFabricServiceResource created on azure
+            // for more information of creating ServiceFabricServiceFabricServiceResource, please refer to the document of ServiceFabricServiceFabricServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string clusterName = "myCluster";
             string applicationName = "myApp";
             string serviceName = "myService";
-            ResourceIdentifier serviceFabricServiceResourceId = ServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
-            ServiceFabricServiceResource serviceFabricService = client.GetServiceFabricServiceResource(serviceFabricServiceResourceId);
+            ResourceIdentifier serviceFabricServiceFabricServiceResourceId = ServiceFabricServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
+            ServiceFabricServiceFabricServiceResource serviceFabricServiceFabricService = client.GetServiceFabricServiceFabricServiceResource(serviceFabricServiceFabricServiceResourceId);
 
             // invoke the operation
-            ServiceFabricServiceResource result = await serviceFabricService.GetAsync();
+            ServiceFabricServiceFabricServiceResource result = await serviceFabricServiceFabricService.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
+            ServiceFabricServiceFabricServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceFabricServiceResource created on azure
-            // for more information of creating ServiceFabricServiceResource, please refer to the document of ServiceFabricServiceResource
+            // this example assumes you already have this ServiceFabricServiceFabricServiceResource created on azure
+            // for more information of creating ServiceFabricServiceFabricServiceResource, please refer to the document of ServiceFabricServiceFabricServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string clusterName = "myCluster";
             string applicationName = "myApp";
             string serviceName = "myService";
-            ResourceIdentifier serviceFabricServiceResourceId = ServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
-            ServiceFabricServiceResource serviceFabricService = client.GetServiceFabricServiceResource(serviceFabricServiceResourceId);
+            ResourceIdentifier serviceFabricServiceFabricServiceResourceId = ServiceFabricServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
+            ServiceFabricServiceFabricServiceResource serviceFabricServiceFabricService = client.GetServiceFabricServiceFabricServiceResource(serviceFabricServiceFabricServiceResourceId);
 
             // invoke the operation
-            ServiceFabricServicePatch patch = new ServiceFabricServicePatch(new AzureLocation("placeholder"))
+            ServiceFabricServiceFabricServicePatch patch = new ServiceFabricServiceFabricServicePatch(new AzureLocation("placeholder"))
             {
                 ServiceLoadMetrics =
 {
@@ -85,12 +85,12 @@ Weight = ServiceLoadMetricWeight.Low,
 {
 },
             };
-            ArmOperation<ServiceFabricServiceResource> lro = await serviceFabricService.UpdateAsync(WaitUntil.Completed, patch);
-            ServiceFabricServiceResource result = lro.Value;
+            ArmOperation<ServiceFabricServiceFabricServiceResource> lro = await serviceFabricServiceFabricService.UpdateAsync(WaitUntil.Completed, patch);
+            ServiceFabricServiceFabricServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
+            ServiceFabricServiceFabricServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,18 +108,18 @@ Weight = ServiceLoadMetricWeight.Low,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceFabricServiceResource created on azure
-            // for more information of creating ServiceFabricServiceResource, please refer to the document of ServiceFabricServiceResource
+            // this example assumes you already have this ServiceFabricServiceFabricServiceResource created on azure
+            // for more information of creating ServiceFabricServiceFabricServiceResource, please refer to the document of ServiceFabricServiceFabricServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string clusterName = "myCluster";
             string applicationName = "myApp";
             string serviceName = "myService";
-            ResourceIdentifier serviceFabricServiceResourceId = ServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
-            ServiceFabricServiceResource serviceFabricService = client.GetServiceFabricServiceResource(serviceFabricServiceResourceId);
+            ResourceIdentifier serviceFabricServiceFabricServiceResourceId = ServiceFabricServiceFabricServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName);
+            ServiceFabricServiceFabricServiceResource serviceFabricServiceFabricService = client.GetServiceFabricServiceFabricServiceResource(serviceFabricServiceFabricServiceResourceId);
 
             // invoke the operation
-            await serviceFabricService.DeleteAsync(WaitUntil.Completed);
+            await serviceFabricServiceFabricService.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

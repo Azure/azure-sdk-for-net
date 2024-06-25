@@ -14,10 +14,10 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing the ServiceFabricService data model.
+    /// A class representing the ServiceFabricServiceFabricService data model.
     /// The service resource.
     /// </summary>
-    public partial class ServiceFabricServiceData : TrackedResourceData
+    public partial class ServiceFabricServiceFabricServiceData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,16 +51,16 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricServiceData(AzureLocation location) : base(location)
+        public ServiceFabricServiceFabricServiceData(AzureLocation location) : base(location)
         {
             CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
             ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.ServiceFabric
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/> for deserialization. </summary>
-        internal ServiceFabricServiceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServiceData"/> for deserialization. </summary>
+        internal ServiceFabricServiceFabricServiceData()
         {
         }
 

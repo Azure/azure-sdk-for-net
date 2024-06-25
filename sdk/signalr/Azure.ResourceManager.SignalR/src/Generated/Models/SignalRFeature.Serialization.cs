@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            SignalRFeatureFlag flag = default;
+            FeatureFlag flag = default;
             string value = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 if (property.NameEquals("flag"u8))
                 {
-                    flag = new SignalRFeatureFlag(property.Value.GetString());
+                    flag = new FeatureFlag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

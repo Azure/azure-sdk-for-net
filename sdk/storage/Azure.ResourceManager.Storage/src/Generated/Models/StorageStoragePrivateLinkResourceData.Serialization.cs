@@ -16,16 +16,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StoragePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<StoragePrivateLinkResourceData>
+    public partial class StorageStoragePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<StorageStoragePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageStoragePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StoragePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageStoragePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageStoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageStoragePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        StoragePrivateLinkResourceData IJsonModel<StoragePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageStoragePrivateLinkResourceData IJsonModel<StorageStoragePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageStoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageStoragePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStoragePrivateLinkResourceData(document.RootElement, options);
+            return DeserializeStorageStoragePrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static StoragePrivateLinkResourceData DeserializeStoragePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageStoragePrivateLinkResourceData DeserializeStorageStoragePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StoragePrivateLinkResourceData(
+            return new StorageStoragePrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -374,9 +374,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<StoragePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageStoragePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageStoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -385,26 +385,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StoragePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageStoragePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StoragePrivateLinkResourceData IPersistableModel<StoragePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageStoragePrivateLinkResourceData IPersistableModel<StorageStoragePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageStoragePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStoragePrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeStorageStoragePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StoragePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageStoragePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StoragePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageStoragePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

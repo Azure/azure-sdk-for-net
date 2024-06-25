@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The service resource for patch operations. </summary>
-    public partial class ServiceFabricServicePatch : TrackedResourceData
+    public partial class ServiceFabricServiceFabricServicePatch : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServicePatch"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricServicePatch(AzureLocation location) : base(location)
+        public ServiceFabricServiceFabricServicePatch(AzureLocation location) : base(location)
         {
             CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
             ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServicePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="serviceKind"> The kind of service (Stateless or Stateful). </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, ApplicationServiceKind? serviceKind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricServiceFabricServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, ApplicationServiceKind? serviceKind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/> for deserialization. </summary>
-        internal ServiceFabricServicePatch()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceFabricServicePatch"/> for deserialization. </summary>
+        internal ServiceFabricServiceFabricServicePatch()
         {
         }
 

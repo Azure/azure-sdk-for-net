@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         internal ServiceResourceList()
         {
-            Value = new ChangeTrackingList<ServiceFabricServiceData>();
+            Value = new ChangeTrackingList<ServiceFabricServiceFabricServiceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of service list results if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceResourceList(IReadOnlyList<ServiceFabricServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceResourceList(IReadOnlyList<ServiceFabricServiceFabricServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ServiceFabricServiceData> Value { get; }
+        public IReadOnlyList<ServiceFabricServiceFabricServiceData> Value { get; }
         /// <summary> URL to get the next set of service list results if there are any. </summary>
         public string NextLink { get; }
     }

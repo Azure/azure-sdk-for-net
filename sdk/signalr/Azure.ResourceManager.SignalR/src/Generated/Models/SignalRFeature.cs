@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRFeature(SignalRFeatureFlag flag, string value)
+        public SignalRFeature(FeatureFlag flag, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalRFeature(FeatureFlag flag, string value, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Flag = flag;
             Value = value;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// - EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.
         /// </summary>
         [WirePath("flag")]
-        public SignalRFeatureFlag Flag { get; set; }
+        public FeatureFlag Flag { get; set; }
         /// <summary> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </summary>
         [WirePath("value")]
         public string Value { get; set; }

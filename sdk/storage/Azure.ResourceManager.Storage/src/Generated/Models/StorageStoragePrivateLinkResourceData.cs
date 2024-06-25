@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class StoragePrivateLinkResourceData : ResourceData
+    public partial class StorageStoragePrivateLinkResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceData"/>. </summary>
-        public StoragePrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="StorageStoragePrivateLinkResourceData"/>. </summary>
+        public StorageStoragePrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageStoragePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageStoragePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

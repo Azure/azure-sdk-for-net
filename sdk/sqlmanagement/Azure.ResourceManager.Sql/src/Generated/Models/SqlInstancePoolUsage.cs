@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM usage. </summary>
-    public partial class InstancePoolUsage
+    public partial class SqlInstancePoolUsage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
-        internal InstancePoolUsage()
+        /// <summary> Initializes a new instance of <see cref="SqlInstancePoolUsage"/>. </summary>
+        internal SqlInstancePoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInstancePoolUsage"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlInstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;

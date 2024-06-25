@@ -3186,7 +3186,7 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlInstancePoolUsage"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3194,10 +3194,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Usage current value. </param>
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
-        /// <returns> A new <see cref="Models.InstancePoolUsage"/> instance for mocking. </returns>
-        public static InstancePoolUsage InstancePoolUsage(ResourceIdentifier id = null, InstancePoolUsageName name = null, ResourceType? resourceType = null, string unit = null, int? currentValue = null, int? limit = null, int? requestedLimit = null)
+        /// <returns> A new <see cref="Models.SqlInstancePoolUsage"/> instance for mocking. </returns>
+        public static SqlInstancePoolUsage SqlInstancePoolUsage(ResourceIdentifier id = null, InstancePoolUsageName name = null, ResourceType? resourceType = null, string unit = null, int? currentValue = null, int? limit = null, int? requestedLimit = null)
         {
-            return new InstancePoolUsage(
+            return new SqlInstancePoolUsage(
                 id,
                 name,
                 resourceType,
