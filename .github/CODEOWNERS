@@ -951,7 +951,6 @@
 /sdk/informatica/Azure.ResourceManager.*/                          @almasak
 
 # ServiceLabel: %Informatica Data Management %Mgmt
-# ServiceLabel: %Informatica Data Management %Mgmt
 # ServiceOwners:                                                   @almasak
 
 # PRLabel: %Large Instance
