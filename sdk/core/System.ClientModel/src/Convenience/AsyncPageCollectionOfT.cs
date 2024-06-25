@@ -24,9 +24,7 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
 
     public abstract Task<ClientPage<T>> GetPageAsync(BinaryData pageToken, RequestOptions? options = default);
 
-    //public AsyncResultValueCollection<T> ToValueCollectionAsync(CancellationToken cancellationToken = default)
-    //    => new AsyncPagedValueCollection(this);
-    public async IAsyncEnumerable<T> ToValueCollectionAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (ClientPage<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
         {
@@ -52,29 +50,6 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
             yield return page;
         }
     }
-
-    //private class AsyncPagedValueCollection : AsyncResultValueCollection<T>
-    //{
-    //    private readonly AsyncPageCollection<T> _pages;
-
-    //    public AsyncPagedValueCollection(AsyncPageCollection<T> pages)
-    //    {
-    //        _pages = pages;
-    //    }
-
-    //    public async override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-    //    {
-    //        await foreach (ClientPage<T> page in _pages.ConfigureAwait(false).WithCancellation(cancellationToken))
-    //        {
-    //            foreach (T value in page.Values)
-    //            {
-    //                SetRawResponse(page.GetRawResponse());
-
-    //                yield return value;
-    //            }
-    //        }
-    //    }
-    //}
 }
 
 #pragma warning restore CS1591

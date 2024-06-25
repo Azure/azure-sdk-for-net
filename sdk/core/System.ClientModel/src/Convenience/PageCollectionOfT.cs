@@ -23,7 +23,7 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
 
     public abstract ClientPage<T> GetPage(BinaryData pageToken, RequestOptions? options = default);
 
-    public IEnumerable<T> ToValueCollection()
+    public IEnumerable<T> GetAllValues()
     {
         foreach (ClientPage<T> page in this)
         {
@@ -47,28 +47,6 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
             yield return page;
         }
     }
-
-    //private class PagedValueCollection : ResultValueCollection<T>
-    //{
-    //    private readonly PageCollection<T> _pages;
-
-    //    public PagedValueCollection(PageCollection<T> pages)
-    //    {
-    //        _pages = pages;
-    //    }
-
-    //    public override IEnumerator<T> GetEnumerator()
-    //    {
-    //        foreach (ClientPage<T> page in _pages)
-    //        {
-    //            foreach (T value in page.Values)
-    //            {
-    //                SetRawResponse(page.GetRawResponse());
-
-    //                yield return value;
-    //            }
-    //        }
-    //    }
-    //}
 }
+
 #pragma warning restore CS1591
