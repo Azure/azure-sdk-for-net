@@ -27,7 +27,11 @@ The first step is to create an HTTP trigger function API using your IDE, install
 
 ### Install the package
 
-After creating the project, you'll need to install the required NuGet packages and build the project *Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents* 
+After creating the project, you'll need to install the required [NuGet package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents)
+
+```dotnetcli
+dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
+```
 
 ---
 
@@ -37,34 +41,34 @@ The function API is the source of extra claims for your token. For the purposes 
 
 In your trigger class, add the contents of the following snippet:
 
-```cs
-[FunctionName("onTokenIssuanceStart")]
-public static WebJobsAuthenticationEventResponse Run(
-    [WebJobsAuthenticationEventsTrigger] WebJobsTokenIssuanceStartRequest request, ILogger log)
+```C# Snippet:AuthEventsTriggerExample
+try
 {
-    try
+    // Checks if the request is successful and did the token validation pass
+    if (request.RequestStatus == WebJobsAuthenticationEventsRequestStatusType.Successful)
     {
-        if (request.RequestStatus == WebJobsAuthenticationEventsRequestStatusType.Successful)
-        {
-            request.Response.Actions.Add(
-                new WebJobsProvideClaimsForToken(
-                    new WebJobsAuthenticationEventsTokenClaim("dateOfBirth", "01/01/2000"),
-                    new WebJobsAuthenticationEventsTokenClaim("customRoles", "Writer", "Editor"),
-                    new WebJobsAuthenticationEventsTokenClaim("apiVersion", "1.0.0"),
-                    new WebJobsAuthenticationEventsTokenClaim(
-                        "correlationId", 
-                        request.Data.AuthenticationContext.CorrelationId.ToString())));
-        }
-        else
-        {
-            log.LogInformation(request.StatusMessage);
-        }
-        return request.Completed();
+        // Fetches information about the user from external data store
+        // Add new claims to the token's response
+        request.Response.Actions.Add(
+            new WebJobsProvideClaimsForToken(
+                new WebJobsAuthenticationEventsTokenClaim("dateOfBirth", "01/01/2000"),
+                new WebJobsAuthenticationEventsTokenClaim("customRoles", "Writer", "Editor"),
+                new WebJobsAuthenticationEventsTokenClaim("apiVersion", "1.0.0"),
+                new WebJobsAuthenticationEventsTokenClaim(
+                    "correlationId", 
+                    request.Data.AuthenticationContext.CorrelationId.ToString())));
     }
-    catch (Exception ex) 
-    { 
-        return request.Failed(ex);
+    else
+    {
+        // If the request fails, such as in token validation, output the failed request status, 
+        // such as in token validation or response validation.
+        log.LogInformation(request.StatusMessage);
     }
+    return request.Completed();
+}
+catch (Exception ex) 
+{ 
+    return request.Failed(ex);
 }
 ```
 
@@ -199,13 +203,13 @@ By default, the code has been set up for authentication in the Azure portal usin
 1. Open your trigger class in your IDE.
 2. Modify the `WebJobsAuthenticationEventsTriggerAttribute` include the `AuthorityUrl`, `AudienceAppId` and `AuthorizedPartyAppId` properties, as shown in the below snippet.
 
-```cs
-    [FunctionName("onTokenIssuanceStart")]
-    public static WebJobsAuthenticationEventResponse Run(
-        [WebJobsAuthenticationEventsTriggerAttribute(
-            AudienceAppId = "Enter custom authentication extension app ID here",
-            AuthorityUrl = "Enter authority URI here", 
-            AuthorizedPartyAppId = "Enter the Authorized Party App Id here")]WebJobsTokenIssuanceStartRequest request, ILogger log)
+```C# Snippet:AuthEventsTriggerParameters
+[FunctionName("onTokenIssuanceStart")]
+public static WebJobsAuthenticationEventResponse Run(
+[WebJobsAuthenticationEventsTriggerAttribute(
+    AudienceAppId = "Enter custom authentication extension app ID here",
+    AuthorityUrl = "Enter authority URI here", 
+    AuthorizedPartyAppId = "Enter the Authorized Party App Id here")]WebJobsTokenIssuanceStartRequest request, ILogger log)
 ```
 
 ---
