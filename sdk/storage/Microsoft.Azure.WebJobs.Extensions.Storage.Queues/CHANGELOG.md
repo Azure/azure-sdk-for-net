@@ -1,12 +1,9 @@
 # Release History
 
 ## 5.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
+- Rely on PeekMessagesAsync when calculating message queue length
+- Fixing target base scale instance concurrency for queues
 
 ### Other Changes
 
