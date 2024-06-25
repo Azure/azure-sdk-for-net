@@ -10,10 +10,10 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a collection of results returned from a cloud service operation.
 /// </summary>
-public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<T>
+public abstract class AsyncResultValueCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="AsyncResultCollection{T}"/>.
+    /// Create a new instance of <see cref="AsyncResultValueCollection{T}"/>.
     /// </summary>
     /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
     /// <see cref="ClientResult"/> instance is created, it is expected that
@@ -24,17 +24,17 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     /// is called. Such implementations will typically be returned from client
     /// convenience methods so that callers of the methods don't need to
     /// dispose the return value. </remarks>
-    protected internal AsyncResultCollection() : base()
+    protected internal AsyncResultValueCollection() : base()
     {
     }
 
     /// <summary>
-    /// Create a new instance of <see cref="AsyncResultCollection{T}"/>.
+    /// Create a new instance of <see cref="AsyncResultValueCollection{T}"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// items in the collection, or the first set of the items in the collection.
     /// </param>
-    protected internal AsyncResultCollection(PipelineResponse response) : base(response)
+    protected internal AsyncResultValueCollection(PipelineResponse response) : base(response)
     {
     }
 
