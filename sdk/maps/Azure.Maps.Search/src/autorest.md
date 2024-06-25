@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1260c7a90d503c18b0aeaf29968dfc0b4bf9e11/specification/maps/data-plane/Search/preview/1.0/search.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1723dc01f8726ca2fcd4206662ed0d6097bc19a/specification/maps/data-plane/Search/stable/2023-06-01/search.json
 title: MapsSearchClient
 openapi-type: data-plane
 add-credentials: true
@@ -41,4 +41,24 @@ directive:
   where: $.securityDefinitions
   transform: |
     $["SharedKey"]["in"] = "header";
+- from: swagger-document
+  where: "$.definitions.GeocodingBatchRequestItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
+- from: swagger-document
+  where: '$.parameters.Bbox'
+  transform: >
+    $["name"] = "boundingBox";
+- from: swagger-document
+  where: "$.parameters.Bbox"
+  transform: >
+    $["x-ms-client-name"] = "BoundingBox";
+- from: swagger-document
+  where: "$.definitions.FeaturesItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
+- from: swagger-document
+  where: "$.definitions.GeoJsonObject.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
 ```

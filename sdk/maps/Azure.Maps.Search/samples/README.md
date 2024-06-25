@@ -13,7 +13,4 @@ description: Samples for the Azure.Maps.Search client library.
 
 For different APIs, please refer the following samples:
 
-* [Search Addresses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/SearchAddressSamples.md)
-* [Reverse Search Addresses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/ReverseSearchAddressSamples.md)
-* [Fuzzy Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/FuzzySearchSamples.md)
-* [GeoJson Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/GeoJsonSearchSamples.md) (Including `search inside geometry`, `search point of interests`, `get polygons`)
+* [Geocoding and Reverse Geocoding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/samples/MapsSearchSamples.md)
