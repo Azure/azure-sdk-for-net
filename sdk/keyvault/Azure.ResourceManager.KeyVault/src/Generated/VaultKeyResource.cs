@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault
 
         private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;
         private readonly KeysRestOperations _vaultKeyKeysRestClient;
-        private readonly KeyData _data;
+        private readonly KeyVaultKeyData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/keys";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of the <see cref="VaultKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VaultKeyResource(ArmClient client, KeyData data) : this(client, data.Id)
+        internal VaultKeyResource(ArmClient client, KeyVaultKeyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual KeyData Data
+        public virtual KeyVaultKeyData Data
         {
             get
             {

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> CreateIfNotExistAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultKeyData>> CreateIfNotExistAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> CreateIfNotExist(string subscriptionId, string resourceGroupName, string vaultName, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<KeyVaultKeyData> CreateIfNotExist(string subscriptionId, string resourceGroupName, string vaultName, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultKeyData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((KeyVaultKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> Get(string subscriptionId, string resourceGroupName, string vaultName, string keyName, CancellationToken cancellationToken = default)
+        public Response<KeyVaultKeyData> Get(string subscriptionId, string resourceGroupName, string vaultName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((KeyVaultKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> GetVersionAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultKeyData>> GetVersionAsync(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -407,13 +407,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((KeyVaultKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> GetVersion(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion, CancellationToken cancellationToken = default)
+        public Response<KeyVaultKeyData> GetVersion(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -442,13 +442,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        KeyVaultKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = KeyVaultKeyData.DeserializeKeyVaultKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((KeyVaultKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

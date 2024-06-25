@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultKeyVersionKeysRestClient.CreateListVersionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultKeyVersionKeysRestClient.CreateListVersionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultKeyVersionResource(Client, KeyData.DeserializeKeyData(e)), _vaultKeyVersionKeysClientDiagnostics, Pipeline, "VaultKeyVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultKeyVersionResource(Client, KeyVaultKeyData.DeserializeKeyVaultKeyData(e)), _vaultKeyVersionKeysClientDiagnostics, Pipeline, "VaultKeyVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultKeyVersionKeysRestClient.CreateListVersionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultKeyVersionKeysRestClient.CreateListVersionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultKeyVersionResource(Client, KeyData.DeserializeKeyData(e)), _vaultKeyVersionKeysClientDiagnostics, Pipeline, "VaultKeyVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultKeyVersionResource(Client, KeyVaultKeyData.DeserializeKeyVaultKeyData(e)), _vaultKeyVersionKeysClientDiagnostics, Pipeline, "VaultKeyVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyRotationPolicyAttributes(created, updated, expiryTime, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <returns> A new <see cref="KeyVault.KeyData"/> instance for mocking. </returns>
-        public static KeyData KeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="KeyVault.KeyVaultKeyData"/> instance for mocking. </returns>
+        public static KeyVaultKeyData KeyVaultKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
             keyOps ??= new List<JsonWebKeyOperation>();
             tags ??= new Dictionary<string, string>();
 
-            return new KeyData(
+            return new KeyVaultKeyData(
                 id,
                 name,
                 resourceType,

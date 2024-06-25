@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="KeyListResult"/>. </summary>
         internal KeyListResult()
         {
-            Value = new ChangeTrackingList<KeyData>();
+            Value = new ChangeTrackingList<KeyVaultKeyData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyListResult"/>. </summary>
         /// <param name="value"> The key resources. </param>
         /// <param name="nextLink"> The URL to get the next page of keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyListResult(IReadOnlyList<KeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyListResult(IReadOnlyList<KeyVaultKeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The key resources. </summary>
-        public IReadOnlyList<KeyData> Value { get; }
+        public IReadOnlyList<KeyVaultKeyData> Value { get; }
         /// <summary> The URL to get the next page of keys. </summary>
         public string NextLink { get; }
     }

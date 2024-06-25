@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class VaultKeyResource : IJsonModel<KeyData>
+    public partial class VaultKeyResource : IJsonModel<KeyVaultKeyData>
     {
-        void IJsonModel<KeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyData>)Data).Write(writer, options);
+        void IJsonModel<KeyVaultKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultKeyData>)Data).Write(writer, options);
 
-        KeyData IJsonModel<KeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyData>)Data).Create(ref reader, options);
+        KeyVaultKeyData IJsonModel<KeyVaultKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultKeyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KeyVaultKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KeyData IPersistableModel<KeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyData>(data, options);
+        KeyVaultKeyData IPersistableModel<KeyVaultKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultKeyData>(data, options);
 
-        string IPersistableModel<KeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KeyVaultKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultKeyData>)Data).GetFormatFromOptions(options);
     }
 }

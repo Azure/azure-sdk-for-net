@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultKeyKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultKeyKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultKeyResource(Client, KeyData.DeserializeKeyData(e)), _vaultKeyKeysClientDiagnostics, Pipeline, "VaultKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultKeyResource(Client, KeyVaultKeyData.DeserializeKeyVaultKeyData(e)), _vaultKeyKeysClientDiagnostics, Pipeline, "VaultKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultKeyKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultKeyKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultKeyResource(Client, KeyData.DeserializeKeyData(e)), _vaultKeyKeysClientDiagnostics, Pipeline, "VaultKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultKeyResource(Client, KeyVaultKeyData.DeserializeKeyVaultKeyData(e)), _vaultKeyKeysClientDiagnostics, Pipeline, "VaultKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

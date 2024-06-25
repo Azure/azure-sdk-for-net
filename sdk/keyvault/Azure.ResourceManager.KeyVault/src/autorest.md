@@ -123,6 +123,7 @@ rename-mapping:
   CheckNameAvailabilityResult: KeyVaultNameAvailabilityResult
   Trigger: KeyRotationTrigger
   Action: KeyRotationAction
+  Key: KeyVaultKey
 
 prompted-enum-values: Default
 

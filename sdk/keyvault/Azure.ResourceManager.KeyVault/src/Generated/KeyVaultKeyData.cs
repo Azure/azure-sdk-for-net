@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing the Key data model.
+    /// A class representing the KeyVaultKey data model.
     /// The key resource.
     /// </summary>
-    public partial class KeyData : ResourceData
+    public partial class KeyVaultKeyData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KeyData"/>. </summary>
-        public KeyData()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyData"/>. </summary>
+        public KeyVaultKeyData()
         {
             KeyOps = new ChangeTrackingList<JsonWebKeyOperation>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, RotationPolicy rotationPolicy, KeyReleasePolicy releasePolicy, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, RotationPolicy rotationPolicy, KeyReleasePolicy releasePolicy, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Attributes = attributes;
             Kty = kty;
