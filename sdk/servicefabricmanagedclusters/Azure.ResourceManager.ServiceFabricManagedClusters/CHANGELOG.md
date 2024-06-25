@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.0 (2024-06-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-12-preview' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/readme.md
+
 ## 1.1.0-beta.4 (2024-02-01)
 
 ### Features Added
