@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.Services.AddSingleton<Manager>(sp =>
             {
                 AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatform());
+                return new Manager(options, new DefaultPlatformDistro());
             });
 
             builder.Services.AddOptions<AzureMonitorOptions>()
