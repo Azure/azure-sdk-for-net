@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            IReadOnlyList<BotServicePrivateLinkResourceData> value = default;
+            IReadOnlyList<BotServiceBotServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    List<BotServicePrivateLinkResourceData> array = new List<BotServicePrivateLinkResourceData>();
+                    List<BotServiceBotServicePrivateLinkResourceData> array = new List<BotServiceBotServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(item, options));
+                        array.Add(BotServiceBotServicePrivateLinkResourceData.DeserializeBotServiceBotServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BotServicePrivateLinkResourceListResult(value ?? new ChangeTrackingList<BotServicePrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new BotServicePrivateLinkResourceListResult(value ?? new ChangeTrackingList<BotServiceBotServicePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServicePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

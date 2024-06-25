@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<ServiceAccountUsage> value = default;
+            IReadOnlyList<CognitiveServicesServiceAccountUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ServiceAccountUsage> array = new List<ServiceAccountUsage>();
+                    List<CognitiveServicesServiceAccountUsage> array = new List<CognitiveServicesServiceAccountUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUsage.DeserializeServiceAccountUsage(item, options));
+                        array.Add(CognitiveServicesServiceAccountUsage.DeserializeCognitiveServicesServiceAccountUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceAccountUsageListResult(nextLink, value ?? new ChangeTrackingList<ServiceAccountUsage>(), serializedAdditionalRawData);
+            return new ServiceAccountUsageListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesServiceAccountUsage>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

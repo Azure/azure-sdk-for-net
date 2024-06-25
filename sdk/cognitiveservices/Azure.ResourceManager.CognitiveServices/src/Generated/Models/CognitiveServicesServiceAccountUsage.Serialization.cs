@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountUsage : IUtf8JsonSerializable, IJsonModel<ServiceAccountUsage>
+    public partial class CognitiveServicesServiceAccountUsage : IUtf8JsonSerializable, IJsonModel<CognitiveServicesServiceAccountUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesServiceAccountUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServiceAccountUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesServiceAccountUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceAccountUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        ServiceAccountUsage IJsonModel<ServiceAccountUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CognitiveServicesServiceAccountUsage IJsonModel<CognitiveServicesServiceAccountUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceAccountUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceAccountUsage(document.RootElement, options);
+            return DeserializeCognitiveServicesServiceAccountUsage(document.RootElement, options);
         }
 
-        internal static ServiceAccountUsage DeserializeServiceAccountUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CognitiveServicesServiceAccountUsage DeserializeCognitiveServicesServiceAccountUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceAccountUsage(
+            return new CognitiveServicesServiceAccountUsage(
                 unit,
                 name,
                 quotaPeriod,
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ServiceAccountUsage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CognitiveServicesServiceAccountUsage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -330,26 +330,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceAccountUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServiceAccountUsage IPersistableModel<ServiceAccountUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CognitiveServicesServiceAccountUsage IPersistableModel<CognitiveServicesServiceAccountUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceAccountUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceAccountUsage(document.RootElement, options);
+                        return DeserializeCognitiveServicesServiceAccountUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceAccountUsage)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServiceAccountUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesServiceAccountUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

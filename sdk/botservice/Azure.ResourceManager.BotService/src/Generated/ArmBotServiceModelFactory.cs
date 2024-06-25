@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.BotService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotServicePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceBotServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -490,13 +490,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.BotServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static BotServicePrivateLinkResourceData BotServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.BotServiceBotServicePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static BotServiceBotServicePrivateLinkResourceData BotServiceBotServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new BotServicePrivateLinkResourceData(
+            return new BotServiceBotServicePrivateLinkResourceData(
                 id,
                 name,
                 resourceType,

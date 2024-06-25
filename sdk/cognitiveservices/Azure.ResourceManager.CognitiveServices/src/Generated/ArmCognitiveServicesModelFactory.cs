@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountSku(resourceType, sku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesServiceAccountUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = null, ServiceAccountUsageMetricName name = null, string quotaPeriod = null, double? limit = null, double? currentValue = null, string nextResetTime = null, ServiceAccountQuotaUsageStatus? status = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesServiceAccountUsage"/> instance for mocking. </returns>
+        public static CognitiveServicesServiceAccountUsage CognitiveServicesServiceAccountUsage(ServiceAccountUsageUnitType? unit = null, ServiceAccountUsageMetricName name = null, string quotaPeriod = null, double? limit = null, double? currentValue = null, string nextResetTime = null, ServiceAccountQuotaUsageStatus? status = null)
         {
-            return new ServiceAccountUsage(
+            return new CognitiveServicesServiceAccountUsage(
                 unit,
                 name,
                 quotaPeriod,

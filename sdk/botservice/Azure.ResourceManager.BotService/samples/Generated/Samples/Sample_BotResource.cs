@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotResource bot = client.GetBotResource(botResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BotServicePrivateLinkResourceData item in bot.GetPrivateLinkResourcesByBotResourceAsync())
+            await foreach (BotServiceBotServicePrivateLinkResourceData item in bot.GetPrivateLinkResourcesByBotResourceAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

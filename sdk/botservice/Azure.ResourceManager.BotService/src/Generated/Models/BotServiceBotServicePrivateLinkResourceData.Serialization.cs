@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServicePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<BotServicePrivateLinkResourceData>
+    public partial class BotServiceBotServicePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<BotServiceBotServicePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServicePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceBotServicePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BotServicePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BotServiceBotServicePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceBotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServicePrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceBotServicePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteEndObject();
         }
 
-        BotServicePrivateLinkResourceData IJsonModel<BotServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BotServiceBotServicePrivateLinkResourceData IJsonModel<BotServiceBotServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceBotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServicePrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceBotServicePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBotServicePrivateLinkResourceData(document.RootElement, options);
+            return DeserializeBotServiceBotServicePrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static BotServicePrivateLinkResourceData DeserializeBotServicePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BotServiceBotServicePrivateLinkResourceData DeserializeBotServiceBotServicePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BotServicePrivateLinkResourceData(
+            return new BotServiceBotServicePrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -210,35 +210,35 @@ namespace Azure.ResourceManager.BotService.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BotServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BotServiceBotServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceBotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServicePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceBotServicePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BotServicePrivateLinkResourceData IPersistableModel<BotServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BotServiceBotServicePrivateLinkResourceData IPersistableModel<BotServiceBotServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceBotServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBotServicePrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeBotServiceBotServicePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServicePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceBotServicePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BotServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BotServiceBotServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
