@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 return null;
             }
-            BackupPrivateEndpointConnectionProperties properties = default;
+            RecoveryServicesBackupBackupPrivateEndpointConnectionProperties properties = default;
             ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = BackupPrivateEndpointConnectionProperties.DeserializeBackupPrivateEndpointConnectionProperties(property.Value, options);
+                    properties = RecoveryServicesBackupBackupPrivateEndpointConnectionProperties.DeserializeRecoveryServicesBackupBackupPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

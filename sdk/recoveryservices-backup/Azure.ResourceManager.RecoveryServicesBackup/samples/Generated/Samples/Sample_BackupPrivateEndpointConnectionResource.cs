@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             BackupPrivateEndpointConnectionData data = new BackupPrivateEndpointConnectionData(new AzureLocation("placeholder"))
             {
-                Properties = new BackupPrivateEndpointConnectionProperties()
+                Properties = new RecoveryServicesBackupBackupPrivateEndpointConnectionProperties()
                 {
                     ProvisioningState = BackupPrivateEndpointConnectionProvisioningState.Succeeded,
                     PrivateEndpointId = new ResourceIdentifier("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/gaallaRG/providers/Microsoft.Network/privateEndpoints/gaallatestpe3"),

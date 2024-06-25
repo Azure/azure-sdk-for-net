@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterprisePrivateLinkResource : IUtf8JsonSerializable, IJsonModel<RedisEnterprisePrivateLinkResource>
+    public partial class RedisEnterpriseRedisEnterprisePrivateLinkResource : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterprisePrivateLinkResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisEnterprisePrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseRedisEnterprisePrivateLinkResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteEndObject();
         }
 
-        RedisEnterprisePrivateLinkResource IJsonModel<RedisEnterprisePrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisEnterpriseRedisEnterprisePrivateLinkResource IJsonModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseRedisEnterprisePrivateLinkResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisEnterprisePrivateLinkResource(document.RootElement, options);
+            return DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResource(document.RootElement, options);
         }
 
-        internal static RedisEnterprisePrivateLinkResource DeserializeRedisEnterprisePrivateLinkResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisEnterpriseRedisEnterprisePrivateLinkResource DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisEnterprisePrivateLinkResource(
+            return new RedisEnterpriseRedisEnterprisePrivateLinkResource(
                 id,
                 name,
                 type,
@@ -210,35 +210,35 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RedisEnterprisePrivateLinkResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseRedisEnterprisePrivateLinkResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisEnterprisePrivateLinkResource IPersistableModel<RedisEnterprisePrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisEnterpriseRedisEnterprisePrivateLinkResource IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRedisEnterprisePrivateLinkResource(document.RootElement, options);
+                        return DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseRedisEnterprisePrivateLinkResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisEnterprisePrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseRedisEnterprisePrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

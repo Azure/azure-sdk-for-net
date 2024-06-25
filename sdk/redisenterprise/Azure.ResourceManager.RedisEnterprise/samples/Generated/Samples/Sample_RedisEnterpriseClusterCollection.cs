@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // invoke the operation
             string clusterName = "cache1";
-            RedisEnterpriseClusterData data = new RedisEnterpriseClusterData(new AzureLocation("West US"), new RedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
+            RedisEnterpriseClusterData data = new RedisEnterpriseClusterData(new AzureLocation("West US"), new RedisEnterpriseRedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
             {
                 Capacity = 3,
             })

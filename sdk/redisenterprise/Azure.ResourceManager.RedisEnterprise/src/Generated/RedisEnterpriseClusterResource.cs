@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetRedisEnterpriseDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RedisEnterprisePrivateEndpointConnectionResources in the RedisEnterpriseCluster. </summary>
-        /// <returns> An object representing collection of RedisEnterprisePrivateEndpointConnectionResources and their operations over a RedisEnterprisePrivateEndpointConnectionResource. </returns>
-        public virtual RedisEnterprisePrivateEndpointConnectionCollection GetRedisEnterprisePrivateEndpointConnections()
+        /// <summary> Gets a collection of RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResources in the RedisEnterpriseCluster. </summary>
+        /// <returns> An object representing collection of RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResources and their operations over a RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource. </returns>
+        public virtual RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections()
         {
-            return GetCachedClient(client => new RedisEnterprisePrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisEnterprisePrivateEndpointConnectionResource>> GetRedisEnterprisePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>> GetRedisEnterpriseRedisEnterprisePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetRedisEnterprisePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RedisEnterprisePrivateEndpointConnectionResource> GetRedisEnterprisePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> GetRedisEnterpriseRedisEnterprisePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetRedisEnterprisePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisEnterpriseRedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisEnterpriseRedisEnterprisePrivateLinkResource.DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisEnterpriseRedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisEnterpriseRedisEnterprisePrivateLinkResource.DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>

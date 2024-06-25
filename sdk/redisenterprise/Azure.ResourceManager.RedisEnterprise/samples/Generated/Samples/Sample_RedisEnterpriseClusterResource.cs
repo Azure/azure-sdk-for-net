@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             // invoke the operation
             RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch()
             {
-                Sku = new RedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
+                Sku = new RedisEnterpriseRedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
                 {
                     Capacity = 9,
                 },
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (RedisEnterprisePrivateLinkResource item in redisEnterpriseCluster.GetPrivateLinkResourcesByClusterAsync())
+            await foreach (RedisEnterpriseRedisEnterprisePrivateLinkResource item in redisEnterpriseCluster.GetPrivateLinkResourcesByClusterAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

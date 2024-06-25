@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
-    /// To get a <see cref="RedisEnterprisePrivateEndpointConnectionCollection"/> instance call the GetRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// A class representing a collection of <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// To get a <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection"/> instance call the GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
     /// </summary>
-    public partial class RedisEnterprisePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<RedisEnterprisePrivateEndpointConnectionResource>, IAsyncEnumerable<RedisEnterprisePrivateEndpointConnectionResource>
+    public partial class RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>, IAsyncEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RedisEnterprisePrivateEndpointConnectionCollection"/> class for mocking. </summary>
-        protected RedisEnterprisePrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection"/> class for mocking. </summary>
+        protected RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RedisEnterprisePrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RedisEnterprisePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterprisePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RedisEnterprisePrivateEndpointConnectionResource.ResourceType, out string redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource.ResourceType, out string redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisEnterprisePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RedisEnterprisePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<RedisEnterprisePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.Get");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<RedisEnterprisePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.Get");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,16 +256,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisEnterprisePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -285,16 +285,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisEnterprisePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.Exists");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.Exists");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,18 +408,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<RedisEnterprisePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<RedisEnterprisePrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,18 +453,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual NullableResponse<RedisEnterprisePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterprisePrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _redisEnterpriseRedisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<RedisEnterprisePrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        IEnumerator<RedisEnterprisePrivateEndpointConnectionResource> IEnumerable<RedisEnterprisePrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> IEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RedisEnterprisePrivateEndpointConnectionResource> IAsyncEnumerable<RedisEnterprisePrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> IAsyncEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

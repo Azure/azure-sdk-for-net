@@ -15,10 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing the RedisEnterprisePrivateEndpointConnection data model.
+    /// A class representing the RedisEnterpriseRedisEnterprisePrivateEndpointConnection data model.
     /// The Private Endpoint Connection resource.
     /// </summary>
-    public partial class RedisEnterprisePrivateEndpointConnectionData : ResourceData
+    public partial class RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionData"/>. </summary>
-        public RedisEnterprisePrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData"/>. </summary>
+        public RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public RedisEnterprisePrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public RedisEnterprisePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

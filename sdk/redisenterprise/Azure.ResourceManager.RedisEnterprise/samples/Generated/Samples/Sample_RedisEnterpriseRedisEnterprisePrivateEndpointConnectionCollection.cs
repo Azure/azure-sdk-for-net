@@ -13,7 +13,7 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
-    public partial class Sample_RedisEnterprisePrivateEndpointConnectionCollection
+    public partial class Sample_RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection
     {
         // RedisEnterpriseListPrivateEndpointConnections
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
-            // get the collection of this RedisEnterprisePrivateEndpointConnectionResource
-            RedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterprisePrivateEndpointConnections();
+            // get the collection of this RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
-            await foreach (RedisEnterprisePrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RedisEnterprisePrivateEndpointConnectionData resourceData = item.Data;
+                RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
-            // get the collection of this RedisEnterprisePrivateEndpointConnectionResource
-            RedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterprisePrivateEndpointConnections();
+            // get the collection of this RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
-            RedisEnterprisePrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
-            // get the collection of this RedisEnterprisePrivateEndpointConnectionResource
-            RedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterprisePrivateEndpointConnections();
+            // get the collection of this RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
-            // get the collection of this RedisEnterprisePrivateEndpointConnectionResource
-            RedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterprisePrivateEndpointConnections();
+            // get the collection of this RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
-            NullableResponse<RedisEnterprisePrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
-            RedisEnterprisePrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
+                RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,25 +182,25 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
-            // get the collection of this RedisEnterprisePrivateEndpointConnectionResource
-            RedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterprisePrivateEndpointConnections();
+            // get the collection of this RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionCollection collection = redisEnterpriseCluster.GetRedisEnterpriseRedisEnterprisePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
-            RedisEnterprisePrivateEndpointConnectionData data = new RedisEnterprisePrivateEndpointConnectionData()
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data = new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData()
             {
-                ConnectionState = new RedisEnterprisePrivateLinkServiceConnectionState()
+                ConnectionState = new RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState()
                 {
                     Status = RedisEnterprisePrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved",
                 },
             };
-            ArmOperation<RedisEnterprisePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            RedisEnterprisePrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

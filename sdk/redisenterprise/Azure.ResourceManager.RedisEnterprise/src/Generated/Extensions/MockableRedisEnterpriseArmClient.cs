@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource GetRedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new RedisEnterprisePrivateEndpointConnectionResource(Client, id);
+            RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionResource(Client, id);
         }
     }
 }

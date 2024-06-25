@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             string impactedRegion = default;
-            ResourceHealthEventStatusValue? status = default;
+            EventStatusValue? status = default;
             IReadOnlyList<string> impactedSubscriptions = default;
             IReadOnlyList<string> impactedTenants = default;
             DateTimeOffset? lastUpdateTime = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = new ResourceHealthEventStatusValue(property.Value.GetString());
+                    status = new EventStatusValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("impactedSubscriptions"u8))

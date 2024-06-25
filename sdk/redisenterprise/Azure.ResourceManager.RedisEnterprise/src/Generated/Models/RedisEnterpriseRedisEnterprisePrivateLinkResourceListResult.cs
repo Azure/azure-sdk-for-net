@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-    internal partial class RedisEnterprisePrivateEndpointConnectionListResult
+    /// <summary> A list of private link resources. </summary>
+    internal partial class RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/>. </summary>
-        internal RedisEnterprisePrivateEndpointConnectionListResult()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult"/>. </summary>
+        internal RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<RedisEnterpriseRedisEnterprisePrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult"/>. </summary>
+        /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterprisePrivateEndpointConnectionListResult(IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult(IReadOnlyList<RedisEnterpriseRedisEnterprisePrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> Value { get; }
+        /// <summary> Array of private link resources. </summary>
+        public IReadOnlyList<RedisEnterpriseRedisEnterprisePrivateLinkResource> Value { get; }
     }
 }

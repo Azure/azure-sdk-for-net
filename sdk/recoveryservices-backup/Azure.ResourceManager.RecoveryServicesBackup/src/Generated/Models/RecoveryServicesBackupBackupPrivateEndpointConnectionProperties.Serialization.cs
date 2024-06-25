@@ -14,16 +14,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupPrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<BackupPrivateEndpointConnectionProperties>
+    public partial class RecoveryServicesBackupBackupPrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupPrivateEndpointConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BackupPrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesBackupBackupPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        BackupPrivateEndpointConnectionProperties IJsonModel<BackupPrivateEndpointConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecoveryServicesBackupBackupPrivateEndpointConnectionProperties IJsonModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesBackupBackupPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupPrivateEndpointConnectionProperties(document.RootElement, options);
+            return DeserializeRecoveryServicesBackupBackupPrivateEndpointConnectionProperties(document.RootElement, options);
         }
 
-        internal static BackupPrivateEndpointConnectionProperties DeserializeBackupPrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecoveryServicesBackupBackupPrivateEndpointConnectionProperties DeserializeRecoveryServicesBackupBackupPrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -145,38 +145,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), privateLinkServiceConnectionState, serializedAdditionalRawData);
+            return new RecoveryServicesBackupBackupPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BackupPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesBackupBackupPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BackupPrivateEndpointConnectionProperties IPersistableModel<BackupPrivateEndpointConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecoveryServicesBackupBackupPrivateEndpointConnectionProperties IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBackupPrivateEndpointConnectionProperties(document.RootElement, options);
+                        return DeserializeRecoveryServicesBackupBackupPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesBackupBackupPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BackupPrivateEndpointConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryServicesBackupBackupPrivateEndpointConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

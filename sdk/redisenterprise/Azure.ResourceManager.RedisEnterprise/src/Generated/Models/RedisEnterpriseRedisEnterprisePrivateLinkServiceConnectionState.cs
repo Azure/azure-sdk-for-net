@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class RedisEnterprisePrivateLinkServiceConnectionState
+    public partial class RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkServiceConnectionState"/>. </summary>
-        public RedisEnterprisePrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState"/>. </summary>
+        public RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkServiceConnectionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterprisePrivateLinkServiceConnectionState(RedisEnterprisePrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState(RedisEnterprisePrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;

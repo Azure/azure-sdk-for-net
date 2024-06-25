@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisEnterprisePrivateLinkResourceListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateLinkResourceListResult value = default;
+                        RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RedisEnterprisePrivateLinkResourceListResult.DeserializeRedisEnterprisePrivateLinkResourceListResult(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult.DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisEnterprisePrivateLinkResourceListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateLinkResourceListResult value = default;
+                        RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RedisEnterprisePrivateLinkResourceListResult.DeserializeRedisEnterprisePrivateLinkResourceListResult(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateLinkResourceListResult.DeserializeRedisEnterpriseRedisEnterprisePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

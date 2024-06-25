@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupPrivateEndpointConnectionProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BackupPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesBackupBackupPrivateEndpointConnectionProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> PrivateEndpointConnectionResource properties. </summary>
-        public BackupPrivateEndpointConnectionProperties Properties { get; set; }
+        public RecoveryServicesBackupBackupPrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
