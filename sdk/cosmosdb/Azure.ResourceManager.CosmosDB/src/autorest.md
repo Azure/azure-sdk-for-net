@@ -436,6 +436,10 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+- from: cosmos-db.json
+  where: $.definitions
+  transform: >
+    $.ErrorResponse['x-ms-client-name'] = 'CosmosDBErrorResult';
 # Managed Cassandra
 - from: managedCassandra.json
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
