@@ -740,59 +740,100 @@ function GeneratePackage()
     $result = "succeeded"
 
     # Generate Code
-    Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
+        # verify the existence of tsp-location.yaml and autorest.md
+        Write-Host "Start to generate sdk $projectFolder"
         if($specRepoRoot -eq "") {
             dotnet build /t:GenerateCode $srcPath
         } else {
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
         }
+        if ( !$?) {
+            Write-Error "Failed to generate sdk. exit code: $?"
+            $result = "failed"
+        }
     }
-    if ( !$?) {
-        Write-Error "Failed to generate sdk. exit code: $?"
-        $result = "failed"
-    } else {
-        # Build
-        Write-Host "Start to build sdk: $projectFolder"
-        dotnet build $projectFolder /p:RunApiCompat=$false
-        if ( !$? ) {
-            Write-Error "Failed to build sdk. exit code: $?"
-            $result = "failed"
-        }
-        # pack
-        Write-Host "Start to pack sdk"
-        dotnet pack $projectFolder /p:RunApiCompat=$false
-        if ( !$? ) {
-            Write-Error "Failed to packe sdk. exit code: $?"
-            $result = "failed"
-        }
-        # Generate APIs
-        Write-Host "Start to export api for $service"
-        & $sdkRootPath/eng/scripts/Export-API.ps1 $service
-        if ( !$? ) {
-            Write-Error "Failed to export api for sdk. exit code: $?"
-            $result = "failed"
-        }
-        # breaking change validation
-        Write-Host "Start to validate breaking change. srcPath:$srcPath"
-        $logFilePath = Join-Path "$srcPath" 'log.txt'
-        if (!(Test-Path $logFilePath)) {
-            New-Item $logFilePath
-        }
-        dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
-        if (!$LASTEXITCODE) {
-            $hasBreakingChange = $false
-        }
-        else {
-            $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-            $breakingChanges = $logFile -join ",`n"
-            $content = "Breaking Changes: $breakingChanges"
-            $hasBreakingChange = $true
-        }
 
-        if (Test-Path $logFilePath) {
-            Remove-Item $logFilePath
+    if ( $?) {
+        Write-Host "Start to generate sdk package $projectFolder"
+        # Build project when successfully generated the code
+        Write-Host "Start to build sdk project: $srcPath"
+        dotnet build $srcPath /p:RunApiCompat=$false
+        if ( !$?) {
+            Write-Error "Failed to build project. exit code: $?"
+            $result = "failed"
+        } else {
+            # Build the whole solution and generate artifacts if the project build successfully
+            # Build the whole solution
+            Write-Host "Start to build sdk solution: $projectFolder"
+            $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
+            dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
+            if ( !$? ) {
+                Write-Error "Failed to build sdk solution. exit code: $?"
+                $result = "failed"
+            }
+            # pack
+            Write-Host "Start to pack sdk"
+            dotnet pack $srcPath /p:RunApiCompat=$false
+            if ( !$? ) {
+                Write-Error "Failed to pack sdk. exit code: $?"
+                $result = "failed"
+            } else {
+                # artifacts
+                Push-Location $sdkRootPath
+                # check the artifact in Debug folder
+                $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
+                $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+                if ($artifacts.count -le 0) {
+                    # check the artifact in Release folder
+                    $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+                    $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+                }
+                $apiViewArtifact = ""
+                if ( $artifacts.count -le 0) {
+                    Write-Error "Failed to generate sdk artifact"
+                } else {
+                    $apiViewArtifact = $artifacts[0]
+                }
+                Pop-Location
+                $full = $null
+                if ($artifacts.count -gt 0) {
+                    $fileName = Split-Path $artifacts[0] -Leaf
+                    $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+                }
+                $installInstructions = [PSCustomObject]@{
+                    full = $full
+                    lite = $full
+                }
+            }
+            # Generate APIs
+            Write-Host "Start to export api for $service"
+            & $sdkRootPath/eng/scripts/Export-API.ps1 $service
+            if ( !$? ) {
+                Write-Error "Failed to export api for sdk. exit code: $?"
+                $result = "failed"
+            }
+            # breaking change validation
+            Write-Host "Start to validate breaking change. srcPath:$srcPath"
+            $logFilePath = Join-Path "$srcPath" 'log.txt'
+            if (!(Test-Path $logFilePath)) {
+                New-Item $logFilePath
+            }
+            dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+            if (!$LASTEXITCODE) {
+                $hasBreakingChange = $false
+            }
+            else {
+                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+                $breakingChanges = $logFile -join ",`n"
+                $content = "Breaking Changes: $breakingChanges"
+                $hasBreakingChange = $true
+            }
+
+            if (Test-Path $logFilePath) {
+                Remove-Item $logFilePath
+            }
         }
     }
 
@@ -801,27 +842,6 @@ function GeneratePackage()
         hasBreakingChange = $hasBreakingChange
     }
 
-    # artifacts
-    Push-Location $sdkRootPath
-    $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
-    $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
-    $apiViewArtifact = ""
-    if ( $artifacts.count -le 0) {
-        Write-Error "Failed to generate sdk artifact"
-    } else {
-        $apiViewArtifact = $artifacts[0]
-    }
-    Pop-Location
-
-    $full = $null
-    if ($artifacts.count -gt 0) {
-        $fileName = Split-Path $artifacts[0] -Leaf
-        $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
-    }
-    $installInstructions = [PSCustomObject]@{
-        full = $full
-        lite = $full
-    }
     $ciFilePath = "sdk/$service/ci.yml"
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
@@ -883,4 +903,31 @@ function UpdateExistingSDKByInputFiles()
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
 
+}
+
+function GetSDKProjectFolder()
+{
+    param(
+        [string]$typespecConfigurationFile,
+        [string]$sdkRepoRoot
+    )
+    $tspConfigYaml = Get-Content -Path $typespecConfigurationFile -Raw
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $yml = ConvertFrom-YAML $tspConfigYaml
+    $service = ""
+    $packageDir = ""
+    if ($yml) {
+        if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
+            $service = $yml["parameters"]["service-dir"]["default"];
+        }
+        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"] -And $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]) {
+            $packageDir = $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]
+        }
+    }
+    if (!$service || !$packageDir) {
+        throw "Not provide service name or packageDir."
+    }
+    $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
+    return $projectFolder
 }

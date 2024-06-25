@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsInference"/> instance for mocking. </returns>
         public static RadiologyInsightsInference RadiologyInsightsInference(string kind = null, IEnumerable<FhirR4Extension> extension = null)
