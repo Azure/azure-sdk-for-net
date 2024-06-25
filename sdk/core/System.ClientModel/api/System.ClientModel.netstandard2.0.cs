@@ -67,12 +67,39 @@ namespace System.ClientModel
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public abstract partial class ResultOperation : System.ClientModel.ClientResult
+    {
+        protected ResultOperation(string id, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasCompleted { get { throw null; } protected set { } }
+        public string Id { get { throw null; } protected set { } }
+        public string? Status { get { throw null; } protected set { } }
+        public abstract System.ClientModel.ClientResult UpdateStatus();
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> UpdateStatusAsync();
+        public abstract System.ClientModel.ClientResult WaitForCompletionResult(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> WaitForCompletionResultAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.ClientResult<string> WaitForStatusChangeResult(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<string>> WaitForStatusChangeResultAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public abstract partial class ResultOperation<T> : System.ClientModel.ResultOperation
+    {
+        protected ResultOperation(string id, System.ClientModel.Primitives.PipelineResponse response) : base (default(string), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public T? Value { get { throw null; } protected set { } }
+        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.ClientResult<(string Status, T? Value)> WaitForStatusChange(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<(string Status, T? Value)>> WaitForStatusChangeAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
     {
         internal ResultPage() { }
         public string? ContinuationToken { get { throw null; } }
         public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+    }
+    public enum ReturnWhen
+    {
+        Started = 0,
+        Completed = 1,
     }
 }
 namespace System.ClientModel.Primitives
