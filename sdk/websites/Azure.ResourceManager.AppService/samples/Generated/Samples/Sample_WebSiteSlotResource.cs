@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AppServicePrivateLinkResourceData item in webSiteSlot.GetPrivateLinkResourcesSlotAsync())
+            await foreach (AppServiceAppServicePrivateLinkResourceData item in webSiteSlot.GetPrivateLinkResourcesSlotAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

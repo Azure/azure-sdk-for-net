@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AppServicePrivateLinkResourceData item in webSite.GetPrivateLinkResourcesAsync())
+            await foreach (AppServiceAppServicePrivateLinkResourceData item in webSite.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A private link resource. </summary>
-    public partial class AppServicePrivateLinkResourceData : ResourceData
+    /// <summary> Properties of a private link resource. </summary>
+    public partial class AppServiceAppServicePrivateLinkResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,36 +45,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="properties"> Properties of a private link resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        internal AppServicePrivateLinkResourceData(AppServicePrivateLinkResourceProperties properties)
+        /// <summary> Initializes a new instance of <see cref="AppServiceAppServicePrivateLinkResourceProperties"/>. </summary>
+        internal AppServiceAppServicePrivateLinkResourceProperties()
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of a private link resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAppServicePrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> GroupId of a private link resource. </param>
+        /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
+        /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceAppServicePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/> for deserialization. </summary>
-        internal AppServicePrivateLinkResourceData()
-        {
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        [WirePath("properties")]
-        public AppServicePrivateLinkResourceProperties Properties { get; }
+        /// <summary> GroupId of a private link resource. </summary>
+        [WirePath("groupId")]
+        public string GroupId { get; }
+        /// <summary> RequiredMembers of a private link resource. </summary>
+        [WirePath("requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> RequiredZoneNames of a private link resource. </summary>
+        [WirePath("requiredZoneNames")]
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The matching logic is exact match.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Action { get; set; }
         /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
         [WirePath("tag")]
-        public AppServiceIPFilterTag? Tag { get; set; }
+        public IPFilterTag? Tag { get; set; }
         /// <summary> Priority of IP restriction rule. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }

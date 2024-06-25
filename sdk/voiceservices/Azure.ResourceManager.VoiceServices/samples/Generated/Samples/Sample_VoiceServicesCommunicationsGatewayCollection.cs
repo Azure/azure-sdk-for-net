@@ -218,7 +218,7 @@ AllowedMediaSourceAddressPrefixes =
                 Connectivity = VoiceServicesCommunicationsGatewayConnectivity.PublicAddress,
                 Codecs =
 {
-VoiceServicesTeamsCodec.Pcma
+TeamsCodec.Pcma
 },
                 E911Type = VoiceServicesEmergencyCallType.Standard,
                 Platforms =

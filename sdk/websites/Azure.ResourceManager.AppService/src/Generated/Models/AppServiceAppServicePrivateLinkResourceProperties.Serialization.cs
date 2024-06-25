@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServicePrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<AppServicePrivateLinkResourceProperties>
+    public partial class AppServiceAppServicePrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<AppServiceAppServicePrivateLinkResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceAppServicePrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AppServicePrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceAppServicePrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAppServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        AppServicePrivateLinkResourceProperties IJsonModel<AppServicePrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppServiceAppServicePrivateLinkResourceProperties IJsonModel<AppServiceAppServicePrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAppServicePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServicePrivateLinkResourceProperties(document.RootElement, options);
+            return DeserializeAppServiceAppServicePrivateLinkResourceProperties(document.RootElement, options);
         }
 
-        internal static AppServicePrivateLinkResourceProperties DeserializeAppServicePrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppServiceAppServicePrivateLinkResourceProperties DeserializeAppServiceAppServicePrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AppServiceAppServicePrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AppServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -261,26 +261,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAppServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppServicePrivateLinkResourceProperties IPersistableModel<AppServicePrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppServiceAppServicePrivateLinkResourceProperties IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAppServicePrivateLinkResourceProperties(document.RootElement, options);
+                        return DeserializeAppServiceAppServicePrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAppServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppServicePrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceAppServicePrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

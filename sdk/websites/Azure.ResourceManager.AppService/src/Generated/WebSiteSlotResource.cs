@@ -5136,11 +5136,11 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceAppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceAppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetPrivateLinkResourcesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetPrivateLinkResourcesSlot", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceAppServicePrivateLinkResourceData.DeserializeAppServiceAppServicePrivateLinkResourceData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetPrivateLinkResourcesSlot", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -5165,11 +5165,11 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceAppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceAppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetPrivateLinkResourcesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetPrivateLinkResourcesSlot", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceAppServicePrivateLinkResourceData.DeserializeAppServiceAppServicePrivateLinkResourceData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetPrivateLinkResourcesSlot", "value", null, cancellationToken);
         }
 
         /// <summary>

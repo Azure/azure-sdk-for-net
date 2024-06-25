@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? vnetTrafficTag = default;
             int? subnetTrafficTag = default;
             string action = default;
-            AppServiceIPFilterTag? tag = default;
+            IPFilterTag? tag = default;
             int? priority = default;
             string name = default;
             string description = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    tag = new AppServiceIPFilterTag(property.Value.GetString());
+                    tag = new IPFilterTag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"u8))
