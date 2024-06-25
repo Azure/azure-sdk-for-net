@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             }
             string recordingId = default;
             RecordingState? recordingState = default;
-            RecordingType? recordingType = default;
+            RecordingKind? recordingKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -36,17 +36,17 @@ namespace Azure.Communication.CallAutomation
                     recordingState = new RecordingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recordingType"u8))
+                if (property.NameEquals("recordingKind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recordingType = new RecordingType(property.Value.GetString());
+                    recordingKind = new RecordingKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new RecordingStateResult(recordingId, recordingState, recordingType);
+            return new RecordingStateResult(recordingId, recordingState, recordingKind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

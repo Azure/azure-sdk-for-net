@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.Core;
@@ -23,6 +24,7 @@ using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
+using OpenAI.Models;
 using OpenAI.Tests;
 using OpenAI.VectorStores;
 
@@ -30,6 +32,15 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
+    protected static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
+
+    protected static readonly DateTimeOffset UNIX_EPOCH =
+#if NETFRAMEWORK
+        DateTimeOffset.Parse("1970-01-01T00:00:00.0000000+00:00");
+#else
+        DateTimeOffset.UnixEpoch;
+#endif
+
     internal TestConfig TestConfig { get; }
     internal Assets Assets { get; }
 
@@ -273,6 +284,46 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         _vectorStoreIdsToDelete.Clear();
         _fileIdsToDelete.Clear();
     }
+    
+    protected static void ValidateClientResult(ClientResult result)
+    {
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.GetRawResponse(), Is.Not.Null);
+    }
+
+    protected static PipelineResponse ValidateClientResultResponse(ClientResult result)
+    {
+        ValidateClientResult(result);
+
+        PipelineResponse response = result.GetRawResponse();
+        Assert.That(response.Status, Is.GreaterThanOrEqualTo(200).And.LessThan(300));
+        Assert.That(response.Headers, Is.Not.Null);
+        Assert.That(response.Headers.GetFirstValueOrDefault("Content-Type"), Does.StartWith("application/json"));
+        Assert.That(response.Content, Is.Not.Null);
+
+        return response;
+    }
+
+    protected virtual TModel ValidateAndParse<TModel>(ClientResult result) where TModel : IJsonModel<TModel>
+    {
+        var response = ValidateClientResultResponse(result);
+
+        TModel model = ModelReaderWriter.Read<TModel>(response.Content, ModelReaderWriterOptions.Json);
+        Assert.That(model, Is.Not.Null);
+        return model;
+    }
+
+    protected virtual TModel ValidateAndParse<TModel>(ClientResult result, JsonSerializerOptions options = null)
+    {
+        var response = ValidateClientResultResponse(result);
+
+        using Stream stream = response.Content.ToStream();
+        Assert.That(stream, Is.Not.Null);
+
+        TModel model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonHelpers.OpenAIJsonOptions);
+        Assert.That(model, Is.Not.Null);
+        return model;
+    }
 
     protected override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
     {
@@ -397,7 +448,6 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     private readonly List<string> _fileIdsToDelete = [];
     private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
-
 }
 
 internal class TestClientOptions : AzureOpenAIClientOptions

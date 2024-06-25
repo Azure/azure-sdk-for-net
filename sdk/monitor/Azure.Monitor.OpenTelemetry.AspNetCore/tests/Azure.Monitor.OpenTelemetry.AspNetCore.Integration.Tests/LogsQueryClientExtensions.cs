@@ -12,22 +12,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     internal static class LogsQueryClientExtensions
     {
-        private static string s_workspaceId = string.Empty;
         private static TimeSpan s_queryDelay = TimeSpan.FromSeconds(30);
 
-        public static void SetQueryWorkSpaceId(this LogsQueryClient client, string workspaceId) => s_workspaceId = workspaceId;
-
-        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string description, string query)
+        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string workspaceId, string description, string query)
         {
-            Debug.WriteLine($"UnitTest: Query Telemetry ({description})");
-            TestContext.Out.WriteLine($"Query Telemetry ({description})");
-
-            // Try every 30 secs for total of 5 minutes.
-            int maxTries = 10;
+            // Try every 30 secs for total of 10 minutes.
+            // This delay should reasonably accomodate known delays:
+            // There can be a delay in provisioning resources and permissions.
+            // There can be a delay in ingesting data, or in the query service.
+            int maxTries = 20;
             for (int attempt = 1; attempt <= maxTries; attempt++)
             {
+                Debug.WriteLine($"UnitTest: Query Telemetry ({description}) attempt {attempt}/{maxTries}");
+                TestContext.Out.WriteLine($"Query Telemetry ({description}) attempt {attempt}/{maxTries}");
+
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-                    s_workspaceId,
+                    workspaceId,
                     query,
                     new QueryTimeRange(TimeSpan.FromMinutes(30)));
 

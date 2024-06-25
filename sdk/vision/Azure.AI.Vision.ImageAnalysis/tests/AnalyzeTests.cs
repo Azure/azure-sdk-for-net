@@ -43,6 +43,25 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         }
 
         [RecordedTest]
+        public async Task AnalyzeFromUrlEntraId()
+        {
+            var client = GetClientWithDefaultCred();
+            var allFeatures = VisualFeatures.Objects | VisualFeatures.People | VisualFeatures.Read | VisualFeatures.SmartCrops | VisualFeatures.Tags;
+            var someFeatures = VisualFeatures.Read;
+
+            foreach (var testFeatures in new VisualFeatures[] { allFeatures, someFeatures })
+            {
+                var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
+
+                Assert.IsNotNull(result);
+                var iaResult = result.Value;
+                Assert.IsNotNull(iaResult);
+
+                ValidateResponse(iaResult, testFeatures, false, 2);
+            }
+        }
+
+        [RecordedTest]
         public async Task AnalyzeFromUrlDefaultParams()
         {
             var client = GetClientWithKey();
