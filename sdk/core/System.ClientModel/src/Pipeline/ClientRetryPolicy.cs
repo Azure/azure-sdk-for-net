@@ -28,6 +28,8 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
 
+    internal int? ClientLoggingPolicyIndex { get; set; }
+
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
@@ -53,6 +55,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -91,6 +94,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -116,6 +122,11 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
+                if (ClientLoggingPolicyIndex.HasValue)
+                {
+                    var loggingPolicy = pipeline[ClientLoggingPolicyIndex.Value] as ClientLoggingPolicy;
+                    loggingPolicy?.EventSourceSingleton.RequestRetrying(loggingPolicy.GetRequestIdFromHeaders(message.Request.Headers), message.RetryCount, elapsed);
+                }
                 continue;
             }
 
