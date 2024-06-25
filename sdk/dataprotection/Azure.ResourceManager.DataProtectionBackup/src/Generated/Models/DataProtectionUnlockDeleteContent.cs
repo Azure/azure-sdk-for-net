@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
-        /// <param name="resourceGuardOperationRequests"></param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="resourceToBeDeleted"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataProtectionUnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the resource guard operation requests. </summary>
+        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
         /// <summary> Gets or sets the resource to be deleted. </summary>
         public string ResourceToBeDeleted { get; set; }

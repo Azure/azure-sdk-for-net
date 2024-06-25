@@ -73,6 +73,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(BcdrSecurityLevel))
+            {
+                writer.WritePropertyName("bcdrSecurityLevel"u8);
+                writer.WriteStringValue(BcdrSecurityLevel.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(ReplicatedRegions))
             {
                 writer.WritePropertyName("replicatedRegions"u8);
@@ -130,6 +145,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             bool? isVaultProtectedByResourceGuard = default;
             BackupVaultFeatureSettings featureSettings = default;
             BackupVaultSecureScoreLevel? secureScore = default;
+            BcdrSecurityLevel? bcdrSecurityLevel = default;
+            IList<string> resourceGuardOperationRequests = default;
             IList<AzureLocation> replicatedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -217,6 +234,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     secureScore = new BackupVaultSecureScoreLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("bcdrSecurityLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bcdrSecurityLevel = new BcdrSecurityLevel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (property.NameEquals("replicatedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -247,6 +287,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 isVaultProtectedByResourceGuard,
                 featureSettings,
                 secureScore,
+                bcdrSecurityLevel,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 serializedAdditionalRawData);
         }
