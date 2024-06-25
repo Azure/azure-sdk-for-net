@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaServicesPrivateLinkResource"/> and their operations.
-    /// Each <see cref="MediaServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
-    /// To get a <see cref="MediaServicesPrivateLinkResourceCollection"/> instance call the GetMediaServicesPrivateLinkResources method from an instance of <see cref="MediaServicesAccountResource"/>.
+    /// A class representing a collection of <see cref="MediaMediaServicesPrivateLinkResource"/> and their operations.
+    /// Each <see cref="MediaMediaServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaMediaServicesPrivateLinkResourceCollection"/> instance call the GetMediaMediaServicesPrivateLinkResources method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
-    public partial class MediaServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<MediaServicesPrivateLinkResource>, IAsyncEnumerable<MediaServicesPrivateLinkResource>
+    public partial class MediaMediaServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<MediaMediaServicesPrivateLinkResource>, IAsyncEnumerable<MediaMediaServicesPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MediaServicesPrivateLinkResourceCollection"/> class for mocking. </summary>
-        protected MediaServicesPrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="MediaMediaServicesPrivateLinkResourceCollection"/> class for mocking. </summary>
+        protected MediaMediaServicesPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MediaServicesPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaMediaServicesPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MediaServicesPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MediaMediaServicesPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", MediaServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MediaServicesPrivateLinkResource.ResourceType, out string mediaServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", MediaMediaServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MediaMediaServicesPrivateLinkResource.ResourceType, out string mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<MediaServicesPrivateLinkResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaMediaServicesPrivateLinkResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.Get");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaMediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<MediaServicesPrivateLinkResource> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MediaMediaServicesPrivateLinkResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.Get");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaMediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,16 +158,16 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MediaServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MediaMediaServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MediaMediaServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaMediaServicesPrivateLinkResource(Client, MediaMediaServicesPrivateLinkResourceData.DeserializeMediaMediaServicesPrivateLinkResourceData(e)), _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaMediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -187,16 +187,16 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MediaServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MediaMediaServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MediaMediaServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaMediaServicesPrivateLinkResource(Client, MediaMediaServicesPrivateLinkResourceData.DeserializeMediaMediaServicesPrivateLinkResourceData(e)), _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaMediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,18 +310,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<MediaServicesPrivateLinkResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MediaMediaServicesPrivateLinkResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MediaServicesPrivateLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MediaMediaServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaMediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,18 +355,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<MediaServicesPrivateLinkResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MediaMediaServicesPrivateLinkResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaMediaServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _mediaMediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MediaServicesPrivateLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MediaMediaServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaMediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        IEnumerator<MediaServicesPrivateLinkResource> IEnumerable<MediaServicesPrivateLinkResource>.GetEnumerator()
+        IEnumerator<MediaMediaServicesPrivateLinkResource> IEnumerable<MediaMediaServicesPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Media
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MediaServicesPrivateLinkResource> IAsyncEnumerable<MediaServicesPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MediaMediaServicesPrivateLinkResource> IAsyncEnumerable<MediaMediaServicesPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

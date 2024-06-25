@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.LabServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of LabVirtualMachineImageResources in the LabPlan. </summary>
-        /// <returns> An object representing collection of LabVirtualMachineImageResources and their operations over a LabVirtualMachineImageResource. </returns>
-        public virtual LabVirtualMachineImageCollection GetLabVirtualMachineImages()
+        /// <summary> Gets a collection of LabServicesLabVirtualMachineImageResources in the LabPlan. </summary>
+        /// <returns> An object representing collection of LabServicesLabVirtualMachineImageResources and their operations over a LabServicesLabVirtualMachineImageResource. </returns>
+        public virtual LabServicesLabVirtualMachineImageCollection GetLabServicesLabVirtualMachineImages()
         {
-            return GetCachedClient(client => new LabVirtualMachineImageCollection(client, Id));
+            return GetCachedClient(client => new LabServicesLabVirtualMachineImageCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LabVirtualMachineImageResource>> GetLabVirtualMachineImageAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesLabVirtualMachineImageResource>> GetLabServicesLabVirtualMachineImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            return await GetLabVirtualMachineImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesLabVirtualMachineImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LabVirtualMachineImageResource> GetLabVirtualMachineImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesLabVirtualMachineImageResource> GetLabServicesLabVirtualMachineImage(string imageName, CancellationToken cancellationToken = default)
         {
-            return GetLabVirtualMachineImages().Get(imageName, cancellationToken);
+            return GetLabServicesLabVirtualMachineImages().Get(imageName, cancellationToken);
         }
 
         /// <summary>

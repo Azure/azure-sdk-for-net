@@ -16,14 +16,14 @@ using Azure.ResourceManager.LabServices.Models;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A Class representing a LabVirtualMachineImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabVirtualMachineImageResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLabVirtualMachineImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LabPlanResource"/> using the GetLabVirtualMachineImage method.
+    /// A Class representing a LabServicesLabVirtualMachineImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabServicesLabVirtualMachineImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabServicesLabVirtualMachineImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LabPlanResource"/> using the GetLabServicesLabVirtualMachineImage method.
     /// </summary>
-    public partial class LabVirtualMachineImageResource : ArmResource
+    public partial class LabServicesLabVirtualMachineImageResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LabVirtualMachineImageResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LabServicesLabVirtualMachineImageResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="labPlanName"> The labPlanName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.LabServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _labVirtualMachineImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _labVirtualMachineImageImagesRestClient;
-        private readonly LabVirtualMachineImageData _data;
+        private readonly ClientDiagnostics _labServicesLabVirtualMachineImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _labServicesLabVirtualMachineImageImagesRestClient;
+        private readonly LabServicesLabVirtualMachineImageData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LabServices/labPlans/images";
 
-        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineImageResource"/> class for mocking. </summary>
-        protected LabVirtualMachineImageResource()
+        /// <summary> Initializes a new instance of the <see cref="LabServicesLabVirtualMachineImageResource"/> class for mocking. </summary>
+        protected LabServicesLabVirtualMachineImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabServicesLabVirtualMachineImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LabVirtualMachineImageResource(ArmClient client, LabVirtualMachineImageData data) : this(client, data.Id)
+        internal LabServicesLabVirtualMachineImageResource(ArmClient client, LabServicesLabVirtualMachineImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabServicesLabVirtualMachineImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LabVirtualMachineImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LabServicesLabVirtualMachineImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _labVirtualMachineImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string labVirtualMachineImageImagesApiVersion);
-            _labVirtualMachineImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labVirtualMachineImageImagesApiVersion);
+            _labServicesLabVirtualMachineImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string labServicesLabVirtualMachineImageImagesApiVersion);
+            _labServicesLabVirtualMachineImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labServicesLabVirtualMachineImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LabVirtualMachineImageData Data
+        public virtual LabServicesLabVirtualMachineImageData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LabVirtualMachineImageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesLabVirtualMachineImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageResource.Get");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LabVirtualMachineImageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesLabVirtualMachineImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageResource.Get");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageResource.Get");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,23 +186,23 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualMachineImageResource>> UpdateAsync(LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesLabVirtualMachineImageResource>> UpdateAsync(LabServicesLabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageResource.Update");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageResource.Update");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,23 +228,23 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<LabVirtualMachineImageResource> Update(LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesLabVirtualMachineImageResource> Update(LabServicesLabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageResource.Update");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageResource.Update");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

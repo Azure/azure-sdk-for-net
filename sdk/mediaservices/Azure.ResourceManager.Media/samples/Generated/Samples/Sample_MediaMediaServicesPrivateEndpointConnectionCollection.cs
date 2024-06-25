@@ -13,7 +13,7 @@ using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media.Samples
 {
-    public partial class Sample_MediaServicesPrivateEndpointConnectionCollection
+    public partial class Sample_MediaMediaServicesPrivateEndpointConnectionCollection
     {
         // Get all private endpoint connections.
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateEndpointConnectionResource
-            MediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaServicesPrivateEndpointConnections();
+            // get the collection of this MediaMediaServicesPrivateEndpointConnectionResource
+            MediaMediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
-            await foreach (MediaServicesPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (MediaMediaServicesPrivateEndpointConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MediaServicesPrivateEndpointConnectionData resourceData = item.Data;
+                MediaMediaServicesPrivateEndpointConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateEndpointConnectionResource
-            MediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaServicesPrivateEndpointConnections();
+            // get the collection of this MediaMediaServicesPrivateEndpointConnectionResource
+            MediaMediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateEndpointConnections();
 
             // invoke the operation
             string name = "connectionName1";
-            MediaServicesPrivateEndpointConnectionResource result = await collection.GetAsync(name);
+            MediaMediaServicesPrivateEndpointConnectionResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MediaServicesPrivateEndpointConnectionData resourceData = result.Data;
+            MediaMediaServicesPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateEndpointConnectionResource
-            MediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaServicesPrivateEndpointConnections();
+            // get the collection of this MediaMediaServicesPrivateEndpointConnectionResource
+            MediaMediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateEndpointConnections();
 
             // invoke the operation
             string name = "connectionName1";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateEndpointConnectionResource
-            MediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaServicesPrivateEndpointConnections();
+            // get the collection of this MediaMediaServicesPrivateEndpointConnectionResource
+            MediaMediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateEndpointConnections();
 
             // invoke the operation
             string name = "connectionName1";
-            NullableResponse<MediaServicesPrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(name);
-            MediaServicesPrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MediaMediaServicesPrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(name);
+            MediaMediaServicesPrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MediaServicesPrivateEndpointConnectionData resourceData = result.Data;
+                MediaMediaServicesPrivateEndpointConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateEndpointConnectionResource
-            MediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaServicesPrivateEndpointConnections();
+            // get the collection of this MediaMediaServicesPrivateEndpointConnectionResource
+            MediaMediaServicesPrivateEndpointConnectionCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateEndpointConnections();
 
             // invoke the operation
             string name = "connectionName1";
-            MediaServicesPrivateEndpointConnectionData data = new MediaServicesPrivateEndpointConnectionData()
+            MediaMediaServicesPrivateEndpointConnectionData data = new MediaMediaServicesPrivateEndpointConnectionData()
             {
                 ConnectionState = new MediaPrivateLinkServiceConnectionState()
                 {
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Media.Samples
                     Description = "Test description.",
                 },
             };
-            ArmOperation<MediaServicesPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            MediaServicesPrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<MediaMediaServicesPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            MediaMediaServicesPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MediaServicesPrivateEndpointConnectionData resourceData = result.Data;
+            MediaMediaServicesPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

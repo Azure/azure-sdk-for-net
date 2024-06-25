@@ -10,20 +10,22 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaServicesPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<MediaServicesPrivateLinkResourceData>
+    public partial class MediaMediaServicesPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<MediaMediaServicesPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaMediaServicesPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MediaServicesPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MediaMediaServicesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaMediaServicesPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,30 +51,20 @@ namespace Azure.ResourceManager.Media
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("groupId"u8);
-                writer.WriteStringValue(GroupId);
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
+            if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("requiredMembers"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredMembers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                writer.WriteObjectValue(ConnectionState, options);
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("requiredZoneNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,19 +85,19 @@ namespace Azure.ResourceManager.Media
             writer.WriteEndObject();
         }
 
-        MediaServicesPrivateLinkResourceData IJsonModel<MediaServicesPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MediaMediaServicesPrivateEndpointConnectionData IJsonModel<MediaMediaServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaMediaServicesPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMediaServicesPrivateLinkResourceData(document.RootElement, options);
+            return DeserializeMediaMediaServicesPrivateEndpointConnectionData(document.RootElement, options);
         }
 
-        internal static MediaServicesPrivateLinkResourceData DeserializeMediaServicesPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MediaMediaServicesPrivateEndpointConnectionData DeserializeMediaMediaServicesPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,9 +109,9 @@ namespace Azure.ResourceManager.Media
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string groupId = default;
-            IReadOnlyList<string> requiredMembers = default;
-            IList<string> requiredZoneNames = default;
+            SubResource privateEndpoint = default;
+            MediaPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MediaPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,37 +149,31 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("groupId"u8))
-                        {
-                            groupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiredMembers"u8))
+                        if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            requiredMembers = array;
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("requiredZoneNames"u8))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            privateLinkServiceConnectionState = MediaPrivateLinkServiceConnectionState.DeserializeMediaPrivateLinkServiceConnectionState(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                array.Add(item.GetString());
+                                continue;
                             }
-                            requiredZoneNames = array;
+                            provisioningState = new MediaPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -199,46 +185,46 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaServicesPrivateLinkResourceData(
+            return new MediaMediaServicesPrivateEndpointConnectionData(
                 id,
                 name,
                 type,
                 systemData,
-                groupId,
-                requiredMembers ?? new ChangeTrackingList<string>(),
-                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MediaServicesPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaMediaServicesPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MediaServicesPrivateLinkResourceData IPersistableModel<MediaServicesPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MediaMediaServicesPrivateEndpointConnectionData IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMediaServicesPrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeMediaMediaServicesPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaMediaServicesPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MediaServicesPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MediaMediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

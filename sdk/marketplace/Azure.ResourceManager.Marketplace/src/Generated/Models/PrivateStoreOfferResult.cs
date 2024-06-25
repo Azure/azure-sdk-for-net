@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
             IconFileUris = new ChangeTrackingDictionary<string, Uri>();
-            Plans = new ChangeTrackingList<PrivateStorePlan>();
+            Plans = new ChangeTrackingList<MarketplacePrivateStorePlan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<MarketplacePrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -103,6 +103,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Icon File Uris. </summary>
         public IReadOnlyDictionary<string, Uri> IconFileUris { get; }
         /// <summary> Offer plans. </summary>
-        public IReadOnlyList<PrivateStorePlan> Plans { get; }
+        public IReadOnlyList<MarketplacePrivateStorePlan> Plans { get; }
     }
 }

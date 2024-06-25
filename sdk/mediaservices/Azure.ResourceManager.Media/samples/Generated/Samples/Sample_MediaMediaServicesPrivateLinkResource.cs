@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.Media.Samples
 {
-    public partial class Sample_MediaServicesPrivateLinkResource
+    public partial class Sample_MediaMediaServicesPrivateLinkResource
     {
         // Get details of a group ID.
         [NUnit.Framework.Test]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.Media.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MediaServicesPrivateLinkResource created on azure
-            // for more information of creating MediaServicesPrivateLinkResource, please refer to the document of MediaServicesPrivateLinkResource
+            // this example assumes you already have this MediaMediaServicesPrivateLinkResource created on azure
+            // for more information of creating MediaMediaServicesPrivateLinkResource, please refer to the document of MediaMediaServicesPrivateLinkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contososports";
             string name = "keydelivery";
-            ResourceIdentifier mediaServicesPrivateLinkResourceId = MediaServicesPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, name);
-            MediaServicesPrivateLinkResource mediaServicesPrivateLinkResource = client.GetMediaServicesPrivateLinkResource(mediaServicesPrivateLinkResourceId);
+            ResourceIdentifier mediaMediaServicesPrivateLinkResourceId = MediaMediaServicesPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, name);
+            MediaMediaServicesPrivateLinkResource mediaMediaServicesPrivateLinkResource = client.GetMediaMediaServicesPrivateLinkResource(mediaMediaServicesPrivateLinkResourceId);
 
             // invoke the operation
-            MediaServicesPrivateLinkResource result = await mediaServicesPrivateLinkResource.GetAsync();
+            MediaMediaServicesPrivateLinkResource result = await mediaMediaServicesPrivateLinkResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MediaServicesPrivateLinkResourceData resourceData = result.Data;
+            MediaMediaServicesPrivateLinkResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

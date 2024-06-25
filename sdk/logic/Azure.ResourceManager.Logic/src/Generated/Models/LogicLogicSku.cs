@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.LabServices.Models
+namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> Lab services virtual machine image for updates. </summary>
-    public partial class LabVirtualMachineImagePatch
+    /// <summary> The sku type. </summary>
+    public partial class LogicLogicSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,32 @@ namespace Azure.ResourceManager.LabServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImagePatch"/>. </summary>
-        public LabVirtualMachineImagePatch()
+        /// <summary> Initializes a new instance of <see cref="LogicLogicSku"/>. </summary>
+        /// <param name="name"> The name. </param>
+        internal LogicLogicSku(LogicSkuName name)
         {
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImagePatch"/>. </summary>
-        /// <param name="enabledState"> Is the image enabled. </param>
+        /// <summary> Initializes a new instance of <see cref="LogicLogicSku"/>. </summary>
+        /// <param name="name"> The name. </param>
+        /// <param name="plan"> The reference to plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineImagePatch(LabServicesEnableState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogicLogicSku(LogicSkuName name, LogicResourceReference plan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnabledState = enabledState;
+            Name = name;
+            Plan = plan;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is the image enabled. </summary>
-        public LabServicesEnableState? EnabledState { get; set; }
+        /// <summary> Initializes a new instance of <see cref="LogicLogicSku"/> for deserialization. </summary>
+        internal LogicLogicSku()
+        {
+        }
+
+        /// <summary> The name. </summary>
+        public LogicSkuName Name { get; }
+        /// <summary> The reference to plan. </summary>
+        public LogicResourceReference Plan { get; }
     }
 }

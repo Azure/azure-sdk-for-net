@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Models.PrivateStoreOfferResult"/> instance for mocking. </returns>
-        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IReadOnlyDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
+        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IReadOnlyDictionary<string, Uri> iconFileUris = null, IEnumerable<MarketplacePrivateStorePlan> plans = null)
         {
             specificPlanIdsLimitation ??= new List<string>();
             iconFileUris ??= new Dictionary<string, Uri>();
-            plans ??= new List<PrivateStorePlan>();
+            plans ??= new List<MarketplacePrivateStorePlan>();
 
             return new PrivateStoreOfferResult(
                 uniqueOfferId,
@@ -108,17 +108,17 @@ namespace Azure.ResourceManager.Marketplace.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateStorePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplacePrivateStorePlan"/>. </summary>
         /// <param name="skuId"> Identifier for this plan. </param>
         /// <param name="planId"> Text identifier for this plan. </param>
         /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
         /// <param name="accessibility"> Plan accessibility. </param>
         /// <param name="altStackReference"> Alternative stack type. </param>
         /// <param name="stackType"> Stack type (classic or arm). </param>
-        /// <returns> A new <see cref="Models.PrivateStorePlan"/> instance for mocking. </returns>
-        public static PrivateStorePlan PrivateStorePlan(string skuId = null, string planId = null, string planDisplayName = null, PrivateStorePlanAccessibility? accessibility = null, string altStackReference = null, string stackType = null)
+        /// <returns> A new <see cref="Models.MarketplacePrivateStorePlan"/> instance for mocking. </returns>
+        public static MarketplacePrivateStorePlan MarketplacePrivateStorePlan(string skuId = null, string planId = null, string planDisplayName = null, PrivateStorePlanAccessibility? accessibility = null, string altStackReference = null, string stackType = null)
         {
-            return new PrivateStorePlan(
+            return new MarketplacePrivateStorePlan(
                 skuId,
                 planId,
                 planDisplayName,
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreOfferData"/> instance for mocking. </returns>
-        public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
+        public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IDictionary<string, Uri> iconFileUris = null, IEnumerable<MarketplacePrivateStorePlan> plans = null)
         {
             specificPlanIdsLimitation ??= new List<string>();
             iconFileUris ??= new Dictionary<string, Uri>();
-            plans ??= new List<PrivateStorePlan>();
+            plans ??= new List<MarketplacePrivateStorePlan>();
 
             return new PrivateStoreOfferData(
                 id,

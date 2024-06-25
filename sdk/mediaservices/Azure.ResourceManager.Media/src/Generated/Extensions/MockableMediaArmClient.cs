@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MediaMediaServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaMediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaMediaServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource"/> object. </returns>
-        public virtual MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaMediaServicesPrivateLinkResource"/> object. </returns>
+        public virtual MediaMediaServicesPrivateLinkResource GetMediaMediaServicesPrivateLinkResource(ResourceIdentifier id)
         {
-            MediaServicesPrivateLinkResource.ValidateResourceId(id);
-            return new MediaServicesPrivateLinkResource(Client, id);
+            MediaMediaServicesPrivateLinkResource.ValidateResourceId(id);
+            return new MediaMediaServicesPrivateLinkResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MediaMediaServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaMediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaMediaServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaMediaServicesPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MediaMediaServicesPrivateEndpointConnectionResource GetMediaMediaServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MediaServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new MediaServicesPrivateEndpointConnectionResource(Client, id);
+            MediaMediaServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MediaMediaServicesPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineImageData>> GetAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
+        public async Task<Response<LabServicesLabVirtualMachineImageData>> GetAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,13 +199,13 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabVirtualMachineImageData)null, message.Response);
+                    return Response.FromValue((LabServicesLabVirtualMachineImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineImageData> Get(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
+        public Response<LabServicesLabVirtualMachineImageData> Get(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -232,19 +232,19 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabVirtualMachineImageData)null, message.Response);
+                    return Response.FromValue((LabServicesLabVirtualMachineImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImageData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.LabServices
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImageData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/>, <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineImageData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
+        public async Task<Response<LabServicesLabVirtualMachineImageData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/>, <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineImageData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
+        public Response<LabServicesLabVirtualMachineImageData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImagePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.LabServices
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImagePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/>, <paramref name="imageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineImageData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<LabServicesLabVirtualMachineImageData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/>, <paramref name="imageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineImageData> Update(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
+        public Response<LabServicesLabVirtualMachineImageData> Update(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabServicesLabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineImageData value = default;
+                        LabServicesLabVirtualMachineImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
+                        value = LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

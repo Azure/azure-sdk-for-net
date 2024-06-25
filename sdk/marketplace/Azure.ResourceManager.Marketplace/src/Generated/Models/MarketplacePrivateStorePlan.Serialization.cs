@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlan : IUtf8JsonSerializable, IJsonModel<PrivateStorePlan>
+    public partial class MarketplacePrivateStorePlan : IUtf8JsonSerializable, IJsonModel<MarketplacePrivateStorePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStorePlan>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplacePrivateStorePlan>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrivateStorePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MarketplacePrivateStorePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplacePrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplacePrivateStorePlan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteEndObject();
         }
 
-        PrivateStorePlan IJsonModel<PrivateStorePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MarketplacePrivateStorePlan IJsonModel<MarketplacePrivateStorePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplacePrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplacePrivateStorePlan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateStorePlan(document.RootElement, options);
+            return DeserializeMarketplacePrivateStorePlan(document.RootElement, options);
         }
 
-        internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MarketplacePrivateStorePlan DeserializeMarketplacePrivateStorePlan(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateStorePlan(
+            return new MarketplacePrivateStorePlan(
                 skuId,
                 planId,
                 planDisplayName,
@@ -154,35 +154,35 @@ namespace Azure.ResourceManager.Marketplace.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateStorePlan>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MarketplacePrivateStorePlan>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplacePrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplacePrivateStorePlan)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateStorePlan IPersistableModel<PrivateStorePlan>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MarketplacePrivateStorePlan IPersistableModel<MarketplacePrivateStorePlan>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplacePrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePrivateStorePlan(document.RootElement, options);
+                        return DeserializeMarketplacePrivateStorePlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplacePrivateStorePlan)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateStorePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MarketplacePrivateStorePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

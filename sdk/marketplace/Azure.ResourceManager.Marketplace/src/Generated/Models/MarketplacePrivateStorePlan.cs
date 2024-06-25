@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The PrivateStorePlan. </summary>
-    public partial class PrivateStorePlan
+    /// <summary> The MarketplacePrivateStorePlan. </summary>
+    public partial class MarketplacePrivateStorePlan
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateStorePlan"/>. </summary>
-        public PrivateStorePlan()
+        /// <summary> Initializes a new instance of <see cref="MarketplacePrivateStorePlan"/>. </summary>
+        public MarketplacePrivateStorePlan()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateStorePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplacePrivateStorePlan"/>. </summary>
         /// <param name="skuId"> Identifier for this plan. </param>
         /// <param name="planId"> Text identifier for this plan. </param>
         /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="altStackReference"> Alternative stack type. </param>
         /// <param name="stackType"> Stack type (classic or arm). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStorePlan(string skuId, string planId, string planDisplayName, PrivateStorePlanAccessibility? accessibility, string altStackReference, string stackType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplacePrivateStorePlan(string skuId, string planId, string planDisplayName, PrivateStorePlanAccessibility? accessibility, string altStackReference, string stackType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SkuId = skuId;
             PlanId = planId;

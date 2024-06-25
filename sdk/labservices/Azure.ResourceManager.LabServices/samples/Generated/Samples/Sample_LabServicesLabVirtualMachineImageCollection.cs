@@ -13,7 +13,7 @@ using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Samples
 {
-    public partial class Sample_LabVirtualMachineImageCollection
+    public partial class Sample_LabServicesLabVirtualMachineImageCollection
     {
         // listImages
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.LabServices.Samples
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
-            // get the collection of this LabVirtualMachineImageResource
-            LabVirtualMachineImageCollection collection = labPlan.GetLabVirtualMachineImages();
+            // get the collection of this LabServicesLabVirtualMachineImageResource
+            LabServicesLabVirtualMachineImageCollection collection = labPlan.GetLabServicesLabVirtualMachineImages();
 
             // invoke the operation and iterate over the result
-            await foreach (LabVirtualMachineImageResource item in collection.GetAllAsync())
+            await foreach (LabServicesLabVirtualMachineImageResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LabVirtualMachineImageData resourceData = item.Data;
+                LabServicesLabVirtualMachineImageData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.LabServices.Samples
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
-            // get the collection of this LabVirtualMachineImageResource
-            LabVirtualMachineImageCollection collection = labPlan.GetLabVirtualMachineImages();
+            // get the collection of this LabServicesLabVirtualMachineImageResource
+            LabServicesLabVirtualMachineImageCollection collection = labPlan.GetLabServicesLabVirtualMachineImages();
 
             // invoke the operation
             string imageName = "image1";
-            LabVirtualMachineImageResource result = await collection.GetAsync(imageName);
+            LabServicesLabVirtualMachineImageResource result = await collection.GetAsync(imageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabVirtualMachineImageData resourceData = result.Data;
+            LabServicesLabVirtualMachineImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.LabServices.Samples
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
-            // get the collection of this LabVirtualMachineImageResource
-            LabVirtualMachineImageCollection collection = labPlan.GetLabVirtualMachineImages();
+            // get the collection of this LabServicesLabVirtualMachineImageResource
+            LabServicesLabVirtualMachineImageCollection collection = labPlan.GetLabServicesLabVirtualMachineImages();
 
             // invoke the operation
             string imageName = "image1";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.LabServices.Samples
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
-            // get the collection of this LabVirtualMachineImageResource
-            LabVirtualMachineImageCollection collection = labPlan.GetLabVirtualMachineImages();
+            // get the collection of this LabServicesLabVirtualMachineImageResource
+            LabServicesLabVirtualMachineImageCollection collection = labPlan.GetLabServicesLabVirtualMachineImages();
 
             // invoke the operation
             string imageName = "image1";
-            NullableResponse<LabVirtualMachineImageResource> response = await collection.GetIfExistsAsync(imageName);
-            LabVirtualMachineImageResource result = response.HasValue ? response.Value : null;
+            NullableResponse<LabServicesLabVirtualMachineImageResource> response = await collection.GetIfExistsAsync(imageName);
+            LabServicesLabVirtualMachineImageResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.LabServices.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LabVirtualMachineImageData resourceData = result.Data;
+                LabServicesLabVirtualMachineImageData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.LabServices.Samples
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
-            // get the collection of this LabVirtualMachineImageResource
-            LabVirtualMachineImageCollection collection = labPlan.GetLabVirtualMachineImages();
+            // get the collection of this LabServicesLabVirtualMachineImageResource
+            LabServicesLabVirtualMachineImageCollection collection = labPlan.GetLabServicesLabVirtualMachineImages();
 
             // invoke the operation
             string imageName = "image1";
-            LabVirtualMachineImageData data = new LabVirtualMachineImageData()
+            LabServicesLabVirtualMachineImageData data = new LabServicesLabVirtualMachineImageData()
             {
                 EnabledState = LabServicesEnableState.Enabled,
             };
-            ArmOperation<LabVirtualMachineImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            LabVirtualMachineImageResource result = lro.Value;
+            ArmOperation<LabServicesLabVirtualMachineImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            LabServicesLabVirtualMachineImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabVirtualMachineImageData resourceData = result.Data;
+            LabServicesLabVirtualMachineImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

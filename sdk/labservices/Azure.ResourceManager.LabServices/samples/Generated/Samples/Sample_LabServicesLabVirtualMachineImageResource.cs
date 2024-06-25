@@ -13,7 +13,7 @@ using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Samples
 {
-    public partial class Sample_LabVirtualMachineImageResource
+    public partial class Sample_LabServicesLabVirtualMachineImageResource
     {
         // getImage
         [NUnit.Framework.Test]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.LabServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LabVirtualMachineImageResource created on azure
-            // for more information of creating LabVirtualMachineImageResource, please refer to the document of LabVirtualMachineImageResource
+            // this example assumes you already have this LabServicesLabVirtualMachineImageResource created on azure
+            // for more information of creating LabServicesLabVirtualMachineImageResource, please refer to the document of LabServicesLabVirtualMachineImageResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             string imageName = "image1";
-            ResourceIdentifier labVirtualMachineImageResourceId = LabVirtualMachineImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName, imageName);
-            LabVirtualMachineImageResource labVirtualMachineImage = client.GetLabVirtualMachineImageResource(labVirtualMachineImageResourceId);
+            ResourceIdentifier labServicesLabVirtualMachineImageResourceId = LabServicesLabVirtualMachineImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName, imageName);
+            LabServicesLabVirtualMachineImageResource labServicesLabVirtualMachineImage = client.GetLabServicesLabVirtualMachineImageResource(labServicesLabVirtualMachineImageResourceId);
 
             // invoke the operation
-            LabVirtualMachineImageResource result = await labVirtualMachineImage.GetAsync();
+            LabServicesLabVirtualMachineImageResource result = await labServicesLabVirtualMachineImage.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabVirtualMachineImageData resourceData = result.Data;
+            LabServicesLabVirtualMachineImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,25 +60,25 @@ namespace Azure.ResourceManager.LabServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LabVirtualMachineImageResource created on azure
-            // for more information of creating LabVirtualMachineImageResource, please refer to the document of LabVirtualMachineImageResource
+            // this example assumes you already have this LabServicesLabVirtualMachineImageResource created on azure
+            // for more information of creating LabServicesLabVirtualMachineImageResource, please refer to the document of LabServicesLabVirtualMachineImageResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             string imageName = "image1";
-            ResourceIdentifier labVirtualMachineImageResourceId = LabVirtualMachineImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName, imageName);
-            LabVirtualMachineImageResource labVirtualMachineImage = client.GetLabVirtualMachineImageResource(labVirtualMachineImageResourceId);
+            ResourceIdentifier labServicesLabVirtualMachineImageResourceId = LabServicesLabVirtualMachineImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName, imageName);
+            LabServicesLabVirtualMachineImageResource labServicesLabVirtualMachineImage = client.GetLabServicesLabVirtualMachineImageResource(labServicesLabVirtualMachineImageResourceId);
 
             // invoke the operation
-            LabVirtualMachineImagePatch patch = new LabVirtualMachineImagePatch()
+            LabServicesLabVirtualMachineImagePatch patch = new LabServicesLabVirtualMachineImagePatch()
             {
                 EnabledState = LabServicesEnableState.Enabled,
             };
-            LabVirtualMachineImageResource result = await labVirtualMachineImage.UpdateAsync(patch);
+            LabServicesLabVirtualMachineImageResource result = await labServicesLabVirtualMachineImage.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabVirtualMachineImageData resourceData = result.Data;
+            LabServicesLabVirtualMachineImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabVirtualMachineImageResource"/> and their operations.
-    /// Each <see cref="LabVirtualMachineImageResource"/> in the collection will belong to the same instance of <see cref="LabPlanResource"/>.
-    /// To get a <see cref="LabVirtualMachineImageCollection"/> instance call the GetLabVirtualMachineImages method from an instance of <see cref="LabPlanResource"/>.
+    /// A class representing a collection of <see cref="LabServicesLabVirtualMachineImageResource"/> and their operations.
+    /// Each <see cref="LabServicesLabVirtualMachineImageResource"/> in the collection will belong to the same instance of <see cref="LabPlanResource"/>.
+    /// To get a <see cref="LabServicesLabVirtualMachineImageCollection"/> instance call the GetLabServicesLabVirtualMachineImages method from an instance of <see cref="LabPlanResource"/>.
     /// </summary>
-    public partial class LabVirtualMachineImageCollection : ArmCollection, IEnumerable<LabVirtualMachineImageResource>, IAsyncEnumerable<LabVirtualMachineImageResource>
+    public partial class LabServicesLabVirtualMachineImageCollection : ArmCollection, IEnumerable<LabServicesLabVirtualMachineImageResource>, IAsyncEnumerable<LabServicesLabVirtualMachineImageResource>
     {
-        private readonly ClientDiagnostics _labVirtualMachineImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _labVirtualMachineImageImagesRestClient;
+        private readonly ClientDiagnostics _labServicesLabVirtualMachineImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _labServicesLabVirtualMachineImageImagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineImageCollection"/> class for mocking. </summary>
-        protected LabVirtualMachineImageCollection()
+        /// <summary> Initializes a new instance of the <see cref="LabServicesLabVirtualMachineImageCollection"/> class for mocking. </summary>
+        protected LabServicesLabVirtualMachineImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabServicesLabVirtualMachineImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal LabVirtualMachineImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LabServicesLabVirtualMachineImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _labVirtualMachineImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", LabVirtualMachineImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(LabVirtualMachineImageResource.ResourceType, out string labVirtualMachineImageImagesApiVersion);
-            _labVirtualMachineImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labVirtualMachineImageImagesApiVersion);
+            _labServicesLabVirtualMachineImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", LabServicesLabVirtualMachineImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LabServicesLabVirtualMachineImageResource.ResourceType, out string labServicesLabVirtualMachineImageImagesApiVersion);
+            _labServicesLabVirtualMachineImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labServicesLabVirtualMachineImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LabVirtualMachineImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LabServicesLabVirtualMachineImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, LabServicesLabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.CreateOrUpdate");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _labVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _labServicesLabVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new LabServicesArmOperation<LabServicesLabVirtualMachineImageResource>(Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LabVirtualMachineImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LabServicesLabVirtualMachineImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, LabServicesLabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.CreateOrUpdate");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken);
-                var uri = _labVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken);
+                var uri = _labServicesLabVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new LabServicesArmOperation<LabServicesLabVirtualMachineImageResource>(Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualMachineImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesLabVirtualMachineImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Get");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual Response<LabVirtualMachineImageResource> Get(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesLabVirtualMachineImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Get");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,18 +260,18 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LabVirtualMachineImageResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LabServicesLabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LabServicesLabVirtualMachineImageResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesLabVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesLabVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesLabVirtualMachineImageResource(Client, LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(e)), _labServicesLabVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabServicesLabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -291,18 +291,18 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LabVirtualMachineImageResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LabServicesLabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LabServicesLabVirtualMachineImageResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesLabVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesLabVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesLabVirtualMachineImageResource(Client, LabServicesLabVirtualMachineImageData.DeserializeLabServicesLabVirtualMachineImageData(e)), _labServicesLabVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabServicesLabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.LabServices
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Exists");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.LabServices
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Exists");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,18 +416,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual async Task<NullableResponse<LabVirtualMachineImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<LabServicesLabVirtualMachineImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _labServicesLabVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<LabServicesLabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.LabServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// <description><see cref="LabServicesLabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,18 +461,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual NullableResponse<LabVirtualMachineImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<LabServicesLabVirtualMachineImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            using var scope = _labServicesLabVirtualMachineImageImagesClientDiagnostics.CreateScope("LabServicesLabVirtualMachineImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                var response = _labServicesLabVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<LabServicesLabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesLabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
-        IEnumerator<LabVirtualMachineImageResource> IEnumerable<LabVirtualMachineImageResource>.GetEnumerator()
+        IEnumerator<LabServicesLabVirtualMachineImageResource> IEnumerable<LabServicesLabVirtualMachineImageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.LabServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<LabVirtualMachineImageResource> IAsyncEnumerable<LabVirtualMachineImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<LabServicesLabVirtualMachineImageResource> IAsyncEnumerable<LabServicesLabVirtualMachineImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

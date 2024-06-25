@@ -15,10 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing the MediaServicesPrivateEndpointConnection data model.
+    /// A class representing the MediaMediaServicesPrivateEndpointConnection data model.
     /// The Private Endpoint Connection resource.
     /// </summary>
-    public partial class MediaServicesPrivateEndpointConnectionData : ResourceData
+    public partial class MediaMediaServicesPrivateEndpointConnectionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MediaServicesPrivateEndpointConnectionData"/>. </summary>
-        public MediaServicesPrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of <see cref="MediaMediaServicesPrivateEndpointConnectionData"/>. </summary>
+        public MediaMediaServicesPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaServicesPrivateEndpointConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaMediaServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, MediaPrivateLinkServiceConnectionState connectionState, MediaPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MediaMediaServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, MediaPrivateLinkServiceConnectionState connectionState, MediaPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;

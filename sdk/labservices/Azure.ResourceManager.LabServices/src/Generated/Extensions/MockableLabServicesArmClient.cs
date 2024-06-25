@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualMachineImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LabServicesLabVirtualMachineImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabServicesLabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesLabVirtualMachineImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabVirtualMachineImageResource"/> object. </returns>
-        public virtual LabVirtualMachineImageResource GetLabVirtualMachineImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabServicesLabVirtualMachineImageResource"/> object. </returns>
+        public virtual LabServicesLabVirtualMachineImageResource GetLabServicesLabVirtualMachineImageResource(ResourceIdentifier id)
         {
-            LabVirtualMachineImageResource.ValidateResourceId(id);
-            return new LabVirtualMachineImageResource(Client, id);
+            LabServicesLabVirtualMachineImageResource.ValidateResourceId(id);
+            return new LabServicesLabVirtualMachineImageResource(Client, id);
         }
 
         /// <summary>

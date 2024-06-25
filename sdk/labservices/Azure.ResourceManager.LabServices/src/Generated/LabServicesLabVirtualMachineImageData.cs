@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing the LabVirtualMachineImage data model.
+    /// A class representing the LabServicesLabVirtualMachineImage data model.
     /// Lab services virtual machine image
     /// </summary>
-    public partial class LabVirtualMachineImageData : ResourceData
+    public partial class LabServicesLabVirtualMachineImageData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.LabServices
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
-        public LabVirtualMachineImageData()
+        /// <summary> Initializes a new instance of <see cref="LabServicesLabVirtualMachineImageData"/>. </summary>
+        public LabServicesLabVirtualMachineImageData()
         {
             AvailableRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesLabVirtualMachineImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="availableRegions"> The available regions of the image in the shared gallery. </param>
         /// <param name="osState"> The OS State of the image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesEnableState? enabledState, LabServicesProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, LabVirtualMachineImageOSType? osType, string plan, LabServicesEnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, LabVirtualMachineImageOSState? osState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LabServicesLabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesEnableState? enabledState, LabServicesProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, LabVirtualMachineImageOSType? osType, string plan, LabServicesEnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, LabVirtualMachineImageOSState? osState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EnabledState = enabledState;
             ProvisioningState = provisioningState;

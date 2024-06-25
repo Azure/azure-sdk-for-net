@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmLabServicesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="LabServices.LabVirtualMachineImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabServicesLabVirtualMachineImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="sharedGalleryId"> The ID for the image in the shared gallery. </param>
         /// <param name="availableRegions"> The available regions of the image in the shared gallery. </param>
         /// <param name="osState"> The OS State of the image. </param>
-        /// <returns> A new <see cref="LabServices.LabVirtualMachineImageData"/> instance for mocking. </returns>
-        public static LabVirtualMachineImageData LabVirtualMachineImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabServicesEnableState? enabledState = null, LabServicesProvisioningState? provisioningState = null, string displayName = null, string description = null, Uri iconUri = null, string author = null, LabVirtualMachineImageOSType? osType = null, string plan = null, LabServicesEnableState? termsStatus = null, string offer = null, string publisher = null, string sku = null, string version = null, ResourceIdentifier sharedGalleryId = null, IEnumerable<AzureLocation> availableRegions = null, LabVirtualMachineImageOSState? osState = null)
+        /// <returns> A new <see cref="LabServices.LabServicesLabVirtualMachineImageData"/> instance for mocking. </returns>
+        public static LabServicesLabVirtualMachineImageData LabServicesLabVirtualMachineImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabServicesEnableState? enabledState = null, LabServicesProvisioningState? provisioningState = null, string displayName = null, string description = null, Uri iconUri = null, string author = null, LabVirtualMachineImageOSType? osType = null, string plan = null, LabServicesEnableState? termsStatus = null, string offer = null, string publisher = null, string sku = null, string version = null, ResourceIdentifier sharedGalleryId = null, IEnumerable<AzureLocation> availableRegions = null, LabVirtualMachineImageOSState? osState = null)
         {
             availableRegions ??= new List<AzureLocation>();
 
-            return new LabVirtualMachineImageData(
+            return new LabServicesLabVirtualMachineImageData(
                 id,
                 name,
                 resourceType,

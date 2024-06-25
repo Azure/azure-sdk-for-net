@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicSku : IUtf8JsonSerializable, IJsonModel<LogicSku>
+    public partial class LogicLogicSku : IUtf8JsonSerializable, IJsonModel<LogicLogicSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicLogicSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LogicSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LogicLogicSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogicSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicLogicSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicLogicSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        LogicSku IJsonModel<LogicSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LogicLogicSku IJsonModel<LogicLogicSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogicSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicLogicSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicLogicSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogicSku(document.RootElement, options);
+            return DeserializeLogicLogicSku(document.RootElement, options);
         }
 
-        internal static LogicSku DeserializeLogicSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LogicLogicSku DeserializeLogicLogicSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LogicSku(name, plan, serializedAdditionalRawData);
+            return new LogicLogicSku(name, plan, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LogicSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LogicLogicSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogicSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicLogicSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicLogicSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LogicSku IPersistableModel<LogicSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LogicLogicSku IPersistableModel<LogicLogicSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogicSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicLogicSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLogicSku(document.RootElement, options);
+                        return DeserializeLogicLogicSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicLogicSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LogicSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LogicLogicSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

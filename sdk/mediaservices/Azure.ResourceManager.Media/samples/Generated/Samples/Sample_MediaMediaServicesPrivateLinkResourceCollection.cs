@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.Media.Samples
 {
-    public partial class Sample_MediaServicesPrivateLinkResourceCollection
+    public partial class Sample_MediaMediaServicesPrivateLinkResourceCollection
     {
         // Get list of all group IDs.
         [NUnit.Framework.Test]
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateLinkResource
-            MediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaServicesPrivateLinkResources();
+            // get the collection of this MediaMediaServicesPrivateLinkResource
+            MediaMediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateLinkResources();
 
             // invoke the operation and iterate over the result
-            await foreach (MediaServicesPrivateLinkResource item in collection.GetAllAsync())
+            await foreach (MediaMediaServicesPrivateLinkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MediaServicesPrivateLinkResourceData resourceData = item.Data;
+                MediaMediaServicesPrivateLinkResourceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateLinkResource
-            MediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaServicesPrivateLinkResources();
+            // get the collection of this MediaMediaServicesPrivateLinkResource
+            MediaMediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateLinkResources();
 
             // invoke the operation
             string name = "keydelivery";
-            MediaServicesPrivateLinkResource result = await collection.GetAsync(name);
+            MediaMediaServicesPrivateLinkResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MediaServicesPrivateLinkResourceData resourceData = result.Data;
+            MediaMediaServicesPrivateLinkResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateLinkResource
-            MediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaServicesPrivateLinkResources();
+            // get the collection of this MediaMediaServicesPrivateLinkResource
+            MediaMediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateLinkResources();
 
             // invoke the operation
             string name = "keydelivery";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.Media.Samples
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
 
-            // get the collection of this MediaServicesPrivateLinkResource
-            MediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaServicesPrivateLinkResources();
+            // get the collection of this MediaMediaServicesPrivateLinkResource
+            MediaMediaServicesPrivateLinkResourceCollection collection = mediaServicesAccount.GetMediaMediaServicesPrivateLinkResources();
 
             // invoke the operation
             string name = "keydelivery";
-            NullableResponse<MediaServicesPrivateLinkResource> response = await collection.GetIfExistsAsync(name);
-            MediaServicesPrivateLinkResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MediaMediaServicesPrivateLinkResource> response = await collection.GetIfExistsAsync(name);
+            MediaMediaServicesPrivateLinkResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Media.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MediaServicesPrivateLinkResourceData resourceData = result.Data;
+                MediaMediaServicesPrivateLinkResourceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

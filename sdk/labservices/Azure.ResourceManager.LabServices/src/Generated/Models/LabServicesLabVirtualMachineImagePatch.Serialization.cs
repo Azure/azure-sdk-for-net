@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineImagePatch : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineImagePatch>
+    public partial class LabServicesLabVirtualMachineImagePatch : IUtf8JsonSerializable, IJsonModel<LabServicesLabVirtualMachineImagePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineImagePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesLabVirtualMachineImagePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LabVirtualMachineImagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LabServicesLabVirtualMachineImagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesLabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineImagePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesLabVirtualMachineImagePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteEndObject();
         }
 
-        LabVirtualMachineImagePatch IJsonModel<LabVirtualMachineImagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LabServicesLabVirtualMachineImagePatch IJsonModel<LabServicesLabVirtualMachineImagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesLabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineImagePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesLabVirtualMachineImagePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLabVirtualMachineImagePatch(document.RootElement, options);
+            return DeserializeLabServicesLabVirtualMachineImagePatch(document.RootElement, options);
         }
 
-        internal static LabVirtualMachineImagePatch DeserializeLabVirtualMachineImagePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LabServicesLabVirtualMachineImagePatch DeserializeLabServicesLabVirtualMachineImagePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LabVirtualMachineImagePatch(enabledState, serializedAdditionalRawData);
+            return new LabServicesLabVirtualMachineImagePatch(enabledState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LabVirtualMachineImagePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LabServicesLabVirtualMachineImagePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesLabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineImagePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesLabVirtualMachineImagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LabVirtualMachineImagePatch IPersistableModel<LabVirtualMachineImagePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LabServicesLabVirtualMachineImagePatch IPersistableModel<LabServicesLabVirtualMachineImagePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesLabVirtualMachineImagePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLabVirtualMachineImagePatch(document.RootElement, options);
+                        return DeserializeLabServicesLabVirtualMachineImagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineImagePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesLabVirtualMachineImagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LabVirtualMachineImagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LabServicesLabVirtualMachineImagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

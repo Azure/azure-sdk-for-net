@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media
         public MediaServicesAccountData(AzureLocation location) : base(location)
         {
             StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
-            PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<MediaMediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaServicesAccountData"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections, MediaServicesMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> privateEndpointConnections, MediaServicesMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MediaServicesAccountId = mediaServicesAccountId;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Provisioning state of the Media Services account. </summary>
         public MediaServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
-        public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </summary>
         public MediaServicesMinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
