@@ -927,7 +927,7 @@
 # AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %ARM
-/sdk/resources/Azure.ResourceManager.*/                            @arm-sdk-owners
+/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @arm-sdk-owners
