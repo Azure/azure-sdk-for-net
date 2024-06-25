@@ -25,18 +25,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
     [Collection("SqlClient")]
     public class SqlClientTests
     {
-        internal const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
-
-        public const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
-        public const string SqlMicrosoftBeforeExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandBefore";
-        public const string SqlDataAfterExecuteCommand = "System.Data.SqlClient.WriteCommandAfter";
-        public const string SqlMicrosoftAfterExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandAfter";
-        public const string SqlDataWriteCommandError = "System.Data.SqlClient.WriteCommandError";
-        public const string SqlMicrosoftWriteCommandError = "Microsoft.Data.SqlClient.WriteCommandError";
+        private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
+        private const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
+        private const string SqlMicrosoftBeforeExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandBefore";
+        private const string SqlDataAfterExecuteCommand = "System.Data.SqlClient.WriteCommandAfter";
+        private const string SqlMicrosoftAfterExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandAfter";
+        private const string SqlDataWriteCommandError = "System.Data.SqlClient.WriteCommandError";
+        private const string SqlMicrosoftWriteCommandError = "Microsoft.Data.SqlClient.WriteCommandError";
 
         private const string TestSqlConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=master";
 
-        private readonly FakeSqlClientDiagnosticSource _fakeSqlClientDiagnosticSource;
+        private readonly FakeSqlClientDiagnosticSource _fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
 
         private const string TestServiceName = nameof(TestServiceName), TestServiceNamespace = nameof(TestServiceNamespace), TestServiceInstance = nameof(TestServiceInstance), TestServiceVersion = nameof(TestServiceVersion);
         private const string TestRoleName = $"[{TestServiceNamespace}]/{TestServiceName}";
@@ -48,11 +47,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             { "service.version", TestServiceVersion }
         };
 
-        public SqlClientTests()
-        {
-            _fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
-        }
-
         [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError, false)]
@@ -60,7 +54,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError, false)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError, false, true)]
-        public void SqlClientErrorsAreCollectedSuccessfully(string beforeCommand, string errorCommand, bool shouldEnrich = true, bool recordException = false)
+        public void SqlClientErrorsAreCollectedSuccessfully(
+            string beforeCommand,
+            string errorCommand,
+            bool shouldEnrich = true,
+            bool recordException = false)
         {
             // SETUP MOCK TRANSMITTER TO CAPTURE AZURE MONITOR TELEMETRY
             var testConnectionString = $"InstrumentationKey=unitTest-{nameof(SqlClientCallsAreCollectedSuccessfully)}";
