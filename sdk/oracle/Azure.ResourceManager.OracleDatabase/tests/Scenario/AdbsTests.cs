@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return new AutonomousDatabaseProperties() {
             DisplayName = _adbsName,
             DbWorkload = WorkloadType.DW,
+            ComputeCount = 2.0f,
+            ComputeModel = ComputeModel.Ecpu,
             DbVersion = "19c",
-            CpuCoreCount = 2,
             DataStorageSizeInTbs = 1,
             AdminPassword = "NetSdkTestPass123",
             LicenseModel = LicenseModel.LicenseIncluded,
