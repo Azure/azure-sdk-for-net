@@ -74,26 +74,6 @@ namespace Azure.ResourceManager.KeyVault
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>
-    {
-        public KeyData() { }
-        public Azure.ResourceManager.KeyVault.Models.KeyAttributes Attributes { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
-        public int? KeySize { get { throw null; } set { } }
-        public System.Uri KeyUri { get { throw null; } }
-        public string KeyUriWithVersion { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.KeyReleasePolicy ReleasePolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.RotationPolicy RotationPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class KeyVaultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.KeyVaultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultResource>, System.Collections.IEnumerable
     {
         protected KeyVaultCollection() { }
@@ -158,6 +138,26 @@ namespace Azure.ResourceManager.KeyVault
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.ManagedHsmResource> GetManagedHsmsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.KeyVault.VaultKeyResource GetVaultKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.KeyVault.VaultKeyVersionResource GetVaultKeyVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class KeyVaultKeyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>
+    {
+        public KeyVaultKeyData() { }
+        public Azure.ResourceManager.KeyVault.Models.KeyAttributes Attributes { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
+        public int? KeySize { get { throw null; } set { } }
+        public System.Uri KeyUri { get { throw null; } }
+        public string KeyUriWithVersion { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyReleasePolicy ReleasePolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.RotationPolicy RotationPolicy { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.VaultKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VaultKeyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>
+    public partial class VaultKeyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VaultKeyResource() { }
-        public virtual Azure.ResourceManager.KeyVault.KeyData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.KeyVaultKeyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string keyName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -546,11 +546,11 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> GetVaultKeyVersion(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> GetVaultKeyVersionAsync(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.VaultKeyVersionCollection GetVaultKeyVersions() { throw null; }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.VaultKeyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.Models.VaultKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.VaultKeyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.Models.VaultKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -569,20 +569,20 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VaultKeyVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>
+    public partial class VaultKeyVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VaultKeyVersionResource() { }
-        public virtual Azure.ResourceManager.KeyVault.KeyData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.KeyVaultKeyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.KeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultKeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultKeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.KeyVault.Mocking
@@ -650,12 +650,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.DeletedManagedHsmData DeletedManagedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties DeletedManagedHsmProperties(Azure.Core.ResourceIdentifier managedHsmId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), bool? purgeProtectionEnabled = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyAttributes KeyAttributes(bool? enabled = default(bool?), long? notBefore = default(long?), long? expires = default(long?), long? created = default(long?), long? updated = default(long?), Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel? recoveryLevel = default(Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel?), bool? exportable = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.KeyVault.KeyData KeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.KeyAttributes attributes = null, Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? kty = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> keyOps = null, int? keySize = default(int?), Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? curveName = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName?), System.Uri keyUri = null, string keyUriWithVersion = null, Azure.ResourceManager.KeyVault.Models.RotationPolicy rotationPolicy = null, Azure.ResourceManager.KeyVault.Models.KeyReleasePolicy releasePolicy = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyProperties KeyProperties(Azure.ResourceManager.KeyVault.Models.KeyAttributes attributes = null, Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? kty = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> keyOps = null, int? keySize = default(int?), Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? curveName = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName?), System.Uri keyUri = null, string keyUriWithVersion = null, Azure.ResourceManager.KeyVault.Models.RotationPolicy rotationPolicy = null, Azure.ResourceManager.KeyVault.Models.KeyReleasePolicy releasePolicy = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyRotationPolicyAttributes KeyRotationPolicyAttributes(long? created = default(long?), long? updated = default(long?), string expiryTime = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.KeyVaultData KeyVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.KeyVaultKeyData KeyVaultKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.KeyAttributes attributes = null, Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? kty = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> keyOps = null, int? keySize = default(int?), Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? curveName = default(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName?), System.Uri keyUri = null, string keyUriWithVersion = null, Azure.ResourceManager.KeyVault.Models.RotationPolicy rotationPolicy = null, Azure.ResourceManager.KeyVault.Models.KeyReleasePolicy releasePolicy = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason? reason = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
