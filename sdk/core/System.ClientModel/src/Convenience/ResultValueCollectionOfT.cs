@@ -8,7 +8,8 @@ using System.Collections.Generic;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a collection of results returned from a cloud service operation.
+/// Represents a collection of values returned from a cloud service operation.
+/// The collection values may be returned by one or more service responses.
 /// </summary>
 public abstract class ResultValueCollection<T> : ClientResult, IEnumerable<T>
 {
