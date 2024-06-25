@@ -16,16 +16,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<EventHubsPrivateLinkResourceData>
+    public partial class EventHubsEventHubsPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<EventHubsEventHubsPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsEventHubsPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EventHubsPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsEventHubsPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsPrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEventHubsPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        EventHubsPrivateLinkResourceData IJsonModel<EventHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EventHubsEventHubsPrivateLinkResourceData IJsonModel<EventHubsEventHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsPrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEventHubsPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventHubsPrivateLinkResourceData(document.RootElement, options);
+            return DeserializeEventHubsEventHubsPrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static EventHubsPrivateLinkResourceData DeserializeEventHubsPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EventHubsEventHubsPrivateLinkResourceData DeserializeEventHubsEventHubsPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EventHubsPrivateLinkResourceData(
+            return new EventHubsEventHubsPrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<EventHubsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -389,26 +389,26 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEventHubsPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EventHubsPrivateLinkResourceData IPersistableModel<EventHubsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EventHubsEventHubsPrivateLinkResourceData IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEventHubsPrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeEventHubsEventHubsPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEventHubsPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EventHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsEventHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

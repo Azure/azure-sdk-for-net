@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EventHubsPrivateLinkResourceData item in eventHubsNamespace.GetPrivateLinkResourcesAsync())
+            await foreach (EventHubsEventHubsPrivateLinkResourceData item in eventHubsNamespace.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             VirtualWorkspaceResource virtualWorkspace = client.GetVirtualWorkspaceResource(virtualWorkspaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DesktopVirtualizationPrivateLinkResourceData item in virtualWorkspace.GetPrivateLinkResourcesAsync())
+            await foreach (DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData item in virtualWorkspace.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

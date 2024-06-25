@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EventHubsPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EventHubsEventHubsPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.EventHubsPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static EventHubsPrivateLinkResourceData EventHubsPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.EventHubsEventHubsPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static EventHubsEventHubsPrivateLinkResourceData EventHubsEventHubsPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new EventHubsPrivateLinkResourceData(
+            return new EventHubsEventHubsPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsAuthorizationRuleData"/> instance for mocking. </returns>
-        public static EventHubsAuthorizationRuleData EventHubsAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<EventHubsAccessRight> rights = null, AzureLocation? location = null)
+        public static EventHubsAuthorizationRuleData EventHubsAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AccessRight> rights = null, AzureLocation? location = null)
         {
-            rights ??= new List<EventHubsAccessRight>();
+            rights ??= new List<AccessRight>();
 
             return new EventHubsAuthorizationRuleData(
                 id,

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             {
                 Rights =
 {
-EventHubsAccessRight.Listen,EventHubsAccessRight.Send
+AccessRight.Listen,AccessRight.Send
 },
             };
             ArmOperation<EventHubAuthorizationRuleResource> lro = await eventHubAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<EventHubsAccessRight> rights = default;
+            IList<AccessRight> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            List<EventHubsAccessRight> array = new List<EventHubsAccessRight>();
+                            List<AccessRight> array = new List<AccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new EventHubsAccessRight(item.GetString()));
+                                array.Add(new AccessRight(item.GetString()));
                             }
                             rights = array;
                             continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
-                rights ?? new ChangeTrackingList<EventHubsAccessRight>(),
+                rights ?? new ChangeTrackingList<AccessRight>(),
                 location,
                 serializedAdditionalRawData);
         }

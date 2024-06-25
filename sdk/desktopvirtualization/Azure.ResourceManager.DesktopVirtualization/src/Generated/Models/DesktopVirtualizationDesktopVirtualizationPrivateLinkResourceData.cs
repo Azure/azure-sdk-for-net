@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class DesktopVirtualizationPrivateLinkResourceData : ResourceData
+    public partial class DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
-        public DesktopVirtualizationPrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData"/>. </summary>
+        public DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

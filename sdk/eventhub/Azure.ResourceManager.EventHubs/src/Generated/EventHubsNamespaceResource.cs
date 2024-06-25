@@ -794,11 +794,11 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubsEventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsEventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsEventHubsPrivateLinkResourceData.DeserializeEventHubsEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -819,11 +819,11 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsEventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsEventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsEventHubsPrivateLinkResourceData.DeserializeEventHubsEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

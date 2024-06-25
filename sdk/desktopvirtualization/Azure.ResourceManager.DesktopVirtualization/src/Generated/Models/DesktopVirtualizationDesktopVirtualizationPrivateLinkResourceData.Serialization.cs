@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationPrivateLinkResourceData>
+    public partial class DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DesktopVirtualizationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        DesktopVirtualizationPrivateLinkResourceData IJsonModel<DesktopVirtualizationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData IJsonModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDesktopVirtualizationPrivateLinkResourceData(document.RootElement, options);
+            return DeserializeDesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static DesktopVirtualizationPrivateLinkResourceData DeserializeDesktopVirtualizationPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData DeserializeDesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DesktopVirtualizationPrivateLinkResourceData(
+            return new DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -210,35 +210,35 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DesktopVirtualizationPrivateLinkResourceData IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDesktopVirtualizationPrivateLinkResourceData(document.RootElement, options);
+                        return DeserializeDesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
