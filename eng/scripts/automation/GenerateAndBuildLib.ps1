@@ -740,7 +740,6 @@ function GeneratePackage()
     $result = "succeeded"
 
     # Generate Code
-    # Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
         # verify the existence of tsp-location.yaml and autorest.md
