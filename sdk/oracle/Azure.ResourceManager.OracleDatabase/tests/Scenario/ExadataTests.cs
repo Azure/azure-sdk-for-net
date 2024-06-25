@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private static CloudExadataInfrastructureResource _exaInfraResource;
         private static CloudVmClusterResource _vmClusterResource;
 
-        public ExadataTests() : base(true, RecordedTestMode.Record)
+        public ExadataTests() : base(true, RecordedTestMode.Playback)
         {
         }
 

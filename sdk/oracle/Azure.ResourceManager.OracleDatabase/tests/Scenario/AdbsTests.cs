@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private string _adbsName;
         private AutonomousDatabaseResource _adbsResource;
 
-        public AdbsTests() : base(true, RecordedTestMode.Record)
+        public AdbsTests() : base(true, RecordedTestMode.Playback)
         {
         }
 
