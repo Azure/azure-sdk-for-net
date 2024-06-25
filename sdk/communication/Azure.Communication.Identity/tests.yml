@@ -9,7 +9,7 @@ extends:
     CloudConfig:
       Public:
         ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFiles:
+        SubscriptionConfigurationFilePaths:
           - eng/common/TestResources/sub-config/AzurePublicMsft.json
         SubscriptionConfigurations:
           - $(sub-config-communication-services-cloud-test-identity-cte)
