@@ -74,6 +74,17 @@ namespace System.ClientModel
         public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
+    public abstract partial class ResultValueOperation : System.ClientModel.ClientResult
+    {
+        protected ResultValueOperation(System.BinaryData rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasCompleted { get { throw null; } protected set { } }
+        public System.BinaryData RehydrationToken { get { throw null; } protected set { } }
+    }
+    public enum ReturnWhen
+    {
+        Started = 0,
+        Completed = 1,
+    }
 }
 namespace System.ClientModel.Primitives
 {
