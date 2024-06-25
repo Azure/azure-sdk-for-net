@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+﻿// Copyright The OpenTelemetry Authors
+// SPDX-License-Identifier: Apache-2.0
 
 // The following tests were originally copied from OpenTelemetry and modified for Azure Monitor.
 // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/Instrumentation.SqlClient-1.9.0-beta.1/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>SA1636</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
