@@ -1268,8 +1268,6 @@ namespace Azure.Storage.Sas
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public string GetStringToSign(Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
-        public string GetStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public void SetPermissions(Azure.Storage.Sas.DataLakeAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeSasPermissions permissions) { }
@@ -1279,6 +1277,8 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.DataLakeSasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public string ToStringToSign(Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
+        public string ToStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
     }
     [System.FlagsAttribute]
     public enum DataLakeSasPermissions

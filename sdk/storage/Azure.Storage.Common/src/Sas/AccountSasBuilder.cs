@@ -202,7 +202,7 @@ namespace Azure.Storage.Sas
                 throw Errors.AccountSasMissingData();
             }
 
-            string stringToSign = GetStringToSign(sharedKeyCredential);
+            string stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(
@@ -232,7 +232,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The string to sign that will be used to generate the signature for the SAS URL.
         /// </returns>
-        public string GetStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 

@@ -345,7 +345,7 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            string stringToSign = GetStringToSign(sharedKeyCredential);
+            string stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
@@ -381,7 +381,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The string to sign that will be used to generate the signature for the SAS URL.
         /// </returns>
-        public string GetStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
@@ -426,7 +426,7 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            string stringToSign = GetStringToSign(userDelegationKey, accountName);
+            string stringToSign = ToStringToSign(userDelegationKey, accountName);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -472,7 +472,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The string to sign that will be used to generate the signature for the SAS URL.
         /// </returns>
-        public string GetStringToSign(UserDelegationKey userDelegationKey, string accountName)
+        public string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);

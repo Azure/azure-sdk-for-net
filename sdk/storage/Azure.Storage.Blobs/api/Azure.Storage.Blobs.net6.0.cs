@@ -1896,8 +1896,6 @@ namespace Azure.Storage.Sas
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public string GetStringToSign(Azure.Storage.Blobs.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
-        public string GetStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public void SetPermissions(Azure.Storage.Sas.BlobAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.BlobContainerSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.BlobSasPermissions permissions) { }
@@ -1909,6 +1907,8 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.BlobSasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public string ToStringToSign(Azure.Storage.Blobs.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
+        public string ToStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
     }
     [System.FlagsAttribute]
     public enum BlobSasPermissions

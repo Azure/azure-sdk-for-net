@@ -236,7 +236,7 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            string stringToSign = GetStringToSign(sharedKeyCredential);
+            string stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(
@@ -265,7 +265,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The string to sign that will be used to generate the signature for the SAS URL.
         /// </returns>
-        public string GetStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
