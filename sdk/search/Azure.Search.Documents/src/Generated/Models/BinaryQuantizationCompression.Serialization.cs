@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class BinaryQuantizationCompressionConfiguration : IUtf8JsonSerializable
+    public partial class BinaryQuantizationCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static BinaryQuantizationCompressionConfiguration DeserializeBinaryQuantizationCompressionConfiguration(JsonElement element)
+        internal static BinaryQuantizationCompression DeserializeBinaryQuantizationCompression(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,15 +81,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new BinaryQuantizationCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling);
+            return new BinaryQuantizationCompression(name, kind, rerankWithOriginalVectors, defaultOversampling);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new BinaryQuantizationCompressionConfiguration FromResponse(Response response)
+        internal static new BinaryQuantizationCompression FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBinaryQuantizationCompressionConfiguration(document.RootElement);
+            return DeserializeBinaryQuantizationCompression(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

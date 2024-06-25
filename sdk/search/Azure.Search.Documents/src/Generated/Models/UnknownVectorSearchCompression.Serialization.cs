@@ -11,13 +11,13 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchCompressionConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorSearchCompressionConfiguration DeserializeUnknownVectorSearchCompressionConfiguration(JsonElement element)
+        internal static UnknownVectorSearchCompression DeserializeUnknownVectorSearchCompression(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,22 +82,22 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownVectorSearchCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling);
+            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownVectorSearchCompressionConfiguration FromResponse(Response response)
+        internal static new UnknownVectorSearchCompression FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownVectorSearchCompressionConfiguration(document.RootElement);
+            return DeserializeUnknownVectorSearchCompression(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorSearchCompressionConfiguration>(this);
+            content.JsonWriter.WriteObjectValue<VectorSearchCompression>(this);
             return content;
         }
     }

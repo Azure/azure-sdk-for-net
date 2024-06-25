@@ -41,10 +41,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("degreeOfParallelism");
                 }
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
@@ -133,7 +133,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             int? batchSize = default;
             int? degreeOfParallelism = default;
-            string uri = default;
+            Uri uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
@@ -169,7 +169,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("uri"u8))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpHeaders"u8))

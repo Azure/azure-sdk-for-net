@@ -24,10 +24,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("vectorizer"u8);
                 writer.WriteStringValue(VectorizerName);
             }
-            if (Optional.IsDefined(CompressionConfigurationName))
+            if (Optional.IsDefined(CompressionName))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteStringValue(CompressionConfigurationName);
+                writer.WriteStringValue(CompressionName);
             }
             writer.WriteEndObject();
         }

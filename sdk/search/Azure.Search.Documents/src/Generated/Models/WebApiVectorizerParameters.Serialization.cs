@@ -12,15 +12,15 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class WebApiParameters : IUtf8JsonSerializable
+    public partial class WebApiVectorizerParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static WebApiParameters DeserializeWebApiParameters(JsonElement element)
+        internal static WebApiVectorizerParameters DeserializeWebApiVectorizerParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WebApiParameters(
+            return new WebApiVectorizerParameters(
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
@@ -153,10 +153,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static WebApiParameters FromResponse(Response response)
+        internal static WebApiVectorizerParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeWebApiParameters(document.RootElement);
+            return DeserializeWebApiVectorizerParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

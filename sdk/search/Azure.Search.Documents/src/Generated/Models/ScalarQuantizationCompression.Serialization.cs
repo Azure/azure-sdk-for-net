@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScalarQuantizationCompressionConfiguration : IUtf8JsonSerializable
+    public partial class ScalarQuantizationCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static ScalarQuantizationCompressionConfiguration DeserializeScalarQuantizationCompressionConfiguration(JsonElement element)
+        internal static ScalarQuantizationCompression DeserializeScalarQuantizationCompression(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,15 +96,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScalarQuantizationCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
+            return new ScalarQuantizationCompression(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ScalarQuantizationCompressionConfiguration FromResponse(Response response)
+        internal static new ScalarQuantizationCompression FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeScalarQuantizationCompressionConfiguration(document.RootElement);
+            return DeserializeScalarQuantizationCompression(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

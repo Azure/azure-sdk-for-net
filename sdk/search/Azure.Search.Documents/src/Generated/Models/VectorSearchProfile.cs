@@ -29,13 +29,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
         /// <param name="vectorizerName"> The name of the vectorization being configured for use with vector search. </param>
-        /// <param name="compressionConfigurationName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
-        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionConfigurationName)
+        /// <param name="compressionName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName)
         {
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
             VectorizerName = vectorizerName;
-            CompressionConfigurationName = compressionConfigurationName;
+            CompressionName = compressionName;
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>
@@ -45,6 +45,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The name of the vectorization being configured for use with vector search. </summary>
         public string VectorizerName { get; set; }
         /// <summary> The name of the compression method configuration that specifies the compression method and optional parameters. </summary>
-        public string CompressionConfigurationName { get; set; }
+        public string CompressionName { get; set; }
     }
 }

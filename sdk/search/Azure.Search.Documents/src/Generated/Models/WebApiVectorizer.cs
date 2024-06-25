@@ -13,26 +13,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebApiVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public WebApiVectorizer(string name) : base(name)
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public WebApiVectorizer(string vectorizerName) : base(vectorizerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
             Kind = VectorSearchVectorizerKind.CustomWebApi;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="webApiParameters"> Specifies the properties of the user-defined vectorizer. </param>
-        internal WebApiVectorizer(string name, VectorSearchVectorizerKind kind, WebApiParameters webApiParameters) : base(name, kind)
+        /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
+        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, WebApiVectorizerParameters parameters) : base(vectorizerName, kind)
         {
-            WebApiParameters = webApiParameters;
+            Parameters = parameters;
             Kind = kind;
         }
 
         /// <summary> Specifies the properties of the user-defined vectorizer. </summary>
-        public WebApiParameters WebApiParameters { get; set; }
+        public WebApiVectorizerParameters Parameters { get; set; }
     }
 }

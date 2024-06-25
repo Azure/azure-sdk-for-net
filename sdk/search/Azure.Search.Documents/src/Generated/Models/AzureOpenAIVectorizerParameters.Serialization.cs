@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AzureOpenAIParameters : IUtf8JsonSerializable
+    public partial class AzureOpenAIVectorizerParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceUrl))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                writer.WriteStringValue(ResourceUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentName))
             {
@@ -31,12 +31,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthenticationIdentity))
             {
-                if (AuthIdentity != null)
+                if (AuthenticationIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    writer.WriteObjectValue(AuthenticationIdentity);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureOpenAIParameters DeserializeAzureOpenAIParameters(JsonElement element)
+        internal static AzureOpenAIVectorizerParameters DeserializeAzureOpenAIVectorizerParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,15 +103,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity, modelName);
+            return new AzureOpenAIVectorizerParameters(resourceUri, deploymentId, apiKey, authIdentity, modelName);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureOpenAIParameters FromResponse(Response response)
+        internal static AzureOpenAIVectorizerParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureOpenAIParameters(document.RootElement);
+            return DeserializeAzureOpenAIVectorizerParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

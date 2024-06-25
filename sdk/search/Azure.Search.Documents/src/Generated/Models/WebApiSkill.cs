@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="batchSize"> The desired batch size which indicates number of documents. </param>
         /// <param name="degreeOfParallelism"> If set, the number of parallel calls that can be made to the Web API. </param>
-        /// <param name="uri"> The URI of the Web API providing the vectorizer. </param>
+        /// <param name="url"> The URI of the Web API providing the vectorizer. </param>
         /// <param name="httpHeaders"> The headers required to make the HTTP request. </param>
         /// <param name="httpMethod"> The method for the HTTP request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
@@ -33,11 +33,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, int? batchSize, int? degreeOfParallelism, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs)
+        internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, int? batchSize, int? degreeOfParallelism, Uri url, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs)
         {
             BatchSize = batchSize;
             DegreeOfParallelism = degreeOfParallelism;
-            Uri = uri;
+            Url = url;
             HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
@@ -50,6 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? BatchSize { get; set; }
         /// <summary> If set, the number of parallel calls that can be made to the Web API. </summary>
         public int? DegreeOfParallelism { get; set; }
+        /// <summary> The URI of the Web API providing the vectorizer. </summary>
+        public Uri Url { get; set; }
         /// <summary> The method for the HTTP request. </summary>
         public string HttpMethod { get; set; }
         /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>

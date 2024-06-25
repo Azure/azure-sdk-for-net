@@ -15,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebApiParameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(WebApiParameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            WebApiParameters customWebApiParameters = default;
+            WebApiVectorizerParameters customWebApiParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    customWebApiParameters = WebApiParameters.DeserializeWebApiParameters(property.Value);
+                    customWebApiParameters = WebApiVectorizerParameters.DeserializeWebApiVectorizerParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

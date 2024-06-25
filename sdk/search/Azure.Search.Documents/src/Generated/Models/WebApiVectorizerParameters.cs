@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the properties for connecting to a user-defined vectorizer. </summary>
-    public partial class WebApiParameters
+    public partial class WebApiVectorizerParameters
     {
-        /// <summary> Initializes a new instance of <see cref="WebApiParameters"/>. </summary>
-        public WebApiParameters()
+        /// <summary> Initializes a new instance of <see cref="WebApiVectorizerParameters"/>. </summary>
+        public WebApiVectorizerParameters()
         {
             HttpHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebApiParameters"/>. </summary>
-        /// <param name="uri"> The URI of the Web API providing the vectorizer. </param>
+        /// <summary> Initializes a new instance of <see cref="WebApiVectorizerParameters"/>. </summary>
+        /// <param name="url"> The URI of the Web API providing the vectorizer. </param>
         /// <param name="httpHeaders"> The headers required to make the HTTP request. </param>
         /// <param name="httpMethod"> The method for the HTTP request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
@@ -31,9 +31,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal WebApiParameters(Uri uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity)
+        internal WebApiVectorizerParameters(Uri url, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity)
         {
-            Uri = uri;
+            Url = url;
             HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The URI of the Web API providing the vectorizer. </summary>
-        public Uri Uri { get; set; }
+        public Uri Url { get; set; }
         /// <summary> The headers required to make the HTTP request. </summary>
         public IDictionary<string, string> HttpHeaders { get; }
         /// <summary> The method for the HTTP request. </summary>

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Profiles = new ChangeTrackingList<VectorSearchProfile>();
             Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
             Vectorizers = new ChangeTrackingList<VectorSearchVectorizer>();
-            Compressions = new ChangeTrackingList<VectorSearchCompressionConfiguration>();
+            Compressions = new ChangeTrackingList<VectorSearchCompression>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
@@ -35,10 +35,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         /// <param name="compressions">
         /// Contains configuration options specific to the compression method used during indexing or querying.
-        /// Please note <see cref="VectorSearchCompressionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryQuantizationCompressionConfiguration"/> and <see cref="ScalarQuantizationCompressionConfiguration"/>.
+        /// Please note <see cref="VectorSearchCompression"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
         /// </param>
-        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompressionConfiguration> compressions)
+        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompression> compressions)
         {
             Profiles = profiles;
             Algorithms = algorithms;
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<VectorSearchVectorizer> Vectorizers { get; }
         /// <summary>
         /// Contains configuration options specific to the compression method used during indexing or querying.
-        /// Please note <see cref="VectorSearchCompressionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryQuantizationCompressionConfiguration"/> and <see cref="ScalarQuantizationCompressionConfiguration"/>.
+        /// Please note <see cref="VectorSearchCompression"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
         /// </summary>
-        public IList<VectorSearchCompressionConfiguration> Compressions { get; }
+        public IList<VectorSearchCompression> Compressions { get; }
     }
 }
