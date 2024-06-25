@@ -64,6 +64,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var testConnectionString = $"InstrumentationKey=unitTest-{nameof(SqlClientErrorsAreCollectedSuccessfully)}";
             var telemetryItems = new List<TelemetryItem>();
             var mockTransmitter = new Exporter.Tests.CommonTestFramework.MockTransmitter(telemetryItems);
+            // The TransmitterFactory is invoked by the Exporter during initialization to ensure that there's only one instance of a transmitter/connectionString shared by all Exporters.
+            // Here we're setting that instance to use the MockTransmitter so this test can capture telemetry before it's sent to Azure Monitor.
             Exporter.Internals.TransmitterFactory.Instance.Set(connectionString: testConnectionString, transmitter: mockTransmitter);
 
             // SETUP OPENTELEMETRY WITH AZURE MONITOR DISTRO
@@ -159,6 +161,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var testConnectionString = $"InstrumentationKey=unitTest-{nameof(SqlClientCallsAreCollectedSuccessfully)}";
             var telemetryItems = new List<TelemetryItem>();
             var mockTransmitter = new Exporter.Tests.CommonTestFramework.MockTransmitter(telemetryItems);
+            // The TransmitterFactory is invoked by the Exporter during initialization to ensure that there's only one instance of a transmitter/connectionString shared by all Exporters.
+            // Here we're setting that instance to use the MockTransmitter so this test can capture telemetry before it's sent to Azure Monitor.
             Exporter.Internals.TransmitterFactory.Instance.Set(connectionString: testConnectionString, transmitter: mockTransmitter);
 
             // SETUP OPENTELEMETRY WITH AZURE MONITOR DISTRO
