@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoutingInfoModelData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkRoutingInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        RoutingInfoModelData value = default;
+                        MobileNetworkRoutingInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoutingInfoModelData.DeserializeRoutingInfoModelData(document.RootElement);
+                        value = MobileNetworkRoutingInfoData.DeserializeMobileNetworkRoutingInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoutingInfoModelData)null, message.Response);
+                    return Response.FromValue((MobileNetworkRoutingInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoutingInfoModelData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkRoutingInfoData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        RoutingInfoModelData value = default;
+                        MobileNetworkRoutingInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoutingInfoModelData.DeserializeRoutingInfoModelData(document.RootElement);
+                        value = MobileNetworkRoutingInfoData.DeserializeMobileNetworkRoutingInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoutingInfoModelData)null, message.Response);
+                    return Response.FromValue((MobileNetworkRoutingInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

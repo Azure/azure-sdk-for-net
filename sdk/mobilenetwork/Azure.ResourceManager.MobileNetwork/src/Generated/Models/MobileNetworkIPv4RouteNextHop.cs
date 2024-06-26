@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> An IPv4 route. </summary>
-    public partial class IPv4Route
+    /// <summary>
+    /// The next hop in an IPv4 route.
+    /// Serialized Name: Ipv4RouteNextHop
+    /// </summary>
+    public partial class MobileNetworkIPv4RouteNextHop
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +48,37 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPv4Route"/>. </summary>
-        public IPv4Route()
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkIPv4RouteNextHop"/>. </summary>
+        public MobileNetworkIPv4RouteNextHop()
         {
-            NextHops = new ChangeTrackingList<IPv4RouteNextHop>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPv4Route"/>. </summary>
-        /// <param name="destination"> The destination IPv4 prefix. </param>
-        /// <param name="nextHops"> A list of next hops for the destination. </param>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkIPv4RouteNextHop"/>. </summary>
+        /// <param name="address">
+        /// The next hop address.
+        /// Serialized Name: Ipv4RouteNextHop.address
+        /// </param>
+        /// <param name="priority">
+        /// The priority of this next hop. Next hops with lower preference values are preferred.
+        /// Serialized Name: Ipv4RouteNextHop.priority
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPv4Route(string destination, IList<IPv4RouteNextHop> nextHops, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MobileNetworkIPv4RouteNextHop(string address, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Destination = destination;
-            NextHops = nextHops;
+            Address = address;
+            Priority = priority;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The destination IPv4 prefix. </summary>
-        public string Destination { get; set; }
-        /// <summary> A list of next hops for the destination. </summary>
-        public IList<IPv4RouteNextHop> NextHops { get; }
+        /// <summary>
+        /// The next hop address.
+        /// Serialized Name: Ipv4RouteNextHop.address
+        /// </summary>
+        public string Address { get; set; }
+        /// <summary>
+        /// The priority of this next hop. Next hops with lower preference values are preferred.
+        /// Serialized Name: Ipv4RouteNextHop.priority
+        /// </summary>
+        public int? Priority { get; set; }
     }
 }

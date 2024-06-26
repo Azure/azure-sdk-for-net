@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             WritableSubResource attachedDataNetwork = default;
-            IList<IPv4Route> routes = default;
+            IList<MobileNetworkIPv4Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<IPv4Route> array = new List<IPv4Route>();
+                    List<MobileNetworkIPv4Route> array = new List<MobileNetworkIPv4Route>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPv4Route.DeserializeIPv4Route(item, options));
+                        array.Add(MobileNetworkIPv4Route.DeserializeMobileNetworkIPv4Route(item, options));
                     }
                     routes = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserPlaneDataRoutesItem(attachedDataNetwork, routes ?? new ChangeTrackingList<IPv4Route>(), serializedAdditionalRawData);
+            return new UserPlaneDataRoutesItem(attachedDataNetwork, routes ?? new ChangeTrackingList<MobileNetworkIPv4Route>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserPlaneDataRoutesItem>.Write(ModelReaderWriterOptions options)

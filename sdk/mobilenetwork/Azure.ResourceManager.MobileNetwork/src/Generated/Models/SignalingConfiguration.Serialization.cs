@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             NASRerouteConfiguration nasReroute = default;
-            IList<NasEncryptionType> nasEncryption = default;
+            IList<MobileNetworkNasEncryptionType> nasEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<NasEncryptionType> array = new List<NasEncryptionType>();
+                    List<MobileNetworkNasEncryptionType> array = new List<MobileNetworkNasEncryptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new NasEncryptionType(item.GetString()));
+                        array.Add(new MobileNetworkNasEncryptionType(item.GetString()));
                     }
                     nasEncryption = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SignalingConfiguration(nasReroute, nasEncryption ?? new ChangeTrackingList<NasEncryptionType>(), serializedAdditionalRawData);
+            return new SignalingConfiguration(nasReroute, nasEncryption ?? new ChangeTrackingList<MobileNetworkNasEncryptionType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalingConfiguration>.Write(ModelReaderWriterOptions options)

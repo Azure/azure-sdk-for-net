@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoutingInfoModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoutingInfoModelResource.CreateResourceIdentifier" /> to create a <see cref="RoutingInfoModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkRoutingInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkRoutingInfoResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkRoutingInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoutingInfoModelResource"/> object. </returns>
-        public virtual RoutingInfoModelResource GetRoutingInfoModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkRoutingInfoResource"/> object. </returns>
+        public virtual MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfoResource(ResourceIdentifier id)
         {
-            RoutingInfoModelResource.ValidateResourceId(id);
-            return new RoutingInfoModelResource(Client, id);
+            MobileNetworkRoutingInfoResource.ValidateResourceId(id);
+            return new MobileNetworkRoutingInfoResource(Client, id);
         }
 
         /// <summary>

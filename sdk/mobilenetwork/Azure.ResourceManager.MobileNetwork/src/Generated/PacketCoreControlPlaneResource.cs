@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetMobileNetworkPacketCaptures().Get(packetCaptureName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a RoutingInfoModelResource along with the instance operations that can be performed on it in the PacketCoreControlPlane. </summary>
-        /// <returns> Returns a <see cref="RoutingInfoModelResource"/> object. </returns>
-        public virtual RoutingInfoModelResource GetRoutingInfoModel()
+        /// <summary> Gets an object representing a MobileNetworkRoutingInfoResource along with the instance operations that can be performed on it in the PacketCoreControlPlane. </summary>
+        /// <returns> Returns a <see cref="MobileNetworkRoutingInfoResource"/> object. </returns>
+        public virtual MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfo()
         {
-            return new RoutingInfoModelResource(Client, Id.AppendChildResource("routingInfo", "default"));
+            return new MobileNetworkRoutingInfoResource(Client, Id.AppendChildResource("routingInfo", "default"));
         }
 
         /// <summary> Gets a collection of PacketCoreDataPlaneResources in the PacketCoreControlPlane. </summary>

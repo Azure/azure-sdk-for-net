@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class RoutingInfoModelData : IUtf8JsonSerializable, IJsonModel<RoutingInfoModelData>
+    public partial class MobileNetworkRoutingInfoData : IUtf8JsonSerializable, IJsonModel<MobileNetworkRoutingInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingInfoModelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkRoutingInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RoutingInfoModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MobileNetworkRoutingInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingInfoModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkRoutingInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingInfoModelData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkRoutingInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteEndObject();
         }
 
-        RoutingInfoModelData IJsonModel<RoutingInfoModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MobileNetworkRoutingInfoData IJsonModel<MobileNetworkRoutingInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingInfoModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkRoutingInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingInfoModelData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkRoutingInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoutingInfoModelData(document.RootElement, options);
+            return DeserializeMobileNetworkRoutingInfoData(document.RootElement, options);
         }
 
-        internal static RoutingInfoModelData DeserializeRoutingInfoModelData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MobileNetworkRoutingInfoData DeserializeMobileNetworkRoutingInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<IPv4Route> controlPlaneAccessRoutes = default;
-            IList<IPv4Route> userPlaneAccessRoutes = default;
+            IList<MobileNetworkIPv4Route> controlPlaneAccessRoutes = default;
+            IList<MobileNetworkIPv4Route> userPlaneAccessRoutes = default;
             IList<UserPlaneDataRoutesItem> userPlaneDataRoutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            List<IPv4Route> array = new List<IPv4Route>();
+                            List<MobileNetworkIPv4Route> array = new List<MobileNetworkIPv4Route>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPv4Route.DeserializeIPv4Route(item, options));
+                                array.Add(MobileNetworkIPv4Route.DeserializeMobileNetworkIPv4Route(item, options));
                             }
                             controlPlaneAccessRoutes = array;
                             continue;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            List<IPv4Route> array = new List<IPv4Route>();
+                            List<MobileNetworkIPv4Route> array = new List<MobileNetworkIPv4Route>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPv4Route.DeserializeIPv4Route(item, options));
+                                array.Add(MobileNetworkIPv4Route.DeserializeMobileNetworkIPv4Route(item, options));
                             }
                             userPlaneAccessRoutes = array;
                             continue;
@@ -214,46 +214,46 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RoutingInfoModelData(
+            return new MobileNetworkRoutingInfoData(
                 id,
                 name,
                 type,
                 systemData,
-                controlPlaneAccessRoutes ?? new ChangeTrackingList<IPv4Route>(),
-                userPlaneAccessRoutes ?? new ChangeTrackingList<IPv4Route>(),
+                controlPlaneAccessRoutes ?? new ChangeTrackingList<MobileNetworkIPv4Route>(),
+                userPlaneAccessRoutes ?? new ChangeTrackingList<MobileNetworkIPv4Route>(),
                 userPlaneDataRoutes ?? new ChangeTrackingList<UserPlaneDataRoutesItem>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RoutingInfoModelData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MobileNetworkRoutingInfoData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingInfoModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkRoutingInfoData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingInfoModelData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkRoutingInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RoutingInfoModelData IPersistableModel<RoutingInfoModelData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MobileNetworkRoutingInfoData IPersistableModel<MobileNetworkRoutingInfoData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingInfoModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkRoutingInfoData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRoutingInfoModelData(document.RootElement, options);
+                        return DeserializeMobileNetworkRoutingInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingInfoModelData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkRoutingInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RoutingInfoModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MobileNetworkRoutingInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

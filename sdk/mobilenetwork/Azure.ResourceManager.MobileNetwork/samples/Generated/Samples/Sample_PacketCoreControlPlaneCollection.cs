@@ -183,7 +183,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000
                     NasRerouteMacroMmeGroupId = 1024,
                     NasEncryption =
 {
-NasEncryptionType.NEA2EEA2,NasEncryptionType.NEA1EEA1,NasEncryptionType.NEA0EEA0
+MobileNetworkNasEncryptionType.NEA2EEA2,MobileNetworkNasEncryptionType.NEA1EEA1,MobileNetworkNasEncryptionType.NEA0EEA0
 },
                 },
             };

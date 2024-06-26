@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            IReadOnlyList<RoutingInfoModelData> value = default;
+            IReadOnlyList<MobileNetworkRoutingInfoData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<RoutingInfoModelData> array = new List<RoutingInfoModelData>();
+                    List<MobileNetworkRoutingInfoData> array = new List<MobileNetworkRoutingInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingInfoModelData.DeserializeRoutingInfoModelData(item, options));
+                        array.Add(MobileNetworkRoutingInfoData.DeserializeMobileNetworkRoutingInfoData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RoutingInfoListResult(value ?? new ChangeTrackingList<RoutingInfoModelData>(), nextLink, serializedAdditionalRawData);
+            return new RoutingInfoListResult(value ?? new ChangeTrackingList<MobileNetworkRoutingInfoData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingInfoListResult>.Write(ModelReaderWriterOptions options)

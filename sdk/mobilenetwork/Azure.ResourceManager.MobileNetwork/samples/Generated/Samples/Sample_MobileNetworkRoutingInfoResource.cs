@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.MobileNetwork.Samples
 {
-    public partial class Sample_RoutingInfoModelResource
+    public partial class Sample_MobileNetworkRoutingInfoResource
     {
         // Get routing information for the packet core
         [NUnit.Framework.Test]
@@ -27,20 +27,20 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingInfoModelResource created on azure
-            // for more information of creating RoutingInfoModelResource, please refer to the document of RoutingInfoModelResource
+            // this example assumes you already have this MobileNetworkRoutingInfoResource created on azure
+            // for more information of creating MobileNetworkRoutingInfoResource, please refer to the document of MobileNetworkRoutingInfoResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string packetCoreControlPlaneName = "TestPacketCoreCP";
-            ResourceIdentifier routingInfoModelResourceId = RoutingInfoModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, packetCoreControlPlaneName);
-            RoutingInfoModelResource routingInfoModel = client.GetRoutingInfoModelResource(routingInfoModelResourceId);
+            ResourceIdentifier mobileNetworkRoutingInfoResourceId = MobileNetworkRoutingInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, packetCoreControlPlaneName);
+            MobileNetworkRoutingInfoResource mobileNetworkRoutingInfo = client.GetMobileNetworkRoutingInfoResource(mobileNetworkRoutingInfoResourceId);
 
             // invoke the operation
-            RoutingInfoModelResource result = await routingInfoModel.GetAsync();
+            MobileNetworkRoutingInfoResource result = await mobileNetworkRoutingInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutingInfoModelData resourceData = result.Data;
+            MobileNetworkRoutingInfoData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

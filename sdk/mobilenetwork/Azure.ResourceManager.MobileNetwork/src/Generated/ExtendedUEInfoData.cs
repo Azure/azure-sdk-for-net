@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the ExtendedUEInfo data model.
     /// Extended User Equipment (UE) information.
+    /// Serialized Name: ExtendedUeInfo
     /// </summary>
     public partial class ExtendedUEInfoData : ResourceData
     {
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Initializes a new instance of <see cref="ExtendedUEInfoData"/>. </summary>
         /// <param name="properties">
         /// Extended UE Information Properties.
+        /// Serialized Name: ExtendedUeInfo.properties
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
         /// </param>
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Extended UE Information Properties.
+        /// Serialized Name: ExtendedUeInfo.properties
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
         /// </param>
@@ -89,6 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Extended UE Information Properties.
+        /// Serialized Name: ExtendedUeInfo.properties
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
         /// </summary>

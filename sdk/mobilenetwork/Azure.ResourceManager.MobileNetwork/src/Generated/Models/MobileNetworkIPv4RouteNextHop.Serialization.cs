@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class IPv4RouteNextHop : IUtf8JsonSerializable, IJsonModel<IPv4RouteNextHop>
+    public partial class MobileNetworkIPv4RouteNextHop : IUtf8JsonSerializable, IJsonModel<MobileNetworkIPv4RouteNextHop>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv4RouteNextHop>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkIPv4RouteNextHop>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPv4RouteNextHop>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MobileNetworkIPv4RouteNextHop>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv4RouteNextHop)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkIPv4RouteNextHop)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        IPv4RouteNextHop IJsonModel<IPv4RouteNextHop>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MobileNetworkIPv4RouteNextHop IJsonModel<MobileNetworkIPv4RouteNextHop>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv4RouteNextHop)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkIPv4RouteNextHop)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPv4RouteNextHop(document.RootElement, options);
+            return DeserializeMobileNetworkIPv4RouteNextHop(document.RootElement, options);
         }
 
-        internal static IPv4RouteNextHop DeserializeIPv4RouteNextHop(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MobileNetworkIPv4RouteNextHop DeserializeMobileNetworkIPv4RouteNextHop(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPv4RouteNextHop(address, priority, serializedAdditionalRawData);
+            return new MobileNetworkIPv4RouteNextHop(address, priority, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPv4RouteNextHop>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MobileNetworkIPv4RouteNextHop>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPv4RouteNextHop)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkIPv4RouteNextHop)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPv4RouteNextHop IPersistableModel<IPv4RouteNextHop>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MobileNetworkIPv4RouteNextHop IPersistableModel<MobileNetworkIPv4RouteNextHop>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4RouteNextHop>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPv4RouteNextHop(document.RootElement, options);
+                        return DeserializeMobileNetworkIPv4RouteNextHop(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPv4RouteNextHop)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkIPv4RouteNextHop)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPv4RouteNextHop>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MobileNetworkIPv4RouteNextHop>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

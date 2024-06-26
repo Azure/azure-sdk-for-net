@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A Class representing a RoutingInfoModel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoutingInfoModelResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRoutingInfoModelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource"/> using the GetRoutingInfoModel method.
+    /// A Class representing a MobileNetworkRoutingInfo along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkRoutingInfoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkRoutingInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource"/> using the GetMobileNetworkRoutingInfo method.
     /// </summary>
-    public partial class RoutingInfoModelResource : ArmResource
+    public partial class MobileNetworkRoutingInfoResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RoutingInfoModelResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MobileNetworkRoutingInfoResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
@@ -32,35 +32,35 @@ namespace Azure.ResourceManager.MobileNetwork
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _routingInfoModelRoutingInfoClientDiagnostics;
-        private readonly RoutingInfoRestOperations _routingInfoModelRoutingInfoRestClient;
-        private readonly RoutingInfoModelData _data;
+        private readonly ClientDiagnostics _mobileNetworkRoutingInfoRoutingInfoClientDiagnostics;
+        private readonly RoutingInfoRestOperations _mobileNetworkRoutingInfoRoutingInfoRestClient;
+        private readonly MobileNetworkRoutingInfoData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/routingInfo";
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingInfoModelResource"/> class for mocking. </summary>
-        protected RoutingInfoModelResource()
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkRoutingInfoResource"/> class for mocking. </summary>
+        protected MobileNetworkRoutingInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingInfoModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkRoutingInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RoutingInfoModelResource(ArmClient client, RoutingInfoModelData data) : this(client, data.Id)
+        internal MobileNetworkRoutingInfoResource(ArmClient client, MobileNetworkRoutingInfoData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingInfoModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkRoutingInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RoutingInfoModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MobileNetworkRoutingInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routingInfoModelRoutingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string routingInfoModelRoutingInfoApiVersion);
-            _routingInfoModelRoutingInfoRestClient = new RoutingInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routingInfoModelRoutingInfoApiVersion);
+            _mobileNetworkRoutingInfoRoutingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string mobileNetworkRoutingInfoRoutingInfoApiVersion);
+            _mobileNetworkRoutingInfoRoutingInfoRestClient = new RoutingInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mobileNetworkRoutingInfoRoutingInfoApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RoutingInfoModelData Data
+        public virtual MobileNetworkRoutingInfoData Data
         {
             get
             {
@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingInfoModelResource"/></description>
+        /// <description><see cref="MobileNetworkRoutingInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoutingInfoModelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileNetworkRoutingInfoResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _routingInfoModelRoutingInfoClientDiagnostics.CreateScope("RoutingInfoModelResource.Get");
+            using var scope = _mobileNetworkRoutingInfoRoutingInfoClientDiagnostics.CreateScope("MobileNetworkRoutingInfoResource.Get");
             scope.Start();
             try
             {
-                var response = await _routingInfoModelRoutingInfoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mobileNetworkRoutingInfoRoutingInfoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoutingInfoModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkRoutingInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutingInfoModelResource"/></description>
+        /// <description><see cref="MobileNetworkRoutingInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoutingInfoModelResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MobileNetworkRoutingInfoResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _routingInfoModelRoutingInfoClientDiagnostics.CreateScope("RoutingInfoModelResource.Get");
+            using var scope = _mobileNetworkRoutingInfoRoutingInfoClientDiagnostics.CreateScope("MobileNetworkRoutingInfoResource.Get");
             scope.Start();
             try
             {
-                var response = _routingInfoModelRoutingInfoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _mobileNetworkRoutingInfoRoutingInfoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoutingInfoModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkRoutingInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

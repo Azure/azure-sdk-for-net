@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The UserPlaneDataRoutesItem. </summary>
+    /// <summary>
+    /// The UserPlaneDataRoutesItem.
+    /// Serialized Name: UserPlaneDataRoutesItem
+    /// </summary>
     public partial class UserPlaneDataRoutesItem
     {
         /// <summary>
@@ -50,21 +53,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of <see cref="UserPlaneDataRoutesItem"/>. </summary>
         public UserPlaneDataRoutesItem()
         {
-            Routes = new ChangeTrackingList<IPv4Route>();
+            Routes = new ChangeTrackingList<MobileNetworkIPv4Route>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserPlaneDataRoutesItem"/>. </summary>
-        /// <param name="attachedDataNetwork"> Reference to an attached data network resource. </param>
-        /// <param name="routes"> A list of IPv4 routes. </param>
+        /// <param name="attachedDataNetwork">
+        /// Reference to an attached data network resource.
+        /// Serialized Name: UserPlaneDataRoutesItem.attachedDataNetwork
+        /// </param>
+        /// <param name="routes">
+        /// A list of IPv4 routes.
+        /// Serialized Name: UserPlaneDataRoutesItem.routes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserPlaneDataRoutesItem(WritableSubResource attachedDataNetwork, IList<IPv4Route> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserPlaneDataRoutesItem(WritableSubResource attachedDataNetwork, IList<MobileNetworkIPv4Route> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AttachedDataNetwork = attachedDataNetwork;
             Routes = routes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Reference to an attached data network resource. </summary>
+        /// <summary>
+        /// Reference to an attached data network resource.
+        /// Serialized Name: UserPlaneDataRoutesItem.attachedDataNetwork
+        /// </summary>
         internal WritableSubResource AttachedDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier AttachedDataNetworkId
@@ -78,7 +90,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> A list of IPv4 routes. </summary>
-        public IList<IPv4Route> Routes { get; }
+        /// <summary>
+        /// A list of IPv4 routes.
+        /// Serialized Name: UserPlaneDataRoutesItem.routes
+        /// </summary>
+        public IList<MobileNetworkIPv4Route> Routes { get; }
     }
 }

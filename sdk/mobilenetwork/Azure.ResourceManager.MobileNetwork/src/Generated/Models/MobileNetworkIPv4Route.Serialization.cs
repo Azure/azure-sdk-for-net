@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class IPv4Route : IUtf8JsonSerializable, IJsonModel<IPv4Route>
+    public partial class MobileNetworkIPv4Route : IUtf8JsonSerializable, IJsonModel<MobileNetworkIPv4Route>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv4Route>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkIPv4Route>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPv4Route>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MobileNetworkIPv4Route>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4Route>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv4Route)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkIPv4Route)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        IPv4Route IJsonModel<IPv4Route>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MobileNetworkIPv4Route IJsonModel<MobileNetworkIPv4Route>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4Route>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv4Route)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkIPv4Route)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPv4Route(document.RootElement, options);
+            return DeserializeMobileNetworkIPv4Route(document.RootElement, options);
         }
 
-        internal static IPv4Route DeserializeIPv4Route(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MobileNetworkIPv4Route DeserializeMobileNetworkIPv4Route(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             string destination = default;
-            IList<IPv4RouteNextHop> nextHops = default;
+            IList<MobileNetworkIPv4RouteNextHop> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<IPv4RouteNextHop> array = new List<IPv4RouteNextHop>();
+                    List<MobileNetworkIPv4RouteNextHop> array = new List<MobileNetworkIPv4RouteNextHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPv4RouteNextHop.DeserializeIPv4RouteNextHop(item, options));
+                        array.Add(MobileNetworkIPv4RouteNextHop.DeserializeMobileNetworkIPv4RouteNextHop(item, options));
                     }
                     nextHops = array;
                     continue;
@@ -110,38 +110,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPv4Route(destination, nextHops ?? new ChangeTrackingList<IPv4RouteNextHop>(), serializedAdditionalRawData);
+            return new MobileNetworkIPv4Route(destination, nextHops ?? new ChangeTrackingList<MobileNetworkIPv4RouteNextHop>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPv4Route>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MobileNetworkIPv4Route>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4Route>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPv4Route)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkIPv4Route)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPv4Route IPersistableModel<IPv4Route>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MobileNetworkIPv4Route IPersistableModel<MobileNetworkIPv4Route>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv4Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkIPv4Route>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPv4Route(document.RootElement, options);
+                        return DeserializeMobileNetworkIPv4Route(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPv4Route)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkIPv4Route)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPv4Route>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MobileNetworkIPv4Route>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
