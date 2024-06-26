@@ -164,6 +164,8 @@ namespace Azure.ResourceManager.StorageMover
         public long? MemoryInMB { get { throw null; } }
         public long? NumberOfCores { get { throw null; } }
         public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
+        public string TimeZone { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences { get { throw null; } }
         public long? UptimeInSeconds { get { throw null; } }
         Azure.ResourceManager.StorageMover.StorageMoverAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -402,7 +404,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static Azure.ResourceManager.StorageMover.Models.JobRunResourceId JobRunResourceId(Azure.Core.ResourceIdentifier jobRunResourceIdValue = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), string host = null, Azure.ResourceManager.StorageMover.Models.NfsVersion? nfsVersion = default(Azure.ResourceManager.StorageMover.Models.NfsVersion?), string export = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), string host = null, string shareName = null, Azure.ResourceManager.StorageMover.Models.AzureKeyVaultSmbCredentials credentials = null) { throw null; }
-        public static Azure.ResourceManager.StorageMover.StorageMoverAgentData StorageMoverAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus? agentStatus = default(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus?), System.DateTimeOffset? lastStatusUpdate = default(System.DateTimeOffset?), string localIPAddress = null, long? memoryInMB = default(long?), long? numberOfCores = default(long?), long? uptimeInSeconds = default(long?), Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails errorDetails = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.StorageMover.StorageMoverAgentData StorageMoverAgentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus? agentStatus, System.DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails errorDetails, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.StorageMover.StorageMoverAgentData StorageMoverAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus? agentStatus = default(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus?), System.DateTimeOffset? lastStatusUpdate = default(System.DateTimeOffset?), string localIPAddress = null, long? memoryInMB = default(long?), long? numberOfCores = default(long?), long? uptimeInSeconds = default(long?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = null, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails errorDetails = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails StorageMoverAgentPropertiesErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverData StorageMoverData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverEndpointData StorageMoverEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties properties = null) { throw null; }
@@ -543,6 +547,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus Canceling { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus CancelRequested { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.JobRunStatus PausedByBandwidthManagement { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus Queued { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus Running { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.JobRunStatus Started { get { throw null; } }
@@ -597,6 +602,65 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.NfsVersion left, Azure.ResourceManager.StorageMover.Models.NfsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum ScheduleDayOfWeek
+    {
+        Monday = 0,
+        Tuesday = 1,
+        Wednesday = 2,
+        Thursday = 3,
+        Friday = 4,
+        Saturday = 5,
+        Sunday = 6,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduleMinute : System.IEquatable<Azure.ResourceManager.StorageMover.Models.ScheduleMinute>
+    {
+        private readonly int _dummyPrimitive;
+        public ScheduleMinute(int value) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.ScheduleMinute Thirty { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.ScheduleMinute Zero { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageMover.Models.ScheduleMinute other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.ScheduleMinute left, Azure.ResourceManager.StorageMover.Models.ScheduleMinute right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageMover.Models.ScheduleMinute (int value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.ScheduleMinute left, Azure.ResourceManager.StorageMover.Models.ScheduleMinute right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ScheduleRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>
+    {
+        public ScheduleRecurrence(Azure.ResourceManager.StorageMover.Models.ScheduleTime startTime, Azure.ResourceManager.StorageMover.Models.ScheduleTime endTime) { }
+        public Azure.ResourceManager.StorageMover.Models.ScheduleTime EndTime { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageMover.Models.ScheduleTime StartTime { get { throw null; } set { } }
+        Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduleTime : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>
+    {
+        public ScheduleTime(int hour) { }
+        public int Hour { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageMover.Models.ScheduleMinute? Minute { get { throw null; } set { } }
+        Azure.ResourceManager.StorageMover.Models.ScheduleTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.Models.ScheduleTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleTime>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduleWeeklyRecurrence : Azure.ResourceManager.StorageMover.Models.ScheduleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>
+    {
+        public ScheduleWeeklyRecurrence(Azure.ResourceManager.StorageMover.Models.ScheduleTime startTime, Azure.ResourceManager.StorageMover.Models.ScheduleTime endTime, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.Models.ScheduleDayOfWeek> days) : base (default(Azure.ResourceManager.StorageMover.Models.ScheduleTime), default(Azure.ResourceManager.StorageMover.Models.ScheduleTime)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageMover.Models.ScheduleDayOfWeek> Days { get { throw null; } }
+        Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SmbMountEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.SmbMountEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.SmbMountEndpointProperties>
     {
         public SmbMountEndpointProperties(string host, string shareName) { }
@@ -623,6 +687,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         public StorageMoverAgentPatch() { }
         public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences { get { throw null; } }
         Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -729,6 +794,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageMoverProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -739,5 +807,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static implicit operator Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState left, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class UploadLimitWeeklyRecurrence : Azure.ResourceManager.StorageMover.Models.ScheduleWeeklyRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>
+    {
+        public UploadLimitWeeklyRecurrence(Azure.ResourceManager.StorageMover.Models.ScheduleTime startTime, Azure.ResourceManager.StorageMover.Models.ScheduleTime endTime, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.Models.ScheduleDayOfWeek> days, int limitInMbps) : base (default(Azure.ResourceManager.StorageMover.Models.ScheduleTime), default(Azure.ResourceManager.StorageMover.Models.ScheduleTime), default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.Models.ScheduleDayOfWeek>)) { }
+        public int LimitInMbps { get { throw null; } set { } }
+        Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.Models.UploadLimitWeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

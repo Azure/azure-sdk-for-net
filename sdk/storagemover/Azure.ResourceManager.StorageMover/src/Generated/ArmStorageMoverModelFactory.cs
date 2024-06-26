@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -56,11 +58,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
         /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
+        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, StorageMoverAgentStatus? agentStatus = null, DateTimeOffset? lastStatusUpdate = null, string localIPAddress = null, long? memoryInMB = null, long? numberOfCores = null, long? uptimeInSeconds = null, StorageMoverAgentPropertiesErrorDetails errorDetails = null, StorageMoverProvisioningState? provisioningState = null)
+        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, StorageMoverAgentStatus? agentStatus = null, DateTimeOffset? lastStatusUpdate = null, string localIPAddress = null, long? memoryInMB = null, long? numberOfCores = null, long? uptimeInSeconds = null, string timeZone = null, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = null, StorageMoverAgentPropertiesErrorDetails errorDetails = null, StorageMoverProvisioningState? provisioningState = null)
         {
+            uploadLimitScheduleWeeklyRecurrences ??= new List<UploadLimitWeeklyRecurrence>();
+
             return new StorageMoverAgentData(
                 id,
                 name,
@@ -76,6 +82,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 memoryInMB,
                 numberOfCores,
                 uptimeInSeconds,
+                timeZone,
+                uploadLimitScheduleWeeklyRecurrences != null ? new UploadLimitSchedule(uploadLimitScheduleWeeklyRecurrences?.ToList(), serializedAdditionalRawData: null) : null,
                 errorDetails,
                 provisioningState,
                 serializedAdditionalRawData: null);
@@ -346,6 +354,30 @@ namespace Azure.ResourceManager.StorageMover.Models
                 host,
                 shareName,
                 credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for the Agent. </param>
+        /// <param name="agentVersion"> The Agent version. </param>
+        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="agentStatus"> The Agent status. </param>
+        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
+        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
+        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
+        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
+        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="errorDetails"></param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState)
+        {
+            return StorageMoverAgentData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, agentVersion: agentVersion, arcResourceId: arcResourceId, arcVmUuid: arcVmUuid, agentStatus: agentStatus, lastStatusUpdate: lastStatusUpdate, localIPAddress: localIPAddress, memoryInMB: memoryInMB, numberOfCores: numberOfCores, uptimeInSeconds: uptimeInSeconds, timeZone: default, uploadLimitScheduleWeeklyRecurrences: default, errorDetails: errorDetails, provisioningState: provisioningState);
         }
     }
 }

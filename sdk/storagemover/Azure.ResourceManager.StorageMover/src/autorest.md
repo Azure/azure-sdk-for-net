@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/9c7b8d71061df7e308f1776d558fc56f4a6247a2/specification/storagemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/de1f3772629b6f4d3ac01548a5f6d719bfb97c9e/specification/storagemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -16,14 +16,6 @@ modelerfour:
 use-model-reader-writer: true
 
 rename-mapping:
-  Agent: StorageMoverAgent
-  Endpoint: StorageMoverEndpoint
-  Project: StorageMoverProject
-  AgentPropertiesErrorDetails: StorageMoverAgentPropertiesErrorDetails
-  AgentStatus: StorageMoverAgentStatus
-  CopyMode: StorageMoverCopyMode
-  ProvisioningState: StorageMoverProvisioningState
-  Credentials : StorageMoverCredentials
   JobDefinition.properties.agentResourceId: -|arm-id
   JobDefinition.properties.latestJobRunResourceId: -|arm-id
   JobDefinition.properties.targetResourceId: -|arm-id
@@ -33,6 +25,21 @@ rename-mapping:
   JobRun.properties.targetResourceId: -|arm-id
   JobRunResourceId.jobRunResourceId: -|arm-id
   AzureStorageBlobContainerEndpointProperties.storageAccountResourceId: -|string
+  WeeklyRecurrence: ScheduleWeeklyRecurrence
+  Recurrence: ScheduleRecurrence
+  Time: ScheduleTime
+  Minute: ScheduleMinute
+  DayOfWeek: ScheduleDayOfWeek
+
+prepend-rp-prefix:
+  - Agent
+  - Endpoint
+  - Project
+  - AgentPropertiesErrorDetails
+  - AgentStatus
+  - CopyMode
+  - ProvisioningState
+  - Credentials
 
 format-by-name-rules:
   'tenantId': 'uuid'
