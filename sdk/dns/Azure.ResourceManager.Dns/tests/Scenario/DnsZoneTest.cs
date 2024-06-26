@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -43,7 +39,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
@@ -53,7 +48,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(dnsZoneName, dnsZone.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task Delete()
         {
@@ -67,7 +61,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        [Test]
         [RecordedTest]
         public async Task Exist()
         {
@@ -77,7 +70,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
         }
 
-        [Test]
         [RecordedTest]
         public async Task Get()
         {
@@ -88,7 +80,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(dnsZoneName, dnsZone.Value.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -103,6 +94,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
+        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
@@ -132,7 +124,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(0, dnsZone.Data.Tags.Count);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllRecords()
         {
@@ -140,7 +131,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             var dnszone = await CreateDnsZone(dnsZoneName, _resourceGroup);
 
             // Add some aaaaRecord
-            var aaaaRecord1 =await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new DnsAaaaRecordData()
+            var aaaaRecord1 = await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new DnsAaaaRecordData()
             {
                 TtlInSeconds = 3600,
                 DnsAaaaRecords =

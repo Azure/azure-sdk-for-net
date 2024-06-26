@@ -51,23 +51,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubWnsCredential"/>. </summary>
-        /// <param name="packageSid"> The package ID for this credential. </param>
-        /// <param name="secretKey"> The secret key. </param>
-        /// <param name="windowsLiveEndpoint"> The Windows Live endpoint. </param>
+        /// <param name="packageSid"> Gets or sets the package ID for this credential. </param>
+        /// <param name="secretKey"> Gets or sets the secret key. </param>
+        /// <param name="windowsLiveEndpoint"> Gets or sets the Windows Live endpoint. </param>
+        /// <param name="certificateKey"> Ges or sets the WNS Certificate Key. </param>
+        /// <param name="wnsCertificate"> Gets or sets the WNS Certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubWnsCredential(string packageSid, string secretKey, Uri windowsLiveEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubWnsCredential(string packageSid, string secretKey, Uri windowsLiveEndpoint, string certificateKey, string wnsCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageSid = packageSid;
             SecretKey = secretKey;
             WindowsLiveEndpoint = windowsLiveEndpoint;
+            CertificateKey = certificateKey;
+            WnsCertificate = wnsCertificate;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The package ID for this credential. </summary>
+        /// <summary> Gets or sets the package ID for this credential. </summary>
         public string PackageSid { get; set; }
-        /// <summary> The secret key. </summary>
+        /// <summary> Gets or sets the secret key. </summary>
         public string SecretKey { get; set; }
-        /// <summary> The Windows Live endpoint. </summary>
+        /// <summary> Gets or sets the Windows Live endpoint. </summary>
         public Uri WindowsLiveEndpoint { get; set; }
+        /// <summary> Ges or sets the WNS Certificate Key. </summary>
+        public string CertificateKey { get; set; }
+        /// <summary> Gets or sets the WNS Certificate. </summary>
+        public string WnsCertificate { get; set; }
     }
 }

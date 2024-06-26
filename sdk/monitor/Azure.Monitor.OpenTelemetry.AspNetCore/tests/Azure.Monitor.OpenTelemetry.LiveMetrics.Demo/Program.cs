@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 ConnectionString = ConnectionString
             };
 
-            var manager = new Manager(azureMonitorOptions, new DefaultPlatform());
+            var manager = new Manager(azureMonitorOptions, new DefaultPlatformDistro());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)

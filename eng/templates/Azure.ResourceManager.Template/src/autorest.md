@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: ProviderShortName
 namespace: Azure.ResourceManager.ProviderShortName
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/ProviderNameLowercase/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/ProviderNameLowercase/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
