@@ -4,18 +4,18 @@
 #nullable enable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Tests.Models;
 
@@ -25,8 +25,9 @@ internal class AzureDeploymentClient : IDisposable
     private const string DEFAULT_SKU_NAME = "standard";
     private const int DEFAULT_CAPACITY = 1;
 
-    private HttpClient _client;
-    private AccessToken? _cachedAuthToken;
+    private CancellationTokenSource _cts;
+    private ClientPipeline _pipeline;
+    private Core.AccessToken? _cachedAuthToken;
     private readonly string _subscriptionId;
     private readonly string _resourceGroup;
     private readonly string _resourceName;
@@ -36,19 +37,24 @@ internal class AzureDeploymentClient : IDisposable
     protected AzureDeploymentClient()
     {
         // for mocking
-        _client = new();
+        _cts = new();
+        _pipeline = ClientPipeline.Create();
         _subscriptionId = _resourceGroup = _resourceName = _endpointUrl = string.Empty;
         _apiVersion = DEFAULT_API_VERSION;
     }
 
-    public AzureDeploymentClient(IConfiguration config, string? apiVersion = null)
+    public AzureDeploymentClient(IConfiguration config, string? apiVersion = null, PipelineTransport? transport = null)
     {
         if (config == null)
         {
             throw new ArgumentNullException(nameof(config));
         }
 
-        _client = new();
+        _cts = new();
+        _pipeline = ClientPipeline.Create(new ClientPipelineOptions()
+        {
+            Transport = transport ?? new HttpClientPipelineTransport()
+        });
 
         _subscriptionId = config.GetValueOrThrow<string>("subscription_id");
         _resourceGroup = config.GetValueOrThrow<string>("resource_group");
@@ -84,71 +90,55 @@ internal class AzureDeploymentClient : IDisposable
 
     public void Dispose()
     {
-        _client.Dispose();
+        _cts.Cancel();
+        _cts.Dispose();
     }
 
     private async ValueTask<AzureDeployedModel> CreateDeploymentAsync(bool isAsync, string deploymentName, string modelName, string? skuName, int capacity, CancellationToken token)
     {
-        using HttpRequestMessage request = new()
+        BinaryContent content = ToJsonContent(new
         {
-            Method = HttpMethod.Put,
-            Content = ToStringContent(new
+            sku = new
             {
-                sku = new
+                name = skuName,
+                capacity = capacity.ToString(CultureInfo.InvariantCulture),
+            },
+            properties = new
+            {
+                model = new
                 {
-                    name = skuName,
-                    capacity = capacity.ToString(CultureInfo.InvariantCulture),
-                },
-                properties = new
-                {
-                    model = new
-                    {
-                        format = "OpenAI",
-                        name = modelName,
-                        version = "1"
-                    }
+                    format = "OpenAI",
+                    name = modelName,
+                    version = "1"
                 }
-            })
-        };
+            }
+        });
 
-        using HttpResponseMessage response = await SendRequestAsync(isAsync, deploymentName, request, token)
+        PipelineResponse response = await SendRequestAsync(isAsync, HttpMethod.Put, deploymentName, content, token)
             .ConfigureAwait(false);
-
-        return await FromJsonContentAsync<AzureDeployedModel>(isAsync, response, token)
-            .ConfigureAwait(false);
+        return FromJsonContent<AzureDeployedModel>(response, token);
     }
 
     private async ValueTask<AzureDeployedModel> GetDeploymentAsync(bool isAsync, string deploymentName, CancellationToken token)
     {
-        using HttpRequestMessage request = new()
-        {
-            Method = HttpMethod.Get,
-        };
-
-        using var response = await SendRequestAsync(isAsync, deploymentName, request, token)
+        PipelineResponse response = await SendRequestAsync(isAsync, HttpMethod.Get, deploymentName, null, token)
             .ConfigureAwait(false);
-
-        return await FromJsonContentAsync<AzureDeployedModel>(isAsync, response, token)
-           .ConfigureAwait(false);
+        return FromJsonContent<AzureDeployedModel>(response, token);
     }
 
-    private async ValueTask<bool> DeleteDeploymentAsync(bool isAsync, string modelId, CancellationToken token)
+    private async ValueTask<bool> DeleteDeploymentAsync(bool isAsync, string deploymentName, CancellationToken token)
     {
-        using HttpRequestMessage request = new()
-        {
-            Method = HttpMethod.Delete
-        };
-
-        using HttpResponseMessage response = await SendRequestAsync(isAsync, modelId, request, token).ConfigureAwait(false);
-
-        response.EnsureSuccessStatusCode();
+        PipelineResponse response = await SendRequestAsync(isAsync, HttpMethod.Delete, deploymentName, null, token)
+            .ConfigureAwait(false);
+        ThrowOnFailed(response);
         return true;
     }
 
-    private StringContent ToStringContent<T>(T value)
+    private static BinaryContent ToJsonContent<T>(T value)
     {
-        string jsonContent = JsonSerializer.Serialize(value, JsonHelpers.AzureJsonOptions);
-        return new StringContent(jsonContent, Encoding.UTF8, "application/json");
+        Utf8JsonBinaryContent content = new();
+        JsonSerializer.Serialize(content.JsonWriter, value, typeof(T), JsonHelpers.AzureJsonOptions);
+        return content;
     }
 
     private class ErrorDetail
@@ -162,77 +152,71 @@ internal class AzureDeploymentClient : IDisposable
         public ErrorDetail? Error { get; init; }
     }
 
-    private async ValueTask<T> FromJsonContentAsync<T>(bool isAsync, HttpResponseMessage response, CancellationToken token)
+    private static void ThrowOnFailed(PipelineResponse response)
     {
-        if (!response.IsSuccessStatusCode)
+        if (response.IsError)
         {
-            if (response.Content?.Headers?.ContentType?.MediaType == "application/json")
+            if (response.Content != null
+                && response.Headers.GetFirstValueOrDefault("Content-Type")?.StartsWith("application/json") == true)
             {
-                using var errorStream = await GetJsonStreamAsync(isAsync, response, token).ConfigureAwait(false);
+                using Stream errorStream = response.Content.ToStream();
                 ErrorInfo? error = JsonHelpers.Deserialize<ErrorInfo>(errorStream, JsonHelpers.AzureJsonOptions);
                 if (error?.Error != null)
                 {
-                    throw new ApplicationException($"[{(int)response.StatusCode} - {error.Error.Code}] {error.Error.Message}");
+                    throw new ClientResultException($"[{response.Status} - {error.Error.Code}] {error.Error.Message}", response);
                 }
             }
 
-            response.EnsureSuccessStatusCode();
+            throw new ClientResultException(response);
         }
+    }
 
-        using var stream = await GetJsonStreamAsync(isAsync, response, token).ConfigureAwait(false);
+    private static T FromJsonContent<T>(PipelineResponse response, CancellationToken token)
+    {
+        ThrowOnFailed(response);
+
+        using Stream stream = response.Content.ToStream();
         return JsonHelpers.Deserialize<T>(stream, JsonHelpers.AzureJsonOptions)
-            ?? throw new InvalidDataException("Service returend a null JSON response body");
+            ?? throw new InvalidDataException("Service returned a null JSON response body");
     }
 
-    private static async ValueTask<Stream> GetJsonStreamAsync(bool isAsync, HttpResponseMessage response, CancellationToken token)
+    private async ValueTask<PipelineResponse> SendRequestAsync(bool isAsync, HttpMethod method, string pathPart, BinaryContent? body, CancellationToken token)
     {
-        if (response.Content == null)
-        {
-            throw new InvalidDataException("Service did not return a response body");
-        }
-        else if (response.Content.Headers.ContentType?.MediaType != "application/json")
-        {
-            throw new InvalidDataException("Service did not return a JSON response body. Got: " + (response.Content.Headers.ContentType?.MediaType ?? "<<null>>"));
-        }
+        var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, token);
 
-        return
-#if NET
-            isAsync
-                ? await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false)
-                : response.Content.ReadAsStream(token);
-#else
-            // NOTE: .Net Framework's HttpClient does not have a synchronous ReadAsStream method
-            await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
-    }
+        PipelineMessage message = _pipeline.CreateMessage();
+        message.Apply(new()
+        {
+            CancellationToken = linked.Token,
+            ErrorOptions = ClientErrorBehaviors.NoThrow
+        });
 
-    private async ValueTask<HttpResponseMessage> SendRequestAsync(bool isAsync, string pathPart, HttpRequestMessage request, CancellationToken token)
-    {
         string requestId = Guid.NewGuid().ToString();
         string bearerToken = await GetOrRenewAuthTokenAsync(isAsync, requestId, token).ConfigureAwait(false);
 
         string fullEndpoint = _endpointUrl + pathPart + "?api-version=" + _apiVersion;
 
-        request.RequestUri = new Uri(fullEndpoint);
-        request.Headers.TryAddWithoutValidation("x-ms-client-request-id", requestId);
-        request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + bearerToken);
+        PipelineRequest request = message.Request;
+        request.Method = method.Method;
+        request.Uri = new Uri(fullEndpoint);
+        request.Headers.Add("x-ms-client-request-id", requestId);
+        request.Headers.Add("Authorization", "Bearer " + bearerToken);
+        if (body != null)
+        {
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = body;
+        }
 
-        HttpResponseMessage response;
-#if NET
-        // NOTE: .Net Framework's HttpClient does not have a synchronous Send method
         if (isAsync)
         {
-#endif
-            response = await _client.SendAsync(request, token).ConfigureAwait(false);
-#if NET
+            await _pipeline.SendAsync(message).ConfigureAwait(false);
         }
         else
         {
-            response = _client.Send(request, token);
+            _pipeline.Send(message);
         }
-#endif
 
-        return response;
+        return message.Response ?? throw new InvalidOperationException("No response was set after sending");
     }
 
     private async ValueTask<string> GetOrRenewAuthTokenAsync(bool isAsync, string requestId, CancellationToken token)
@@ -250,7 +234,7 @@ internal class AzureDeploymentClient : IDisposable
             ],
             requestId);
 
-        AccessToken authToken;
+        Azure.Core.AccessToken authToken;
         if (isAsync)
         {
             authToken = await cred.GetTokenAsync(context, token).ConfigureAwait(false);

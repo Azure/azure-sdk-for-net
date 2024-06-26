@@ -12,10 +12,12 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using NUnit.Framework.Interfaces;
 using OpenAI.Assistants;
 using OpenAI.Audio;
 using OpenAI.Batch;
@@ -24,7 +26,6 @@ using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
-using OpenAI.Models;
 using OpenAI.Tests;
 using OpenAI.VectorStores;
 using RetryMode = Azure.Core.RetryMode;
@@ -35,6 +36,8 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
+    private const string AZURE_URI_SANITIZER_PATTERN = @"(?<=/(subscriptions|resourceGroups|accounts)/)([^/]+?)(?=(/|$))";
+
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
 #if NETFRAMEWORK
@@ -61,9 +64,28 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         {
             Value = SanitizedJsonConfig.MASK_STRING
         });
-        BodyKeySanitizers.Add(new BodyKeySanitizer("*..endpoint")
+        UriRegexSanitizers.Add(new UriRegexSanitizer(AZURE_URI_SANITIZER_PATTERN)
+        {
+            Value = SanitizedJsonConfig.MASK_STRING
+        });
+        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Azure-AsyncOperation")
+        {
+            Regex = AZURE_URI_SANITIZER_PATTERN,
+            Value = SanitizedJsonConfig.MASK_STRING
+        });
+        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Location")
+        {
+            Regex = AZURE_URI_SANITIZER_PATTERN,
+            Value = SanitizedJsonConfig.MASK_STRING
+        });
+        BodyKeySanitizers.Add(new BodyKeySanitizer("$..endpoint")
         {
             Regex = SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN,
+            Value = SanitizedJsonConfig.MASK_STRING
+        });
+        BodyKeySanitizers.Add(new BodyKeySanitizer("$..id")
+        {
+            Regex = AZURE_URI_SANITIZER_PATTERN,
             Value = SanitizedJsonConfig.MASK_STRING
         });
 
@@ -77,9 +99,6 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         RecordingDisabler = new(() => Recording);
         RecordingDisabler.DisableBodyRecordingFor<FileClient>(nameof(FileClient.UploadFileAsync));
 
-        // Some tests poll until a condition is met. However the code will inject a distinct client request ID into each request
-        // meaning each get call will be treated as different and all will be preserved rather than the last one. Let's ignore
-        // this header (but still validate requests have it)
         IgnoredHeaders.Add("x-ms-client-request-id");
     }
 
@@ -254,19 +273,23 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     /// <returns>The final state. This will return when the conditions have been met or we timed out.</returns>
     protected virtual async Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<T>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
     {
-        TimeSpan max = Mode == RecordedTestMode.Playback
-            ? TimeSpan.FromSeconds(30)
-            : maxWait ?? TimeSpan.FromMinutes(2);
+        TimeSpan delay, max;
+        if (Mode == RecordedTestMode.Playback)
+        {
+            delay = TimeSpan.FromMilliseconds(10);
+            max = TimeSpan.FromSeconds(30);
+        }
+        else
+        {
+            delay = waitTimeBetweenRequests ?? TimeSpan.FromSeconds(2);
+            max = maxWait ?? TimeSpan.FromMinutes(2);
+        }
 
         DateTimeOffset stopTime = DateTimeOffset.Now + max;
-
         T result = initialValue;
+
         while (!stopCondition(result) && DateTimeOffset.Now < stopTime)
         {
-            TimeSpan delay = Mode == RecordedTestMode.Playback
-                ? TimeSpan.FromMilliseconds(10)
-                : waitTimeBetweenRequests ?? TimeSpan.FromSeconds(2);
-
             await Task.Delay(delay).ConfigureAwait(false);
             result = await getAsync().ConfigureAwait(false);
         }
@@ -332,6 +355,10 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
                 break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
+                break;
+            case nameof(AzureDeploymentClient):
+                var accessor = NonPublic.FromField<ClientPipeline, PipelineTransport>("_transport");
+                clientObject = new AzureDeploymentClient(config, null, accessor.Get(topLevelClient.Pipeline));
                 break;
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
@@ -485,7 +512,8 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         _fileIdsToDelete.Clear();
 
         // If we are in recording mode, update the recorded playback configuration as well
-        if (Mode == RecordedTestMode.Record)
+        if (Mode == RecordedTestMode.Record
+            && TestContext.CurrentContext.Result.Outcome == ResultState.Success)
         {
             TestConfig.SavePlaybackConfig();
         }

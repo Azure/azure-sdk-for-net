@@ -96,9 +96,17 @@ internal class TestConfig
 
         if (sourceDirectoryPath != null)
         {
+            string newJson = JsonSerializer.Serialize(_recordedConfig, JsonConfig.JSON_OPTIONS);
+
             string playbackConfigJson = Path.Combine(sourceDirectoryPath, AssetsSubFolder, PlaybackAssetsJson);
-            using var stream = new FileStream(playbackConfigJson, FileMode.Create, FileAccess.Write, FileShare.Read);
-            JsonHelpers.Serialize(stream, _recordedConfig, JsonConfig.JSON_OPTIONS);
+            string oldJson = File.ReadAllText(playbackConfigJson);
+
+            // Visual Studio's hot reload feature can get upset if you are debugging the code and the playback config
+            // file changes, so we only save it if it is different
+            if (oldJson != newJson)
+            {
+                File.WriteAllText(playbackConfigJson, newJson, Encoding.UTF8);
+            }
         }
     }
 
