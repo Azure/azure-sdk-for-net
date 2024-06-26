@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -16,9 +15,8 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor
     // calls the base class constructor that does not take a response.
-    protected AsyncPageCollection(RequestOptions? options /* = default*/) : base()
+    protected AsyncPageCollection() : base()
     {
-        RequestOptions = options;
     }
 
     // Note that this is abstract rather than providing the field in the base
@@ -26,9 +24,8 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
-    protected RequestOptions? RequestOptions { get; }
-
-    public abstract Task<PageResult<T>> GetPageAsync(ClientToken pageToken, RequestOptions? options = default);
+    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
+    public abstract Task<PageResult<T>> GetPageAsync(ClientToken pageToken);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -45,18 +42,14 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
 
     async IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
-        // TODO: join cancellation tokens
-
-        RequestOptions? options = cancellationToken == default ?
-            default :
-            new RequestOptions() { CancellationToken = cancellationToken };
-
-        PageResult<T> page = await GetPageAsync(FirstPageToken, options).ConfigureAwait(false);
+        PageResult<T> page = await GetPageAsync(FirstPageToken).ConfigureAwait(false);
         yield return page;
 
         while (page.NextPageToken != null)
         {
-            page = await GetPageAsync(page.NextPageToken, options).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            page = await GetPageAsync(page.NextPageToken).ConfigureAwait(false);
             yield return page;
         }
     }

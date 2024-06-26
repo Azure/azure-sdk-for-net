@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,9 +15,8 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor
     // calls the base class constructor that does not take a response.
-    protected PageCollection(RequestOptions? options/* = default*/) : base()
+    protected PageCollection() : base()
     {
-        RequestOptions = options;
     }
 
     // Note that this is abstract rather than providing the field in the base
@@ -26,9 +24,8 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
-    protected RequestOptions? RequestOptions { get; }
-
-    public abstract PageResult<T> GetPage(ClientToken pageToken, RequestOptions? options = default);
+    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
+    public abstract PageResult<T> GetPage(ClientToken pageToken);
 
     public IEnumerable<T> GetAllValues()
     {
@@ -45,7 +42,7 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 
     IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
     {
-        PageResult<T> page = GetPage(FirstPageToken, RequestOptions);
+        PageResult<T> page = GetPage(FirstPageToken);
         yield return page;
 
         while (page.NextPageToken != null)
