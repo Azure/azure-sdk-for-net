@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
 using OpenAI;
 using OpenAI.Assistants;
@@ -28,8 +29,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicAssistantOperationsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
         Assert.That(assistant.Name, Is.Null.Or.Empty);
@@ -106,8 +107,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task SettingResponseFormatWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
 
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
@@ -135,8 +136,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task StreamingToolCall()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         FunctionToolDefinition getWeatherTool = new("get_current_weather", "Gets the user's current weather");
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
@@ -297,8 +298,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicRunOperationsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
         AssistantThread thread = await client.CreateThreadAsync();
@@ -309,7 +310,6 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(runPage.Count, Is.EqualTo(0));
         ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Hello, assistant!"]);
         Validate(message);
-        Thread.Sleep(3000);
         ThreadRun run = await client.CreateRunAsync(thread.Id, assistant.Id);
         Validate(run);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Queued));
@@ -327,11 +327,12 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             c => c.GetMessagesAsync(thread));
         Assert.That(messages.Count, Is.GreaterThanOrEqualTo(1));
 
-        for (int i = 0; i < 10 && !run.Status.IsTerminal; i++)
-        {
-            await Task.Delay(1000);
-            run = await client.GetRunAsync(run);
-        }
+        run = await WaitUntilReturnLast(
+            run,
+            () => client.GetRunAsync(run),
+            r => r.Status.IsTerminal);
+        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
+
         Assert.Multiple(() =>
         {
             Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
@@ -354,8 +355,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task BasicRunStepFunctionalityWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
         {
             Tools = { new CodeInterpreterToolDefinition() },
@@ -372,11 +373,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         ThreadRun run = await client.CreateRunAsync(thread, assistant);
         Validate(run);
 
-        while (!run.Status.IsTerminal)
-        {
-            await Task.Delay(1000);
-            run = await client.GetRunAsync(run);
-        }
+        run = await WaitUntilReturnLast(
+            run,
+            () => client.GetRunAsync(run),
+            r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
         Assert.That(run.Usage?.TotalTokens, Is.GreaterThan(0));
 
@@ -410,8 +410,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task FunctionToolsWork()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
         {
             Tools =
@@ -455,13 +455,13 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Validate(run);
         Console.WriteLine($" Run status right after creation: {run.Status}");
 
-        // TODO FIXME: The underlying OpenAI code doesn't consider the "requires_action" status to be terminal even though it is
-        //             work around this here
-        for (int i = 0; i < 10 && !run.Status.IsTerminal && !run.Status.Equals("requires_action"); i++)
-        {
-            Thread.Sleep(500);
-            run = await client.GetRunAsync(run);
-        }
+        // TODO FIXME: The underlying OpenAI code doesn't consider the "requires_action" status to be terminal even though it is.
+        //             Work around this here
+        run = await WaitUntilReturnLast(
+            run,
+            () => client.GetRunAsync(run),
+            r => r.Status.IsTerminal || r.Status.Equals(RunStatus.RequiresAction));
+
         Assert.That(run.Status, Is.EqualTo(RunStatus.RequiresAction));
         Assert.That(run.RequiredActions?.Count, Is.EqualTo(1));
         Assert.That(run.RequiredActions[0].ToolCallId, Is.Not.Null.Or.Empty);
@@ -471,11 +471,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         run = await client.SubmitToolOutputsToRunAsync(run, [new(run.RequiredActions[0].ToolCallId, "tacos")]);
         Assert.That(run.Status.IsTerminal, Is.False);
 
-        for (int i = 0; i < 10 && !run.Status.IsTerminal; i++)
-        {
-            Thread.Sleep(500);
-            run = await client.GetRunAsync(run);
-        }
+        run = await WaitUntilReturnLast(
+            run,
+            () => client.GetRunAsync(run),
+            r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
         List<ThreadMessage> messages = await SyncOrAsyncList(client,
@@ -491,9 +490,9 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     public async Task BasicFileSearchWorks()
     {
         // First, we need to upload a simple test file.
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
-        FileClient fileClient = GetChildTestClient<FileClient>(client);
+        string modelName = client.DeploymentOrThrow();
+        FileClient fileClient = GetTestClientFrom<FileClient>(client);
 
         OpenAIFileInfo testFile = await fileClient.UploadFileAsync(
             BinaryData.FromString("""
@@ -577,11 +576,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         ThreadRun run = await client.CreateRunAsync(thread, assistant);
         Validate(run);
-        do
-        {
-            await Task.Delay(1000);
-            run = await client.GetRunAsync(run);
-        } while (run?.Status.IsTerminal == false);
+        run = await WaitUntilReturnLast(
+            run,
+            () => client.GetRunAsync(run),
+            r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
         AsyncPageableCollection<ThreadMessage> messages = SyncOrAsync(client,
@@ -609,8 +607,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task StreamingRunWorks()
     {
-        string modelName = TestConfig.GetDeploymentNameFor<AssistantClient>();
         AssistantClient client = GetTestClient();
+        string modelName = client.DeploymentOrThrow();
         Assistant assistant = await client.CreateAssistantAsync(modelName);
         Validate(assistant);
 
