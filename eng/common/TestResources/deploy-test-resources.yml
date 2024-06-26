@@ -46,6 +46,7 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
@@ -98,4 +99,5 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
         ${{ insert }}: ${{ parameters.EnvVars }}
