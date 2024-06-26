@@ -601,7 +601,7 @@
       ]
     },
     {
-      "filename": "**/sdk/informatica/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
         "cdie",
         "infa",
