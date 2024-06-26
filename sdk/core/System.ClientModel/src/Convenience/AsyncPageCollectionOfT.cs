@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
+public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
 {
     protected AsyncPageCollection() : base()
     {
@@ -22,11 +22,11 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
-    public abstract Task<ClientPage<T>> GetPageAsync(ClientToken pageToken, RequestOptions? options = default);
+    public abstract Task<PageResult<T>> GetPageAsync(ClientToken pageToken, RequestOptions? options = default);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await foreach (ClientPage<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (PageResult<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page.Values)
             {
@@ -35,13 +35,13 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
         }
     }
 
-    async IAsyncEnumerator<ClientPage<T>> IAsyncEnumerable<ClientPage<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
+    async IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
         RequestOptions? options = cancellationToken == default ?
             default :
             new RequestOptions() { CancellationToken = cancellationToken };
 
-        ClientPage<T> page = await GetPageAsync(FirstPageToken, options).ConfigureAwait(false);
+        PageResult<T> page = await GetPageAsync(FirstPageToken, options).ConfigureAwait(false);
         yield return page;
 
         while (page.NextPageToken != null)

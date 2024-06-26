@@ -8,9 +8,9 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public class ClientPage<T> : ClientResult
+public class PageResult<T> : ClientResult
 {
-    private ClientPage(IReadOnlyList<T> values,
+    private PageResult(IReadOnlyList<T> values,
         ClientToken pageToken,
         ClientToken? nextPageToken,
         PipelineResponse response) : base(response)
@@ -35,7 +35,7 @@ public class ClientPage<T> : ClientResult
     // If this is null, the current page is the last page in a collection.
     public ClientToken? NextPageToken { get; }
 
-    public static ClientPage<T> Create(IReadOnlyList<T> values, ClientToken pageToken, ClientToken? nextPageToken, PipelineResponse response)
+    public static PageResult<T> Create(IReadOnlyList<T> values, ClientToken pageToken, ClientToken? nextPageToken, PipelineResponse response)
         => new(values, pageToken, nextPageToken, response);
 }
 

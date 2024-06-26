@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 // This type is a client that defines a collection of elements and can
 // make service requests to retrieve specific pages
-public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
+public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 {
     // Note - assumes we don't make a request initially, so don't call
     // response constructor
@@ -21,11 +21,11 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
 
     public abstract ClientToken FirstPageToken { get; }
 
-    public abstract ClientPage<T> GetPage(ClientToken pageToken, RequestOptions? options = default);
+    public abstract PageResult<T> GetPage(ClientToken pageToken, RequestOptions? options = default);
 
     public IEnumerable<T> GetAllValues()
     {
-        foreach (ClientPage<T> page in this)
+        foreach (PageResult<T> page in this)
         {
             foreach (T value in page.Values)
             {
@@ -34,11 +34,11 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
         }
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<ClientPage<T>>)this).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PageResult<T>>)this).GetEnumerator();
 
-    IEnumerator<ClientPage<T>> IEnumerable<ClientPage<T>>.GetEnumerator()
+    IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
     {
-        ClientPage<T> page = GetPage(FirstPageToken);
+        PageResult<T> page = GetPage(FirstPageToken);
         yield return page;
 
         while (page.NextPageToken != null)

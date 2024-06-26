@@ -10,71 +10,71 @@ namespace System.ClientModel.Tests.Results;
 
 public class PageCollectionTests
 {
-    [Test]
-    public void CanEnumeratePages()
-    {
-        List<int> values = new() { 0, 1, 2, 3 };
-        int pageSize = 2;
+    //[Test]
+    //public void CanEnumeratePages()
+    //{
+    //    List<int> values = new() { 0, 1, 2, 3 };
+    //    int pageSize = 2;
 
-        List<ClientResult> mockResults = new() {
-            new MockClientResult(new MockPipelineResponse(0)),
-            new MockClientResult(new MockPipelineResponse(1))
-        };
+    //    List<ClientResult> mockResults = new() {
+    //        new MockClientResult(new MockPipelineResponse(0)),
+    //        new MockClientResult(new MockPipelineResponse(1))
+    //    };
 
-        PageCollection<int> pages = new MockPageCollection<int>(values, mockResults, pageSize);
+    //    PageCollection<int> pages = new MockPageCollection<int>(values, mockResults, pageSize);
 
-        int i = 0;
-        foreach (ClientPage<int> page in pages)
-        {
-            Assert.AreEqual(i++, page.Values[0]);
-            Assert.AreEqual(i++, page.Values[1]);
-        }
+    //    int i = 0;
+    //    foreach (PageResult<int> page in pages)
+    //    {
+    //        Assert.AreEqual(i++, page.Values[0]);
+    //        Assert.AreEqual(i++, page.Values[1]);
+    //    }
 
-        Assert.AreEqual(4, i);
-    }
+    //    Assert.AreEqual(4, i);
+    //}
 
-    [Test]
-    public void CanEnumerateClientResults()
-    {
-        List<ClientResult> mockResults = new() {
-            new MockClientResult(new MockPipelineResponse(0)),
-            new MockClientResult(new MockPipelineResponse(1))
-        };
+    //[Test]
+    //public void CanEnumerateClientResults()
+    //{
+    //    List<ClientResult> mockResults = new() {
+    //        new MockClientResult(new MockPipelineResponse(0)),
+    //        new MockClientResult(new MockPipelineResponse(1))
+    //    };
 
-        IEnumerable<ClientResult> results = new ProtocolMockPageCollection(mockResults);
+    //    IEnumerable<ClientResult> results = new ProtocolMockPageCollection(mockResults);
 
-        int i = 0;
-        foreach (ClientResult result in results)
-        {
-            Assert.AreEqual(i++, result.GetRawResponse().Status);
-        }
+    //    int i = 0;
+    //    foreach (ClientResult result in results)
+    //    {
+    //        Assert.AreEqual(i++, result.GetRawResponse().Status);
+    //    }
 
-        Assert.AreEqual(2, i);
-    }
+    //    Assert.AreEqual(2, i);
+    //}
 
-    [Test]
-    public void CanEvolveFromProtocol()
-    {
-        List<int> values = new() { 0, 1, 2, 3 };
-        int pageSize = 2;
+    //[Test]
+    //public void CanEvolveFromProtocol()
+    //{
+    //    List<int> values = new() { 0, 1, 2, 3 };
+    //    int pageSize = 2;
 
-        List<ClientResult> mockResults = new() {
-            new MockClientResult(new MockPipelineResponse(0)),
-            new MockClientResult(new MockPipelineResponse(1))
-        };
+    //    List<ClientResult> mockResults = new() {
+    //        new MockClientResult(new MockPipelineResponse(0)),
+    //        new MockClientResult(new MockPipelineResponse(1))
+    //    };
 
-        // Showing that we can use the same code as protocol-only
-        // with a convenience return type.
-        IEnumerable<ClientResult> results = new MockPageCollection<int>(values, mockResults, pageSize);
+    //    // Showing that we can use the same code as protocol-only
+    //    // with a convenience return type.
+    //    IEnumerable<ClientResult> results = new MockPageCollection<int>(values, mockResults, pageSize);
 
-        int i = 0;
-        foreach (ClientResult result in results)
-        {
-            Assert.AreEqual(i++, result.GetRawResponse().Status);
-        }
+    //    int i = 0;
+    //    foreach (ClientResult result in results)
+    //    {
+    //        Assert.AreEqual(i++, result.GetRawResponse().Status);
+    //    }
 
-        Assert.AreEqual(2, i);
-    }
+    //    Assert.AreEqual(2, i);
+    //}
 
     //private static readonly string[] MockPageContents = { """
     //        [

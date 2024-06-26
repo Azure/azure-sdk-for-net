@@ -7,19 +7,19 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncPageCollection<T> : System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>
+    public abstract partial class AsyncCollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
+    {
+        protected internal AsyncCollectionResult() { }
+        protected internal AsyncCollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public abstract partial class AsyncPageCollection<T> : System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>
     {
         protected AsyncPageCollection() { }
         public abstract System.ClientModel.ClientToken FirstPageToken { get; }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientPage<T>> GetPageAsync(System.ClientModel.ClientToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
-        System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public abstract partial class AsyncResultValueCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
-    {
-        protected internal AsyncResultValueCollection() { }
-        protected internal AsyncResultValueCollection(System.ClientModel.Primitives.PipelineResponse response) { }
-        public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsync(System.ClientModel.ClientToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
+        System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -31,14 +31,6 @@ namespace System.ClientModel
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public partial class ClientPage<T> : System.ClientModel.ClientResult
-    {
-        internal ClientPage() { }
-        public System.ClientModel.ClientToken? NextPageToken { get { throw null; } }
-        public System.ClientModel.ClientToken PageToken { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        public static System.ClientModel.ClientPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ClientToken pageToken, System.ClientModel.ClientToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
     public partial class ClientResult
     {
@@ -67,25 +59,33 @@ namespace System.ClientModel
     public partial class ClientToken
     {
         protected ClientToken() { }
-        public ClientToken(System.BinaryData bytes) { }
+        protected ClientToken(System.BinaryData bytes) { }
         public static System.ClientModel.ClientToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.IEnumerable
+    public abstract partial class CollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+    {
+        protected internal CollectionResult() { }
+        protected internal CollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
         public abstract System.ClientModel.ClientToken FirstPageToken { get; }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
-        public abstract System.ClientModel.ClientPage<T> GetPage(System.ClientModel.ClientToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
-        System.Collections.Generic.IEnumerator<System.ClientModel.ClientPage<T>> System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>.GetEnumerator() { throw null; }
+        public abstract System.ClientModel.PageResult<T> GetPage(System.ClientModel.ClientToken pageToken, System.ClientModel.Primitives.RequestOptions? options = null);
+        System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class ResultValueCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+    public partial class PageResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ResultValueCollection() { }
-        protected internal ResultValueCollection(System.ClientModel.Primitives.PipelineResponse response) { }
-        public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        internal PageResult() { }
+        public System.ClientModel.ClientToken? NextPageToken { get { throw null; } }
+        public System.ClientModel.ClientToken PageToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
+        public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ClientToken pageToken, System.ClientModel.ClientToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
