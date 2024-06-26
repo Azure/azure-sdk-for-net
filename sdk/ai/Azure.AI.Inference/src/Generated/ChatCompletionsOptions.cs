@@ -118,13 +118,14 @@ namespace Azure.AI.Inference
         /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
         /// </param>
-        /// <param name="toolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
+        /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
         /// <param name="seed">
         /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
-        /// same seed and parameters should return the same result. Determinism is not guaranteed."
+        /// same seed and parameters should return the same result. Determinism is not guaranteed.
         /// </param>
+        /// <param name="model"> ID of the specific AI model to use, if more than one model is available on the endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice, long? seed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, long? seed, string model, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             FrequencyPenalty = frequencyPenalty;
@@ -136,8 +137,9 @@ namespace Azure.AI.Inference
             ResponseFormat = responseFormat;
             StopSequences = stopSequences;
             Tools = tools;
-            ToolChoice = toolChoice;
+            InternalSuppressedToolChoice = internalSuppressedToolChoice;
             Seed = seed;
+            Model = model;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -200,51 +202,11 @@ namespace Azure.AI.Inference
         /// </summary>
         public IList<ChatCompletionsToolDefinition> Tools { get; }
         /// <summary>
-        /// If specified, the model will configure which of the provided tools it can use for the chat completions response.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description><see cref="ChatCompletionsToolSelectionPreset"/></description>
-        /// </item>
-        /// <item>
-        /// <description><see cref="ChatCompletionsNamedToolSelection"/></description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ToolChoice { get; set; }
-        /// <summary>
         /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
-        /// same seed and parameters should return the same result. Determinism is not guaranteed."
+        /// same seed and parameters should return the same result. Determinism is not guaranteed.
         /// </summary>
         public long? Seed { get; set; }
+        /// <summary> ID of the specific AI model to use, if more than one model is available on the endpoint. </summary>
+        public string Model { get; set; }
     }
 }

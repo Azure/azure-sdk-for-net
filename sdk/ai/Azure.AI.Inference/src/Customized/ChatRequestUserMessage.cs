@@ -6,8 +6,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Azure.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.Inference
 {
