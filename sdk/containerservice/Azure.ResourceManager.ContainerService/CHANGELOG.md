@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.2 (2024-06-17)
+
+### Bugs Fixed
+
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/44501.
+
 ## 1.2.1 (2024-04-29)
 
 ### Features Added

@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#nullable disable
-
 #if !NETFRAMEWORK
 using System.Data;
 using System.Diagnostics;
@@ -36,7 +34,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
     private readonly PropertyFetcher<Exception> exceptionFetcher = new("Exception");
     private readonly SqlClientTraceInstrumentationOptions options;
 
-    public SqlClientDiagnosticListener(string sourceName, SqlClientTraceInstrumentationOptions options)
+    public SqlClientDiagnosticListener(string sourceName, SqlClientTraceInstrumentationOptions? options)
         : base(sourceName)
     {
         this.options = options ?? new SqlClientTraceInstrumentationOptions();
@@ -44,7 +42,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
 
     public override bool SupportsNullActivity => true;
 
-    public override void OnEventWritten(string name, object payload)
+    public override void OnEventWritten(string name, object? payload)
     {
         var activity = Activity.Current;
         switch (name)
@@ -96,14 +94,19 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                         _ = this.connectionFetcher.TryFetch(command, out var connection);
                         _ = this.databaseFetcher.TryFetch(connection, out var database);
 
-                        activity.DisplayName = (string)database;
+                        if (database != null)
+                        {
+                            activity.DisplayName = (string)database;
+                            activity.SetTag(SemanticConventions.AttributeDbName, database);
+                        }
 
                         _ = this.dataSourceFetcher.TryFetch(connection, out var dataSource);
                         _ = this.commandTextFetcher.TryFetch(command, out var commandText);
 
-                        activity.SetTag(SemanticConventions.AttributeDbName, (string)database);
-
-                        this.options.AddConnectionLevelDetailsToActivity((string)dataSource, activity);
+                        if (dataSource != null)
+                        {
+                            this.options.AddConnectionLevelDetailsToActivity((string)dataSource, activity);
+                        }
 
                         if (this.commandTypeFetcher.TryFetch(command, out CommandType commandType))
                         {
@@ -112,7 +115,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                                 case CommandType.StoredProcedure:
                                     if (this.options.SetDbStatementForStoredProcedure)
                                     {
-                                        activity.SetTag(SemanticConventions.AttributeDbStatement, (string)commandText);
+                                        activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
                                     }
 
                                     break;
@@ -120,7 +123,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                                 case CommandType.Text:
                                     if (this.options.SetDbStatementForText)
                                     {
-                                        activity.SetTag(SemanticConventions.AttributeDbStatement, (string)commandText);
+                                        activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
                                     }
 
                                     break;
@@ -178,7 +181,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                     {
                         if (activity.IsAllDataRequested)
                         {
-                            if (this.exceptionFetcher.TryFetch(payload, out Exception exception) && exception != null)
+                            if (this.exceptionFetcher.TryFetch(payload, out Exception? exception) && exception != null)
                             {
                                 activity.SetStatus(ActivityStatusCode.Error, exception.Message);
 

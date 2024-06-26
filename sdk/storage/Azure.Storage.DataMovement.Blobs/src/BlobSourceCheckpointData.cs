@@ -9,8 +9,8 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class BlobSourceCheckpointData : BlobCheckpointData
     {
-        public BlobSourceCheckpointData(DataTransferProperty<BlobType?> blobType)
-            : base(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion, blobType)
+        public BlobSourceCheckpointData()
+            : base(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion)
         {
         }
 
@@ -23,17 +23,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             writer.Write(Version);
-
-            // BlobType
-            writer.Write(PreserveBlobType);
-            if (!PreserveBlobType)
-            {
-                writer.Write((byte)BlobTypeValue);
-            }
-            else
-            {
-                writer.Write((byte)0);
-            }
         }
 
         internal static BlobSourceCheckpointData Deserialize(Stream stream)
@@ -48,11 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
             }
 
-            // BlobType
-            bool preserveBlobType = reader.ReadBoolean();
-            BlobType blobType = (BlobType)reader.ReadByte();
-
-            return new BlobSourceCheckpointData(blobType: preserveBlobType ? new(preserveBlobType) : new(blobType));
+            return new BlobSourceCheckpointData();
         }
     }
 }

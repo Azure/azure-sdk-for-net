@@ -6,8 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("AzureMachineLearningIndexChatDataSource")]
-[CodeGenSuppress(nameof(AzureMachineLearningIndexChatDataSource))]
-[CodeGenSuppress(nameof(AzureMachineLearningIndexChatDataSource), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(InternalAzureMachineLearningIndexChatDataSourceParameters))]
 public partial class AzureMachineLearningIndexChatDataSource : AzureChatDataSource
 {
     [CodeGenMember("Parameters")]

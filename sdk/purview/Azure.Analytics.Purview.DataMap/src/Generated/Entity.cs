@@ -5328,7 +5328,7 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", contentType);
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }

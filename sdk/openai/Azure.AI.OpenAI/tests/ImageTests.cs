@@ -6,7 +6,6 @@
 using System;
 using System.ClientModel;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Images;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using OpenAI.Images;

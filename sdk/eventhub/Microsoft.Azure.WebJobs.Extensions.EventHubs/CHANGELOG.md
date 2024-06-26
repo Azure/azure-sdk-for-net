@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 6.3.3 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`. 
+
 ## 6.3.2 (2024-04-29)
 
 ### Bugs Fixed

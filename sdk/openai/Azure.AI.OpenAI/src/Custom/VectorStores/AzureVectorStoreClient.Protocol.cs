@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.VectorStores;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.VectorStores;
 

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using OpenAI;
 using OpenAI.Batch;
 
 namespace Azure.AI.OpenAI.Batch;

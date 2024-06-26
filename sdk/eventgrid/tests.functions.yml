@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: eventgrid
     SDKType: functions
+    Location: eastus

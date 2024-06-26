@@ -138,6 +138,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         protected ImageAnalysisClient() { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions options) { }
+        public ImageAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ImageAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult> Analyze(System.BinaryData imageData, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult> Analyze(System.Uri imageUri, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -284,6 +286,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIVisionImageAnalysisClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClient, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClient, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClient, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.4 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2024-06-17)
+
+### Features Added
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
 
 ## 1.12.0-beta.3 (2024-06-11)
 

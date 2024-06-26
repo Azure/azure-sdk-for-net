@@ -507,6 +507,63 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetBatchUsingTags()
+        {
+            var response1 = new MockResponse(200);
+            var mockTags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+            var response1Settings = new[]
+            {
+                CreateSetting(0, mockTags),
+                CreateSetting(1, mockTags)
+            };
+            response1.SetContent(SerializationHelpers.Serialize((Settings: response1Settings, NextLink: $"/kv?after=5&api-version={s_version}"), SerializeBatch));
+
+            var response2 = new MockResponse(200);
+            var response2Settings = new[]
+            {
+                CreateSetting(2, mockTags),
+                CreateSetting(3, mockTags),
+                CreateSetting(4, mockTags),
+            };
+            response2.SetContent(SerializationHelpers.Serialize((Settings: response2Settings, NextLink: (string)null), SerializeBatch));
+
+            var mockTransport = new MockTransport(response1, response2);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var parsedTags = mockTags.Select(t => $"{t.Key}={t.Value}").ToList();
+            var query = new SettingSelector();
+            foreach (var tag in mockTags)
+            {
+                query.TagsFilter.Add($"{tag.Key}={tag.Value}");
+            }
+            int keyIndex = 0;
+
+            await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
+            {
+                Assert.AreEqual("key" + keyIndex, value.Key);
+                Assert.AreEqual(mockTags, value.Tags);
+                keyIndex++;
+            }
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            MockRequest request1 = mockTransport.Requests[0];
+            var expectedTagsQuery = string.Join("&tags=", parsedTags.Select(Uri.EscapeDataString));
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?api-version={s_version}&tags={expectedTagsQuery}", request1.Uri.ToString());
+            AssertRequestCommon(request1);
+
+            MockRequest request2 = mockTransport.Requests[1];
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}", request2.Uri.ToString());
+            AssertRequestCommon(request1);
+        }
+
+        [Test]
         public async Task ConfiguringTheClient()
         {
             var response = new MockResponse(200);
@@ -944,8 +1001,13 @@ namespace Azure.Data.AppConfiguration.Tests
             StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
         }
 
-        private static ConfigurationSetting CreateSetting(int i)
+        private static ConfigurationSetting CreateSetting(int i, IDictionary<string, string> tags = null)
         {
+            if (tags != null)
+            {
+                return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text", Tags = tags };
+            }
+
             return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
         }
 

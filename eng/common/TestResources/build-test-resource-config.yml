@@ -9,38 +9,52 @@ parameters:
   - name: EnvVars
     type: object
     default: null
+  - name: SubscriptionConfigurationFilePaths
+    type: object
+    default: null
 
 steps:
-  - ${{ if parameters.SubscriptionConfiguration }}:
-    - pwsh: |
-        $config = @'
-          ${{ parameters.SubscriptionConfiguration }}
-        '@ | ConvertFrom-Json -AsHashtable
+  - pwsh: |
+      . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-        . ./eng/common/TestResources/SubConfig-Helpers.ps1
-        SetSubscriptionConfiguration $config
-      displayName: Initialize SubscriptionConfiguration variable
-      ${{ if parameters.EnvVars }}:
-        env: ${{ parameters.EnvVars }}
+      $finalConfig = @{}
+      $baseSubConfigRaw = @'
+        ${{ parameters.SubscriptionConfiguration }}
+      '@.Trim()
+      if ($baseSubConfigRaw) {
+        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-  - ${{ if parameters.SubscriptionConfigurations }}:
-    - pwsh: |
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
-      displayName: Initialize SubscriptionConfiguration variable for merging
-      condition: eq(variables['SubscriptionConfiguration'], '')
+        Write-Host "Setting base sub config"
+        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
+      }
 
-    - ${{ each config in parameters.SubscriptionConfigurations }}:
-      - pwsh: |
-          $configBase = @'
-            $(SubscriptionConfiguration)
-          '@ | ConvertFrom-Json -AsHashtable
-          $config = @'
-            ${{ config }}
-          '@ | ConvertFrom-Json -AsHashtable
+      $subConfigJsonsRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurations) }}
+      '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-          . ./eng/common/TestResources/SubConfig-Helpers.ps1
-          UpdateSubscriptionConfiguration $configBase $config
+      if ($subConfigJsonsRaw) {
+        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
 
-        displayName: Merge Test Resource Configurations
-        ${{ if parameters.EnvVars }}:
-          env: ${{ parameters.EnvVars }}
+        foreach ($subConfig in $subConfigs) {
+          Write-Host "Merging sub config from list"
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+        }
+      }
+
+      $subConfigFilesRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
+      '@.Trim()
+
+      if ($subConfigFilesRaw) {
+        $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
+        foreach ($file in $subConfigFiles) {
+          Write-Host "Merging sub config from file: $file"
+          $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+        }
+      }
+
+      Write-Host ($finalConfig | ConvertTo-Json)
+      $serialized = $finalConfig | ConvertTo-Json -Compress
+      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    displayName: Merge subscription configurations

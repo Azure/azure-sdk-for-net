@@ -6,8 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("PineconeChatDataSource")]
-[CodeGenSuppress(nameof(PineconeChatDataSource))]
-[CodeGenSuppress(nameof(PineconeChatDataSource), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(InternalPineconeChatDataSourceParameters))]
 public partial class PineconeChatDataSource : AzureChatDataSource
 {
     [CodeGenMember("Parameters")]
@@ -99,7 +97,7 @@ public partial class PineconeChatDataSource : AzureChatDataSource
 
     public PineconeChatDataSource()
     {
-        Type = "azure_search";
+        Type = "pinecone";
         InternalParameters = new();
         _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
     }

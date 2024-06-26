@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2024-06-14)
+
+### Features Added
+
+- Per changes to the [OpenAI .NET client library](https://github.com/openai/openai-dotnet), most convenience methods now provide the direct ability to provide optional `CancellationTokens`, removing the need to use protocol methods
+
+### Breaking Changes
+
+- In support of `CancellationToken`s in methods, an overriden method signature for streaming chat completions was changed and a new minimum version dependency of 2.0.0-beta.5 is established for the OpenAI dependency. These styles of breaks will be extraordinarily rare.
+
+### Bugs Fixed
+
+- See breaking changes: when streaming chat completions, an error of "Unrecognized request argument supplied: stream_options" is introduced when using Azure.AI.OpenAI 2.0.0-beta.1 with OpenAI 2.0.0-beta.5+. This is fixed with the new version.
 
 ## 2.0.0-beta.1 (2024-06-07)
 

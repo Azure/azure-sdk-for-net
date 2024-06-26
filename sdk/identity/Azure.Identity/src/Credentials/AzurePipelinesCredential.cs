@@ -110,20 +110,27 @@ namespace Azure.Identity
 
         internal string GetOidcTokenResponse(HttpMessage message)
         {
-            Utf8JsonReader reader = new Utf8JsonReader(message.Response.Content);
             string oidcToken = null;
-            while (oidcToken is null && reader.Read())
+            try
             {
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                Utf8JsonReader reader = new Utf8JsonReader(message.Response.Content);
+                while (oidcToken is null && reader.Read())
                 {
-                    switch (reader.GetString())
+                    if (reader.TokenType == JsonTokenType.PropertyName)
                     {
-                        case "oidcToken":
-                            reader.Read();
-                            oidcToken = reader.GetString();
-                            break;
+                        switch (reader.GetString())
+                        {
+                            case "oidcToken":
+                                reader.Read();
+                                oidcToken = reader.GetString();
+                                break;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                //Just don't want to throw here, we will throw in the next if block
             }
             if (oidcToken is null)
             {

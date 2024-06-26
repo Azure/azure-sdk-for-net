@@ -2,7 +2,7 @@
 
 ## 1.0.0-preview.6 (2022-06-07)
 
-### Changed
+### Other Changes
 - Added `contentType` to requests with multiple media types.
 
 ## 1.0.0-preview.5 (2021-08-10)

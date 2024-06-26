@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/b4506c0467cf68eeb9b0e966a3db1c9bedcd84c7/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2024-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -436,6 +436,10 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+- from: cosmos-db.json
+  where: $.definitions
+  transform: >
+    $.ErrorResponse['x-ms-client-name'] = 'CosmosDBErrorResult';
 # Managed Cassandra
 - from: managedCassandra.json
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']

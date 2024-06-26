@@ -283,7 +283,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/cloudevents+json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/cloudevents+json; charset=utf-8");
             request.Content = content;
             return message;
         }
@@ -301,7 +301,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/cloudevents-batch+json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
             request.Content = content;
             return message;
         }

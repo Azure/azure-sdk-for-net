@@ -57,6 +57,7 @@ jobs:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
+      SDKType: ${{ parameters.SDKType }}
 
     steps:
       - checkout: self
@@ -124,6 +125,17 @@ jobs:
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
+
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/scripts/Save-Package-Namespaces-Property.ps1
+          arguments: >
+            -RepoRoot $(Build.SourcesDirectory)
+            -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -BuildConfiguration $(BuildConfiguration)
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with namespaces
 
       - template: ../steps/archetype-sdk-docs.yml
         parameters:

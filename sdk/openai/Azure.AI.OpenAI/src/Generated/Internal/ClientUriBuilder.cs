@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Azure.AI.OpenAI
 {
-    internal class ClientUriBuilder
+    internal partial class ClientUriBuilder
     {
         private UriBuilder _uriBuilder;
         private StringBuilder _pathBuilder;
@@ -189,21 +189,6 @@ namespace Azure.AI.OpenAI
         {
             var stringValues = value.Select(v => ModelSerializationExtensions.TypeFormatters.ConvertToString(v, format));
             AppendQuery(name, string.Join(delimiter, stringValues), escape);
-        }
-
-        public Uri ToUri()
-        {
-            if (_pathBuilder != null)
-            {
-                UriBuilder.Path = _pathBuilder.ToString();
-            }
-
-            if (_queryBuilder != null)
-            {
-                UriBuilder.Query = _queryBuilder.ToString();
-            }
-
-            return UriBuilder.Uri;
         }
     }
 }

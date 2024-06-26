@@ -15,7 +15,7 @@ namespace Azure.Data.Tables
         {
             error = null;
             data = null;
-            if (response.ContentStream == null || !(response.ContentStream is MemoryStream))
+            if (response.ContentStream == null)
             {
                 return false;
             }

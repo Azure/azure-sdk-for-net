@@ -1,16 +1,30 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-06-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-10' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/de1f3772629b6f4d3ac01548a5f6d719bfb97c9e/specification/storagemover/resource-manager/readme.md.
+    - Added support for upload limit schedule
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.1.1 (2023-11-30)
 
@@ -49,11 +63,13 @@
 ## 1.0.1 (2023-03-11)
 
 ### Other Changes
+
 - Upgraded dependent `Azure.Core` to `1.30.0`.
 
 ## 1.0.0 (2023-03-03)
 
 ### Other Changes
+
 This is the first stable release of StorageMover client library.
 
 ## 1.0.0-beta.1 (2022-12-09)

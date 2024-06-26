@@ -8,11 +8,17 @@
 
 ### Bugs Fixed
 
+- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection. 
+
+- Fixed an error with ETW logs which caused structured arguments for Id 105 (Event Processor position determined) to be out-of-order with the message format.  This also caused the date to render incorrectly for some captures.
+
 ### Other Changes
 
-- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
 
 - The `PluggableCheckpointStoreEventProcessor` will now emit a diagnostic span when a checkpoint is created/updated.  While this span is not defined by the Open Telemetry specification, this change aligns diagnostic spans with those emitted by `EventProcessorClient`.
+
+- Adjusted the options used by `EventProcessor<TPartition>` and descendants during startup validation to reduce the amount of data transferred and minimize impact on the outgoing events metric.
 
 ## 5.12.0-beta.1 (2024-05-17)
 

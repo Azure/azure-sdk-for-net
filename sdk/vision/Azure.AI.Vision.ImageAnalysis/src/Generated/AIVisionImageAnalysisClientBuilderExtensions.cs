@@ -30,6 +30,18 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
+        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>((options, cred) => new ImageAnalysisClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
         public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>

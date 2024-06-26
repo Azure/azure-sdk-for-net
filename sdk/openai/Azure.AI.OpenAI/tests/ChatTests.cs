@@ -19,13 +19,6 @@ namespace Azure.AI.OpenAI.Tests;
 
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
-    private static readonly DateTimeOffset UNIX_EPOCH =
-#if NETFRAMEWORK
-            DateTimeOffset.Parse("1970-01-01T00:00:00.0000000+00:00");
-#else
-            DateTimeOffset.UnixEpoch;
-#endif
-
     public ChatTests(bool isAsync) : base(isAsync)
     { }
 
@@ -35,14 +28,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [Category("Smoke")]
     public async Task DefaultUserAgentStringWorks()
     {
-        using MockPipeline pipeline = new(req => new CapturedResponse()
-        {
-            Content = BinaryData.FromString("{}"),
-            Headers = new Dictionary<string, IReadOnlyList<string>>()
-            {
-                ["Content-Type"] = ["application/json"],
-            }
-        });
+        using MockPipeline pipeline = new(MockPipeline.ReturnEmptyJson);
 
         Uri endpoint = new Uri("https://www.bing.com/");
         string apiKey = "not-a-real-one";

@@ -5,18 +5,14 @@ $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("
 
 function Get-DevOpsRestHeaders()
 {
-  $headers = $null
-  if (Get-Variable -Name "devops_pat" -ValueOnly -ErrorAction "Ignore")
-  {
-    $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
-    $headers = @{ Authorization = "Basic $encodedToken" }
+  # Get a temp access token from the logged in az cli user for azure devops resource
+  $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
+
+  if ([System.String]::IsNullOrEmpty($headerAccessToken)) {
+    throw "Unable to create the DevOpsRestHeader due to access token being null or empty. The caller needs to be logged in with az login to an account with enough permissions to edit work items in the azure-sdk Release team project."
   }
-  else
-  {
-    # Get a temp access token from the logged in az cli user for azure devops resource
-    $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
-    $headers = @{ Authorization = "Bearer $jwt_accessToken" }
-  }
+
+  $headers = @{ Authorization = "Bearer $headerAccessToken" }
 
   return $headers
 }
@@ -101,15 +97,6 @@ function Invoke-Query($fields, $wiql, $output = $true)
   }
 
   return $workItems
-}
-
-function LoginToAzureDevops([string]$devops_pat)
-{
-  if (!$devops_pat) {
-    return
-  }
-  # based on the docs at https://aka.ms/azure-devops-cli-auth the recommendation is to set this env variable to login
-  $env:AZURE_DEVOPS_EXT_PAT = $devops_pat
 }
 
 function BuildHashKeyNoNull()
@@ -374,7 +361,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   {
     CreateWorkItemRelation $workItemId $parentId "parent" $outputCommand
   }
-  
+
   # Add a work item as related if given.
   if ($relatedId)
   {

@@ -169,15 +169,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag"u8);
+                if (PropertyBag != null)
+                {
+                    writer.WritePropertyName("propertyBag"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PropertyBag);
 #else
-                using (JsonDocument document = JsonDocument.Parse(PropertyBag))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(PropertyBag))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("propertyBag");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -395,6 +402,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        propertyBag = null;
                         continue;
                     }
                     propertyBag = BinaryData.FromString(property.Value.GetRawText());

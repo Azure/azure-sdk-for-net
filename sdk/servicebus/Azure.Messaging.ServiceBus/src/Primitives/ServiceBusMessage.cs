@@ -116,9 +116,13 @@ namespace Azure.Messaging.ServiceBus
             // copy message annotations except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.MessageAnnotations)
             {
-                if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName ||
+                if (kvp.Key == AmqpMessageConstants.LockedUntilName ||
+                    kvp.Key == AmqpMessageConstants.SequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName ||
+                    kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.ScheduledEnqueueTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.MessageStateName ||
                     kvp.Key == AmqpMessageConstants.PartitionIdName)
                 {
                     continue;

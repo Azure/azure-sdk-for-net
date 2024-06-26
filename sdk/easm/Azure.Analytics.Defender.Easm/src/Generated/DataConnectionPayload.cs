@@ -55,7 +55,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Defender.Easm
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Discriminator. </summary>
+        /// <summary> Discriminator property for DataConnectionPayload. </summary>
         internal string Kind { get; set; }
         /// <summary> The name of data connection. </summary>
         public string Name { get; set; }

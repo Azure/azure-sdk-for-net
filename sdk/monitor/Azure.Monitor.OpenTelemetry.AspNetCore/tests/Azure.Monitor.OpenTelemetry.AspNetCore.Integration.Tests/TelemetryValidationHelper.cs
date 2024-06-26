@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             {
                 if (property.Name == "Properties")
                 {
-                    var jsonString = row[property.Name].ToString();
+                    var jsonString = row[property.Name]?.ToString();
                     Assert.IsNotNull(jsonString, $"({description}) Expected a non-null value for {property.Name}");
                     var expectedProperties = property.GetValue(expectedTelemetry, null) as List<KeyValuePair<string, string>>;
                     Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {nameof(expectedTelemetry)}.Properties");
@@ -37,11 +37,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 }
                 else
                 {
-                    TestContext.Out.WriteLine($"Property: '{property.Name}' ExpectedValue: '{property.GetValue(expectedTelemetry, null)}' ActualValue: '{row[property.Name]}'");
+                    TestContext.Out.WriteLine($"PropertyName: '{property.Name}' ExpectedValue: '{property.GetValue(expectedTelemetry, null)}' ActualValue: '{row[property.Name]}'");
 
                     Assert.AreEqual(
-                        expected: property.GetValue(expectedTelemetry, null),
-                        actual: row[property.Name],
+                        expected: property.GetValue(expectedTelemetry, null)!.ToString(),
+                        actual: row[property.Name].ToString(),
                         message: $"({description}) Expected {property.Name} to be '{property.GetValue(expectedTelemetry, null)}' but found '{logsTable.Rows[0][property.Name]}'.");
                 }
             }
@@ -54,6 +54,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 #if NET6_0_OR_GREATER
             var jsonNode = JsonNode.Parse(jsonString);
             Assert.IsNotNull(jsonNode, $"({description}) Expected a non-null JSON node.");
+
+            var expectedCount = expectedProperties.Count;
+            var actualCount = ((JsonObject)jsonNode!).Count;
+            Assert.AreEqual(expectedCount, actualCount, $"({description}) Expected {expectedCount} properties but found {actualCount}.");
 
             foreach (var expectedProperty in expectedProperties)
             {
@@ -71,37 +75,66 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 #endif
         }
 
+        /*
+         * Notes on field validation:
+         * Remember that this test will be run as both a Recording and Live.
+         * We can't include unique ids becasue they are unique per test run (ie: Id, OperationId, ParentId, etc).
+         * We can't include timing fields because would be unique per test run(ie: TimeGenerated, DurationMS, PerformanceBucket).
+         * We can't include client fields because we can't control where these tests run (ie: ClientOS, ClientCity, ClientCountryOrRegion, etc).
+         */
+
         public struct ExpectedAppDependency
         {
+            public string Target { get; set; }
+            public string DependencyType { get; set; }
+            public string Name { get; set; }
             public string Data { get; set; }
+            public string Success { get; set; }
+            public string ResultCode { get; set; }
+            public List<KeyValuePair<string, string>> Properties { get; set; }
+            public string UserAuthenticatedId { get; set; }
+            public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            public string AppRoleInstance { get; set; }
+            public string ClientIP { get; set; }
+            public string Type { get; set; }
         }
 
         public struct ExpectedAppRequest
         {
+            public string Name { get; set; }
             public string Url { get; set; }
+            public string Success { get; set; }
+            public string ResultCode { get; set; }
+            public List<KeyValuePair<string, string>> Properties { get; set; }
+            public string OperationName { get; set; }
+            public string UserAuthenticatedId { get; set; }
+            public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            public string AppRoleInstance { get; set; }
+            public string ClientIP { get; set; }
+            public string Type { get; set; }
         }
 
         public struct ExpectedAppMetric
         {
             public string Name { get; set; }
-            public string AppRoleName { get; set; }
             public List<KeyValuePair<string, string>> Properties { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            public string AppVersion { get; set; }
+            public string AppRoleName { get; set; }
+            public string AppRoleInstance { get; set; }
+            public string Type { get; set; }
         }
 
         public struct ExpectedAppTrace
         {
             public string Message { get; set; }
+            public string SeverityLevel { get; set; }
+            public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
-
-            // TODO: ADD REMAINING PROPERTIES IN FOLLOW UP PR.
+            public string AppRoleInstance { get; set; }
+            public string ClientIP { get; set; }
+            public string Type { get; set; }
         }
     }
 }

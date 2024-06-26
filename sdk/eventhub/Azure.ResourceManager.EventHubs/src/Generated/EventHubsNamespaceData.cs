@@ -84,9 +84,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, NamespaceGeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -107,7 +106,6 @@ namespace Azure.ResourceManager.EventHubs
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
             AlternateName = alternateName;
-            GeoDataReplication = geoDataReplication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -173,8 +171,5 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
         [WirePath("properties.alternateName")]
         public string AlternateName { get; set; }
-        /// <summary> Geo Data Replication settings for the namespace. </summary>
-        [WirePath("properties.geoDataReplication")]
-        public NamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
     }
 }

@@ -38,6 +38,7 @@ public partial class AzureOpenAISamples
                 Tools = { ToolDefinition.CreateCodeInterpreter() },
             });
         ThreadInitializationMessage initialMessage = new(
+            MessageRole.User,
             [
                 "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9."
             ]);

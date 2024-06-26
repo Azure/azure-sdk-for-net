@@ -27,5 +27,19 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             return client;
         }
+
+        protected ImageAnalysisClient ImageAnalysisEntraIDAuth()
+        {
+            #region Snippet:ImageAnalysisEntraIDAuth
+            string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
+
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
+            ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
+
+            return client;
+        }
     }
 }

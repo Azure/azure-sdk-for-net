@@ -22,6 +22,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
+            if (Optional.IsCollectionDefined(PlayPrompts))
+            {
+                writer.WritePropertyName("playPrompts"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlayPrompts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);

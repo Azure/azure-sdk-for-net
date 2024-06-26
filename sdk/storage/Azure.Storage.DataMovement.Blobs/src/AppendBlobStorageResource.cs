@@ -309,7 +309,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(new(BlobType.Append));
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()

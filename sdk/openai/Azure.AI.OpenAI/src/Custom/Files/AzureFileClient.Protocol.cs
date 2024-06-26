@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.Files;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Files;
 

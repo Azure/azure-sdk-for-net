@@ -25,13 +25,13 @@
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net462"
       },
-      "macos-11_NETCore3.1": {
-        "OSVmImage": "macos-11",
+      "macos_NETCore3.1": {
+        "OSVmImage": "macos-latest",
         "Pool": "Azure Pipelines",
         "TestTargetFramework": "netcoreapp3.1"
       },
-      "macos-11_NET6.0": {
-        "OSVmImage": "macos-11",
+      "macos_NET6.0": {
+        "OSVmImage": "macos-latest",
         "Pool": "Azure Pipelines",
         "TestTargetFramework": "net6.0"
       }

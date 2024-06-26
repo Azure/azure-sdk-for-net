@@ -41,6 +41,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings, options);
             }
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,6 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             MonitoringSettings monitoringSettings = default;
             BackupVaultSecuritySettings securitySettings = default;
             BackupVaultFeatureSettings featureSettings = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +124,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataProtectionBackupVaultPatchProperties(monitoringSettings, securitySettings, featureSettings, serializedAdditionalRawData);
+            return new DataProtectionBackupVaultPatchProperties(monitoringSettings, securitySettings, featureSettings, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultPatchProperties>.Write(ModelReaderWriterOptions options)

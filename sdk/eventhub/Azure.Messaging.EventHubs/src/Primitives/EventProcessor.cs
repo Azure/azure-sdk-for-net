@@ -765,7 +765,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
                 var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(Identifier, EventHubName, ConsumerGroup, partition.PartitionId, startingPosition.ToString(), checkpointUsed, checkpointAuthor, checkpointLastModified);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -795,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, true);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, exclusive: true);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and
@@ -2203,9 +2203,19 @@ namespace Azure.Messaging.EventHubs.Primitives
             var partitionIndex = new Random().Next(0, (properties.PartitionIds.Length - 1));
 
             // To ensure validity of the requested consumer group and that at least one partition exists,
-            // attempt to read from a partition.
+            // attempt to read from a partition.  Create a new set of options that preserves the connection
+            // and retry configuration, but uses a minimal prefetch count to reduce the amount of data transferred.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
+            var options = new EventProcessorOptions
+            {
+                PrefetchCount = 1,
+                Identifier = Identifier,
+                RetryOptions = Options.RetryOptions,
+                ConnectionOptions = Options.ConnectionOptions,
+                TrackLastEnqueuedEventProperties = false
+            };
+
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, options, exclusive: false);
 
             try
             {

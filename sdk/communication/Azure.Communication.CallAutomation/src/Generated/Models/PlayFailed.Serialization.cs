@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
             }
             string operationContext = default;
             ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
@@ -38,6 +39,15 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("failedPlaySourceIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failedPlaySourceIndex = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -54,7 +64,13 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            return new PlayFailed(
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

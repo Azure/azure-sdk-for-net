@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -212,6 +213,30 @@ namespace Azure.Core.Amqp.Tests
         }
 
         [Test]
+        [TestCase("http://www.server.com/path/stuff/thing.json")]
+        [TestCase("/path/stuff/thing.json")]
+        public void ToAmqpMessageHandlesRelativeAndAbsoluteUris(string uriValue)
+        {
+            var key = "UriProperty";
+            var expectedUri = new Uri(uriValue, UriKind.RelativeOrAbsolute);
+
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            annotatedMessage.ApplicationProperties.Add(key, expectedUri);
+
+            using AmqpMessage message = ToAmqpMessage(annotatedMessage);
+
+            Assert.IsNotNull(message, "The AMQP message should have been created.");
+            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+
+            var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
+            var uriProperty = value as Uri;
+
+            Assert.IsTrue(containsValue, $"The message properties did not contain the Uri property");
+            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.AreEqual(expectedUri, uriProperty, "The property value did not match.");
+        }
+
+        [Test]
         public void FromAmqpMessagePopulatesSimpleApplicationProperties()
         {
             var applicationProperties = s_simpleApplicationPropertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value);
@@ -240,6 +265,31 @@ namespace Azure.Core.Amqp.Tests
                 Assert.IsTrue(containsValue, $"The message properties did not contain: [{ property }]");
                 Assert.AreEqual(value, applicationProperties[property], $"The property value did not match for: [{ property }]");
             }
+        }
+
+        [Test]
+        [TestCase("http://www.server.com/path/stuff/thing.json")]
+        [TestCase("/path/stuff/thing.json")]
+        public void FromAmqpMessageHandlesRelativeAndAbsoluteUris(string uriValue)
+        {
+            var key = "UriProperty";
+            var expectedUri = new Uri(uriValue, UriKind.RelativeOrAbsolute);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+
+            using var message = AmqpMessage.Create(dataBody);
+            message.ApplicationProperties.Map.Add(key, new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, uriValue));
+
+            var annotatedMessage = FromAmqpMessage(message);
+
+            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.IsTrue(annotatedMessage.ApplicationProperties.Any(), "The message should have a set of application properties.");
+
+            var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
+            var uriProperty = value as Uri;
+
+            Assert.IsTrue(containsValue, $"The message properties did not contain the Uri property");
+            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.AreEqual(expectedUri, uriProperty, "The property value did not match.");
         }
 
         [Test]
