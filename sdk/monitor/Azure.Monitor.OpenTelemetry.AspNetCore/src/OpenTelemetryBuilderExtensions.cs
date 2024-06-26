@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.Services.AddSingleton<Manager>(sp =>
             {
                 AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatform());
+                return new Manager(options, new DefaultPlatformDistro());
             });
 
             builder.Services.AddOptions<AzureMonitorOptions>()

@@ -7,6 +7,7 @@ extends:
     SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
+    UseFederatedAuth: true
     SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
