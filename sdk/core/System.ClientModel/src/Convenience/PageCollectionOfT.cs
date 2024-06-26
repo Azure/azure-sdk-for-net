@@ -19,9 +19,9 @@ public abstract class PageCollection<T> : IEnumerable<ClientPage<T>>
     {
     }
 
-    public abstract BinaryData FirstPageToken { get; }
+    public abstract PageToken FirstPageToken { get; }
 
-    public abstract ClientPage<T> GetPage(BinaryData pageToken, RequestOptions? options = default);
+    public abstract ClientPage<T> GetPage(PageToken pageToken, RequestOptions? options = default);
 
     public IEnumerable<T> GetAllValues()
     {

@@ -20,9 +20,9 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<ClientPage<T>>
     // I like this being abstract rather than providing the field in the base
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
-    public abstract BinaryData FirstPageToken { get; }
+    public abstract PageToken FirstPageToken { get; }
 
-    public abstract Task<ClientPage<T>> GetPageAsync(BinaryData pageToken, RequestOptions? options = default);
+    public abstract Task<ClientPage<T>> GetPageAsync(PageToken pageToken, RequestOptions? options = default);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
