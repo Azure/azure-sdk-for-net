@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class PageToken
+public abstract class ClientToken
 {
-    protected PageToken() { }
+    protected ClientToken() { }
 
-    protected abstract PageToken FirstPageToken { get; }
+    //// Do we need this property?
+    //protected abstract PageToken FirstPageToken { get; }
 
     // Does it need to be public?
     public abstract BinaryData ToBytes();
