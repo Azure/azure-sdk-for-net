@@ -358,7 +358,10 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
                 break;
             case nameof(AzureDeploymentClient):
                 var accessor = NonPublic.FromField<ClientPipeline, PipelineTransport>("_transport");
-                clientObject = new AzureDeploymentClient(config, null, accessor.Get(topLevelClient.Pipeline));
+                clientObject = new AzureDeploymentClient(
+                    config,
+                    TestEnvironment.Credential,
+                    transport: accessor.Get(topLevelClient.Pipeline));
                 break;
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");

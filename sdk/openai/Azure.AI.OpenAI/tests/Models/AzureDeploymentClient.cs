@@ -28,6 +28,7 @@ internal class AzureDeploymentClient : IDisposable
     private CancellationTokenSource _cts;
     private ClientPipeline _pipeline;
     private Core.AccessToken? _cachedAuthToken;
+    private readonly Core.TokenCredential _credential;
     private readonly string _subscriptionId;
     private readonly string _resourceGroup;
     private readonly string _resourceName;
@@ -41,9 +42,10 @@ internal class AzureDeploymentClient : IDisposable
         _pipeline = ClientPipeline.Create();
         _subscriptionId = _resourceGroup = _resourceName = _endpointUrl = string.Empty;
         _apiVersion = DEFAULT_API_VERSION;
+        _credential = new Core.TestFramework.MockCredential();
     }
 
-    public AzureDeploymentClient(IConfiguration config, string? apiVersion = null, PipelineTransport? transport = null)
+    public AzureDeploymentClient(IConfiguration config, Core.TokenCredential credential, string? apiVersion = null, PipelineTransport? transport = null)
     {
         if (config == null)
         {
@@ -55,6 +57,7 @@ internal class AzureDeploymentClient : IDisposable
         {
             Transport = transport ?? new HttpClientPipelineTransport()
         });
+        _credential = credential ?? throw new ArgumentNullException(nameof(credential));
 
         _subscriptionId = config.GetValueOrThrow<string>("subscription_id");
         _resourceGroup = config.GetValueOrThrow<string>("resource_group");
@@ -227,21 +230,20 @@ internal class AzureDeploymentClient : IDisposable
             return _cachedAuthToken.Value.Token;
         }
 
-        var cred = new Azure.Identity.DefaultAzureCredential();
         var context = new Core.TokenRequestContext(
             [
                 "https://management.azure.com/.default"
             ],
             requestId);
 
-        Azure.Core.AccessToken authToken;
+        Core.AccessToken authToken;
         if (isAsync)
         {
-            authToken = await cred.GetTokenAsync(context, token).ConfigureAwait(false);
+            authToken = await _credential.GetTokenAsync(context, token).ConfigureAwait(false);
         }
         else
         {
-            authToken = cred.GetToken(context, token);
+            authToken = _credential.GetToken(context, token);
         }
 
         string bearerToken = authToken.Token;
