@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="etag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Offerings = offerings;
             EnvironmentData = environmentData;
             Kind = kind;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

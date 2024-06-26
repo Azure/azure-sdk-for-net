@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            string etag = default;
+            string eTag = default;
             DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = default;
             string status = default;
             ResourceIdentifier id = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 if (property.NameEquals("eTag"u8))
                 {
-                    etag = property.Value.GetString();
+                    eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpoint"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 type,
                 systemData,
                 provisioningState,
-                etag,
+                eTag,
                 remotePrivateEndpoint,
                 status,
                 serializedAdditionalRawData);

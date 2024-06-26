@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Search
         /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
-        /// <param name="etag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
+        /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SearchSku = searchSku;
             Identity = identity;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Search
             SemanticSearch = semanticSearch;
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

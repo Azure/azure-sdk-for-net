@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

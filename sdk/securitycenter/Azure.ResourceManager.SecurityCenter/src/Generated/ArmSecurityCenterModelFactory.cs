@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="etag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, bool? isEnabled = null, IEnumerable<SecurityAutomationScope> scopes = null, IEnumerable<SecurityAutomationSource> sources = null, IEnumerable<SecurityAutomationAction> actions = null, string kind = null, ETag? etag = null)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, bool? isEnabled = null, IEnumerable<SecurityAutomationScope> scopes = null, IEnumerable<SecurityAutomationSource> sources = null, IEnumerable<SecurityAutomationAction> actions = null, string kind = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
             scopes ??= new List<SecurityAutomationScope>();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 sources?.ToList(),
                 actions?.ToList(),
                 kind,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -1486,9 +1486,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="etag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null, string kind = null, ETag? etag = null)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null, string kind = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
             offerings ??= new List<SecurityCenterCloudOffering>();
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 offerings?.ToList(),
                 environmentData,
                 kind,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 

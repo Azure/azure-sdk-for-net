@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            ETag = eTag;
             ClusterResourceId = clusterResourceId;
             Group = group;
             ProvisioningState = provisioningState;

@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceEncryptionConfigExtendedResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceEncryptionConfigExtendedProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceEncryptionConfigExtendedProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

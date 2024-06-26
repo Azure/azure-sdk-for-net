@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="etag"></param>
+        /// <param name="eTag"></param>
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? etag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SubscriptionId = subscriptionId;
             SupportedActions = supportedActions;
             VaultName = vaultName;
-            ETag = etag;
+            ETag = eTag;
             SourceDataStoreName = sourceDataStoreName;
             DestinationDataStoreName = destinationDataStoreName;
             _serializedAdditionalRawData = serializedAdditionalRawData;

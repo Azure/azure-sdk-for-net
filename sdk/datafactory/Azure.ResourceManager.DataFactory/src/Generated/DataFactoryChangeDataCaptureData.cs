@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="policy"> CDC policy. </param>
         /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
         /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeDataCaptureFolder folder, string description, IList<MapperSourceConnectionsInfo> sourceConnectionsInfo, IList<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, ETag? etag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
+        internal DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeDataCaptureFolder folder, string description, IList<MapperSourceConnectionsInfo> sourceConnectionsInfo, IList<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
             Folder = folder;
             Description = description;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory
             Policy = policy;
             AllowVnetOverride = allowVnetOverride;
             Status = status;
-            ETag = etag;
+            ETag = eTag;
             AdditionalProperties = additionalProperties;
         }
 

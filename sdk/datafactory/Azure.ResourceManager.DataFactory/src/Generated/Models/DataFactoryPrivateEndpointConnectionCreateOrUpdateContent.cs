@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionApprovalRequest properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionApprovalRequest properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

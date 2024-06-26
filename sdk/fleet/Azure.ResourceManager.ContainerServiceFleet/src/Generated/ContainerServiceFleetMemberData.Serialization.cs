@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            ETag? etag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 name,
                 type,
                 systemData,
-                etag,
+                eTag,
                 clusterResourceId,
                 group,
                 provisioningState,

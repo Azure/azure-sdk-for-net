@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             string offerId = default;
-            ETag? etag = default;
+            ETag? eTag = default;
             IList<ContextAndPlansDetails> plansContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             {
                                 continue;
                             }
-                            etag = new ETag(property0.Value.GetString());
+                            eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("plansContext"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MultiContextAndPlansContent(offerId, etag, plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>(), serializedAdditionalRawData);
+            return new MultiContextAndPlansContent(offerId, eTag, plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultiContextAndPlansContent>.Write(ModelReaderWriterOptions options)

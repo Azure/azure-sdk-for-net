@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="availability"> Indicates private store availability. </param>
         /// <param name="privateStoreId"> Private Store id. </param>
-        /// <param name="etag"> Identifier for purposes of race condition. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreName"> Private Store Name. </param>
         /// <param name="tenantId"> Tenant id. </param>
         /// <param name="isGov"> Is government. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
         /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreData"/> instance for mocking. </returns>
-        public static PrivateStoreData PrivateStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateStoreAvailability? availability = null, Guid? privateStoreId = null, ETag? etag = null, string privateStoreName = null, Guid? tenantId = null, bool? isGov = null, IEnumerable<Guid> collectionIds = null, IDictionary<string, string> branding = null, IEnumerable<NotificationRecipient> recipients = null, bool? sendToAllMarketplaceAdmins = null)
+        public static PrivateStoreData PrivateStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateStoreAvailability? availability = null, Guid? privateStoreId = null, ETag? eTag = null, string privateStoreName = null, Guid? tenantId = null, bool? isGov = null, IEnumerable<Guid> collectionIds = null, IDictionary<string, string> branding = null, IEnumerable<NotificationRecipient> recipients = null, bool? sendToAllMarketplaceAdmins = null)
         {
             collectionIds ??= new List<Guid>();
             branding ??= new Dictionary<string, string>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 systemData,
                 availability,
                 privateStoreId,
-                etag,
+                eTag,
                 privateStoreName,
                 tenantId,
                 isGov,
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="etag"> Identifier for purposes of race condition. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
         /// <param name="createdOn"> Private store offer creation date. </param>
         /// <param name="modifiedOn"> Private store offer modification date. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Models.PrivateStoreOfferResult"/> instance for mocking. </returns>
-        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? etag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IReadOnlyDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
+        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IReadOnlyDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
         {
             specificPlanIdsLimitation ??= new List<string>();
             iconFileUris ??= new Dictionary<string, Uri>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 uniqueOfferId,
                 offerDisplayName,
                 publisherDisplayName,
-                etag,
+                eTag,
                 privateStoreId,
                 createdOn,
                 modifiedOn,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="etag"> Identifier for purposes of race condition. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
         /// <param name="createdOn"> Private store offer creation date. </param>
         /// <param name="modifiedOn"> Private store offer modification date. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreOfferData"/> instance for mocking. </returns>
-        public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? etag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
+        public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
         {
             specificPlanIdsLimitation ??= new List<string>();
             iconFileUris ??= new Dictionary<string, Uri>();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 uniqueOfferId,
                 offerDisplayName,
                 publisherDisplayName,
-                etag,
+                eTag,
                 privateStoreId,
                 createdOn,
                 modifiedOn,
@@ -359,14 +359,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="Models.QueryApprovalRequestResult"/>. </summary>
         /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="etag"> Gets or sets e-tag field. </param>
+        /// <param name="eTag"> Gets or sets e-tag field. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
         /// <returns> A new <see cref="Models.QueryApprovalRequestResult"/> instance for mocking. </returns>
-        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = null, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = null, ETag? etag = null, long? messageCode = null)
+        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = null, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = null, ETag? eTag = null, long? messageCode = null)
         {
             plansDetails ??= new Dictionary<string, PrivateStorePlanDetails>();
 
-            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails, etag, messageCode, serializedAdditionalRawData: null);
+            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails, eTag, messageCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Marketplace.MarketplaceAdminApprovalRequestData"/>. </summary>

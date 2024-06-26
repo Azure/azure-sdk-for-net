@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            ETag? etag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CostManagement
                 partitionData,
                 nextRunTimeEstimate,
                 schedule,
-                etag,
+                eTag,
                 serializedAdditionalRawData);
         }
 

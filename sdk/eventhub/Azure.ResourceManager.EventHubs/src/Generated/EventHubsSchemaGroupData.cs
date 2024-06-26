@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="updatedAtUtc"> Exact time the Schema Group was updated. </param>
         /// <param name="createdAtUtc"> Exact time the Schema Group was created. </param>
-        /// <param name="etag"> The ETag value. </param>
+        /// <param name="eTag"> The ETag value. </param>
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? etag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
-            ETag = etag;
+            ETag = eTag;
             GroupProperties = groupProperties;
             SchemaCompatibility = schemaCompatibility;
             SchemaType = schemaType;
