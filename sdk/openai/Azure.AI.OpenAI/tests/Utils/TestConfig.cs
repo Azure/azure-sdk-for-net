@@ -89,24 +89,36 @@ internal class TestConfig
 
     public virtual void SavePlaybackConfig()
     {
-        string? sourceDirectoryPath = typeof(TestConfig).Assembly
-            .GetCustomAttributes<AssemblyMetadataAttribute>()
-            .SingleOrDefault(attrib => attrib.Key == "TestProjectSourceBasePath")
-            ?.Value;
-
-        if (sourceDirectoryPath != null)
+        try
         {
-            string newJson = JsonSerializer.Serialize(_recordedConfig, JsonConfig.JSON_OPTIONS);
+            string? sourceDirectoryPath = typeof(TestConfig).Assembly
+                .GetCustomAttributes<AssemblyMetadataAttribute>()
+                .FirstOrDefault(attrib => attrib.Key == "TestProjectSourceBasePath")
+                ?.Value;
 
-            string playbackConfigJson = Path.Combine(sourceDirectoryPath, AssetsSubFolder, PlaybackAssetsJson);
-            string oldJson = File.ReadAllText(playbackConfigJson);
-
-            // Visual Studio's hot reload feature can get upset if you are debugging the code and the playback config
-            // file changes, so we only save it if it is different
-            if (oldJson != newJson)
+            if (sourceDirectoryPath != null)
             {
-                File.WriteAllText(playbackConfigJson, newJson, Encoding.UTF8);
+                string playbackConfigJson = Path.Combine(sourceDirectoryPath, AssetsSubFolder, PlaybackAssetsJson);
+
+                string oldJson = string.Empty;
+                if (File.Exists(playbackConfigJson))
+                {
+                    oldJson = File.ReadAllText(playbackConfigJson);
+                }
+
+                string newJson = JsonSerializer.Serialize(_recordedConfig, JsonConfig.JSON_OPTIONS);
+
+                // Visual Studio's hot reload feature can get upset if you are debugging the code and the playback config
+                // file changes, so we only save it if it is different
+                if (oldJson != newJson)
+                {
+                    File.WriteAllText(playbackConfigJson, newJson, Encoding.UTF8);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Failed to save the playback configuration file. Details: " + ex);
         }
     }
 
