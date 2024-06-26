@@ -26,9 +26,9 @@ enable-bicep-serialization: true
 #  show-serialized-names: true
 
 rename-mapping:
+  DeploymentStack: ArmDeploymentStack
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
-  DeploymentParameter.type: DeploymentParameterType
 
 patch-initializer-customization:
   ArmDeploymentContent:

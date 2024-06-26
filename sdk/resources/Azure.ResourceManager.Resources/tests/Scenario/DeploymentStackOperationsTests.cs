@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Delete-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            DeploymentStackResource deploymentStack = (await rg.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await rg.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             await deploymentStack.DeleteAsync(WaitUntil.Completed);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Export-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            DeploymentStackResource deploymentStack = (await rg.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await rg.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
 
             Assert.IsNotNull(deploymentStackTemplate);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Validate-");
             var deploymentStackId = new ResourceIdentifier(rg.Id + "/providers/Microsoft.Resources/deploymentStacks/" + deploymentStackName);
-            var deploymentStack = Client.GetDeploymentStackResource(deploymentStackId);
+            var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Delete-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await subscription.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             await deploymentStack.DeleteAsync(WaitUntil.Completed);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Export-");
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await subscription.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await subscription.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
             Assert.IsNotNull(deploymentStackTemplate);
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Validate-");
             var deploymentStackId = new ResourceIdentifier(subscription.Id + "/providers/Microsoft.Resources/deploymentStacks/" + deploymentStackName);
-            var deploymentStack = Client.GetDeploymentStackResource(deploymentStackId);
+            var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Delete-");
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await managementGroup.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await managementGroup.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             await deploymentStack.DeleteAsync(WaitUntil.Completed);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Export-");
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await managementGroup.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
+            ArmDeploymentStackResource deploymentStack = (await managementGroup.GetArmDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
             Assert.IsNotNull(deploymentStackTemplate);
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Validate-");
             var deploymentStackId = new ResourceIdentifier(managementGroup.Id + "/providers/Microsoft.Resources/deploymentStacks/" + deploymentStackName);
-            var deploymentStack = Client.GetDeploymentStackResource(deploymentStackId);
+            var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;

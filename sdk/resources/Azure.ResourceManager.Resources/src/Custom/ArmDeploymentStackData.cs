@@ -8,10 +8,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing the DeploymentStack data model.
+    /// A class representing the ArmDeploymentStack data model.
     /// Deployment stack object.
     /// </summary>
-    public partial class DeploymentStackData : ResourceData
+    public partial class ArmDeploymentStackData : ResourceData
     {
     }
 }
