@@ -64,10 +64,12 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class ClientToken
+    public partial class ClientToken
     {
         protected ClientToken() { }
-        public abstract System.BinaryData ToBytes();
+        public ClientToken(System.BinaryData bytes) { }
+        public static System.ClientModel.ClientToken FromBytes(System.BinaryData bytes) { throw null; }
+        public virtual System.BinaryData ToBytes() { throw null; }
     }
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>>, System.Collections.IEnumerable
     {

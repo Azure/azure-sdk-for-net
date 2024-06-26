@@ -8,27 +8,23 @@ using System.Text;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591
-public abstract class ClientToken
+
+public class ClientToken
 {
+    private readonly BinaryData? _bytes;
+
     protected ClientToken() { }
 
-    public abstract BinaryData ToBytes();
+    public ClientToken(BinaryData bytes)
+    {
+        _bytes = bytes;
+    }
+
+    public virtual BinaryData ToBytes()
+        => _bytes ??
+           throw new InvalidOperationException("Unable to write token as bytes.");
+
+    public static ClientToken FromBytes(BinaryData bytes) => new(bytes);
 }
-
-//public class ClientToken
-//{
-//    private readonly BinaryData? _bytes;
-
-//    protected ClientToken() { }
-
-//    public ClientToken(BinaryData bytes)
-//    {
-//        _bytes = bytes;
-//    }
-
-//    public virtual BinaryData ToBytes()
-//        => _bytes ??
-//           throw new InvalidOperationException("Unable to write token as bytes.");
-//}
 
 #pragma warning restore CS1591
