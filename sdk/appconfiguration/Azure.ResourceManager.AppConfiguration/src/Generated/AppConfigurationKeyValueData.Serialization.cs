@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppConfiguration
             string label = default;
             string value = default;
             string contentType = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             DateTimeOffset? lastModified = default;
             bool? locked = default;
             IDictionary<string, string> tags = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastModified"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 label,
                 value,
                 contentType,
-                eTag,
+                etag,
                 lastModified,
                 locked,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
