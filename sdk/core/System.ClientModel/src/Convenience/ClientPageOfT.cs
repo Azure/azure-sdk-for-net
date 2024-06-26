@@ -4,11 +4,10 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
-// Lives in .Primitives because it's intended to be inherited from to create
-// a service-specific instance.
 namespace System.ClientModel;
 
 #pragma warning disable CS1591
+
 public class ClientPage<T> : ClientResult
 {
     private ClientPage(IReadOnlyList<T> values,
@@ -39,4 +38,5 @@ public class ClientPage<T> : ClientResult
     public static ClientPage<T> Create(IReadOnlyList<T> values, BinaryData pageToken, BinaryData? nextPageToken, PipelineResponse response)
         => new(values, pageToken, nextPageToken, response);
 }
+
 #pragma warning restore CS1591
