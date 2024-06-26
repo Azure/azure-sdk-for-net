@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             ResourceGuardProperties properties = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

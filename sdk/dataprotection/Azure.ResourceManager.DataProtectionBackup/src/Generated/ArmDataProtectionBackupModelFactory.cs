@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="etag"> Optional ETag. </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupVaultData"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataProtectionBackupVaultProperties properties = null, ManagedServiceIdentity identity = null, ETag? eTag = null)
+        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataProtectionBackupVaultProperties properties = null, ManagedServiceIdentity identity = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 location,
                 properties,
                 identity,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="eTag"></param>
+        /// <param name="etag"></param>
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupJobProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = null, string backupInstanceFriendlyName = null, ResourceIdentifier backupInstanceId = null, ResourceIdentifier dataSourceId = null, AzureLocation dataSourceLocation = default, string dataSourceName = null, string dataSourceSetName = null, string dataSourceType = null, TimeSpan? duration = null, DateTimeOffset? endOn = null, IEnumerable<ResponseError> errorDetails = null, BackupJobExtendedInfo extendedInfo = null, bool isUserTriggered = default, string operation = null, string operationCategory = null, ResourceIdentifier policyId = null, string policyName = null, bool isProgressEnabled = default, Uri progressUri = null, string rehydrationPriority = null, string restoreType = null, string sourceResourceGroup = null, string sourceSubscriptionId = null, DateTimeOffset startOn = default, string status = null, string subscriptionId = null, IEnumerable<string> supportedActions = null, string vaultName = null, ETag? eTag = null, string sourceDataStoreName = null, string destinationDataStoreName = null)
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = null, string backupInstanceFriendlyName = null, ResourceIdentifier backupInstanceId = null, ResourceIdentifier dataSourceId = null, AzureLocation dataSourceLocation = default, string dataSourceName = null, string dataSourceSetName = null, string dataSourceType = null, TimeSpan? duration = null, DateTimeOffset? endOn = null, IEnumerable<ResponseError> errorDetails = null, BackupJobExtendedInfo extendedInfo = null, bool isUserTriggered = default, string operation = null, string operationCategory = null, ResourceIdentifier policyId = null, string policyName = null, bool isProgressEnabled = default, Uri progressUri = null, string rehydrationPriority = null, string restoreType = null, string sourceResourceGroup = null, string sourceSubscriptionId = null, DateTimeOffset startOn = default, string status = null, string subscriptionId = null, IEnumerable<string> supportedActions = null, string vaultName = null, ETag? etag = null, string sourceDataStoreName = null, string destinationDataStoreName = null)
         {
             errorDetails ??= new List<ResponseError>();
             supportedActions ??= new List<string>();
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 subscriptionId,
                 supportedActions?.ToList(),
                 vaultName,
-                eTag,
+                etag,
                 sourceDataStoreName,
                 destinationDataStoreName,
                 serializedAdditionalRawData: null);
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="etag"> Optional ETag. </param>
         /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardData"/> instance for mocking. </returns>
-        public static ResourceGuardData ResourceGuardData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceGuardProperties properties = null, ETag? eTag = null)
+        public static ResourceGuardData ResourceGuardData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceGuardProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 tags,
                 location,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -647,13 +647,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupRetentionTag"/>. </summary>
-        /// <param name="eTag"> Retention Tag version. </param>
+        /// <param name="etag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupRetentionTag"/> instance for mocking. </returns>
-        public static DataProtectionBackupRetentionTag DataProtectionBackupRetentionTag(ETag? eTag = null, string id = null, string tagName = null)
+        public static DataProtectionBackupRetentionTag DataProtectionBackupRetentionTag(ETag? etag = null, string id = null, string tagName = null)
         {
-            return new DataProtectionBackupRetentionTag(eTag, id, tagName, serializedAdditionalRawData: null);
+            return new DataProtectionBackupRetentionTag(etag, id, tagName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
