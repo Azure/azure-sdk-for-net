@@ -16,10 +16,10 @@ public class ClientToken
         _bytes = bytes;
     }
 
+    public static ClientToken FromBytes(BinaryData bytes) => new(bytes);
+
     public virtual BinaryData ToBytes() => _bytes ??
         throw new InvalidOperationException("Unable to write token as bytes.");
-
-    public static ClientToken FromBytes(BinaryData bytes) => new(bytes);
 }
 
 #pragma warning restore CS1591
