@@ -147,10 +147,9 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
     [Test]
     [Category("Smoke")]
-    [SkipOnOS("OSX", Reason = "Getting the default Azure credential is not working properly")]
     public async Task DefaultAzureCredentialWorks()
     {
-        ChatClient chatClient = GetTestClient(tokenCredential: new DefaultAzureCredential());
+        ChatClient chatClient = GetTestClient(tokenCredential: this.TestEnvironment.Credential);
         ChatCompletion chatCompletion = await chatClient.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
         Assert.That(chatCompletion, Is.Not.Null);
         Assert.That(chatCompletion.Content, Is.Not.Null.Or.Empty);
