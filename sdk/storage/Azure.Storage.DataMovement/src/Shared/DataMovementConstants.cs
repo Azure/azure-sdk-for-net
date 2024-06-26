@@ -62,6 +62,8 @@ namespace Azure.Storage.DataMovement
         internal const int LongSizeInBytes = 8;
         internal const int IntSizeInBytes = 4;
         internal const int GuidSizeInBytes = 16;
+        internal const string StringTypeStr = "string";
+        internal const string StringArrayTypeStr = "string[]";
 
         /// <summary>
         /// Constants used for job plan files.

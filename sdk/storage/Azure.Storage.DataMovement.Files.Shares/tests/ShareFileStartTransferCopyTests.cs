@@ -94,7 +94,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             ShareClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            TransferPropertiesTestType propertiesTestType = default)
             => CreateFileClientAsync(
                 container,
                 objectLength,
