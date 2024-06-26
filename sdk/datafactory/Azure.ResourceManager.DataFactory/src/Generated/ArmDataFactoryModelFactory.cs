@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="globalParameters"> List of parameters for factory. </param>
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, DateTimeOffset? createdOn = null, string version = null, ResourceIdentifier purviewResourceId = null, FactoryRepoConfiguration repoConfiguration = null, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = null, DataFactoryEncryptionConfiguration encryption = null, DataFactoryPublicNetworkAccess? publicNetworkAccess = null, ETag? eTag = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, DateTimeOffset? createdOn = null, string version = null, ResourceIdentifier purviewResourceId = null, FactoryRepoConfiguration repoConfiguration = null, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = null, DataFactoryEncryptionConfiguration encryption = null, DataFactoryPublicNetworkAccess? publicNetworkAccess = null, ETag? etag = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             globalParameters ??= new Dictionary<string, DataFactoryGlobalParameterProperties>();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 globalParameters,
                 encryption,
                 publicNetworkAccess,
-                eTag,
+                etag,
                 additionalProperties);
         }
 
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryIntegrationRuntimeData"/> instance for mocking. </returns>
-        public static DataFactoryIntegrationRuntimeData DataFactoryIntegrationRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryIntegrationRuntimeProperties properties = null, ETag? eTag = null)
+        public static DataFactoryIntegrationRuntimeData DataFactoryIntegrationRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryIntegrationRuntimeProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryIntegrationRuntimeData(
                 id,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -353,9 +353,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DataFactoryLinkedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonMwsLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AmazonS3CompatibleLinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDBLinkedService"/>, <see cref="CosmosDBMongoDBApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleBigQueryV2LinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="LakeHouseLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDBLinkedService"/>, <see cref="MongoDBAtlasLinkedService"/>, <see cref="MongoDBV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleCloudStorageLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PostgreSqlV2LinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SalesforceServiceCloudV2LinkedService"/>, <see cref="SalesforceV2LinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="ServiceNowV2LinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SnowflakeV2LinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WarehouseLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryLinkedServiceData"/> instance for mocking. </returns>
-        public static DataFactoryLinkedServiceData DataFactoryLinkedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryLinkedServiceProperties properties = null, ETag? eTag = null)
+        public static DataFactoryLinkedServiceData DataFactoryLinkedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryLinkedServiceProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryLinkedServiceData(
                 id,
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DataFactoryDatasetProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonMwsObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDBMongoDBApiCollectionDataset"/>, <see cref="CosmosDBSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDBCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GoogleBigQueryV2ObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="DataFactoryHttpDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="LakeHouseTableDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDBAtlasCollectionDataset"/>, <see cref="MongoDBCollectionDataset"/>, <see cref="MongoDBV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PostgreSqlV2TableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SalesforceServiceCloudV2ObjectDataset"/>, <see cref="SalesforceV2ObjectDataset"/>, <see cref="SapBWCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="ServiceNowV2ObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SnowflakeV2Dataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WarehouseTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/> and <see cref="ZohoObjectDataset"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryDatasetData"/> instance for mocking. </returns>
-        public static DataFactoryDatasetData DataFactoryDatasetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryDatasetProperties properties = null, ETag? eTag = null)
+        public static DataFactoryDatasetData DataFactoryDatasetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryDatasetProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryDatasetData(
                 id,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -409,10 +409,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folderName"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="elapsedTimeMetricDuration"> Pipeline Policy. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryPipelineData"/> instance for mocking. </returns>
-        public static DataFactoryPipelineData DataFactoryPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<PipelineActivity> activities = null, IDictionary<string, EntityParameterSpecification> parameters = null, IDictionary<string, PipelineVariableSpecification> variables = null, int? concurrency = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> runDimensions = null, string folderName = null, BinaryData elapsedTimeMetricDuration = null, ETag? eTag = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryPipelineData DataFactoryPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<PipelineActivity> activities = null, IDictionary<string, EntityParameterSpecification> parameters = null, IDictionary<string, PipelineVariableSpecification> variables = null, int? concurrency = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> runDimensions = null, string folderName = null, BinaryData elapsedTimeMetricDuration = null, ETag? etag = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             activities ??= new List<PipelineActivity>();
             parameters ??= new Dictionary<string, EntityParameterSpecification>();
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 runDimensions,
                 folderName != null ? new PipelineFolder(folderName, serializedAdditionalRawData: null) : null,
                 elapsedTimeMetricDuration != null ? new DataFactoryPipelinePolicy(new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
-                eTag,
+                etag,
                 additionalProperties);
         }
 
@@ -572,9 +572,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="Models.DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataFactoryBlobEventsTrigger"/>, <see cref="Models.DataFactoryBlobTrigger"/>, <see cref="Models.ChainingTrigger"/>, <see cref="Models.CustomEventsTrigger"/>, <see cref="Models.MultiplePipelineTrigger"/>, <see cref="Models.RerunTumblingWindowTrigger"/>, <see cref="Models.DataFactoryScheduleTrigger"/> and <see cref="Models.TumblingWindowTrigger"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryTriggerData"/> instance for mocking. </returns>
-        public static DataFactoryTriggerData DataFactoryTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryTriggerProperties properties = null, ETag? eTag = null)
+        public static DataFactoryTriggerData DataFactoryTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryTriggerProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryTriggerData(
                 id,
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -655,9 +655,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryDataFlowData"/> instance for mocking. </returns>
-        public static DataFactoryDataFlowData DataFactoryDataFlowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryDataFlowProperties properties = null, ETag? eTag = null)
+        public static DataFactoryDataFlowData DataFactoryDataFlowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryDataFlowProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryDataFlowData(
                 id,
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -795,9 +795,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed Virtual Network properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryManagedVirtualNetworkData"/> instance for mocking. </returns>
-        public static DataFactoryManagedVirtualNetworkData DataFactoryManagedVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryManagedVirtualNetworkProperties properties = null, ETag? eTag = null)
+        public static DataFactoryManagedVirtualNetworkData DataFactoryManagedVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryManagedVirtualNetworkProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryManagedVirtualNetworkData(
                 id,
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -827,9 +827,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointData"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointData DataFactoryPrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateEndpointProperties properties = null, ETag? eTag = null)
+        public static DataFactoryPrivateEndpointData DataFactoryPrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateEndpointProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryPrivateEndpointData(
                 id,
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -885,9 +885,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryServiceCredentialData"/> instance for mocking. </returns>
-        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryCredential properties = null, ETag? eTag = null)
+        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryCredential properties = null, ETag? etag = null)
         {
             return new DataFactoryServiceCredentialData(
                 id,
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -905,9 +905,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionData DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateEndpointConnectionProperties properties = null, ETag? eTag = null)
+        public static DataFactoryPrivateEndpointConnectionData DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateEndpointConnectionProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryPrivateEndpointConnectionData(
                 id,
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -935,9 +935,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionApprovalRequest properties = null, ETag? eTag = null)
+        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionApprovalRequest properties = null, ETag? etag = null)
         {
             return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(
                 id,
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -955,9 +955,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResource"/> instance for mocking. </returns>
-        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateLinkResourceProperties properties = null, ETag? eTag = null)
+        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataFactoryPrivateLinkResourceProperties properties = null, ETag? etag = null)
         {
             return new DataFactoryPrivateLinkResource(
                 id,
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -988,9 +988,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the global parameter. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryGlobalParameterData"/> instance for mocking. </returns>
-        public static DataFactoryGlobalParameterData DataFactoryGlobalParameterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, DataFactoryGlobalParameterProperties> properties = null, ETag? eTag = null)
+        public static DataFactoryGlobalParameterData DataFactoryGlobalParameterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, DataFactoryGlobalParameterProperties> properties = null, ETag? etag = null)
         {
             properties ??= new Dictionary<string, DataFactoryGlobalParameterProperties>();
 
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -1016,10 +1016,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> CDC policy. </param>
         /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
         /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
-        public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string folderName = null, string description = null, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = null, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = null, MapperPolicy policy = null, bool? allowVnetOverride = null, string status = null, ETag? eTag = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string folderName = null, string description = null, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = null, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = null, MapperPolicy policy = null, bool? allowVnetOverride = null, string status = null, ETag? etag = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             sourceConnectionsInfo ??= new List<MapperSourceConnectionsInfo>();
             targetConnectionsInfo ??= new List<MapperTargetConnectionsInfo>();
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 allowVnetOverride,
                 status,
-                eTag,
+                etag,
                 additionalProperties);
         }
 

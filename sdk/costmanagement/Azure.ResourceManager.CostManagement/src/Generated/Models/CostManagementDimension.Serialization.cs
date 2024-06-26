@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             AzureLocation? location = default;
             string sku = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 nextLink,
                 location,
                 sku,
-                eTag,
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
