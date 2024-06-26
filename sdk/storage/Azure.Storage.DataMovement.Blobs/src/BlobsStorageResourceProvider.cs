@@ -238,16 +238,18 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobCheckpointData checkpointData = properties.GetCheckpointData(getSource);
 
-            ResourceType type = GetType(checkpointData.BlobType, properties.IsContainer);
+            ResourceType type = GetType(checkpointData, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
-            IBlobResourceRehydrator rehydrator = type switch
-            {
-                ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
-                ResourceType.PageBlob => new PageBlobResourceRehydrator(),
-                ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
-                ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
-                _ => throw BadResourceTypeException(type)
-            };
+            IBlobResourceRehydrator rehydrator = getSource ?
+                type == ResourceType.BlobContainer ? new BlobContainerResourceRehydrator() : new BlockBlobResourceRehydrator()
+                : type switch
+                {
+                    ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
+                    ResourceType.PageBlob => new PageBlobResourceRehydrator(),
+                    ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
+                    ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
+                    _ => throw BadResourceTypeException(type)
+                };
             return _credentialType switch
             {
                 CredentialType.None => rehydrator.Rehydrate(
@@ -715,16 +717,18 @@ namespace Azure.Storage.DataMovement.Blobs
         }
         #endregion
 
-        private static ResourceType GetType(DataTransferProperty<BlobType?> blobType, bool isContainer)
+        private static ResourceType GetType(BlobCheckpointData checkpointData, bool isContainer)
         {
             if (isContainer)
             {
                 return ResourceType.BlobContainer;
             }
 
-            if (blobType?.Value != default)
+            BlobDestinationCheckpointData destinationCheckpointData = checkpointData as BlobDestinationCheckpointData;
+
+            if (null != destinationCheckpointData && destinationCheckpointData.BlobType?.Value != default)
             {
-                return blobType.Value switch
+                return destinationCheckpointData.BlobType.Value switch
                 {
                     BlobType.Block => ResourceType.BlockBlob,
                     BlobType.Page => ResourceType.PageBlob,
