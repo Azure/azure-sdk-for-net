@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -244,24 +244,13 @@ directive:
         }
       }
 
-  # remove cmdlets
-  - where:
-      subject: NetworkProfile
-    remove: true
-  - where:
-      subject: MachineRunCommand
-      verb: Set
-    remove: true
-
-  # remove operations
-  - remove-operation: Machines_CreateOrUpdate
-  - remove-operation: MachineRunCommands_Update
+  # we don't want user to interact with them / we don't support some operations
+  - remove-operation: MachineRunCommands_Update #PATCH
   - remove-operation: AgentVersion_List
   - remove-operation: AgentVersion_Get
   - remove-operation: HybridIdentityMetadata_Get
   - remove-operation: HybridIdentityMetadata_ListByMachines
 
-  # add back when swagger change is checked in
   - remove-operation: Licenses_ValidateLicense
   - remove-operation: Licenses_Update #PATCH
 
@@ -271,20 +260,6 @@ directive:
   - remove-operation: LicenseProfiles_List
   - remove-operation: LicenseProfiles_CreateOrUpdate
 
-  - remove-operation: NetworkConfigurations_Get
-  - remove-operation: NetworkConfigurations_Update
-  - remove-operation: NetworkConfigurations_CreateOrUpdate
-
-  - remove-operation: NetworkSecurityPerimeterConfigurations_ReconcileForPrivateLinkScope
-
-  # we will generate a seperate SDK for them
-  - remove-operation: Gateways_CreateOrUpdate
-  - remove-operation: Gateways_Get
-  - remove-operation: Gateways_ListByResourceGroup
-  - remove-operation: Gateways_ListBySubscription
-  - remove-operation: Gateways_Delete
-  - remove-operation: Gateways_Update
-  - remove-operation: Settings_Update
   - remove-operation: Settings_Get
   - remove-operation: Settings_Patch
 

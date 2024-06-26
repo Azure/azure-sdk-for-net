@@ -57,22 +57,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
         /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
+        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
+        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? billingStartOn, DateTimeOffset? enrollmentOn, DateTimeOffset? disenrollmentOn, IList<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LicenseStatus = licenseStatus;
             LicenseChannel = licenseChannel;
             EsuProfile = esuProfile;
             SubscriptionStatus = subscriptionStatus;
             ProductType = productType;
-            BillingStartOn = billingStartOn;
             EnrollmentOn = enrollmentOn;
+            BillingStartOn = billingStartOn;
             DisenrollmentOn = disenrollmentOn;
+            BillingEndOn = billingEndOn;
+            Error = error;
             ProductFeatures = productFeatures;
             IsSoftwareAssuranceCustomer = isSoftwareAssuranceCustomer;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -88,12 +92,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
         /// <summary> Indicates the product type of the license. </summary>
         public LicenseProfileProductType? ProductType { get; set; }
-        /// <summary> The timestamp in UTC when the billing starts. </summary>
-        public DateTimeOffset? BillingStartOn { get; }
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
         public DateTimeOffset? EnrollmentOn { get; }
+        /// <summary> The timestamp in UTC when the billing starts. </summary>
+        public DateTimeOffset? BillingStartOn { get; }
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
         public DateTimeOffset? DisenrollmentOn { get; }
+        /// <summary> The timestamp in UTC when the billing ends. </summary>
+        public DateTimeOffset? BillingEndOn { get; }
+        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        public ResponseError Error { get; }
         /// <summary> The list of product features. </summary>
         public IList<HybridComputeProductFeature> ProductFeatures { get; }
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>

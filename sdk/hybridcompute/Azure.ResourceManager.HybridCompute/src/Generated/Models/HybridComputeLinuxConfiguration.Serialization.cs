@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
+            if (Optional.IsDefined(EnableHotpatching))
+            {
+                writer.WritePropertyName("enableHotpatching"u8);
+                writer.WriteBooleanValue(EnableHotpatching.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,6 +89,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             AssessmentModeType? assessmentMode = default;
             PatchModeType? patchMode = default;
+            bool? enableHotpatching = default;
+            PatchSettingsStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,6 +122,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             patchMode = new PatchModeType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enableHotpatching"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHotpatching = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = PatchSettingsStatus.DeserializePatchSettingsStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -119,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, serializedAdditionalRawData);
+            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, enableHotpatching, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLinuxConfiguration>.Write(ModelReaderWriterOptions options)
