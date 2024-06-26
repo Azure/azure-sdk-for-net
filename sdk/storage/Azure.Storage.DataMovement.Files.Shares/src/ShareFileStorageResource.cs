@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Specialized;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -79,7 +80,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     httpHeaders: httpHeaders,
                     metadata: metadata,
                     smbProperties: smbProperties,
-                    filePermission: _options?.FilePermissions,
                     conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -199,11 +199,50 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
                 conditions: _options?.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            if (ResourceProperties == default)
-            {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
-            }
             return ResourceProperties;
+        }
+
+        protected override async Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+        {
+            string permissionKey = properties?.RawProperties?.GetSourcePermissionKey();
+            if (!string.IsNullOrEmpty(permissionKey))
+            {
+                ShareClient parentShare = ShareFileClient.GetParentShareClient();
+                return await parentShare.GetPermissionAsync(permissionKey, cancellationToken).ConfigureAwait(false);
+            }
+            return default;
+        }
+
+        protected override async Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+        {
+            if (sourceResource is ShareFileStorageResource)
+            {
+                if (_options?.FilePermissions?.Preserve ?? false)
+                {
+                    ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
+                    if (string.IsNullOrEmpty(sourceShareFile._options._destinationPermissionKey))
+                    {
+                        string sourcePermissions = await sourceShareFile.GetPermissionsAsync(sourceProperties, cancellationToken).ConfigureAwait(false);
+
+                        if (!string.IsNullOrEmpty(sourcePermissions))
+                        {
+                            ShareClient parentShare = ShareFileClient.GetParentShareClient();
+                            PermissionInfo permissionsInfo = await parentShare.CreatePermissionAsync(sourcePermissions, cancellationToken).ConfigureAwait(false);
+                            _options._destinationPermissionKey = permissionsInfo.FilePermissionKey;
+                        }
+                    }
+                    else
+                    {
+                        _options._destinationPermissionKey = sourceShareFile._options._destinationPermissionKey;
+                    }
+                }
+            }
         }
 
         protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
@@ -232,7 +271,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 contentDisposition: _options?.ContentDisposition,
                 cacheControl: _options?.CacheControl,
                 fileAttributes: _options?.FileAttributes,
-                filePermissionKey: _options?.FilePermissionKey,
+                filePermissionKey: _options?._destinationPermissionKey,
                 fileCreatedOn: _options?.FileCreatedOn,
                 fileLastWrittenOn: _options?.FileLastWrittenOn,
                 fileChangedOn: _options?.FileChangedOn,

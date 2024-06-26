@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Properties of the Storage Resource Item.
         /// </summary>
-        protected StorageResourceItemProperties ResourceProperties { get; set; }
+        protected internal StorageResourceItemProperties ResourceProperties { get; set; }
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -150,6 +150,22 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
         protected internal abstract Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default);
+
+        /// <summary>
+        /// Gets the Permissions of a storage resource.
+        /// </summary>
+        /// <returns></returns>
+        protected internal abstract Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sets the permissions of the storage resource.
+        /// </summary>
+        /// <returns></returns>
+        protected internal abstract Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the Authorization Header for the storage resource if available.

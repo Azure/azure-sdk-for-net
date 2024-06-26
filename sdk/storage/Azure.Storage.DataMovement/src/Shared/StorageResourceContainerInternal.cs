@@ -16,8 +16,9 @@ namespace Azure.Storage.DataMovement
     internal abstract class StorageResourceContainerInternal : StorageResourceContainer
     {
         internal IAsyncEnumerable<StorageResource> GetStorageResourcesInternalAsync(
+            StorageResourceContainer destinationContainer = default,
             CancellationToken cancellationToken = default)
-            => GetStorageResourcesAsync(cancellationToken);
+            => GetStorageResourcesAsync(destinationContainer, cancellationToken);
 
         internal StorageResourceItem GetStorageResourceReferenceInternal(string path, string resourceId)
             => GetStorageResourceReference(path, resourceId);

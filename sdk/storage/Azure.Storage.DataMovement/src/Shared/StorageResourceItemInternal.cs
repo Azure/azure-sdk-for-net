@@ -78,5 +78,14 @@ namespace Azure.Storage.DataMovement
             long? length = null,
             CancellationToken cancellationToken = default)
             => ReadStreamAsync(position, length, cancellationToken);
+
+        internal StorageResourceItemProperties GetResourceProperties()
+            => ResourceProperties;
+
+        internal Task<string> GetPermissionsInternalAsync(StorageResourceItemProperties sourceProperties = default)
+            => GetPermissionsAsync(sourceProperties);
+
+        internal Task SetPermissionsInternalAsync(StorageResourceItem sourceResource, StorageResourceItemProperties sourceProperties)
+            => SetPermissionsAsync(sourceResource, sourceProperties);
     }
 }

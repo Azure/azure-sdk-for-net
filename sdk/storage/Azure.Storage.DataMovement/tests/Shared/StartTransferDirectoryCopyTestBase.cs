@@ -37,6 +37,14 @@ namespace Azure.Storage.DataMovement.Tests
         public ClientBuilder<TSourceServiceClient, TSourceClientOptions> SourceClientBuilder { get; protected set; }
         public ClientBuilder<TDestinationServiceClient, TDestinationClientOptions> DestinationClientBuilder { get; protected set; }
 
+        public enum TransferPropertiesTestType
+        {
+            Default = 0,
+            Preserve = 1,
+            NoPreserve = 2,
+            NewProperties = 3,
+        }
+
         /// <summary>
         /// Constructor for TransferManager.StartTransferAsync tests
         ///
@@ -138,7 +146,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerClient">The container client to get the respective storage resource.</param>
         /// <param name="directoryPath">The respective directory path of the storage resource container.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient containerClient, string directoryPath);
+        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(
+            TDestinationContainerClient containerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default);
 
         /// <summary>
         /// Creates the directory within the source container. Will also create any parent directories if required and is a hierarchical structure.
@@ -193,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePrefix,
             TDestinationContainerClient destinationContainer,
             string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
             CancellationToken cancellationToken = default);
         #endregion
 
@@ -622,7 +634,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         #region Single Concurrency
-        private async Task CreateDirectoryTree(
+        internal async Task CreateDirectoryTree(
             TSourceContainerClient client,
             string sourcePrefix,
             int size)

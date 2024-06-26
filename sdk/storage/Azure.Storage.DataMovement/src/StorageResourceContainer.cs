@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement
         /// Lists all the child storage resources in the path.
         /// </summary>
         protected internal abstract IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>

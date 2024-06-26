@@ -1035,7 +1035,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                TransferPropertiesTestType.Preserve);
+                TransferPropertiesTestType.NewProperties);
         }
     }
 }

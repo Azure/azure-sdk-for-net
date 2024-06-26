@@ -117,7 +117,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
+        protected override StorageResourceContainer GetDestinationStorageResourceContainer(
+            BlobContainerClient sourceContainerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default)
             => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Block) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
@@ -165,6 +168,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string sourcePrefix,
             BlobContainerClient destinationContainer,
             string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
