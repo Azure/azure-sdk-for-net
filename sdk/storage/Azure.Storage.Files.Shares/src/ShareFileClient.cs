@@ -6648,6 +6648,35 @@ namespace Azure.Storage.Files.Shares
             });
 
         /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before
+        /// <see cref="GenerateSasStringToSign(ShareSasPermissions, DateTimeOffset)"/>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual string GenerateSasStringToSign(ShareSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ShareSasBuilder shareSasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = ShareName,
+                FilePath = Path
+            };
+
+            return shareSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
+        }
+
+        /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
         /// <see cref="Uri"/> that generates a Share File Service
         /// Shared Access Signature (SAS) Uri based on the Client properties
