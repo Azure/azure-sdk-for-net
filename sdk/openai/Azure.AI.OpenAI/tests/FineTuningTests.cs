@@ -232,10 +232,12 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
     [RecordedTest]
     [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
-    [LiveOnly(Reason = "Some clients are not correctly hooked up to the test proxy yet")]
     public async Task DeployAndChatWithModel()
     {
-        AzureDeploymentClient deploymentClient = GetDeploymentModelClient();
+        string fineTunedModel = GetFineTunedModel();
+        FineTuningClient client = GetTestClient();
+
+        AzureDeploymentClient deploymentClient = GetTestClientFrom<AzureDeploymentClient>(client);
         string? deploymentName = null;
         await using RunOnScopeExit _ = new(async () =>
         {
@@ -245,9 +247,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
         });
 
-        string fineTunedModel = GetFineTunedModel();
-        FineTuningClient client = GetTestClient();
-
         // Check if the model exists by searching all jobs
         FineTuningJob? job = await EnumerateJobsAsync(client)
             .FirstOrDefaultAsync(j => j.FineTunedModel == fineTunedModel);
@@ -255,7 +254,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job!.Status, Is.EqualTo("succeeded"));
 
         // Deploy the model and wait for the deployment to finish
-        deploymentName = "azure-ai-openai-test-" + Guid.NewGuid().ToString();
+        deploymentName = "azure-ai-openai-test-" + Recording.Random.NewGuid().ToString();
         AzureDeployedModel deployment = await deploymentClient.CreateDeploymentAsync(deploymentName, fineTunedModel);
         Assert.That(deployment, Is.Not.Null);
         Assert.That(deployment.ID, !(Is.Null.Or.Empty));
@@ -272,7 +271,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
                     || d.Properties.ProvisioningState == "Failed"
                     || d.Properties.ProvisioningState == "Canceled";
             },
-            TimeSpan.FromSeconds(15),
+            TimeSpan.FromMinutes(1),
             TimeSpan.FromMinutes(30));
 
         Assert.That(deployment.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
@@ -309,14 +308,6 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     #region helper methods
-
-    private AzureDeploymentClient GetDeploymentModelClient()
-    {
-        var config = TestConfig.GetConfig<FineTuningClient>()
-            ?? throw new KeyNotFoundException("Could not find any configuration for the fine tuning client");
-        AzureDeploymentClient client = new(config);
-        return InstrumentClient(client);
-    }
 
     private string GetFineTunedModel()
     {

@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Tests.Utils.Config
     /// <summary>
     /// Configuration that reads from environment variables.
     /// </summary>
-    public class EnvironmentValuesConfig : IConfiguration
+    public class EnvironmentValuesConfig : INamedConfiguration
     {
         private const char ENV_KEY_SEPARATOR = '_';
         private const string SUFFIX_AOAI_API_KEY = "API_KEY";
@@ -45,7 +45,12 @@ namespace Azure.AI.OpenAI.Tests.Utils.Config
         /// <exception cref="ArgumentNullException">The prefix specified was null.</exception>
         public EnvironmentValuesConfig(string prefix, string clientName)
             : this($"{prefix}{ENV_KEY_SEPARATOR}{clientName}")
-        { }
+        {
+            Name = clientName;
+        }
+
+        /// <inheritdoc />
+        public string? Name { get; }
 
         /// <inheritdoc />
         public Uri? Endpoint { get; }

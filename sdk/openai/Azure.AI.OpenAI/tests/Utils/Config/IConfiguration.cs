@@ -40,6 +40,17 @@ public interface IConfiguration
 }
 
 /// <summary>
+/// A named test configuration for an Azure resource.
+/// </summary>
+public interface INamedConfiguration : IConfiguration
+{
+    /// <summary>
+    /// The name of the configuration.
+    /// </summary>
+    string? Name { get; }
+}
+
+/// <summary>
 /// Extensions methods for <see cref="IConfiguration"/>.
 /// </summary>
 public static class ConfigurationExtensions
